@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import zensusLogo from "@/assets/zensus-logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +19,7 @@ const Navbar = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <span className="text-lg font-bold text-primary-foreground">Z</span>
-            </div>
+            <img src={zensusLogo} alt="Zensus logo" className="h-8 w-8 rounded-lg" />
             <span className="text-xl font-semibold text-foreground">Zensus</span>
           </a>
 

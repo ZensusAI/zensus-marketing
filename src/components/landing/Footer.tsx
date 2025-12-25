@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Twitter, Linkedin, Github } from "lucide-react";
+import zensusLogo from "@/assets/zensus-logo.png";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -65,9 +66,7 @@ const Footer = () => {
           {/* Logo */}
           <div className="col-span-2">
             <a href="#" className="flex items-center gap-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                <span className="text-lg font-bold text-primary-foreground">Z</span>
-              </div>
+              <img src={zensusLogo} alt="Zensus logo" className="h-8 w-8 rounded-lg" />
               <span className="text-xl font-semibold text-foreground">Zensus</span>
             </a>
             <p className="text-sm text-muted-foreground max-w-xs mb-6">
