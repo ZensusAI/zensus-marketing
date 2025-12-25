@@ -1,0 +1,123 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, Twitter, Linkedin, Github } from "lucide-react";
+
+const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      setIsSubmitted(true);
+    }
+  };
+
+  const footerLinks = {
+    Product: ["Features", "Pricing", "Changelog", "Roadmap"],
+    Company: ["About", "Blog", "Careers", "Press"],
+    Legal: ["Privacy", "Terms", "Security"],
+  };
+
+  return (
+    <footer className="bg-background border-t border-border">
+      {/* CTA Section */}
+      <div className="section-container section-padding">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">
+            Ready to see your{" "}
+            <span className="text-gradient">cash flow future?</span>
+          </h2>
+          <p className="text-lg text-muted-foreground mb-8">
+            Join 250+ founders who already have clarity on their finances.
+          </p>
+
+          {!isSubmitted ? (
+            <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground"
+                  required
+                />
+                <Button type="submit" size="lg" className="h-12 px-6 glow group">
+                  Get Early Access
+                  <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <div className="p-6 rounded-xl bg-secondary border border-primary/30 max-w-md mx-auto glow-sm">
+              <p className="text-lg font-medium text-foreground">You're in! 🎉</p>
+              <p className="text-sm text-muted-foreground">We'll reach out soon.</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Footer Links */}
+      <div className="section-container py-12 border-t border-border">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+          {/* Logo */}
+          <div className="col-span-2">
+            <a href="#" className="flex items-center gap-2 mb-4">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+                <span className="text-lg font-bold text-primary-foreground">Z</span>
+              </div>
+              <span className="text-xl font-semibold text-foreground">Zensus</span>
+            </a>
+            <p className="text-sm text-muted-foreground max-w-xs mb-6">
+              AI-powered cash flow forecasting for founders who need clarity on their finances.
+            </p>
+            <div className="flex gap-4">
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Twitter size={20} />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Linkedin size={20} />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Github size={20} />
+              </a>
+            </div>
+          </div>
+
+          {/* Links */}
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category}>
+              <h4 className="font-semibold text-foreground mb-4">{category}</h4>
+              <ul className="space-y-3">
+                {links.map((link) => (
+                  <li key={link}>
+                    <a
+                      href="#"
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Zensus. All rights reserved.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Made with ❤️ for founders everywhere
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
