@@ -1,4 +1,4 @@
-import { TrendingUp, BarChart3, Zap } from "lucide-react";
+import zensusDashboard from "@/assets/zensus-dashboard.png";
 
 const ProductShowcase = () => {
   return (
@@ -34,36 +34,12 @@ const ProductShowcase = () => {
               </div>
             </div>
 
-            {/* Dashboard content */}
-            <div className="p-6 md:p-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                {/* Stat cards */}
-                {[
-                  { label: "Optimistic", value: "$142,500", change: "+12%", icon: TrendingUp },
-                  { label: "Expected", value: "$128,000", change: "+8%", icon: BarChart3 },
-                  { label: "Pessimistic", value: "$98,500", change: "-3%", icon: Zap },
-                ].map((stat, index) => (
-                  <div key={index} className="p-4 rounded-xl bg-secondary/50 border border-border">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground">{stat.label}</span>
-                      <stat.icon size={16} className="text-primary" />
-                    </div>
-                    <div className="text-2xl font-bold text-foreground">{stat.value}</div>
-                    <div className={`text-sm ${stat.change.startsWith('+') ? 'text-primary' : 'text-destructive'}`}>
-                      {stat.change} vs last week
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Chart placeholder */}
-              <div className="h-48 md:h-64 rounded-xl bg-secondary/30 border border-border flex items-center justify-center">
-                <div className="flex flex-col items-center gap-3 text-muted-foreground">
-                  <BarChart3 size={48} className="text-primary/50" />
-                  <span className="text-sm">8-Week Cash Flow Forecast</span>
-                </div>
-              </div>
-            </div>
+            {/* Dashboard screenshot */}
+            <img 
+              src={zensusDashboard} 
+              alt="Zensus Cash Flow Projection Dashboard showing scenario-based forecasting" 
+              className="w-full h-auto"
+            />
           </div>
         </div>
       </div>
