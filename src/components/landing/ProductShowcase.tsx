@@ -1,4 +1,4 @@
-import zensusDashboard from "@/assets/zensus-dashboard.png";
+import { BarChart3 } from "lucide-react";
 
 const ProductShowcase = () => {
   return (
@@ -34,12 +34,13 @@ const ProductShowcase = () => {
               </div>
             </div>
 
-            {/* Dashboard screenshot */}
-            <img 
-              src={zensusDashboard} 
-              alt="Zensus Cash Flow Projection Dashboard showing scenario-based forecasting" 
-              className="w-full h-auto"
-            />
+            {/* Placeholder until screenshot is uploaded */}
+            <div className="h-64 md:h-96 flex items-center justify-center bg-secondary/20">
+              <div className="flex flex-col items-center gap-3 text-muted-foreground">
+                <BarChart3 size={48} className="text-primary/50" />
+                <span className="text-sm">Dashboard screenshot coming soon</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
