@@ -1,17 +1,43 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, Twitter, Linkedin, Github } from "lucide-react";
+import { ArrowRight, Twitter, Linkedin, Github, Loader2 } from "lucide-react";
 import zensusLogo from "@/assets/zensus-logo.png";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    if (!email) return;
+
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("submit-email", {
+        body: { email, consent: true },
+      });
+
+      if (error) throw error;
+
       setIsSubmitted(true);
+      toast({
+        title: "You're in!",
+        description: "We'll reach out soon.",
+      });
+    } catch (error: any) {
+      console.error("Error submitting email:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -31,7 +57,7 @@ const Footer = () => {
             <span className="text-gradient">cash flow future?</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            Join 250+ founders who already have clarity on their finances.
+            Join founders who already have clarity on their finances.
           </p>
 
           {!isSubmitted ? (
@@ -44,10 +70,17 @@ const Footer = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground"
                   required
+                  disabled={isLoading}
                 />
-                <Button type="submit" size="lg" className="h-12 px-6 glow group">
-                  Get Early Access
-                  <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <Button type="submit" size="lg" className="h-12 px-6 glow group" disabled={isLoading}>
+                  {isLoading ? (
+                    <Loader2 size={18} className="animate-spin" />
+                  ) : (
+                    <>
+                      Get Early Access
+                      <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
                 </Button>
               </div>
             </form>
