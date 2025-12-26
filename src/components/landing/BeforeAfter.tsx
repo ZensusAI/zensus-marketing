@@ -12,7 +12,7 @@ const BeforeAfter = () => {
     "AI-powered forecasting in seconds",
     "Decision insights for hiring & distributions",
     "Early warning for cash pressure",
-    "Three scenarios: optimistic, expected, pessimistic",
+    "Custom Scenarios for your future cash flow.",
   ];
 
   return (

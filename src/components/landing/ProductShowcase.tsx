@@ -9,7 +9,7 @@ const ProductShowcase = () => {
             Replace chaos with <span className="text-gradient">clarity</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            See your cash flow future across three scenarios. Make confident decisions backed by data.
+            See your cash flow future using custom scenarios. Make confident decisions backed by data.
           </p>
         </div>
 

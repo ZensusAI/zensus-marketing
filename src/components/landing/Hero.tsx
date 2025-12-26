@@ -2,18 +2,43 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Hero = () => {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email && consent) {
+    if (!email || !consent) return;
+
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("submit-email", {
+        body: { email, consent },
+      });
+
+      if (error) throw error;
+
       setIsSubmitted(true);
-      // Placeholder for actual submission logic
+      toast({
+        title: "You're on the list!",
+        description: "We'll be in touch soon with early access.",
+      });
+    } catch (error: any) {
+      console.error("Error submitting email:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -43,7 +68,7 @@ const Hero = () => {
 
           {/* Subheadline */}
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Upload your financial model. Get 8-week forecasts with three scenarios. 
+            Upload your financial model. Get future forecasts with custom scenarios. 
             Know exactly when you can hire, distribute, or need to cut.
           </p>
 
@@ -59,10 +84,17 @@ const Hero = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="flex-1 h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground"
                     required
+                    disabled={isLoading}
                   />
-                  <Button type="submit" size="lg" className="h-12 px-6 glow-sm group">
-                    Join Waitlist
-                    <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <Button type="submit" size="lg" className="h-12 px-6 glow-sm group" disabled={isLoading}>
+                    {isLoading ? (
+                      <Loader2 size={18} className="animate-spin" />
+                    ) : (
+                      <>
+                        Join Waitlist
+                        <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
                   </Button>
                 </div>
 
@@ -72,6 +104,7 @@ const Hero = () => {
                     checked={consent}
                     onCheckedChange={(checked) => setConsent(checked as boolean)}
                     className="mt-0.5"
+                    disabled={isLoading}
                   />
                   <label htmlFor="consent" className="text-sm text-muted-foreground text-left cursor-pointer">
                     I agree to receive product updates and announcements
@@ -84,24 +117,7 @@ const Hero = () => {
                 <p className="text-sm text-muted-foreground">We'll be in touch soon with early access.</p>
               </div>
             )}
-
-            {/* Trust badges */}
-            <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                No credit card required
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                Free tier forever
-              </span>
-            </div>
           </div>
-
-          {/* Waitlist counter */}
-          <p className="mt-8 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            <span className="text-primary font-semibold">250+</span> founders already on the waitlist
-          </p>
         </div>
       </div>
     </section>
