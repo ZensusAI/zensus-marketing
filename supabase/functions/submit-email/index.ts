@@ -152,6 +152,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Processing email submission from IP: ${clientIp}`);
 
     // Create a new page in Notion database
+    // Using "email" property type for Email field
     const notionResponse = await fetch("https://api.notion.com/v1/pages", {
       method: "POST",
       headers: {
@@ -163,21 +164,7 @@ const handler = async (req: Request): Promise<Response> => {
         parent: { database_id: NOTION_DATABASE_ID },
         properties: {
           Email: {
-            title: [
-              {
-                text: {
-                  content: sanitizedEmail,
-                },
-              },
-            ],
-          },
-          Consent: {
-            checkbox: Boolean(consent),
-          },
-          "Signed Up": {
-            date: {
-              start: new Date().toISOString(),
-            },
+            email: sanitizedEmail,
           },
         },
       }),
