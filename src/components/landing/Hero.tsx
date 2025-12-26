@@ -5,17 +5,65 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowRight, Sparkles, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+
+// Email validation schema using zod
+const emailSchema = z.string().email("Please enter a valid email address").max(254, "Email is too long");
+
+// Additional regex validation for stricter email checking
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const Hero = () => {
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [consentError, setConsentError] = useState(false);
+  const [emailError, setEmailError] = useState("");
   const { toast } = useToast();
+
+  const validateEmail = (email: string): boolean => {
+    // Reset error
+    setEmailError("");
+    
+    // Check with zod
+    const zodResult = emailSchema.safeParse(email);
+    if (!zodResult.success) {
+      setEmailError(zodResult.error.errors[0].message);
+      return false;
+    }
+    
+    // Additional regex validation
+    if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return false;
+    }
+    
+    return true;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !consent) return;
+    
+    // Reset errors
+    setConsentError(false);
+    setEmailError("");
+    
+    // Validate email
+    if (!validateEmail(email)) {
+      return;
+    }
+    
+    // Check consent
+    if (!consent) {
+      setConsentError(true);
+      toast({
+        title: "Consent required",
+        description: "Please agree to receive product updates to join the waitlist.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsLoading(true);
     try {
@@ -24,6 +72,16 @@ const Hero = () => {
       });
 
       if (error) throw error;
+
+      // Check if already exists
+      if (data?.alreadyExists) {
+        toast({
+          title: "You're already on the list!",
+          description: "We have your email and will reach out soon.",
+        });
+        setIsSubmitted(true);
+        return;
+      }
 
       setIsSubmitted(true);
       toast({
@@ -77,15 +135,23 @@ const Hero = () => {
             {!isSubmitted ? (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground"
-                    required
-                    disabled={isLoading}
-                  />
+                  <div className="flex-1 flex flex-col">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (emailError) setEmailError("");
+                      }}
+                      className={`h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground ${emailError ? "border-destructive" : ""}`}
+                      required
+                      disabled={isLoading}
+                    />
+                    {emailError && (
+                      <span className="text-xs text-destructive mt-1 text-left">{emailError}</span>
+                    )}
+                  </div>
                   <Button type="submit" size="lg" className="h-12 px-6 glow-sm group" disabled={isLoading}>
                     {isLoading ? (
                       <Loader2 size={18} className="animate-spin" />
@@ -98,17 +164,25 @@ const Hero = () => {
                   </Button>
                 </div>
 
-                <div className="flex items-start gap-3 justify-center">
-                  <Checkbox
-                    id="consent"
-                    checked={consent}
-                    onCheckedChange={(checked) => setConsent(checked as boolean)}
-                    className="mt-0.5"
-                    disabled={isLoading}
-                  />
-                  <label htmlFor="consent" className="text-sm text-muted-foreground text-left cursor-pointer">
-                    I agree to receive product updates and announcements
-                  </label>
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id="consent"
+                      checked={consent}
+                      onCheckedChange={(checked) => {
+                        setConsent(checked as boolean);
+                        if (consentError) setConsentError(false);
+                      }}
+                      className={`mt-0.5 ${consentError ? "border-destructive" : ""}`}
+                      disabled={isLoading}
+                    />
+                    <label htmlFor="consent" className={`text-sm text-left cursor-pointer ${consentError ? "text-destructive" : "text-muted-foreground"}`}>
+                      I agree to receive product updates and announcements
+                    </label>
+                  </div>
+                  {consentError && (
+                    <span className="text-xs text-destructive">Please check this box to continue</span>
+                  )}
                 </div>
               </form>
             ) : (

@@ -151,6 +151,38 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`Processing email submission from IP: ${clientIp}`);
 
+    // Check if email already exists in Notion database
+    const queryResponse = await fetch(`https://api.notion.com/v1/databases/${NOTION_DATABASE_ID}/query`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${NOTION_API_KEY}`,
+        "Content-Type": "application/json",
+        "Notion-Version": "2022-06-28",
+      },
+      body: JSON.stringify({
+        filter: {
+          property: "Email",
+          email: {
+            equals: sanitizedEmail,
+          },
+        },
+      }),
+    });
+
+    if (queryResponse.ok) {
+      const queryData = await queryResponse.json();
+      if (queryData.results && queryData.results.length > 0) {
+        console.log(`Email already exists: ${sanitizedEmail}`);
+        return new Response(
+          JSON.stringify({ success: true, alreadyExists: true, message: "Email already on waitlist" }),
+          {
+            status: 200,
+            headers: { "Content-Type": "application/json", ...corsHeaders },
+          }
+        );
+      }
+    }
+
     // Create a new page in Notion database
     // Using "email" property type for Email field
     const notionResponse = await fetch("https://api.notion.com/v1/pages", {
@@ -186,7 +218,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Successfully added to Notion:", notionData.id);
 
     return new Response(
-      JSON.stringify({ success: true, message: "Email submitted successfully" }),
+      JSON.stringify({ success: true, alreadyExists: false, message: "Email submitted successfully" }),
       {
         status: 200,
         headers: { "Content-Type": "application/json", ...corsHeaders },
