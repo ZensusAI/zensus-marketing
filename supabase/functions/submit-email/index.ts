@@ -1,10 +1,35 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-};
+// Allowed origins - add your custom domains here
+const ALLOWED_ORIGINS = [
+  "https://wpczgwxsriezaubncuom.lovableproject.com",
+  "https://zensus.lovable.app",
+  // Add any custom domains below:
+  // "https://yourdomain.com",
+  // "https://www.yourdomain.com",
+];
+
+// Allow localhost in development
+const DEV_ORIGINS = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://127.0.0.1:5173",
+];
+
+function getCorsHeaders(req: Request): Record<string, string> {
+  const origin = req.headers.get("origin") || "";
+  const allAllowedOrigins = [...ALLOWED_ORIGINS, ...DEV_ORIGINS];
+  
+  // Check if origin is allowed
+  const isAllowed = allAllowedOrigins.some(allowed => 
+    origin === allowed || origin.endsWith(".lovableproject.com") || origin.endsWith(".lovable.app")
+  );
+  
+  return {
+    "Access-Control-Allow-Origin": isAllowed ? origin : ALLOWED_ORIGINS[0],
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  };
+}
 
 interface SubmitEmailRequest {
   email: string;
@@ -60,6 +85,8 @@ function sanitizeEmail(email: string): string {
 }
 
 const handler = async (req: Request): Promise<Response> => {
+  const corsHeaders = getCorsHeaders(req);
+  
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
