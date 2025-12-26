@@ -3,7 +3,7 @@ import { TrendingUp, FileSpreadsheet, Users, AlertCircle } from "lucide-react";
 const features = [
   {
     icon: TrendingUp,
-    title: "Three-Scenario Forecasts",
+    title: "Custom Scenarios",
     description: "Get optimistic, expected, and pessimistic projections for your cash flow over the next 8 weeks.",
   },
   {
