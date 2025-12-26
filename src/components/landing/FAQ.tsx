@@ -15,20 +15,8 @@ const faqs = [
     answer: "We currently support Excel (.xlsx, .xls) and CSV files. Our AI automatically extracts and structures your financial data from these formats.",
   },
   {
-    question: "Is my financial data secure?",
-    answer: "Absolutely. We use bank-level encryption for all data in transit and at rest. Your data is never shared with third parties and you can delete it at any time.",
-  },
-  {
-    question: "Is there a free tier?",
-    answer: "Yes! We offer a free tier that includes basic forecasting features. It's available forever—no credit card required to get started.",
-  },
-  {
     question: "How often are forecasts updated?",
     answer: "Forecasts update automatically when you upload new data. You can also manually trigger updates at any time to see the latest projections.",
-  },
-  {
-    question: "Can I share forecasts with my team or investors?",
-    answer: "Yes, you can export forecasts as PDFs or share live dashboards with team members and investors. Permissions are fully customizable.",
   },
 ];
 
