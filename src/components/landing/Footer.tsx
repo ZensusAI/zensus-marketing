@@ -14,6 +14,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import zensusLogo from "@/assets/zensus-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+
+// Email validation schema
+const emailSchema = z.string().email("Please enter a valid email address").max(254, "Email is too long");
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -21,18 +26,44 @@ const Footer = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [consentError, setConsentError] = useState(false);
   const { toast } = useToast();
+
+  const validateEmail = (email: string): boolean => {
+    setEmailError("");
+    
+    const zodResult = emailSchema.safeParse(email);
+    if (!zodResult.success) {
+      setEmailError(zodResult.error.errors[0].message);
+      return false;
+    }
+    
+    if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return false;
+    }
+    
+    return true;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !consent) {
-      if (!consent) {
-        toast({
-          title: "Consent required",
-          description: "Please agree to receive updates.",
-          variant: "destructive",
-        });
-      }
+    
+    setConsentError(false);
+    setEmailError("");
+    
+    if (!validateEmail(email)) {
+      return;
+    }
+    
+    if (!consent) {
+      setConsentError(true);
+      toast({
+        title: "Consent required",
+        description: "Please agree to receive updates.",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -97,34 +128,51 @@ const Footer = () => {
                   </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground"
-                    required
-                    disabled={isLoading}
-                  />
-                  <div className="flex items-start space-x-3">
-                    <Checkbox
-                      id="footer-consent"
-                      checked={consent}
-                      onCheckedChange={(checked) => setConsent(checked as boolean)}
+                  <div className="flex flex-col">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (emailError) setEmailError("");
+                      }}
+                      className={`h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground ${emailError ? "border-destructive" : ""}`}
+                      required
                       disabled={isLoading}
                     />
-                    <label
-                      htmlFor="footer-consent"
-                      className="text-sm text-muted-foreground leading-tight cursor-pointer"
-                    >
-                      I agree to receive product updates and marketing emails from Zensus.
-                    </label>
+                    {emailError && (
+                      <span className="text-xs text-destructive mt-1 text-left">{emailError}</span>
+                    )}
+                  </div>
+                  <div className="flex flex-col items-start gap-1">
+                    <div className="flex items-start space-x-3">
+                      <Checkbox
+                        id="footer-consent"
+                        checked={consent}
+                        onCheckedChange={(checked) => {
+                          setConsent(checked as boolean);
+                          if (consentError) setConsentError(false);
+                        }}
+                        className={`mt-0.5 ${consentError ? "border-destructive" : ""}`}
+                        disabled={isLoading}
+                      />
+                      <label
+                        htmlFor="footer-consent"
+                        className={`text-sm leading-tight cursor-pointer ${consentError ? "text-destructive" : "text-muted-foreground"}`}
+                      >
+                        I agree to receive product updates and marketing emails from Zensus.
+                      </label>
+                    </div>
+                    {consentError && (
+                      <span className="text-xs text-destructive">Please check this box to continue</span>
+                    )}
                   </div>
                   <Button
                     type="submit"
                     size="lg"
                     className="w-full h-12 glow"
-                    disabled={isLoading || !consent}
+                    disabled={isLoading}
                   >
                     {isLoading ? (
                       <Loader2 size={18} className="animate-spin" />
