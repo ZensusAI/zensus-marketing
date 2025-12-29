@@ -1,12 +1,14 @@
+import { useState } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
 
 const tiers = [
   {
     name: "Free",
-    price: "$0",
-    period: "/month",
+    monthlyPrice: 0,
+    annualPrice: 0,
     description: "Get started with basic forecasting",
     features: ["5 uploads"],
     cta: "Get Started",
@@ -14,8 +16,8 @@ const tiers = [
   },
   {
     name: "Pro",
-    price: "$20",
-    period: "/month",
+    monthlyPrice: 20,
+    annualPrice: 17,
     description: "Unlock full forecasting power",
     features: ["Unlimited uploads", "Scenario analysis"],
     cta: "Get Started",
@@ -24,6 +26,8 @@ const tiers = [
 ];
 
 const Pricing = () => {
+  const [isAnnual, setIsAnnual] = useState(false);
+
   return (
     <section id="pricing" className="section-padding relative">
       {/* Background glow */}
@@ -39,53 +43,76 @@ const Pricing = () => {
           </p>
         </div>
 
+        {/* Billing toggle */}
+        <div className="flex items-center justify-center gap-4 mb-10">
+          <span className={`text-sm font-medium transition-colors ${!isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
+            Monthly
+          </span>
+          <Switch 
+            checked={isAnnual} 
+            onCheckedChange={setIsAnnual}
+            aria-label="Toggle annual billing"
+          />
+          <span className={`text-sm font-medium transition-colors ${isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
+            Annually
+          </span>
+          <span className="ml-1 px-2 py-0.5 text-xs font-medium bg-primary/20 text-primary rounded-full">
+            Save 15%
+          </span>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-          {tiers.map((tier) => (
-            <Card
-              key={tier.name}
-              className={`relative bg-card border ${
-                tier.highlighted
-                  ? "border-primary/50 glow"
-                  : "border-border"
-              }`}
-            >
-              {tier.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="px-3 py-1 text-xs font-medium bg-primary text-primary-foreground rounded-full">
-                    Recommended
-                  </span>
-                </div>
-              )}
+          {tiers.map((tier) => {
+            const price = isAnnual ? tier.annualPrice : tier.monthlyPrice;
+            const period = isAnnual && tier.annualPrice > 0 ? "/mo, billed annually" : "/month";
+            
+            return (
+              <Card
+                key={tier.name}
+                className={`relative bg-card border ${
+                  tier.highlighted
+                    ? "border-primary/50 glow"
+                    : "border-border"
+                }`}
+              >
+                {tier.highlighted && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <span className="px-3 py-1 text-xs font-medium bg-primary text-primary-foreground rounded-full">
+                      Recommended
+                    </span>
+                  </div>
+                )}
 
-              <CardHeader className="text-center pb-2">
-                <CardTitle className="text-xl">{tier.name}</CardTitle>
-                <CardDescription>{tier.description}</CardDescription>
-              </CardHeader>
+                <CardHeader className="text-center pb-2">
+                  <CardTitle className="text-xl">{tier.name}</CardTitle>
+                  <CardDescription>{tier.description}</CardDescription>
+                </CardHeader>
 
-              <CardContent className="text-center">
-                <div className="mb-6">
-                  <span className="text-4xl font-bold">{tier.price}</span>
-                  <span className="text-muted-foreground">{tier.period}</span>
-                </div>
+                <CardContent className="text-center">
+                  <div className="mb-6">
+                    <span className="text-4xl font-bold">${price}</span>
+                    <span className="text-muted-foreground">{period}</span>
+                  </div>
 
-                <ul className="space-y-3 mb-8 text-left">
-                  {tier.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3">
-                      <Check size={18} className="text-primary flex-shrink-0" />
-                      <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="space-y-3 mb-8 text-left">
+                    {tier.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-3">
+                        <Check size={18} className="text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                <Button
-                  className={`w-full ${tier.highlighted ? "glow-sm" : ""}`}
-                  variant={tier.highlighted ? "default" : "outline"}
-                >
-                  {tier.cta}
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                  <Button
+                    className={`w-full ${tier.highlighted ? "glow-sm" : ""}`}
+                    variant={tier.highlighted ? "default" : "outline"}
+                  >
+                    {tier.cta}
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>
