@@ -1,9 +1,10 @@
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
+import ProductShowcase from "@/components/landing/ProductShowcase";
 import Problem from "@/components/landing/Problem";
 import BeforeAfter from "@/components/landing/BeforeAfter";
-import ProductShowcase from "@/components/landing/ProductShowcase";
 import Features from "@/components/landing/Features";
+import Pricing from "@/components/landing/Pricing";
 import FounderQuote from "@/components/landing/FounderQuote";
 import FAQ from "@/components/landing/FAQ";
 import Footer from "@/components/landing/Footer";
@@ -14,10 +15,11 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
+        <ProductShowcase />
         <Problem />
         <BeforeAfter />
-        <ProductShowcase />
         <Features />
+        <Pricing />
         <FounderQuote />
         <FAQ />
       </main>
