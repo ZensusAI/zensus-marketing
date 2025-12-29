@@ -6,6 +6,13 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 // Email validation schema using zod
 const emailSchema = z.string().email("Please enter a valid email address").max(254, "Email is too long");
@@ -20,6 +27,7 @@ const Hero = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [consentError, setConsentError] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const validateEmail = (email: string): boolean => {
@@ -124,12 +132,31 @@ const Hero = () => {
             Know exactly when you can hire, distribute, or need to cut.
           </p>
 
-          {/* Email Signup Form */}
-          <div className="max-w-md mx-auto animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <div className="flex-1 flex flex-col">
+          {/* Coming Soon CTA */}
+          <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+            <Button 
+              size="lg" 
+              className="h-12 px-8 glow-sm group"
+              onClick={() => setIsDialogOpen(true)}
+            >
+              Coming Soon
+              <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
+
+          {/* Waitlist Modal */}
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Join the Waitlist</DialogTitle>
+                <DialogDescription>
+                  Be the first to know when we launch. Enter your email below.
+                </DialogDescription>
+              </DialogHeader>
+              
+              {!isSubmitted ? (
+                <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+                  <div className="flex flex-col">
                     <Input
                       type="email"
                       placeholder="Enter your email"
@@ -146,46 +173,44 @@ const Hero = () => {
                       <span className="text-xs text-destructive mt-1 text-left">{emailError}</span>
                     )}
                   </div>
-                  <Button type="submit" size="lg" className="h-12 px-6 glow-sm group" disabled={isLoading}>
+
+                  <div className="flex flex-col items-start gap-1">
+                    <div className="flex items-start gap-3">
+                      <Checkbox
+                        id="consent-modal"
+                        checked={consent}
+                        onCheckedChange={(checked) => {
+                          setConsent(checked as boolean);
+                          if (consentError) setConsentError(false);
+                        }}
+                        className={`mt-0.5 ${consentError ? "border-destructive" : ""}`}
+                        disabled={isLoading}
+                      />
+                      <label htmlFor="consent-modal" className={`text-sm text-left cursor-pointer ${consentError ? "text-destructive" : "text-muted-foreground"}`}>
+                        I agree to receive product updates and announcements
+                      </label>
+                    </div>
+                    {consentError && (
+                      <span className="text-xs text-destructive">Please check this box to continue</span>
+                    )}
+                  </div>
+
+                  <Button type="submit" className="w-full h-12 glow-sm" disabled={isLoading}>
                     {isLoading ? (
                       <Loader2 size={18} className="animate-spin" />
                     ) : (
-                      <>
-                        Join Waitlist
-                        <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                      </>
+                      "Join Waitlist"
                     )}
                   </Button>
+                </form>
+              ) : (
+                <div className="p-6 rounded-xl bg-secondary border border-primary/30 text-center">
+                  <p className="text-lg font-medium text-foreground mb-1">You're on the list! 🎉</p>
+                  <p className="text-sm text-muted-foreground">We'll be in touch soon with early access.</p>
                 </div>
-
-                <div className="flex flex-col items-center gap-1">
-                  <div className="flex items-start gap-3">
-                    <Checkbox
-                      id="consent"
-                      checked={consent}
-                      onCheckedChange={(checked) => {
-                        setConsent(checked as boolean);
-                        if (consentError) setConsentError(false);
-                      }}
-                      className={`mt-0.5 ${consentError ? "border-destructive" : ""}`}
-                      disabled={isLoading}
-                    />
-                    <label htmlFor="consent" className={`text-sm text-left cursor-pointer ${consentError ? "text-destructive" : "text-muted-foreground"}`}>
-                      I agree to receive product updates and announcements
-                    </label>
-                  </div>
-                  {consentError && (
-                    <span className="text-xs text-destructive">Please check this box to continue</span>
-                  )}
-                </div>
-              </form>
-            ) : (
-              <div className="p-6 rounded-xl bg-secondary border border-primary/30 glow-sm">
-                <p className="text-lg font-medium text-foreground mb-1">You're on the list! 🎉</p>
-                <p className="text-sm text-muted-foreground">We'll be in touch soon with early access.</p>
-              </div>
-            )}
-          </div>
+              )}
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </section>
