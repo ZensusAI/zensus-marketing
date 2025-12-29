@@ -2,29 +2,50 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Linkedin, Loader2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
 import zensusLogo from "@/assets/zensus-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !consent) {
+      if (!consent) {
+        toast({
+          title: "Consent required",
+          description: "Please agree to receive updates.",
+          variant: "destructive",
+        });
+      }
+      return;
+    }
 
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke("submit-email", {
-        body: { email, consent: true },
+        body: { email, consent },
       });
 
       if (error) throw error;
 
       setIsSubmitted(true);
+      setIsOpen(false);
       toast({
         title: "You're in!",
         description: "We'll reach out soon.",
@@ -61,29 +82,59 @@ const Footer = () => {
           </p>
 
           {!isSubmitted ? (
-            <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground"
-                  required
-                  disabled={isLoading}
-                />
-                <Button type="submit" size="lg" className="h-12 px-6 glow group" disabled={isLoading}>
-                  {isLoading ? (
-                    <Loader2 size={18} className="animate-spin" />
-                  ) : (
-                    <>
-                      Get Early Access
-                      <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </>
-                  )}
+            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+              <DialogTrigger asChild>
+                <Button size="lg" className="h-14 px-8 text-lg glow group">
+                  Coming Soon
+                  <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
-              </div>
-            </form>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Join the Waitlist</DialogTitle>
+                  <DialogDescription>
+                    Be the first to know when Zensus launches.
+                  </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground"
+                    required
+                    disabled={isLoading}
+                  />
+                  <div className="flex items-start space-x-3">
+                    <Checkbox
+                      id="footer-consent"
+                      checked={consent}
+                      onCheckedChange={(checked) => setConsent(checked as boolean)}
+                      disabled={isLoading}
+                    />
+                    <label
+                      htmlFor="footer-consent"
+                      className="text-sm text-muted-foreground leading-tight cursor-pointer"
+                    >
+                      I agree to receive product updates and marketing emails from Zensus.
+                    </label>
+                  </div>
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full h-12 glow"
+                    disabled={isLoading || !consent}
+                  >
+                    {isLoading ? (
+                      <Loader2 size={18} className="animate-spin" />
+                    ) : (
+                      "Join Waitlist"
+                    )}
+                  </Button>
+                </form>
+              </DialogContent>
+            </Dialog>
           ) : (
             <div className="p-6 rounded-xl bg-secondary border border-primary/30 max-w-md mx-auto glow-sm">
               <p className="text-lg font-medium text-foreground">You're in! 🎉</p>
