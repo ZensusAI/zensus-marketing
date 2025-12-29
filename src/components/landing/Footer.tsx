@@ -140,12 +140,16 @@ const Footer = () => {
                       className={`h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground ${emailError ? "border-destructive" : ""}`}
                       required
                       disabled={isLoading}
+                      autoFocus
+                      aria-label="Email address"
+                      aria-invalid={!!emailError}
+                      aria-describedby={emailError ? "footer-email-error" : undefined}
                     />
                     {emailError && (
-                      <span className="text-xs text-destructive mt-1 text-left">{emailError}</span>
+                      <span id="footer-email-error" className="text-xs text-destructive mt-1 text-left" role="alert">{emailError}</span>
                     )}
                   </div>
-                  <div className="flex flex-col items-start gap-1">
+                  <fieldset className="flex flex-col items-start gap-1">
                     <div className="flex items-start space-x-3">
                       <Checkbox
                         id="footer-consent"
@@ -156,6 +160,7 @@ const Footer = () => {
                         }}
                         className={`mt-0.5 ${consentError ? "border-destructive" : ""}`}
                         disabled={isLoading}
+                        aria-describedby={consentError ? "footer-consent-error" : undefined}
                       />
                       <label
                         htmlFor="footer-consent"
@@ -165,9 +170,9 @@ const Footer = () => {
                       </label>
                     </div>
                     {consentError && (
-                      <span className="text-xs text-destructive">Please check this box to continue</span>
+                      <span id="footer-consent-error" className="text-xs text-destructive" role="alert">Please check this box to continue</span>
                     )}
-                  </div>
+                  </fieldset>
                   <Button
                     type="submit"
                     size="lg"

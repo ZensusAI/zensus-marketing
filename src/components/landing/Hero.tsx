@@ -168,13 +168,17 @@ const Hero = () => {
                       className={`h-12 bg-secondary border-border text-foreground placeholder:text-muted-foreground ${emailError ? "border-destructive" : ""}`}
                       required
                       disabled={isLoading}
+                      autoFocus
+                      aria-label="Email address"
+                      aria-invalid={!!emailError}
+                      aria-describedby={emailError ? "hero-email-error" : undefined}
                     />
                     {emailError && (
-                      <span className="text-xs text-destructive mt-1 text-left">{emailError}</span>
+                      <span id="hero-email-error" className="text-xs text-destructive mt-1 text-left" role="alert">{emailError}</span>
                     )}
                   </div>
 
-                  <div className="flex flex-col items-start gap-1">
+                  <fieldset className="flex flex-col items-start gap-1">
                     <div className="flex items-start gap-3">
                       <Checkbox
                         id="consent-modal"
@@ -185,15 +189,16 @@ const Hero = () => {
                         }}
                         className={`mt-0.5 ${consentError ? "border-destructive" : ""}`}
                         disabled={isLoading}
+                        aria-describedby={consentError ? "hero-consent-error" : undefined}
                       />
                       <label htmlFor="consent-modal" className={`text-sm text-left cursor-pointer ${consentError ? "text-destructive" : "text-muted-foreground"}`}>
                         I agree to receive product updates and announcements
                       </label>
                     </div>
                     {consentError && (
-                      <span className="text-xs text-destructive">Please check this box to continue</span>
+                      <span id="hero-consent-error" className="text-xs text-destructive" role="alert">Please check this box to continue</span>
                     )}
-                  </div>
+                  </fieldset>
 
                   <Button type="submit" className="w-full h-12 glow-sm" disabled={isLoading}>
                     {isLoading ? (
