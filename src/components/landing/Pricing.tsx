@@ -44,19 +44,21 @@ const Pricing = () => {
         </div>
 
         {/* Billing toggle */}
-        <div className="flex items-center justify-center gap-4 mb-10">
-          <span className={`text-sm font-medium transition-colors ${!isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
-            Monthly
-          </span>
-          <Switch 
-            checked={isAnnual} 
-            onCheckedChange={setIsAnnual}
-            aria-label="Toggle annual billing"
-          />
-          <span className={`text-sm font-medium transition-colors ${isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
-            Annually
-          </span>
-          <span className="ml-1 px-2 py-0.5 text-xs font-medium bg-primary/20 text-primary rounded-full">
+        <div className="flex flex-col items-center gap-2 mb-10">
+          <div className="flex items-center gap-4">
+            <span className={`text-sm font-medium transition-colors ${!isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
+              Monthly
+            </span>
+            <Switch 
+              checked={isAnnual} 
+              onCheckedChange={setIsAnnual}
+              aria-label="Toggle annual billing"
+            />
+            <span className={`text-sm font-medium transition-colors ${isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
+              Annually
+            </span>
+          </div>
+          <span className="px-2 py-0.5 text-xs font-medium bg-primary/20 text-primary rounded-full">
             Save 15%
           </span>
         </div>
