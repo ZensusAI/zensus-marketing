@@ -1,7 +1,6 @@
-const ProductShowcase = () => {
-  // Using external URL since asset file was removed
-  const dashboardImage = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=675&fit=crop";
+import zensusDashboard from "@/assets/zensus-dashboard.png";
 
+const ProductShowcase = () => {
   return (
     <section className="section-padding bg-background overflow-hidden">
       <div className="section-container">
@@ -37,7 +36,7 @@ const ProductShowcase = () => {
 
             {/* Dashboard screenshot */}
             <img 
-              src={dashboardImage} 
+              src={zensusDashboard} 
               alt="Zensus Cash Flow Projection Dashboard showing scenario-based forecasting" 
               className="w-full h-auto"
             />
