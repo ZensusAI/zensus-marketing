@@ -16,8 +16,8 @@ const tiers = [
   },
   {
     name: "Pro",
-    monthlyPrice: 20,
-    annualPrice: 17,
+    monthlyPrice: 25,
+    annualPrice: 21,
     description: "Unlock full forecasting power",
     features: ["Unlimited uploads", "Scenario analysis"],
     cta: "Get Started",
