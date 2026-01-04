@@ -1,43 +1,52 @@
-import { TrendingUp, FileSpreadsheet, Users, AlertCircle } from "lucide-react";
+import { Shield, TrendingUp, Lightbulb, Check } from "lucide-react";
 
 const features = [
   {
+    icon: Shield,
+    title: "Enterprise-Grade Data Sovereignty",
+    description: "Your data stays yours. Always.",
+    bullets: [
+      "All AI processing within your AWS account (Bedrock)",
+      "Your data never leaves your infrastructure",
+      "No third-party API data sharing",
+    ],
+  },
+  {
     icon: TrendingUp,
-    title: "Custom Scenarios",
-    description: "Get optimistic, expected, and pessimistic projections for your cash flow over the next 8 weeks.",
+    title: "Cash Flow Forecasting",
+    description: "See your financial future with clarity.",
+    bullets: [
+      "AI-generated financial projections",
+      "Scenario modeling",
+      "Runway calculations for startups",
+    ],
   },
   {
-    icon: FileSpreadsheet,
-    title: "AI Data Extraction",
-    description: "Upload your Excel or CSV files. Our AI extracts and structures your financial data automatically.",
-  },
-  {
-    icon: Users,
+    icon: Lightbulb,
     title: "Decision Insights",
-    description: "Know exactly when you can hire, take distributions, or need to pause spending.",
-  },
-  {
-    icon: AlertCircle,
-    title: "Early Warning System",
-    description: "Get alerted before cash pressure hits. Never be surprised by a tight week again.",
+    description: "Make confident business decisions.",
+    bullets: [
+      "Know when you can afford to hire",
+      "Distribution timing recommendations",
+      "Early warning for cash pressure",
+    ],
   },
 ];
 
 const Features = () => {
   return (
-    <section id="features" className="section-padding bg-background">
+    <section id="features" className="section-padding bg-secondary/30">
       <div className="section-container">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            What changes when everything{" "}
-            <span className="text-gradient">lives in one place?</span>
+            Introducing <span className="text-gradient">Zensus</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Stop juggling spreadsheets. Start making decisions with confidence.
+            Enterprise-grade cash flow intelligence for modern finance teams
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {features.map((feature, index) => (
             <div
               key={index}
@@ -46,8 +55,23 @@ const Features = () => {
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                 <feature.icon size={28} className="text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">{feature.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-muted-foreground mb-4">{feature.description}</p>
+              <ul className="space-y-3">
+                {feature.bullets.map((bullet, bulletIndex) => (
+                  <li key={bulletIndex} className="flex items-start gap-3">
+                    <Check
+                      size={18}
+                      className="text-primary mt-0.5 flex-shrink-0"
+                    />
+                    <span className="text-muted-foreground text-sm leading-relaxed">
+                      {bullet}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
