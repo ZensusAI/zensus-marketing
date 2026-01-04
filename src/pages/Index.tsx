@@ -3,7 +3,6 @@ import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import ProductShowcase from "@/components/landing/ProductShowcase";
 import Problem from "@/components/landing/Problem";
-import BeforeAfter from "@/components/landing/BeforeAfter";
 import Features from "@/components/landing/Features";
 import FounderQuote from "@/components/landing/FounderQuote";
 import FAQ from "@/components/landing/FAQ";
@@ -33,7 +32,6 @@ const Index = () => {
         <Hero />
         <ProductShowcase />
         <Problem />
-        <BeforeAfter />
         <Features />
         <FounderQuote />
         <FAQ />
