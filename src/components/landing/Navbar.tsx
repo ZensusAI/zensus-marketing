@@ -9,7 +9,6 @@ const Navbar = () => {
   const navLinks = [
     { href: "#problem", label: "The Problem" },
     { href: "#features", label: "Features" },
-    { href: "#pricing", label: "Pricing" },
     { href: "#faq", label: "FAQ" },
   ];
 
@@ -39,7 +38,7 @@ const Navbar = () => {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Button asChild className="glow-sm">
-              <a href="#pricing">Get Started</a>
+              <a href="https://app.zensus.app/login">Get Started</a>
             </Button>
           </div>
 
@@ -68,7 +67,7 @@ const Navbar = () => {
                 </a>
               ))}
               <Button asChild className="mt-2">
-                <a href="#pricing" onClick={() => setIsOpen(false)}>Get Started</a>
+                <a href="https://app.zensus.app/login" onClick={() => setIsOpen(false)}>Get Started</a>
               </Button>
             </div>
           </div>

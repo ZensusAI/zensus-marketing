@@ -5,7 +5,6 @@ import ProductShowcase from "@/components/landing/ProductShowcase";
 import Problem from "@/components/landing/Problem";
 import BeforeAfter from "@/components/landing/BeforeAfter";
 import Features from "@/components/landing/Features";
-import Pricing from "@/components/landing/Pricing";
 import FounderQuote from "@/components/landing/FounderQuote";
 import FAQ from "@/components/landing/FAQ";
 import Footer from "@/components/landing/Footer";
@@ -36,7 +35,6 @@ const Index = () => {
         <Problem />
         <BeforeAfter />
         <Features />
-        <Pricing />
         <FounderQuote />
         <FAQ />
       </main>
