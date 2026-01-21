@@ -34,7 +34,7 @@ const Hero = () => {
               duration={3}
               borderRadius={8}
             >
-              <Button asChild size="lg" className="h-12 px-8 group bg-primary/70 hover:bg-primary/80 border-0">
+              <Button asChild size="lg" className="h-12 px-8 group bg-transparent hover:bg-primary/10 text-primary-foreground border-0">
                 <a href="https://app.zensus.app/login">
                   Try it Now
                   <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
