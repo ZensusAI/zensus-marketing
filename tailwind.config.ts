@@ -82,6 +82,10 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(142 71% 45% / 0.3)" },
           "50%": { boxShadow: "0 0 40px hsl(142 71% 45% / 0.5)" },
         },
+        shine: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -90,6 +94,7 @@ export default {
         "fade-in-up": "fade-in-up 0.8s ease-out forwards",
         "scale-in": "scale-in 0.4s ease-out forwards",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        shine: "shine var(--duration, 14s) linear infinite",
       },
     },
   },
