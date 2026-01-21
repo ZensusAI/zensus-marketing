@@ -30,7 +30,7 @@ const Hero = () => {
           {/* Try it Now CTA */}
           <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <ShineBorder
-              shineColor={["hsl(142 71% 45%)", "hsl(160 84% 39%)"]}
+              shineColor={["hsl(0 0% 100%)", "hsl(0 0% 80%)"]}
               duration={3}
               borderRadius={8}
             >
