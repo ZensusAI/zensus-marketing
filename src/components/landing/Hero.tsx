@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ShineBorder } from "@/components/ui/shine-border";
 import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
@@ -28,12 +29,18 @@ const Hero = () => {
 
           {/* Try it Now CTA */}
           <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <Button asChild size="lg" className="h-12 px-8 glow-sm group">
-              <a href="https://app.zensus.app/login">
-                Try it Now
-                <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
+            <ShineBorder
+              shineColor={["hsl(142 71% 45%)", "hsl(160 84% 39%)"]}
+              duration={3}
+              borderRadius="rounded-lg"
+            >
+              <Button asChild size="lg" className="h-12 px-8 group">
+                <a href="https://app.zensus.app/login">
+                  Try it Now
+                  <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
+            </ShineBorder>
           </div>
         </div>
       </div>
