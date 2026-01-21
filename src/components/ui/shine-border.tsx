@@ -33,47 +33,47 @@ const ShineBorder: React.FC<ShineBorderProps> = ({
   ...props
 }) => {
   const colors = Array.isArray(shineColor) ? shineColor : [shineColor];
-  const gradientColors = colors.join(", ");
 
   return (
     <div
-      className={cn("relative inline-block group", className)}
+      className={cn("relative inline-block", className)}
+      style={{
+        padding: `${borderWidth}px`,
+        borderRadius: `${borderRadius}px`,
+      }}
       {...props}
     >
-      {/* Animated border container */}
+      {/* Rotating gradient border */}
       <div
-        className="absolute -inset-[2px] rounded-lg opacity-75 blur-sm group-hover:opacity-100 transition-opacity"
+        className="absolute inset-0 overflow-hidden"
         style={{
-          background: `linear-gradient(90deg, ${gradientColors}, ${colors[0]})`,
-          backgroundSize: "200% 100%",
-          animation: `shimmer ${duration}s linear infinite`,
-          borderRadius: `${borderRadius + 2}px`,
+          borderRadius: `${borderRadius}px`,
         }}
-      />
-      
-      {/* Static border glow */}
-      <div
-        className="absolute -inset-[1px] rounded-lg"
-        style={{
-          background: `linear-gradient(135deg, ${gradientColors})`,
-          borderRadius: `${borderRadius + 1}px`,
-        }}
-      />
+      >
+        <div
+          className="absolute w-[200%] h-[200%] top-1/2 left-1/2"
+          style={{
+            background: `conic-gradient(from 0deg, transparent 0deg, ${colors[0]} 60deg, ${colors[1] || colors[0]} 120deg, transparent 180deg, transparent 360deg)`,
+            animation: `spin ${duration}s linear infinite`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      </div>
       
       {/* Inner content with background */}
       <div
-        className="relative bg-background"
+        className="relative bg-primary"
         style={{
-          borderRadius: `${borderRadius}px`,
+          borderRadius: `${borderRadius - borderWidth}px`,
         }}
       >
         {children}
       </div>
       
       <style>{`
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
+        @keyframes spin {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
         }
       `}</style>
     </div>
