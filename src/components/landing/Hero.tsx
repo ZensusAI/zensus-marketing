@@ -32,9 +32,9 @@ const Hero = () => {
             <ShineBorder
               shineColor={["hsl(0 0% 100%)", "hsl(0 0% 80%)"]}
               duration={3}
-              borderRadius={8}
+              borderRadius={9999}
             >
-              <Button asChild size="lg" className="h-12 px-8 group bg-transparent hover:bg-primary/10 text-primary-foreground border-0">
+              <Button asChild size="lg" className="h-12 px-8 group bg-transparent hover:bg-primary/10 text-primary-foreground border-0 rounded-full">
                 <a href="https://app.zensus.app/login">
                   Try it Now
                   <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
