@@ -32,7 +32,7 @@ const Hero = () => {
             <ShineBorder
               shineColor={["hsl(142 71% 45%)", "hsl(160 84% 39%)"]}
               duration={3}
-              borderRadius="rounded-lg"
+              borderRadius={8}
             >
               <Button asChild size="lg" className="h-12 px-8 group">
                 <a href="https://app.zensus.app/login">
