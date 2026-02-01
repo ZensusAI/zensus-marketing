@@ -15,16 +15,14 @@ const Hero = () => {
         <div className="max-w-3xl mx-auto text-center">
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Forecast Your{" "}
-            <span className="text-gradient">Cash Flow.</span>
-            <br />
-            Make Better Decisions.
+            Know Your Runway.{" "}
+            <span className="text-gradient">Plan Your Future.</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Upload your financial model. Get future forecasts with custom scenarios. 
-            Know exactly when you can hire, distribute, or need to cut.
+            Connect QuickBooks or upload your cash flow statement. Get AI-powered 
+            forecasts and ask questions about your business runway.
           </p>
 
           {/* Try it Now CTA */}
