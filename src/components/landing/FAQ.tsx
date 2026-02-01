@@ -7,16 +7,24 @@ import {
 
 const faqs = [
   {
-    question: "How does Zensus generate forecasts?",
-    answer: "Zensus uses AI to analyze your uploaded financial data (Excel or CSV) and generates 8-week cash flow projections across three scenarios: optimistic, expected, and pessimistic.",
+    question: "How does QuickBooks integration work?",
+    answer: "Connect with one click using OAuth. We securely pull your financial data and keep it synced automatically. Your credentials are never stored.",
   },
   {
-    question: "What file formats do you support?",
-    answer: "We currently support Excel (.xlsx, .xls) and CSV files. Our AI automatically extracts and structures your financial data from these formats.",
+    question: "What's the difference between Forecast and Runway?",
+    answer: "Forecast lets you upload any cash flow statement for scenario planning. Runway connects directly to QuickBooks for automatic, real-time financial tracking and Q&A.",
   },
   {
-    question: "How often are forecasts updated?",
-    answer: "Forecasts update automatically when you upload new data. You can also manually trigger updates at any time to see the latest projections.",
+    question: "What questions can I ask about my runway?",
+    answer: "Ask anything like 'When will I run out of cash?', 'Can I afford to hire in 3 months?', or 'What if I lose my biggest client?'",
+  },
+  {
+    question: "Is my financial data secure?",
+    answer: "Yes. We use bank-level encryption, never store your QuickBooks credentials, and all data is processed in your isolated environment.",
+  },
+  {
+    question: "What file formats does Forecast support?",
+    answer: "We support Excel (.xlsx, .xls) and CSV files. Our AI automatically extracts and structures your cash flow data.",
   },
 ];
 

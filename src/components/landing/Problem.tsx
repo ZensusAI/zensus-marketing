@@ -3,23 +3,23 @@ import { Clock, HelpCircle, AlertTriangle, TrendingDown } from "lucide-react";
 const painPoints = [
   {
     icon: Clock,
-    title: "Hours in spreadsheets",
-    description: "Manually building forecasts from scratch every month",
+    title: "Guessing your runway",
+    description: "Not knowing exactly how many months of cash you have left",
   },
   {
     icon: HelpCircle,
-    title: "No hiring clarity",
-    description: "Never knowing if you can actually afford that next hire",
+    title: "Scattered financial data",
+    description: "Jumping between QuickBooks, spreadsheets, and bank statements",
   },
   {
     icon: AlertTriangle,
-    title: "Cash surprises",
-    description: "Getting caught off-guard when cash gets tight",
+    title: "Blind decision-making",
+    description: "Making hiring or spending decisions without seeing the impact",
   },
   {
     icon: TrendingDown,
-    title: "What-if paralysis",
-    description: "Always wondering 'what if revenue drops 20%?'",
+    title: "Late cash warnings",
+    description: "Finding out about cash problems when it's too late to act",
   },
 ];
 
@@ -29,11 +29,11 @@ const Problem = () => {
       <div className="section-container">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            Ever spent hours in spreadsheets{" "}
-            <span className="text-gradient">just to see if you can make payroll?</span>
+            Running a business without knowing{" "}
+            <span className="text-gradient">how long your cash will last?</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            You're not alone. Most founders struggle with cash flow visibility.
+            You're not alone. Most small business owners struggle with runway visibility.
           </p>
         </div>
 

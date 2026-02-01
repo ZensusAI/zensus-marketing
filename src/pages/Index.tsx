@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
-import ProductShowcase from "@/components/landing/ProductShowcase";
+import IntegrationBanner from "@/components/landing/IntegrationBanner";
+import ForecastFeature from "@/components/landing/ForecastFeature";
+import RunwayFeature from "@/components/landing/RunwayFeature";
+import HowItWorks from "@/components/landing/HowItWorks";
 import Problem from "@/components/landing/Problem";
-import Features from "@/components/landing/Features";
-import FounderQuote from "@/components/landing/FounderQuote";
+import PricingPreview from "@/components/landing/PricingPreview";
 import FAQ from "@/components/landing/FAQ";
 import Footer from "@/components/landing/Footer";
 import PageSkeleton from "@/components/landing/PageSkeleton";
@@ -30,10 +32,12 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <ProductShowcase />
+        <IntegrationBanner />
         <Problem />
-        <Features />
-        <FounderQuote />
+        <ForecastFeature />
+        <RunwayFeature />
+        <HowItWorks />
+        <PricingPreview />
         <FAQ />
       </main>
       <Footer />
