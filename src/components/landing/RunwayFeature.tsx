@@ -1,4 +1,5 @@
-import { Check, Link2 } from "lucide-react";
+import { Check } from "lucide-react";
+import quickbooksIntegration from "@/assets/quickbooks-integration.png";
 
 const bullets = [
   "One-click QuickBooks connection",
@@ -36,16 +37,12 @@ const RunwayFeature = () => {
 
           {/* Image/Visual - Right */}
           <div>
-            <div className="relative rounded-2xl overflow-hidden border border-border bg-card p-8 aspect-[4/3] flex items-center justify-center">
-              {/* Placeholder visual */}
-              <div className="text-center">
-                <div className="w-20 h-20 rounded-2xl bg-[#2CA01C]/10 flex items-center justify-center mx-auto mb-4">
-                  <Link2 size={40} className="text-[#2CA01C]" />
-                </div>
-                <p className="text-muted-foreground text-sm">
-                  QuickBooks integration mockup coming soon
-                </p>
-              </div>
+            <div className="relative rounded-2xl overflow-hidden border border-border bg-card">
+              <img 
+                src={quickbooksIntegration} 
+                alt="Zensus QuickBooks Integration" 
+                className="w-full h-auto"
+              />
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-bl from-[#2CA01C]/5 via-transparent to-transparent pointer-events-none" />
             </div>

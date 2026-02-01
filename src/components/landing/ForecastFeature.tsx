@@ -1,4 +1,5 @@
-import { Check, FileSpreadsheet } from "lucide-react";
+import { Check } from "lucide-react";
+import forecastDashboard from "@/assets/forecast-dashboard.png";
 
 const bullets = [
   "Upload Excel/CSV cash flow statements",
@@ -14,16 +15,12 @@ const ForecastFeature = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Image/Visual - Left */}
           <div className="order-2 lg:order-1">
-            <div className="relative rounded-2xl overflow-hidden border border-border bg-card p-8 aspect-[4/3] flex items-center justify-center">
-              {/* Placeholder visual */}
-              <div className="text-center">
-                <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <FileSpreadsheet size={40} className="text-primary" />
-                </div>
-                <p className="text-muted-foreground text-sm">
-                  Dashboard mockup coming soon
-                </p>
-              </div>
+            <div className="relative rounded-2xl overflow-hidden border border-border bg-card">
+              <img 
+                src={forecastDashboard} 
+                alt="Zensus Forecast Dashboard" 
+                className="w-full h-auto"
+              />
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
             </div>
