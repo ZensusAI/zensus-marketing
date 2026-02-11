@@ -1,8 +1,17 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ShineBorder } from "@/components/ui/shine-border";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
+import { getCalApi } from "@calcom/embed-react";
 
 const Hero = () => {
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: "30min" });
+      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    })();
+  }, []);
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center pt-16">
       {/* Background gradient */}
@@ -26,19 +35,30 @@ const Hero = () => {
           </p>
 
           {/* Try it Now CTA */}
-          <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <div className="flex flex-col sm:flex-row items-center gap-4 animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <ShineBorder
               shineColor={["hsl(0 0% 100%)", "hsl(0 0% 80%)"]}
               duration={3}
               borderRadius={9999}
             >
               <Button asChild size="lg" className="h-12 px-8 group bg-transparent hover:bg-primary/10 text-primary-foreground border-0 rounded-full">
-                <a href="https://app.zensus.app/login">
+                <a href="https://app.zensus.app/subscribe">
                   Try it Now
                   <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
             </ShineBorder>
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-12 px-8 rounded-full"
+              data-cal-namespace="30min"
+              data-cal-link="zensus/30min"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            >
+              <Calendar size={18} className="mr-2" />
+              Book Demo
+            </Button>
           </div>
         </div>
       </div>
