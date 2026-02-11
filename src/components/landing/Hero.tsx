@@ -35,7 +35,7 @@ const Hero = () => {
           </p>
 
           {/* Try it Now CTA */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <ShineBorder
               shineColor={["hsl(0 0% 100%)", "hsl(0 0% 80%)"]}
               duration={3}
