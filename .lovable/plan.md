@@ -1,61 +1,46 @@
 
-# Pricing Page Updates and Navigation Fix
+
+# Add "Book Demo" Button with Cal.com Modal
 
 ## Overview
 
-Two sets of changes:
-1. Remove specific features and text from the pricing page
-2. Fix navigation links so they work correctly when on the pricing page
+Add a "Book Demo" button next to the "Try it Now" button in the Hero section. Clicking it opens a Cal.com scheduling modal directly on the landing page using the `@calcom/embed-react` package.
 
 ---
 
 ## Changes
 
-### 1. Update Pricing Page Features (`src/pages/Pricing.tsx`)
+### 1. Install Dependency
 
-**Remove from features list (lines 7-18):**
-- "Data export"
-- "Priority support"
-- "8-week forward projections"
-- "Bank-level encryption"
+Add `@calcom/embed-react` package to the project.
 
-**Updated feature list will be:**
+### 2. Update Hero Section (`src/components/landing/Hero.tsx`)
+
+- Import `getCalApi` from `@calcom/embed-react` and `useEffect` from React
+- Import `Calendar` icon from `lucide-react`
+- Add a `useEffect` hook to initialize the Cal.com embed API with the `"30min"` namespace and month view layout
+- Add a new "Book Demo" button next to the existing "Try it Now" button using `data-cal-*` attributes to trigger the modal
+- Style as an outline/secondary variant button with a calendar icon, pill-shaped to match the existing CTA style
+- Wrap both buttons in a flex container with a gap for spacing
+
+**Button layout:**
 ```
-- Unlimited forecasts
-- QuickBooks integration
-- Runway calculations
-- Conversational Q&A
-- Unlimited what-if scenarios
-- Automatic data sync
-```
-
-**Remove text (lines 74-76):**
-Delete the paragraph: "No credit card required to start"
-
----
-
-### 2. Fix Navigation Links (`src/components/landing/Navbar.tsx`)
-
-**Problem:** Anchor links like `#features` and `#faq` only work on the landing page. When on `/pricing`, clicking these links does nothing because the browser tries to find those anchors on the current page.
-
-**Solution:** Update the navigation to use full paths (`/#features`, `/#faq`) so clicking them from any page navigates to the landing page with the correct section anchor.
-
-**Changes to navLinks (lines 10-14):**
-```tsx
-const navLinks = [
-  { href: "/#features", label: "Features" },
-  { href: "/pricing", label: "Pricing", isRoute: true },
-  { href: "/#faq", label: "FAQ" },
-];
+[ Try it Now -> ]  [ Calendar Icon  Book Demo ]
 ```
 
-Also update the logo link from `href="#"` to use React Router's `Link` component pointing to `/` so it works correctly from all pages.
+The "Book Demo" button will use Cal.com's data attributes:
+- `data-cal-namespace="30min"`
+- `data-cal-link="zensus/30min"`
+- `data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'`
+
+These attributes tell the Cal.com embed script to open the scheduling modal when clicked.
 
 ---
 
 ## File Summary
 
-| File | Changes |
-|------|---------|
-| `src/pages/Pricing.tsx` | Remove 4 features from list, remove "No credit card required" text |
-| `src/components/landing/Navbar.tsx` | Update anchor links to use `/#section` format, update logo to use Link |
+| Action | File |
+|--------|------|
+| Install | `@calcom/embed-react` package |
+| Edit | `src/components/landing/Hero.tsx` - Add Book Demo button with Cal.com embed integration |
+
