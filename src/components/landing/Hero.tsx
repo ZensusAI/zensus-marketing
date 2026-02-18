@@ -24,8 +24,8 @@ const Hero = () => {
         <div className="max-w-3xl mx-auto text-center">
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Know Your Runway.{" "}
-            <span className="text-gradient">Plan Your Future.</span>
+            Proactive Runway Intelligence.{" "}
+            <span className="text-gradient">Plan with Confidence.</span>
           </h1>
 
           {/* Subheadline */}
