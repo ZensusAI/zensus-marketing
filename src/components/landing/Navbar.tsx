@@ -107,7 +107,18 @@ const Navbar = () => {
                   </a>
                 )
               ))}
-              <Button asChild className="mt-2">
+              <Button
+                variant="outline"
+                className="mt-2 rounded-full"
+                data-cal-namespace="30min"
+                data-cal-link="zensus/30min"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                onClick={() => setIsOpen(false)}
+              >
+                <Calendar size={16} className="mr-1.5" />
+                Book Demo
+              </Button>
+              <Button asChild>
                 <a href="https://app.zensus.app/login" onClick={() => setIsOpen(false)}>Get Started</a>
               </Button>
             </div>
