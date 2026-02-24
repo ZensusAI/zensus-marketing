@@ -1,13 +1,13 @@
-import quickbooksBanner from "@/assets/quickbooks-banner.png";
+import integrationCard from "@/assets/integrations-card.png";
 
 const IntegrationBanner = () => {
   return (
     <section className="py-8 bg-background">
       <div className="section-container flex justify-center">
         <img
-          src={quickbooksBanner}
-          alt="Seamlessly connects with QuickBooks - One-click integration, Automatic sync"
-          className="max-w-md w-full rounded-2xl"
+          src={integrationCard}
+          alt="Integrations - Connect QuickBooks and Plaid to streamline your financial data and keep forecasts accurate"
+          className="max-w-lg w-full"
         />
       </div>
     </section>
