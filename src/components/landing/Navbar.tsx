@@ -54,8 +54,19 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-full"
+              data-cal-namespace="30min"
+              data-cal-link="zensus/30min"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            >
+              <Calendar size={16} className="mr-1.5" />
+              Book Demo
+            </Button>
             <Button asChild className="glow-sm">
               <a href="https://app.zensus.app/login">Get Started</a>
             </Button>
