@@ -1,17 +1,8 @@
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ShineBorder } from "@/components/ui/shine-border";
-import { ArrowRight, Calendar } from "lucide-react";
-import { getCalApi } from "@calcom/embed-react";
+import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
-  useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({ namespace: "30min" });
-      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    })();
-  }, []);
-
   return (
     <section id="hero" className="relative min-h-screen flex items-center pt-16">
       {/* Background gradient */}
@@ -35,7 +26,7 @@ const Hero = () => {
           </p>
 
           {/* Try it Now CTA */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <div className="flex items-center justify-center animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <ShineBorder
               shineColor={["hsl(0 0% 100%)", "hsl(0 0% 80%)"]}
               duration={3}
@@ -48,17 +39,6 @@ const Hero = () => {
                 </a>
               </Button>
             </ShineBorder>
-            <Button
-              size="lg"
-              variant="outline"
-              className="h-12 px-8 rounded-full"
-              data-cal-namespace="30min"
-              data-cal-link="zensus/30min"
-              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-            >
-              <Calendar size={18} className="mr-2" />
-              Book Demo
-            </Button>
           </div>
         </div>
       </div>
