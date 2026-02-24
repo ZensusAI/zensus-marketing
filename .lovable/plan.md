@@ -1,46 +1,25 @@
 
 
-# Add "Book Demo" Button with Cal.com Modal
+# Update Hero Headline
 
-## Overview
+## Change
+Replace the current two-line headline in the hero section with the new benefit-driven copy:
 
-Add a "Book Demo" button next to the "Try it Now" button in the Hero section. Clicking it opens a Cal.com scheduling modal directly on the landing page using the `@calcom/embed-react` package.
+**"Know exactly when your cash runs out -- and what to do about it."**
 
----
+## What happens
+- In `src/components/landing/Hero.tsx`, the `<h1>` content changes from:
+  ```
+  Runway Intelligence. Decide with Clarity.
+  ```
+  to:
+  ```
+  Know exactly when your cash runs out —
+  and what to do about it.
+  ```
+- The "and what to do about it." portion will use the existing `text-gradient` style to maintain the visual accent on the actionable part of the headline.
+- No layout, animation, or structural changes -- just the copy swap.
 
-## Changes
-
-### 1. Install Dependency
-
-Add `@calcom/embed-react` package to the project.
-
-### 2. Update Hero Section (`src/components/landing/Hero.tsx`)
-
-- Import `getCalApi` from `@calcom/embed-react` and `useEffect` from React
-- Import `Calendar` icon from `lucide-react`
-- Add a `useEffect` hook to initialize the Cal.com embed API with the `"30min"` namespace and month view layout
-- Add a new "Book Demo" button next to the existing "Try it Now" button using `data-cal-*` attributes to trigger the modal
-- Style as an outline/secondary variant button with a calendar icon, pill-shaped to match the existing CTA style
-- Wrap both buttons in a flex container with a gap for spacing
-
-**Button layout:**
-```
-[ Try it Now -> ]  [ Calendar Icon  Book Demo ]
-```
-
-The "Book Demo" button will use Cal.com's data attributes:
-- `data-cal-namespace="30min"`
-- `data-cal-link="zensus/30min"`
-- `data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'`
-
-These attributes tell the Cal.com embed script to open the scheduling modal when clicked.
-
----
-
-## File Summary
-
-| Action | File |
-|--------|------|
-| Install | `@calcom/embed-react` package |
-| Edit | `src/components/landing/Hero.tsx` - Add Book Demo button with Cal.com embed integration |
+## Technical Detail
+Single edit to `src/components/landing/Hero.tsx`, lines ~27-30, replacing the `<h1>` inner content.
 
