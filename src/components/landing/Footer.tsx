@@ -1,5 +1,9 @@
 const Footer = () => {
-  const legalLinks = ["Privacy", "Terms", "Security"];
+  const legalLinks = [
+    { label: "Privacy", href: "https://app.zensus.app/privacy" },
+    { label: "Terms", href: "https://app.zensus.app/terms" },
+    { label: "Security", href: "#" },
+  ];
 
   return (
     <footer className="bg-background border-t border-border">
@@ -9,11 +13,13 @@ const Footer = () => {
           <div className="flex gap-6">
             {legalLinks.map((link) => (
               <a
-                key={link}
-                href="#"
+                key={link.label}
+                href={link.href}
+                target={link.href.startsWith("http") ? "_blank" : undefined}
+                rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                {link}
+                {link.label}
               </a>
             ))}
           </div>
