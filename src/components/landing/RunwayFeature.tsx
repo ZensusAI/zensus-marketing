@@ -2,10 +2,10 @@ import { Check } from "lucide-react";
 import quickbooksIntegration from "@/assets/quickbooks-integration.png";
 
 const bullets = [
-  "One-click QuickBooks connection",
-  "Automatic data sync",
-  "Real-time runway calculation",
-  "Conversational Q&A about your finances",
+  "Connect in 60 seconds — Link your bank account, QuickBooks, or both",
+  "Always up to date — Your revenue, expenses, and balances sync daily",
+  "See your zero-cash date — Know exactly which month you run out, not a rough guess",
+  "Ask \"what if?\" and get answers — Simulate hiring, cutting costs, or raising prices before you commit",
 ];
 
 const RunwayFeature = () => {
@@ -16,12 +16,12 @@ const RunwayFeature = () => {
           {/* Content - Left */}
           <div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-              Runway:{" "}
-              <span className="text-gradient">Your QuickBooks Financial Copilot</span>
+              Know your exact runway —{" "}
+              <span className="text-gradient">down to the month</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Connect QuickBooks in one click. We pull your financial data automatically 
-              and calculate your runway. Then ask questions to see how decisions impact your future.
+              Connect your bank account or QuickBooks. Zensus pulls your real numbers and shows 
+              exactly when cash runs out — and what to do about it.
             </p>
             <ul className="space-y-4">
               {bullets.map((bullet, index) => (
