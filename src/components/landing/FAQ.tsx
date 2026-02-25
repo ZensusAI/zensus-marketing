@@ -5,26 +5,58 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const faqs = [
+const faqGroups = [
   {
-    question: "How does QuickBooks integration work?",
-    answer: "Connect with one click using OAuth. We securely pull your financial data and keep it synced automatically. Your credentials are never stored.",
+    category: "Getting Started",
+    items: [
+      {
+        question: "Do I need QuickBooks to use Zensus?",
+        answer: "No. You can connect your bank account directly via Plaid, connect QuickBooks, or use both together. You can also upload a spreadsheet to get started immediately — no integrations required.",
+      },
+      {
+        question: "How long does setup take?",
+        answer: "Under 2 minutes. Connect your bank or QuickBooks with one click, and your runway is calculated instantly. No manual data entry.",
+      },
+    ],
   },
   {
-    question: "What's the difference between Forecast and Runway?",
-    answer: "Forecast lets you upload any cash flow statement for scenario planning. Runway connects directly to QuickBooks for automatic, real-time financial tracking and Q&A.",
+    category: "Product",
+    items: [
+      {
+        question: "What's the difference between Runway and Forecast?",
+        answer: "Runway connects to your bank and QuickBooks to give you a live, always-updated view of how long your cash will last — plus AI-powered what-if scenarios. Forecast lets you upload any cash flow spreadsheet for one-time analysis and projections. Most users start with Runway.",
+      },
+      {
+        question: "What kind of questions can I ask?",
+        answer: "Anything about your finances. Examples: \"When will I run out of cash?\", \"Can I afford to hire two engineers?\", \"What happens if I lose my biggest client?\", \"What's my burn rate trend over the last 6 months?\" You can type or speak — Zensus has a built-in voice assistant.",
+      },
+      {
+        question: "How often does my data update?",
+        answer: "Bank and QuickBooks data syncs automatically every day. Your runway calculation updates in real-time as new data comes in.",
+      },
+    ],
   },
   {
-    question: "What questions can I ask about my runway?",
-    answer: "Ask anything like 'When will I run out of cash?', 'Can I afford to hire in 3 months?', or 'What if I lose my biggest client?'",
+    category: "Trust & Security",
+    items: [
+      {
+        question: "Is my financial data secure?",
+        answer: "Yes. We use bank-level AES-256 encryption. Your QuickBooks and bank credentials are never stored — we use OAuth tokens managed by Plaid and Intuit. All data is processed on encrypted AWS infrastructure.",
+      },
+      {
+        question: "Who can see my data?",
+        answer: "Only you. Your financial data is never shared, sold, or used to train AI models. Each account is completely isolated.",
+      },
+    ],
   },
   {
-    question: "Is my financial data secure?",
-    answer: "Yes. We use bank-level encryption, never store your QuickBooks credentials, and all data is processed in your isolated environment.",
-  },
-  {
-    question: "What file formats does Forecast support?",
-    answer: "We support Excel (.xlsx, .xls) and CSV files. Our AI automatically extracts and structures your cash flow data.",
+    category: "Pricing",
+    items: [
+      {
+        question: "What happens after the free trial?",
+        answer: "After 7 days, you'll be charged $199/month. You can cancel anytime from your billing settings — no contracts, no cancellation fees. If you cancel, you keep access through the end of your billing period.",
+      },
+    ],
   },
 ];
 
@@ -41,23 +73,30 @@ const FAQ = () => {
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="bg-card border border-border rounded-xl px-6 data-[state=open]:border-primary/30"
-              >
-                <AccordionTrigger className="text-left text-foreground hover:text-primary hover:no-underline py-5">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+        <div className="max-w-3xl mx-auto space-y-10">
+          {faqGroups.map((group) => (
+            <div key={group.category}>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+                {group.category}
+              </p>
+              <Accordion type="single" collapsible className="space-y-4">
+                {group.items.map((faq, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`${group.category}-${index}`}
+                    className="bg-card border border-border rounded-xl px-6 data-[state=open]:border-primary/30"
+                  >
+                    <AccordionTrigger className="text-left text-foreground hover:text-primary hover:no-underline py-5">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground pb-5">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          ))}
         </div>
       </div>
     </section>
