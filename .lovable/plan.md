@@ -1,62 +1,32 @@
 
 
-# Hero CTA Hierarchy + Social Proof Improvements
+# Problem Section Copy Redesign
 
-## Overview
-Three changes: (1) move "Book Demo" from hero to navbar, (2) remove the Testimonials section, (3) add an integration logo strip near the hero.
+## What Changes
 
----
+Update headline, subline, and all 4 pain point cards in `src/components/landing/Problem.tsx` with sharper, more emotionally resonant copy that maps each pain to a Zensus feature.
 
-## 1. Move "Book Demo" to Navbar, Remove from Hero
+## Changes to `src/components/landing/Problem.tsx`
 
-**Goal:** Make "Try it Now" the sole dominant CTA in the hero. "Book Demo" becomes a secondary option in the navigation bar.
+### Headline + Subline
+- **Headline:** "You're making million-dollar decisions on **gut feeling**" (gradient on "gut feeling")
+- **Subline:** "Most founders check their bank balance and hope for the best. That's not a financial strategy."
 
-### Changes to `src/components/landing/Hero.tsx`
-- Remove the "Book Demo" `<Button>` (lines 51-61)
-- Remove the `Calendar` icon import and `getCalApi` setup (the Cal.com embed init moves to Navbar)
-- Remove the `@calcom/embed-react` import
-- The CTA area becomes just the single "Try it Now" ShineBorder button, centered
+### Pain Point Cards
 
-### Changes to `src/components/landing/Navbar.tsx`
-- Import `getCalApi` from `@calcom/embed-react` and `Calendar` from lucide-react
-- Add a `useEffect` to initialize the Cal.com embed (same code currently in Hero)
-- Add a "Book Demo" button next to the existing "Get Started" button in the desktop nav
-  - Styled as `variant="outline"` with `rounded-full`, smaller than the primary CTA
-  - Uses the same `data-cal-*` attributes for the scheduling popup
-- Add the same "Book Demo" button in the mobile menu, above "Get Started"
+| # | Title | Description |
+|---|-------|-------------|
+| 1 | "How many months do I have left?" | You check your bank balance, do mental math, and still aren't sure |
+| 2 | Logging into 3 tools to get 1 answer | Your bank, QuickBooks, and a spreadsheet that's always outdated |
+| 3 | "Can I afford to hire?" | No way to simulate decisions before committing real money |
+| 4 | Surprises at the end of the month | Cash problems are obvious in hindsight but invisible in real-time |
 
----
+### No layout/styling changes
+Same section structure, grid, icons, and card design. Copy-only update.
 
-## 2. Remove Testimonials Section
-
-**Goal:** Remove placeholder testimonials until real quotes are available.
-
-### Changes to `src/pages/Index.tsx`
-- Remove the `Testimonials` import and `<Testimonials />` from the page render
-- Note: The `Testimonials.tsx` file itself stays in the codebase for future use
-
----
-
-## 3. Add Integration Logo Strip
-
-**Goal:** Show trusted partner logos (QuickBooks, Plaid) near the hero to build credibility.
-
-### New component: `src/components/landing/IntegrationLogos.tsx`
-- A horizontal strip showing "Integrates with" label + QuickBooks and Plaid logos
-- Logos rendered as simple SVG icons or text badges in a muted, trust-bar style
-- Centered layout, subtle styling (muted colors, small size) so it doesn't compete with the hero
-
-### Changes to `src/pages/Index.tsx`
-- Import and place `<IntegrationLogos />` between `<Hero />` and `<IntegrationBanner />`
-
----
-
-## Summary of Files Changed
+## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/Hero.tsx` | Remove Book Demo button + Cal.com setup |
-| `src/components/landing/Navbar.tsx` | Add Book Demo button + Cal.com embed init |
-| `src/pages/Index.tsx` | Remove Testimonials, add IntegrationLogos |
-| `src/components/landing/IntegrationLogos.tsx` | New component -- logo trust bar |
+| `src/components/landing/Problem.tsx` | Updated headline, subline, and 4 pain point titles + descriptions |
 
