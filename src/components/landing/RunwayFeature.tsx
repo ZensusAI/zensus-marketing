@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import quickbooksIntegration from "@/assets/quickbooks-integration.png";
+import runwayDashboard from "@/assets/runway-dashboard.png";
 
 const bullets = [
   "Connect in 60 seconds — Link your bank account, QuickBooks, or both",
@@ -38,9 +38,9 @@ const RunwayFeature = () => {
           {/* Image/Visual - Right */}
           <div>
             <div className="relative rounded-2xl overflow-hidden border border-border bg-card">
-              <img 
-                src={quickbooksIntegration} 
-                alt="Zensus QuickBooks Integration" 
+                <img 
+                src={runwayDashboard} 
+                alt="Zensus Runway Dashboard showing scenario analysis" 
                 className="w-full h-auto"
               />
               {/* Glow effect */}
