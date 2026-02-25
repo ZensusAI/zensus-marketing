@@ -1,34 +1,35 @@
 
 
-# Runway Feature Section Copy Redesign
+# How It Works Section Redesign
 
 ## What Changes
 
-Update headline, subline, and all 4 bullet points in `src/components/landing/RunwayFeature.tsx` to be integration-agnostic and outcome-focused instead of anchoring to QuickBooks.
+Expand from 3 steps to 4 in `src/components/landing/HowItWorks.tsx`, update subline, and use new copy and icons per the user's spec. Same card layout style, now in a 2x2 grid on desktop instead of 3-column.
 
-## Changes to `src/components/landing/RunwayFeature.tsx`
+## Changes to `src/components/landing/HowItWorks.tsx`
 
-### Headline + Subline
-- **Current headline:** "Runway: Your QuickBooks Financial Copilot"
-- **New headline:** "Know your exact runway — <span gradient>down to the month</span>"
-- **Current subline:** "Connect QuickBooks in one click. We pull your financial data automatically and calculate your runway. Then ask questions to see how decisions impact your future."
-- **New subline:** "Connect your bank account or QuickBooks. Zensus pulls your real numbers and shows exactly when cash runs out — and what to do about it."
+### Subline
+- **Current:** "Get started in minutes, not hours"
+- **New:** "From sign-up to runway number in under 2 minutes"
 
-### Bullet Points (outcome-driven)
+### Steps (3 → 4)
 
-| # | Current | New |
-|---|---------|-----|
-| 1 | One-click QuickBooks connection | Connect in 60 seconds — Link your bank account, QuickBooks, or both |
-| 2 | Automatic data sync | Always up to date — Your revenue, expenses, and balances sync daily |
-| 3 | Real-time runway calculation | See your zero-cash date — Know exactly which month you run out, not a rough guess |
-| 4 | Conversational Q&A about your finances | Ask "what if?" and get answers — Simulate hiring, cutting costs, or raising prices before you commit |
+| # | Title | Description | Icon |
+|---|-------|-------------|------|
+| 1 | Connect your data | Link your bank account via Plaid, connect QuickBooks, or both. One click, no spreadsheets needed. | `Link` (lucide) |
+| 2 | See your runway instantly | Get your exact months of runway, zero-cash date, and net burn rate — calculated from your real numbers. | `BarChart3` (lucide) |
+| 3 | Simulate before you spend | Ask "What if I hire 2 people?" or "What if I cut marketing by 30%?" and see the impact on your runway in seconds. | `SlidersHorizontal` (lucide) |
+| 4 | Talk to your finances | Ask questions by voice or text. Zensus explains your cash flow, flags risks, and suggests next moves. | `Mic` (lucide) |
 
-### No layout/styling changes
-Same two-column grid, same image, same check icons. Copy-only update.
+### Layout change
+- Grid switches from `md:grid-cols-3` to `md:grid-cols-2 lg:grid-cols-4` so all 4 steps sit in one row on large screens and 2x2 on medium.
+
+### No other changes
+Same section background, card styling, step number badges, and hover effects.
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/RunwayFeature.tsx` | Updated headline, subline, and 4 bullet points |
+| `src/components/landing/HowItWorks.tsx` | Updated subline, expanded to 4 steps with new copy and icons |
 
