@@ -1,23 +1,29 @@
-import { Upload, Eye, MessageCircle } from "lucide-react";
+import { Link, BarChart3, SlidersHorizontal, Mic } from "lucide-react";
 
 const steps = [
   {
     number: "1",
-    icon: Upload,
-    title: "Connect or Upload",
-    description: "Link QuickBooks or upload your cash flow spreadsheet",
+    icon: Link,
+    title: "Connect your data",
+    description: "Link your bank account via Plaid, connect QuickBooks, or both. One click, no spreadsheets needed.",
   },
   {
     number: "2",
-    icon: Eye,
-    title: "See Your Runway",
-    description: "Get instant visibility into your financial future",
+    icon: BarChart3,
+    title: "See your runway instantly",
+    description: "Get your exact months of runway, zero-cash date, and net burn rate — calculated from your real numbers.",
   },
   {
     number: "3",
-    icon: MessageCircle,
-    title: "Ask Questions",
-    description: "Explore scenarios with natural language queries",
+    icon: SlidersHorizontal,
+    title: "Simulate before you spend",
+    description: 'Ask "What if I hire 2 people?" or "What if I cut marketing by 30%?" and see the impact on your runway in seconds.',
+  },
+  {
+    number: "4",
+    icon: Mic,
+    title: "Talk to your finances",
+    description: "Ask questions by voice or text. Zensus explains your cash flow, flags risks, and suggests next moves.",
   },
 ];
 
@@ -30,11 +36,11 @@ const HowItWorks = () => {
             How it <span className="text-gradient">works</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Get started in minutes, not hours
+            From sign-up to runway number in under 2 minutes
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
           {steps.map((step, index) => (
             <div
               key={index}
