@@ -1,32 +1,34 @@
 
 
-# Problem Section Copy Redesign
+# Runway Feature Section Copy Redesign
 
 ## What Changes
 
-Update headline, subline, and all 4 pain point cards in `src/components/landing/Problem.tsx` with sharper, more emotionally resonant copy that maps each pain to a Zensus feature.
+Update headline, subline, and all 4 bullet points in `src/components/landing/RunwayFeature.tsx` to be integration-agnostic and outcome-focused instead of anchoring to QuickBooks.
 
-## Changes to `src/components/landing/Problem.tsx`
+## Changes to `src/components/landing/RunwayFeature.tsx`
 
 ### Headline + Subline
-- **Headline:** "You're making million-dollar decisions on **gut feeling**" (gradient on "gut feeling")
-- **Subline:** "Most founders check their bank balance and hope for the best. That's not a financial strategy."
+- **Current headline:** "Runway: Your QuickBooks Financial Copilot"
+- **New headline:** "Know your exact runway — <span gradient>down to the month</span>"
+- **Current subline:** "Connect QuickBooks in one click. We pull your financial data automatically and calculate your runway. Then ask questions to see how decisions impact your future."
+- **New subline:** "Connect your bank account or QuickBooks. Zensus pulls your real numbers and shows exactly when cash runs out — and what to do about it."
 
-### Pain Point Cards
+### Bullet Points (outcome-driven)
 
-| # | Title | Description |
-|---|-------|-------------|
-| 1 | "How many months do I have left?" | You check your bank balance, do mental math, and still aren't sure |
-| 2 | Logging into 3 tools to get 1 answer | Your bank, QuickBooks, and a spreadsheet that's always outdated |
-| 3 | "Can I afford to hire?" | No way to simulate decisions before committing real money |
-| 4 | Surprises at the end of the month | Cash problems are obvious in hindsight but invisible in real-time |
+| # | Current | New |
+|---|---------|-----|
+| 1 | One-click QuickBooks connection | Connect in 60 seconds — Link your bank account, QuickBooks, or both |
+| 2 | Automatic data sync | Always up to date — Your revenue, expenses, and balances sync daily |
+| 3 | Real-time runway calculation | See your zero-cash date — Know exactly which month you run out, not a rough guess |
+| 4 | Conversational Q&A about your finances | Ask "what if?" and get answers — Simulate hiring, cutting costs, or raising prices before you commit |
 
 ### No layout/styling changes
-Same section structure, grid, icons, and card design. Copy-only update.
+Same two-column grid, same image, same check icons. Copy-only update.
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/Problem.tsx` | Updated headline, subline, and 4 pain point titles + descriptions |
+| `src/components/landing/RunwayFeature.tsx` | Updated headline, subline, and 4 bullet points |
 
