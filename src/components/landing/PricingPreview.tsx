@@ -1,12 +1,19 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Database, TrendingUp } from "lucide-react";
 
-const features = [
-  "Unlimited forecasts",
-  "QuickBooks integration",
-  "Runway calculations",
-  "Conversational Q&A",
+const dataFeatures = [
+  "Bank account connection (Plaid)",
+  "QuickBooks auto-sync",
+  "CSV/Excel upload for forecasting",
+  "Daily automatic data refresh",
+];
+
+const runwayFeatures = [
+  "Real-time runway calculation with zero-cash date",
+  "Cash flow projections and burn rate tracking",
+  "AI-powered what-if scenario modeling",
+  "Expense categorization across 7 business categories",
 ];
 
 const PricingPreview = () => {
@@ -18,44 +25,65 @@ const PricingPreview = () => {
             Simple, <span className="text-gradient">transparent pricing</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            One plan with everything you need to manage your runway
+            Everything you need to see your financial future clearly
           </p>
         </div>
 
-        <div className="max-w-md mx-auto">
+        <div className="max-w-xl mx-auto">
           <div className="relative p-8 rounded-2xl bg-card border border-primary/30 glow-sm">
-            {/* Badge */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-primary-foreground text-sm font-medium">
-              7-day free trial
-            </div>
-
-            <div className="text-center mb-6 mt-2">
+            <div className="text-center mb-6">
               <h3 className="text-2xl font-bold text-foreground mb-2">Zensus Pro</h3>
               <div className="flex items-baseline justify-center gap-1">
                 <span className="text-4xl font-bold text-foreground">$199</span>
                 <span className="text-muted-foreground">/month</span>
               </div>
+              <p className="text-sm text-muted-foreground mt-2">
+                Less than a single hour with a fractional CFO
+              </p>
             </div>
 
-            <ul className="space-y-3 mb-8">
-              {features.map((feature, index) => (
-                <li key={index} className="flex items-center gap-3">
-                  <Check size={18} className="text-primary flex-shrink-0" />
-                  <span className="text-foreground">{feature}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="space-y-5 mb-8">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Database size={16} className="text-primary" />
+                  <span className="text-sm font-semibold text-foreground">Data & Integrations</span>
+                </div>
+                <ul className="space-y-2">
+                  {dataFeatures.map((feature, index) => (
+                    <li key={index} className="flex items-center gap-3">
+                      <Check size={14} className="text-primary flex-shrink-0" />
+                      <span className="text-sm text-foreground">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp size={16} className="text-primary" />
+                  <span className="text-sm font-semibold text-foreground">Runway & Forecasting</span>
+                </div>
+                <ul className="space-y-2">
+                  {runwayFeatures.map((feature, index) => (
+                    <li key={index} className="flex items-center gap-3">
+                      <Check size={14} className="text-primary flex-shrink-0" />
+                      <span className="text-sm text-foreground">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
 
             <div className="space-y-3">
               <Button asChild className="w-full" size="lg">
                 <a href="https://app.zensus.app/login">
-                  Start Free Trial
+                  Get Started
                   <ArrowRight size={18} className="ml-2" />
                 </a>
               </Button>
               <Button asChild variant="ghost" className="w-full" size="sm">
-                <Link to="/pricing">
-                  View full pricing details
+                <Link to="/#faq">
+                  Have questions? Talk to us
                 </Link>
               </Button>
             </div>
