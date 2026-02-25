@@ -1,35 +1,60 @@
 
 
-# How It Works Section Redesign
+# Pricing Section Redesign
 
 ## What Changes
 
-Expand from 3 steps to 4 in `src/components/landing/HowItWorks.tsx`, update subline, and use new copy and icons per the user's spec. Same card layout style, now in a 2x2 grid on desktop instead of 3-column.
+Update `PricingPreview.tsx` (homepage) and `Pricing.tsx` (full page) with new copy, restructured feature list, removed free trial, and updated CTAs.
 
-## Changes to `src/components/landing/HowItWorks.tsx`
+## Changes to `src/components/landing/PricingPreview.tsx`
 
 ### Subline
-- **Current:** "Get started in minutes, not hours"
-- **New:** "From sign-up to runway number in under 2 minutes"
+- **Current:** "One plan with everything you need to manage your runway"
+- **New:** "Everything you need to see your financial future clearly"
 
-### Steps (3 → 4)
+### Remove free trial badge
+- Delete the "7-day free trial" badge element
 
-| # | Title | Description | Icon |
-|---|-------|-------------|------|
-| 1 | Connect your data | Link your bank account via Plaid, connect QuickBooks, or both. One click, no spreadsheets needed. | `Link` (lucide) |
-| 2 | See your runway instantly | Get your exact months of runway, zero-cash date, and net burn rate — calculated from your real numbers. | `BarChart3` (lucide) |
-| 3 | Simulate before you spend | Ask "What if I hire 2 people?" or "What if I cut marketing by 30%?" and see the impact on your runway in seconds. | `SlidersHorizontal` (lucide) |
-| 4 | Talk to your finances | Ask questions by voice or text. Zensus explains your cash flow, flags risks, and suggests next moves. | `Mic` (lucide) |
+### Price anchoring
+- Add line below price: `$199/mo — Less than a single hour with a fractional CFO`
 
-### Layout change
-- Grid switches from `md:grid-cols-3` to `md:grid-cols-2 lg:grid-cols-4` so all 4 steps sit in one row on large screens and 2x2 on medium.
+### Features — replace 4 generic bullets with 2 grouped lists
 
-### No other changes
-Same section background, card styling, step number badges, and hover effects.
+**Data & Integrations**
+- Bank account connection (Plaid)
+- QuickBooks auto-sync
+- CSV/Excel upload for forecasting
+- Daily automatic data refresh
+
+**Runway & Forecasting**
+- Real-time runway calculation with zero-cash date
+- Cash flow projections and burn rate tracking
+- AI-powered what-if scenario modeling
+- Expense categorization across 7 business categories
+
+### CTA button
+- **Current:** "Start Free Trial"
+- **New:** "Get Started" (same link)
+
+### Bottom link
+- **Current:** "View full pricing details" linking to /pricing
+- **New:** "Have questions? Talk to us" linking to /#faq
+
+## Changes to `src/pages/Pricing.tsx`
+
+Same changes mirrored:
+- Updated subline
+- Removed free trial badge
+- Added price anchoring line
+- Replaced feature list with the same 2 grouped sections
+- Updated CTA from "Start Your 7-Day Free Trial" to "Get Started"
+- Removed "No credit card required" note
+- Updated billing note from "Billed monthly • Cancel anytime" (keep as is, it's fine)
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/HowItWorks.tsx` | Updated subline, expanded to 4 steps with new copy and icons |
+| `src/components/landing/PricingPreview.tsx` | Full copy and structure redesign |
+| `src/pages/Pricing.tsx` | Matching updates |
 
