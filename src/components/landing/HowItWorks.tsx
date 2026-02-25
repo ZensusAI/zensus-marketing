@@ -1,4 +1,4 @@
-import { Link, BarChart3, SlidersHorizontal, Mic } from "lucide-react";
+import { Link, BarChart3, SlidersHorizontal } from "lucide-react";
 
 const steps = [
   {
@@ -19,12 +19,6 @@ const steps = [
     title: "Simulate before you spend",
     description: 'Ask "What if I hire 2 people?" or "What if I cut marketing by 30%?" and see the impact on your runway in seconds.',
   },
-  {
-    number: "4",
-    icon: Mic,
-    title: "Talk to your finances",
-    description: "Ask questions by voice or text. Zensus explains your cash flow, flags risks, and suggests next moves.",
-  },
 ];
 
 const HowItWorks = () => {
@@ -40,7 +34,7 @@ const HowItWorks = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {steps.map((step, index) => (
             <div
               key={index}
