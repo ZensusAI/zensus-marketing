@@ -1,60 +1,44 @@
 
 
-# Pricing Section Redesign
+# FAQ Section Redesign
 
 ## What Changes
 
-Update `PricingPreview.tsx` (homepage) and `Pricing.tsx` (full page) with new copy, restructured feature list, removed free trial, and updated CTAs.
+Replace the 5 generic FAQs in `src/components/landing/FAQ.tsx` with 8 questions organized into 4 buyer-objection categories, each with a category label.
 
-## Changes to `src/components/landing/PricingPreview.tsx`
+## Changes to `src/components/landing/FAQ.tsx`
 
-### Subline
-- **Current:** "One plan with everything you need to manage your runway"
-- **New:** "Everything you need to see your financial future clearly"
+### Structure
 
-### Remove free trial badge
-- Delete the "7-day free trial" badge element
+Group FAQs into 4 labeled sections, each rendered with a small category heading above its accordion items:
 
-### Price anchoring
-- Add line below price: `$199/mo — Less than a single hour with a fractional CFO`
+**Getting Started**
+1. "Do I need QuickBooks to use Zensus?" — No, Plaid/QuickBooks/spreadsheet options.
+2. "How long does setup take?" — Under 2 minutes, one-click connect.
 
-### Features — replace 4 generic bullets with 2 grouped lists
+**Product**
+3. "What's the difference between Runway and Forecast?" — Live tracking vs one-time upload analysis.
+4. "What kind of questions can I ask?" — Examples with voice assistant mention.
+5. "How often does my data update?" — Daily sync, real-time runway updates.
 
-**Data & Integrations**
-- Bank account connection (Plaid)
-- QuickBooks auto-sync
-- CSV/Excel upload for forecasting
-- Daily automatic data refresh
+**Trust & Security**
+6. "Is my financial data secure?" — AES-256, OAuth, AWS.
+7. "Who can see my data?" — Only you, never shared or used for training.
 
-**Runway & Forecasting**
-- Real-time runway calculation with zero-cash date
-- Cash flow projections and burn rate tracking
-- AI-powered what-if scenario modeling
-- Expense categorization across 7 business categories
+**Pricing**
+8. "What happens after the free trial?" — $199/mo, cancel anytime, keep access through billing period.
 
-### CTA button
-- **Current:** "Start Free Trial"
-- **New:** "Get Started" (same link)
+### Layout approach
 
-### Bottom link
-- **Current:** "View full pricing details" linking to /pricing
-- **New:** "Have questions? Talk to us" linking to /#faq
+Map over an array of `{ category, items[] }` objects. Each category gets a small uppercase/semibold label, followed by its accordion items using the same card styling as current.
 
-## Changes to `src/pages/Pricing.tsx`
+### No other changes
 
-Same changes mirrored:
-- Updated subline
-- Removed free trial badge
-- Added price anchoring line
-- Replaced feature list with the same 2 grouped sections
-- Updated CTA from "Start Your 7-Day Free Trial" to "Get Started"
-- Removed "No credit card required" note
-- Updated billing note from "Billed monthly • Cancel anytime" (keep as is, it's fine)
+Same section ID (`#faq`), background, headline, and accordion component usage.
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/PricingPreview.tsx` | Full copy and structure redesign |
-| `src/pages/Pricing.tsx` | Matching updates |
+| `src/components/landing/FAQ.tsx` | Replace 5 FAQs with 8 grouped by category |
 
