@@ -3,23 +3,23 @@ import { Clock, HelpCircle, AlertTriangle, TrendingDown } from "lucide-react";
 const painPoints = [
   {
     icon: Clock,
-    title: "Guessing your runway",
-    description: "Not knowing exactly how many months of cash you have left",
+    title: '"How many months do I have left?"',
+    description: "You check your bank balance, do mental math, and still aren't sure",
   },
   {
     icon: HelpCircle,
-    title: "Scattered financial data",
-    description: "Jumping between QuickBooks, spreadsheets, and bank statements",
+    title: "Logging into 3 tools to get 1 answer",
+    description: "Your bank, QuickBooks, and a spreadsheet that's always outdated",
   },
   {
     icon: AlertTriangle,
-    title: "Blind decision-making",
-    description: "Making hiring or spending decisions without seeing the impact",
+    title: '"Can I afford to hire?"',
+    description: "No way to simulate decisions before committing real money",
   },
   {
     icon: TrendingDown,
-    title: "Late cash warnings",
-    description: "Finding out about cash problems when it's too late to act",
+    title: "Surprises at the end of the month",
+    description: "Cash problems are obvious in hindsight but invisible in real-time",
   },
 ];
 
@@ -29,11 +29,11 @@ const Problem = () => {
       <div className="section-container">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            Running a business without knowing{" "}
-            <span className="text-gradient">how long your cash will last?</span>
+            You're making million-dollar decisions on{" "}
+            <span className="text-gradient">gut feeling</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            You're not alone. Most small business owners struggle with runway visibility.
+            Most founders check their bank balance and hope for the best. That's not a financial strategy.
           </p>
         </div>
 
