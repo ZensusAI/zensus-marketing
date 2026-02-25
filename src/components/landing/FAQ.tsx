@@ -53,8 +53,8 @@ const faqGroups = [
     category: "Pricing",
     items: [
       {
-        question: "What happens after the free trial?",
-        answer: "After 7 days, you'll be charged $199/month. You can cancel anytime from your billing settings — no contracts, no cancellation fees. If you cancel, you keep access through the end of your billing period.",
+        question: "Can I cancel anytime?",
+        answer: "Yes. There are no contracts or cancellation fees. You can cancel anytime from your billing settings. If you cancel, you keep access through the end of your billing period.",
       },
     ],
   },
