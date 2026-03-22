@@ -1,19 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Menu, X, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { getCalApi } from "@calcom/embed-react";
 import zensusLogo from "@/assets/zensus-logo.png";
+
+const openCalendly = () => {
+  window.Calendly?.initPopupWidget({ url: "https://calendly.com/hello-zensus/introcall" });
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    (async function () {
-      const cal = await getCalApi({ namespace: "30min" });
-      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    })();
-  }, []);
 
   const navLinks = [
     { href: "#features", label: "Features" },
@@ -25,15 +21,13 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="section-container">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
           <a href="#" className="flex items-center gap-2">
             <img src={zensusLogo} alt="Zensus logo" className="h-8 w-8 rounded-lg" />
             <span className="text-xl font-semibold text-foreground">Zensus</span>
           </a>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {navLinks.map((link) =>
               link.isRoute ? (
                 <Link
                   key={link.href}
@@ -51,18 +45,15 @@ const Navbar = () => {
                   {link.label}
                 </a>
               )
-            ))}
+            )}
           </div>
 
-          {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <Button
               variant="outline"
               size="sm"
               className="rounded-full"
-              data-cal-namespace="30min"
-              data-cal-link="zensus/30min"
-              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+              onClick={openCalendly}
             >
               <Calendar size={16} className="mr-1.5" />
               Book Demo
@@ -72,7 +63,6 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2 text-foreground"
             onClick={() => setIsOpen(!isOpen)}
@@ -82,11 +72,10 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-4">
-              {navLinks.map((link) => (
+              {navLinks.map((link) =>
                 link.isRoute ? (
                   <Link
                     key={link.href}
@@ -106,14 +95,11 @@ const Navbar = () => {
                     {link.label}
                   </a>
                 )
-              ))}
+              )}
               <Button
                 variant="outline"
                 className="mt-2 rounded-full"
-                data-cal-namespace="30min"
-                data-cal-link="zensus/30min"
-                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                onClick={() => setIsOpen(false)}
+                onClick={() => { openCalendly(); setIsOpen(false); }}
               >
                 <Calendar size={16} className="mr-1.5" />
                 Book Demo

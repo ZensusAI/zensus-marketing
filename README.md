@@ -1,73 +1,57 @@
-# Welcome to your Lovable project
+# Zensus – Cash Flow Forecasting for Founders
 
-## Project info
+**AI-powered cash flow forecasting for founders with variable revenue.**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Upload your model. Run what-ifs. Know the exact week you can hire, distribute, or need to cut.
 
-## How can I edit this code?
+🌐 [zensus.ai](https://zensus.ai) · 🚀 [Launch App](https://app.zensus.app)
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- [React](https://react.dev) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev) – build tooling
+- [Tailwind CSS](https://tailwindcss.com) – utility-first styling
+- [shadcn/ui](https://ui.shadcn.com) – component library
+- [React Router](https://reactrouter.com) – client-side routing
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting Started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Clone the repository
+git clone https://github.com/ZensusAI/zensus-launchpad-template.git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to the project directory
+cd zensus-launchpad-template
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project Structure
 
-**Use GitHub Codespaces**
+```
+src/
+├── components/    # Reusable UI and landing page components
+├── pages/         # Route-level page components
+├── hooks/         # Custom React hooks
+├── lib/           # Utility functions
+└── integrations/  # Backend client configuration
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Links
 
-## What technologies are used for this project?
+- **Website:** [zensus.ai](https://zensus.ai)
+- **App:** [app.zensus.app](https://app.zensus.app)
+- **Twitter/X:** [@zensusai](https://x.com/zensusai)
+- **LinkedIn:** [Zensus](https://www.linkedin.com/company/zensusai)
 
-This project is built with:
+## License
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+© Zensus AI. All rights reserved.
