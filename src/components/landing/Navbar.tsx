@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import zensusLogo from "@/assets/zensus-logo.png";
 
 const openCalendly = () => {
-  window.Calendly?.initPopupWidget({ url: "https://calendly.com/hello-zensus/introcall" });
+  (window as any).Calendly?.initPopupWidget({ url: "https://calendly.com/hello-zensus/introcall" });
 };
 
 const Navbar = () => {
