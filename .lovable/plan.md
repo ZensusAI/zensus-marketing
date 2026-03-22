@@ -1,44 +1,37 @@
 
 
-# FAQ Section Redesign
+# README Update + Book Demo Calendly Integration
 
-## What Changes
+## 1. Update README.md
 
-Replace the 5 generic FAQs in `src/components/landing/FAQ.tsx` with 8 questions organized into 4 buyer-objection categories, each with a category label.
+Replace the generic Lovable template README with a professional Zensus-branded README:
+- Product name, tagline, and description (AI-powered cash flow forecasting for founders)
+- Tech stack (React, Vite, TypeScript, Tailwind CSS, shadcn/ui)
+- Local development setup instructions
+- Links to live site (zensus.ai) and app (app.zensus.app)
 
-## Changes to `src/components/landing/FAQ.tsx`
+## 2. Switch "Book Demo" from Cal.com to Calendly popup
 
-### Structure
+### In `index.html`
+- Add Calendly widget CSS and JS in `<head>`:
+  - `<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">`
+  - `<script src="https://assets.calendly.com/assets/external/widget.js" async>`
 
-Group FAQs into 4 labeled sections, each rendered with a small category heading above its accordion items:
+### In `src/components/landing/Navbar.tsx`
+- Remove `@calcom/embed-react` import and the Cal.com `useEffect` initialization
+- Remove all `data-cal-*` attributes from both desktop and mobile Book Demo buttons
+- Add `onClick` handler that calls `Calendly.initPopupWidget({ url: 'https://calendly.com/hello-zensus/introcall' })` on both buttons
+- Add a TypeScript type declaration for `window.Calendly` (either inline or in `vite-env.d.ts`)
 
-**Getting Started**
-1. "Do I need QuickBooks to use Zensus?" — No, Plaid/QuickBooks/spreadsheet options.
-2. "How long does setup take?" — Under 2 minutes, one-click connect.
-
-**Product**
-3. "What's the difference between Runway and Forecast?" — Live tracking vs one-time upload analysis.
-4. "What kind of questions can I ask?" — Examples with voice assistant mention.
-5. "How often does my data update?" — Daily sync, real-time runway updates.
-
-**Trust & Security**
-6. "Is my financial data secure?" — AES-256, OAuth, AWS.
-7. "Who can see my data?" — Only you, never shared or used for training.
-
-**Pricing**
-8. "What happens after the free trial?" — $199/mo, cancel anytime, keep access through billing period.
-
-### Layout approach
-
-Map over an array of `{ category, items[] }` objects. Each category gets a small uppercase/semibold label, followed by its accordion items using the same card styling as current.
-
-### No other changes
-
-Same section ID (`#faq`), background, headline, and accordion component usage.
+### Cleanup
+- Optionally remove `@calcom/embed-react` from `package.json` since it will no longer be used
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/FAQ.tsx` | Replace 5 FAQs with 8 grouped by category |
+| `README.md` | Full rewrite with Zensus branding |
+| `index.html` | Add Calendly widget CSS/JS |
+| `src/components/landing/Navbar.tsx` | Replace Cal.com with Calendly popup |
+| `src/vite-env.d.ts` | Add Calendly type declaration |
 
