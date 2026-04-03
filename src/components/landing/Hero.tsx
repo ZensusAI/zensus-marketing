@@ -21,8 +21,8 @@ const Hero = () => {
 
           {/* Subheadline */}
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Connect QuickBooks or upload your cash flow statement. Get AI-powered 
-            forecasts and ask questions about your business runway.
+            Connect QuickBooks, your bank account, or both. Get runway 
+            projections and ask your agent questions about your business survival.
           </p>
 
           {/* Try it Now CTA */}
