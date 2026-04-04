@@ -102,7 +102,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "See when revenue actually hits your bank, not flat monthly estimates",
     ],
     icon: <BarChart3 size={20} className="text-primary" />,
-    image: runwayDashboard,
+    image: runwayDrilldown,
   },
   {
     headline: "Ask 'what if?' and",
