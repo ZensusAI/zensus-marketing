@@ -2,10 +2,12 @@ import { Check } from "lucide-react";
 import runwayDashboard from "@/assets/runway-dashboard.png";
 
 const bullets = [
-  "Connect in 60 seconds — Link your bank account, QuickBooks, or both",
-  "Always up to date — Your revenue, expenses, and balances sync daily",
+  "Connect in 60 seconds — Link your bank account, QuickBooks, HubSpot, or all three",
+  "Subscription-aware projections — See when annual and quarterly contracts actually hit your bank, not just flat monthly estimates",
   "See your zero-cash date — Know exactly which month you run out, not a rough guess",
-  "Ask \"what if?\" and get answers — Simulate hiring, cutting costs, or raising prices before you commit",
+  "Drill down to any week or day — Click any month to see weekly cash flow, then drill into daily details",
+  "AI scenario analysis — Have a conversation about your finances. Ask about hiring, churn, pricing changes, or subscription upgrades and see the projected impact instantly",
+  "Always in sync — Data refreshes automatically when stale, with manual sync across all connected sources",
 ];
 
 const RunwayFeature = () => {
