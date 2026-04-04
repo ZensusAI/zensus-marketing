@@ -113,6 +113,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "\"What happens with 5% monthly churn?\"",
     ],
     icon: <MessageCircle size={20} className="text-primary" />,
+    image: runwayDashboard,
   },
 ];
 
