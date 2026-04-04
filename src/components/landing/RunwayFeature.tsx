@@ -2,6 +2,7 @@ import { Link2, Target, BarChart3, MessageCircle } from "lucide-react";
 import runwayDashboard from "@/assets/runway-dashboard.png";
 import runwayConnect from "@/assets/runway-connect.png";
 import runwayZerocash from "@/assets/runway-zerocash.png";
+import runwayDrilldown from "@/assets/runway-drilldown.png";
 
 interface RunwaySectionProps {
   headline: string;
@@ -101,7 +102,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "See when revenue actually hits your bank, not flat monthly estimates",
     ],
     icon: <BarChart3 size={20} className="text-primary" />,
-    image: runwayDashboard,
+    image: runwayDrilldown,
   },
   {
     headline: "Ask 'what if?' and",
