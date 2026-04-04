@@ -106,14 +106,14 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
     image: runwayDrilldown,
   },
   {
-    headline: "Ask 'what if?' and",
-    highlight: "get answers",
+    headline: "Run scenarios with",
+    highlight: "your runway agent",
     description:
-      "Have a conversation about your finances. Ask about hiring, churn, pricing changes, or subscription upgrades and see the projected impact instantly. Type or speak — Zensus has a built-in voice assistant.",
+      "Layer hiring plans, churn assumptions, and pricing changes into multi-turn scenarios. Your agent recalculates runway in real time — type or speak.",
     bullets: [
-      "\"Can I afford to hire two engineers next quarter?\"",
-      "\"What if we lose our largest annual contract?\"",
-      "\"What happens with 5% monthly churn?\"",
+      "Stack multiple assumptions — hiring, churn, pricing — in a single conversation",
+      "Watch your runway update live as each scenario layer is applied",
+      "Compare before-and-after projections and revert any change instantly",
     ],
     icon: <MessageCircle size={20} className="text-primary" />,
     image: runwayWhatif,
