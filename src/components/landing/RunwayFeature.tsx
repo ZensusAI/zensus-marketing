@@ -3,6 +3,7 @@ import runwayDashboard from "@/assets/runway-dashboard.png";
 import runwayConnect from "@/assets/runway-connect.png";
 import runwayZerocash from "@/assets/runway-zerocash.png";
 import runwayDrilldown from "@/assets/runway-drilldown.png";
+import runwayWhatif from "@/assets/runway-whatif.png";
 
 interface RunwaySectionProps {
   headline: string;
@@ -115,7 +116,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "\"What happens with 5% monthly churn?\"",
     ],
     icon: <MessageCircle size={20} className="text-primary" />,
-    image: runwayDashboard,
+    image: runwayWhatif,
   },
 ];
 
