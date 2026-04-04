@@ -12,7 +12,7 @@ interface RunwaySectionProps {
   imageRight: boolean;
 }
 
-const RunwaySection = ({ headline, highlight, description, bullets, icon, imageRight }: RunwaySectionProps) => {
+const RunwaySection = ({ headline, highlight, description, bullets, icon, image, imageRight }: RunwaySectionProps) => {
   const content = (
     <div>
       <div className="flex items-center gap-3 mb-4">
