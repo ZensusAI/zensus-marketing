@@ -36,10 +36,10 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
     </div>
   );
 
-  const image = (
+  const imageEl = (
     <div className="relative rounded-2xl overflow-hidden border border-border bg-card">
       <img
-        src={runwayDashboard}
+        src={image}
         alt="Zensus dashboard"
         className="w-full h-auto"
       />
@@ -52,9 +52,9 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
       <div className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {imageRight ? (
-            <>{content}{image}</>
+            <>{content}{imageEl}</>
           ) : (
-            <>{image}{content}</>
+            <>{imageEl}{content}</>
           )}
         </div>
       </div>
@@ -74,6 +74,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "Manually sync all connected sources at any time",
     ],
     icon: <Link2 size={20} className="text-primary" />,
+    image: runwayConnect,
   },
   {
     headline: "See your",
