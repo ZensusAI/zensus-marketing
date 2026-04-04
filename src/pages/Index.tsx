@@ -32,9 +32,9 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <IntegrationLogos />
         <IntegrationBanner />
         <Problem />
+        <IntegrationLogos />
         <RunwayFeature />
         <HowItWorks />
         <PricingPreview />
