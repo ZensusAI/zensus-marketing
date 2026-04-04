@@ -35,7 +35,6 @@ const Index = () => {
         <IntegrationLogos />
         <IntegrationBanner />
         <Problem />
-        <ForecastFeature />
         <RunwayFeature />
         <HowItWorks />
         <PricingPreview />

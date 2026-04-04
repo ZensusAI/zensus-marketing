@@ -22,8 +22,7 @@ const RunwayFeature = () => {
               <span className="text-gradient">down to the month</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Connect your bank account or QuickBooks. Zensus pulls your real numbers and shows 
-              exactly when cash runs out — and what to do about it.
+              Connect your bank account, QuickBooks, or HubSpot. Zensus pulls your real numbers — including subscription billing schedules — and shows exactly when cash runs out and what to do about it.
             </p>
             <ul className="space-y-4">
               {bullets.map((bullet, index) => (
