@@ -1,5 +1,6 @@
 import { Link2, Target, BarChart3, MessageCircle } from "lucide-react";
 import runwayDashboard from "@/assets/runway-dashboard.png";
+import runwayConnect from "@/assets/runway-connect.png";
 
 interface RunwaySectionProps {
   headline: string;
@@ -7,10 +8,11 @@ interface RunwaySectionProps {
   description: string;
   bullets: string[];
   icon: React.ReactNode;
+  image: string;
   imageRight: boolean;
 }
 
-const RunwaySection = ({ headline, highlight, description, bullets, icon, imageRight }: RunwaySectionProps) => {
+const RunwaySection = ({ headline, highlight, description, bullets, icon, image, imageRight }: RunwaySectionProps) => {
   const content = (
     <div>
       <div className="flex items-center gap-3 mb-4">
@@ -34,10 +36,10 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, imageR
     </div>
   );
 
-  const image = (
+  const imageEl = (
     <div className="relative rounded-2xl overflow-hidden border border-border bg-card">
       <img
-        src={runwayDashboard}
+        src={image}
         alt="Zensus dashboard"
         className="w-full h-auto"
       />
@@ -50,9 +52,9 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, imageR
       <div className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {imageRight ? (
-            <>{content}{image}</>
+            <>{content}{imageEl}</>
           ) : (
-            <>{image}{content}</>
+            <>{imageEl}{content}</>
           )}
         </div>
       </div>
@@ -72,6 +74,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "Manually sync all connected sources at any time",
     ],
     icon: <Link2 size={20} className="text-primary" />,
+    image: runwayConnect,
   },
   {
     headline: "See your",
@@ -84,6 +87,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "Clear visual timeline so you can plan ahead",
     ],
     icon: <Target size={20} className="text-primary" />,
+    image: runwayDashboard,
   },
   {
     headline: "Drill down to",
@@ -96,6 +100,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "See when revenue actually hits your bank, not flat monthly estimates",
     ],
     icon: <BarChart3 size={20} className="text-primary" />,
+    image: runwayDashboard,
   },
   {
     headline: "Ask 'what if?' and",
@@ -108,6 +113,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "\"What happens with 5% monthly churn?\"",
     ],
     icon: <MessageCircle size={20} className="text-primary" />,
+    image: runwayDashboard,
   },
 ];
 
