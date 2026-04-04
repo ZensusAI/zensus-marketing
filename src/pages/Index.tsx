@@ -3,7 +3,6 @@ import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import IntegrationLogos from "@/components/landing/IntegrationLogos";
 import IntegrationBanner from "@/components/landing/IntegrationBanner";
-import ForecastFeature from "@/components/landing/ForecastFeature";
 import RunwayFeature from "@/components/landing/RunwayFeature";
 import HowItWorks from "@/components/landing/HowItWorks";
 import Problem from "@/components/landing/Problem";
