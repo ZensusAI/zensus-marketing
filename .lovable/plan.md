@@ -1,18 +1,24 @@
 
 
-# Update "How It Works" Section Copy
+# Remove CSV/Excel Upload from Pricing Feature Lists
 
-## Changes in `src/components/landing/HowItWorks.tsx`
+The CSV/Excel upload feature has been removed from the product. Update the pricing feature lists in both files to remove it.
 
-**Step 1 description** — Add HubSpot:
-> "Link your bank account via Plaid, connect QuickBooks, or sync your HubSpot subscriptions. One click, no spreadsheets needed."
+## Changes
 
-**Step 3 description** — Subscription-aware example:
-> 'Ask "What if I hire 2 people?" or "What happens if we lose our largest annual contract?" and see the impact on your runway in seconds.'
+### Data & Integrations (now 4 items)
+1. Bank account connection (Plaid)
+2. QuickBooks auto-sync
+3. HubSpot subscription sync — add
+4. Automatic data refresh when stale — update wording
 
-## File Changed
+### Runway & Forecasting (now 7 items)
+Same as previously approved plan.
+
+## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/HowItWorks.tsx` | Update step 1 and step 3 description text |
+| `src/components/landing/PricingPreview.tsx` | Remove "CSV/Excel upload" from `dataFeatures`, add HubSpot, update refresh wording, update `runwayFeatures` per prior plan |
+| `src/pages/Pricing.tsx` | Same changes |
 
