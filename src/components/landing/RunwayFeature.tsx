@@ -3,6 +3,7 @@ import runwayDashboard from "@/assets/runway-dashboard.png";
 import runwayConnect from "@/assets/runway-connect.png";
 import runwayZerocash from "@/assets/runway-zerocash.png";
 import runwayDrilldown from "@/assets/runway-drilldown.png";
+import runwayWhatif from "@/assets/runway-whatif.png";
 
 interface RunwaySectionProps {
   headline: string;
