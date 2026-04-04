@@ -11,7 +11,11 @@ const faqGroups = [
     items: [
       {
         question: "Do I need QuickBooks to use Zensus?",
-        answer: "No. You can connect your bank account directly via Plaid, connect QuickBooks, or use both together. You can also upload a spreadsheet to get started immediately — no integrations required.",
+        answer: "No. You can connect your bank account directly via Plaid, connect QuickBooks, sync your HubSpot subscriptions, or use any combination. No single integration is required to get started.",
+      },
+      {
+        question: "Can I connect my HubSpot account?",
+        answer: "Yes. Zensus syncs your HubSpot subscriptions — including annual and quarterly contracts — so your runway projections reflect when revenue actually hits your bank, not just flat monthly estimates.",
       },
       {
         question: "How long does setup take?",
@@ -23,16 +27,12 @@ const faqGroups = [
     category: "Product",
     items: [
       {
-        question: "What's the difference between Runway and Forecast?",
-        answer: "Runway connects to your bank and QuickBooks to give you a live, always-updated view of how long your cash will last — plus AI-powered what-if scenarios. Forecast lets you upload any cash flow spreadsheet for one-time analysis and projections. Most users start with Runway.",
-      },
-      {
         question: "What kind of questions can I ask?",
-        answer: "Anything about your finances. Examples: \"When will I run out of cash?\", \"Can I afford to hire two engineers?\", \"What happens if I lose my biggest client?\", \"What's my burn rate trend over the last 6 months?\" You can type or speak — Zensus has a built-in voice assistant.",
+        answer: "Anything about your finances. Examples: \"When will I run out of cash?\", \"Can I afford to hire two engineers?\", \"What if we lose our largest annual contract?\", \"What happens with 5% monthly churn?\", \"What if we switch a client from monthly to annual billing?\" You can type or speak — Zensus has a built-in voice assistant.",
       },
       {
         question: "How often does my data update?",
-        answer: "Bank and QuickBooks data syncs automatically every day. Your runway calculation updates in real-time as new data comes in.",
+        answer: "Your connected data syncs automatically whenever it's more than an hour stale — triggered each time you open the dashboard. You can also manually sync all sources at any time. Your runway recalculates in real-time as new data comes in.",
       },
     ],
   },
