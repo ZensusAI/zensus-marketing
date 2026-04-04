@@ -17,7 +17,7 @@ const steps = [
     number: "3",
     icon: SlidersHorizontal,
     title: "Simulate before you spend",
-    description: 'Ask "What if I hire 2 people?" or "What if I cut marketing by 30%?" and see the impact on your runway in seconds.',
+    description: 'Ask "What if I hire 2 people?" or "What happens if we lose our largest annual contract?" and see the impact on your runway in seconds.',
   },
 ];
 
