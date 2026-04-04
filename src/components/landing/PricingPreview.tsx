@@ -5,15 +5,18 @@ import { Check, ArrowRight, Database, TrendingUp } from "lucide-react";
 const dataFeatures = [
   "Bank account connection (Plaid)",
   "QuickBooks auto-sync",
-  "CSV/Excel upload for forecasting",
-  "Daily automatic data refresh",
+  "HubSpot subscription sync",
+  "Automatic data refresh when stale",
 ];
 
 const runwayFeatures = [
   "Real-time runway calculation with zero-cash date",
   "Cash flow projections and burn rate tracking",
-  "AI-powered what-if scenario modeling",
-  "Expense categorization across 7 business categories",
+  "AI scenario modeling with persistent chat history",
+  "Expense categorization across 8 business categories",
+  "Subscription-aware revenue projections",
+  "Weekly and daily cash flow drill-down",
+  "CSV export at monthly, weekly, or daily granularity",
 ];
 
 const PricingPreview = () => {
