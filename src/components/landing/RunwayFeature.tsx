@@ -87,6 +87,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "Clear visual timeline so you can plan ahead",
     ],
     icon: <Target size={20} className="text-primary" />,
+    image: runwayDashboard,
   },
   {
     headline: "Drill down to",
