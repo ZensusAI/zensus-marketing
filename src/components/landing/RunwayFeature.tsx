@@ -1,5 +1,6 @@
 import { Link2, Target, BarChart3, MessageCircle } from "lucide-react";
 import runwayDashboard from "@/assets/runway-dashboard.png";
+import runwayConnect from "@/assets/runway-connect.png";
 
 interface RunwaySectionProps {
   headline: string;
@@ -7,6 +8,7 @@ interface RunwaySectionProps {
   description: string;
   bullets: string[];
   icon: React.ReactNode;
+  image: string;
   imageRight: boolean;
 }
 
