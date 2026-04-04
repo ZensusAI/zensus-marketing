@@ -5,7 +5,7 @@ const steps = [
     number: "1",
     icon: Link,
     title: "Connect your data",
-    description: "Link your bank account via Plaid, connect QuickBooks, or both. One click, no spreadsheets needed.",
+    description: "Link your bank account via Plaid, connect QuickBooks, or sync your HubSpot subscriptions. One click, no spreadsheets needed.",
   },
   {
     number: "2",
@@ -17,7 +17,7 @@ const steps = [
     number: "3",
     icon: SlidersHorizontal,
     title: "Simulate before you spend",
-    description: 'Ask "What if I hire 2 people?" or "What if I cut marketing by 30%?" and see the impact on your runway in seconds.',
+    description: 'Ask "What if I hire 2 people?" or "What happens if we lose our largest annual contract?" and see the impact on your runway in seconds.',
   },
 ];
 
