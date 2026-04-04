@@ -5,7 +5,7 @@ const steps = [
     number: "1",
     icon: Link,
     title: "Connect your data",
-    description: "Link your bank account via Plaid, connect QuickBooks, or both. One click, no spreadsheets needed.",
+    description: "Link your bank account via Plaid, connect QuickBooks, or sync your HubSpot subscriptions. One click, no spreadsheets needed.",
   },
   {
     number: "2",
