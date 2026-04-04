@@ -1,22 +1,36 @@
 
 
-# Hero Section Copy Update
+# Remove Forecast Section & Revamp Runway Feature Section
 
-## Change
+## Step 1: Remove ForecastFeature section
 
-Update the subtitle text on line 24-25 of `src/components/landing/Hero.tsx`.
+- Remove `<ForecastFeature />` from `src/pages/Index.tsx` and its import
+- Delete `src/components/landing/ForecastFeature.tsx`
+- Delete `src/assets/forecast-dashboard.png` (if it exists and is unused elsewhere)
 
-**Current subtitle:**
-> Connect QuickBooks or upload your cash flow statement. Get AI-powered forecasts and ask questions about your business runway.
+## Step 2: Update RunwayFeature section copy
 
-**New subtitle:**
-> Connect QuickBooks, your bank account, or both. Get runway projections and ask your agent questions about your business survival.
+**In `src/components/landing/RunwayFeature.tsx`:**
 
-The headline stays unchanged.
+Keep the headline: *"Know your exact runway — down to the month"*
 
-## File Changed
+Update the description paragraph to:
+> Connect your bank account, QuickBooks, or HubSpot. Zensus pulls your real numbers — including subscription billing schedules — and shows exactly when cash runs out and what to do about it.
+
+Replace the 4 bullets with these 6:
+
+1. **Connect in 60 seconds** — Link your bank account, QuickBooks, HubSpot, or all three
+2. **Subscription-aware projections** — See when annual and quarterly contracts actually hit your bank, not just flat monthly estimates
+3. **See your zero-cash date** — Know exactly which month you run out, not a rough guess
+4. **Drill down to any week or day** — Click any month to see weekly cash flow, then drill into daily details
+5. **AI scenario analysis** — Have a conversation about your finances. Ask about hiring, churn, pricing changes, or subscription upgrades and see the projected impact instantly
+6. **Always in sync** — Data refreshes automatically when stale, with manual sync across all connected sources
+
+## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/Hero.tsx` | Update subtitle text (lines 24-25) |
+| `src/pages/Index.tsx` | Remove ForecastFeature import and usage |
+| `src/components/landing/ForecastFeature.tsx` | Delete file |
+| `src/components/landing/RunwayFeature.tsx` | Update description + bullets |
 
