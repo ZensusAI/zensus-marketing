@@ -1,26 +1,31 @@
 
 
-# Rewrite Section 4: Agentic Scenario Analysis
+# Fix Favicon and SEO Audit
 
-## What Changes
+## Problem 1: Lovable Favicon Still Showing
 
-Update the headline, description, and bullet points for the fourth runway section to position the feature as an **agentic scenario planner** rather than a chatbot. Emphasize multi-turn conversation, scenario layering, and runway impact — not Q&A.
+The `public/favicon.ico` file still exists and is the **default Lovable favicon**. Browsers (and Google) request `/favicon.ico` by default, which overrides your custom `favicon.png` reference in `index.html`. This is why Google shows the Lovable icon.
 
-## New Copy
+**Fix:** Delete `public/favicon.ico`. The existing `index.html` already points to `/favicon.png`, which is your custom Zensus favicon.
 
-| Field | Current | New |
-|-------|---------|-----|
-| **Headline** | Ask 'what if?' and **get answers** | Run scenarios with **your runway agent** |
-| **Description** | "Have a conversation about your finances..." | "Layer hiring plans, churn assumptions, and pricing changes into multi-turn scenarios. Your agent recalculates runway in real time — type or speak." |
-| **Bullet 1** | "Can I afford to hire two engineers next quarter?" | "Stack multiple assumptions — hiring, churn, pricing — in a single conversation" |
-| **Bullet 2** | "What if we lose our largest annual contract?" | "Watch your runway update live as each scenario layer is applied" |
-| **Bullet 3** | "What happens with 5% monthly churn?" | "Compare before-and-after projections and revert any change instantly" |
+## Problem 2: SEO — Outdated Meta Description
+
+Your SEO setup is solid (structured data, OG tags, Twitter cards, canonical URL, robots meta). However, the meta description still says *"Upload your model. Run what-ifs."* — this references the deprecated CSV upload flow. It should reflect the current product positioning (integration-led, agentic scenario analysis).
+
+**Fix:** Update the meta description and OG/Twitter descriptions to match current positioning.
+
+### Proposed New Copy
+
+| Tag | New Value |
+|-----|-----------|
+| **meta description** | "Connect your accounts, see your runway in real time, and run multi-turn scenarios with an AI agent. Cash flow forecasting built for founders with variable revenue." |
+| **OG description** | "Connect your accounts, see your runway, and run scenarios with your AI agent. Cash flow forecasting for founders." |
+| **Twitter description** | "Connect your accounts, see your runway, and run scenarios with your AI agent." |
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/RunwayFeature.tsx` | Update headline, highlight, description, and bullets for section 4 (index 3) |
-
-No asset or structural changes needed — copy update only.
+| `public/favicon.ico` | **Delete** |
+| `index.html` | Update meta description, OG description, Twitter description |
 
