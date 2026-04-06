@@ -8,6 +8,9 @@ const IntegrationBanner = () => {
           src={integrationCard}
           alt="Integrations - Connect QuickBooks and Plaid to streamline your financial data and keep forecasts accurate"
           className="max-w-lg w-full"
+          loading="lazy"
+          width={512}
+          height={320}
         />
       </div>
     </section>

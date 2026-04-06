@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -61,6 +62,33 @@ const faqGroups = [
 ];
 
 const FAQ = () => {
+  useEffect(() => {
+    const allItems = faqGroups.flatMap((g) => g.items);
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: allItems.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    };
+
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(jsonLd);
+    script.id = "faq-jsonld";
+    document.head.appendChild(script);
+
+    return () => {
+      const el = document.getElementById("faq-jsonld");
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <section id="faq" className="section-padding bg-secondary/30">
       <div className="section-container">
