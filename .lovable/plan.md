@@ -1,31 +1,72 @@
 
 
-# Fix Favicon and SEO Audit
+# SEO & Performance Optimization Plan
 
-## Problem 1: Lovable Favicon Still Showing
+## Overview
 
-The `public/favicon.ico` file still exists and is the **default Lovable favicon**. Browsers (and Google) request `/favicon.ico` by default, which overrides your custom `favicon.png` reference in `index.html`. This is why Google shows the Lovable icon.
+Four improvements to boost search ranking and online presence: sitemap generation, FAQPage structured data, image optimization, and a blog foundation.
 
-**Fix:** Delete `public/favicon.ico`. The existing `index.html` already points to `/favicon.png`, which is your custom Zensus favicon.
+---
 
-## Problem 2: SEO — Outdated Meta Description
+## Step 1 — Sitemap & Robots.txt
 
-Your SEO setup is solid (structured data, OG tags, Twitter cards, canonical URL, robots meta). However, the meta description still says *"Upload your model. Run what-ifs."* — this references the deprecated CSV upload flow. It should reflect the current product positioning (integration-led, agentic scenario analysis).
+**Create `public/sitemap.xml`** listing all public routes with `lastmod` dates:
+- `/` (homepage)
+- `/pricing`
+- `/forecast`
 
-**Fix:** Update the meta description and OG/Twitter descriptions to match current positioning.
+**Update `public/robots.txt`** to add a `Sitemap:` directive pointing to `https://zensus.ai/sitemap.xml`.
 
-### Proposed New Copy
+---
 
-| Tag | New Value |
-|-----|-----------|
-| **meta description** | "Connect your accounts, see your runway in real time, and run multi-turn scenarios with an AI agent. Cash flow forecasting built for founders with variable revenue." |
-| **OG description** | "Connect your accounts, see your runway, and run scenarios with your AI agent. Cash flow forecasting for founders." |
-| **Twitter description** | "Connect your accounts, see your runway, and run scenarios with your AI agent." |
+## Step 2 — FAQPage JSON-LD Structured Data
+
+**Update `src/components/landing/FAQ.tsx`** to inject a `<script type="application/ld+json">` block containing all 8 FAQ items in Google's `FAQPage` schema format. This enables rich snippets (expandable Q&A) directly in Google search results.
+
+The structured data will be generated from the existing `faqGroups` array so it stays in sync automatically.
+
+---
+
+## Step 3 — Image Optimization
+
+**Update `src/components/landing/RunwayFeature.tsx`:**
+- Add `loading="lazy"` to all product screenshot `<img>` tags (these are below the fold)
+- Add descriptive `alt` text per section instead of the generic "Zensus dashboard"
+- Add `width` and `height` attributes to prevent layout shift (CLS)
+
+**Update `src/components/landing/IntegrationBanner.tsx`:**
+- Add `loading="lazy"`, descriptive `alt` (already decent), and dimensions
+
+**Update `src/components/landing/Navbar.tsx`:**
+- Logo is above the fold — keep eager loading but add `width`/`height`
+
+---
+
+## Step 4 — Blog Route Foundation
+
+**Create `src/pages/Blog.tsx`** — a simple blog listing page with:
+- SEO-friendly heading structure
+- Placeholder card layout for future posts
+- A few sample post cards with titles like "How to Calculate Startup Runway" and "Cash Flow Forecasting for Variable Revenue Businesses"
+- Links back to the homepage
+
+**Update `src/App.tsx`** — add `/blog` route.
+
+**Update `index.html` JSON-LD** — fix the outdated description in the existing `SoftwareApplication` structured data (still says "Upload your model, run what-ifs").
+
+---
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `public/favicon.ico` | **Delete** |
-| `index.html` | Update meta description, OG description, Twitter description |
+| `public/sitemap.xml` | **New** — sitemap with 4 routes |
+| `public/robots.txt` | Add `Sitemap:` directive |
+| `src/components/landing/FAQ.tsx` | Add `FAQPage` JSON-LD structured data |
+| `src/components/landing/RunwayFeature.tsx` | `loading="lazy"`, descriptive `alt`, `width`/`height` |
+| `src/components/landing/IntegrationBanner.tsx` | `loading="lazy"`, dimensions |
+| `src/components/landing/Navbar.tsx` | Add `width`/`height` to logo |
+| `src/pages/Blog.tsx` | **New** — blog listing page |
+| `src/App.tsx` | Add `/blog` route |
+| `index.html` | Fix JSON-LD description |
 
