@@ -22,7 +22,7 @@ const Navbar = () => {
       <div className="section-container">
         <div className="flex h-16 items-center justify-between">
           <a href="#" className="flex items-center gap-2">
-            <img src={zensusLogo} alt="Zensus logo" className="h-8 w-8 rounded-lg" />
+            <img src={zensusLogo} alt="Zensus logo" className="h-8 w-8 rounded-lg" width={32} height={32} />
             <span className="text-xl font-semibold text-foreground">Zensus</span>
           </a>
 

@@ -43,8 +43,11 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
     <div className="relative rounded-2xl overflow-hidden border border-border bg-card">
       <img
         src={image}
-        alt="Zensus dashboard"
+        alt={headline + " " + highlight + " — Zensus cash flow forecasting"}
         className="w-full h-auto"
+        loading="lazy"
+        width={800}
+        height={500}
       />
       <div className="absolute inset-0 bg-gradient-to-bl from-[hsl(var(--primary))]/5 via-transparent to-transparent pointer-events-none" />
     </div>
