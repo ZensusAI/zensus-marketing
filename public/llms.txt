@@ -1,0 +1,30 @@
+# Zensus
+
+> AI-native cash flow forecasting and runway planning for startup founders.
+
+Zensus helps founders with variable revenue know exactly when their cash runs out — and what to do about it. Connect QuickBooks, your bank account via Plaid, or HubSpot subscriptions. Get real-time runway projections and ask an AI agent questions about your business survival.
+
+## Key Features
+
+- Real-time runway calculation with zero-cash date
+- Agentic multi-turn scenario planning (text and voice)
+- Subscription-intelligent revenue projections (annual, quarterly, monthly contracts)
+- Direct integrations: QuickBooks, Plaid bank feeds, HubSpot
+- Expense categorization across 8 business categories
+- Weekly and daily cash flow drill-down
+- CSV export at multiple granularities
+
+## Target Audience
+
+Founders and operators of startups with variable revenue, complex hiring plans, annual contracts, seasonal income, or usage-based pricing.
+
+## Pricing
+
+- Zensus Pro: $199/month, billed monthly, cancel anytime
+
+## Links
+
+- [Homepage](https://zensus.ai)
+- [Pricing](https://zensus.ai/pricing)
+- [Blog](https://zensus.ai/blog)
+- [llms-full.txt](https://zensus.ai/llms-full.txt)
