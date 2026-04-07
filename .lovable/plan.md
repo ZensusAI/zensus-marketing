@@ -1,72 +1,44 @@
 
 
-# SEO & Performance Optimization Plan
+# Fix Broken Navigation Links
 
-## Overview
+## Problems Found
 
-Four improvements to boost search ranking and online presence: sitemap generation, FAQPage structured data, image optimization, and a blog foundation.
+1. **`#features` link has no target.** The navbar links to `#features`, but no section on the page has `id="features"`. The RunwayFeature component (which showcases features) has no `id` attribute at all. Clicking "Features" does nothing.
 
----
+2. **Hash links don't work from `/pricing` or `/blog`.** The navbar uses plain `<a href="#faq">` and `<a href="#features">`. These only work when already on the homepage. From `/pricing` or `/blog`, clicking "Features" or "FAQ" navigates to `/pricing#features` — which doesn't exist on that page.
 
-## Step 1 — Sitemap & Robots.txt
+3. **Logo link uses `<a href="#">`** instead of linking to `/`. From any sub-page, clicking the logo doesn't navigate home.
 
-**Create `public/sitemap.xml`** listing all public routes with `lastmod` dates:
-- `/` (homepage)
-- `/pricing`
-- `/forecast`
+4. **Footer "Security" link points to `#`** — a dead link.
 
-**Update `public/robots.txt`** to add a `Sitemap:` directive pointing to `https://zensus.ai/sitemap.xml`.
+## Plan
 
----
+### 1. Add `id="features"` to RunwayFeature section
 
-## Step 2 — FAQPage JSON-LD Structured Data
+In `src/components/landing/RunwayFeature.tsx`, add `id="features"` to the wrapping `<section>` element so the anchor target exists.
 
-**Update `src/components/landing/FAQ.tsx`** to inject a `<script type="application/ld+json">` block containing all 8 FAQ items in Google's `FAQPage` schema format. This enables rich snippets (expandable Q&A) directly in Google search results.
+### 2. Convert hash links to absolute paths with hashes
 
-The structured data will be generated from the existing `faqGroups` array so it stays in sync automatically.
+In `src/components/landing/Navbar.tsx`:
+- Change `#features` → `/#features` and `#faq` → `/#faq`
+- Use React Router `Link` for these instead of plain `<a>` tags, OR use `<a href="/#features">` which works cross-page
+- Change logo from `<a href="#">` → `<Link to="/">`
 
----
+### 3. Handle scroll-to-hash on homepage load
 
-## Step 3 — Image Optimization
+Add a small `useEffect` in `Index.tsx` that checks `window.location.hash` after the loading skeleton clears and scrolls to the target element. This ensures navigating from `/pricing` to `/#features` actually scrolls.
 
-**Update `src/components/landing/RunwayFeature.tsx`:**
-- Add `loading="lazy"` to all product screenshot `<img>` tags (these are below the fold)
-- Add descriptive `alt` text per section instead of the generic "Zensus dashboard"
-- Add `width` and `height` attributes to prevent layout shift (CLS)
+### 4. Fix footer dead link
 
-**Update `src/components/landing/IntegrationBanner.tsx`:**
-- Add `loading="lazy"`, descriptive `alt` (already decent), and dimensions
-
-**Update `src/components/landing/Navbar.tsx`:**
-- Logo is above the fold — keep eager loading but add `width`/`height`
-
----
-
-## Step 4 — Blog Route Foundation
-
-**Create `src/pages/Blog.tsx`** — a simple blog listing page with:
-- SEO-friendly heading structure
-- Placeholder card layout for future posts
-- A few sample post cards with titles like "How to Calculate Startup Runway" and "Cash Flow Forecasting for Variable Revenue Businesses"
-- Links back to the homepage
-
-**Update `src/App.tsx`** — add `/blog` route.
-
-**Update `index.html` JSON-LD** — fix the outdated description in the existing `SoftwareApplication` structured data (still says "Upload your model, run what-ifs").
-
----
+In `src/components/landing/Footer.tsx`, either remove the "Security" link or point it to a real destination.
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `public/sitemap.xml` | **New** — sitemap with 4 routes |
-| `public/robots.txt` | Add `Sitemap:` directive |
-| `src/components/landing/FAQ.tsx` | Add `FAQPage` JSON-LD structured data |
-| `src/components/landing/RunwayFeature.tsx` | `loading="lazy"`, descriptive `alt`, `width`/`height` |
-| `src/components/landing/IntegrationBanner.tsx` | `loading="lazy"`, dimensions |
-| `src/components/landing/Navbar.tsx` | Add `width`/`height` to logo |
-| `src/pages/Blog.tsx` | **New** — blog listing page |
-| `src/App.tsx` | Add `/blog` route |
-| `index.html` | Fix JSON-LD description |
+| `src/components/landing/RunwayFeature.tsx` | Add `id="features"` to section |
+| `src/components/landing/Navbar.tsx` | Logo → `<Link to="/">`, hash links → `/#features`, `/#faq` |
+| `src/pages/Index.tsx` | Add `useEffect` to scroll to hash after skeleton clears |
+| `src/components/landing/Footer.tsx` | Fix or remove dead "Security" `#` link |
 
