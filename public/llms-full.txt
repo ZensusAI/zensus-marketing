@@ -1,0 +1,80 @@
+# Zensus — Full Context for LLMs
+
+> AI-native cash flow forecasting and runway planning for startup founders.
+
+## What Is Zensus?
+
+Zensus is a financial planning tool that gives founders real-time visibility into their cash position and runway. Instead of spreadsheets or gut instinct, founders connect their financial accounts and get instant, always-current projections powered by an AI agent they can ask questions in natural language — via text or voice.
+
+## Problem It Solves
+
+Most founders make million-dollar decisions — hiring, fundraising timing, contract negotiations — based on gut feeling or a stale spreadsheet. Checking your bank balance is not a financial strategy. Zensus replaces that with live, subscription-aware projections that update automatically.
+
+## Core Features
+
+### Real-Time Runway
+- Calculates your exact zero-cash date based on connected financial data
+- Updates automatically whenever data is more than an hour stale
+- Manual sync available at any time
+
+### AI Agent / Scenario Planning
+- Ask natural-language questions: "Can I afford to hire two engineers?", "What if we lose our largest annual contract?", "What happens with 5% monthly churn?"
+- Multi-turn conversations with persistent chat history
+- Built-in voice assistant for hands-free interaction
+
+### Subscription-Intelligent Projections
+- Syncs HubSpot subscriptions including annual and quarterly contracts
+- Projects revenue based on when cash actually hits the bank, not flat monthly estimates
+- Handles variable revenue, seasonal patterns, and usage-based pricing
+
+### Integrations
+- **QuickBooks**: One-click OAuth connection for accounting data
+- **Plaid**: Direct bank account connection for real-time transaction data
+- **HubSpot**: Subscription and contract revenue sync
+
+### Cash Flow Analysis
+- Expense categorization across 8 business categories
+- Weekly and daily drill-down views
+- CSV export at monthly, weekly, or daily granularity
+- Burn rate tracking and trend visualization
+
+## Security
+
+- AES-256 encryption for all data
+- OAuth tokens managed by Plaid and Intuit — credentials are never stored
+- All data processed on encrypted AWS infrastructure
+- Financial data is never shared, sold, or used to train AI models
+- Each account is completely isolated
+
+## Pricing
+
+**Zensus Pro — $199/month**
+- Billed monthly, cancel anytime
+- Less than a single hour with a fractional CFO
+- Includes all integrations, AI agent, and unlimited scenarios
+
+## FAQ
+
+**Do I need QuickBooks to use Zensus?**
+No. You can connect your bank account directly via Plaid, connect QuickBooks, sync your HubSpot subscriptions, or use any combination.
+
+**Can I connect my HubSpot account?**
+Yes. Zensus syncs your HubSpot subscriptions — including annual and quarterly contracts — so your runway projections reflect when revenue actually hits your bank.
+
+**How long does setup take?**
+Under 2 minutes. Connect your bank or QuickBooks with one click, and your runway is calculated instantly.
+
+**What kind of questions can I ask?**
+Anything about your finances: "When will I run out of cash?", "Can I afford to hire two engineers?", "What if we lose our largest annual contract?", "What happens with 5% monthly churn?"
+
+**Is my financial data secure?**
+Yes. Bank-level AES-256 encryption. Credentials are never stored — OAuth tokens are managed by Plaid and Intuit.
+
+**Who can see my data?**
+Only you. Your financial data is never shared, sold, or used to train AI models.
+
+## Links
+
+- Homepage: https://zensus.ai
+- Pricing: https://zensus.ai/pricing
+- Blog: https://zensus.ai/blog
