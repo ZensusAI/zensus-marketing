@@ -2,7 +2,6 @@ const Footer = () => {
   const legalLinks = [
     { label: "Privacy", href: "https://app.zensus.app/privacy" },
     { label: "Terms", href: "https://app.zensus.app/terms" },
-    { label: "Security", href: "#" },
   ];
 
   return (
