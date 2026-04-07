@@ -12,9 +12,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { href: "#features", label: "Features" },
+    { href: "/#features", label: "Features" },
     { href: "/pricing", label: "Pricing", isRoute: true },
-    { href: "#faq", label: "FAQ" },
+    { href: "/#faq", label: "FAQ" },
   ];
 
   return (
