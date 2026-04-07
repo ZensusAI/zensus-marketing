@@ -125,11 +125,11 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
 
 const RunwayFeature = () => {
   return (
-    <>
+    <div id="features">
       {sections.map((section, i) => (
         <RunwaySection key={i} {...section} imageRight={i % 2 === 0} />
       ))}
-    </>
+    </div>
   );
 };
 

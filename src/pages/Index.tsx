@@ -15,13 +15,21 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate initial load / allow assets to load
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 300);
-
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!isLoading && window.location.hash) {
+      const id = window.location.hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 50);
+      }
+    }
+  }, [isLoading]);
 
   if (isLoading) {
     return <PageSkeleton />;
