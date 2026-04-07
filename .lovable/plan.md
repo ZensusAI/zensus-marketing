@@ -1,44 +1,47 @@
 
 
-# Fix Broken Navigation Links
+# Fix Favicon for Google Search Results
 
-## Problems Found
+## Problem
 
-1. **`#features` link has no target.** The navbar links to `#features`, but no section on the page has `id="features"`. The RunwayFeature component (which showcases features) has no `id` attribute at all. Clicking "Features" does nothing.
-
-2. **Hash links don't work from `/pricing` or `/blog`.** The navbar uses plain `<a href="#faq">` and `<a href="#features">`. These only work when already on the homepage. From `/pricing` or `/blog`, clicking "Features" or "FAQ" navigates to `/pricing#features` — which doesn't exist on that page.
-
-3. **Logo link uses `<a href="#">`** instead of linking to `/`. From any sub-page, clicking the logo doesn't navigate home.
-
-4. **Footer "Security" link points to `#`** — a dead link.
+The current `favicon.png` is **1.3 MB and 968×967 px** — far too large for Google. Google requires favicons to be a multiple of 48px (e.g., 48×48, 96×96, 192×192) and reasonably small in file size. Google also looks for `/favicon.ico` by default.
 
 ## Plan
 
-### 1. Add `id="features"` to RunwayFeature section
+### 1. Generate optimized favicon files from the existing logo
 
-In `src/components/landing/RunwayFeature.tsx`, add `id="features"` to the wrapping `<section>` element so the anchor target exists.
+Using the existing `public/favicon.png` as the source, create:
+- `public/favicon.ico` — 48×48 ICO (Google's preferred format)
+- `public/favicon-32x32.png` — 32×32 PNG
+- `public/favicon-192x192.png` — 192×192 PNG (for Android/PWA)
+- `public/apple-touch-icon.png` — 180×180 PNG
 
-### 2. Convert hash links to absolute paths with hashes
+### 2. Update `index.html` with proper favicon references
 
-In `src/components/landing/Navbar.tsx`:
-- Change `#features` → `/#features` and `#faq` → `/#faq`
-- Use React Router `Link` for these instead of plain `<a>` tags, OR use `<a href="/#features">` which works cross-page
-- Change logo from `<a href="#">` → `<Link to="/">`
+```html
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+```
 
-### 3. Handle scroll-to-hash on homepage load
+Remove the old single `favicon.png` reference.
 
-Add a small `useEffect` in `Index.tsx` that checks `window.location.hash` after the loading skeleton clears and scrolls to the target element. This ensures navigating from `/pricing` to `/#features` actually scrolls.
+### 3. Keep the original `favicon.png` (no change)
 
-### 4. Fix footer dead link
+It stays as the source file but won't be referenced directly.
 
-In `src/components/landing/Footer.tsx`, either remove the "Security" link or point it to a real destination.
+## Why this fixes Google
+
+Google specifically crawls `/favicon.ico` and small PNG favicons. The current 1.3 MB PNG is ignored by Google's favicon crawler. After this change, Google will pick up the properly sized ICO/PNG on its next crawl (can take days to weeks).
 
 ## Files Changed
 
 | File | Change |
 |------|--------|
-| `src/components/landing/RunwayFeature.tsx` | Add `id="features"` to section |
-| `src/components/landing/Navbar.tsx` | Logo → `<Link to="/">`, hash links → `/#features`, `/#faq` |
-| `src/pages/Index.tsx` | Add `useEffect` to scroll to hash after skeleton clears |
-| `src/components/landing/Footer.tsx` | Fix or remove dead "Security" `#` link |
+| `public/favicon.ico` | **New** — 48×48 ICO generated from logo |
+| `public/favicon-32x32.png` | **New** — 32×32 PNG |
+| `public/favicon-192x192.png` | **New** — 192×192 PNG |
+| `public/apple-touch-icon.png` | **New** — 180×180 PNG |
+| `index.html` | Updated favicon `<link>` tags |
 
