@@ -1,4 +1,5 @@
 import { Link2, Target, BarChart3, MessageCircle } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import runwayDashboard from "@/assets/runway-dashboard.png";
 import runwayConnect from "@/assets/runway-connect.png";
 import runwayZerocash from "@/assets/runway-zerocash.png";
@@ -16,9 +17,19 @@ interface RunwaySectionProps {
 }
 
 const RunwaySection = ({ headline, highlight, description, bullets, icon, image, imageRight }: RunwaySectionProps) => {
+  const { ref, isVisible } = useScrollAnimation(0.15);
+
+  const contentAnimation = isVisible
+    ? imageRight ? "animate-slide-in-left" : "animate-slide-in-right"
+    : "opacity-0";
+
+  const imageAnimation = isVisible
+    ? imageRight ? "animate-slide-in-right" : "animate-slide-in-left"
+    : "opacity-0";
+
   const content = (
-    <div>
-      <div className="flex items-center gap-3 mb-4">
+    <div className={`animate-on-scroll ${contentAnimation}`}>
+      <div className={`flex items-center gap-3 mb-4 ${isVisible ? "animate-scale-in" : "opacity-0"}`}>
         <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
           {icon}
         </div>
@@ -30,7 +41,11 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
       <p className="text-lg text-muted-foreground mb-6">{description}</p>
       <ul className="space-y-3">
         {bullets.map((bullet, i) => (
-          <li key={i} className="flex items-start gap-3">
+          <li
+            key={i}
+            className={`flex items-start gap-3 ${isVisible ? "animate-fade-in-up" : "opacity-0"}`}
+            style={{ animationDelay: isVisible ? `${i * 100}ms` : "0ms" }}
+          >
             <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-primary mt-2.5" />
             <span className="text-foreground">{bullet}</span>
           </li>
@@ -40,7 +55,7 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
   );
 
   const imageEl = (
-    <div className="relative rounded-2xl overflow-hidden border border-border bg-card">
+    <div className={`relative rounded-2xl overflow-hidden border border-border bg-card animate-on-scroll ${imageAnimation}`}>
       <img
         src={image}
         alt={headline + " " + highlight + " — Zensus cash flow forecasting"}
@@ -54,7 +69,7 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
   );
 
   return (
-    <section className="section-padding bg-background">
+    <section ref={ref} className="section-padding bg-background">
       <div className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {imageRight ? (
