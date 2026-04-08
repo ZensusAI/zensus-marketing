@@ -82,6 +82,14 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(142 71% 45% / 0.3)" },
           "50%": { boxShadow: "0 0 40px hsl(142 71% 45% / 0.5)" },
         },
+        "slide-in-left": {
+          "0%": { opacity: "0", transform: "translateX(-60px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "slide-in-right": {
+          "0%": { opacity: "0", transform: "translateX(60px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
         shine: {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
