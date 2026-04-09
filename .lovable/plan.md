@@ -1,12 +1,12 @@
 
 
-# Replace Zero-Cash Date Screenshot
+# Replace Drill-Down Screenshot
 
-The uploaded screenshot will be copied to `src/assets/runway-zerocash.png`, replacing the current file. No code changes needed since the component already imports from this path.
+Copy the uploaded screenshot to replace `src/assets/runway-drilldown.png`. No code changes needed — the component already imports from this path.
 
 ## Change
 
 | File | Action |
 |------|--------|
-| `src/assets/runway-zerocash.png` | Overwrite with uploaded screenshot |
+| `src/assets/runway-drilldown.png` | Overwrite with uploaded screenshot |
 
