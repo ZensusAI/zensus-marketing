@@ -1,12 +1,12 @@
 
 
-# Replace Drill-Down Screenshot
+# Replace Runway Agent Screenshot
 
-Copy the uploaded screenshot to replace `src/assets/runway-drilldown.png`. No code changes needed — the component already imports from this path.
+Copy the uploaded screenshot to replace `src/assets/runway-whatif.png`. No code changes needed — the component already imports from this path.
 
 ## Change
 
 | File | Action |
 |------|--------|
-| `src/assets/runway-drilldown.png` | Overwrite with uploaded screenshot |
+| `src/assets/runway-whatif.png` | Overwrite with uploaded screenshot |
 
