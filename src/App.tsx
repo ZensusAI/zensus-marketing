@@ -8,6 +8,7 @@ import Pricing from "./pages/Pricing";
 import Forecast from "./pages/Forecast";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
+import RedirectToApp from "./components/RedirectToApp";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,9 @@ const App = () => (
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/forecast" element={<Forecast />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/privacy" element={<RedirectToApp />} />
+          <Route path="/support" element={<RedirectToApp />} />
+          <Route path="/features" element={<RedirectToApp />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
