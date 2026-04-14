@@ -1,28 +1,25 @@
 
 
-# Fix Google Search Console Indexing Issues for zensus.app
+# Redirect Legacy Routes to app.zensus.app
 
-The core problem: all canonical URLs, sitemap entries, OG tags, and structured data reference `zensus.ai` instead of `zensus.app`. Google sees your site at zensus.app but the canonical says "the real version is at zensus.ai," so it skips indexing.
+The problem: when Google (or anyone) visits `zensus.app/privacy`, `zensus.app/support`, or `zensus.app/features`, the SPA serves `index.html` and React Router shows the NotFound page (with a 200 status). Google sees this as duplicate thin content. Instead, these should redirect to `app.zensus.app`.
 
 ## Changes
 
-### 1. Update `index.html` — switch all URLs from zensus.ai to zensus.app
-- Canonical: `https://zensus.app`
-- OG/Twitter URLs: `https://zensus.app/`
-- Structured data `url`: `https://zensus.app`
+### 1. Create a `RedirectToApp` component
+A small component that redirects to `app.zensus.app` + the current path using `window.location.replace()`. It also sets a `noindex` meta tag during the brief render.
 
-### 2. Update `public/sitemap.xml` — all `<loc>` entries to zensus.app
-- `https://zensus.app/`, `/pricing`, `/forecast`, `/blog`
+### 2. Add redirect routes in `src/App.tsx`
+Add explicit routes for `/privacy`, `/support`, and `/features` that use the `RedirectToApp` component:
 
-### 3. Update `public/robots.txt` — sitemap URL to zensus.app
-- `Sitemap: https://zensus.app/sitemap.xml`
+```
+<Route path="/privacy" element={<RedirectToApp />} />
+<Route path="/support" element={<RedirectToApp />} />
+<Route path="/features" element={<RedirectToApp />} />
+```
 
-### 4. Remove `/forecast` from sitemap
-- The Forecast page is just a redirect to `app.zensus.app/forecast` — it has no indexable content and is likely one of the "page with redirect" issues. Remove it from the sitemap so Google doesn't try to index a redirect page.
+This way, visitors and Google are immediately redirected to `app.zensus.app/privacy`, etc., instead of seeing the homepage or a soft 404.
 
-### 5. Add per-page meta tags (optional but recommended)
-- Each page (Pricing, Blog) currently shares the same `<title>` and `<meta description>` from `index.html`. Since this is an SPA without SSR, this is a known limitation. For now, the sitemap and canonical fixes are the priority.
-
-## Impact
-These changes should resolve the "Page with redirect," "Alternate page with proper canonical tag," and most "Crawled - currently not indexed" issues. The 404 and 403 issues likely involve specific URLs that Google discovered elsewhere — you may want to check GSC for the exact URLs to investigate further.
+### 3. Add `noindex` to `NotFound.tsx`
+For any other unknown routes, add a `<meta name="robots" content="noindex">` tag so Google doesn't index random SPA catch-all pages as duplicate content.
 
