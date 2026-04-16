@@ -15,7 +15,62 @@ dist-ssr
 # Environment files — configure via Vercel env vars, never commit
 .env
 .env.*
+*.env
+*.env.*
+.envrc
 !.env.example
+
+# Secrets, keys, certificates — never commit
+*.pem
+*.key
+*.cer
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+*.asc
+*.gpg
+secrets/
+secret/
+credentials/
+credentials.json
+service-account*.json
+gcp-*.json
+firebase-adminsdk*.json
+.npmrc
+.netrc
+
+# Supabase CLI local artifacts (may contain session/keys)
+.supabase/
+supabase/.branches/
+supabase/.temp/
+
+# Vercel local artifacts
+.vercel
+
+# Build caches / tooling caches
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+coverage/
+.nyc_output/
+
+# Temp / backup / patch leftovers
+tmp/
+temp/
+*.bak
+*.backup
+*.tmp
+*.orig
+*.rej
 
 # Lovable artifacts (historical — platform ejected)
 .lovable/
