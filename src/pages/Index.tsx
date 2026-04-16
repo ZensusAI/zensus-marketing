@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
-import IntegrationLogos from "@/components/landing/IntegrationLogos";
-import IntegrationBanner from "@/components/landing/IntegrationBanner";
 import RunwayFeature from "@/components/landing/RunwayFeature";
 import HowItWorks from "@/components/landing/HowItWorks";
 import Problem from "@/components/landing/Problem";
@@ -40,9 +38,7 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <IntegrationBanner />
         <Problem />
-        <IntegrationLogos />
         <RunwayFeature />
         <HowItWorks />
         <PricingPreview />
