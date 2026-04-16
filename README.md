@@ -4,7 +4,7 @@
 
 Upload your model. Run what-ifs. Know the exact week you can hire, distribute, or need to cut.
 
-🌐 [zensus.ai](https://zensus.ai) · 🚀 [Launch App](https://app.zensus.app)
+[zensus.app](https://zensus.app) · [Launch App](https://app.zensus.app)
 
 ---
 
@@ -47,7 +47,7 @@ src/
 
 ## Links
 
-- **Website:** [zensus.ai](https://zensus.ai)
+- **Website:** [zensus.app](https://zensus.app)
 - **App:** [app.zensus.app](https://app.zensus.app)
 - **Twitter/X:** [@zensusai](https://x.com/zensusai)
 - **LinkedIn:** [Zensus](https://www.linkedin.com/company/zensusai)

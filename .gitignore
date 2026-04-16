@@ -12,6 +12,20 @@ dist
 dist-ssr
 *.local
 
+# Environment files — configure via Vercel env vars, never commit
+.env
+.env.*
+!.env.example
+
+# Lovable artifacts (historical — platform ejected)
+.lovable/
+
+# Lockfile policy — this project uses npm (package-lock.json)
+bun.lock
+bun.lockb
+pnpm-lock.yaml
+yarn.lock
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
