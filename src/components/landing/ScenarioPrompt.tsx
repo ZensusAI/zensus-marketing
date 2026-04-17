@@ -28,10 +28,11 @@ export const ScenarioPrompt = ({ className, visible = true }: ScenarioPromptProp
       {PHRASES.map((phrase, i) => (
         <span
           key={phrase}
-          className="absolute inset-0 whitespace-nowrap"
+          className="absolute inset-0 whitespace-nowrap opacity-0"
           style={{
             animation: `scenario-rotate 20s infinite`,
             animationDelay: `${i * 5}s`,
+            animationFillMode: "backwards",
           }}
         >
           {phrase}

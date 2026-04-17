@@ -5,7 +5,6 @@ import { TalkToUsButton } from "./TalkToUsButton";
 const H1_SENTENCE_1 = "Know exactly when your cash runs out.";
 const H1_SENTENCE_2_PLAIN = "And exactly what to do ";
 const H1_SENTENCE_2_ACCENT = "about it.";
-const LOCAL_STORAGE_KEY = "zensus-hero-seen-v1";
 const TYPE_SPEED_MS = 40;
 
 const prefersReducedMotion = () =>
@@ -18,8 +17,7 @@ const Hero = () => {
   const [promptVisible, setPromptVisible] = useState(false);
   const [animateOnMount] = useState(() => {
     if (typeof window === "undefined") return false;
-    if (prefersReducedMotion()) return false;
-    return !localStorage.getItem(LOCAL_STORAGE_KEY);
+    return !prefersReducedMotion();
   });
   const timeoutRefs = useRef<number[]>([]);
 
@@ -42,10 +40,7 @@ const Hero = () => {
           window.setTimeout(() => setFadeInSentence2(true), 50),
         );
         timeoutRefs.current.push(
-          window.setTimeout(() => {
-            setPromptVisible(true);
-            localStorage.setItem(LOCAL_STORAGE_KEY, "1");
-          }, 550),
+          window.setTimeout(() => setPromptVisible(true), 550),
         );
       }
     };
