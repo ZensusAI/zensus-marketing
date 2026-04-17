@@ -13,6 +13,7 @@ import Security from "./pages/Security";
 import Integrations from "./pages/Integrations";
 import PlaidIntegration from "./pages/integrations/Plaid";
 import QuickBooksIntegration from "./pages/integrations/QuickBooks";
+import HubSpotIntegration from "./pages/integrations/HubSpot";
 import RedirectToApp from "./components/RedirectToApp";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/integrations/plaid" element={<PlaidIntegration />} />
             <Route path="/integrations/quickbooks" element={<QuickBooksIntegration />} />
+            <Route path="/integrations/hubspot" element={<HubSpotIntegration />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
