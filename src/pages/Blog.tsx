@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, Clock, ArrowRight } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 
@@ -41,6 +42,12 @@ const posts = [
 const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Blog · Zensus</title>
+        <meta name="description" content="Case studies and practical guides on cash flow forecasting, runway planning, and financial decision-making for founders with variable revenue." />
+        <meta property="og:title" content="Blog · Zensus" />
+        <meta property="og:description" content="Case studies on cash flow forecasting for founders with variable revenue." />
+      </Helmet>
       <Navbar />
       <main className="pt-24 pb-16">
         <div className="section-container">
