@@ -130,7 +130,7 @@ const entries: ChangelogEntry[] = [
 ### 8. SEO
 
 - `<Helmet>` block in `Changelog.tsx` with title, description, og tags.
-- `public/sitemap.xml` gets a new `<url>` entry for `/changelog` with today's `<lastmod>`.
+- `public/sitemap.xml` gets a new `<url>` entry for `/changelog` with `<loc>`, today's `<lastmod>`, `<changefreq>weekly</changefreq>`, and `<priority>0.7</priority>`. This matches the existing entry pattern in the file.
 
 ### 9. Accessibility
 
@@ -166,6 +166,6 @@ Verification per task: `npm run build` passes, `npm run lint` stays at the Phase
 
 ## Maintenance notes
 
-- Adding a new entry: edit `entries` array at the top of `src/pages/Changelog.tsx`, commit. Entries in the array must be in reverse chronological order (newest first); alternatively the rendering step sorts by date, but keeping array order matches intent and makes diffs legible.
+- Adding a new entry: edit the `entries` array at the top of `src/pages/Changelog.tsx`, commit. The invariant is that the array is authored in reverse chronological order (newest first). The component renders the array as-is, no sort at render time. Diffs stay legible, PR review is trivial.
 - Category taxonomy is fixed at four values; adding a fifth requires updating the `ChangelogCategory` type and the pill-color map.
 - If cadence slips and the page goes stale for months, consider demoting the nav link back to Footer rather than leaving a visibly stale Changelog in primary nav.
