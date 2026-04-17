@@ -1,6 +1,5 @@
 import { Link2, Target, BarChart3, MessageCircle, Bell } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import runwayDashboard from "@/assets/runway-dashboard.png";
 import runwayConnect from "@/assets/runway-connect.png";
 import runwayZerocash from "@/assets/runway-zerocash.png";
 import runwayDrilldown from "@/assets/runway-drilldown.png";
