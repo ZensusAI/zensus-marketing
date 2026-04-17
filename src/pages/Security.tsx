@@ -112,12 +112,12 @@ const Security = () => (
           <p>
             Security questions, disclosures, or procurement inquiries go to{" "}
             <a
-              href="mailto:security@zensus.app"
+              href="mailto:hello@zensus.app"
               className="text-primary hover:underline"
             >
-              security@zensus.app
+              hello@zensus.app
             </a>
-            . Response time is typically within one business day.
+            .
           </p>
         </Section>
 
