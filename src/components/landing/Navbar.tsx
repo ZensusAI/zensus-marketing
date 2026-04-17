@@ -15,7 +15,7 @@ interface NavLink {
 const NAV_LINKS: NavLink[] = [
   { href: "/#features", label: "Product", isRoute: false },
   { href: "/integrations", label: "Integrations", isRoute: true },
-  { href: "/pricing", label: "Plans", isRoute: true },
+  { href: "/changelog", label: "Changelog", isRoute: true },
   { href: "/security", label: "Security", isRoute: true },
 ];
 
