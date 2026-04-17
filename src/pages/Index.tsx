@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import { TrustBar } from "@/components/landing/TrustBar";
-import RunwayFeature from "@/components/landing/RunwayFeature";
-import HowItWorks from "@/components/landing/HowItWorks";
 import Problem from "@/components/landing/Problem";
+import RunwayFeature from "@/components/landing/RunwayFeature";
+import Bento from "@/components/landing/Bento";
+import HowItWorks from "@/components/landing/HowItWorks";
+import SecurityStrip from "@/components/landing/SecurityStrip";
 import PricingPreview from "@/components/landing/PricingPreview";
 import FAQ from "@/components/landing/FAQ";
+import FinalCTABand from "@/components/landing/FinalCTABand";
 import Footer from "@/components/landing/Footer";
 import PageSkeleton from "@/components/landing/PageSkeleton";
 
@@ -42,9 +45,12 @@ const Index = () => {
         <TrustBar />
         <Problem />
         <RunwayFeature />
+        <Bento />
         <HowItWorks />
+        <SecurityStrip />
         <PricingPreview />
         <FAQ />
+        <FinalCTABand />
       </main>
       <Footer />
     </div>
