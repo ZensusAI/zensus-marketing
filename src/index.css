@@ -6,8 +6,8 @@
 
 @layer base {
   :root {
-    --background: 220 20% 4%;
-    --foreground: 0 0% 98%;
+    --background: 240 7% 4%;     /* was 220 20% 4% */
+    --foreground: 36 27% 96%;    /* keep */
 
     --card: 220 20% 8%;
     --card-foreground: 0 0% 98%;
@@ -40,11 +40,14 @@
     --gradient-start: 142 71% 45%;
     --gradient-end: 160 84% 39%;
     --glow: 142 71% 45%;
+
+    --surface-raised: 220 13% 9%;  /* #14161A, for bento tiles, scenario prompt */
+    --caution: 38 92% 50%;          /* amber, reserved for UI alerts */
   }
 
   .dark {
-    --background: 220 20% 4%;
-    --foreground: 0 0% 98%;
+    --background: 240 7% 4%;     /* was 220 20% 4% */
+    --foreground: 36 27% 96%;    /* keep */
 
     --card: 220 20% 8%;
     --card-foreground: 0 0% 98%;
@@ -70,6 +73,9 @@
     --border: 220 20% 18%;
     --input: 220 20% 18%;
     --ring: 142 71% 45%;
+
+    --surface-raised: 220 13% 9%;  /* #14161A, for bento tiles, scenario prompt */
+    --caution: 38 92% 50%;          /* amber, reserved for UI alerts */
   }
 }
 
