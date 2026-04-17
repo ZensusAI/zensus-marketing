@@ -58,8 +58,8 @@ const faqGroups = [
     category: "Pricing",
     items: [
       {
-        question: "Can I cancel anytime?",
-        answer: "Yes. There are no contracts or cancellation fees. You can cancel anytime from your billing settings. If you cancel, you keep access through the end of your billing period.",
+        question: "How does pricing work?",
+        answer: "Zensus pricing is tailored to your business size and data volume. We will walk you through what it looks like for you on the call.",
       },
     ],
   },
