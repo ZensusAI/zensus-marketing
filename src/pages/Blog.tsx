@@ -5,34 +5,34 @@ import Footer from "@/components/landing/Footer";
 
 const posts = [
   {
-    title: "How to Calculate Startup Runway",
+    title: "Catching a cash crunch two weeks before it hits",
     description:
-      "Learn the exact formula founders use to calculate runway, plus common mistakes that lead to inaccurate projections.",
-    category: "Guides",
+      "How one founder used Slack alerts to spot a projected shortfall in time to renegotiate payroll timing — without panic or a board call.",
+    category: "Case Study",
     readTime: "6 min read",
     date: "Coming Soon",
   },
   {
-    title: "Cash Flow Forecasting for Variable Revenue Businesses",
+    title: "Replacing a fractional CFO with scenario chat",
     description:
-      "Why traditional forecasting fails for businesses with annual contracts, seasonal revenue, or usage-based pricing — and what to do instead.",
-    category: "Insights",
+      "A founder walks through the four scenarios she ran before her next round — hiring, churn, pricing, and an acquisition offer — in under an hour.",
+    category: "Case Study",
     readTime: "8 min read",
     date: "Coming Soon",
   },
   {
-    title: "When Should You Hire? A Data-Driven Framework",
+    title: "When your runway forecast is lying about annual contracts",
     description:
-      "Use your cash flow forecast to determine the exact month you can afford a new hire without shortening your runway below safety thresholds.",
-    category: "Frameworks",
+      "Why flat MRR math breaks for agencies, consultancies, and SaaS with mixed contract terms — and how subscription-aware projections change the answer.",
+    category: "Case Study",
     readTime: "5 min read",
     date: "Coming Soon",
   },
   {
-    title: "QuickBooks vs. Bank Feeds: Which Data Source Is More Accurate?",
+    title: "From spreadsheet to dashboard: one founder's migration",
     description:
-      "We compared runway projections from QuickBooks data vs. direct bank feeds. Here's what we found and when each source works best.",
-    category: "Product",
+      "What changed after connecting QuickBooks and HubSpot: fewer tabs, faster decisions, and a runway number that actually matches the bank.",
+    category: "Case Study",
     readTime: "4 min read",
     date: "Coming Soon",
   },

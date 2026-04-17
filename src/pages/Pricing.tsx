@@ -8,13 +8,14 @@ const dataFeatures = [
   "Bank account connection (Plaid)",
   "QuickBooks auto-sync",
   "HubSpot subscription sync",
-  "Automatic data refresh when stale",
+  "Real-time webhook sync across all sources",
 ];
 
 const runwayFeatures = [
   "Real-time runway calculation with zero-cash date",
   "Cash flow projections and burn rate tracking",
   "AI scenario modeling with persistent chat history",
+  "Slack alerts when your runway crosses a threshold you set",
   "Expense categorization across 8 business categories",
   "Subscription-aware revenue projections",
   "Weekly and daily cash flow drill-down",

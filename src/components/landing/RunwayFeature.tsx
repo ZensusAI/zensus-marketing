@@ -1,4 +1,4 @@
-import { Link2, Target, BarChart3, MessageCircle } from "lucide-react";
+import { Link2, Target, BarChart3, MessageCircle, Bell } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import runwayDashboard from "@/assets/runway-dashboard.png";
 import runwayConnect from "@/assets/runway-connect.png";
@@ -88,11 +88,11 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
     headline: "Connect in",
     highlight: "60 seconds",
     description:
-      "Link your bank via Plaid, QuickBooks, or HubSpot. Data refreshes automatically when stale, with manual sync across all sources.",
+      "Link your bank via Plaid, QuickBooks, or HubSpot. Data syncs in real time via webhooks, with one-click manual sync from any source.",
     bullets: [
       "Connect your bank account, QuickBooks, HubSpot, or all three",
-      "Data refreshes automatically when stale — no manual work needed",
-      "Manually sync all connected sources at any time",
+      "Real-time webhook sync — the moment a transaction clears, your runway updates",
+      "One-click manual sync across every connected source",
     ],
     icon: <Link2 size={20} className="text-primary" />,
     image: runwayConnect,
@@ -124,10 +124,24 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
     image: runwayDrilldown,
   },
   {
+    headline: "Get alerted",
+    highlight: "before cash runs out",
+    description:
+      "Set your cash floor. Zensus watches your 30-day projection and pings Slack the moment it crosses the line — then re-alerts if the breach moves earlier or your minimum balance drops 10%.",
+    bullets: [
+      "Threshold-based Slack alerts from your projection, not your balance",
+      "Re-alerts on material change — a week earlier or a 10% dip in minimum balance",
+      "Snooze or adjust your threshold from Slack in one click",
+    ],
+    icon: <Bell size={20} className="text-primary" />,
+    // TODO: replace /placeholder.svg with a real Slack alert screenshot
+    image: "/placeholder.svg",
+  },
+  {
     headline: "Run scenarios with",
     highlight: "your runway agent",
     description:
-      "Layer hiring plans, churn assumptions, and pricing changes into multi-turn scenarios. Your agent recalculates runway in real time — type or speak.",
+      "Layer hiring plans, churn assumptions, and pricing changes into multi-turn scenarios. Your agent recalculates runway in real time.",
     bullets: [
       "Stack multiple assumptions — hiring, churn, pricing — in a single conversation",
       "Watch your runway update live as each scenario layer is applied",

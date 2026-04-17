@@ -29,11 +29,15 @@ const faqGroups = [
     items: [
       {
         question: "What kind of questions can I ask?",
-        answer: "Anything about your finances. Examples: \"When will I run out of cash?\", \"Can I afford to hire two engineers?\", \"What if we lose our largest annual contract?\", \"What happens with 5% monthly churn?\", \"What if we switch a client from monthly to annual billing?\" You can type or speak — Zensus has a built-in voice assistant.",
+        answer: "Anything about your finances. Examples: \"When will I run out of cash?\", \"Can I afford to hire two engineers?\", \"What if we lose our largest annual contract?\", \"What happens with 5% monthly churn?\", \"What if we switch a client from monthly to annual billing?\"",
+      },
+      {
+        question: "Can I get notified when I'm running low on cash?",
+        answer: "Yes. Zensus watches your 30-day projection and fires a Slack alert the moment it drops below a threshold you set. It re-alerts on material change — if the breach moves earlier or your minimum balance drops 10% — and you can snooze or adjust your threshold directly from Slack.",
       },
       {
         question: "How often does my data update?",
-        answer: "Your connected data syncs automatically whenever it's more than an hour stale — triggered each time you open the dashboard. You can also manually sync all sources at any time. Your runway recalculates in real-time as new data comes in.",
+        answer: "Your data syncs in real time via webhooks. The moment a transaction clears in Plaid, an invoice changes in QuickBooks, or a subscription updates in HubSpot, your runway recalculates. You can also trigger a manual sync from any source at any time.",
       },
     ],
   },
@@ -42,7 +46,7 @@ const faqGroups = [
     items: [
       {
         question: "Is my financial data secure?",
-        answer: "Yes. We use bank-level AES-256 encryption. Your QuickBooks and bank credentials are never stored — we use OAuth tokens managed by Plaid and Intuit. All data is processed on encrypted AWS infrastructure.",
+        answer: "Yes. All integration tokens are encrypted at rest with AES-256-GCM. Your bank and QuickBooks credentials are never stored on our servers — we rely on OAuth managed by Plaid and Intuit. Every query is isolated by account at the database level, and data sits on encrypted AWS infrastructure.",
       },
       {
         question: "Who can see my data?",

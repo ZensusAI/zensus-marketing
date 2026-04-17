@@ -1,56 +1,69 @@
-# Zensus – Cash Flow Forecasting for Founders
+# zensus-marketing
 
-**AI-powered cash flow forecasting for founders with variable revenue.**
+Public marketing site for Zensus — served at [zensus.app](https://zensus.app).
 
-Upload your model. Run what-ifs. Know the exact week you can hire, distribute, or need to cut.
+This repo is a standalone project, separate from the Zensus monorepo ([ZensusAI/zensus](https://github.com/ZensusAI/zensus)). It was originally built in [Lovable](https://lovable.dev) and ejected to Vercel on 2026-04-16.
 
-[zensus.app](https://zensus.app) · [Launch App](https://app.zensus.app)
+## Stack
 
----
+- Vite 5 + React 18 + TypeScript
+- Tailwind CSS + shadcn/ui (Radix primitives)
+- React Router v6
+- Supabase client (currently instantiated but not actively used — reserved for future waitlist/signup flows)
+- Deployed on Vercel (auto-deploy on push to `main`)
 
-## Tech Stack
-
-- [React](https://react.dev) + [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev) – build tooling
-- [Tailwind CSS](https://tailwindcss.com) – utility-first styling
-- [shadcn/ui](https://ui.shadcn.com) – component library
-- [React Router](https://reactrouter.com) – client-side routing
-
-## Getting Started
+## Local development
 
 ```sh
-# Clone the repository
-git clone https://github.com/ZensusAI/zensus-launchpad-template.git
-
-# Navigate to the project directory
-cd zensus-launchpad-template
-
-# Install dependencies
 npm install
-
-# Start the development server
 npm run dev
 ```
 
-The app will be available at `http://localhost:8080`.
+The dev server runs on `http://localhost:8080`.
 
-## Project Structure
+Required env vars for local dev (copy into a `.env` file at repo root — `.env` is gitignored):
+
+```
+VITE_SUPABASE_PROJECT_ID=rrjfwnmkesscyxppanhm
+VITE_SUPABASE_URL=https://rrjfwnmkesscyxppanhm.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=<supabase anon key — grab from Vercel project env>
+```
+
+The Supabase publishable key is the `anon` JWT — designed to be public and embedded in the client bundle. Row-level security policies in Supabase enforce actual access control.
+
+## Deployment
+
+Vercel project: `zensus-marketing` (Hobby tier). `main` branch auto-deploys to production at [zensus.app](https://zensus.app). PRs get preview deploys at `zensus-marketing-git-<branch>-<team>.vercel.app`.
+
+Production env vars are managed in Vercel dashboard → Settings → Environment Variables. Do not commit env values to this repo.
+
+## Scripts
+
+```sh
+npm run dev          # local dev server (:8080)
+npm run build        # production build → dist/
+npm run build:dev    # dev-mode build (includes component tagger)
+npm run preview      # serve built dist/ locally
+npm run lint         # eslint
+```
+
+## Project structure
 
 ```
 src/
-├── components/    # Reusable UI and landing page components
-├── pages/         # Route-level page components
+├── components/    # UI components + landing sections
+├── pages/         # Route-level pages
 ├── hooks/         # Custom React hooks
-├── lib/           # Utility functions
-└── integrations/  # Backend client configuration
+├── lib/           # Utilities
+└── integrations/
+    └── supabase/  # Supabase client + generated types
 ```
 
 ## Links
 
-- **Website:** [zensus.app](https://zensus.app)
-- **App:** [app.zensus.app](https://app.zensus.app)
-- **Twitter/X:** [@zensusai](https://x.com/zensusai)
-- **LinkedIn:** [Zensus](https://www.linkedin.com/company/zensusai)
+- Production: [zensus.app](https://zensus.app) · [www.zensus.app](https://www.zensus.app)
+- App (separate repo/domain): [app.zensus.app](https://app.zensus.app)
+- Zensus monorepo: [ZensusAI/zensus](https://github.com/ZensusAI/zensus)
 
 ## License
 
