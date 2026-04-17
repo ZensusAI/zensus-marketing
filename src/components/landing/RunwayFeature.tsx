@@ -35,8 +35,7 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
         </div>
       </div>
       <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-        {headline}{" "}
-        <span className="text-gradient">{highlight}</span>
+        {headline} {highlight}
       </h2>
       <p className="text-lg text-muted-foreground mb-6">{description}</p>
       <ul className="space-y-3">
@@ -58,7 +57,7 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
     <div className={`relative rounded-2xl overflow-hidden border border-border bg-card animate-on-scroll ${imageAnimation}`}>
       <img
         src={image}
-        alt={headline + " " + highlight + " — Zensus cash flow forecasting"}
+        alt={headline + " " + highlight + ", Zensus cash flow forecasting"}
         className="w-full h-auto"
         loading="lazy"
         width={800}
@@ -91,7 +90,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "Link your bank via Plaid, QuickBooks, or HubSpot. Data syncs in real time via webhooks, with one-click manual sync from any source.",
     bullets: [
       "Connect your bank account, QuickBooks, HubSpot, or all three",
-      "Real-time webhook sync — the moment a transaction clears, your runway updates",
+      "Real-time webhook sync, the moment a transaction clears your runway updates",
       "One-click manual sync across every connected source",
     ],
     icon: <Link2 size={20} className="text-primary" />,
@@ -101,7 +100,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
     headline: "See your",
     highlight: "zero-cash date",
     description:
-      "Know exactly which month you run out of cash — not a rough guess. Real-time runway calculation from your actual numbers.",
+      "Know exactly which month you run out of cash, not a rough guess. Real-time runway calculation from your actual numbers.",
     bullets: [
       "Exact month-by-month runway based on real data",
       "Real-time recalculation as new transactions come in",
@@ -127,10 +126,10 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
     headline: "Get alerted",
     highlight: "before cash runs out",
     description:
-      "Set your cash floor. Zensus watches your 30-day projection and pings Slack the moment it crosses the line — then re-alerts if the breach moves earlier or your minimum balance drops 10%.",
+      "Set your cash floor. Zensus watches your 30-day projection and pings Slack the moment it crosses the line, then re-alerts if the breach moves earlier or your minimum balance drops 10%.",
     bullets: [
       "Threshold-based Slack alerts from your projection, not your balance",
-      "Re-alerts on material change — a week earlier or a 10% dip in minimum balance",
+      "Re-alerts on material change (a week earlier or a 10% dip in minimum balance)",
       "Snooze or adjust your threshold from Slack in one click",
     ],
     icon: <Bell size={20} className="text-primary" />,
@@ -143,7 +142,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
     description:
       "Layer hiring plans, churn assumptions, and pricing changes into multi-turn scenarios. Your agent recalculates runway in real time.",
     bullets: [
-      "Stack multiple assumptions — hiring, churn, pricing — in a single conversation",
+      "Stack multiple assumptions (hiring, churn, pricing) in a single conversation",
       "Watch your runway update live as each scenario layer is applied",
       "Compare before-and-after projections and revert any change instantly",
     ],

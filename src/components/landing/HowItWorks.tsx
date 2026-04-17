@@ -11,7 +11,7 @@ const steps = [
     number: "2",
     icon: BarChart3,
     title: "See your runway instantly",
-    description: "Get your exact months of runway, zero-cash date, and net burn rate — calculated from your real numbers.",
+    description: "Get your exact months of runway, zero-cash date, and net burn rate, calculated from your real numbers.",
   },
   {
     number: "3",
@@ -27,7 +27,7 @@ const HowItWorks = () => {
       <div className="section-container">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            How it <span className="text-gradient">works</span>
+            How it works
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             From sign-up to runway number in under 2 minutes

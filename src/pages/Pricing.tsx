@@ -32,7 +32,7 @@ const Pricing = () => {
           <div className="section-container">
             <div className="text-center mb-16">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                Simple, <span className="text-gradient">transparent pricing</span>
+                Simple, transparent pricing
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
                 Everything you need to see your financial future clearly
@@ -108,7 +108,7 @@ const Pricing = () => {
           <div className="section-container">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tight mb-4">
-                Pricing <span className="text-gradient">questions</span>
+                Pricing questions
               </h2>
             </div>
 

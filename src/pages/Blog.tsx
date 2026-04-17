@@ -7,7 +7,7 @@ const posts = [
   {
     title: "Catching a cash crunch two weeks before it hits",
     description:
-      "How one founder used Slack alerts to spot a projected shortfall in time to renegotiate payroll timing — without panic or a board call.",
+      "How one founder used Slack alerts to spot a projected shortfall in time to renegotiate payroll timing, without panic or a board call.",
     category: "Case Study",
     readTime: "6 min read",
     date: "Coming Soon",
@@ -15,7 +15,7 @@ const posts = [
   {
     title: "Replacing a fractional CFO with scenario chat",
     description:
-      "A founder walks through the four scenarios she ran before her next round — hiring, churn, pricing, and an acquisition offer — in under an hour.",
+      "A founder walks through the four scenarios she ran before her next round (hiring, churn, pricing, and an acquisition offer) in under an hour.",
     category: "Case Study",
     readTime: "8 min read",
     date: "Coming Soon",
@@ -23,7 +23,7 @@ const posts = [
   {
     title: "When your runway forecast is lying about annual contracts",
     description:
-      "Why flat MRR math breaks for agencies, consultancies, and SaaS with mixed contract terms — and how subscription-aware projections change the answer.",
+      "Why flat MRR math breaks for agencies, consultancies, and SaaS with mixed contract terms, and how subscription-aware projections change the answer.",
     category: "Case Study",
     readTime: "5 min read",
     date: "Coming Soon",
@@ -54,7 +54,7 @@ const Blog = () => {
 
           <div className="max-w-3xl mb-16">
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-              The Zensus <span className="text-gradient">Blog</span>
+              The Zensus Blog
             </h1>
             <p className="text-lg text-muted-foreground">
               Practical guides on cash flow forecasting, runway planning, and

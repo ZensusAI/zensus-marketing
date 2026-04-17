@@ -29,8 +29,7 @@ const Problem = () => {
       <div className="section-container">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            You're making million-dollar decisions on{" "}
-            <span className="text-gradient">gut feeling</span>
+            You're making million-dollar decisions on gut feeling
           </h2>
           <p className="text-lg text-muted-foreground">
             Most founders check their bank balance and hope for the best. That's not a financial strategy.

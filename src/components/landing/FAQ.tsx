@@ -16,7 +16,7 @@ const faqGroups = [
       },
       {
         question: "Can I connect my HubSpot account?",
-        answer: "Yes. Zensus syncs your HubSpot subscriptions — including annual and quarterly contracts — so your runway projections reflect when revenue actually hits your bank, not just flat monthly estimates.",
+        answer: "Yes. Zensus syncs your HubSpot subscriptions (including annual and quarterly contracts) so your runway projections reflect when revenue actually hits your bank, not just flat monthly estimates.",
       },
       {
         question: "How long does setup take?",
@@ -33,7 +33,7 @@ const faqGroups = [
       },
       {
         question: "Can I get notified when I'm running low on cash?",
-        answer: "Yes. Zensus watches your 30-day projection and fires a Slack alert the moment it drops below a threshold you set. It re-alerts on material change — if the breach moves earlier or your minimum balance drops 10% — and you can snooze or adjust your threshold directly from Slack.",
+        answer: "Yes. Zensus watches your 30-day projection and fires a Slack alert the moment it drops below a threshold you set. It re-alerts on material change (if the breach moves earlier or your minimum balance drops 10%) and you can snooze or adjust your threshold directly from Slack.",
       },
       {
         question: "How often does my data update?",
@@ -46,7 +46,7 @@ const faqGroups = [
     items: [
       {
         question: "Is my financial data secure?",
-        answer: "Yes. All integration tokens are encrypted at rest with AES-256-GCM. Your bank and QuickBooks credentials are never stored on our servers — we rely on OAuth managed by Plaid and Intuit. Every query is isolated by account at the database level, and data sits on encrypted AWS infrastructure.",
+        answer: "Yes. All integration tokens are encrypted at rest with AES-256-GCM. Your bank and QuickBooks credentials are never stored on our servers; we rely on OAuth managed by Plaid and Intuit. Every query is isolated by account at the database level, and data sits on encrypted AWS infrastructure.",
       },
       {
         question: "Who can see my data?",
@@ -98,7 +98,7 @@ const FAQ = () => {
       <div className="section-container">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            Frequently asked <span className="text-gradient">questions</span>
+            Frequently asked questions
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Everything you need to know about Zensus

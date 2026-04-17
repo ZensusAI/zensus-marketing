@@ -26,7 +26,7 @@ const PricingPreview = () => {
       <div className="section-container">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            Simple, <span className="text-gradient">transparent pricing</span>
+            Simple, transparent pricing
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Everything you need to see your financial future clearly
