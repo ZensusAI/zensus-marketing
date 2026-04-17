@@ -1,5 +1,6 @@
 const Footer = () => {
   const legalLinks = [
+    { label: "Book a call", href: "https://calendly.com/hello-zensus/introcall" },
     { label: "Privacy", href: "https://app.zensus.app/privacy" },
     { label: "Terms", href: "https://app.zensus.app/terms" },
   ];
