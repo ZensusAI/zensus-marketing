@@ -90,6 +90,7 @@ The gradient accent lives on one phrase, on one page, once: "about it." in the H
 - `src/components/landing/HowItWorks.tsx`: remove gradient span around "works".
 - `src/components/landing/PricingPreview.tsx`: remove gradient span around "transparent pricing".
 - `src/components/landing/FAQ.tsx`: remove gradient span around "questions".
+- `src/components/landing/RunwayFeature.tsx`: the `RunwaySection` template applies `.text-gradient` to the `highlight` prop on every panel. After pruning to 3 panels (subscription drill-down, scenarios, alerts), that is still 3 gradient instances. Remove the gradient span from `RunwaySection`'s template so panel headlines render solid in foreground. Keep the `highlight` prop for now in case we want a non-gradient emphasis later (italic, accent weight, etc.), but do not style it differently from the rest of the headline in Phase 1.
 - `src/pages/Pricing.tsx`: remove gradient span around "transparent pricing".
 - `src/pages/Blog.tsx`: remove gradient span around "Blog".
 
@@ -504,14 +505,15 @@ These do not block the design. Implementation will resolve them.
 
 Captured at 2026-04-17 from `npm run lint`. These are inherited from shadcn/ui component templates and Tailwind config; leave alone.
 
-Errors (3):
+Errors (4):
+- `src/components/landing/Navbar.tsx:8:14` `@typescript-eslint/no-explicit-any`. Expected to disappear after Milestone 4 rewrites Navbar; drop the baseline to 3 errors at that point.
 - `src/components/ui/command.tsx:24:11` `@typescript-eslint/no-empty-object-type`
 - `src/components/ui/textarea.tsx:5:18` `@typescript-eslint/no-empty-object-type`
 - `tailwind.config.ts:111:13` `@typescript-eslint/no-require-imports`
 
 Warnings (7): `react-refresh/only-export-components` across various shadcn UI files (`button.tsx`, `form.tsx`, `navigation-menu.tsx`, `sidebar.tsx`, `sonner.tsx`, `toggle.tsx`, plus one more). Tolerated.
 
-Milestone gate: every milestone's PR runs `npm run lint` and the count of problems must equal the baseline exactly.
+Milestone gate: every milestone's PR runs `npm run lint`. For milestones 1 through 3, problem count must be exactly 11 (4 errors, 7 warnings). For milestone 4 onward, problem count drops to 10 (3 errors, 7 warnings) once Navbar is rewritten without `any`.
 
 ## Maintenance notes (not Phase 1 tasks)
 
