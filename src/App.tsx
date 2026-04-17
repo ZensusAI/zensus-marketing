@@ -14,6 +14,7 @@ import Integrations from "./pages/Integrations";
 import PlaidIntegration from "./pages/integrations/Plaid";
 import QuickBooksIntegration from "./pages/integrations/QuickBooks";
 import HubSpotIntegration from "./pages/integrations/HubSpot";
+import SlackIntegration from "./pages/integrations/Slack";
 import RedirectToApp from "./components/RedirectToApp";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/integrations/plaid" element={<PlaidIntegration />} />
             <Route path="/integrations/quickbooks" element={<QuickBooksIntegration />} />
             <Route path="/integrations/hubspot" element={<HubSpotIntegration />} />
+            <Route path="/integrations/slack" element={<SlackIntegration />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
