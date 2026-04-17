@@ -40,15 +40,19 @@ Dark, precise, signal-driven. Reference points: Stripe docs, Bloomberg terminal,
 
 ### 2. Color tokens
 
-| Role | Value | Notes |
-|---|---|---|
-| Background | `#0A0A0B` | Near-black, not pure black |
-| Foreground | `#F7F5F2` | Warm off-white, not pure white |
-| Accent: positive / primary | `#21C55C` | Current green, keep |
-| Accent: caution | `#F59E0B` | Amber, for UI alerts only |
-| Accent: negative | `#EF4444` | Red, for critical UI states only |
-| Border subtle | `#1F1F22` | Card borders, dividers |
-| Surface raised | `#14161A` | Scenario prompt, bento tiles |
+`src/index.css` uses HSL channel notation (`--background: 220 20% 4%;` with `hsl(var(--background))` at the call site). New tokens keep that convention. Hex values are provided alongside HSL for visual reference.
+
+| Role | Hex | HSL channel | Notes |
+|---|---|---|---|
+| Background | `#0A0A0B` | `240 7% 4%` | Near-black, not pure black |
+| Foreground | `#F7F5F2` | `36 27% 96%` | Warm off-white, not pure white |
+| Accent: positive / primary | `#21C55C` | `142 71% 45%` | Current green, keep |
+| Accent: caution | `#F59E0B` | `38 92% 50%` | Amber, for UI alerts only |
+| Accent: negative | `#EF4444` | `0 84% 60%` | Red, for critical UI states only |
+| Border subtle | `#1F1F22` | `240 5% 13%` | Card borders, dividers |
+| Surface raised | `#14161A` | `220 13% 9%` | Scenario prompt, bento tiles |
+
+Token names in `src/index.css` keep their existing identifiers where values are compatible; add new CSS variables for `--caution`, `--surface-raised` as needed.
 
 **Signal-only discipline.** The three accent colors (green, amber, red) appear only for:
 - Live data signals in product screenshots.
@@ -69,10 +73,12 @@ They never appear as decorative fills, heading treatments elsewhere, or anywhere
 
 Both families from Google Fonts, free and open source. Dollar amounts and statistical callouts always render in Geist Mono with `font-variant-numeric: tabular-nums`.
 
+**Current state check:** There is no Inter `<link>` in `index.html` today. Inter lives only in `tailwind.config.ts` as the `fontFamily.sans` and `fontFamily.display` stack, which falls through to the browser's system Inter or nothing. Geist therefore needs to be loaded fresh, not replaced.
+
 **Implementation:**
-- Replace the existing Inter import in `index.html` with Geist and Geist Mono from Google Fonts.
-- Update `tailwind.config.ts`: `fontFamily.sans` and `fontFamily.display` point to Geist; add `fontFamily.mono` for Geist Mono.
-- Apply `font-mono font-variant-numeric: tabular-nums` (or a Tailwind plugin) wherever dollar figures appear.
+- Add Google Fonts `<link>` tags in `index.html` for Geist (weights 400/500/600/700) and Geist Mono (weights 400/500/600). Preconnect to `fonts.googleapis.com` and `fonts.gstatic.com` in the `<head>` as Google recommends.
+- Update `tailwind.config.ts`: swap the Inter entries in `fontFamily.sans` and `fontFamily.display` for Geist, with `system-ui, sans-serif` as fallback. Add `fontFamily.mono: ["Geist Mono", "ui-monospace", "monospace"]`.
+- Apply `font-mono` class and `font-variant-numeric: tabular-nums` (via Tailwind's `tabular-nums` utility) wherever dollar figures or stat callouts appear.
 
 ### 4. Gradient discipline
 
@@ -99,7 +105,7 @@ Rules:
 - "Pricing" renamed to **Plans**, points to `/pricing` (which now shows the hidden-amount Talk to us block). Renamed because a nav label that says "Pricing" pointing at a page that says "Talk to us for pricing" is incoherent.
 - **Security** links to new `/security` page.
 - **FAQ** removed from nav. Still exists as a homepage section with a scroll anchor.
-- **Book Demo** removed from primary nav entirely. Calendly link moves to the footer only.
+- **Book Demo** removed from primary nav entirely. The Calendly link moves into `src/components/landing/Footer.tsx` as a small "Book a call with the team" footer entry. Definitive, not optional.
 - **Get Started** renamed to **Talk to us** (primary CTA, routes TBD during implementation, likely Calendly or a contact flow).
 - **Sign in** added as secondary CTA for returning customers. Routes to `app.zensus.app/login`.
 
@@ -149,7 +155,7 @@ The backend reality of the current Stripe self-serve flow is handled by the foun
 - Typewriter runs in a `useEffect` with cleanup on unmount. Prompt rotation uses CSS keyframes, no JS timer.
 - No new motion library dependency (Framer Motion etc.).
 
-**`localStorage` key rotation:** Use a versioned key (`zensus-hero-seen-v1`). If the H1 copy changes in a future edit, bump to `-v2` so returning visitors see the new animation once.
+**`localStorage` key:** `zensus-hero-seen-v1`. Versioned key documented in Maintenance notes at the end of this spec; not a Phase 1 task.
 
 ### 8. Trust bar (section 02)
 
@@ -163,29 +169,33 @@ New component: `src/components/landing/TrustBar.tsx`. Rendered directly under He
   3. Account-level isolation
   4. Credentials never stored
 
-Logos import from `src/assets/integrations/`. Placeholder SVGs until real brand files are sourced.
+Logos import from `src/assets/integrations/`. **Directory does not exist yet; create it in Milestone 2 and seed with placeholder SVGs until real brand files are sourced.**
 
 ### 9. Homepage flow
 
 Full reorder. `src/pages/Index.tsx` renders:
 
-```
-01 <Hero />
-02 <TrustBar />
-03 <Problem />
-04 <SubscriptionDrillDown />   (was RunwayFeature panel index 2)
-05 <Scenarios />                (was RunwayFeature panel index 3, now 4 after Alerts insert)
-06 <Alerts />                   (was RunwayFeature panel index 3 after the earlier edit)
-07 <Bento />                    (new)
-08 <HowItWorks />               (condensed)
-09 <SecurityStrip />            (new)
-10 <PricingPreview />           (rewritten to hidden amount)
-11 <FAQ />
-12 <FinalCTABand />             (new)
-13 <Footer />
-```
+| Order | Render | File / Source | Status |
+|---|---|---|---|
+| 01 | Hero | `src/components/landing/Hero.tsx` | Full rewrite |
+| 02 | Trust bar | `src/components/landing/TrustBar.tsx` | New |
+| 03 | Problem | `src/components/landing/Problem.tsx` | Rewrite pain point index 1 |
+| 04 | Feature: Subscription drill-down | `RunwayFeature.tsx` `sections[0]` (was index 2) | Reorder, keep content |
+| 05 | Feature: Scenarios | `RunwayFeature.tsx` `sections[1]` (was index 4 after earlier edit) | Reorder, keep content, drop "type or speak" line already done |
+| 06 | Feature: Alerts | `RunwayFeature.tsx` `sections[2]` (was index 3 after earlier edit) | Reorder, keep content; image stays `/placeholder.svg` per deferral below |
+| 07 | Bento | `src/components/landing/Bento.tsx` | New |
+| 08 | How it works | `src/components/landing/HowItWorks.tsx` | Copy refresh only |
+| 09 | Security strip | `src/components/landing/SecurityStrip.tsx` | New |
+| 10 | Pricing preview | `src/components/landing/PricingPreview.tsx` | Rewrite to hidden amount |
+| 11 | FAQ | `src/components/landing/FAQ.tsx` | Pricing category rewrite only |
+| 12 | Final CTA band | `src/components/landing/FinalCTABand.tsx` | New |
+| 13 | Footer | `src/components/landing/Footer.tsx` | Add Calendly "Book a call" entry |
 
-Panels 01 to 06 are now the "above the scroll fatigue" zone. Features lead with the three differentiators. Connect and Zero-cash move into the bento.
+**Section 04 to 06 stay as entries in the existing `RunwayFeature` component's `sections` array.** They are not separate components. `RunwayFeature.tsx` still renders a single multi-panel section; we are only reordering and pruning the `sections` array from 5 entries to 3 (Subscription drill-down, Scenarios, Alerts). Connect and Zero-cash move into the bento.
+
+**Alerts panel image deferral:** The Alerts panel image stays `/placeholder.svg` through Phase 1. Founder to provide a real Slack alert screenshot at their convenience; swap is a trivial one-line edit that does not block Phase 1 sign-off.
+
+Panels 01 to 06 are now the "above the scroll fatigue" zone. Features lead with the three differentiators.
 
 ### 10. Feature sections (04 to 06) refactor
 
@@ -308,7 +318,7 @@ Mobile:
 - Sheet contents: same four links stacked, then Sign in.
 - Sticky-bottom Talk to us pill button that stays pinned regardless of sheet scroll.
 
-Remove the `Calendar`/`Book Demo` link entirely from primary nav. Calendly link moves to `Footer.tsx` as a small footer entry if the founder wants. Decide at implementation.
+Remove the `Calendar`/`Book Demo` link entirely from primary nav. Calendly link moves to `Footer.tsx` as a small "Book a call with the team" footer entry. This is definitive and matches Section 5.
 
 ### 20. New pages
 
@@ -323,7 +333,7 @@ Full-width page following the dark design system. Sections:
 3. What Zensus stores: OAuth tokens (encrypted AES-256-GCM), derived runway projections, scenario chat history for your account only.
 4. What Zensus never stores: bank or QuickBooks passwords, payment cards, raw transactions outside the sync window.
 5. Account isolation: every DB query filtered by user ID, no cross-account access for any Zensus staff or system.
-6. CI security: Semgrep SAST on every commit, gitleaks secret scanning, synthetic API monitoring on api.zensus.app.
+6. CI security: Semgrep SAST on every commit, gitleaks secret scanning. (Synthetic API monitoring on api.zensus.app exists in the product repo but is not yet verified shipped-to-prod for the public-facing claim; confirm during implementation before naming it on this page.)
 7. AI training: your data never trains any AI model. Claude is called per-request; nothing is persisted for fine-tuning or memory.
 8. Compliance posture: honest current state. "SOC 2 not yet certified. We're working toward it; in the meantime our data-protection and access-control practices are documented and reviewable on request."
 9. Contact: security@zensus.app for security questions.
@@ -340,7 +350,7 @@ Full-width page following the dark design system. Sections:
 
 Takes props for integration slug, display name, logo, and section content. Each detail page is a thin wrapper passing the props.
 
-Sections per page:
+Sections per page (structure shared, content varies):
 1. Hero: logo + H1 "Connect your [bank / QuickBooks / HubSpot / Slack] with Zensus".
 2. What Zensus reads from this integration.
 3. What Zensus does NOT read (explicit, builds trust).
@@ -357,6 +367,8 @@ Sections per page:
 - `src/pages/integrations/Slack.tsx`
 
 Content is integration-specific, structure is shared via `IntegrationPage`.
+
+**Content authoring load:** The four integration pages require real copy for each of the seven sections. That is 28 content blocks total. This is explicitly part of Milestone 5 and not trivial. Copy can be drafted by referencing the product repo (`/Users/ajin/GitHub/zensus/apps/backend/src` for each integration module) and validated against `app.zensus.app/settings/integrations` UI behavior. Budget time accordingly.
 
 #### Routing (`src/App.tsx`)
 
@@ -381,11 +393,21 @@ The comment `ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE` in `App.tsx` r
 - Swap Inter font loading for Geist in `index.html`, `tailwind.config.ts`.
 - Remove `.text-gradient` usages in Problem, HowItWorks, PricingPreview, FAQ, Pricing, Blog (keep the class definition in `src/index.css`).
 
-### 22. SEO and meta
+### 22. Shared CTA component
+
+Multiple sections (`Hero`, `PricingPreview`, `SecurityStrip`, `FinalCTABand`, `Security` page, `Integrations` pages, and potentially the Navbar pill) all render a "Talk to us" button with identical appearance and destination. Centralize this as `src/components/landing/TalkToUsButton.tsx`.
+
+Props: size (sm/md/lg), variant (primary pill / ghost link), optional trailing icon. Consumes a single URL constant exported from `src/lib/constants.ts` so the destination (Calendly URL or contact form) lives in exactly one place.
+
+Building this in Milestone 2 means every subsequent milestone just imports and uses it; no copy-paste CTAs that drift out of sync.
+
+### 23. SEO and meta
 
 - Update `public/sitemap.xml` to include every new route.
 - Add page-specific `<title>`, `<meta name="description">`, and OpenGraph tags to each new page component.
 - `public/robots.txt` needs no changes (the new routes are all indexable).
+
+**Implementation detail:** React Router v6 alone cannot set per-route `<title>` or meta tags. Install `react-helmet-async` (or an equivalent) and wrap the app with `<HelmetProvider>` in `src/App.tsx`. Each new page component then renders a `<Helmet>` block with its route-specific meta. Added as a Phase 1 dependency.
 
 ## Phase 1 build plan
 
@@ -405,8 +427,11 @@ Highest-visibility change.
 
 - Rewrite `Hero.tsx` with two-sentence H1, chunked typewriter, blur-fade sentence 2, scenario prompt, `localStorage` first-visit gate, `prefers-reduced-motion` respect.
 - Extract `ScenarioPrompt` component.
+- Create `src/assets/integrations/` directory with placeholder SVG logos (Plaid, QuickBooks, HubSpot, Slack). Real brand marks from each media kit swap in later.
 - Build `TrustBar.tsx`.
-- Render both in `Index.tsx`.
+- Build shared `TalkToUsButton` component (see Section 22). All subsequent milestones reference this one component rather than redefining the CTA.
+- Render Hero and TrustBar in `Index.tsx`.
+- Draft the Milestone 7 manual QA checklist in parallel so later milestones can test against it as they ship.
 
 ### Milestone 3: Homepage rearchitecture
 
@@ -424,18 +449,20 @@ Highest-visibility change.
 - Rewrite `Navbar.tsx` with the new link list, CTAs, and mobile sticky button.
 
 ### Milestone 5: New pages
-Can run in parallel once `IntegrationPage` exists.
+Can run in parallel once `IntegrationPage` exists. Content authoring is the dominant cost here, not component code.
 
+- Install `react-helmet-async` and wrap app in `<HelmetProvider>` in `src/App.tsx`.
 - Build `IntegrationPage` shared component.
-- Build `Security.tsx` page.
-- Build `Integrations.tsx` index.
-- Build four per-integration detail pages.
+- Build `Security.tsx` page (structure plus copy for all ~10 sections).
+- Build `Integrations.tsx` index (structure plus four card blurbs).
+- Build four per-integration detail pages (structure plus seven content blocks each, 28 content blocks total; reference the product repo at `/Users/ajin/GitHub/zensus/apps/backend/src` to get the facts right).
 - Add routes in `App.tsx` above the catch-all.
 
 ### Milestone 6: FAQ and Pricing page
 
 - Update `FAQ.tsx` Pricing category questions.
 - Rewrite `Pricing.tsx` around the Talk-to-us block.
+- QA pass for legal-copy orphans (billing timing language, automatic renewal wording, anything that assumed a self-serve trial or auto-charge flow). Flag anything that needs to stay for regulatory reasons.
 
 ### Milestone 7: SEO and polish
 
@@ -466,9 +493,31 @@ These do not block the design. Implementation will resolve them.
 ## Success criteria for Phase 1
 
 - `npm run build` passes.
-- `npm run lint` passes with no new errors beyond the four pre-existing ones in shadcn and tailwind config.
+- `npm run lint` passes with no new errors beyond the pre-existing baseline below.
 - Every route renders without console errors on desktop and mobile.
-- Manual QA walk-through passes (checklist written during Milestone 7).
+- Manual QA walk-through passes (checklist drafted in Milestone 2, used continuously through Milestone 7).
 - No em-dashes in any generated or authored copy.
 - Founder confirms the Hero motion feels right when tested in an actual browser, not in a mockup.
 - `prefers-reduced-motion: reduce` users see the final Hero state without the typewriter or blur-fade, and still see the rotating prompt with reduced transform.
+
+### Pre-existing lint baseline (do not regress)
+
+Captured at 2026-04-17 from `npm run lint`. These are inherited from shadcn/ui component templates and Tailwind config; leave alone.
+
+Errors (3):
+- `src/components/ui/command.tsx:24:11` `@typescript-eslint/no-empty-object-type`
+- `src/components/ui/textarea.tsx:5:18` `@typescript-eslint/no-empty-object-type`
+- `tailwind.config.ts:111:13` `@typescript-eslint/no-require-imports`
+
+Warnings (7): `react-refresh/only-export-components` across various shadcn UI files (`button.tsx`, `form.tsx`, `navigation-menu.tsx`, `sidebar.tsx`, `sonner.tsx`, `toggle.tsx`, plus one more). Tolerated.
+
+Milestone gate: every milestone's PR runs `npm run lint` and the count of problems must equal the baseline exactly.
+
+## Maintenance notes (not Phase 1 tasks)
+
+These guide future edits once Phase 1 ships.
+
+- **Hero `localStorage` key versioning.** Key is `zensus-hero-seen-v1`. If the Hero copy or motion changes meaningfully in a later edit, bump to `zensus-hero-seen-v2` so returning visitors see the new animation once. Stale keys can be cleaned up in a subsequent bump.
+- **Alerts panel image.** `/placeholder.svg` is temporary. When a real Slack alert screenshot is available, drop it into `src/assets/` and swap the `image:` line in `RunwayFeature.tsx`. One line edit.
+- **Testimonials slot.** Deleted from this repo entirely. If a real customer testimonial lands, do not resurrect the deleted file; build a fresh component so the new code has no legacy assumptions.
+- **Changelog, founder note, case studies.** Phase 2 candidates. When any of these ships, revisit this spec's homepage flow table and extend from section 11 downward (founder note between Pricing and FAQ, other additions between FAQ and Final CTA as appropriate).
