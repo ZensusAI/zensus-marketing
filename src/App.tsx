@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Pricing from "./pages/Pricing";
 import Forecast from "./pages/Forecast";
 import Blog from "./pages/Blog";
+import Changelog from "./pages/Changelog";
 import NotFound from "./pages/NotFound";
 import Security from "./pages/Security";
 import Integrations from "./pages/Integrations";
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/integrations/quickbooks" element={<QuickBooksIntegration />} />
             <Route path="/integrations/hubspot" element={<HubSpotIntegration />} />
             <Route path="/integrations/slack" element={<SlackIntegration />} />
+            <Route path="/changelog" element={<Changelog />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
