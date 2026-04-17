@@ -8,8 +8,8 @@ const painPoints = [
   },
   {
     icon: HelpCircle,
-    title: "Logging into 3 tools to get 1 answer",
-    description: "Your bank, QuickBooks, and a spreadsheet that's always outdated",
+    title: "Still pasting CSVs from three different tools",
+    description: "Every export is stale the moment it downloads. Zensus pulls live from every source, no manual imports ever",
   },
   {
     icon: AlertTriangle,
