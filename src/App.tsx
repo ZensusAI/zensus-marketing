@@ -10,6 +10,7 @@ import Forecast from "./pages/Forecast";
 import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 import Security from "./pages/Security";
+import Integrations from "./pages/Integrations";
 import RedirectToApp from "./components/RedirectToApp";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/support" element={<RedirectToApp />} />
             <Route path="/features" element={<RedirectToApp />} />
             <Route path="/security" element={<Security />} />
+            <Route path="/integrations" element={<Integrations />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
