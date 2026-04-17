@@ -5,55 +5,97 @@ import { TalkToUsButton } from "./TalkToUsButton";
 const H1_SENTENCE_1 = "Know exactly when your cash runs out.";
 const H1_SENTENCE_2_PLAIN = "And exactly what to do ";
 const H1_SENTENCE_2_ACCENT = "about it.";
-const TYPE_SPEED_MS = 40;
+
+const CHAR_STAGGER_MS = 32;
+const CHAR_ANIMATION_MS = 420;
+const CHAR_EASING = "cubic-bezier(0.2, 0.8, 0.2, 1)";
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+interface RevealedLineProps {
+  text: string;
+  startDelayMs?: number;
+  animate: boolean;
+  globalCharIndexOffset?: number;
+}
+
+const RevealedLine = ({
+  text,
+  startDelayMs = 0,
+  animate,
+  globalCharIndexOffset = 0,
+}: RevealedLineProps) => {
+  const words = text.split(" ");
+  let charCursor = globalCharIndexOffset;
+
+  return (
+    <>
+      {words.map((word, wi) => {
+        const wordChars = word.split("");
+        return (
+          <span key={wi} className="inline-block whitespace-nowrap">
+            {wordChars.map((ch, ci) => {
+              const delay = startDelayMs + charCursor * CHAR_STAGGER_MS;
+              charCursor += 1;
+              return (
+                <span
+                  key={ci}
+                  className="inline-block"
+                  style={
+                    animate
+                      ? {
+                          opacity: 0,
+                          animation: `char-reveal ${CHAR_ANIMATION_MS}ms ${CHAR_EASING} ${delay}ms forwards`,
+                        }
+                      : undefined
+                  }
+                >
+                  {ch}
+                </span>
+              );
+            })}
+            {wi < words.length - 1 && "\u00A0"}
+          </span>
+        );
+      })}
+    </>
+  );
+};
+
 const Hero = () => {
-  const [typedLength, setTypedLength] = useState(0);
   const [fadeInSentence2, setFadeInSentence2] = useState(false);
   const [promptVisible, setPromptVisible] = useState(false);
-  const [animateOnMount] = useState(() => {
+  const [animate] = useState(() => {
     if (typeof window === "undefined") return false;
     return !prefersReducedMotion();
   });
   const timeoutRefs = useRef<number[]>([]);
 
   useEffect(() => {
-    if (!animateOnMount) {
-      setTypedLength(H1_SENTENCE_1.length);
+    if (!animate) {
       setFadeInSentence2(true);
       setPromptVisible(true);
       return;
     }
 
-    let i = 0;
-    const type = () => {
-      if (i <= H1_SENTENCE_1.length) {
-        setTypedLength(i);
-        i++;
-        timeoutRefs.current.push(window.setTimeout(type, TYPE_SPEED_MS));
-      } else {
-        timeoutRefs.current.push(
-          window.setTimeout(() => setFadeInSentence2(true), 50),
-        );
-        timeoutRefs.current.push(
-          window.setTimeout(() => setPromptVisible(true), 550),
-        );
-      }
-    };
-    type();
+    const sentence1CompleteMs =
+      H1_SENTENCE_1.replace(/\s/g, "").length * CHAR_STAGGER_MS +
+      CHAR_ANIMATION_MS;
+
+    timeoutRefs.current.push(
+      window.setTimeout(() => setFadeInSentence2(true), sentence1CompleteMs + 80),
+    );
+    timeoutRefs.current.push(
+      window.setTimeout(() => setPromptVisible(true), sentence1CompleteMs + 620),
+    );
 
     return () => {
       timeoutRefs.current.forEach((t) => window.clearTimeout(t));
       timeoutRefs.current = [];
     };
-  }, [animateOnMount]);
-
-  const typedText = H1_SENTENCE_1.slice(0, typedLength);
-  const showCaret = animateOnMount && typedLength < H1_SENTENCE_1.length;
+  }, [animate]);
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center pt-16">
@@ -63,13 +105,9 @@ const Hero = () => {
       <div className="section-container relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            <span>{typedText}</span>
-            {showCaret && (
-              <span
-                aria-hidden="true"
-                className="inline-block w-[2px] h-[0.9em] bg-primary ml-1 align-text-bottom animate-pulse"
-              />
-            )}
+            <span className="block">
+              <RevealedLine text={H1_SENTENCE_1} animate={animate} />
+            </span>
             <span
               className={`block transition-all duration-500 ${
                 fadeInSentence2

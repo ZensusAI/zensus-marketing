@@ -128,11 +128,29 @@
   100% { opacity: 0; }
 }
 
+@keyframes char-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   @keyframes scenario-rotate {
     0%, 2% { opacity: 0; }
     5%, 23% { opacity: 1; }
     25%, 28% { opacity: 0; }
     100% { opacity: 0; }
+  }
+
+  @keyframes char-reveal {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
