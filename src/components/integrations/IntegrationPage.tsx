@@ -37,7 +37,7 @@ export const IntegrationPage = ({
     <main className="pt-24 pb-16">
       <div className="section-container max-w-3xl">
         <div className="flex items-center gap-4 mb-6">
-          <img src={logoSrc} alt={displayName} width={56} height={56} />
+          <img src={logoSrc} alt={displayName} className="h-12 w-auto" />
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
             Connect your {displayName} with Zensus
           </h1>

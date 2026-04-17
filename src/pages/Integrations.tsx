@@ -83,8 +83,8 @@ const Integrations = () => (
               to={`/integrations/${card.slug}`}
               className="group rounded-2xl border border-border bg-card p-6 hover:border-primary/40 transition-colors"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <img src={card.logo} alt="" width={36} height={36} />
+              <div className="flex items-center gap-3 mb-3 h-9">
+                <img src={card.logo} alt="" className="h-8 w-auto" />
                 <h2 className="text-lg font-semibold text-foreground">
                   {card.name}
                 </h2>
