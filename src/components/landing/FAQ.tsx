@@ -16,7 +16,7 @@ const faqGroups = [
       },
       {
         question: "Can I connect my HubSpot account?",
-        answer: "Yes. Zensus syncs your HubSpot subscriptions — including annual and quarterly contracts — so your runway projections reflect when revenue actually hits your bank, not just flat monthly estimates.",
+        answer: "Yes. Zensus syncs your HubSpot subscriptions (including annual and quarterly contracts) so your runway projections reflect when revenue actually hits your bank, not just flat monthly estimates.",
       },
       {
         question: "How long does setup take?",
@@ -29,11 +29,15 @@ const faqGroups = [
     items: [
       {
         question: "What kind of questions can I ask?",
-        answer: "Anything about your finances. Examples: \"When will I run out of cash?\", \"Can I afford to hire two engineers?\", \"What if we lose our largest annual contract?\", \"What happens with 5% monthly churn?\", \"What if we switch a client from monthly to annual billing?\" You can type or speak — Zensus has a built-in voice assistant.",
+        answer: "Anything about your finances. Examples: \"When will I run out of cash?\", \"Can I afford to hire two engineers?\", \"What if we lose our largest annual contract?\", \"What happens with 5% monthly churn?\", \"What if we switch a client from monthly to annual billing?\"",
+      },
+      {
+        question: "Can I get notified when I'm running low on cash?",
+        answer: "Yes. Zensus watches your 30-day projection and fires a Slack alert the moment it drops below a threshold you set. It re-alerts on material change (if the breach moves earlier or your minimum balance drops 10%) and you can snooze or adjust your threshold directly from Slack.",
       },
       {
         question: "How often does my data update?",
-        answer: "Your connected data syncs automatically whenever it's more than an hour stale — triggered each time you open the dashboard. You can also manually sync all sources at any time. Your runway recalculates in real-time as new data comes in.",
+        answer: "Your data syncs in real time via webhooks. The moment a transaction clears in Plaid, an invoice changes in QuickBooks, or a subscription updates in HubSpot, your runway recalculates. You can also trigger a manual sync from any source at any time.",
       },
     ],
   },
@@ -42,7 +46,7 @@ const faqGroups = [
     items: [
       {
         question: "Is my financial data secure?",
-        answer: "Yes. We use bank-level AES-256 encryption. Your QuickBooks and bank credentials are never stored — we use OAuth tokens managed by Plaid and Intuit. All data is processed on encrypted AWS infrastructure.",
+        answer: "Yes. All integration tokens are encrypted at rest with AES-256-GCM. Your bank and QuickBooks credentials are never stored on our servers; we rely on OAuth managed by Plaid and Intuit. Every query is isolated by account at the database level, and data sits on encrypted AWS infrastructure.",
       },
       {
         question: "Who can see my data?",
@@ -54,8 +58,8 @@ const faqGroups = [
     category: "Pricing",
     items: [
       {
-        question: "Can I cancel anytime?",
-        answer: "Yes. There are no contracts or cancellation fees. You can cancel anytime from your billing settings. If you cancel, you keep access through the end of your billing period.",
+        question: "How does pricing work?",
+        answer: "Zensus pricing is tailored to your business size and data volume. We will walk you through what it looks like for you on the call.",
       },
     ],
   },
@@ -94,7 +98,7 @@ const FAQ = () => {
       <div className="section-container">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            Frequently asked <span className="text-gradient">questions</span>
+            Frequently asked questions
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Everything you need to know about Zensus

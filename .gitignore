@@ -75,6 +75,12 @@ temp/
 # Lovable artifacts (historical — platform ejected)
 .lovable/
 
+# Visual companion brainstorm sessions (ephemeral)
+.superpowers/
+
+# Claude Code local editor config (per-developer plugin enablement)
+.claude/
+
 # Lockfile policy — this project uses npm (package-lock.json)
 bun.lock
 bun.lockb

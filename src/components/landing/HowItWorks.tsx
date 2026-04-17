@@ -5,19 +5,19 @@ const steps = [
     number: "1",
     icon: Link,
     title: "Connect your data",
-    description: "Link your bank account via Plaid, connect QuickBooks, or sync your HubSpot subscriptions. One click, no spreadsheets needed.",
+    description: "OAuth to Plaid, QuickBooks, or HubSpot. All three if you want. No uploads.",
   },
   {
     number: "2",
     icon: BarChart3,
-    title: "See your runway instantly",
-    description: "Get your exact months of runway, zero-cash date, and net burn rate — calculated from your real numbers.",
+    title: "See your runway live",
+    description: "Zero-cash date, day-by-day drill-down, and scenario chat ready in 60 seconds.",
   },
   {
     number: "3",
     icon: SlidersHorizontal,
-    title: "Simulate before you spend",
-    description: 'Ask "What if I hire 2 people?" or "What happens if we lose our largest annual contract?" and see the impact on your runway in seconds.',
+    title: "Set your alert threshold",
+    description: "Slack pings you the moment your 30-day projection crosses the line.",
   },
 ];
 
@@ -27,7 +27,7 @@ const HowItWorks = () => {
       <div className="section-container">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            How it <span className="text-gradient">works</span>
+            How it works
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             From sign-up to runway number in under 2 minutes

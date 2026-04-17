@@ -1,10 +1,8 @@
-import { Link2, Target, BarChart3, MessageCircle } from "lucide-react";
+import { BarChart3, MessageCircle, Bell } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import runwayDashboard from "@/assets/runway-dashboard.png";
-import runwayConnect from "@/assets/runway-connect.png";
-import runwayZerocash from "@/assets/runway-zerocash.png";
 import runwayDrilldown from "@/assets/runway-drilldown.png";
 import runwayWhatif from "@/assets/runway-whatif.png";
+import runwayAlerts from "@/assets/runway-alerts.png";
 
 interface RunwaySectionProps {
   headline: string;
@@ -35,8 +33,7 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
         </div>
       </div>
       <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-        {headline}{" "}
-        <span className="text-gradient">{highlight}</span>
+        {headline} {highlight}
       </h2>
       <p className="text-lg text-muted-foreground mb-6">{description}</p>
       <ul className="space-y-3">
@@ -58,7 +55,7 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
     <div className={`relative rounded-2xl overflow-hidden border border-border bg-card animate-on-scroll ${imageAnimation}`}>
       <img
         src={image}
-        alt={headline + " " + highlight + " — Zensus cash flow forecasting"}
+        alt={`${headline} ${highlight}. Zensus cash flow forecasting.`}
         className="w-full h-auto"
         loading="lazy"
         width={800}
@@ -85,38 +82,12 @@ const RunwaySection = ({ headline, highlight, description, bullets, icon, image,
 
 const sections: Omit<RunwaySectionProps, "imageRight">[] = [
   {
-    headline: "Connect in",
-    highlight: "60 seconds",
-    description:
-      "Link your bank via Plaid, QuickBooks, or HubSpot. Data refreshes automatically when stale, with manual sync across all sources.",
-    bullets: [
-      "Connect your bank account, QuickBooks, HubSpot, or all three",
-      "Data refreshes automatically when stale — no manual work needed",
-      "Manually sync all connected sources at any time",
-    ],
-    icon: <Link2 size={20} className="text-primary" />,
-    image: runwayConnect,
-  },
-  {
-    headline: "See your",
-    highlight: "zero-cash date",
-    description:
-      "Know exactly which month you run out of cash — not a rough guess. Real-time runway calculation from your actual numbers.",
-    bullets: [
-      "Exact month-by-month runway based on real data",
-      "Real-time recalculation as new transactions come in",
-      "Clear visual timeline so you can plan ahead",
-    ],
-    icon: <Target size={20} className="text-primary" />,
-    image: runwayZerocash,
-  },
-  {
     headline: "Drill down to",
     highlight: "any week or day",
     description:
       "Click any month to see weekly cash flow, then drill into daily details. Subscription-aware projections show when annual and quarterly contracts actually hit your bank.",
     bullets: [
-      "Monthly → weekly → daily drill-down with a single click",
+      "Monthly to weekly to daily drill-down with a single click",
       "Subscription-aware projections for annual and quarterly contracts",
       "See when revenue actually hits your bank, not flat monthly estimates",
     ],
@@ -127,14 +98,27 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
     headline: "Run scenarios with",
     highlight: "your runway agent",
     description:
-      "Layer hiring plans, churn assumptions, and pricing changes into multi-turn scenarios. Your agent recalculates runway in real time — type or speak.",
+      "Layer hiring plans, churn assumptions, and pricing changes into multi-turn scenarios. Your agent recalculates runway in real time.",
     bullets: [
-      "Stack multiple assumptions — hiring, churn, pricing — in a single conversation",
+      "Stack multiple assumptions (hiring, churn, pricing) in a single conversation",
       "Watch your runway update live as each scenario layer is applied",
       "Compare before-and-after projections and revert any change instantly",
     ],
     icon: <MessageCircle size={20} className="text-primary" />,
     image: runwayWhatif,
+  },
+  {
+    headline: "Get alerted",
+    highlight: "before cash runs out",
+    description:
+      "Set your cash floor. Zensus watches your 30-day projection and pings Slack the moment it crosses the line. If the breach moves earlier or your minimum balance drops 10%, you get re-alerted.",
+    bullets: [
+      "Threshold-based Slack alerts from your projection, not your balance",
+      "Re-alerts on material change (a week earlier or a 10% dip in minimum balance)",
+      "Snooze or adjust your threshold from Slack in one click",
+    ],
+    icon: <Bell size={20} className="text-primary" />,
+    image: runwayAlerts,
   },
 ];
 

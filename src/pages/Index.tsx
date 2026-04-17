@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
-import RunwayFeature from "@/components/landing/RunwayFeature";
-import HowItWorks from "@/components/landing/HowItWorks";
+import { TrustBar } from "@/components/landing/TrustBar";
 import Problem from "@/components/landing/Problem";
+import RunwayFeature from "@/components/landing/RunwayFeature";
+import Bento from "@/components/landing/Bento";
+import HowItWorks from "@/components/landing/HowItWorks";
+import SecurityStrip from "@/components/landing/SecurityStrip";
 import PricingPreview from "@/components/landing/PricingPreview";
 import FAQ from "@/components/landing/FAQ";
+import FinalCTABand from "@/components/landing/FinalCTABand";
 import Footer from "@/components/landing/Footer";
 import PageSkeleton from "@/components/landing/PageSkeleton";
 
@@ -35,14 +40,24 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
+      <Helmet>
+        <title>Zensus · Cash flow forecasting for founders with variable revenue</title>
+        <meta name="description" content="Know exactly when your cash runs out and what to do about it. Connect your bank, QuickBooks, and HubSpot for runway projections that match the calendar." />
+        <meta property="og:title" content="Zensus · Cash flow forecasting for founders" />
+        <meta property="og:description" content="Runway that matches the calendar. Built for founders with annual and quarterly contracts." />
+      </Helmet>
       <Navbar />
       <main>
         <Hero />
+        <TrustBar />
         <Problem />
         <RunwayFeature />
+        <Bento />
         <HowItWorks />
+        <SecurityStrip />
         <PricingPreview />
         <FAQ />
+        <FinalCTABand />
       </main>
       <Footer />
     </div>
