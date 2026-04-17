@@ -119,6 +119,21 @@
   .section-padding {
     @apply py-16 md:py-24 lg:py-32;
   }
+
+  .glyph-frame {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    border: 1px solid rgba(247, 245, 242, 0.08);
+    background:
+      linear-gradient(rgba(247, 245, 242, 0.05) 1px, transparent 1px) 0 0 / 8px 8px,
+      radial-gradient(circle at 50% 50%, rgba(33, 197, 92, 0.1), rgba(10, 10, 11, 0) 70%),
+      #0e1013;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
 }
 
 @keyframes scenario-rotate {
