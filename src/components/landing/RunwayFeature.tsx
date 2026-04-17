@@ -2,6 +2,7 @@ import { BarChart3, MessageCircle, Bell } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import runwayDrilldown from "@/assets/runway-drilldown.png";
 import runwayWhatif from "@/assets/runway-whatif.png";
+import runwayAlerts from "@/assets/runway-alerts.png";
 
 interface RunwaySectionProps {
   headline: string;
@@ -117,8 +118,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
       "Snooze or adjust your threshold from Slack in one click",
     ],
     icon: <Bell size={20} className="text-primary" />,
-    // TODO: replace /placeholder.svg with a real Slack alert screenshot
-    image: "/placeholder.svg",
+    image: runwayAlerts,
   },
 ];
 
