@@ -21,6 +21,17 @@ interface ShineBorderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default 8
    */
   borderRadius?: number;
+  /**
+   * Render a blurred duplicate behind the trace to create an ambient glow.
+   * @default false
+   */
+  glow?: boolean;
+  /**
+   * Keep the inner content background transparent (so the child provides its own fill).
+   * Useful when wrapping a Button that already has a background color.
+   * @default false
+   */
+  transparentInner?: boolean;
 }
 
 const ShineBorder: React.FC<ShineBorderProps> = ({
@@ -28,11 +39,14 @@ const ShineBorder: React.FC<ShineBorderProps> = ({
   duration = 3,
   shineColor = ["hsl(142 71% 45%)", "hsl(160 84% 39%)"],
   borderRadius = 8,
+  glow = false,
+  transparentInner = false,
   className,
   children,
   ...props
 }) => {
   const colors = Array.isArray(shineColor) ? shineColor : [shineColor];
+  const gradient = `conic-gradient(from 0deg, transparent 0deg, ${colors[0]} 60deg, ${colors[1] || colors[0]} 120deg, transparent 180deg, transparent 360deg)`;
 
   return (
     <div
@@ -43,35 +57,60 @@ const ShineBorder: React.FC<ShineBorderProps> = ({
       }}
       {...props}
     >
-      {/* Rotating gradient border */}
+      {/* Ambient glow halo (blurred duplicate of the trace) */}
+      {glow && (
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            inset: "-6px",
+            borderRadius: `${borderRadius + 6}px`,
+            overflow: "hidden",
+            filter: "blur(8px)",
+            opacity: 0.12,
+          }}
+          aria-hidden="true"
+        >
+          <div
+            className="absolute w-[200%] h-[200%] top-1/2 left-1/2"
+            style={{
+              background: gradient,
+              animation: `shine-border-spin ${duration}s linear infinite`,
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        </div>
+      )}
+
+      {/* Crisp rotating gradient border */}
       <div
-        className="absolute inset-0 overflow-hidden"
+        className="absolute inset-0 overflow-hidden pointer-events-none"
         style={{
           borderRadius: `${borderRadius}px`,
         }}
+        aria-hidden="true"
       >
         <div
           className="absolute w-[200%] h-[200%] top-1/2 left-1/2"
           style={{
-            background: `conic-gradient(from 0deg, transparent 0deg, ${colors[0]} 60deg, ${colors[1] || colors[0]} 120deg, transparent 180deg, transparent 360deg)`,
-            animation: `spin ${duration}s linear infinite`,
-            transform: 'translate(-50%, -50%)',
+            background: gradient,
+            animation: `shine-border-spin ${duration}s linear infinite`,
+            transform: "translate(-50%, -50%)",
           }}
         />
       </div>
-      
-      {/* Inner content with background */}
+
+      {/* Inner content */}
       <div
-        className="relative bg-primary"
+        className={cn("relative", !transparentInner && "bg-primary")}
         style={{
-          borderRadius: `${borderRadius - borderWidth}px`,
+          borderRadius: `${Math.max(borderRadius - borderWidth, 0)}px`,
         }}
       >
         {children}
       </div>
-      
+
       <style>{`
-        @keyframes spin {
+        @keyframes shine-border-spin {
           from { transform: translate(-50%, -50%) rotate(0deg); }
           to { transform: translate(-50%, -50%) rotate(360deg); }
         }

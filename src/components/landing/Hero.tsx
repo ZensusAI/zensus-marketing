@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ScenarioPrompt } from "./ScenarioPrompt";
-import { TalkToUsButton } from "./TalkToUsButton";
+import { TryItNowButton } from "./TryItNowButton";
 
 const H1_SENTENCE_1 = "Know exactly when your cash runs out.";
 const H1_SENTENCE_2_PLAIN = "And exactly what to do ";
@@ -127,7 +127,7 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col items-center gap-8">
-            <TalkToUsButton size="lg" />
+            <TryItNowButton />
             <ScenarioPrompt visible={promptVisible} />
           </div>
         </div>
