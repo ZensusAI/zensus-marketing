@@ -63,6 +63,7 @@ const Integrations = () => (
         property="og:description"
         content="Live integrations to Plaid, QuickBooks, HubSpot, and Slack. No manual data entry."
       />
+      <link rel="canonical" href="https://zensus.app/integrations" />
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

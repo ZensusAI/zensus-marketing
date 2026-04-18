@@ -45,6 +45,7 @@ const Index = () => {
         <meta name="description" content="Know exactly when your cash runs out and what to do about it. Connect your bank, QuickBooks, and HubSpot for runway projections that match the calendar." />
         <meta property="og:title" content="Zensus · Cash flow forecasting for founders" />
         <meta property="og:description" content="Runway that matches the calendar. Built for founders with annual and quarterly contracts." />
+        <link rel="canonical" href="https://zensus.app/" />
       </Helmet>
       <Navbar />
       <main>

@@ -63,6 +63,7 @@ const Pricing = () => (
         property="og:description"
         content="Zensus pricing is tailored to your business. Talk to us for a walkthrough."
       />
+      <link rel="canonical" href="https://zensus.app/pricing" />
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

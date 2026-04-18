@@ -23,6 +23,7 @@ const Security = () => (
         property="og:description"
         content="How Zensus protects your financial data. Bank-level OAuth, encryption at rest, account-level isolation."
       />
+      <link rel="canonical" href="https://zensus.app/security" />
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

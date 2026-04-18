@@ -19,6 +19,7 @@ interface IntegrationPageProps {
 }
 
 export const IntegrationPage = ({
+  slug,
   displayName,
   tagline,
   logoSrc,
@@ -32,6 +33,7 @@ export const IntegrationPage = ({
       <meta name="description" content={metaDescription} />
       <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
+      <link rel="canonical" href={`https://zensus.app/integrations/${slug}`} />
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

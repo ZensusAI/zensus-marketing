@@ -47,6 +47,7 @@ const Blog = () => {
         <meta name="description" content="Case studies and practical guides on cash flow forecasting, runway planning, and financial decision-making for founders with variable revenue." />
         <meta property="og:title" content="Blog · Zensus" />
         <meta property="og:description" content="Case studies on cash flow forecasting for founders with variable revenue." />
+        <link rel="canonical" href="https://zensus.app/blog" />
       </Helmet>
       <Navbar />
       <main className="pt-24 pb-16">

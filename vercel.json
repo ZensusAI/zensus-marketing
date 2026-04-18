@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/privacy",
+      "destination": "https://app.zensus.app/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/support",
+      "destination": "https://app.zensus.app/support",
+      "permanent": true
+    },
+    {
+      "source": "/features",
+      "destination": "https://app.zensus.app/features",
+      "permanent": true
+    },
+    {
+      "source": "/forecast",
+      "destination": "https://app.zensus.app/forecast",
+      "permanent": true
+    }
+  ]
+}

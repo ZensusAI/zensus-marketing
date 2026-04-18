@@ -73,6 +73,7 @@ const Changelog = () => (
         property="og:description"
         content="What we have shipped on Zensus, most recent first."
       />
+      <link rel="canonical" href="https://zensus.app/changelog" />
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">
