@@ -1,14 +1,16 @@
 # Lint baseline
 
-Captured 2026-04-17 during Chunk 1 of the marketing redesign. Updated after Chunk 4's Navbar rewrite dropped the `no-explicit-any` error.
+Captured 2026-04-17 during the marketing redesign. All inherited template errors cleaned up as of 2026-04-19.
 
-**Expected:** 3 errors plus 7 warnings (10 problems).
+**Expected:** 0 errors plus 7 warnings (7 problems).
 
-Errors:
-1. `src/components/ui/command.tsx:24:11` no-empty-object-type
-2. `src/components/ui/textarea.tsx:5:18` no-empty-object-type
-3. `tailwind.config.ts:111:13` no-require-imports
+Errors: none.
 
-Warnings (7): react-refresh/only-export-components across shadcn UI files.
+Warnings (7): `react-refresh/only-export-components` across shadcn UI files (button, form, navigation-menu, sidebar, sonner, toggle, plus one more). Harmless; they concern HMR re-render granularity, not correctness.
 
-Milestone gate: `npm run lint` problem count must match this baseline on every PR from Chunk 4 onward.
+Milestone gate: `npm run lint` must report 0 errors on every PR. Warnings may fluctuate but should stay bounded around the current level.
+
+History:
+- 2026-04-17: 4 errors + 7 warnings (chunk 1 foundation, before Navbar rewrite).
+- 2026-04-17: 3 errors + 7 warnings (after Navbar rewrite removed `no-explicit-any`).
+- 2026-04-19: 0 errors + 7 warnings (typed shadcn empty interfaces as type aliases; swapped `require()` to ESM import for tailwindcss-animate).
