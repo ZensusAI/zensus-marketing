@@ -3,6 +3,12 @@ import { ArrowLeft, Clock, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
+import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+
+const breadcrumbs = breadcrumbSchema([
+  HOME_CRUMB,
+  { name: "Blog", url: "https://zensus.app/blog" },
+]);
 
 const posts = [
   {
@@ -48,6 +54,7 @@ const Blog = () => {
         <meta property="og:title" content="Blog · Zensus" />
         <meta property="og:description" content="Case studies on cash flow forecasting for founders with variable revenue." />
         <link rel="canonical" href="https://zensus.app/blog" />
+        <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       </Helmet>
       <Navbar />
       <main className="pt-24 pb-16">

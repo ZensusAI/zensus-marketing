@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
+import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 export interface IntegrationSection {
   heading: string;
@@ -18,6 +19,13 @@ interface IntegrationPageProps {
   sections: IntegrationSection[];
 }
 
+const BREADCRUMB_NAMES: Record<string, string> = {
+  plaid: "Plaid",
+  quickbooks: "QuickBooks",
+  hubspot: "HubSpot",
+  slack: "Slack",
+};
+
 export const IntegrationPage = ({
   slug,
   displayName,
@@ -26,7 +34,17 @@ export const IntegrationPage = ({
   metaTitle,
   metaDescription,
   sections,
-}: IntegrationPageProps) => (
+}: IntegrationPageProps) => {
+  const breadcrumbs = breadcrumbSchema([
+    HOME_CRUMB,
+    { name: "Integrations", url: "https://zensus.app/integrations" },
+    {
+      name: BREADCRUMB_NAMES[slug] ?? slug,
+      url: `https://zensus.app/integrations/${slug}`,
+    },
+  ]);
+
+  return (
   <div className="min-h-screen bg-background">
     <Helmet>
       <title>{metaTitle}</title>
@@ -34,6 +52,7 @@ export const IntegrationPage = ({
       <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
       <link rel="canonical" href={`https://zensus.app/integrations/${slug}`} />
+      <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">
@@ -62,4 +81,5 @@ export const IntegrationPage = ({
     </main>
     <Footer />
   </div>
-);
+  );
+};

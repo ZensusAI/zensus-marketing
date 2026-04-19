@@ -2,6 +2,12 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { cn } from "@/lib/utils";
+import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+
+const breadcrumbs = breadcrumbSchema([
+  HOME_CRUMB,
+  { name: "Changelog", url: "https://zensus.app/changelog" },
+]);
 
 type ChangelogCategory = "New" | "Improved" | "Fixed" | "Security";
 
@@ -74,6 +80,7 @@ const Changelog = () => (
         content="What we have shipped on Zensus, most recent first."
       />
       <link rel="canonical" href="https://zensus.app/changelog" />
+      <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

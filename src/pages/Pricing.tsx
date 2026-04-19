@@ -4,6 +4,12 @@ import { Check, Database, TrendingUp } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
+import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+
+const breadcrumbs = breadcrumbSchema([
+  HOME_CRUMB,
+  { name: "Plans", url: "https://zensus.app/pricing" },
+]);
 
 const dataFeatures = [
   "Bank account connection (Plaid)",
@@ -64,6 +70,7 @@ const Pricing = () => (
         content="Zensus pricing is tailored to your business. Talk to us for a walkthrough."
       />
       <link rel="canonical" href="https://zensus.app/pricing" />
+      <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

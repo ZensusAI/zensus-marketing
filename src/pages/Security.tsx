@@ -2,6 +2,12 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
+import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+
+const breadcrumbs = breadcrumbSchema([
+  HOME_CRUMB,
+  { name: "Security", url: "https://zensus.app/security" },
+]);
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <section className="mb-10">
@@ -24,6 +30,7 @@ const Security = () => (
         content="How Zensus protects your financial data. Bank-level OAuth, encryption at rest, account-level isolation."
       />
       <link rel="canonical" href="https://zensus.app/security" />
+      <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

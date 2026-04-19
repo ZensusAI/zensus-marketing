@@ -19,10 +19,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Calendly Widget -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -33,31 +29,41 @@
     <meta name="theme-color" content="#0a0c0f" />
     <meta name="msapplication-TileColor" content="#0a0c0f" />
 
-    <!-- Structured Data (JSON-LD) -->
+    <!-- Structured Data (JSON-LD). Organization and WebSite graphs apply site-wide; SoftwareApplication describes the Zensus product. Pricing is intentionally omitted since Zensus is sales-led and plans are quoted per customer. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Zensus",
-        "description": "AI-powered cash flow forecasting for founders with variable revenue. Connect your accounts, see your runway in real time, and run multi-turn scenarios with an AI agent.",
-        "url": "https://zensus.app",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD",
-          "description": "Free tier available"
-        },
-        "creator": {
-          "@type": "Organization",
-          "name": "Zensus",
-          "url": "https://zensus.app",
-          "sameAs": [
-            "https://x.com/zensusai",
-            "https://www.linkedin.com/company/zensusai"
-          ]
-        }
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://zensus.app/#organization",
+            "name": "Zensus",
+            "url": "https://zensus.app",
+            "logo": "https://zensus.app/favicon-192x192.png",
+            "sameAs": [
+              "https://x.com/zensusai",
+              "https://www.linkedin.com/company/zensusai"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://zensus.app/#website",
+            "url": "https://zensus.app",
+            "name": "Zensus",
+            "description": "Cash flow forecasting for founders with variable revenue",
+            "publisher": { "@id": "https://zensus.app/#organization" },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Zensus",
+            "description": "AI-powered cash flow forecasting for founders with variable revenue. Connect your bank, QuickBooks, and HubSpot, see your runway in real time, and run multi-turn scenarios with an AI agent.",
+            "url": "https://zensus.app",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "publisher": { "@id": "https://zensus.app/#organization" }
+          }
+        ]
       }
     </script>
   </head>

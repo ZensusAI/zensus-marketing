@@ -8,6 +8,12 @@ import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
 import slackLogo from "@/assets/integrations/slack.svg";
+import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+
+const breadcrumbs = breadcrumbSchema([
+  HOME_CRUMB,
+  { name: "Integrations", url: "https://zensus.app/integrations" },
+]);
 
 interface Card {
   slug: string;
@@ -64,6 +70,7 @@ const Integrations = () => (
         content="Live integrations to Plaid, QuickBooks, HubSpot, and Slack. No manual data entry."
       />
       <link rel="canonical" href="https://zensus.app/integrations" />
+      <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">
