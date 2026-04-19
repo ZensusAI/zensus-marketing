@@ -13,7 +13,8 @@ import { createServer } from "node:http";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { join, extname, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
+import puppeteer from "puppeteer-core";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -82,9 +83,21 @@ function startServer() {
 async function prerender() {
   console.log(`[prerender] starting on http://localhost:${PORT}`);
   const server = await startServer();
+  // On Vercel we rely on the @sparticuz/chromium binary. Locally we
+  // fall back to whichever Chrome/Chromium the machine already has so
+  // developers do not need to download the serverless-tuned build.
+  const localChrome = process.env.PUPPETEER_EXECUTABLE_PATH
+    || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+  const executablePath = process.env.VERCEL
+    ? await chromium.executablePath()
+    : localChrome;
   const browser = await puppeteer.launch({
-    headless: "new",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: process.env.VERCEL
+      ? chromium.args
+      : ["--no-sandbox", "--disable-setuid-sandbox"],
+    defaultViewport: chromium.defaultViewport,
+    executablePath,
+    headless: true,
   });
 
   try {
