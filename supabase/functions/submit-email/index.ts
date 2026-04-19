@@ -1,30 +1,33 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
-// Allowed origins - add your custom domains here
+// Allowed origins for the waitlist endpoint. Add new production
+// domains here as the surface expands.
 const ALLOWED_ORIGINS = [
-  "https://wpczgwxsriezaubncuom.lovableproject.com",
-  "https://zensus.lovable.app",
-  // Add any custom domains below:
-  // "https://yourdomain.com",
-  // "https://www.yourdomain.com",
+  "https://zensus.app",
+  "https://www.zensus.app",
 ];
 
-// Allow localhost in development
+// Allow localhost in development. Port 8080 matches vite.config.ts.
 const DEV_ORIGINS = [
+  "http://localhost:8080",
   "http://localhost:5173",
   "http://localhost:3000",
+  "http://127.0.0.1:8080",
   "http://127.0.0.1:5173",
 ];
+
+// Vercel preview deployments get ephemeral zensus-marketing-*.vercel.app
+// hostnames. Match them so previews can hit the edge function.
+const PREVIEW_HOST_SUFFIX = ".vercel.app";
 
 function getCorsHeaders(req: Request): Record<string, string> {
   const origin = req.headers.get("origin") || "";
   const allAllowedOrigins = [...ALLOWED_ORIGINS, ...DEV_ORIGINS];
-  
-  // Check if origin is allowed
-  const isAllowed = allAllowedOrigins.some(allowed => 
-    origin === allowed || origin.endsWith(".lovableproject.com") || origin.endsWith(".lovable.app")
-  );
-  
+
+  const isAllowed = allAllowedOrigins.some(
+    (allowed) => origin === allowed,
+  ) || origin.endsWith(PREVIEW_HOST_SUFFIX);
+
   return {
     "Access-Control-Allow-Origin": isAllowed ? origin : ALLOWED_ORIGINS[0],
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",

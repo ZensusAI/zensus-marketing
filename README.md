@@ -2,7 +2,7 @@
 
 Public marketing site for Zensus — served at [zensus.app](https://zensus.app).
 
-This repo is a standalone project, separate from the Zensus monorepo ([ZensusAI/zensus](https://github.com/ZensusAI/zensus)). It was originally built in [Lovable](https://lovable.dev) and ejected to Vercel on 2026-04-16.
+This repo is a standalone project, separate from the Zensus monorepo ([ZensusAI/zensus](https://github.com/ZensusAI/zensus)).
 
 ## Stack
 
@@ -42,7 +42,7 @@ Production env vars are managed in Vercel dashboard → Settings → Environment
 ```sh
 npm run dev          # local dev server (:8080)
 npm run build        # production build → dist/
-npm run build:dev    # dev-mode build (includes component tagger)
+npm run build:dev    # dev-mode build (unminified output, useful for debugging)
 npm run preview      # serve built dist/ locally
 npm run lint         # eslint
 ```

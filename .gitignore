@@ -72,9 +72,6 @@ temp/
 *.orig
 *.rej
 
-# Lovable artifacts (historical — platform ejected)
-.lovable/
-
 # Visual companion brainstorm sessions (ephemeral)
 .superpowers/
 

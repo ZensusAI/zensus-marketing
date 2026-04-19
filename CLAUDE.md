@@ -11,7 +11,7 @@ Marketing site for Zensus (`zensus.app`). The **product app** lives at a separat
 ```sh
 npm run dev        # Vite dev server on http://localhost:8080 (port set in vite.config.ts, not default 5173)
 npm run build      # Production build
-npm run build:dev  # Build with development mode (keeps lovable-tagger, etc.)
+npm run build:dev  # Build with development mode (unminified output, useful for debugging)
 npm run lint       # ESLint
 npm run preview    # Preview the production build locally
 ```
@@ -34,11 +34,7 @@ No test runner is configured.
 
 **Supabase integration:** The web client in `src/integrations/supabase/client.ts` is marked **"automatically generated. Do not edit it directly."** It reads `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from `import.meta.env`. `src/integrations/supabase/types.ts` is the generated Database types — regenerate it via Supabase tooling rather than hand-editing.
 
-**Edge function (`supabase/functions/submit-email/index.ts`, Deno):** Waitlist endpoint that writes to a **Notion** database (not Supabase Postgres) via `NOTION_API_KEY` + `NOTION_DATABASE_ID` env vars. Includes an in-memory rate limiter (5/hour per IP, resets on cold start) and a hardcoded CORS allowlist that accepts `*.lovableproject.com` / `*.lovable.app` plus localhost. Add new production domains to `ALLOWED_ORIGINS` at the top of the file.
-
-## Lovable history
-
-The project was originally scaffolded on Lovable and has since been ejected (see commit `665e988`). The `lovable-tagger` Vite plugin still runs **in development mode only** (`vite.config.ts`) and can stay; `.lovable/` is gitignored. Don't add new Lovable-specific tooling.
+**Edge function (`supabase/functions/submit-email/index.ts`, Deno):** Waitlist endpoint that writes to a **Notion** database (not Supabase Postgres) via `NOTION_API_KEY` + `NOTION_DATABASE_ID` env vars. Includes an in-memory rate limiter (5/hour per IP, resets on cold start) and a CORS allowlist that accepts `zensus.app`, `www.zensus.app`, any `*.vercel.app` preview host, and localhost. Add new production domains to `ALLOWED_ORIGINS` at the top of the file.
 
 ## Deployment
 
