@@ -79,6 +79,10 @@ const Changelog = () => (
         property="og:description"
         content="What we have shipped on Zensus, most recent first."
       />
+      <meta property="og:image" content="https://zensus.app/og/changelog.png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta name="twitter:image" content="https://zensus.app/og/changelog.png" />
       <link rel="canonical" href="https://zensus.app/changelog" />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>

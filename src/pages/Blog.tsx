@@ -53,6 +53,10 @@ const Blog = () => {
         <meta name="description" content="Case studies and practical guides on cash flow forecasting, runway planning, and financial decision-making for founders with variable revenue." />
         <meta property="og:title" content="Blog · Zensus" />
         <meta property="og:description" content="Case studies on cash flow forecasting for founders with variable revenue." />
+        <meta property="og:image" content="https://zensus.app/og/blog.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:image" content="https://zensus.app/og/blog.png" />
         <link rel="canonical" href="https://zensus.app/blog" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       </Helmet>

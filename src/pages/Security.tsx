@@ -29,6 +29,10 @@ const Security = () => (
         property="og:description"
         content="How Zensus protects your financial data. Bank-level OAuth, encryption at rest, account-level isolation."
       />
+      <meta property="og:image" content="https://zensus.app/og/security.png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta name="twitter:image" content="https://zensus.app/og/security.png" />
       <link rel="canonical" href="https://zensus.app/security" />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>

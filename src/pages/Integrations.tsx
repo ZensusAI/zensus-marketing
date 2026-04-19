@@ -69,6 +69,10 @@ const Integrations = () => (
         property="og:description"
         content="Live integrations to Plaid, QuickBooks, HubSpot, and Slack. No manual data entry."
       />
+      <meta property="og:image" content="https://zensus.app/og/integrations.png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta name="twitter:image" content="https://zensus.app/og/integrations.png" />
       <link rel="canonical" href="https://zensus.app/integrations" />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>

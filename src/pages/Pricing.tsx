@@ -69,6 +69,10 @@ const Pricing = () => (
         property="og:description"
         content="Zensus pricing is tailored to your business. Talk to us for a walkthrough."
       />
+      <meta property="og:image" content="https://zensus.app/og/pricing.png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta name="twitter:image" content="https://zensus.app/og/pricing.png" />
       <link rel="canonical" href="https://zensus.app/pricing" />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>
