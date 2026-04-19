@@ -32,13 +32,9 @@ No test runner is configured.
 
 **Styling:** shadcn/ui (slate base) with CSS variables. `tailwind.config.ts` defines custom animations (`fade-in`, `fade-in-up`, `slide-in-*`, `pulse-glow`, `shine`) that the landing sections rely on — prefer these over adding new one-offs. Font is Inter via `fontFamily.sans`/`display`.
 
-**Supabase integration:** The web client in `src/integrations/supabase/client.ts` is marked **"automatically generated. Do not edit it directly."** It reads `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from `import.meta.env`. `src/integrations/supabase/types.ts` is the generated Database types — regenerate it via Supabase tooling rather than hand-editing.
-
-**Edge function (`supabase/functions/submit-email/index.ts`, Deno):** Waitlist endpoint that writes to a **Notion** database (not Supabase Postgres) via `NOTION_API_KEY` + `NOTION_DATABASE_ID` env vars. Includes an in-memory rate limiter (5/hour per IP, resets on cold start) and a CORS allowlist that accepts `zensus.app`, `www.zensus.app`, any `*.vercel.app` preview host, and localhost. Add new production domains to `ALLOWED_ORIGINS` at the top of the file.
-
 ## Deployment
 
-Deployed via Vercel. Environment variables (`VITE_SUPABASE_*`, Notion secrets for the edge function) are configured in the Vercel/Supabase dashboards — never commit `.env*` files.
+Deployed via Vercel. `main` auto-deploys to production. The site has no runtime environment variables today (the old Supabase waitlist was removed), so there is nothing to configure in the Vercel dashboard.
 
 ## ESLint note
 

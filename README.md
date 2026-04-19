@@ -9,7 +9,6 @@ This repo is a standalone project, separate from the Zensus monorepo ([ZensusAI/
 - Vite 5 + React 18 + TypeScript
 - Tailwind CSS + shadcn/ui (Radix primitives)
 - React Router v6
-- Supabase client (currently instantiated but not actively used — reserved for future waitlist/signup flows)
 - Deployed on Vercel (auto-deploy on push to `main`)
 
 ## Local development
@@ -19,32 +18,22 @@ npm install
 npm run dev
 ```
 
-The dev server runs on `http://localhost:8080`.
-
-Required env vars for local dev (copy into a `.env` file at repo root — `.env` is gitignored):
-
-```
-VITE_SUPABASE_PROJECT_ID=rrjfwnmkesscyxppanhm
-VITE_SUPABASE_URL=https://rrjfwnmkesscyxppanhm.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=<supabase anon key — grab from Vercel project env>
-```
-
-The Supabase publishable key is the `anon` JWT — designed to be public and embedded in the client bundle. Row-level security policies in Supabase enforce actual access control.
+The dev server runs on `http://localhost:8080`. The marketing site is fully static and has no runtime environment variables.
 
 ## Deployment
 
 Vercel project: `zensus-marketing` (Hobby tier). `main` branch auto-deploys to production at [zensus.app](https://zensus.app). PRs get preview deploys at `zensus-marketing-git-<branch>-<team>.vercel.app`.
 
-Production env vars are managed in Vercel dashboard → Settings → Environment Variables. Do not commit env values to this repo.
-
 ## Scripts
 
 ```sh
 npm run dev          # local dev server (:8080)
-npm run build        # production build → dist/
+npm run build        # production build, also generates OG images and prerenders routes
 npm run build:dev    # dev-mode build (unminified output, useful for debugging)
 npm run preview      # serve built dist/ locally
 npm run lint         # eslint
+npm run og           # regenerate per-route OG images into dist/og/ (no prerender)
+npm run prerender    # prerender all routes into dist/<route>/index.html
 ```
 
 ## Project structure
@@ -54,9 +43,13 @@ src/
 ├── components/    # UI components + landing sections
 ├── pages/         # Route-level pages
 ├── hooks/         # Custom React hooks
-├── lib/           # Utilities
-└── integrations/
-    └── supabase/  # Supabase client + generated types
+└── lib/           # Utilities
+
+scripts/
+├── generate-og.mjs     # Build-time OG image generator
+├── prerender.mjs       # Build-time route prerenderer
+├── optimize-images.mjs # One-shot image optimizer
+└── og/template.html    # Shared HTML template for social cards
 ```
 
 ## Links
