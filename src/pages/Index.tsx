@@ -39,7 +39,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background animate-fade-in">
+    <div className="min-h-screen bg-background">
       <Helmet>
         <title>Zensus · Cash flow forecasting for founders with variable revenue</title>
         <meta name="description" content="Know exactly when your cash runs out and what to do about it. Connect your bank, QuickBooks, and HubSpot for runway projections that match the calendar." />
@@ -52,19 +52,21 @@ const Index = () => {
         <link rel="canonical" href="https://zensus.app/" />
       </Helmet>
       <Navbar />
-      <main>
-        <Hero />
-        <TrustBar />
-        <Problem />
-        <RunwayFeature />
-        <Bento />
-        <HowItWorks />
-        <SecurityStrip />
-        <PricingPreview />
-        <FAQ />
-        <FinalCTABand />
-      </main>
-      <Footer />
+      <div className="animate-fade-in">
+        <main>
+          <Hero />
+          <TrustBar />
+          <Problem />
+          <RunwayFeature />
+          <Bento />
+          <HowItWorks />
+          <SecurityStrip />
+          <PricingPreview />
+          <FAQ />
+          <FinalCTABand />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };
