@@ -22,14 +22,14 @@ export const TryItNowButton = ({ className }: TryItNowButtonProps) => (
       asChild
       size="lg"
       className={cn(
-        "group h-12 px-8 rounded-full bg-primary text-primary-foreground",
-        "hover:bg-primary/90 font-semibold",
+        "group h-10 px-6 rounded-full bg-primary text-primary-foreground",
+        "hover:bg-primary/90 font-semibold text-[15px]",
       )}
     >
       <a href={SIGN_IN_URL} target="_blank" rel="noopener noreferrer">
         Try it Now
         <ArrowRight
-          size={18}
+          size={16}
           className="ml-2 transition-transform group-hover:translate-x-1"
         />
       </a>

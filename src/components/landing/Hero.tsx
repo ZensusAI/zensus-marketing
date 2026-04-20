@@ -130,7 +130,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative flex items-center pt-24 pb-24 md:pt-32 md:pb-32 lg:pt-40 lg:pb-40 overflow-hidden"
+      className="relative flex items-center pt-24 pb-4 md:pt-32 md:pb-6 lg:pt-40 lg:pb-8 overflow-hidden"
     >
       {/* Aurora backdrop with a gentle parallax. The container has -20% top
           and bottom so the transform never reveals the section edges. */}
@@ -188,7 +188,7 @@ const Hero = () => {
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-20 md:mb-28 lg:mb-36">
             Connect your bank, QuickBooks, and HubSpot. Runway that knows your
             annual contract hits March 14, not "sometime in Q1."
           </p>
