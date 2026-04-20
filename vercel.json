@@ -20,12 +20,11 @@
       "source": "/forecast",
       "destination": "https://app.zensus.app/forecast",
       "permanent": true
-    }
-  ],
-  "rewrites": [
+    },
     {
-      "source": "/((?!.*\\.).*)",
-      "destination": "/index.html"
+      "source": "/terms",
+      "destination": "https://app.zensus.app/terms",
+      "permanent": true
     }
   ]
 }
