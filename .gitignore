@@ -78,6 +78,12 @@ temp/
 # Claude Code local editor config (per-developer plugin enablement)
 .claude/
 
+# Playwright MCP scratch output (screenshots, traces, console logs from
+# local Playwright browser sessions — never part of the build)
+.playwright-mcp/
+playwright-report/
+test-results/
+
 # Lockfile policy — this project uses npm (package-lock.json)
 bun.lock
 bun.lockb
