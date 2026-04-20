@@ -23,8 +23,8 @@ const painPoints = [
   },
   {
     Glyph: GlyphCliff,
-    title: "Surprises at the end of the month",
-    description: "Cash problems are obvious in hindsight but invisible in real-time",
+    title: "The annual invoice that posted three weeks late",
+    description: "The hire you made the week before a customer churned",
   },
 ];
 
@@ -34,7 +34,7 @@ const Problem = () => {
       <div className="section-container">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-            You're making million-dollar decisions on gut feeling
+            You check your bank every Monday and still aren't sure you can make payroll in six weeks.
           </h2>
           <p className="text-lg text-muted-foreground">
             Most founders check their bank balance and hope for the best. That's not a financial strategy.

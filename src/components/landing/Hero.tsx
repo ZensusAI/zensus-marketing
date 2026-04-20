@@ -122,8 +122,8 @@ const Hero = () => {
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-            Connect your bank, QuickBooks, and HubSpot. Runway that matches the
-            calendar, not a rough monthly average.
+            Connect your bank, QuickBooks, and HubSpot. Runway that knows your
+            annual contract hits March 14, not "sometime in Q1."
           </p>
 
           <div className="flex flex-col items-center gap-8">

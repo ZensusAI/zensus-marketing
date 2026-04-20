@@ -98,7 +98,7 @@ const sections: Omit<RunwaySectionProps, "imageRight">[] = [
     headline: "Run scenarios with",
     highlight: "your runway agent",
     description:
-      "Layer hiring plans, churn assumptions, and pricing changes into multi-turn scenarios. Your agent recalculates runway in real time.",
+      "Ask it in plain English: what if our biggest customer pays 30 days late and we hire two engineers? Your agent recalculates runway in real time.",
     bullets: [
       "Stack multiple assumptions (hiring, churn, pricing) in a single conversation",
       "Watch your runway update live as each scenario layer is applied",
