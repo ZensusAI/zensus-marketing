@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import {
   Accordion,
   AccordionContent,
@@ -65,36 +65,27 @@ const faqGroups = [
   },
 ];
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqGroups
+    .flatMap((g) => g.items)
+    .map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+};
+
 const FAQ = () => {
-  useEffect(() => {
-    const allItems = faqGroups.flatMap((g) => g.items);
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: allItems.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: item.answer,
-        },
-      })),
-    };
-
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.textContent = JSON.stringify(jsonLd);
-    script.id = "faq-jsonld";
-    document.head.appendChild(script);
-
-    return () => {
-      const el = document.getElementById("faq-jsonld");
-      if (el) el.remove();
-    };
-  }, []);
-
   return (
     <section id="faq" className="section-padding bg-secondary/30">
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+      </Helmet>
       <div className="section-container">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
