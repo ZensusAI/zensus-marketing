@@ -44,7 +44,7 @@ const Index = () => {
         <title>Zensus · Cash flow forecasting for founders with variable revenue</title>
         <meta name="description" content="Know exactly when your cash runs out and what to do about it. Connect your bank, QuickBooks, and HubSpot for runway projections that match the calendar." />
         <meta property="og:title" content="Zensus · Cash flow forecasting for founders" />
-        <meta property="og:description" content="Runway that matches the calendar. Built for founders with annual and quarterly contracts." />
+        <meta property="og:description" content="Runway that knows your annual contract hits March 14, not 'sometime in Q1.' Built for founders with variable revenue." />
         <meta property="og:image" content="https://zensus.app/og/home.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
