@@ -7,7 +7,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-background border-t border-border">
+    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 shadow-sm border-t-0">
       <div className="section-container py-12">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
           {/* Legal Links */}
@@ -18,7 +18,7 @@ const Footer = () => {
                 href={link.href}
                 target={link.href.startsWith("http") ? "_blank" : undefined}
                 rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-base font-semibold text-gray-300 hover:text-white transition-colors"
               >
                 {link.label}
               </a>
