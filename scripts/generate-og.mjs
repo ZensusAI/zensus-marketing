@@ -65,9 +65,9 @@ const CARDS = [
   {
     slug: "about",
     category: "About",
-    title: "Ajin Sunny, Founder",
+    title: "About Zensus",
     subtitle:
-      "Full-stack engineer turned founder, building Zensus because too many startups fail from missed cash flow, not missed missions.",
+      "Cash flow forecasting for founders with variable revenue. Built because too many startups fail from missed cash flow, not missed missions.",
     accent: "green",
   },
   {
