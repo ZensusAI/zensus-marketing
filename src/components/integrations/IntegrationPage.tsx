@@ -17,6 +17,7 @@ interface IntegrationPageProps {
   metaTitle: string;
   metaDescription: string;
   sections: IntegrationSection[];
+  serviceSchema?: Record<string, unknown>;
 }
 
 const BREADCRUMB_NAMES: Record<string, string> = {
@@ -34,6 +35,7 @@ export const IntegrationPage = ({
   metaTitle,
   metaDescription,
   sections,
+  serviceSchema,
 }: IntegrationPageProps) => {
   const breadcrumbs = breadcrumbSchema([
     HOME_CRUMB,
@@ -63,6 +65,9 @@ export const IntegrationPage = ({
       />
       <link rel="canonical" href={`https://zensus.app/integrations/${slug}`} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      {serviceSchema && (
+        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
+      )}
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

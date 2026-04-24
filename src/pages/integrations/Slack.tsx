@@ -56,6 +56,27 @@ const sections: IntegrationSection[] = [
   },
 ];
 
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Zensus + Slack integration",
+  serviceType: "Cash-alert delivery to Slack workspaces",
+  description:
+    "Post Zensus cash-crunch alerts into Slack with interactive Block Kit messages for snooze and threshold controls. OAuth-based, revocable anytime.",
+  provider: { "@id": "https://zensus.app/#organization" },
+  areaServed: "US",
+  url: "https://zensus.app/integrations/slack",
+  isRelatedTo: {
+    "@type": "Organization",
+    name: "Slack",
+    url: "https://slack.com",
+  },
+  audience: {
+    "@type": "Audience",
+    audienceType: "Founders and operators with variable revenue",
+  },
+};
+
 const SlackIntegration = () => (
   <IntegrationPage
     slug="slack"
@@ -65,6 +86,7 @@ const SlackIntegration = () => (
     metaTitle="Slack integration · Zensus"
     metaDescription="Post Zensus cash-crunch alerts into Slack. Interactive Block Kit messages with snooze and threshold controls, OAuth-based, revocable anytime."
     sections={sections}
+    serviceSchema={serviceSchema}
   />
 );
 

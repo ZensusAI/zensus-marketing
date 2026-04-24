@@ -54,6 +54,27 @@ const sections: IntegrationSection[] = [
   },
 ];
 
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Zensus + QuickBooks integration",
+  serviceType: "Accounting data integration for cash flow forecasting",
+  description:
+    "Connect QuickBooks Online to Zensus via Intuit OAuth for live expenses, invoices, and AR/AP feeding a subscription-aware runway forecast.",
+  provider: { "@id": "https://zensus.app/#organization" },
+  areaServed: "US",
+  url: "https://zensus.app/integrations/quickbooks",
+  isRelatedTo: {
+    "@type": "Organization",
+    name: "QuickBooks",
+    url: "https://quickbooks.intuit.com",
+  },
+  audience: {
+    "@type": "Audience",
+    audienceType: "Founders and operators with variable revenue",
+  },
+};
+
 const QuickBooksIntegration = () => (
   <IntegrationPage
     slug="quickbooks"
@@ -63,6 +84,7 @@ const QuickBooksIntegration = () => (
     metaTitle="QuickBooks integration · Zensus"
     metaDescription="Connect QuickBooks to Zensus via Intuit OAuth. Live expense and AR/AP sync, AES-256-GCM encrypted tokens, credentials never stored."
     sections={sections}
+    serviceSchema={serviceSchema}
   />
 );
 

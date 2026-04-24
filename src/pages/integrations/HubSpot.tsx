@@ -56,6 +56,27 @@ const sections: IntegrationSection[] = [
   },
 ];
 
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Zensus + HubSpot integration",
+  serviceType: "CRM and subscription data integration for runway projection",
+  description:
+    "Connect HubSpot to Zensus via OAuth so deals and subscriptions feed runway projections that respect annual, quarterly, and multi-currency contract terms.",
+  provider: { "@id": "https://zensus.app/#organization" },
+  areaServed: "US",
+  url: "https://zensus.app/integrations/hubspot",
+  isRelatedTo: {
+    "@type": "Organization",
+    name: "HubSpot",
+    url: "https://www.hubspot.com",
+  },
+  audience: {
+    "@type": "Audience",
+    audienceType: "Founders and operators with variable revenue",
+  },
+};
+
 const HubSpotIntegration = () => (
   <IntegrationPage
     slug="hubspot"
@@ -65,6 +86,7 @@ const HubSpotIntegration = () => (
     metaTitle="HubSpot integration · Zensus"
     metaDescription="Connect HubSpot to Zensus via OAuth. Deals and subscriptions feed real-time runway projections that respect contract terms and currency."
     sections={sections}
+    serviceSchema={serviceSchema}
   />
 );
 

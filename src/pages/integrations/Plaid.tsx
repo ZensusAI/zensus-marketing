@@ -24,6 +24,27 @@ const sections: IntegrationSection[] = [
   },
 ];
 
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Zensus + Plaid bank integration",
+  serviceType: "Bank account data integration for cash flow forecasting",
+  description:
+    "Connect your bank account to Zensus via Plaid for real-time transaction sync and runway projections based on actual cleared transactions.",
+  provider: { "@id": "https://zensus.app/#organization" },
+  areaServed: "US",
+  url: "https://zensus.app/integrations/plaid",
+  isRelatedTo: {
+    "@type": "Organization",
+    name: "Plaid",
+    url: "https://plaid.com",
+  },
+  audience: {
+    "@type": "Audience",
+    audienceType: "Founders and operators with variable revenue",
+  },
+};
+
 const PlaidIntegration = () => (
   <IntegrationPage
     slug="plaid"
@@ -33,6 +54,7 @@ const PlaidIntegration = () => (
     metaTitle="Plaid integration · Zensus"
     metaDescription="Connect your bank to Zensus via Plaid. Real-time transaction sync, bank-level OAuth, no credentials stored."
     sections={sections}
+    serviceSchema={serviceSchema}
   />
 );
 
