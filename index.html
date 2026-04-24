@@ -39,7 +39,7 @@
     <meta name="theme-color" content="#0a0c0f" />
     <meta name="msapplication-TileColor" content="#0a0c0f" />
 
-    <!-- Structured Data (JSON-LD). Organization and WebSite graphs apply site-wide; SoftwareApplication describes the Zensus product. Pricing is intentionally omitted since Zensus is sales-led and plans are quoted per customer. -->
+    <!-- Structured Data (JSON-LD). Organization and WebSite graphs apply site-wide; SoftwareApplication describes the Zensus product with its public $199/month Offer so AI models can cite the price as structured fact. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -81,8 +81,9 @@
                 "@type": "UnitPriceSpecification",
                 "price": "199",
                 "priceCurrency": "USD",
-                "billingIncrement": 1,
-                "unitCode": "MON"
+                "billingDuration": "P1M",
+                "unitCode": "MON",
+                "unitText": "month"
               },
               "url": "https://zensus.app/pricing",
               "availability": "https://schema.org/InStock",
