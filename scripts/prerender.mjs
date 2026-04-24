@@ -28,6 +28,7 @@ const ROUTES = [
   "/blog",
   "/changelog",
   "/security",
+  "/about",
   "/integrations",
   "/integrations/plaid",
   "/integrations/quickbooks",

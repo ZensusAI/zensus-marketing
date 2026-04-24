@@ -63,6 +63,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "about",
+    category: "About",
+    title: "Ajin Sunny, Founder",
+    subtitle:
+      "Full-stack engineer turned founder, building Zensus because too many startups fail from missed cash flow, not missed missions.",
+    accent: "green",
+  },
+  {
     slug: "integrations",
     category: "Integrations",
     title: "Connect the tools that run your business",
