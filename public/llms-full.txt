@@ -75,6 +75,6 @@ Only you. Your financial data is never shared, sold, or used to train AI models.
 
 ## Links
 
-- Homepage: https://zensus.ai
-- Pricing: https://zensus.ai/pricing
-- Blog: https://zensus.ai/blog
+- Homepage: https://zensus.app
+- Pricing: https://zensus.app/pricing
+- Blog: https://zensus.app/blog

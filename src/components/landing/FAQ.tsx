@@ -59,7 +59,7 @@ const faqGroups = [
     items: [
       {
         question: "How does pricing work?",
-        answer: "Zensus pricing is tailored to your business size and data volume. We will walk you through what it looks like for you on the call.",
+        answer: "Zensus Pro is $199 a month, billed monthly, cancel anytime. One plan with every integration (Plaid, QuickBooks, HubSpot, Slack), real-time runway, AI scenarios, and alerts. No free trial today, no annual billing yet.",
       },
     ],
   },

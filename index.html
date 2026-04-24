@@ -71,7 +71,23 @@
             "url": "https://zensus.app",
             "applicationCategory": "BusinessApplication",
             "operatingSystem": "Web",
-            "publisher": { "@id": "https://zensus.app/#organization" }
+            "publisher": { "@id": "https://zensus.app/#organization" },
+            "offers": {
+              "@type": "Offer",
+              "name": "Zensus Pro",
+              "price": "199",
+              "priceCurrency": "USD",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "199",
+                "priceCurrency": "USD",
+                "billingIncrement": 1,
+                "unitCode": "MON"
+              },
+              "url": "https://zensus.app/pricing",
+              "availability": "https://schema.org/InStock",
+              "category": "subscription"
+            }
           }
         ]
       }

@@ -24,7 +24,7 @@ Founders and operators of startups with variable revenue, complex hiring plans, 
 
 ## Links
 
-- [Homepage](https://zensus.ai)
-- [Pricing](https://zensus.ai/pricing)
-- [Blog](https://zensus.ai/blog)
-- [llms-full.txt](https://zensus.ai/llms-full.txt)
+- [Homepage](https://zensus.app)
+- [Pricing](https://zensus.app/pricing)
+- [Blog](https://zensus.app/blog)
+- [llms-full.txt](https://zensus.app/llms-full.txt)

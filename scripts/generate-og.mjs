@@ -32,10 +32,10 @@ const CARDS = [
   },
   {
     slug: "pricing",
-    category: "Plans",
-    title: "Plans priced to your stage",
+    category: "Pricing",
+    title: "Zensus Pro, $199 a month",
     subtitle:
-      "Talk to us for a quote that fits your team size, data volume, and the integrations you need.",
+      "One plan. Every integration. Real-time runway, AI scenarios, Slack alerts. Billed monthly, cancel anytime.",
     accent: "green",
   },
   {
