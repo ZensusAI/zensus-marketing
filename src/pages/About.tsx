@@ -15,16 +15,6 @@ const breadcrumbs = breadcrumbSchema([
   { name: "About", url: PAGE_URL },
 ]);
 
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Ajin Sunny",
-  jobTitle: "Founder & CEO",
-  url: PAGE_URL,
-  worksFor: { "@id": "https://zensus.app/#organization" },
-  sameAs: [PERSONAL_SITE, PERSONAL_LINKEDIN],
-};
-
 const personalLinks = [
   { label: "LinkedIn", href: PERSONAL_LINKEDIN, external: true },
   { label: "ajinsunny.com", href: PERSONAL_SITE, external: true },
@@ -64,7 +54,6 @@ const About = () => (
       <meta name="twitter:image" content="https://zensus.app/og/about.png" />
       <link rel="canonical" href={PAGE_URL} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
-      <script type="application/ld+json">{JSON.stringify(personSchema)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

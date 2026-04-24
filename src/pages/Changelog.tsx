@@ -20,19 +20,26 @@ const slugify = (title: string) =>
 
 const changelogGraph = (items: ChangelogEntry[]) => ({
   "@context": "https://schema.org",
-  "@graph": items.map((entry) => ({
-    "@type": "Article",
-    headline: entry.title,
-    description: entry.body,
-    datePublished: entry.date,
-    dateModified: entry.date,
-    articleSection: entry.category,
-    url: `https://zensus.app/changelog#${slugify(entry.title)}`,
-    mainEntityOfPage: "https://zensus.app/changelog",
-    author: { "@id": "https://zensus.app/#organization" },
-    publisher: { "@id": "https://zensus.app/#organization" },
-    inLanguage: "en-US",
-  })),
+  "@graph": items.map((entry) => {
+    const slug = slugify(entry.title);
+    return {
+      "@type": "Article",
+      headline: entry.title,
+      description: entry.body,
+      datePublished: entry.date,
+      dateModified: entry.date,
+      articleSection: entry.category,
+      url: `https://zensus.app/changelog#${slug}`,
+      mainEntityOfPage: "https://zensus.app/changelog",
+      author: { "@id": "https://zensus.app/#organization" },
+      publisher: { "@id": "https://zensus.app/#organization" },
+      inLanguage: "en-US",
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: [`#${slug} h2`, `#${slug} p`],
+      },
+    };
+  }),
 });
 
 interface ChangelogEntry {
