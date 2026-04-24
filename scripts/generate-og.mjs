@@ -63,6 +63,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "about",
+    category: "About",
+    title: "About Zensus",
+    subtitle:
+      "Cash flow forecasting for founders with variable revenue. Built because too many startups fail from missed cash flow, not missed missions.",
+    accent: "green",
+  },
+  {
     slug: "integrations",
     category: "Integrations",
     title: "Connect the tools that run your business",
