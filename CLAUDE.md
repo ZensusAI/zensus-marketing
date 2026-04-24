@@ -34,7 +34,7 @@ No test runner is configured.
 
 ## SEO and prerender
 
-Every route listed in `src/App.tsx` is also listed in `scripts/prerender.mjs` and `public/sitemap.xml`. The production build runs `vite build` then `scripts/generate-og.mjs` (per-route Open Graph PNGs into `dist/og/`) then `scripts/prerender.mjs` (Puppeteer walks each route and writes `dist/<route>/index.html` so Googlebot sees real HTML on first fetch). When adding a new route, update **all three** lists.
+Every route listed in `src/App.tsx` is also listed in `scripts/prerender.mjs` and `public/sitemap.xml`. The production build runs `vite build` then `scripts/generate-og.mjs` (per-route Open Graph PNGs into `dist/og/`) then `scripts/prerender.mjs` (Puppeteer walks each route and writes `dist/<route>/index.html` so Googlebot sees real HTML on first fetch) then `scripts/indexnow-ping.mjs` (POSTs every sitemap URL to the IndexNow API so Bing and Yandex learn about changes immediately; gated on `VERCEL=1` + `VERCEL_ENV=production` so local builds never ping). When adding a new route, update **all three** lists.
 
 Per-route `<title>`, description, canonical, and og/twitter tags are emitted by `react-helmet-async` inside each page component. The FAQ section emits the only `FAQPage` JSON-LD block; site-wide Organization / WebSite / SoftwareApplication lives in `index.html`. Breadcrumb JSON-LD is built via `src/lib/structured-data.ts`.
 

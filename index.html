@@ -45,11 +45,30 @@
         "@context": "https://schema.org",
         "@graph": [
           {
+            "@type": "Person",
+            "@id": "https://zensus.app/about#ajin-sunny",
+            "name": "Ajin Sunny",
+            "jobTitle": "Founder & CEO",
+            "url": "https://zensus.app/about",
+            "worksFor": { "@id": "https://zensus.app/#organization" },
+            "knowsAbout": [
+              "Cash flow forecasting",
+              "Runway planning",
+              "SaaS finance",
+              "Full-stack web development"
+            ],
+            "sameAs": [
+              "https://ajinsunny.com",
+              "https://www.linkedin.com/in/ajinsunny/"
+            ]
+          },
+          {
             "@type": "Organization",
             "@id": "https://zensus.app/#organization",
             "name": "Zensus",
             "url": "https://zensus.app",
             "logo": "https://zensus.app/favicon-192x192.png",
+            "founder": { "@id": "https://zensus.app/about#ajin-sunny" },
             "sameAs": [
               "https://x.com/zensusai",
               "https://www.linkedin.com/company/zensusai",
@@ -72,6 +91,7 @@
             "url": "https://zensus.app",
             "applicationCategory": "BusinessApplication",
             "operatingSystem": "Web",
+            "dateModified": "2026-04-24",
             "publisher": { "@id": "https://zensus.app/#organization" },
             "offers": {
               "@type": "Offer",
