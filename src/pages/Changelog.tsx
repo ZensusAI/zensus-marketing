@@ -11,6 +11,30 @@ const breadcrumbs = breadcrumbSchema([
 
 type ChangelogCategory = "New" | "Improved" | "Fixed" | "Security";
 
+const slugify = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+
+const changelogGraph = (items: ChangelogEntry[]) => ({
+  "@context": "https://schema.org",
+  "@graph": items.map((entry) => ({
+    "@type": "Article",
+    headline: entry.title,
+    description: entry.body,
+    datePublished: entry.date,
+    dateModified: entry.date,
+    articleSection: entry.category,
+    url: `https://zensus.app/changelog#${slugify(entry.title)}`,
+    mainEntityOfPage: "https://zensus.app/changelog",
+    author: { "@id": "https://zensus.app/#organization" },
+    publisher: { "@id": "https://zensus.app/#organization" },
+    inLanguage: "en-US",
+  })),
+});
+
 interface ChangelogEntry {
   date: string;
   category: ChangelogCategory;
@@ -85,6 +109,9 @@ const Changelog = () => (
       <meta name="twitter:image" content="https://zensus.app/og/changelog.png" />
       <link rel="canonical" href="https://zensus.app/changelog" />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      <script type="application/ld+json">
+        {JSON.stringify(changelogGraph(entries))}
+      </script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">
@@ -100,7 +127,7 @@ const Changelog = () => (
 
         <ol className="space-y-10 list-none p-0">
           {entries.map((entry) => (
-            <li key={entry.date + entry.title}>
+            <li key={entry.date + entry.title} id={slugify(entry.title)}>
               <article className="grid grid-cols-1 sm:grid-cols-[8rem,1fr] gap-4 sm:gap-8">
                 <time
                   dateTime={entry.date}
