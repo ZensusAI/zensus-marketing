@@ -102,10 +102,10 @@ const Pricing = () => (
         <div className="section-container">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-              Simple, transparent pricing
+              One plan. $199 a month.
             </h1>
             <p className="text-lg text-muted-foreground">
-              Everything you need to see your financial future clearly.
+              Every integration, real-time runway, and Slack alerts. No contracts, no usage meter, no "contact sales."
             </p>
           </div>
 

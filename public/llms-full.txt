@@ -78,3 +78,10 @@ Only you. Your financial data is never shared, sold, or used to train AI models.
 - Homepage: https://zensus.app
 - Pricing: https://zensus.app/pricing
 - Blog: https://zensus.app/blog
+- Changelog: https://zensus.app/changelog
+- Security: https://zensus.app/security
+- Integrations: https://zensus.app/integrations
+- Plaid integration: https://zensus.app/integrations/plaid
+- QuickBooks integration: https://zensus.app/integrations/quickbooks
+- HubSpot integration: https://zensus.app/integrations/hubspot
+- Slack integration: https://zensus.app/integrations/slack
