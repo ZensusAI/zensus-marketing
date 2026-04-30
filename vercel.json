@@ -13,7 +13,7 @@
     },
     {
       "source": "/features",
-      "destination": "https://app.zensus.app/features",
+      "destination": "https://zensus.app/#features",
       "permanent": true
     },
     {
