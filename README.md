@@ -55,7 +55,6 @@ scripts/
 ## Links
 
 - Production: [zensus.app](https://zensus.app) · [www.zensus.app](https://www.zensus.app)
-- App (separate repo/domain): [app.zensus.app](https://app.zensus.app)
 - Zensus monorepo: [ZensusAI/zensus](https://github.com/ZensusAI/zensus)
 
 ## License
