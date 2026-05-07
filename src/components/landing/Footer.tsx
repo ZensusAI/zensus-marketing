@@ -3,8 +3,8 @@ const Footer = () => {
     { label: "About", href: "/about" },
     { label: "Book a call", href: "https://calendly.com/hello-zensus/introcall" },
     { label: "Plans", href: "/pricing" },
-    { label: "Privacy", href: "https://app.zensus.app/privacy" },
-    { label: "Terms", href: "https://app.zensus.app/terms" },
+    { label: "Privacy", href: "/privacy" },
+    { label: "Terms", href: "/terms" },
   ];
 
   return (
