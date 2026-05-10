@@ -17,6 +17,8 @@ const Changelog = lazy(() => import("./pages/Changelog"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Security = lazy(() => import("./pages/Security"));
 const About = lazy(() => import("./pages/About"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
 const Integrations = lazy(() => import("./pages/Integrations"));
 const PlaidIntegration = lazy(() => import("./pages/integrations/Plaid"));
 const QuickBooksIntegration = lazy(
@@ -47,6 +49,8 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/security" element={<Security />} />
               <Route path="/about" element={<About />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
               <Route path="/integrations" element={<Integrations />} />
               <Route path="/integrations/plaid" element={<PlaidIntegration />} />
               <Route

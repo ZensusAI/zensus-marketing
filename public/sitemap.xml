@@ -37,6 +37,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://zensus.app/privacy</loc>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://zensus.app/terms</loc>
+    <lastmod>2026-02-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://zensus.app/integrations</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
