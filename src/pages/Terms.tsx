@@ -1,6 +1,31 @@
+import { Helmet } from "react-helmet-async";
+import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+
+const PAGE_URL = "https://zensus.app/terms";
+const PAGE_DESCRIPTION =
+  "Terms of Service for the Zensus platform. Subscription terms, acceptable use, intellectual property, and account responsibilities.";
+
+const breadcrumbs = breadcrumbSchema([
+  HOME_CRUMB,
+  { name: "Terms of Service", url: PAGE_URL },
+]);
+
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-background">
+    <>
+      <Helmet>
+        <title>Terms of Service · Zensus</title>
+        <meta name="description" content={PAGE_DESCRIPTION} />
+        <meta property="og:title" content="Terms of Service · Zensus" />
+        <meta property="og:description" content={PAGE_DESCRIPTION} />
+        <meta property="og:image" content="https://zensus.app/og/terms.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:image" content="https://zensus.app/og/terms.png" />
+        <link rel="canonical" href={PAGE_URL} />
+        <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      </Helmet>
+      <main className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         {/* Header */}
         <header className="mb-12">
@@ -600,5 +625,6 @@ export default function TermsPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }

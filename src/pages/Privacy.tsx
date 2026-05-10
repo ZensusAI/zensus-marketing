@@ -1,6 +1,31 @@
+import { Helmet } from "react-helmet-async";
+import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+
+const PAGE_URL = "https://zensus.app/privacy";
+const PAGE_DESCRIPTION =
+  "How Zensus collects, uses, and protects your information. Bank credentials stay with Plaid, your data never trains an AI model, and every query is isolated by account.";
+
+const breadcrumbs = breadcrumbSchema([
+  HOME_CRUMB,
+  { name: "Privacy Policy", url: PAGE_URL },
+]);
+
 export default function PrivacyPolicy() {
   return (
-    <main className="min-h-screen bg-background">
+    <>
+      <Helmet>
+        <title>Privacy Policy · Zensus</title>
+        <meta name="description" content={PAGE_DESCRIPTION} />
+        <meta property="og:title" content="Privacy Policy · Zensus" />
+        <meta property="og:description" content={PAGE_DESCRIPTION} />
+        <meta property="og:image" content="https://zensus.app/og/privacy.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:image" content="https://zensus.app/og/privacy.png" />
+        <link rel="canonical" href={PAGE_URL} />
+        <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      </Helmet>
+      <main className="min-h-screen bg-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         {/* Header */}
         <header className="mb-12">
@@ -575,5 +600,6 @@ export default function PrivacyPolicy() {
         </div>
       </div>
     </main>
+    </>
   );
 }

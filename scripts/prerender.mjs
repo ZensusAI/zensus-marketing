@@ -29,6 +29,8 @@ const ROUTES = [
   "/changelog",
   "/security",
   "/about",
+  "/privacy",
+  "/terms",
   "/integrations",
   "/integrations/plaid",
   "/integrations/quickbooks",
