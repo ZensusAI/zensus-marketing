@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
+import HeroShowcase from "@/components/landing/HeroShowcase";
 import { TrustBar } from "@/components/landing/TrustBar";
 import Problem from "@/components/landing/Problem";
 import RunwayFeature from "@/components/landing/RunwayFeature";
@@ -62,6 +63,7 @@ const Index = () => {
       <div className="animate-fade-in">
         <main>
           <Hero />
+          <HeroShowcase />
           <TrustBar />
           <Problem />
           <RunwayFeature />
