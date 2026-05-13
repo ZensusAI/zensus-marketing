@@ -1,0 +1,48 @@
+# Notify IndexNow-compatible engines (Bing, Yandex, etc.) when main changes.
+# Google does not participate. See docs/indexnow.md
+#
+# v1: submit homepage + sitemap only (engines crawl from there).
+# Key: repository secret INDEXNOW_KEY (same value as public/<key>.txt body).
+
+name: IndexNow
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST IndexNow (homepage + sitemap)
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          set -euo pipefail
+          KEY="$(printf '%s' "${INDEXNOW_KEY:-}" | tr -d ' \n\r\t')"
+          if [ -z "$KEY" ]; then
+            echo "::warning::INDEXNOW_KEY is not set (Settings → Secrets and variables → Actions). Skipping IndexNow."
+            exit 0
+          fi
+          if ! printf '%s' "$KEY" | grep -qE '^[a-fA-F0-9]{32}$'; then
+            echo "::error::INDEXNOW_KEY must be exactly 32 hexadecimal characters."
+            exit 1
+          fi
+          BODY="$(jq -n \
+            --arg host "zensus.app" \
+            --arg key "$KEY" \
+            --arg kl "https://zensus.app/${KEY}.txt" \
+            --argjson urlList '["https://zensus.app/","https://zensus.app/sitemap.xml"]' \
+            '{host: $host, key: $key, keyLocation: $kl, urlList: $urlList}')"
+          CODE="$(curl -sS -o /tmp/indexnow_resp.txt -w '%{http_code}' \
+            -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d "$BODY")"
+          echo "IndexNow HTTP status: ${CODE}"
+          head -c 500 /tmp/indexnow_resp.txt 2>/dev/null || true
+          echo
+          if [ "$CODE" -ge 400 ]; then
+            echo "::error::IndexNow API returned ${CODE}"
+            exit 1
+          fi

@@ -18,7 +18,7 @@ npm install
 npm run dev
 ```
 
-The dev server runs on `http://localhost:8080`. The marketing site is fully static and has no runtime environment variables.
+The dev server runs on `http://localhost:8080`. The marketing site is fully static for local dev; production can use optional env vars for IndexNow (see [docs/indexnow.md](docs/indexnow.md)).
 
 ## Deployment
 
@@ -48,9 +48,14 @@ src/
 scripts/
 ├── generate-og.mjs     # Build-time OG image generator
 ├── prerender.mjs       # Build-time route prerenderer
+├── indexnow-ping.mjs   # IndexNow ping (Vercel production builds only)
 ├── optimize-images.mjs # One-shot image optimizer
 └── og/template.html    # Shared HTML template for social cards
 ```
+
+## IndexNow
+
+Bing/Yandex URL notification on production build and on push to `main`. Setup and verification: [docs/indexnow.md](docs/indexnow.md). Add GitHub secret **`INDEXNOW_KEY`** and (recommended) Vercel **`INDEXNOW_KEY`** to match `public/<key>.txt`.
 
 ## Links
 

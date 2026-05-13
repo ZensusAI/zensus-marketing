@@ -34,13 +34,13 @@ No test runner is configured.
 
 ## SEO and prerender
 
-Every route listed in `src/App.tsx` is also listed in `scripts/prerender.mjs` and `public/sitemap.xml`. The production build runs `vite build` then `scripts/generate-og.mjs` (per-route Open Graph PNGs into `dist/og/`) then `scripts/prerender.mjs` (Puppeteer walks each route and writes `dist/<route>/index.html` so Googlebot sees real HTML on first fetch) then `scripts/indexnow-ping.mjs` (POSTs every sitemap URL to the IndexNow API so Bing and Yandex learn about changes immediately; gated on `VERCEL=1` + `VERCEL_ENV=production` so local builds never ping). When adding a new route, update **all three** lists.
+Every route listed in `src/App.tsx` is also listed in `scripts/prerender.mjs` and `public/sitemap.xml`. The production build runs `vite build` then `scripts/generate-og.mjs` (per-route Open Graph PNGs into `dist/og/`) then `scripts/prerender.mjs` (Puppeteer walks each route and writes `dist/<route>/index.html` so Googlebot sees real HTML on first fetch) then `scripts/indexnow-ping.mjs` (POSTs every sitemap URL to the IndexNow API so Bing and Yandex learn about changes immediately; gated on `VERCEL=1` + `VERCEL_ENV=production` so local builds never ping). The key comes from the `INDEXNOW_KEY` env var on Vercel if set, otherwise from the single `public/<32-hex>.txt` proof file. Pushes to `main` also run `.github/workflows/indexnow.yml`, which POSTs the homepage + sitemap (repository secret `INDEXNOW_KEY`). See `docs/indexnow.md`. When adding a new route, update **all three** lists.
 
 Per-route `<title>`, description, canonical, and og/twitter tags are emitted by `react-helmet-async` inside each page component. The FAQ section emits the only `FAQPage` JSON-LD block; site-wide Organization / WebSite / SoftwareApplication lives in `index.html`. Breadcrumb JSON-LD is built via `src/lib/structured-data.ts`.
 
 ## Deployment
 
-Deployed via Vercel. `main` auto-deploys to production. The site has no runtime environment variables today (the old Supabase waitlist was removed), so there is nothing to configure in the Vercel dashboard.
+Deployed via Vercel. `main` auto-deploys to production. Optional **Vercel Production** env var: `INDEXNOW_KEY` (32-char hex, same as `public/<key>.txt`) so IndexNow pings do not rely only on the committed key file. GitHub Actions needs the same value as repository secret `INDEXNOW_KEY` for the IndexNow workflow on `main`.
 
 ## ESLint note
 

@@ -6,17 +6,45 @@
 // environment looks like a Vercel production build (VERCEL=1 and
 // VERCEL_ENV=production) so local `npm run build` never hits the API.
 // Failures are logged but do not break the build.
+//
+// Key resolution (in order):
+// 1. INDEXNOW_KEY environment variable (set in Vercel for production).
+// 2. Else: single file public/<32-hex>.txt whose first line matches the stem.
+// The key must match https://zensus.app/<key>.txt (see docs/indexnow.md).
 
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SITEMAP_PATH = join(__dirname, "..", "public", "sitemap.xml");
+const PUBLIC_DIR = join(__dirname, "..", "public");
 
-const KEY = "50e6a09d8eaa8f7b9871da6766dbaea1";
 const HOST = "zensus.app";
-const ENDPOINT = "https://api.indexnow.org/IndexNow";
+const ENDPOINT = "https://api.indexnow.org/indexnow";
+
+const HEX32_TXT = /^([a-f0-9]{32})\.txt$/i;
+
+async function resolveKey() {
+  const fromEnv = process.env.INDEXNOW_KEY?.trim();
+  if (fromEnv && /^[a-f0-9]{32}$/i.test(fromEnv)) return fromEnv;
+
+  const names = await readdir(PUBLIC_DIR);
+  const keyFiles = names.filter((n) => HEX32_TXT.test(n));
+  if (keyFiles.length !== 1) {
+    if (keyFiles.length > 1) {
+      console.warn(
+        "[indexnow] multiple public/*.txt key candidates; set INDEXNOW_KEY explicitly",
+      );
+    }
+    return "";
+  }
+  const stem = keyFiles[0].replace(/\.txt$/i, "");
+  const raw = await readFile(join(PUBLIC_DIR, keyFiles[0]), "utf-8");
+  const line = raw.trim().split(/\r?\n/)[0]?.trim() ?? "";
+  if (line.toLowerCase() === stem.toLowerCase()) return line;
+  return "";
+}
 
 async function ping() {
   const onVercelProd =
@@ -25,6 +53,14 @@ async function ping() {
   if (!onVercelProd) {
     console.log(
       "[indexnow] skipping (not a Vercel production build; set VERCEL=1 and VERCEL_ENV=production to ping)",
+    );
+    return;
+  }
+
+  const key = await resolveKey();
+  if (!key) {
+    console.warn(
+      "[indexnow] no IndexNow key: set INDEXNOW_KEY on Vercel or keep exactly one public/<32-hex>.txt whose body matches the filename",
     );
     return;
   }
@@ -44,8 +80,8 @@ async function ping() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       host: HOST,
-      key: KEY,
-      keyLocation: `https://${HOST}/${KEY}.txt`,
+      key,
+      keyLocation: `https://${HOST}/${key}.txt`,
       urlList,
     }),
   });
