@@ -51,6 +51,30 @@ interface ChangelogEntry {
 
 const entries: ChangelogEntry[] = [
   {
+    date: "2026-05-05",
+    category: "New",
+    title: "Runway empty state and sharper financial summaries",
+    body: "If you have not connected Plaid, QuickBooks, or HubSpot yet, Runway greets you with a clear empty state instead of a confusing half-loaded view. Summary rows now include short explanations on hover, revenue appears explicitly in the breakdown, and baseline other revenue lines up correctly when HubSpot subscription revenue is in the mix.",
+  },
+  {
+    date: "2026-05-02",
+    category: "Improved",
+    title: "Activity tab: next dates and cleaner vendor rows",
+    body: "Recurring rows show when the next hit is expected, so you are not guessing from cadence labels alone. Vendors that were split into noisy partitions collapse under a parent row you can expand when you need detail. Classification feeds and irregular schedules got tighter so the list matches how you actually spend.",
+  },
+  {
+    date: "2026-04-21",
+    category: "Improved",
+    title: "Clearer runway chart tooltips",
+    body: "The Level 1 runway chart tooltip is rebuilt end to end: vendor names read cleanly, subtotals reconcile with the rows you see, and scenario math matches what the chart is drawing. Less squinting, fewer moments where the numbers almost add up but do not.",
+  },
+  {
+    date: "2026-04-19",
+    category: "New",
+    title: "Forecast categories and Financials overrides",
+    body: "Transactions and runway math now share a single forecast-category vocabulary from sync through the engine to the Financials tab. Override a line when reality differs from the model, revert a single row, or reset everything with a clear confirmation. Saves debounce and recover gracefully so you are not fighting stale numbers after you step away.",
+  },
+  {
     date: "2026-04-17",
     category: "New",
     title: "Slack cash-crunch alerts",
