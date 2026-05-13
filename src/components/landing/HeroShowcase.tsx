@@ -50,12 +50,32 @@ const HeroShowcase = () => {
         <div className="mx-auto max-w-5xl">
           <div
             className={cn(
-              "rounded-2xl border border-border bg-card p-1.5 shadow-xl",
-              "ring-1 ring-black/5 dark:ring-white/10 md:p-2",
+              "overflow-hidden rounded-2xl border border-border bg-card shadow-xl",
+              "ring-1 ring-black/5 dark:ring-white/10",
             )}
           >
+            {/* Browser-style window chrome (decorative; not a live browser). */}
             <div
-              className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-muted"
+              className="flex items-center gap-3 border-b border-white/[0.06] bg-zinc-950 px-3 py-2.5 sm:px-4 sm:py-3"
+              aria-hidden
+            >
+              <div className="flex shrink-0 gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
+                <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
+                <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
+              </div>
+              <div className="flex min-w-0 flex-1 justify-center">
+                <div className="truncate rounded-full border border-white/10 bg-zinc-900/80 px-3 py-1 text-center font-mono text-[11px] text-zinc-400 sm:text-xs sm:px-4">
+                  app.zensus.app
+                </div>
+              </div>
+              <span className="shrink-0 text-[10px] font-medium uppercase tracking-widest text-zinc-500">
+                Live
+              </span>
+            </div>
+
+            <div
+              className="relative aspect-[16/10] w-full overflow-hidden bg-muted"
               role="group"
               aria-roledescription="carousel"
               aria-label="Runway dashboard screenshots"
