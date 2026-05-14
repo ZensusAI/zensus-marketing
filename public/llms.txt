@@ -14,6 +14,10 @@ Zensus helps founders with variable revenue know exactly when their cash runs ou
 - Weekly and daily cash flow drill-down
 - CSV export at multiple granularities
 
+## Company location
+
+Zensus operates from **Austin, Texas, United States** (city-level; see site footer for a map of the Austin area).
+
 ## Target Audience
 
 Founders and operators of startups with variable revenue, complex hiring plans, annual contracts, seasonal income, or usage-based pricing.

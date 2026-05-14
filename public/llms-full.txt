@@ -6,6 +6,10 @@
 
 Zensus is a financial planning tool that gives founders real-time visibility into their cash position and runway. Instead of spreadsheets or gut instinct, founders connect their financial accounts and get instant, always-current projections powered by an AI agent they can ask questions in natural language — via text or voice.
 
+## Company location
+
+Zensus operates from **Austin, Texas, United States**. The public marketing site footer includes a city-level map of the Austin, TX area (not a street address). A dedicated customer case study page may be added later for regional SEO once a testimonial is approved.
+
 ## Problem It Solves
 
 Most founders make million-dollar decisions — hiring, fundraising timing, contract negotiations — based on gut feeling or a stale spreadsheet. Checking your bank balance is not a financial strategy. Zensus replaces that with live, subscription-aware projections that update automatically.
