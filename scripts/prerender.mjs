@@ -31,6 +31,7 @@ const ROUTES = [
   "/about",
   "/privacy",
   "/terms",
+  "/subprocessors",
   "/integrations",
   "/integrations/plaid",
   "/integrations/quickbooks",
