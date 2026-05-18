@@ -8,17 +8,17 @@ const PricingPreview = () => (
     <div className="section-container">
       <div className="max-w-xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-          One plan. $199 a month.
+          Start free for 14 days.
         </h2>
         <p className="text-lg text-muted-foreground mb-8">
           Every integration, real-time runway, AI scenarios, and Slack alerts.
-          Billed monthly, cancel anytime. Less than a single hour with a
+          Then $199 a month after your trial. Less than a single hour with a
           fractional CFO.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button asChild size="lg" className="rounded-full">
             <a href={SIGN_IN_URL} target="_blank" rel="noopener noreferrer">
-              Get Started
+              Start 14-day free trial
               <ArrowRight size={18} className="ml-2" />
             </a>
           </Button>
