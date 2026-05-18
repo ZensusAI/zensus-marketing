@@ -185,27 +185,12 @@ const CATEGORIES: Category[] = [
     title: "Analytics and marketing intelligence",
     vendors: [
       {
-        name: "Google Analytics",
-        country: "United States",
-        purpose: "Aggregated marketing-site usage analytics.",
-        dataCategories:
-          "Pageviews, referrer, IP, user-agent, persistent identifiers stored in cookies.",
-      },
-      {
         name: "Apollo.io",
         country: "United States",
         purpose:
           "Marketing-site visitor identification for outbound sales. Apollo matches visitor IP addresses against its database of company IPs and reports which businesses are browsing our site.",
         dataCategories:
           "Visitor IP, user-agent, pageview events.",
-      },
-      {
-        name: "PostHog",
-        country: "United States",
-        purpose:
-          "Product-app behavioral analytics and error reporting for signed-in users.",
-        dataCategories:
-          "Distinct ID, pageviews, exception traces.",
       },
       {
         name: "Vercel (Web Analytics and Speed Insights)",

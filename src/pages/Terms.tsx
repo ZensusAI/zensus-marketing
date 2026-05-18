@@ -40,7 +40,7 @@ export default function TermsPage() {
             Terms of Service
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: February 18, 2026
+            Last Updated: May 18, 2026
           </p>
         </header>
 
@@ -200,7 +200,7 @@ export default function TermsPage() {
               </li>
             </ul>
 
-            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.4 Data Privacy</h3>
+            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.5 Data Privacy</h3>
             <p className="text-foreground/80">
               We take the security of your financial data seriously. Our collection, use, and protection of your data is governed by our Privacy Policy at{' '}
               <a href="https://zensus.app/privacy" className="text-primary hover:underline">https://zensus.app/privacy</a>.
@@ -371,9 +371,11 @@ export default function TermsPage() {
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">7.4 Data Export</h3>
             <p className="text-foreground/80">
-              Before terminating, you may request an export of your data by contacting{' '}
-              <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a>.
-              We will provide your data within 30 days.
+              Authenticated Zensus users can self-serve a JSON export of the personal data we hold from the product app at{' '}
+              <a href="https://app.zensus.app" className="text-primary hover:underline">app.zensus.app</a>.
+              You may also request an export by email at{' '}
+              <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a>;
+              we will respond within 30 days.
             </p>
           </section>
 
