@@ -9,6 +9,7 @@ const Footer = () => {
     { label: "Plans", href: "/pricing" },
     { label: "Privacy", href: "/privacy" },
     { label: "Terms", href: "/terms" },
+    { label: "Subprocessors", href: "/subprocessors" },
   ];
 
   return (

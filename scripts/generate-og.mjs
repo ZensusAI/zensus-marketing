@@ -87,6 +87,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "subprocessors",
+    category: "Subprocessors",
+    title: "Subprocessors",
+    subtitle:
+      "The third-party services Zensus uses to process customer data. Updated whenever we add or remove a subprocessor.",
+    accent: "green",
+  },
+  {
     slug: "integrations",
     category: "Integrations",
     title: "Connect the tools that run your business",
