@@ -12,6 +12,32 @@ Per the ticket: do **not** start drafting legal text until the founder has signe
 
 ---
 
+## Decisions log
+
+Founder decisions on the executive-summary items, locked 2026-05-18 (Ajin Sunny). These drive Phase 2.
+
+| # | Topic | Decision | Implication |
+|---|---|---|---|
+| 1 | Admin impersonation user notification | **B — no notification flow; disclose current posture explicitly in Privacy** | Privacy text must state that no contemporaneous notice is provided. Linear ZEN-205 / ZEN-207 stay backlog. Carry the SOC 2 / GDPR transparency risk knowingly. |
+| 2 | DSAR export endpoint | **A — build `/api/user/export`** | New monorepo ticket. Privacy can promise machine-readable export with stated SLA once shipped. |
+| 3 | Retention claim vs. code | **A — rewrite Privacy to match code (immediate hard delete + named survivors)** | No backend work. Privacy text update only. `docs/compliance/data-protection-policy.md` "+90 days" claim also gets corrected. |
+| 4 | Pre-consent analytics | **B — drop GA4 and PostHog entirely** | New ticket(s) to remove GA4 from marketing repo (`index.html` + `src/lib/analytics.tsx`) and PostHog from monorepo (`apps/landing/components/PostHogProvider.tsx` etc). Removes the ePrivacy/GDPR exposure. |
+| 5 | Anthropic → Bedrock disclosure | **A — name AWS Bedrock + model lineup in Privacy** | Phase 2 text edit. |
+| 6 | OpenAI Whisper retention | **B — disclose default OpenAI retention in Privacy** | Phase 2 text edit. Revisit ZDR if voice usage grows. |
+| 7 | Content license clause for AI inputs | **A — add license clause to ToS** | Counsel drafts wording in Phase 2. Engineer flags for counsel rather than authoring. |
+| 8 | `impersonation_audit` retention ceiling | **A — 24 months, then redact `targetEmail` + `startedFromIp`** | New monorepo ticket for the redaction cron. Privacy publishes the 24-month window. |
+| 9 | DPA inventory | **Pending** | Engineer to produce a one-page checklist with each subprocessor's DPA URL and required action. Founder to work through it. |
+
+## Follow-up tickets implied by these decisions
+
+Phase 2 inside **this** repo (Terms.tsx + Privacy.tsx update) can proceed on decisions 1, 3, 5, 6, 7. Decisions 2, 4, 8 imply code work in the **monorepo** before Privacy can publish honestly. Proposed tickets:
+
+- **ZEN-NEW (monorepo):** Build `/api/user/export` — DSAR data export as zipped CSVs across the cascade tables in §6. Sized ~3-5 days.
+- **ZEN-NEW (split):** Drop GA4 from marketing repo. Drop PostHog from `apps/landing`. Either as one bundled ticket or one per repo.
+- **ZEN-NEW (monorepo):** `impersonation_audit` retention sweep — cron that redacts `targetEmail` + `startedFromIp` on rows older than 24 months, keeps `endReason` / `startedAt` / hashed admin identity for the security signal. Sized ~half-day.
+
+---
+
 ## Executive summary — founder/counsel decisions needed
 
 These are the items that cannot be resolved by an engineer and must be settled before Phase 2.
