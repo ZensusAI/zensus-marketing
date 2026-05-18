@@ -40,7 +40,7 @@ export default function PrivacyPolicy() {
             Privacy Policy
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: February 18, 2026
+            Last Updated: May 18, 2026
           </p>
         </header>
 
@@ -85,11 +85,12 @@ export default function PrivacyPolicy() {
               </div>
 
               <div>
-                <p className="font-semibold text-foreground mb-2">Via Google OAuth:</p>
+                <p className="font-semibold text-foreground mb-2">Via Google OAuth or Sign in with Apple:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>Email address</li>
-                  <li>Full name (if provided by Google)</li>
-                  <li>Profile picture URL (if provided by Google)</li>
+                  <li>Email address (or Apple-relay address for Sign in with Apple)</li>
+                  <li>Full name (if provided by the identity provider)</li>
+                  <li>Profile picture URL (if provided by the identity provider)</li>
+                  <li>Provider subject identifier</li>
                 </ul>
               </div>
 
@@ -138,11 +139,28 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
                   <li>If you connect your bank account, we use Plaid Technologies, Inc. to link your financial institution</li>
                   <li>Data synced includes: account names, account types, last 4 digits of account number, and transaction history (dates, amounts, merchant names, and categories)</li>
-                  <li>Bank account credentials are never stored by Zensus — they are handled directly and securely by Plaid</li>
+                  <li>Bank account credentials are never stored by Zensus; they are handled directly and securely by Plaid</li>
                   <li>Plaid's privacy policy applies to data collected during bank linking:{' '}
                     <a href="https://plaid.com/legal/#consumers" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">https://plaid.com/legal/#consumers</a>
                   </li>
                   <li>You can disconnect your bank account at any time from your account settings</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground mb-2">HubSpot CRM Integration (Optional):</p>
+                <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
+                  <li>If you connect HubSpot, we sync contacts, companies, line items, invoices, and subscriptions from your CRM</li>
+                  <li>Used to project recurring billing into your runway forecast</li>
+                  <li>You can disconnect HubSpot at any time from your account settings</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground mb-2">Slack Workspace Integration (Optional):</p>
+                <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
+                  <li>If you connect Slack, we store OAuth tokens (encrypted at rest), the channel IDs you select for alert delivery, and the contents of alert messages we send to your workspace</li>
+                  <li>Alert message contents are aggregated cash-flow signals; we do not send transaction-level data to Slack</li>
                 </ul>
               </div>
             </div>
@@ -150,7 +168,7 @@ export default function PrivacyPolicy() {
             <div className="rounded-lg border border-primary/30 bg-primary/5 p-5 my-4">
               <p className="font-semibold text-foreground mb-2">Data Processing Note:</p>
               <p className="text-foreground/80 text-sm">
-                Financial data you upload is processed to generate forecasts and runway calculations. We do not share your raw financial data with third parties except as described in Section 3 (Service Providers). Your uploaded files are processed and the extracted data is used only to provide the Services you request.
+                Financial data you upload is processed to generate forecasts and runway calculations. We do not share your raw financial data with third parties except as described in Section 3 (Service Providers). Your uploaded files are processed and the extracted data is used only to provide the Services you request. Your data is never used to train an AI model.
               </p>
             </div>
 
@@ -159,12 +177,11 @@ export default function PrivacyPolicy() {
 
             <div className="rounded-lg border border-border bg-muted/30 p-5 my-4 space-y-4">
               <div>
-                <p className="font-semibold text-foreground mb-2">Usage Information (via PostHog):</p>
+                <p className="font-semibold text-foreground mb-2">Server-side Operational Telemetry:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>Pages and features you access</li>
-                  <li>File upload events (file size only, not file contents)</li>
-                  <li>Forecast generation events (aggregated metrics only)</li>
-                  <li>Session duration and navigation paths</li>
+                  <li>Request logs (path, status code, timing) retained for operational and security purposes</li>
+                  <li>Application logs containing user IDs and request paths (via AWS CloudWatch)</li>
+                  <li>Marketing-site request and performance metrics via Vercel hosting</li>
                 </ul>
               </div>
 
@@ -172,9 +189,17 @@ export default function PrivacyPolicy() {
                 <p className="font-semibold text-foreground mb-2">Technical Information:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
                   <li>Browser type and version</li>
-                  <li>IP address (for general geographic location)</li>
+                  <li>IP address (used for general geographic location and abuse prevention; on integration connect we run a server-side IP geolocation / VPN-proxy check via ipapi.co)</li>
                   <li>Time zone</li>
                   <li>Referral sources</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground mb-2">Marketing-site Sales Intelligence:</p>
+                <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
+                  <li>On the public marketing site at <a href="https://zensus.app" className="text-primary hover:underline">zensus.app</a>, we run Apollo.io's website tracker. Apollo performs reverse-IP lookups against its business database to identify the company an anonymous visitor's IP is associated with; it does not identify the individual visitor</li>
+                  <li>This only runs on the marketing site, not inside the authenticated product app</li>
                 </ul>
               </div>
             </div>
@@ -182,8 +207,9 @@ export default function PrivacyPolicy() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">1.4 Payment Information</h3>
             <p className="text-foreground/80 mb-3">When you subscribe to our paid services:</p>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
-              <li>Payment card information is processed by Stripe; we do not store full card numbers</li>
+              <li>Payment card information is processed by Stripe; full card numbers never reach Zensus</li>
               <li>Billing email address</li>
+              <li>Stripe customer ID and subscription / price IDs</li>
               <li>Subscription status (active, paused, canceled)</li>
               <li>Transaction history</li>
             </ul>
@@ -197,11 +223,10 @@ export default function PrivacyPolicy() {
             <p className="text-foreground/80 mb-3">We use cookies and browser storage for:</p>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
               <li><strong className="text-foreground">Essential Cookies:</strong> Authentication session management (httpOnly, secure)</li>
-              <li><strong className="text-foreground">Analytics Cookies:</strong> PostHog for understanding product usage</li>
               <li><strong className="text-foreground">Local Storage:</strong> Runway calculator state (persisted locally for convenience)</li>
             </ul>
             <p className="text-foreground/80 mt-3">
-              You can control cookies through your browser settings. Disabling essential cookies will prevent you from using authenticated features.
+              We do not currently use third-party analytics cookies on the product app. Product telemetry is server-side via AWS CloudWatch. You can control cookies through your browser settings; disabling essential cookies will prevent you from using authenticated features.
             </p>
           </section>
 
@@ -217,7 +242,7 @@ export default function PrivacyPolicy() {
               <li>Process your financial data to generate runway calculations and forecasts</li>
               <li>Enable AI-powered scenario analysis using your financial data</li>
               <li>Store and retrieve your runway snapshots</li>
-              <li>Sync data from QuickBooks (if you connect it)</li>
+              <li>Sync data from QuickBooks, HubSpot, Plaid, or Slack (if you connect them)</li>
             </ul>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">2.2 To Improve Our Services</h3>
@@ -227,6 +252,9 @@ export default function PrivacyPolicy() {
               <li>Develop new features based on user needs</li>
               <li>Generate aggregated, de-identified statistics</li>
             </ul>
+            <p className="text-foreground/80 mt-3">
+              Your data is never used to train an AI model. Our AI scenario analysis runs inference on Claude models hosted on AWS Bedrock under our AWS account; in that configuration Anthropic does not access the data we send to Bedrock for inference.
+            </p>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">2.3 To Communicate With You</h3>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
@@ -269,57 +297,72 @@ export default function PrivacyPolicy() {
               We do not sell your Personal Data. We share your data with third parties only as described below:
             </p>
 
-            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">3.1 Service Providers</h3>
-            <p className="text-foreground/80 mb-3">We share Personal Data with service providers who perform services on our behalf:</p>
+            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">3.1 Service Providers (Subprocessors)</h3>
+            <p className="text-foreground/80 mb-3">
+              The principal third-party services we use to operate Zensus are listed below. For the complete and current list, including data shared and country of processing for each, see our public subprocessor page at{' '}
+              <a href="https://zensus.app/subprocessors" className="text-primary hover:underline">https://zensus.app/subprocessors</a>.
+            </p>
 
             <div className="rounded-lg border border-border bg-muted/30 p-5 my-4 space-y-3">
               <div>
-                <p className="font-semibold text-foreground">Supabase</p>
-                <p className="text-foreground/80 text-sm">User authentication and session management</p>
-              </div>
-
-              <div>
                 <p className="font-semibold text-foreground">Amazon Web Services (AWS)</p>
-                <p className="text-foreground/80 text-sm">Cloud infrastructure, data storage, and computing services</p>
+                <p className="text-foreground/80 text-sm">Cloud infrastructure, database hosting (RDS Postgres), transactional email (SES), application logs (CloudWatch), and product app hosting (Amplify/CloudFront).</p>
               </div>
 
               <div>
-                <p className="font-semibold text-foreground">AWS Bedrock (Claude API)</p>
-                <p className="text-foreground/80 text-sm">AI-powered scenario analysis. Your financial data is sent to Claude for processing within AWS infrastructure. Data does not leave your AWS account.</p>
+                <p className="font-semibold text-foreground">AWS Bedrock (Claude models)</p>
+                <p className="text-foreground/80 text-sm">AI-powered scenario analysis. Your financial context (cash, MRR, expenses, transaction descriptors and amounts) is sent to Claude models running on Bedrock inside our AWS account. In this configuration, Anthropic (the maker of the Claude models) does not access the data we send to Bedrock.</p>
               </div>
 
               <div>
-                <p className="font-semibold text-foreground">PostHog</p>
-                <p className="text-foreground/80 text-sm">Product analytics to understand feature usage. We track events (not raw financial data).</p>
+                <p className="font-semibold text-foreground">Supabase</p>
+                <p className="text-foreground/80 text-sm">User authentication and session management, including magic-link sign-in and administrative impersonation token minting.</p>
               </div>
 
               <div>
-                <p className="font-semibold text-foreground">Stripe</p>
-                <p className="text-foreground/80 text-sm">Payment processing and subscription management. See{' '}
+                <p className="font-semibold text-foreground">Plaid Inc. (Optional)</p>
+                <p className="text-foreground/80 text-sm">If you connect your bank account, we use Plaid to link your financial institution and sync transaction data. We do not store your bank login credentials. See{' '}
+                  <a href="https://plaid.com/legal/#consumers" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Plaid's Privacy Policy</a>.
+                </p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground">Intuit QuickBooks (Optional)</p>
+                <p className="text-foreground/80 text-sm">If you connect QuickBooks, we sync financial data (purchases, bills, payments, invoices, P&amp;L, Balance Sheet) from your account. You can disconnect at any time.</p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground">HubSpot Inc. (Optional)</p>
+                <p className="text-foreground/80 text-sm">If you connect HubSpot, we sync contacts, companies, invoices, and subscriptions to project recurring billing into your runway forecast.</p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground">Slack Technologies LLC (Optional)</p>
+                <p className="text-foreground/80 text-sm">If you connect Slack, we deliver cash-flow alerts to the channels you select. We store an encrypted workspace OAuth token.</p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground">Stripe Inc.</p>
+                <p className="text-foreground/80 text-sm">Subscription billing, webhooks, and customer portal. Card data stays at Stripe and never reaches Zensus. See{' '}
                   <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Stripe's Privacy Policy</a>.
                 </p>
               </div>
 
               <div>
-                <p className="font-semibold text-foreground">AWS Simple Email Service (SES)</p>
-                <p className="text-foreground/80 text-sm">Transactional and marketing emails</p>
+                <p className="font-semibold text-foreground">Vercel Inc.</p>
+                <p className="text-foreground/80 text-sm">Hosting for our marketing site at <a href="https://zensus.app" className="text-primary hover:underline">zensus.app</a>.</p>
               </div>
 
               <div>
-                <p className="font-semibold text-foreground">Intuit QuickBooks (Optional)</p>
-                <p className="text-foreground/80 text-sm">If you connect QuickBooks, we sync financial data from your account. You can disconnect at any time.</p>
-              </div>
-
-              <div>
-                <p className="font-semibold text-foreground">Plaid Technologies, Inc. (Optional)</p>
-                <p className="text-foreground/80 text-sm">If you connect your bank account, we use Plaid to link your financial institution and sync transaction data. We do not store your bank login credentials. See{' '}
-                  <a href="https://plaid.com/legal/#consumers" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Plaid's Privacy Policy</a>.
-                </p>
+                <p className="font-semibold text-foreground">Apollo.io</p>
+                <p className="text-foreground/80 text-sm">Reverse-IP sales intelligence on the marketing site only (not the product app). Apollo identifies the company an anonymous visitor's IP is associated with for outbound sales.</p>
               </div>
             </div>
 
             <p className="text-foreground/80 mt-3">
-              These service providers are contractually obligated to protect your data and use it only for the purposes we specify.
+              Additional subprocessors used in narrower contexts (federated identity providers, web fonts, voice transcription for the voice agent, IP geolocation, etc.) are enumerated on the{' '}
+              <a href="https://zensus.app/subprocessors" className="text-primary hover:underline">subprocessors page</a>.
+              All service providers are contractually obligated to protect your data and use it only for the purposes we specify.
             </p>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">3.2 Business Transfers</h3>
@@ -338,7 +381,7 @@ export default function PrivacyPolicy() {
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">3.4 With Your Consent</h3>
             <p className="text-foreground/80">
-              We may share your Personal Data with third parties when you explicitly consent, such as when you connect QuickBooks or other integrations.
+              We may share your Personal Data with third parties when you explicitly consent, such as when you connect QuickBooks, HubSpot, Plaid, or Slack.
             </p>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">3.5 Aggregated Data</h3>
@@ -362,8 +405,13 @@ export default function PrivacyPolicy() {
               </div>
 
               <div>
-                <p className="font-semibold text-foreground mb-2">Financial Data (Uploads & Calculations):</p>
+                <p className="font-semibold text-foreground mb-2">Financial Data (Uploads, Calculations, Synced Transactions):</p>
                 <p className="text-foreground/80 text-sm">Retained while your account is active. You may request deletion at any time.</p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground mb-2">Integration Tokens (Plaid, QuickBooks, HubSpot, Slack):</p>
+                <p className="text-foreground/80 text-sm">Stored encrypted at rest while the integration is connected. Deleted on disconnect or account closure.</p>
               </div>
 
               <div>
@@ -377,8 +425,13 @@ export default function PrivacyPolicy() {
               </div>
 
               <div>
-                <p className="font-semibold text-foreground mb-2">Usage Analytics:</p>
-                <p className="text-foreground/80 text-sm">Typically retained for 24 months. Aggregated data may be retained indefinitely.</p>
+                <p className="font-semibold text-foreground mb-2">Administrative-Access Audit Records:</p>
+                <p className="text-foreground/80 text-sm">Identifying fields (your email, IP, user agent, and any free-text reason) are automatically redacted 24 months after the access event. The non-identifying audit metadata (admin email, timestamps, session outcome) is retained as a permanent security record. See § 4.2 below.</p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground mb-2">Server Logs and Telemetry:</p>
+                <p className="text-foreground/80 text-sm">Typically retained for 30–90 days for operational and security purposes.</p>
               </div>
 
               <div>
@@ -392,9 +445,19 @@ export default function PrivacyPolicy() {
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
               <li>We securely delete or anonymize your data</li>
               <li>Service providers are instructed to delete your data</li>
-              <li>Some data may be retained for legal or regulatory purposes</li>
+              <li>Some data may be retained for legal or regulatory purposes (e.g., payment records for tax)</li>
               <li>Backup copies may persist for a limited period</li>
             </ul>
+
+            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.2 Administrative Access to Your Account</h3>
+            <div className="rounded-lg border border-border bg-muted/30 p-5 my-4">
+              <p className="text-foreground/80 text-sm mb-3">
+                A small number of authorized Zensus employees can access user accounts to provide support, investigate incidents, or comply with legal process. Every such access is recorded in an append-only audit log capturing the admin's identity, the time of access, the originating IP and user agent, and a stated reason. Administrative access requires a second authentication factor (TOTP) and is rate-limited.
+              </p>
+              <p className="text-foreground/80 text-sm">
+                To balance our duty to maintain a durable security record with your right to data minimization, the user-identifying fields on each audit record (your email, the IP it was accessed from, the user agent, and the free-text reason) are automatically redacted by a scheduled job 24 months after the access event. The structural metadata (admin email, timestamps, session outcome) is retained as a permanent security record.
+              </p>
+            </div>
           </section>
 
           {/* Section 5 */}
@@ -410,6 +473,9 @@ export default function PrivacyPolicy() {
               <li><strong className="text-foreground">Right to Access:</strong> Request a copy of the Personal Data we hold about you</li>
               <li><strong className="text-foreground">Right to Data Portability:</strong> Request your data in a structured, machine-readable format</li>
             </ul>
+            <p className="text-foreground/80 mt-3">
+              Authenticated Zensus users can export their personal data in JSON form from the product app at <a href="https://app.zensus.app" className="text-primary hover:underline">app.zensus.app</a>. We may also fulfill access and portability requests by email (see § 5.5).
+            </p>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">5.2 Correction and Deletion</h3>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
@@ -471,10 +537,10 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Technical Safeguards:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li><strong className="text-foreground">Encryption:</strong> TLS 1.3 in transit; AES-256 at rest</li>
+                  <li><strong className="text-foreground">Encryption:</strong> TLS 1.3 in transit; AES-256-GCM at rest for OAuth tokens and TOTP secrets</li>
                   <li><strong className="text-foreground">Authentication:</strong> JWT tokens in httpOnly cookies, PKCE for OAuth</li>
                   <li><strong className="text-foreground">Infrastructure:</strong> AWS with enterprise-grade security</li>
-                  <li><strong className="text-foreground">Access Controls:</strong> Role-based access and multi-factor authentication</li>
+                  <li><strong className="text-foreground">Access Controls:</strong> Role-based access; administrative access protected by TOTP and recorded in an append-only audit log</li>
                 </ul>
               </div>
 
@@ -496,7 +562,7 @@ export default function PrivacyPolicy() {
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">7.2 Breach Notification</h3>
             <p className="text-foreground/80">
-              In the event of a data breach affecting your Personal Data, we will notify you within 72 hours as required by applicable law and provide information about steps we're taking to address it.
+              In the event of a data breach affecting your Personal Data, we will notify affected users without undue delay, consistent with our obligations under applicable law. Notice will include the nature of the breach, the categories of data affected, the steps we are taking to address it, and the steps you can take to protect yourself.
             </p>
           </section>
 
@@ -513,9 +579,9 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Categories of Personal Information Collected:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>Identifiers (email, name)</li>
-                  <li>Financial information (data you upload for runway/forecast)</li>
-                  <li>Internet activity (usage data via PostHog)</li>
+                  <li>Identifiers (email, name, federated identity provider subject)</li>
+                  <li>Financial information (data you upload or sync for runway/forecast)</li>
+                  <li>Internet activity (limited server-side telemetry; marketing-site reverse-IP intelligence via Apollo)</li>
                   <li>Geolocation (general location from IP address)</li>
                 </ul>
               </div>

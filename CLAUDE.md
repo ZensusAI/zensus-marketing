@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository purpose
 
-Marketing site for Zensus (`zensus.app`). The **product app** lives at a separate domain (`app.zensus.app`) and is not in this repo. This repo serves the public landing, pricing, blog, changelog, security, and integrations pages (hub + per-provider sub-pages for Plaid, QuickBooks, HubSpot, and Slack). Routes that point at product surfaces (`/privacy`, `/support`, `/features`, `/forecast`, `/terms`) are 301'd to `app.zensus.app` at the edge via `vercel.json`, not by a React component.
+Marketing site for Zensus (`zensus.app`). The **product app** lives at a separate domain (`app.zensus.app`) and is not in this repo. This repo serves the public landing, pricing, blog, changelog, security, integrations (hub + per-provider sub-pages for Plaid, QuickBooks, HubSpot, and Slack), `/privacy`, `/terms`, and `/subprocessors` pages. A small set of product-surface routes (`/support`, `/features`, `/forecast`) are 301'd to `app.zensus.app` at the edge via `vercel.json`, not by a React component; everything else is a real React route served from this repo.
 
 ## Commands
 
