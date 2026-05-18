@@ -128,7 +128,7 @@ const CATEGORIES: Category[] = [
         name: "Amazon Web Services (Bedrock)",
         country: "United States",
         purpose:
-          "Hosted inference for the AI features used to generate scenarios, categorize transactions, and power the conversational assistants. Anthropic does not receive customer data through this configuration.",
+          "Hosted inference for the AI features used to generate scenarios, categorize transactions, and power the conversational assistants. In this configuration, Anthropic (the maker of the Claude models) does not access the data we send to Bedrock.",
         dataCategories:
           "User prompts, conversation history, financial context (cash, MRR, expense breakdown, billing timeline), sanitized transaction descriptors.",
       },
@@ -161,7 +161,28 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    title: "Analytics",
+    title: "Web fonts and embedded content",
+    vendors: [
+      {
+        name: "Google Fonts",
+        country: "United States",
+        purpose:
+          "Delivery of the Geist and Geist Mono webfonts used by the marketing site.",
+        dataCategories:
+          "Visitor IP and user-agent (transmitted to Google when fonts are fetched).",
+      },
+      {
+        name: "Google Maps",
+        country: "United States",
+        purpose:
+          "Embedded city-level map of Austin, TX shown in the marketing-site footer.",
+        dataCategories:
+          "Visitor IP and user-agent (transmitted to Google when the embedded map loads).",
+      },
+    ],
+  },
+  {
+    title: "Analytics and marketing intelligence",
     vendors: [
       {
         name: "Google Analytics",
@@ -169,6 +190,14 @@ const CATEGORIES: Category[] = [
         purpose: "Aggregated marketing-site usage analytics.",
         dataCategories:
           "Pageviews, referrer, IP, user-agent, persistent identifiers stored in cookies.",
+      },
+      {
+        name: "Apollo.io",
+        country: "United States",
+        purpose:
+          "Marketing-site visitor identification for outbound sales. Apollo matches visitor IP addresses against its database of company IPs and reports which businesses are browsing our site.",
+        dataCategories:
+          "Visitor IP, user-agent, pageview events.",
       },
       {
         name: "PostHog",
