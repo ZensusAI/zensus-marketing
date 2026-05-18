@@ -72,7 +72,7 @@ const pricingFaqs = [
   {
     question: "Is there a free trial?",
     answer:
-      "Not currently. You can sign up, connect your data, and cancel the same day if Zensus is not the right fit.",
+      "Yes — 14 days, no charge today. We collect your card up front so the subscription continues automatically if Zensus is working for you, and you can cancel anytime before the trial ends with no charge.",
   },
 ];
 
@@ -82,7 +82,7 @@ const Pricing = () => (
       <title>Pricing · Zensus</title>
       <meta
         name="description"
-        content="Zensus Pro is $199/month. Billed monthly, cancel anytime. One plan with every integration, real-time runway, AI scenarios, and Slack alerts."
+        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time runway, AI scenarios, and Slack alerts."
       />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://zensus.app/pricing" />
@@ -90,7 +90,7 @@ const Pricing = () => (
       <meta property="og:title" content="Pricing · Zensus" />
       <meta
         property="og:description"
-        content="Zensus Pro is $199/month. One plan with every integration, real-time runway, AI scenarios, and Slack alerts."
+        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time runway, AI scenarios, and Slack alerts."
       />
       <meta property="og:image" content="https://zensus.app/og/pricing.png" />
       <meta property="og:image:width" content="1200" />
@@ -100,7 +100,7 @@ const Pricing = () => (
       <meta name="twitter:title" content="Pricing · Zensus" />
       <meta
         name="twitter:description"
-        content="Zensus Pro is $199/month. One plan with every integration, real-time runway, AI scenarios, and Slack alerts."
+        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time runway, AI scenarios, and Slack alerts."
       />
       <meta name="twitter:image" content="https://zensus.app/og/pricing.png" />
       <link rel="canonical" href="https://zensus.app/pricing" />
@@ -112,16 +112,19 @@ const Pricing = () => (
         <div className="section-container">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-              One plan. $199 a month.
+              Start free. 14 days on us.
             </h1>
             <p className="text-lg text-muted-foreground">
-              Every integration, real-time runway, and Slack alerts. No contracts, no usage meter, no "contact sales."
+              Every integration, real-time runway, and AI scenarios. 14-day free trial, then $199 a month. Cancel anytime.
             </p>
           </div>
 
           <div className="max-w-2xl mx-auto">
             <div className="relative p-8 sm:p-10 rounded-3xl bg-card border border-primary/30 glow-sm">
               <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-primary/10 border border-primary/25 text-xs font-semibold text-primary">
+                  14-day free trial
+                </div>
                 <h2 className="text-2xl font-semibold text-foreground mb-3">
                   Zensus Pro
                 </h2>
@@ -130,7 +133,7 @@ const Pricing = () => (
                   <span className="text-xl text-muted-foreground">/month</span>
                 </div>
                 <p className="text-muted-foreground mt-2">
-                  Billed monthly. Cancel anytime.
+                  After your 14-day free trial. Cancel anytime.
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
                   Less than a single hour with a fractional CFO.
@@ -156,10 +159,14 @@ const Pricing = () => (
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Get Started
+                  Start 14-day free trial
                   <ArrowRight size={18} className="ml-2" />
                 </a>
               </Button>
+
+              <p className="text-center text-xs text-muted-foreground mt-3">
+                No charge today. Cancel anytime before your trial ends.
+              </p>
 
               <p className="text-center text-sm text-muted-foreground mt-4">
                 Prefer a walkthrough first?{" "}
