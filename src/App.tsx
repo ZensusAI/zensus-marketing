@@ -14,6 +14,7 @@ import Index from "./pages/Index";
 // fetch a separate chunk). Every other route lazy-loads.
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Changelog = lazy(() => import("./pages/Changelog"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Security = lazy(() => import("./pages/Security"));
@@ -50,6 +51,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/security" element={<Security />} />
               <Route path="/about" element={<About />} />
               <Route path="/privacy" element={<Privacy />} />

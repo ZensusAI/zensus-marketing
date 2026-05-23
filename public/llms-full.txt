@@ -77,12 +77,17 @@ Yes. Bank-level AES-256 encryption. Credentials are never stored — OAuth token
 **Who can see my data?**
 Only you. Your financial data is never shared, sold, or used to train AI models.
 
+## Guides
+
+- **What Is Cash Flow Forecasting?** — Practical guide for founders and finance teams on liquidity visibility, forecast accuracy, and financial planning: https://zensus.app/blog/what-is-cash-flow-forecasting
+
 ## Links
 
 - Homepage: https://zensus.app
 - About: https://zensus.app/about
 - Pricing: https://zensus.app/pricing
 - Blog: https://zensus.app/blog
+- What Is Cash Flow Forecasting? (blog): https://zensus.app/blog/what-is-cash-flow-forecasting
 - Changelog: https://zensus.app/changelog
 - Security: https://zensus.app/security
 - Integrations: https://zensus.app/integrations
