@@ -3,83 +3,77 @@ import { ArrowLeft, Clock, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+import { formatPostDate, getAllPosts, postUrl } from "@/lib/blog";
+import {
+  blogIndexItemListSchema,
+  breadcrumbSchema,
+  HOME_CRUMB,
+} from "@/lib/structured-data";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
   { name: "Blog", url: "https://zensus.app/blog" },
 ]);
 
-const posts = [
-  {
-    title: "Catching a cash crunch two weeks before it hits",
-    description:
-      "How one founder used Slack alerts to spot a projected shortfall in time to renegotiate payroll timing, without panic or a board call.",
-    category: "Case Study",
-    readTime: "6 min read",
-    date: "Coming Soon",
-  },
-  {
-    title: "Replacing a fractional CFO with scenario chat",
-    description:
-      "A founder walks through the four scenarios she ran before her next round (hiring, churn, pricing, and an acquisition offer) in under an hour.",
-    category: "Case Study",
-    readTime: "8 min read",
-    date: "Coming Soon",
-  },
-  {
-    title: "When your runway forecast is lying about annual contracts",
-    description:
-      "Why flat MRR math breaks for agencies, consultancies, and SaaS with mixed contract terms, and how subscription-aware projections change the answer.",
-    category: "Case Study",
-    readTime: "5 min read",
-    date: "Coming Soon",
-  },
-  {
-    title: "From spreadsheet to dashboard: one founder's migration",
-    description:
-      "What changed after connecting QuickBooks and HubSpot: fewer tabs, faster decisions, and a runway number that actually matches the bank.",
-    category: "Case Study",
-    readTime: "4 min read",
-    date: "Coming Soon",
-  },
-];
+const posts = getAllPosts();
+
+const blogItemListLd = blogIndexItemListSchema(
+  posts.map((post) => ({
+    name: post.title,
+    url: postUrl(post.slug),
+    datePublished: post.date,
+  })),
+);
 
 const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>Blog · Zensus</title>
-        <meta name="description" content="Case studies and practical guides on cash flow forecasting, runway planning, and financial decision-making for founders with variable revenue." />
+        <meta
+          name="description"
+          content="Case studies and practical guides on cash flow forecasting, runway planning, and financial decision-making for founders with variable revenue."
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://zensus.app/blog" />
         <meta property="og:site_name" content="Zensus" />
         <meta property="og:title" content="Blog · Zensus" />
-        <meta property="og:description" content="Case studies on cash flow forecasting for founders with variable revenue." />
+        <meta
+          property="og:description"
+          content="Case studies and practical guides on cash flow forecasting for founders with variable revenue."
+        />
         <meta property="og:image" content="https://zensus.app/og/blog.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Blog page social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Blog · Zensus" />
-        <meta name="twitter:description" content="Case studies on cash flow forecasting for founders with variable revenue." />
+        <meta
+          name="twitter:description"
+          content="Case studies and practical guides on cash flow forecasting for founders with variable revenue."
+        />
         <meta name="twitter:image" content="https://zensus.app/og/blog.png" />
         <link rel="canonical" href="https://zensus.app/blog" />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+        {posts.length > 0 ? (
+          <script type="application/ld+json">
+            {JSON.stringify(blogItemListLd)}
+          </script>
+        ) : null}
       </Helmet>
       <Navbar />
       <main className="pt-24 pb-16">
         <div className="section-container">
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+            className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft size={14} />
             Back to Home
           </Link>
 
-          <div className="max-w-3xl mb-16">
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+          <div className="mb-16 max-w-3xl">
+            <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
               The Zensus Blog
             </h1>
             <p className="text-lg text-muted-foreground">
@@ -88,39 +82,47 @@ const Blog = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {posts.map((post) => (
-              <article
-                key={post.title}
-                className="group border border-border rounded-2xl bg-card p-6 flex flex-col justify-between hover:border-primary/30 transition-colors"
-              >
-                <div>
-                  <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                    {post.category}
-                  </span>
-                  <h2 className="text-xl font-semibold mt-2 mb-3 text-foreground group-hover:text-primary transition-colors">
-                    {post.title}
-                  </h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {post.description}
-                  </p>
-                </div>
-                <div className="flex items-center justify-between mt-6 text-xs text-muted-foreground">
-                  <div className="flex items-center gap-3">
-                    <span className="flex items-center gap-1">
-                      <Clock size={12} />
-                      {post.readTime}
+          {posts.length === 0 ? (
+            <p className="text-muted-foreground">New posts are on the way.</p>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {posts.map((post) => (
+                <Link
+                  key={post.slug}
+                  to={`/blog/${post.slug}`}
+                  className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/30"
+                >
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-widest text-primary">
+                      {post.category}
                     </span>
-                    <span>{post.date}</span>
+                    <h2 className="mt-2 mb-3 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
+                      {post.title}
+                    </h2>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {post.description}
+                    </p>
                   </div>
-                  <ArrowRight
-                    size={14}
-                    className="text-primary opacity-0 group-hover:opacity-100 transition-opacity"
-                  />
-                </div>
-              </article>
-            ))}
-          </div>
+                  <div className="mt-6 flex items-center justify-between text-xs text-muted-foreground">
+                    <div className="flex items-center gap-3">
+                      <span className="flex items-center gap-1">
+                        <Clock size={12} aria-hidden />
+                        {post.readTime}
+                      </span>
+                      <time dateTime={post.date}>
+                        {formatPostDate(post.date)}
+                      </time>
+                    </div>
+                    <ArrowRight
+                      size={14}
+                      className="text-primary opacity-0 transition-opacity group-hover:opacity-100"
+                      aria-hidden
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </main>
       <Footer />

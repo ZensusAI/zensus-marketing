@@ -7,7 +7,8 @@
 // Output: dist/og/<slug>.png (1200x630, social-card spec)
 
 import { createServer } from "node:http";
-import { readFile, mkdir, writeFile, copyFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { readFile, readdir, mkdir, copyFile } from "node:fs/promises";
 import { join, extname, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import chromium from "@sparticuz/chromium";
@@ -160,6 +161,43 @@ const MIME = {
   ".woff2": "font/woff2",
 };
 
+/** Read a single-quoted meta string (supports line breaks after the colon). */
+function readMetaString(text, field) {
+  const match = text.match(
+    new RegExp(`${field}:\\s*(?:\\n\\s*)?['"]([^'"]+)['"]`),
+  );
+  return match?.[1]?.trim();
+}
+
+/** @returns {Promise<Array<{ slug: string, category: string, title: string, subtitle: string, accent: string, nested?: string }>>} */
+export async function loadBlogCards() {
+  const blogDir = join(repoRoot, "src", "content", "blog");
+  const files = await readdir(blogDir);
+  const cards = [];
+  for (const file of files.filter((f) => f.endsWith(".mdx"))) {
+    const text = await readFile(join(blogDir, file), "utf-8");
+    const slug = file.replace(/\.mdx$/, "");
+    const pageTitle = readMetaString(text, "title");
+    const description = readMetaString(text, "description");
+    const ogTitle = readMetaString(text, "ogTitle");
+    const ogSubtitle = readMetaString(text, "ogSubtitle");
+    const category = readMetaString(text, "category") ?? "Blog";
+    if (!pageTitle || !description) {
+      console.warn(`[og] skipping ${file}: missing title or description in meta`);
+      continue;
+    }
+    cards.push({
+      slug,
+      category,
+      title: ogTitle || pageTitle,
+      subtitle: ogSubtitle || description,
+      accent: "green",
+      nested: "blog",
+    });
+  }
+  return cards;
+}
+
 function startServer() {
   return new Promise((resolve, reject) => {
     const server = createServer(async (req, res) => {
@@ -185,16 +223,40 @@ function startServer() {
   });
 }
 
+async function resolveChromePath() {
+  if (process.env.PUPPETEER_EXECUTABLE_PATH) {
+    return process.env.PUPPETEER_EXECUTABLE_PATH;
+  }
+  if (process.env.VERCEL) {
+    return await chromium.executablePath();
+  }
+  if (process.platform === "win32") {
+    const candidates = [
+      "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+      join(
+        process.env.LOCALAPPDATA || "",
+        "Google",
+        "Chrome",
+        "Application",
+        "chrome.exe",
+      ),
+    ];
+    for (const candidate of candidates) {
+      if (candidate && existsSync(candidate)) return candidate;
+    }
+  }
+  return "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+}
+
 async function generate() {
-  console.log(`[og] starting on http://localhost:${PORT}`);
+  const blogOnly = process.argv.includes("--blog-only");
+  console.log(
+    `[og] starting on http://localhost:${PORT}${blogOnly ? " (blog posts only)" : ""}`,
+  );
   const server = await startServer();
 
-  const localChrome =
-    process.env.PUPPETEER_EXECUTABLE_PATH ||
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-  const executablePath = process.env.VERCEL
-    ? await chromium.executablePath()
-    : localChrome;
+  const executablePath = await resolveChromePath();
   const browser = await puppeteer.launch({
     args: process.env.VERCEL
       ? chromium.args
@@ -205,10 +267,15 @@ async function generate() {
   });
 
   const outDir = join(distDir, "og");
+  const publicOgDir = join(repoRoot, "public", "og", "blog");
   await mkdir(outDir, { recursive: true });
+  await mkdir(publicOgDir, { recursive: true });
+
+  const blogCards = await loadBlogCards();
+  const allCards = blogOnly ? blogCards : [...CARDS, ...blogCards];
 
   try {
-    for (const card of CARDS) {
+    for (const card of allCards) {
       const qs = new URLSearchParams({
         title: card.title,
         subtitle: card.subtitle,
@@ -224,24 +291,42 @@ async function generate() {
       await page.evaluateHandle("document.fonts.ready");
       await new Promise((r) => setTimeout(r, 150));
 
-      const outPath = join(outDir, `${card.slug}.png`);
+      const distPath = card.nested
+        ? join(outDir, card.nested, `${card.slug}.png`)
+        : join(outDir, `${card.slug}.png`);
+      const publicPath = card.nested
+        ? join(publicOgDir, `${card.slug}.png`)
+        : null;
+
+      if (card.nested) {
+        await mkdir(join(outDir, card.nested), { recursive: true });
+      }
+
+      const screenshotTarget = publicPath ?? distPath;
       await page.screenshot({
-        path: outPath,
+        path: screenshotTarget,
         type: "png",
         clip: { x: 0, y: 0, width: 1200, height: 630 },
       });
+
+      if (publicPath && publicPath !== distPath) {
+        await mkdir(dirname(distPath), { recursive: true });
+        await copyFile(publicPath, distPath);
+        console.log(`[og] wrote ${publicPath}`);
+      } else {
+        console.log(`[og] wrote ${distPath}`);
+      }
+
       await page.close();
-      console.log(`[og] wrote ${outPath}`);
     }
 
-    // Copy the home card to /og/default.png so any un-overridden
-    // Helmet (e.g. future page that forgets to set og:image) still
-    // gets a reasonable fallback.
-    await copyFile(
-      join(outDir, "home.png"),
-      join(outDir, "default.png"),
-    );
-    console.log(`[og] wrote ${join(outDir, "default.png")}`);
+    if (!blogOnly) {
+      // Copy the home card to /og/default.png so any un-overridden
+      // Helmet (e.g. future page that forgets to set og:image) still
+      // gets a reasonable fallback.
+      await copyFile(join(outDir, "home.png"), join(outDir, "default.png"));
+      console.log(`[og] wrote ${join(outDir, "default.png")}`);
+    }
   } finally {
     await browser.close();
     server.close();
