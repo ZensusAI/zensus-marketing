@@ -21,6 +21,13 @@ describe("composeEmail", () => {
     const m = composeEmail({ ...params, intro: "a & b" }, FROM);
     expect(m.html).toContain("a &amp; b");
   });
+  it("renders a branded HTML document with logo and wordmark", () => {
+    const m = composeEmail(params, FROM);
+    expect(m.html).toContain("<!DOCTYPE html>");
+    expect(m.html).toContain("https://zensus.app/email-logo.png");
+    expect(m.html).toContain(">Zensus<");
+    expect(m.html).toContain("The Zensus team");
+  });
 });
 
 describe("sendAck", () => {
