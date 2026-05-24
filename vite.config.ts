@@ -25,4 +25,8 @@ export default defineConfig(() => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  test: {
+    environment: "node",
+    include: ["api/**/*.test.ts", "src/**/*.test.{ts,tsx}"],
+  },
 }));
