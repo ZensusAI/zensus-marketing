@@ -1,0 +1,95 @@
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { SESClient } from "@aws-sdk/client-ses";
+import { BedrockRuntimeClient } from "@aws-sdk/client-bedrock-runtime";
+import { validateInput } from "./_lib/validate";
+import { verifyTurnstile } from "./_lib/turnstile";
+import { generateIntro, FALLBACK_INTRO } from "./_lib/intro";
+import { sanitizeIntro } from "./_lib/sanitize";
+import { sendAck } from "./_lib/email";
+
+export const config = { maxDuration: 15 };
+
+const ALLOWED_ORIGINS = [/^https:\/\/zensus\.app$/, /^https:\/\/[^.]+\.vercel\.app$/];
+const REQUIRED_ENV = [
+  "SES_FROM", "SES_REGION", "BEDROCK_REGION", "BEDROCK_MODEL_ID", "TURNSTILE_SECRET_KEY",
+];
+
+function log(stage: string, outcome: string, errorName?: string) {
+  console.log(JSON.stringify({ fn: "acknowledge", stage, outcome, error_name: errorName }));
+}
+
+function originAllowed(req: VercelRequest): boolean {
+  const origin = (req.headers.origin as string) || "";
+  return ALLOWED_ORIGINS.some((re) => re.test(origin));
+}
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== "POST") return res.status(405).json({ error: "method_not_allowed" });
+
+  const missing = REQUIRED_ENV.filter((k) => !process.env[k]);
+  if (missing.length) {
+    log("config", "missing_env", missing.join(","));
+    return res.status(500).json({ error: "server_misconfigured" });
+  }
+
+  if (!originAllowed(req)) {
+    log("origin", "rejected");
+    return res.status(403).json({ error: "forbidden" });
+  }
+
+  const bodyObj = (req.body ?? {}) as Record<string, unknown>;
+  const token = typeof bodyObj.turnstileToken === "string" ? bodyObj.turnstileToken : "";
+
+  const v = validateInput(bodyObj);
+  if (!v.ok) {
+    log("validate", "rejected", v.error);
+    return res.status(400).json({ error: "invalid_input" });
+  }
+  log("validate", "ok");
+
+  if (!token) {
+    log("turnstile", "missing_token");
+    return res.status(403).json({ error: "turnstile_required" });
+  }
+  try {
+    const ok = await verifyTurnstile(
+      token,
+      process.env.TURNSTILE_SECRET_KEY as string,
+      (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim(),
+    );
+    if (!ok) {
+      log("turnstile", "invalid");
+      return res.status(403).json({ error: "turnstile_failed" });
+    }
+  } catch (err) {
+    log("turnstile", "unreachable", (err as Error).name);
+    return res.status(503).json({ error: "turnstile_unavailable" });
+  }
+  log("turnstile", "ok");
+
+  const bedrock = new BedrockRuntimeClient({ region: process.env.BEDROCK_REGION });
+  const { intro: raw, usedFallback } = await generateIntro(
+    { name: v.data.name, subject: v.data.subject, message: v.data.message },
+    {
+      client: bedrock,
+      modelId: process.env.BEDROCK_MODEL_ID as string,
+      timeoutMs: Number(process.env.BEDROCK_TIMEOUT_MS ?? 8000),
+    },
+  );
+  const clean = sanitizeIntro(raw) ?? FALLBACK_INTRO;
+  const introWasFallback = usedFallback || clean === FALLBACK_INTRO;
+  log("ai", introWasFallback ? "fallback" : "ok");
+
+  try {
+    const sesClient = new SESClient({ region: process.env.SES_REGION });
+    const result = await sendAck(
+      { to: v.data.email, name: v.data.name, intro: clean },
+      { client: sesClient, from: process.env.SES_FROM as string, dryRun: process.env.ACK_DRY_RUN === "true" },
+    );
+    log("ses", result.dryRun ? "dry_run" : "sent");
+    return res.status(200).json({ ok: true, dryRun: result.dryRun });
+  } catch (err) {
+    log("ses", "failed", (err as Error).name);
+    return res.status(502).json({ error: "send_failed" });
+  }
+}
