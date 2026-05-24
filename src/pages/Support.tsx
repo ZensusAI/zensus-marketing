@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -77,6 +78,9 @@ const EMPTY_FORM: FormState = {
 };
 
 export default function Support() {
+  const turnstileRef = useRef<TurnstileInstance>(null);
+  const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
+
   const [formData, setFormData] = useState<FormState>(EMPTY_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -174,6 +178,29 @@ export default function Support() {
     return true;
   };
 
+  // Best-effort: ask our serverless function to email the submitter an
+  // acknowledgment. Never blocks or fails the form. keepalive lets it survive
+  // the user navigating away right after submit.
+  const sendAcknowledgment = (token: string) => {
+    if (!token) return;
+    try {
+      fetch("/api/acknowledge", {
+        method: "POST",
+        keepalive: true,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          turnstileToken: token,
+        }),
+      }).catch(() => {});
+    } catch {
+      /* ignore — acknowledgment is optional */
+    }
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -221,6 +248,17 @@ export default function Support() {
         throw new Error(`Form submission failed (${response.status}).`);
       }
       setSubmitStatus("success");
+      // Fire the acknowledgment with a fresh Turnstile token, then reset the
+      // widget so a later "Send another message" gets a new one.
+      if (TURNSTILE_SITE_KEY && turnstileRef.current) {
+        try {
+          const token = await turnstileRef.current.getResponsePromise();
+          sendAcknowledgment(token);
+        } catch {
+          /* no token -> skip acknowledgment */
+        }
+        turnstileRef.current.reset();
+      }
       setFormData(EMPTY_FORM);
       setValidationErrors({});
     } catch (error) {
@@ -394,6 +432,14 @@ export default function Support() {
                     <p className="text-xs text-destructive">{validationErrors.message}</p>
                   )}
                 </div>
+
+                {TURNSTILE_SITE_KEY && (
+                  <Turnstile
+                    ref={turnstileRef}
+                    siteKey={TURNSTILE_SITE_KEY}
+                    options={{ size: "invisible" }}
+                  />
+                )}
 
                 <div>
                   <Button type="submit" disabled={isSubmitting}>
