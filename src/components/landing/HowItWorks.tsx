@@ -23,7 +23,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="section-padding bg-secondary/30">
+    <section id="how-it-works" className="section-padding scroll-mt-28 bg-secondary/30">
       <div className="section-container">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">

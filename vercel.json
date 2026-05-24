@@ -2,11 +2,6 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/support",
-      "destination": "https://app.zensus.app/support",
-      "permanent": true
-    },
-    {
       "source": "/features",
       "destination": "https://zensus.app/#features",
       "permanent": true

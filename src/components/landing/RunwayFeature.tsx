@@ -20,6 +20,13 @@ type StepDef = {
   aspect: string;
 };
 
+/** Deep-link targets from blog and docs (`https://zensus.app/#features-*`). */
+export const FEATURE_STEP_IDS = [
+  "features-drill-down",
+  "features-scenarios",
+  "features-alerts",
+] as const;
+
 const STEPS: StepDef[] = [
   {
     eyebrow: "Drill-down",
@@ -307,8 +314,9 @@ const RunwayFeature = () => {
               return (
                 <div
                   key={i}
+                  id={FEATURE_STEP_IDS[i]}
                   ref={stepRefs[i]}
-                  className="relative flex flex-col justify-start pb-24 lg:min-h-[90vh] lg:justify-center lg:pb-0 lg:pl-14"
+                  className="relative scroll-mt-28 flex flex-col justify-start pb-24 lg:min-h-[90vh] lg:justify-center lg:pb-0 lg:pl-14"
                 >
                   {/* Rail dot */}
                   <span
