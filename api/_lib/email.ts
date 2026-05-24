@@ -1,5 +1,5 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import { escapeHtml } from "./sanitize.js";
+import { emailHtml, emailText } from "./email-template.js";
 
 export interface EmailParams {
   to: string;
@@ -10,20 +10,11 @@ export interface EmailParams {
 const SUBJECT = "Thanks for contacting Zensus";
 
 export function composeEmail(p: EmailParams, from: string) {
-  const text =
-    `${p.intro}\n\n` +
-    `A member of our team will get back to you, usually within one business day. ` +
-    `If you need to add anything, just reply to this email or write to ${from}.\n\n` +
-    `The Zensus team\nhttps://zensus.app`;
-
-  const html =
-    `<p>${escapeHtml(p.intro)}</p>` +
-    `<p>A member of our team will get back to you, usually within one business day. ` +
-    `If you need to add anything, just reply to this email or write to ` +
-    `<a href="mailto:${from}">${from}</a>.</p>` +
-    `<p>The Zensus team<br><a href="https://zensus.app">zensus.app</a></p>`;
-
-  return { subject: SUBJECT, text, html };
+  return {
+    subject: SUBJECT,
+    text: emailText({ intro: p.intro, from }),
+    html: emailHtml({ intro: p.intro, from }),
+  };
 }
 
 function isTransient(err: unknown): boolean {
