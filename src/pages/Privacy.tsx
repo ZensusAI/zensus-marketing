@@ -202,6 +202,14 @@ export default function PrivacyPolicy() {
                   <li>This only runs on the marketing site, not inside the authenticated product app</li>
                 </ul>
               </div>
+
+              <div>
+                <p className="font-semibold text-foreground mb-2">Support-form Bot Protection:</p>
+                <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
+                  <li>When you submit the contact form on our support page (<a href="https://zensus.app/support" className="text-primary hover:underline">zensus.app/support</a>), we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects the form from spam and abuse and does not track you across sites. See Cloudflare's{' '}
+                    <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Turnstile Privacy Addendum</a>.</li>
+                </ul>
+              </div>
             </div>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">1.4 Payment Information</h3>
