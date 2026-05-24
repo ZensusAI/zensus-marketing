@@ -27,6 +27,14 @@ describe("sanitizeIntro", () => {
     expect(sanitizeIntro("a\n\n\n\nb")).toBeNull();
     expect(sanitizeIntro("a\x1fb")).toBeNull();
   });
+  it("allows one or two newlines but rejects 3+", () => {
+    expect(sanitizeIntro("Thanks!\nWe got your message.")).toBe("Thanks!\nWe got your message.");
+    expect(sanitizeIntro("a\n\n\n\nb")).toBeNull();
+  });
+  it("rejects dangerous URI schemes", () => {
+    expect(sanitizeIntro("javascript:alert(1)")).toBeNull();
+    expect(sanitizeIntro("data:text/html,hi")).toBeNull();
+  });
 });
 
 describe("escapeHtml", () => {

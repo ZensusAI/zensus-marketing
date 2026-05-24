@@ -1,7 +1,8 @@
 const MAX_LEN = 300;
 // eslint-disable-next-line no-control-regex
-const CONTROL_RE = /[\x00-\x1f]/;
+const CONTROL_RE = /[\x00-\x09\x0b\x0c\x0e-\x1f]/; // control chars except LF (\x0a) and CR (\x0d)
 const URL_RE = /https?:\/\/|www\./i;
+const SCHEME_RE = /\b(?:javascript|data|vbscript):/i;
 const MD_LINK_RE = /\[[^\]]*\]\([^)]*\)/;
 const ANGLE_RE = /[<>]/;
 const MANY_NEWLINES_RE = /\n{3,}/;
@@ -13,6 +14,7 @@ export function sanitizeIntro(raw: string): string | null {
   if (CONTROL_RE.test(s)) return null;
   if (MANY_NEWLINES_RE.test(s)) return null;
   if (URL_RE.test(s)) return null;
+  if (SCHEME_RE.test(s)) return null;
   if (MD_LINK_RE.test(s)) return null;
   if (ANGLE_RE.test(s)) return null;
   return s;
