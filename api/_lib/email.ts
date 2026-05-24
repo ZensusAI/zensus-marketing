@@ -1,5 +1,5 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import { escapeHtml } from "./sanitize";
+import { escapeHtml } from "./sanitize.js";
 
 export interface EmailParams {
   to: string;

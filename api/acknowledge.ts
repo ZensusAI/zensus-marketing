@@ -1,11 +1,11 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { SESClient } from "@aws-sdk/client-ses";
 import { BedrockRuntimeClient } from "@aws-sdk/client-bedrock-runtime";
-import { validateInput } from "./_lib/validate";
-import { verifyTurnstile } from "./_lib/turnstile";
-import { generateIntro, FALLBACK_INTRO } from "./_lib/intro";
-import { sanitizeIntro } from "./_lib/sanitize";
-import { sendAck } from "./_lib/email";
+import { validateInput } from "./_lib/validate.js";
+import { verifyTurnstile } from "./_lib/turnstile.js";
+import { generateIntro, FALLBACK_INTRO } from "./_lib/intro.js";
+import { sanitizeIntro } from "./_lib/sanitize.js";
+import { sendAck } from "./_lib/email.js";
 
 export const config = { maxDuration: 15 };
 
