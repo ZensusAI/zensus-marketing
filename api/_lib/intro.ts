@@ -4,7 +4,7 @@ import {
 } from "@aws-sdk/client-bedrock-runtime";
 
 export const FALLBACK_INTRO =
-  "Thanks for reaching out to Zensus — we've received your message and a member of our team will get back to you soon.";
+  "Thanks for reaching out to Zensus. We've received your message and a member of our team will get back to you soon.";
 
 const SYSTEM_PROMPT =
   "You write a single warm 1-2 sentence acknowledgment that a support request " +
@@ -30,11 +30,12 @@ export async function generateIntro(
   opts: IntroOpts,
 ): Promise<{ intro: string; usedFallback: boolean }> {
   try {
+    const esc = (s: string) => s.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     const userContent =
       `A support request arrived. Acknowledge it warmly, referencing the topic.\n` +
-      `<name>${input.name}</name>\n` +
-      `<subject>${input.subject}</subject>\n` +
-      `<message>${input.message}</message>`;
+      `<name>${esc(input.name)}</name>\n` +
+      `<subject>${esc(input.subject)}</subject>\n` +
+      `<message>${esc(input.message)}</message>`;
 
     const command = new ConverseCommand({
       modelId: opts.modelId,
