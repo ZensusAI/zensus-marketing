@@ -22,6 +22,7 @@ const About = lazy(() => import("./pages/About"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Subprocessors = lazy(() => import("./pages/Subprocessors"));
+const Support = lazy(() => import("./pages/Support"));
 const Integrations = lazy(() => import("./pages/Integrations"));
 const PlaidIntegration = lazy(() => import("./pages/integrations/Plaid"));
 const QuickBooksIntegration = lazy(
@@ -57,6 +58,7 @@ const App = () => (
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/subprocessors" element={<Subprocessors />} />
+              <Route path="/support" element={<Support />} />
               <Route path="/integrations" element={<Integrations />} />
               <Route path="/integrations/plaid" element={<PlaidIntegration />} />
               <Route

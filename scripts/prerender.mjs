@@ -33,6 +33,7 @@ const STATIC_ROUTES = [
   "/privacy",
   "/terms",
   "/subprocessors",
+  "/support",
   "/integrations",
   "/integrations/plaid",
   "/integrations/quickbooks",

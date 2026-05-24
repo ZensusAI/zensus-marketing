@@ -96,6 +96,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "support",
+    category: "Support",
+    title: "Support",
+    subtitle:
+      "Get help with your account, integrations, or billing. Reach the team through the contact form or email hello@zensus.app.",
+    accent: "green",
+  },
+  {
     slug: "integrations",
     category: "Integrations",
     title: "Connect the tools that run your business",
