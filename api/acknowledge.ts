@@ -28,7 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const missing = REQUIRED_ENV.filter((k) => !process.env[k]);
   if (missing.length) {
-    log("config", "missing_env", missing.join(","));
+    console.log(JSON.stringify({ fn: "acknowledge", stage: "config", outcome: "missing_env", missing_keys: missing.join(",") }));
     return res.status(500).json({ error: "server_misconfigured" });
   }
 

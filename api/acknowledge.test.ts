@@ -78,4 +78,28 @@ describe("acknowledge handler", () => {
     expect(r.status).toHaveBeenCalledWith(200);
     expect(ses.commandCalls(SendEmailCommand).length).toBe(0);
   });
+  it("500 when a required env var is missing", async () => {
+    delete process.env.SES_FROM;
+    const r = res();
+    await handler(req() as any, r as any);
+    expect(r.status).toHaveBeenCalledWith(500);
+  });
+  it("403 when the Turnstile token is missing", async () => {
+    const r = res();
+    await handler(req({ body: { ...body } }) as any, r as any); // no turnstileToken
+    expect(r.status).toHaveBeenCalledWith(403);
+  });
+  it("503 when Turnstile is unreachable", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("network")));
+    const r = res();
+    await handler(req() as any, r as any);
+    expect(r.status).toHaveBeenCalledWith(503);
+  });
+  it("502 when SES send fails permanently", async () => {
+    const err = Object.assign(new Error("rejected"), { name: "MessageRejected" });
+    ses.on(SendEmailCommand).rejects(err);
+    const r = res();
+    await handler(req() as any, r as any);
+    expect(r.status).toHaveBeenCalledWith(502);
+  });
 });
