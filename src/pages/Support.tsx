@@ -12,10 +12,14 @@ const PAGE_DESCRIPTION =
   "Get help with Zensus. Reach the team about your account, integrations, or billing, browse common questions, or email us directly at hello@zensus.app.";
 
 // Third-party form backend (no server needed on this static marketing site).
-const FORM_ENDPOINT = "https://getform.io/f/bkkyzgkb";
+// Forminit (formerly Getform) form in Public mode. New-style Forminit forms
+// require prefixed "block keys" (fi-<blockType>-<name>) rather than arbitrary
+// field names — see the mapping in handleSubmit. The form's schema (name,
+// sender email, subject, message) is fixed by its first submission.
+const FORM_ENDPOINT = "https://forminit.com/f/ho5iwqa3lz1";
 
 // Client-side throttle so a single browser can't hammer the form. Purely a
-// courtesy guard; the real anti-spam is the honeypot field plus getform's
+// courtesy guard; the real anti-spam is the honeypot field plus Forminit's
 // own filtering.
 const RATE_LIMIT = {
   maxAttempts: 3,
@@ -199,10 +203,16 @@ export default function Support() {
     setSubmitStatus("idle");
 
     try {
+      // Map our fields to Forminit block keys. Name/subject/message are text
+      // blocks (lenient — a strict sender-name block would reject names with
+      // commas, digits, etc. and silently drop support requests); email is a
+      // sender block so replies thread back to the submitter. The _gotcha
+      // honeypot is checked client-side in validate() and never sent.
       const body = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key !== "_gotcha") body.append(key, value);
-      });
+      body.append("fi-text-name", formData.name);
+      body.append("fi-sender-email", formData.email);
+      body.append("fi-text-subject", formData.subject);
+      body.append("fi-text-message", formData.message);
 
       const response = await fetch(FORM_ENDPOINT, { method: "POST", body });
       recordAttempt();
