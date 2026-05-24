@@ -45,6 +45,7 @@ const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
       { label: "Blog", href: "/blog" },
       { label: "Changelog", href: "/changelog" },
       { label: "Security", href: "/security" },
+      { label: "Support", href: "/support" },
     ],
   },
   {

@@ -20,6 +20,7 @@ const STATIC_URLS = [
   { loc: "https://zensus.app/privacy", changefreq: "yearly", priority: "0.3" },
   { loc: "https://zensus.app/terms", changefreq: "yearly", priority: "0.3" },
   { loc: "https://zensus.app/subprocessors", changefreq: "monthly", priority: "0.4" },
+  { loc: "https://zensus.app/support", changefreq: "monthly", priority: "0.5" },
   { loc: "https://zensus.app/integrations", changefreq: "monthly", priority: "0.8" },
   { loc: "https://zensus.app/integrations/plaid", changefreq: "monthly", priority: "0.7" },
   { loc: "https://zensus.app/integrations/quickbooks", changefreq: "monthly", priority: "0.7" },
