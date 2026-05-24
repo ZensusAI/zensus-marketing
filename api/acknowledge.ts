@@ -12,6 +12,7 @@ export const config = { maxDuration: 15 };
 const ALLOWED_ORIGINS = [/^https:\/\/zensus\.app$/, /^https:\/\/[^.]+\.vercel\.app$/];
 const REQUIRED_ENV = [
   "SES_FROM", "SES_REGION", "BEDROCK_REGION", "BEDROCK_MODEL_ID", "TURNSTILE_SECRET_KEY",
+  "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY",
 ];
 
 function log(stage: string, outcome: string, errorName?: string) {
