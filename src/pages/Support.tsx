@@ -15,7 +15,7 @@ const PAGE_DESCRIPTION =
 // Third-party form backend (no server needed on this static marketing site).
 // Forminit (formerly Getform) form in Public mode. New-style Forminit forms
 // require prefixed "block keys" (fi-<blockType>-<name>) rather than arbitrary
-// field names — see the mapping in handleSubmit. The form's schema (name,
+// field names (see the mapping in handleSubmit). The form's schema (name,
 // sender email, subject, message) is fixed by its first submission.
 const FORM_ENDPOINT = "https://forminit.com/f/ho5iwqa3lz1";
 
@@ -66,7 +66,7 @@ interface FormState {
   email: string;
   subject: string;
   message: string;
-  _gotcha: string; // honeypot — humans never see or fill this
+  _gotcha: string; // honeypot; humans never see or fill this
 }
 
 const EMPTY_FORM: FormState = {
@@ -139,7 +139,7 @@ export default function Support() {
         setRateLimitReset(data.resetTime);
       }
     } catch {
-      // Ignore storage failures (private mode, quota) — they only weaken the
+      // Ignore storage failures (private mode, quota); they only weaken the
       // courtesy throttle, nothing functional.
     }
   };
@@ -197,7 +197,7 @@ export default function Support() {
         }),
       }).catch(() => {});
     } catch {
-      /* ignore — acknowledgment is optional */
+      /* ignore; acknowledgment is optional */
     }
   };
 
@@ -231,7 +231,7 @@ export default function Support() {
 
     try {
       // Map our fields to Forminit block keys. Name/subject/message are text
-      // blocks (lenient — a strict sender-name block would reject names with
+      // blocks (lenient; a strict sender-name block would reject names with
       // commas, digits, etc. and silently drop support requests); email is a
       // sender block so replies thread back to the submitter. The _gotcha
       // honeypot is checked client-side in validate() and never sent.
