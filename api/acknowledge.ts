@@ -12,8 +12,19 @@ export const config = { maxDuration: 15 };
 const ALLOWED_ORIGINS = [/^https:\/\/zensus\.app$/, /^https:\/\/[^.]+\.vercel\.app$/];
 const REQUIRED_ENV = [
   "SES_FROM", "SES_REGION", "BEDROCK_REGION", "BEDROCK_MODEL_ID", "TURNSTILE_SECRET_KEY",
-  "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY",
+  "ACK_AWS_ACCESS_KEY_ID", "ACK_AWS_SECRET_ACCESS_KEY",
 ];
+
+// Dedicated, distinctly-named credentials for this function's IAM user. We pass
+// them explicitly (rather than letting the SDK read the conventional
+// AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY from the default chain) so this
+// function can never pick up ambient AWS credentials meant for other systems.
+function ackCredentials() {
+  return {
+    accessKeyId: process.env.ACK_AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.ACK_AWS_SECRET_ACCESS_KEY as string,
+  };
+}
 
 function log(stage: string, outcome: string, errorName?: string) {
   console.log(JSON.stringify({ fn: "acknowledge", stage, outcome, error_name: errorName }));
@@ -68,7 +79,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   log("turnstile", "ok");
 
-  const bedrock = new BedrockRuntimeClient({ region: process.env.BEDROCK_REGION });
+  const bedrock = new BedrockRuntimeClient({
+    region: process.env.BEDROCK_REGION,
+    credentials: ackCredentials(),
+  });
   const { intro: raw, usedFallback } = await generateIntro(
     { name: v.data.name, subject: v.data.subject, message: v.data.message },
     {
@@ -82,7 +96,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   log("ai", introWasFallback ? "fallback" : "ok");
 
   try {
-    const sesClient = new SESClient({ region: process.env.SES_REGION });
+    const sesClient = new SESClient({
+      region: process.env.SES_REGION,
+      credentials: ackCredentials(),
+    });
     const result = await sendAck(
       { to: v.data.email, name: v.data.name, intro: clean },
       { client: sesClient, from: process.env.SES_FROM as string, dryRun: process.env.ACK_DRY_RUN === "true" },

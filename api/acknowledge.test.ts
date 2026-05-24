@@ -24,8 +24,8 @@ beforeEach(() => {
   process.env.BEDROCK_REGION = "us-east-1";
   process.env.BEDROCK_MODEL_ID = "model";
   process.env.TURNSTILE_SECRET_KEY = "secret";
-  process.env.AWS_ACCESS_KEY_ID = "x";
-  process.env.AWS_SECRET_ACCESS_KEY = "y";
+  process.env.ACK_AWS_ACCESS_KEY_ID = "x";
+  process.env.ACK_AWS_SECRET_ACCESS_KEY = "y";
   delete process.env.ACK_DRY_RUN;
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ json: async () => ({ success: true }) }));
   bedrock.on(ConverseCommand).resolves({ output: { message: { role: "assistant", content: [{ text: "Thanks for asking about runway." }] } } });

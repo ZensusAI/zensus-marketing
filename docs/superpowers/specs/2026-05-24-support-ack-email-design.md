@@ -191,7 +191,7 @@ is called out in Prerequisites.
 | `SES_REGION` | AWS region where the SES identity is verified |
 | `BEDROCK_REGION` | AWS region for Bedrock (may differ from SES) |
 | `BEDROCK_MODEL_ID` | **Claude Haiku 4.5** if enabled, else Claude 3.5 Haiku. Likely a cross-region **inference profile** id (e.g. `us.anthropic.claude-haiku-4-5-*`), not a bare model arn — newer Claude models on Bedrock require one |
-| `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` | IAM creds scoped to `ses:SendEmail` + `bedrock:InvokeModel` (reusable across both) |
+| `ACK_AWS_ACCESS_KEY_ID` / `ACK_AWS_SECRET_ACCESS_KEY` | Dedicated IAM creds for this function, scoped to `ses:SendEmail` + `bedrock:InvokeModel`. Deliberately NOT named `AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY` and passed explicitly to the SDK clients, so the function never picks up ambient AWS credentials from the default chain (those names are used by other systems). |
 | `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile secret (server) |
 | `VITE_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key (client, public) |
 | `ACK_DRY_RUN` | optional; when `"true"`, the function does everything except the SES send (logs the composed email instead). Lets us exercise the full path on a preview without emailing real people |
