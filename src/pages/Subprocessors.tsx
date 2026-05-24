@@ -202,6 +202,19 @@ const CATEGORIES: Category[] = [
       },
     ],
   },
+  {
+    title: "Bot and abuse protection",
+    vendors: [
+      {
+        name: "Cloudflare (Turnstile)",
+        country: "United States",
+        purpose:
+          "Invisible bot and abuse protection on the marketing-site support form (zensus.app/support), so the contact and acknowledgment flow cannot be used to send spam.",
+        dataCategories:
+          "Visitor IP, user-agent, and a verification token (transmitted to Cloudflare when the support form is submitted).",
+      },
+    ],
+  },
 ];
 
 const Subprocessors = () => (
