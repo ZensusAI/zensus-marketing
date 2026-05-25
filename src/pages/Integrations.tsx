@@ -59,7 +59,7 @@ const CHIPS = [
 const Integrations = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>Integrations · Zensus</title>
+      <title>Zensus Integrations · QuickBooks, Plaid, HubSpot, Slack</title>
       <meta
         name="description"
         content="Every number on Zensus comes from a live integration. Plaid, QuickBooks, HubSpot, Slack. No CSV uploads, no manual data entry."
@@ -67,7 +67,7 @@ const Integrations = () => (
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://zensus.app/integrations" />
       <meta property="og:site_name" content="Zensus" />
-      <meta property="og:title" content="Integrations · Zensus" />
+      <meta property="og:title" content="Zensus Integrations · QuickBooks, Plaid, HubSpot, Slack" />
       <meta
         property="og:description"
         content="Live integrations to Plaid, QuickBooks, HubSpot, and Slack. No manual data entry."
@@ -77,7 +77,7 @@ const Integrations = () => (
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Integrations page social preview card" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Integrations · Zensus" />
+      <meta name="twitter:title" content="Zensus Integrations · QuickBooks, Plaid, HubSpot, Slack" />
       <meta
         name="twitter:description"
         content="Live integrations to Plaid, QuickBooks, HubSpot, and Slack. No manual data entry."

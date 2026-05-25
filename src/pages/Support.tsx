@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const PAGE_URL = "https://zensus.app/support";
 const PAGE_DESCRIPTION =
@@ -47,7 +47,7 @@ const FAQS = [
   {
     question: "How much does Zensus cost?",
     answer:
-      "Current plans and pricing are on our Pricing page. You can start without entering a card.",
+      "Zensus Pro is $199/month after a 14-day free trial. We collect your card when you start the trial and only charge once it ends, so you can cancel anytime before then at no cost. Full details are on our Pricing page.",
   },
   {
     question: "How do I reach a person?",
@@ -60,6 +60,10 @@ const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
   { name: "Support", url: PAGE_URL },
 ]);
+
+// The support FAQ is rendered as visible text below; emit it as FAQPage JSON-LD
+// too so AI engines and rich results can extract the questions and answers.
+const faqLd = faqPageSchema(FAQS);
 
 interface FormState {
   name: string;
@@ -279,23 +283,24 @@ export default function Support() {
   return (
     <>
       <Helmet>
-        <title>Support · Zensus</title>
+        <title>Zensus Support · Help With Your Account and Integrations</title>
         <meta name="description" content={PAGE_DESCRIPTION} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={PAGE_URL} />
         <meta property="og:site_name" content="Zensus" />
-        <meta property="og:title" content="Support · Zensus" />
+        <meta property="og:title" content="Zensus Support · Help With Your Account and Integrations" />
         <meta property="og:description" content={PAGE_DESCRIPTION} />
         <meta property="og:image" content="https://zensus.app/og/support.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Zensus Support social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Support · Zensus" />
+        <meta name="twitter:title" content="Zensus Support · Help With Your Account and Integrations" />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
         <meta name="twitter:image" content="https://zensus.app/og/support.png" />
         <link rel="canonical" href={PAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+        <script type="application/ld+json">{JSON.stringify(faqLd)}</script>
       </Helmet>
 
       <main className="min-h-screen bg-background">
