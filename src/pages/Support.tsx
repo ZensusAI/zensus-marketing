@@ -47,7 +47,7 @@ const FAQS = [
   {
     question: "How much does Zensus cost?",
     answer:
-      "Current plans and pricing are on our Pricing page. You can start without entering a card.",
+      "Zensus Pro is $199/month after a 14-day free trial. We collect your card when you start the trial and only charge once it ends, so you can cancel anytime before then at no cost. Full details are on our Pricing page.",
   },
   {
     question: "How do I reach a person?",
