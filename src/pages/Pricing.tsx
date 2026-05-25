@@ -74,7 +74,7 @@ const pricingFaqs = [
 const Pricing = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>Pricing · Zensus</title>
+      <title>Zensus Pricing · $199/mo Cash Flow Forecasting for Founders</title>
       <meta
         name="description"
         content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, AI scenarios, and Slack alerts."
@@ -82,7 +82,7 @@ const Pricing = () => (
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://zensus.app/pricing" />
       <meta property="og:site_name" content="Zensus" />
-      <meta property="og:title" content="Pricing · Zensus" />
+      <meta property="og:title" content="Zensus Pricing · $199/mo Cash Flow Forecasting for Founders" />
       <meta
         property="og:description"
         content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, AI scenarios, and Slack alerts."
@@ -92,7 +92,7 @@ const Pricing = () => (
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Pricing page social preview card" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Pricing · Zensus" />
+      <meta name="twitter:title" content="Zensus Pricing · $199/mo Cash Flow Forecasting for Founders" />
       <meta
         name="twitter:description"
         content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, AI scenarios, and Slack alerts."

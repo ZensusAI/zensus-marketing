@@ -125,6 +125,17 @@ const BlogPost = () => {
               {meta.description}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+              <span>
+                By{" "}
+                <Link
+                  to="/about"
+                  rel="author"
+                  className="font-medium text-foreground hover:text-primary hover:underline"
+                >
+                  Ajin Sunny
+                </Link>
+                , Founder &amp; CEO
+              </span>
               <time dateTime={meta.date}>{formatPostDate(meta.date)}</time>
               <span className="flex items-center gap-1">
                 <Clock size={14} aria-hidden />

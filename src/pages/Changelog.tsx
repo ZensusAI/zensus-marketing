@@ -124,7 +124,7 @@ const formatDate = (iso: string) => iso.replace(/-/g, " ");
 const Changelog = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>Changelog · Zensus</title>
+      <title>Zensus Changelog · Product Updates and New Features</title>
       <meta
         name="description"
         content="What we have shipped on Zensus, most recent first. Per-release posts on new features, improvements, fixes, and security work."
@@ -132,7 +132,7 @@ const Changelog = () => (
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://zensus.app/changelog" />
       <meta property="og:site_name" content="Zensus" />
-      <meta property="og:title" content="Changelog · Zensus" />
+      <meta property="og:title" content="Zensus Changelog · Product Updates and New Features" />
       <meta
         property="og:description"
         content="What we have shipped on Zensus, most recent first."
@@ -142,7 +142,7 @@ const Changelog = () => (
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Changelog page social preview card" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Changelog · Zensus" />
+      <meta name="twitter:title" content="Zensus Changelog · Product Updates and New Features" />
       <meta
         name="twitter:description"
         content="What we have shipped on Zensus, most recent first."
