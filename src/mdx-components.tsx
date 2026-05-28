@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import type { ComponentPropsWithoutRef } from "react";
+import { CopyHeader } from "@/components/blog/CopyHeader";
 
 const linkClass =
   "font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded-sm";
@@ -7,20 +8,22 @@ const linkClass =
 /** Shared MDX element styles for blog posts (also used via MDXProvider). */
 export const blogMdxComponents: MDXComponents = {
   h2: ({ children, ...props }: ComponentPropsWithoutRef<"h2">) => (
-    <h2
-      className="mb-4 mt-12 scroll-mt-28 border-b border-border/60 pb-2 text-2xl font-semibold tracking-tight text-foreground first:mt-8"
+    <CopyHeader
+      level={2}
+      className="mb-4 mt-12 border-b border-border/60 pb-2 text-2xl font-semibold tracking-tight text-foreground first:mt-8"
       {...props}
     >
       {children}
-    </h2>
+    </CopyHeader>
   ),
   h3: ({ children, ...props }: ComponentPropsWithoutRef<"h3">) => (
-    <h3
-      className="mb-3 mt-8 scroll-mt-28 text-xl font-semibold tracking-tight text-foreground"
+    <CopyHeader
+      level={3}
+      className="mb-3 mt-8 text-xl font-semibold tracking-tight text-foreground"
       {...props}
     >
       {children}
-    </h3>
+    </CopyHeader>
   ),
   p: ({ children, ...props }: ComponentPropsWithoutRef<"p">) => (
     <p

@@ -4,13 +4,15 @@ import { ArrowLeft, Clock } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { blogMdxComponents } from "@/mdx-components";
 import { BlogPostFaq } from "@/components/blog/BlogPostFaq";
+import { AuthorCard } from "@/components/blog/AuthorCard";
+import { TableOfContents } from "@/components/blog/TableOfContents";
+import { MobileToc } from "@/components/blog/MobileToc";
+import { ReadMoreSection } from "@/components/blog/ReadMoreSection";
+import { FlickeringGrid } from "@/components/blog/FlickeringGrid";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import {
-  formatPostDate,
-  getPostBySlug,
-  postUrl,
-} from "@/lib/blog";
+import { formatPostDate, getPostBySlug, postUrl } from "@/lib/blog";
+import { getAuthor } from "@/lib/authors";
 import {
   blogPostingSchema,
   breadcrumbSchema,
@@ -28,7 +30,10 @@ const BlogPost = () => {
         <Navbar />
         <main className="section-container py-32 text-center">
           <h1 className="text-2xl font-semibold">Post not found</h1>
-          <Link to="/blog" className="mt-4 inline-block text-primary hover:underline">
+          <Link
+            to="/blog"
+            className="mt-4 inline-block text-primary hover:underline"
+          >
             Back to Blog
           </Link>
         </main>
@@ -40,6 +45,7 @@ const BlogPost = () => {
   const { meta, Content } = post;
   const pageUrl = postUrl(meta.slug);
   const published = meta.dateModified ?? meta.date;
+  const author = getAuthor(meta.author);
 
   const breadcrumbs = breadcrumbSchema([
     HOME_CRUMB,
@@ -101,58 +107,106 @@ const BlogPost = () => {
         ) : null}
       </Helmet>
       <Navbar />
-      <main className="pt-24 pb-16">
-        <article className="section-container max-w-3xl">
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeft size={14} />
-            Back to Blog
-          </Link>
 
-          <header className="mt-8 border-b border-border pb-8">
-            <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-              {meta.category}
-            </span>
-            <h1
-              id="blog-article-title"
-              className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+      <main className="pt-24">
+        <section className="relative overflow-hidden border-b border-border">
+          <div className="pointer-events-none absolute inset-0 z-0 h-full w-full [mask-image:linear-gradient(to_top,transparent_15%,black_95%)]">
+            <FlickeringGrid
+              className="absolute inset-0 h-full w-full"
+              squareSize={4}
+              gridGap={6}
+              color="#94A3B8"
+              maxOpacity={0.2}
+              flickerChance={0.05}
+            />
+          </div>
+
+          <div className="section-container relative z-10 flex flex-col gap-6 py-12">
+            <Link
+              to="/blog"
+              className="inline-flex w-fit items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              {meta.title}
-            </h1>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
-              {meta.description}
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-              <span>
-                By{" "}
-                <Link
-                  to="/about"
-                  rel="author"
-                  className="font-medium text-foreground hover:text-primary hover:underline"
+              <ArrowLeft size={14} />
+              Back to Blog
+            </Link>
+
+            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+              {meta.tags?.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex h-6 items-center rounded-md border border-border bg-muted/40 px-2 text-xs font-medium text-muted-foreground"
                 >
-                  Ajin Sunny
-                </Link>
-                , Founder &amp; CEO
+                  {tag}
+                </span>
+              ))}
+              <span className="text-xs font-semibold uppercase tracking-widest text-primary">
+                {meta.category}
               </span>
-              <time dateTime={meta.date}>{formatPostDate(meta.date)}</time>
-              <span className="flex items-center gap-1">
+              <time dateTime={meta.date} className="font-medium">
+                {formatPostDate(meta.date)}
+              </time>
+              <span className="inline-flex items-center gap-1">
                 <Clock size={14} aria-hidden />
                 {meta.readTime}
               </span>
             </div>
-          </header>
 
-          <div className="blog-article-body prose prose-invert mt-10 max-w-none prose-headings:text-foreground prose-p:text-foreground/85 prose-li:text-foreground/85 prose-a:text-primary [&_figure>div]:overflow-hidden [&_figure>div]:rounded-2xl">
-            <MDXProvider components={blogMdxComponents}>
-              <Content />
-            </MDXProvider>
+            <h1
+              id="blog-article-title"
+              className="text-4xl font-medium tracking-tighter text-balance md:text-5xl lg:text-6xl"
+            >
+              {meta.title}
+            </h1>
+
+            <p className="max-w-3xl text-base text-muted-foreground md:text-lg md:text-balance">
+              {meta.description}
+            </p>
+
+            <p className="text-sm text-muted-foreground">
+              By{" "}
+              <Link
+                to={author.url ?? "/about"}
+                rel="author"
+                className="font-medium text-foreground hover:text-primary hover:underline"
+              >
+                {author.name}
+              </Link>
+              {author.position ? `, ${author.position}` : null}
+            </p>
           </div>
+        </section>
 
-          {meta.faqs?.length ? <BlogPostFaq items={meta.faqs} /> : null}
-        </article>
+        <div className="section-container relative">
+          <div className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_300px]">
+            <article className="min-w-0">
+              <div className="blog-article-body prose prose-invert max-w-none prose-headings:scroll-mt-28 prose-headings:tracking-tight prose-headings:text-foreground prose-p:tracking-tight prose-p:text-foreground/85 prose-li:text-foreground/85 prose-a:text-primary prose-a:no-underline hover:prose-a:underline [&_figure>div]:overflow-hidden [&_figure>div]:rounded-2xl">
+                <MDXProvider components={blogMdxComponents}>
+                  <Content />
+                </MDXProvider>
+              </div>
+
+              {meta.faqs?.length ? <BlogPostFaq items={meta.faqs} /> : null}
+
+              <ReadMoreSection
+                currentSlug={meta.slug}
+                currentTags={meta.tags}
+                className="mt-12"
+              />
+            </article>
+
+            <aside className="hidden lg:block">
+              <div className="sticky top-24 space-y-8">
+                <AuthorCard author={author} />
+                <div className="rounded-lg border border-border bg-card/40 p-5">
+                  <TableOfContents />
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
       </main>
+
+      <MobileToc />
       <Footer />
     </div>
   );

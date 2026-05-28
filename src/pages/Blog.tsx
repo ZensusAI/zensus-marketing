@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
-import { ArrowLeft, Clock, ArrowRight } from "lucide-react";
+import { useMemo } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { formatPostDate, getAllPosts, postUrl } from "@/lib/blog";
+import { BlogCard } from "@/components/blog/BlogCard";
+import { TagFilter } from "@/components/blog/TagFilter";
+import { FlickeringGrid } from "@/components/blog/FlickeringGrid";
 import {
   blogIndexItemListSchema,
   breadcrumbSchema,
@@ -15,21 +19,47 @@ const breadcrumbs = breadcrumbSchema([
   { name: "Blog", url: "https://zensus.app/blog" },
 ]);
 
-const posts = getAllPosts();
-
-const blogItemListLd = blogIndexItemListSchema(
-  posts.map((post) => ({
-    name: post.title,
-    url: postUrl(post.slug),
-    datePublished: post.date,
-  })),
-);
-
 const Blog = () => {
+  const posts = useMemo(() => getAllPosts(), []);
+  const [searchParams] = useSearchParams();
+  const selectedTag = searchParams.get("tag") ?? "All";
+
+  const allTags = useMemo(() => {
+    const set = new Set<string>();
+    posts.forEach((post) => post.tags?.forEach((tag) => set.add(tag)));
+    return ["All", ...Array.from(set).sort()];
+  }, [posts]);
+
+  const tagCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: posts.length };
+    allTags.forEach((tag) => {
+      if (tag === "All") return;
+      counts[tag] = posts.filter((post) => post.tags?.includes(tag)).length;
+    });
+    return counts;
+  }, [posts, allTags]);
+
+  const filteredPosts = useMemo(() => {
+    if (selectedTag === "All") return posts;
+    return posts.filter((post) => post.tags?.includes(selectedTag));
+  }, [posts, selectedTag]);
+
+  const blogItemListLd = useMemo(
+    () =>
+      blogIndexItemListSchema(
+        posts.map((post) => ({
+          name: post.title,
+          url: postUrl(post.slug),
+          datePublished: post.date,
+        })),
+      ),
+    [posts],
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Zensus Blog · Cash Flow Forecasting Guides for Founders</title>
+        <title>Blog · Zensus</title>
         <meta
           name="description"
           content="Case studies and practical guides on cash flow forecasting, runway planning, and financial decision-making for founders with variable revenue."
@@ -37,7 +67,7 @@ const Blog = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://zensus.app/blog" />
         <meta property="og:site_name" content="Zensus" />
-        <meta property="og:title" content="Zensus Blog · Cash Flow Forecasting Guides for Founders" />
+        <meta property="og:title" content="Blog · Zensus" />
         <meta
           property="og:description"
           content="Case studies and practical guides on cash flow forecasting for founders with variable revenue."
@@ -47,7 +77,7 @@ const Blog = () => {
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Blog page social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Zensus Blog · Cash Flow Forecasting Guides for Founders" />
+        <meta name="twitter:title" content="Blog · Zensus" />
         <meta
           name="twitter:description"
           content="Case studies and practical guides on cash flow forecasting for founders with variable revenue."
@@ -62,69 +92,84 @@ const Blog = () => {
         ) : null}
       </Helmet>
       <Navbar />
-      <main className="pt-24 pb-16">
-        <div className="section-container">
-          <Link
-            to="/"
-            className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeft size={14} />
-            Back to Home
-          </Link>
 
-          <div className="mb-16 max-w-3xl">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
-              The Zensus Blog
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Practical guides on cash flow forecasting, runway planning, and
-              financial decision-making for founders.
-            </p>
+      <main className="pt-24">
+        <section className="relative overflow-hidden border-b border-border">
+          <div className="pointer-events-none absolute inset-0 z-0 h-full w-full [mask-image:linear-gradient(to_top,transparent_15%,black_95%)]">
+            <FlickeringGrid
+              className="absolute inset-0 h-full w-full"
+              squareSize={4}
+              gridGap={6}
+              color="#94A3B8"
+              maxOpacity={0.25}
+              flickerChance={0.06}
+            />
           </div>
 
-          {posts.length === 0 ? (
-            <p className="text-muted-foreground">New posts are on the way.</p>
+          <div className="section-container relative z-10 flex min-h-[280px] flex-col justify-center gap-6 py-12">
+            <Link
+              to="/"
+              className="inline-flex w-fit items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <ArrowLeft size={14} />
+              Back to Home
+            </Link>
+
+            <div className="flex flex-col gap-3">
+              <h1 className="text-4xl font-medium tracking-tighter sm:text-5xl md:text-6xl">
+                The Zensus Blog
+              </h1>
+              <p className="max-w-2xl text-base text-muted-foreground md:text-lg">
+                Practical guides on cash flow forecasting, runway planning, and
+                financial decision-making for founders and finance teams.
+              </p>
+            </div>
+
+            {allTags.length > 1 ? (
+              <div className="mt-2 w-full">
+                <TagFilter
+                  tags={allTags}
+                  selectedTag={selectedTag}
+                  tagCounts={tagCounts}
+                />
+              </div>
+            ) : null}
+          </div>
+        </section>
+
+        <section className="section-container pb-20">
+          {filteredPosts.length === 0 ? (
+            <p className="py-16 text-center text-muted-foreground">
+              No posts in this category yet.
+            </p>
           ) : (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {posts.map((post) => (
-                <Link
+            <div
+              className={
+                "grid grid-cols-1 overflow-hidden border-x border-border md:grid-cols-2 lg:grid-cols-3 " +
+                (filteredPosts.length < 4 ? "border-b" : "")
+              }
+            >
+              {filteredPosts.map((post, index) => (
+                <BlogCard
                   key={post.slug}
-                  to={`/blog/${post.slug}`}
-                  className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/30"
-                >
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                      {post.category}
-                    </span>
-                    <h2 className="mt-2 mb-3 text-xl font-semibold text-foreground transition-colors group-hover:text-primary">
-                      {post.title}
-                    </h2>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
-                      {post.description}
-                    </p>
-                  </div>
-                  <div className="mt-6 flex items-center justify-between text-xs text-muted-foreground">
-                    <div className="flex items-center gap-3">
-                      <span className="flex items-center gap-1">
-                        <Clock size={12} aria-hidden />
-                        {post.readTime}
-                      </span>
-                      <time dateTime={post.date}>
-                        {formatPostDate(post.date)}
-                      </time>
-                    </div>
-                    <ArrowRight
-                      size={14}
-                      className="text-primary opacity-0 transition-opacity group-hover:opacity-100"
-                      aria-hidden
-                    />
-                  </div>
-                </Link>
+                  slug={post.slug}
+                  title={post.title}
+                  description={post.description}
+                  date={formatPostDate(post.date)}
+                  readTime={post.readTime}
+                  tags={post.tags}
+                  thumbnail={post.thumbnail}
+                  showRightBorder={
+                    (index + 1) % 3 !== 0 && index !== filteredPosts.length - 1
+                  }
+                  featured={false}
+                />
               ))}
             </div>
           )}
-        </div>
+        </section>
       </main>
+
       <Footer />
     </div>
   );
