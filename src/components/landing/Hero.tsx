@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { ScenarioPrompt } from "./ScenarioPrompt";
 import { TryItNowButton } from "./TryItNowButton";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 
 // Track window.scrollY with rAF-throttled updates. Used to drive a subtle
-// parallax on the hero background — the aurora lags behind foreground scroll
-// for a sense of depth without turning into a distracting effect.
+// parallax on the hero background.
 function useScrollY() {
   const [y, setY] = useState(0);
   useEffect(() => {
@@ -29,69 +29,15 @@ function useScrollY() {
 }
 
 const H1_SENTENCE_1 = "Know exactly when your cash runs out.";
-const H1_SENTENCE_2_PLAIN = "And exactly what to do ";
-const H1_SENTENCE_2_ACCENT = "about it.";
-
-const CHAR_STAGGER_MS = 32;
-const CHAR_ANIMATION_MS = 420;
-const CHAR_EASING = "cubic-bezier(0.2, 0.8, 0.2, 1)";
+const H1_SENTENCE_2 = "And exactly what to do about it.";
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-interface RevealedLineProps {
-  text: string;
-  startDelayMs?: number;
-  animate: boolean;
-  globalCharIndexOffset?: number;
-}
-
-const RevealedLine = ({
-  text,
-  startDelayMs = 0,
-  animate,
-  globalCharIndexOffset = 0,
-}: RevealedLineProps) => {
-  const words = text.split(" ");
-  let charCursor = globalCharIndexOffset;
-
-  return (
-    <>
-      {words.map((word, wi) => {
-        const wordChars = word.split("");
-        return (
-          <span key={wi} className="inline-block whitespace-nowrap">
-            {wordChars.map((ch, ci) => {
-              const delay = startDelayMs + charCursor * CHAR_STAGGER_MS;
-              charCursor += 1;
-              return (
-                <span
-                  key={ci}
-                  className="inline-block"
-                  style={
-                    animate
-                      ? {
-                          opacity: 0,
-                          animation: `char-reveal ${CHAR_ANIMATION_MS}ms ${CHAR_EASING} ${delay}ms forwards`,
-                        }
-                      : undefined
-                  }
-                >
-                  {ch}
-                </span>
-              );
-            })}
-            {wi < words.length - 1 && "\u00A0"}
-          </span>
-        );
-      })}
-    </>
-  );
-};
-
 const Hero = () => {
-  const [fadeInSentence2, setFadeInSentence2] = useState(false);
+  const [sentence1Visible, setSentence1Visible] = useState(false);
+  const [sentence2Visible, setSentence2Visible] = useState(false);
   const [promptVisible, setPromptVisible] = useState(false);
   const [animate] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -99,27 +45,19 @@ const Hero = () => {
   });
   const timeoutRefs = useRef<number[]>([]);
   const scrollY = useScrollY();
-  // Clamp the parallax travel so the bg never escapes its negative-inset
-  // buffer (the image container has -20% top/bottom to hide the movement).
   const parallaxY = Math.min(scrollY * 0.15, 180);
 
   useEffect(() => {
     if (!animate) {
-      setFadeInSentence2(true);
+      setSentence1Visible(true);
+      setSentence2Visible(true);
       setPromptVisible(true);
       return;
     }
 
-    const sentence1CompleteMs =
-      H1_SENTENCE_1.replace(/\s/g, "").length * CHAR_STAGGER_MS +
-      CHAR_ANIMATION_MS;
-
-    timeoutRefs.current.push(
-      window.setTimeout(() => setFadeInSentence2(true), sentence1CompleteMs + 80),
-    );
-    timeoutRefs.current.push(
-      window.setTimeout(() => setPromptVisible(true), sentence1CompleteMs + 620),
-    );
+    timeoutRefs.current.push(window.setTimeout(() => setSentence1Visible(true), 80));
+    timeoutRefs.current.push(window.setTimeout(() => setSentence2Visible(true), 700));
+    timeoutRefs.current.push(window.setTimeout(() => setPromptVisible(true), 1300));
 
     return () => {
       timeoutRefs.current.forEach((t) => window.clearTimeout(t));
@@ -132,8 +70,7 @@ const Hero = () => {
       id="hero"
       className="relative flex items-center pt-24 pb-4 md:pt-32 md:pb-6 lg:pt-40 lg:pb-8 overflow-hidden"
     >
-      {/* Aurora backdrop with a gentle parallax. The container has -20% top
-          and bottom so the transform never reveals the section edges. */}
+      {/* Aurora backdrop with a gentle parallax. */}
       <div
         className="absolute inset-x-0 -top-[20%] -bottom-[20%] pointer-events-none will-change-transform"
         style={{ transform: `translate3d(0, ${parallaxY}px, 0)` }}
@@ -162,8 +99,7 @@ const Hero = () => {
         </picture>
       </div>
 
-      {/* Contrast overlay so the headline stays legible over the aurora.
-          Heavier through the middle where the text sits. */}
+      {/* Contrast overlay so the headline stays legible over the aurora. */}
       <div
         className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/70 to-background pointer-events-none"
         aria-hidden
@@ -172,19 +108,28 @@ const Hero = () => {
       <div className="section-container relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-5">
-            <span className="block">
-              <RevealedLine text={H1_SENTENCE_1} animate={animate} />
+            <span
+              className={`block transition-all duration-500 ${
+                sentence1Visible
+                  ? "opacity-100 blur-0 translate-y-0"
+                  : "opacity-0 blur-md translate-y-2"
+              }`}
+            >
+              <TextShimmer as="span" duration={2.4} spread={2}>
+                {H1_SENTENCE_1}
+              </TextShimmer>
             </span>
             <span
               className={`block transition-all duration-500 ${
-                fadeInSentence2
-                  ? "opacity-100 blur-0"
-                  : "opacity-0 blur-md"
+                sentence2Visible
+                  ? "opacity-100 blur-0 translate-y-0"
+                  : "opacity-0 blur-md translate-y-2"
               }`}
-              aria-hidden={!fadeInSentence2}
+              aria-hidden={!sentence2Visible}
             >
-              {H1_SENTENCE_2_PLAIN}
-              <span className="text-gradient">{H1_SENTENCE_2_ACCENT}</span>
+              <TextShimmer as="span" duration={2.4} spread={2}>
+                {H1_SENTENCE_2}
+              </TextShimmer>
             </span>
           </h1>
 
