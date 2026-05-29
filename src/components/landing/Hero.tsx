@@ -115,9 +115,13 @@ const Hero = () => {
                   : "opacity-0 blur-md translate-y-2"
               }`}
             >
-              <TextShimmer as="span" duration={2.4} spread={2}>
-                {H1_SENTENCE_1}
-              </TextShimmer>
+              {animate ? (
+                <TextShimmer as="span" duration={5} spread={2.5} ease={[0.65, 0, 0.35, 1]}>
+                  {H1_SENTENCE_1}
+                </TextShimmer>
+              ) : (
+                <span>{H1_SENTENCE_1}</span>
+              )}
             </span>
             <span
               className={`block transition-all duration-500 ${
@@ -127,9 +131,13 @@ const Hero = () => {
               }`}
               aria-hidden={!sentence2Visible}
             >
-              <TextShimmer as="span" duration={2.4} spread={2}>
-                {H1_SENTENCE_2}
-              </TextShimmer>
+              {animate ? (
+                <TextShimmer as="span" duration={5} spread={2.5} ease={[0.65, 0, 0.35, 1]}>
+                  {H1_SENTENCE_2}
+                </TextShimmer>
+              ) : (
+                <span>{H1_SENTENCE_2}</span>
+              )}
             </span>
           </h1>
 
