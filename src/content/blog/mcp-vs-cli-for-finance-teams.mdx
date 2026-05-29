@@ -98,6 +98,13 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>Every one of those needs the agent to reach into a real system. QuickBooks, the bank, the CRM, the payroll provider. That reach happens through one of two doors. Understanding which door your tooling uses is now part of evaluating any AI product that touches your books.</p>
 
 
+<BlogFigure
+  src="/blog/mcp-vs-cli-for-finance-teams/agent-reaching-into-finance-stack.png"
+  alt="Illustration of an AI agent represented as a glowing teal orb at the center, extending four curving light threads outward to small monochrome icons for QuickBooks, a bank, HubSpot CRM, and Plaid, showing how an AI agent reaches into a finance stack."
+  caption="An AI agent has to reach into real systems of record (QuickBooks, the bank, the CRM, the payroll provider) to answer founder questions. The two ways it can reach are MCP and CLI."
+/>
+
+
 ## What a CLI Agent Actually Does (in Plain English)
 
 
@@ -180,6 +187,13 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 ## Where Each One Fits, in Plain English
 
 
+<BlogFigure
+  src="/blog/mcp-vs-cli-for-finance-teams/cli-vs-mcp-side-by-side.png"
+  alt="Side-by-side comparison of a CLI agent and an MCP server. The CLI side shows an open terminal window with abstract scrollback bars and arrows escaping through every edge of the frame, conveying an unbounded shell. The MCP side shows a bounded container exposing only three named tools (list_invoices, get_trial_balance, create_invoice), an OAuth padlock badge, and a small audit-log timeline strip beneath it."
+  caption="CLI gives an agent an open shell. MCP gives an agent a small, typed, audit-logged toolbox. For finance data, the second posture is what auditors expect."
+/>
+
+
 <p>The honest answer is that neither approach wins everywhere. The question is which axis matters more for the workflow in front of you.</p>
 
 
@@ -233,6 +247,13 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   <li>credentials and PII sit in the same context the model produces tokens from</li>
 
 </ul>
+
+
+<BlogFigure
+  src="/blog/mcp-vs-cli-for-finance-teams/audit-trail-comparison.png"
+  alt="Visual comparison of two audit trails. On the left, a torn, fragmented terminal window labeled CLI fades into smoke with an ambiguous question mark, conveying an unreliable record. On the right, a clean MCP audit log shows seven structured rows with timestamped tool calls, scoped OAuth badges, and tagged inputs and outputs ready for a SOC 2 or WISP review."
+  caption="Reconstructing what a CLI agent did from terminal scrollback is not an audit log. An MCP server hands you the structured record auditors expect for SOC 2, ISO 27001, and WISP reviews."
+/>
 
 
 <p className="mb-2 font-medium text-foreground">An MCP server gives you the artifacts an auditor expects:</p>
@@ -310,6 +331,13 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 </ul>
 
 
+<BlogFigure
+  src="/blog/mcp-vs-cli-for-finance-teams/mcp-month-end-workflow.png"
+  alt="Flowchart of an MCP-orchestrated month-end close. Three input cards on the left (QuickBooks calling get_trial_balance, Plaid calling get_bank_balance, and CRM calling get_revenue_recognition) converge on a central AI agent node. The agent then writes a single 'Month-end pack' output rectangle with table-row previews and a grid icon inside. Beneath the diagram, a horizontal audit-log timeline shows each tool call with timestamp and tool name."
+  caption="A month-end close orchestrated through MCP: parallel pulls from QuickBooks, Plaid, and the CRM, with every tool call logged. The variance pack drafts itself while the auditor reads the same log you do."
+/>
+
+
 <p className="mb-2 font-medium text-foreground">Audit-evidence collection:</p>
 
 
@@ -365,6 +393,13 @@ Zensus is a cash flow forecasting and runway-planning platform for founders with
   </li>
 
 </ul>
+
+
+<BlogFigure
+  src="/blog/mcp-vs-cli-for-finance-teams/zensus-typed-integration-architecture.png"
+  alt="Architecture diagram of how Zensus connects to finance data. Four dark integration cards aligned at the top, labeled Plaid, QuickBooks, HubSpot, and Slack, each carrying a green OAuth padlock badge and labeled with 'typed integration' and 'scoped OAuth' beneath. The cards feed downward into a wide 'Structured runway snapshot' layer rendered as a data-row strip. Below the snapshot, a glowing Zensus runway agent node reads from the snapshot via a single labeled arrow."
+  caption="Zensus is not an MCP server, but the architecture follows the same principles MCP encodes: typed integrations, scoped OAuth, and a structured snapshot the runway agent reads from, not a shell on your bank session."
+/>
 
 
 <p>The bet is that the choice between CLI and MCP is really a choice between "fast and flexible" and "trustworthy and auditable." For an AI tool that touches finance data, the second one is what founders should ask for, whether the product is built on MCP or on equivalent typed-integration principles.</p>
