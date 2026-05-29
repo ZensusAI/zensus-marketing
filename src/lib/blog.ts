@@ -21,6 +21,14 @@ export interface BlogPostMeta {
   ogSubtitle?: string;
   /** Optional FAQ block for FAQPage JSON-LD (targets People Also Ask). */
   faqs?: BlogFaqItem[];
+  /** Topic tags surfaced in the card and used by the index tag filter. */
+  tags?: string[];
+  /** When true, the post is highlighted as a featured/lead card. */
+  featured?: boolean;
+  /** Card and hero image path (public/ relative or absolute). */
+  thumbnail?: string;
+  /** Author key into the authors map; defaults to the site's default author. */
+  author?: string;
 }
 
 export interface BlogPostModule {
