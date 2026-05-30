@@ -48,20 +48,12 @@ function GoogleIcon({ className }: { className?: string }) {
 }
 
 const continueButtonClasses = [
-  "group/cta relative h-11 w-full overflow-hidden rounded-lg",
+  "relative h-11 w-full overflow-hidden rounded-lg",
   "border-stone-300 bg-white text-stone-900 shadow-sm",
-  "justify-center gap-3 transition-all",
-  "hover:bg-white hover:text-stone-900 hover:border-stone-400 hover:shadow-md",
+  "justify-center gap-3",
+  "transition-all duration-700 ease-in-out-cubic",
+  "hover:bg-primary/25 hover:text-stone-900 hover:border-primary/50 hover:shadow-md",
 ].join(" ");
-
-function ShineSweep() {
-  return (
-    <span
-      aria-hidden
-      className="pointer-events-none absolute inset-y-0 left-0 w-1/3 -translate-x-full -skew-x-12 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 transition-opacity duration-200 group-hover/cta:opacity-100 group-hover/cta:animate-shimmer-sweep"
-    />
-  );
-}
 
 interface SignupModalProps {
   children: ReactNode;
@@ -132,11 +124,8 @@ export function SignupModal({ children }: SignupModalProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ShineSweep />
-                  <span className="relative inline-flex items-center gap-3">
-                    <GoogleIcon />
-                    Continue with Google
-                  </span>
+                  <GoogleIcon />
+                  Continue with Google
                 </a>
               </Button>
               <Button
@@ -150,11 +139,8 @@ export function SignupModal({ children }: SignupModalProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ShineSweep />
-                  <span className="relative inline-flex items-center gap-3">
-                    <AtSign size={18} aria-hidden />
-                    Continue with Email
-                  </span>
+                  <AtSign size={18} aria-hidden />
+                  Continue with Email
                 </a>
               </Button>
             </div>
