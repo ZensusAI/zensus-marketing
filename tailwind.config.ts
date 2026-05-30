@@ -60,6 +60,9 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      transitionTimingFunction: {
+        "in-out-cubic": "cubic-bezier(0.65, 0, 0.35, 1)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
