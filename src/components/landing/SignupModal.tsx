@@ -109,7 +109,7 @@ export function SignupModal({ children }: SignupModalProps) {
                 asChild
                 variant="outline"
                 size="lg"
-                className="h-11 w-full justify-center gap-3 rounded-lg border-border bg-card text-foreground hover:bg-card/80"
+                className="h-11 w-full justify-center gap-3 rounded-lg border-border bg-card text-foreground hover:bg-card/70 hover:text-foreground hover:border-primary/40"
               >
                 <a
                   href={`${SIGN_IN_URL}?provider=google`}
@@ -124,7 +124,7 @@ export function SignupModal({ children }: SignupModalProps) {
                 asChild
                 variant="outline"
                 size="lg"
-                className="h-11 w-full justify-center gap-3 rounded-lg border-border bg-card text-foreground hover:bg-card/80"
+                className="h-11 w-full justify-center gap-3 rounded-lg border-border bg-card text-foreground hover:bg-card/70 hover:text-foreground hover:border-primary/40"
               >
                 <a
                   href={`${SIGN_IN_URL}?provider=email`}
