@@ -97,6 +97,10 @@ export default {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
+        "shimmer-sweep": {
+          "0%": { transform: "translateX(-100%) skewX(-12deg)" },
+          "100%": { transform: "translateX(400%) skewX(-12deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -108,6 +112,7 @@ export default {
         "slide-in-left": "slide-in-left 0.7s ease-out forwards",
         "slide-in-right": "slide-in-right 0.7s ease-out forwards",
         shine: "shine var(--duration, 14s) linear infinite",
+        "shimmer-sweep": "shimmer-sweep 1.8s ease-in-out infinite",
       },
     },
   },

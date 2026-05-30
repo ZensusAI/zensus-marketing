@@ -47,6 +47,22 @@ function GoogleIcon({ className }: { className?: string }) {
   );
 }
 
+const continueButtonClasses = [
+  "group/cta relative h-11 w-full overflow-hidden rounded-lg",
+  "border-stone-300 bg-white text-stone-900 shadow-sm",
+  "justify-center gap-3 transition-all",
+  "hover:bg-white hover:text-stone-900 hover:border-stone-400 hover:shadow-md",
+].join(" ");
+
+function ShineSweep() {
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute inset-y-0 left-0 w-1/3 -translate-x-full -skew-x-12 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 transition-opacity duration-200 group-hover/cta:opacity-100 group-hover/cta:animate-shimmer-sweep"
+    />
+  );
+}
+
 interface SignupModalProps {
   children: ReactNode;
 }
@@ -55,10 +71,10 @@ export function SignupModal({ children }: SignupModalProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-w-4xl gap-0 overflow-hidden border-border bg-background p-0">
+      <DialogContent className="max-w-4xl gap-0 overflow-hidden border-stone-200 bg-[#FAF6EC] p-0 text-stone-900 [&_button.absolute]:text-stone-500 [&_button.absolute]:hover:text-stone-900">
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left pane: atmospheric brand image + tagline (hidden on small screens) */}
-          <div className="relative hidden min-h-[480px] md:block">
+          <div className="relative hidden min-h-[480px] bg-slate-950 md:block">
             <picture>
               <source srcSet="/hero-aurora-1200.webp" type="image/webp" />
               <img
@@ -68,12 +84,12 @@ export function SignupModal({ children }: SignupModalProps) {
                 loading="lazy"
               />
             </picture>
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-slate-950/10" />
             <div className="absolute inset-x-0 bottom-0 p-8">
-              <DialogTitle className="text-2xl font-semibold leading-tight tracking-tight text-foreground">
+              <DialogTitle className="text-2xl font-semibold leading-tight tracking-tight text-white">
                 Runway that adapts to your billing cadence.
               </DialogTitle>
-              <DialogDescription className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              <DialogDescription className="mt-2 text-sm leading-relaxed text-slate-300">
                 Bank, accounting, CRM. One runway view, in real time.
               </DialogDescription>
             </div>
@@ -81,10 +97,10 @@ export function SignupModal({ children }: SignupModalProps) {
 
           {/* Right pane: bullets + auth buttons */}
           <div className="flex flex-col justify-center p-8 md:p-10">
-            <DialogTitle className="mb-1 text-xl font-semibold tracking-tight md:hidden">
+            <DialogTitle className="mb-1 text-xl font-semibold tracking-tight text-stone-900 md:hidden">
               Start using Zensus
             </DialogTitle>
-            <DialogDescription className="mb-6 text-sm text-muted-foreground md:hidden">
+            <DialogDescription className="mb-6 text-sm text-stone-600 md:hidden">
               Bank, accounting, CRM. One runway view, in real time.
             </DialogDescription>
 
@@ -92,7 +108,7 @@ export function SignupModal({ children }: SignupModalProps) {
               {BULLETS.map((bullet) => (
                 <li
                   key={bullet}
-                  className="flex items-start gap-3 text-sm leading-relaxed text-foreground"
+                  className="flex items-start gap-3 text-sm leading-relaxed text-stone-800"
                 >
                   <Check
                     size={18}
@@ -109,58 +125,64 @@ export function SignupModal({ children }: SignupModalProps) {
                 asChild
                 variant="outline"
                 size="lg"
-                className="h-11 w-full justify-center gap-3 rounded-lg border-border bg-card text-foreground hover:bg-card/70 hover:text-foreground hover:border-primary/40"
+                className={continueButtonClasses}
               >
                 <a
                   href={`${SIGN_IN_URL}?provider=google`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <GoogleIcon />
-                  Continue with Google
+                  <ShineSweep />
+                  <span className="relative inline-flex items-center gap-3">
+                    <GoogleIcon />
+                    Continue with Google
+                  </span>
                 </a>
               </Button>
               <Button
                 asChild
                 variant="outline"
                 size="lg"
-                className="h-11 w-full justify-center gap-3 rounded-lg border-border bg-card text-foreground hover:bg-card/70 hover:text-foreground hover:border-primary/40"
+                className={continueButtonClasses}
               >
                 <a
                   href={`${SIGN_IN_URL}?provider=email`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <AtSign size={18} aria-hidden />
-                  Continue with Email
+                  <ShineSweep />
+                  <span className="relative inline-flex items-center gap-3">
+                    <AtSign size={18} aria-hidden />
+                    Continue with Email
+                  </span>
                 </a>
               </Button>
             </div>
 
-            <p className="mt-6 text-center text-sm text-muted-foreground">
+            <p className="mt-6 text-center text-sm text-stone-600">
               Already have an account?{" "}
               <a
                 href={SIGN_IN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-foreground transition-colors hover:text-primary hover:underline"
+                className="font-medium text-stone-900 transition-colors hover:text-primary hover:underline"
               >
                 Log in
               </a>
             </p>
 
-            <p className="mt-8 text-center text-xs leading-relaxed text-muted-foreground">
+            <p className="mt-8 text-center text-xs leading-relaxed text-stone-500">
               By continuing, you agree to our{" "}
               <Link
                 to="/terms"
-                className="underline underline-offset-2 transition-colors hover:text-foreground"
+                className="underline underline-offset-2 transition-colors hover:text-stone-900"
               >
                 Terms
               </Link>{" "}
               and{" "}
               <Link
                 to="/privacy"
-                className="underline underline-offset-2 transition-colors hover:text-foreground"
+                className="underline underline-offset-2 transition-colors hover:text-stone-900"
               >
                 Privacy Policy
               </Link>
