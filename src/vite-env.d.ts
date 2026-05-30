@@ -1,5 +1,14 @@
 /// <reference types="vite/client" />
 
+interface ImportMetaEnv {
+  // Google One Tap sign-in (ZEN-365). All optional: when absent the Supabase
+  // client is null and One Tap renders nothing (build-first, wire config later).
+  readonly VITE_SUPABASE_URL?: string;
+  readonly VITE_SUPABASE_ANON_KEY?: string;
+  readonly VITE_GOOGLE_CLIENT_ID?: string;
+  readonly VITE_APP_URL?: string;
+}
+
 interface BlogFaqItem {
   question: string;
   answer: string;

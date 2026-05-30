@@ -14,6 +14,7 @@ import FAQ from "@/components/landing/FAQ";
 import FinalCTABand from "@/components/landing/FinalCTABand";
 import Footer from "@/components/landing/Footer";
 import PageSkeleton from "@/components/landing/PageSkeleton";
+import { GoogleOneTap } from "@/components/landing/GoogleOneTap";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -60,6 +61,9 @@ const Index = () => {
         <link rel="canonical" href="https://zensus.app/" />
       </Helmet>
       <Navbar />
+      {/* Google One Tap (ZEN-365): self-gates on config + existing session,
+          renders only its own top-right prompt. No-op until env is configured. */}
+      <GoogleOneTap />
       <div className="animate-fade-in">
         <main>
           <Hero />
