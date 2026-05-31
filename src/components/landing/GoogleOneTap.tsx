@@ -104,7 +104,7 @@ export function GoogleOneTap() {
             );
             return;
           }
-          window.location.href = buildHandoffUrl("/runway");
+          window.location.href = buildHandoffUrl("/subscribe");
         },
       });
       window.google.accounts.id.prompt();

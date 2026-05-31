@@ -35,6 +35,12 @@ describe("buildHandoffUrl", () => {
     );
   });
 
+  it("routes One-Tap sign-ins to /subscribe for the trial acquisition flow", () => {
+    expect(buildHandoffUrl("/subscribe")).toBe(
+      "https://app.zensus.app/auth/handoff?redirect=%2Fsubscribe",
+    );
+  });
+
   it("encodes a nested redirect path", () => {
     expect(buildHandoffUrl("/settings/billing")).toBe(
       "https://app.zensus.app/auth/handoff?redirect=%2Fsettings%2Fbilling",

@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { SIGN_IN_URL } from "@/lib/constants";
+import { SIGN_IN_URL, START_TRIAL_URL } from "@/lib/constants";
 
 const BULLETS = [
   "Connect QuickBooks, Plaid, and HubSpot in minutes",
@@ -120,7 +120,7 @@ export function SignupModal({ children }: SignupModalProps) {
                 className={continueButtonClasses}
               >
                 <a
-                  href={`${SIGN_IN_URL}?provider=google`}
+                  href={`${START_TRIAL_URL}&provider=google`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -135,7 +135,7 @@ export function SignupModal({ children }: SignupModalProps) {
                 className={continueButtonClasses}
               >
                 <a
-                  href={`${SIGN_IN_URL}?provider=email`}
+                  href={`${START_TRIAL_URL}&provider=email`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
