@@ -5,7 +5,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { Button } from "@/components/ui/button";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
-import { SIGN_IN_URL } from "@/lib/constants";
+import { START_TRIAL_URL } from "@/lib/constants";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const breadcrumbs = breadcrumbSchema([
@@ -150,7 +150,7 @@ const Pricing = () => (
 
               <Button asChild className="w-full rounded-full" size="lg">
                 <a
-                  href={SIGN_IN_URL}
+                  href={START_TRIAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
