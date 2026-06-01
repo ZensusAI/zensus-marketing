@@ -50,6 +50,13 @@ const Index = () => {
         <meta name="twitter:description" content="Runway that knows your annual contract hits March 14, not 'sometime in Q1.' Built for founders with variable revenue." />
         <meta name="twitter:image" content="https://zensus.app/og/home.png" />
         <link rel="canonical" href="https://zensus.app/" />
+        {/* Preload the LCP hero image (AVIF) — one variant per breakpoint, exactly
+            matching the <picture> in Hero.tsx so a single resource is fetched. With
+            createRoot re-rendering the <img> at bundle time, this caches the bytes
+            during HTML parse so the re-render paints instantly. Home-only. */}
+        <link rel="preload" as="image" type="image/avif" href="/hero-aurora-800.avif" media="(max-width: 768px)" />
+        <link rel="preload" as="image" type="image/avif" href="/hero-aurora-1200.avif" media="(min-width: 769px) and (max-width: 1280px)" />
+        <link rel="preload" as="image" type="image/avif" href="/hero-aurora-1920.avif" media="(min-width: 1281px)" />
       </Helmet>
       <Navbar />
       {/* Google One Tap (ZEN-365): self-gates on config + existing session,
