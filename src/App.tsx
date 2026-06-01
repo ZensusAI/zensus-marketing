@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
@@ -33,8 +32,6 @@ const QuickBooksIntegration = lazy(
 const HubSpotIntegration = lazy(() => import("./pages/integrations/HubSpot"));
 const SlackIntegration = lazy(() => import("./pages/integrations/Slack"));
 
-const queryClient = new QueryClient();
-
 // Minimal suspense fallback: the prerendered HTML is already visible,
 // so hydration gaps only matter if a visitor navigates client-side to
 // a lazy route. A blank placeholder is fine.
@@ -42,46 +39,44 @@ const RouteFallback = () => <div className="min-h-screen bg-background" />;
 
 const App = () => (
   <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <ConsentBanner />
-        <BrowserRouter>
-          <PostHogPageview />
-          <Analytics />
-          <SpeedInsights />
-          <Suspense fallback={<RouteFallback />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/security" element={<Security />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/subprocessors" element={<Subprocessors />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/integrations" element={<Integrations />} />
-              <Route path="/integrations/plaid" element={<PlaidIntegration />} />
-              <Route
-                path="/integrations/quickbooks"
-                element={<QuickBooksIntegration />}
-              />
-              <Route
-                path="/integrations/hubspot"
-                element={<HubSpotIntegration />}
-              />
-              <Route path="/integrations/slack" element={<SlackIntegration />} />
-              <Route path="/changelog" element={<Changelog />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <ConsentBanner />
+      <BrowserRouter>
+        <PostHogPageview />
+        <Analytics />
+        <SpeedInsights />
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/security" element={<Security />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/subprocessors" element={<Subprocessors />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/integrations" element={<Integrations />} />
+            <Route path="/integrations/plaid" element={<PlaidIntegration />} />
+            <Route
+              path="/integrations/quickbooks"
+              element={<QuickBooksIntegration />}
+            />
+            <Route
+              path="/integrations/hubspot"
+              element={<HubSpotIntegration />}
+            />
+            <Route path="/integrations/slack" element={<SlackIntegration />} />
+            <Route path="/changelog" element={<Changelog />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </TooltipProvider>
   </HelmetProvider>
 );
 
