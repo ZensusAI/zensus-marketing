@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { BarChart3, Bell, Check, MessageCircle } from "lucide-react";
-import runwayDrilldownWeekly from "@/assets/runway-drilldown-weekly.png";
-import runwayDrilldownDaily from "@/assets/runway-drilldown-daily.png";
-import runwayWhatifOverview from "@/assets/runway-whatif-overview.png";
-import runwayWhatifMonthly from "@/assets/runway-whatif-monthly.png";
-import runwayWhatifWeekly from "@/assets/runway-whatif-weekly.png";
-import runwayAlertsA from "@/assets/runway-alerts-a.png";
-import runwayAlertsB from "@/assets/runway-alerts-b.png";
+import runwayDrilldownWeekly from "@/assets/runway-drilldown-weekly.webp";
+import runwayDrilldownDaily from "@/assets/runway-drilldown-daily.webp";
+import runwayWhatifOverview from "@/assets/runway-whatif-overview.webp";
+import runwayWhatifMonthly from "@/assets/runway-whatif-monthly.webp";
+import runwayWhatifWeekly from "@/assets/runway-whatif-weekly.webp";
+import runwayAlertsA from "@/assets/runway-alerts-a.webp";
+import runwayAlertsB from "@/assets/runway-alerts-b.webp";
 
 type StepDef = {
   eyebrow: string;

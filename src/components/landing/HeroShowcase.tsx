@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Pause, Play } from "lucide-react";
-import dashboard1 from "@/assets/dashboard-1.png";
-import dashboard2 from "@/assets/dashboard-2.png";
+import dashboard1 from "@/assets/dashboard-1.webp";
+import dashboard2 from "@/assets/dashboard-2.webp";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
