@@ -6,6 +6,7 @@ import Footer from "@/components/landing/Footer";
 import { Button } from "@/components/ui/button";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
 import { START_TRIAL_URL } from "@/lib/constants";
+import { trackCtaClick } from "@/lib/analytics/events";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const breadcrumbs = breadcrumbSchema([
@@ -153,6 +154,9 @@ const Pricing = () => (
                   href={START_TRIAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCtaClick("pricing_page", { destination: "trial" })
+                  }
                 >
                   Start 14-day free trial
                   <ArrowRight size={18} className="ml-2" />

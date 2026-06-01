@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SIGN_IN_URL, START_TRIAL_URL } from "@/lib/constants";
+import { trackCtaClick } from "@/lib/analytics/events";
 
 const BULLETS = [
   "Connect QuickBooks, Plaid, and HubSpot in minutes",
@@ -123,6 +124,12 @@ export function SignupModal({ children }: SignupModalProps) {
                   href={`${START_TRIAL_URL}&provider=google`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCtaClick("signup_modal", {
+                      destination: "trial",
+                      provider: "google",
+                    })
+                  }
                 >
                   <GoogleIcon />
                   Continue with Google
@@ -138,6 +145,12 @@ export function SignupModal({ children }: SignupModalProps) {
                   href={`${START_TRIAL_URL}&provider=email`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCtaClick("signup_modal", {
+                      destination: "trial",
+                      provider: "email",
+                    })
+                  }
                 >
                   <AtSign size={18} aria-hidden />
                   Continue with Email

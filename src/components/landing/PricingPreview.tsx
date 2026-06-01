@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { START_TRIAL_URL } from "@/lib/constants";
+import { trackCtaClick } from "@/lib/analytics/events";
 
 const PricingPreview = () => (
   <section className="section-padding bg-background">
@@ -17,7 +18,14 @@ const PricingPreview = () => (
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button asChild size="lg" className="rounded-full">
-            <a href={START_TRIAL_URL} target="_blank" rel="noopener noreferrer">
+            <a
+              href={START_TRIAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackCtaClick("pricing_preview", { destination: "trial" })
+              }
+            >
               Start 14-day free trial
               <ArrowRight size={18} className="ml-2" />
             </a>
