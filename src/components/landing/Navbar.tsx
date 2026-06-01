@@ -5,6 +5,7 @@ import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { Button } from "@/components/ui/button";
 import { TalkToUsButton } from "./TalkToUsButton";
 import { SIGN_IN_URL } from "@/lib/constants";
+import { trackCtaClick } from "@/lib/analytics/events";
 import zensusLogo from "@/assets/zensus-logo.png";
 
 interface NavLinkItem {
@@ -304,7 +305,14 @@ const Navbar = () => {
           <div className="flex items-center gap-3 justify-self-end">
             <div className="hidden md:flex items-center gap-3">
               <Button asChild variant="ghost" size="sm" className={`rounded-full ${focusRing}`}>
-                <a href={SIGN_IN_URL} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={SIGN_IN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCtaClick("navbar_desktop", { destination: "signin" })
+                  }
+                >
                   Sign in
                 </a>
               </Button>
@@ -347,7 +355,10 @@ const Navbar = () => {
                   href={SIGN_IN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={close}
+                  onClick={() => {
+                    trackCtaClick("navbar_mobile", { destination: "signin" });
+                    close();
+                  }}
                 >
                   Sign in
                 </a>

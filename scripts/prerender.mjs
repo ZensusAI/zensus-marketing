@@ -112,6 +112,12 @@ async function prerender() {
     for (const route of ROUTES) {
       const url = `http://localhost:${PORT}${route}`;
       const page = await browser.newPage();
+      // Signal to client code that this is the prerender crawl, before any app
+      // script runs. PostHog (lib/analytics) checks window.__PRERENDER__ and
+      // skips init so the build server never emits bot $pageview events.
+      await page.evaluateOnNewDocument(() => {
+        window.__PRERENDER__ = true;
+      });
       // Disable animations so the captured state is stable and deterministic.
       await page.emulateMediaFeatures([
         { name: "prefers-reduced-motion", value: "reduce" },

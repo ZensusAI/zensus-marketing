@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { PostHogPageview } from "./lib/analytics/PostHogPageview";
 import Index from "./pages/Index";
 
 // The homepage ships in the initial bundle (most visitors land there and
@@ -45,6 +46,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <PostHogPageview />
           <Analytics />
           <SpeedInsights />
           <Suspense fallback={<RouteFallback />}>
