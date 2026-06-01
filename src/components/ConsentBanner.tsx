@@ -76,18 +76,16 @@ export function ConsentBanner() {
       role="dialog"
       aria-label="Cookie consent"
       aria-live="polite"
-      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-sm rounded-xl border border-border bg-background/95 p-4 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:inset-x-auto sm:right-4 sm:mx-0"
+      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-xs rounded-lg border border-border bg-background/95 p-3 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:inset-x-auto sm:right-4 sm:mx-0"
     >
-      <p className="text-sm leading-relaxed text-foreground/80">
-        We use cookies for analytics to understand how people use Zensus and
-        make it better. You can accept or decline — declining won&apos;t affect
-        your experience. See our{" "}
+      <p className="text-xs leading-snug text-foreground/80">
+        We use cookies for analytics to improve Zensus. See our{" "}
         <a href="/privacy" className="font-medium text-primary hover:underline">
           Privacy Policy
         </a>
         .
       </p>
-      <div className="mt-3 flex justify-end gap-2">
+      <div className="mt-2.5 flex justify-end gap-2">
         <Button variant="outline" size="sm" onClick={decline}>
           Decline
         </Button>
