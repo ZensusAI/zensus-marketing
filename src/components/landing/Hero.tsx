@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ScenarioPrompt } from "./ScenarioPrompt";
 import { TryItNowButton } from "./TryItNowButton";
 import { TextShimmer } from "@/components/ui/text-shimmer";
@@ -36,57 +36,37 @@ const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const Hero = () => {
-  const [sentence1Visible, setSentence1Visible] = useState(false);
-  const [sentence2Visible, setSentence2Visible] = useState(false);
-  const [promptVisible, setPromptVisible] = useState(false);
-  const [animate] = useState(() => {
+  // The shimmer is decorative; fall back to plain text under reduced motion.
+  // The headline itself ALWAYS renders visible — it's the page's value
+  // proposition and must never wait on JS hydration to appear (the entrance
+  // is a pure-CSS `motion-safe:animate-fade-in`, so it runs at first paint,
+  // not after the bundle hydrates).
+  const [shimmer] = useState(() => {
     if (typeof window === "undefined") return false;
     return !prefersReducedMotion();
   });
-  const timeoutRefs = useRef<number[]>([]);
   const scrollY = useScrollY();
   const parallaxY = Math.min(scrollY * 0.15, 180);
-
-  useEffect(() => {
-    if (!animate) {
-      setSentence1Visible(true);
-      setSentence2Visible(true);
-      setPromptVisible(true);
-      return;
-    }
-
-    timeoutRefs.current.push(window.setTimeout(() => setSentence1Visible(true), 80));
-    timeoutRefs.current.push(window.setTimeout(() => setSentence2Visible(true), 700));
-    timeoutRefs.current.push(window.setTimeout(() => setPromptVisible(true), 1300));
-
-    return () => {
-      timeoutRefs.current.forEach((t) => window.clearTimeout(t));
-      timeoutRefs.current = [];
-    };
-  }, [animate]);
 
   return (
     <section
       id="hero"
       className="relative flex items-center pt-24 pb-4 md:pt-32 md:pb-6 lg:pt-40 lg:pb-8 overflow-hidden"
     >
-      {/* Aurora backdrop with a gentle parallax. */}
+      {/* Aurora backdrop with a gentle parallax. This full-bleed image is the
+          page's LCP element, so it ships AVIF first (smallest), then WebP, then
+          a JPG fallback, and stays eager + high priority. */}
       <div
         className="absolute inset-x-0 -top-[20%] -bottom-[20%] pointer-events-none will-change-transform"
         style={{ transform: `translate3d(0, ${parallaxY}px, 0)` }}
         aria-hidden
       >
         <picture>
-          <source
-            srcSet="/hero-aurora-800.webp"
-            media="(max-width: 768px)"
-            type="image/webp"
-          />
-          <source
-            srcSet="/hero-aurora-1200.webp"
-            media="(max-width: 1280px)"
-            type="image/webp"
-          />
+          <source srcSet="/hero-aurora-800.avif" media="(max-width: 768px)" type="image/avif" />
+          <source srcSet="/hero-aurora-1200.avif" media="(max-width: 1280px)" type="image/avif" />
+          <source srcSet="/hero-aurora-1920.avif" type="image/avif" />
+          <source srcSet="/hero-aurora-800.webp" media="(max-width: 768px)" type="image/webp" />
+          <source srcSet="/hero-aurora-1200.webp" media="(max-width: 1280px)" type="image/webp" />
           <source srcSet="/hero-aurora-1920.webp" type="image/webp" />
           <img
             src="/hero-aurora-1920.jpg"
@@ -107,15 +87,9 @@ const Hero = () => {
 
       <div className="section-container relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-5">
-            <span
-              className={`block transition-all duration-500 ${
-                sentence1Visible
-                  ? "opacity-100 blur-0 translate-y-0"
-                  : "opacity-0 blur-md translate-y-2"
-              }`}
-            >
-              {animate ? (
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-5 motion-safe:animate-fade-in">
+            <span className="block">
+              {shimmer ? (
                 <TextShimmer as="span" duration={5} spread={2.5} ease={[0.65, 0, 0.35, 1]}>
                   {H1_SENTENCE_1}
                 </TextShimmer>
@@ -123,15 +97,8 @@ const Hero = () => {
                 <span>{H1_SENTENCE_1}</span>
               )}
             </span>
-            <span
-              className={`block transition-all duration-500 ${
-                sentence2Visible
-                  ? "opacity-100 blur-0 translate-y-0"
-                  : "opacity-0 blur-md translate-y-2"
-              }`}
-              aria-hidden={!sentence2Visible}
-            >
-              {animate ? (
+            <span className="block">
+              {shimmer ? (
                 <TextShimmer as="span" duration={5} spread={2.5} ease={[0.65, 0, 0.35, 1]}>
                   {H1_SENTENCE_2}
                 </TextShimmer>
@@ -148,7 +115,7 @@ const Hero = () => {
 
           <div className="flex flex-col items-center gap-4">
             <TryItNowButton />
-            <ScenarioPrompt visible={promptVisible} />
+            <ScenarioPrompt />
           </div>
         </div>
       </div>

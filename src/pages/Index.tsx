@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
@@ -13,32 +13,23 @@ import PricingPreview from "@/components/landing/PricingPreview";
 import FAQ from "@/components/landing/FAQ";
 import FinalCTABand from "@/components/landing/FinalCTABand";
 import Footer from "@/components/landing/Footer";
-import PageSkeleton from "@/components/landing/PageSkeleton";
 import { GoogleOneTap } from "@/components/landing/GoogleOneTap";
 
 const Index = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
+  // Render the prerendered content immediately. (Previously this gated the
+  // whole page behind a 300ms `isLoading` skeleton, which on hydration
+  // unmounted the prerendered hero — including the LCP image — and remounted
+  // it a beat later, delaying Largest Contentful Paint. There is no async
+  // data here, so the loading state was pure cost.)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (!isLoading && window.location.hash) {
+    if (window.location.hash) {
       const id = window.location.hash.replace("#", "");
       const el = document.getElementById(id);
       if (el) {
         setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 50);
       }
     }
-  }, [isLoading]);
-
-  if (isLoading) {
-    return <PageSkeleton />;
-  }
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -64,22 +55,20 @@ const Index = () => {
       {/* Google One Tap (ZEN-365): self-gates on config + existing session,
           renders only its own top-right prompt. No-op until env is configured. */}
       <GoogleOneTap />
-      <div className="animate-fade-in">
-        <main>
-          <Hero />
-          <HeroShowcase />
-          <TrustBar />
-          <Problem />
-          <RunwayFeature />
-          <Bento />
-          <HowItWorks />
-          <SecurityStrip />
-          <PricingPreview />
-          <FAQ />
-          <FinalCTABand />
-        </main>
-        <Footer />
-      </div>
+      <main>
+        <Hero />
+        <HeroShowcase />
+        <TrustBar />
+        <Problem />
+        <RunwayFeature />
+        <Bento />
+        <HowItWorks />
+        <SecurityStrip />
+        <PricingPreview />
+        <FAQ />
+        <FinalCTABand />
+      </main>
+      <Footer />
     </div>
   );
 };
