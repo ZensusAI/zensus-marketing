@@ -14,19 +14,19 @@ export default function PrivacyPolicy() {
   return (
     <>
       <Helmet>
-        <title>Privacy Policy · Zensus</title>
+        <title>Privacy Policy · How Zensus Handles Your Data</title>
         <meta name="description" content={PAGE_DESCRIPTION} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={PAGE_URL} />
         <meta property="og:site_name" content="Zensus" />
-        <meta property="og:title" content="Privacy Policy · Zensus" />
+        <meta property="og:title" content="Privacy Policy · How Zensus Handles Your Data" />
         <meta property="og:description" content={PAGE_DESCRIPTION} />
         <meta property="og:image" content="https://zensus.app/og/privacy.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Privacy Policy social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Privacy Policy · Zensus" />
+        <meta name="twitter:title" content="Privacy Policy · How Zensus Handles Your Data" />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
         <meta name="twitter:image" content="https://zensus.app/og/privacy.png" />
         <link rel="canonical" href={PAGE_URL} />

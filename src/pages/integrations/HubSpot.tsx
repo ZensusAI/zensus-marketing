@@ -83,7 +83,7 @@ const HubSpotIntegration = () => (
     displayName="HubSpot"
     tagline="Deals and subscriptions feed your runway. Annual and quarterly contracts hit on their real dates, not smeared into MRR."
     logoSrc={hubspotLogo}
-    metaTitle="HubSpot integration · Zensus"
+    metaTitle="HubSpot Integration · Deals & Subscriptions in Zensus"
     metaDescription="Connect HubSpot to Zensus via OAuth. Deals and subscriptions feed real-time runway projections that respect contract terms and currency."
     sections={sections}
     serviceSchema={serviceSchema}

@@ -83,7 +83,7 @@ const SlackIntegration = () => (
     displayName="Slack"
     tagline="Cash-crunch alerts with snooze and threshold controls, delivered where your team already works."
     logoSrc={slackLogo}
-    metaTitle="Slack integration · Zensus"
+    metaTitle="Slack Integration · Cash-Crunch Alerts from Zensus"
     metaDescription="Post Zensus cash-crunch alerts into Slack. Interactive Block Kit messages with snooze and threshold controls, OAuth-based, revocable anytime."
     sections={sections}
     serviceSchema={serviceSchema}

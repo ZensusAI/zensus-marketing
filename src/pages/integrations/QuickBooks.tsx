@@ -81,7 +81,7 @@ const QuickBooksIntegration = () => (
     displayName="QuickBooks"
     tagline="Live expenses, invoices, and AR/AP from your books. Real-time through Intuit OAuth."
     logoSrc={quickbooksLogo}
-    metaTitle="QuickBooks integration · Zensus"
+    metaTitle="QuickBooks Integration · Sync Accounting to Zensus"
     metaDescription="Connect QuickBooks to Zensus via Intuit OAuth. Live expense and AR/AP sync, AES-256-GCM encrypted tokens, credentials never stored."
     sections={sections}
     serviceSchema={serviceSchema}
