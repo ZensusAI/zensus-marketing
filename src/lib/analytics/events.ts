@@ -77,7 +77,26 @@ export function initAnalytics(): void {
     // Write the distinct_id cookie on `.zensus.app` so app.zensus.app reads the
     // same anonymous id and the two sites form a single funnel.
     cross_subdomain_cookie: true,
+    // Start opted OUT — no capture and no analytics cookie until consent is
+    // resolved. ConsentBanner calls grantCapturing()/denyCapturing() based on
+    // the visitor's region + choice; main.tsx opts in synchronously for a
+    // returning "granted" visitor. (See lib/consent.ts + ConsentBanner.tsx.)
+    opt_out_capturing_by_default: true,
   });
+}
+
+/** Start capturing (call once the visitor has consented / implied consent). */
+export function grantCapturing(): void {
+  const ph = getPostHog();
+  if (!ph) return;
+  ph.opt_in_capturing();
+}
+
+/** Stop capturing and clear analytics persistence (visitor declined). */
+export function denyCapturing(): void {
+  const ph = getPostHog();
+  if (!ph) return;
+  ph.opt_out_capturing();
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
