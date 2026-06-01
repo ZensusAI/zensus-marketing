@@ -75,7 +75,14 @@
               "https://x.com/zensusai",
               "https://www.linkedin.com/company/zensusai",
               "https://github.com/ZensusAI"
-            ]
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "hello@zensus.app",
+              "url": "https://zensus.app/support",
+              "availableLanguage": ["English"]
+            }
           },
           {
             "@type": "WebSite",
@@ -89,11 +96,22 @@
           },
           {
             "@type": "SoftwareApplication",
+            "@id": "https://zensus.app/#software",
             "name": "Zensus",
             "description": "AI-powered cash flow forecasting for founders with variable revenue. Connect your bank, QuickBooks, and HubSpot, see your runway in real time, and run multi-turn scenarios with an AI agent.",
             "url": "https://zensus.app",
             "applicationCategory": "BusinessApplication",
+            "applicationSubCategory": "Cash Flow Forecasting Software",
             "operatingSystem": "Web",
+            "featureList": [
+              "Subscription-aware runway projections that place annual and quarterly contracts on the exact day they hit the bank",
+              "AI runway agent for multi-turn what-if scenarios (hiring, churn, pricing, late payments)",
+              "Real-time webhook sync from Plaid, QuickBooks, and HubSpot",
+              "Threshold-based Slack alerts on a rolling 30-day cash projection",
+              "Zero-cash date recalculated live",
+              "Monthly-to-weekly-to-daily cash flow drill-down"
+            ],
+            "screenshot": "https://zensus.app/og/home.png",
             "dateModified": "2026-05-26",
             "publisher": { "@id": "https://zensus.app/#organization" },
             "offers": {
