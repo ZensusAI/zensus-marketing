@@ -19,7 +19,7 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 const Security = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>Security at Zensus</title>
+      <title>Security at Zensus · How We Protect Your Financial Data</title>
       <meta
         name="description"
         content="How Zensus protects your financial data. AES-256-GCM at rest, bank-level OAuth via Plaid and Intuit, account-level isolation, and zero AI training on your data."
@@ -27,7 +27,7 @@ const Security = () => (
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://zensus.app/security" />
       <meta property="og:site_name" content="Zensus" />
-      <meta property="og:title" content="Security at Zensus" />
+      <meta property="og:title" content="Security at Zensus · How We Protect Your Financial Data" />
       <meta
         property="og:description"
         content="How Zensus protects your financial data. Bank-level OAuth, encryption at rest, account-level isolation."
@@ -37,7 +37,7 @@ const Security = () => (
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Security at Zensus social preview card" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Security at Zensus" />
+      <meta name="twitter:title" content="Security at Zensus · How We Protect Your Financial Data" />
       <meta
         name="twitter:description"
         content="How Zensus protects your financial data. Bank-level OAuth, encryption at rest, account-level isolation."

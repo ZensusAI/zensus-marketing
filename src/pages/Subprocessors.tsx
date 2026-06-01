@@ -220,19 +220,19 @@ const CATEGORIES: Category[] = [
 const Subprocessors = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>Subprocessors · Zensus</title>
+      <title>Subprocessors · Third-Party Services Zensus Uses</title>
       <meta name="description" content={PAGE_DESCRIPTION} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={PAGE_URL} />
       <meta property="og:site_name" content="Zensus" />
-      <meta property="og:title" content="Subprocessors · Zensus" />
+      <meta property="og:title" content="Subprocessors · Third-Party Services Zensus Uses" />
       <meta property="og:description" content={PAGE_DESCRIPTION} />
       <meta property="og:image" content="https://zensus.app/og/subprocessors.png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Zensus Subprocessors social preview card" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Subprocessors · Zensus" />
+      <meta name="twitter:title" content="Subprocessors · Third-Party Services Zensus Uses" />
       <meta name="twitter:description" content={PAGE_DESCRIPTION} />
       <meta name="twitter:image" content="https://zensus.app/og/subprocessors.png" />
       <link rel="canonical" href={PAGE_URL} />

@@ -8,7 +8,7 @@
     },
     {
       "source": "/forecast",
-      "destination": "https://app.zensus.app/forecast",
+      "destination": "https://app.zensus.app/runway",
       "permanent": true
     }
   ],

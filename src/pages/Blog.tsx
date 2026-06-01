@@ -59,7 +59,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Blog · Zensus</title>
+        <title>Zensus Blog · Cash Flow and Runway Guides for Founders</title>
         <meta
           name="description"
           content="Case studies and practical guides on cash flow forecasting, runway planning, and financial decision-making for founders with variable revenue."
@@ -67,7 +67,7 @@ const Blog = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://zensus.app/blog" />
         <meta property="og:site_name" content="Zensus" />
-        <meta property="og:title" content="Blog · Zensus" />
+        <meta property="og:title" content="Zensus Blog · Cash Flow and Runway Guides for Founders" />
         <meta
           property="og:description"
           content="Case studies and practical guides on cash flow forecasting for founders with variable revenue."
@@ -77,7 +77,7 @@ const Blog = () => {
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Blog page social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Blog · Zensus" />
+        <meta name="twitter:title" content="Zensus Blog · Cash Flow and Runway Guides for Founders" />
         <meta
           name="twitter:description"
           content="Case studies and practical guides on cash flow forecasting for founders with variable revenue."
