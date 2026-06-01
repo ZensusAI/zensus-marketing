@@ -204,6 +204,16 @@ export default function PrivacyPolicy() {
               </div>
 
               <div>
+                <p className="font-semibold text-foreground mb-2">Product &amp; Marketing Analytics:</p>
+                <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
+                  <li>We use PostHog (PostHog, Inc.) for analytics across our marketing site (<a href="https://zensus.app" className="text-primary hover:underline">zensus.app</a>) and the product app (app.zensus.app). PostHog records page views, navigation, and funnel events, and sets a first-party analytics cookie scoped to the .zensus.app domain so a single visit is measured consistently across both sites. This data is stored in PostHog's US cloud.</li>
+                  <li>PostHog also captures session recordings (replays of on-page interactions) to help us debug and improve the experience; form inputs are masked by default.</li>
+                  <li>This activity is pseudonymous — tied to a random identifier, not your name — until you sign in. See{' '}
+                    <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PostHog's Privacy Policy</a>.</li>
+                </ul>
+              </div>
+
+              <div>
                 <p className="font-semibold text-foreground mb-2">Support-form Bot Protection:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
                   <li>When you submit the contact form on our support page (<a href="https://zensus.app/support" className="text-primary hover:underline">zensus.app/support</a>), we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects the form from spam and abuse and does not track you across sites. See Cloudflare's{' '}
@@ -231,10 +241,11 @@ export default function PrivacyPolicy() {
             <p className="text-foreground/80 mb-3">We use cookies and browser storage for:</p>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
               <li><strong className="text-foreground">Essential Cookies:</strong> Authentication session management (httpOnly, secure)</li>
-              <li><strong className="text-foreground">Local Storage:</strong> Runway calculator state (persisted locally for convenience)</li>
+              <li><strong className="text-foreground">Analytics Cookies:</strong> PostHog sets a first-party analytics cookie on the .zensus.app domain (shared across our marketing site and app) to measure usage and funnels, as described in section 1.3</li>
+              <li><strong className="text-foreground">Local Storage:</strong> Runway calculator state and analytics identifiers (persisted locally for convenience)</li>
             </ul>
             <p className="text-foreground/80 mt-3">
-              We do not currently use third-party analytics cookies on the product app. Product telemetry is server-side via AWS CloudWatch. You can control cookies through your browser settings; disabling essential cookies will prevent you from using authenticated features.
+              Server-side operational telemetry is also collected via AWS CloudWatch. You can disable analytics cookies and session recording through your browser settings without affecting your ability to use the product; disabling essential cookies will prevent you from using authenticated features.
             </p>
           </section>
 
