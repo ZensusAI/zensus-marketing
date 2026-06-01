@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { PostHogPageview } from "./lib/analytics/PostHogPageview";
+import { ConsentBanner } from "@/components/ConsentBanner";
 import Index from "./pages/Index";
 
 // The homepage ships in the initial bundle (most visitors land there and
@@ -45,6 +46,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <ConsentBanner />
         <BrowserRouter>
           <PostHogPageview />
           <Analytics />
