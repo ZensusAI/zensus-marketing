@@ -51,6 +51,30 @@ interface ChangelogEntry {
 
 const entries: ChangelogEntry[] = [
   {
+    date: "2026-06-01",
+    category: "New",
+    title: "Cookie preferences for EEA, UK, and Switzerland",
+    body: "Visitors from the EEA, UK, and Switzerland see a compact preference notice on their first visit. Accept or decline analytics tracking, and change your mind at any time. Your choice persists across sessions.",
+  },
+  {
+    date: "2026-05-31",
+    category: "New",
+    title: "Sign in with Google from the homepage",
+    body: "A one-tap Google sign-in prompt now appears when you visit zensus.app. If you already have a Google account, you can create your Zensus account or sign back in without filling out a form.",
+  },
+  {
+    date: "2026-05-24",
+    category: "Improved",
+    title: "Dedicated support page and instant acknowledgment email",
+    body: "The support form is now at zensus.app/support and does not require you to be logged in. When you submit a request, you receive a confirmation email within seconds that summarizes what you sent and sets expectations for a reply.",
+  },
+  {
+    date: "2026-05-19",
+    category: "New",
+    title: "14-day free trial",
+    body: "Zensus now starts with a 14-day free trial. Connect your accounts, explore every feature, and decide before your card is charged. Nothing is locked or limited during the trial period.",
+  },
+  {
     date: "2026-05-05",
     category: "New",
     title: "Runway empty state and sharper financial summaries",
