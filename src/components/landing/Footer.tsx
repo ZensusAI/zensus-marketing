@@ -3,7 +3,7 @@ import { Linkedin, Mail } from "lucide-react";
 import { TALK_TO_US_URL } from "@/lib/constants";
 
 const COMPANY_LINKEDIN = "https://www.linkedin.com/company/zensusai";
-const CONTACT_EMAIL = "hello@zensus.app";
+const CONTACT_EMAIL = "support@zensus.app";
 
 const socialLinkClass =
   "inline-flex items-center gap-2 rounded-sm text-sm font-medium text-gray-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900";

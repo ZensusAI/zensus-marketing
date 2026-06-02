@@ -10,7 +10,7 @@ import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-da
 
 const PAGE_URL = "https://zensus.app/support";
 const PAGE_DESCRIPTION =
-  "Get help with Zensus. Reach the team about your account, integrations, or billing, browse common questions, or email us directly at hello@zensus.app.";
+  "Get help with Zensus. Reach the team about your account, integrations, or billing, browse common questions, or email us directly at support@zensus.app.";
 
 // Third-party form backend (no server needed on this static marketing site).
 // Forminit (formerly Getform) form in Public mode. New-style Forminit forms
@@ -52,7 +52,7 @@ const FAQS = [
   {
     question: "How do I reach a person?",
     answer:
-      "Email hello@zensus.app or use the form on this page. We typically reply within one business day.",
+      "Email support@zensus.app or use the form on this page. We typically reply within one business day.",
   },
 ];
 
@@ -220,7 +220,7 @@ export default function Support() {
     if (isRateLimited) {
       setSubmitStatus("error");
       setErrorMessage(
-        "You've reached the maximum number of submissions. Please email hello@zensus.app instead.",
+        "You've reached the maximum number of submissions. Please email support@zensus.app instead.",
       );
       return;
     }
@@ -270,7 +270,7 @@ export default function Support() {
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "Something went wrong. Please try again or email hello@zensus.app.",
+          : "Something went wrong. Please try again or email support@zensus.app.",
       );
     } finally {
       setIsSubmitting(false);
@@ -347,10 +347,10 @@ export default function Support() {
                   try again in {formatTimeRemaining(rateLimitReset)}, or email us
                   directly at{" "}
                   <a
-                    href="mailto:hello@zensus.app"
+                    href="mailto:support@zensus.app"
                     className="text-primary underline underline-offset-4"
                   >
-                    hello@zensus.app
+                    support@zensus.app
                   </a>
                   .
                 </p>
@@ -487,10 +487,10 @@ export default function Support() {
               <p className="text-sm text-muted-foreground">
                 Prefer email? Reach the team directly at{" "}
                 <a
-                  href="mailto:hello@zensus.app"
+                  href="mailto:support@zensus.app"
                   className="text-primary underline underline-offset-4"
                 >
-                  hello@zensus.app
+                  support@zensus.app
                 </a>
                 .
               </p>

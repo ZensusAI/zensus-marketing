@@ -60,7 +60,7 @@ export default function PrivacyPolicy() {
             <p className="text-foreground/80">
               <strong className="text-foreground">Contact Information:</strong><br />
               Zensus Inc.<br />
-              Email: <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a><br />
+              Email: <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
               Website: <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>
             </p>
           </section>
@@ -516,7 +516,7 @@ export default function PrivacyPolicy() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">5.5 How to Exercise Your Rights</h3>
             <p className="text-foreground/80 mb-3">To exercise any of these rights:</p>
             <ol className="list-decimal pl-6 space-y-1 text-foreground/80">
-              <li>Email us at <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a></li>
+              <li>Email us at <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a></li>
               <li>Specify which right(s) you wish to exercise</li>
               <li>We will verify your identity and respond within 30 days</li>
             </ol>
@@ -524,7 +524,7 @@ export default function PrivacyPolicy() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">5.6 Complaints</h3>
             <p className="text-foreground/80 mb-3">If you believe we have not complied with privacy laws, you may lodge a complaint with:</p>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
-              <li>Us directly at <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a></li>
+              <li>Us directly at <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a></li>
               <li>Your local data protection authority (for EEA/UK residents)</li>
               <li>The Federal Trade Commission (for U.S. residents)</li>
             </ul>
@@ -538,7 +538,7 @@ export default function PrivacyPolicy() {
               <p className="font-semibold text-foreground mb-2">Age Requirement</p>
               <p className="text-foreground/80 text-sm">
                 Our Services are designed for businesses and are not intended for individuals under 18. We do not knowingly collect Personal Data from anyone under 18. If you believe a child has provided data to us, contact us at{' '}
-                <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a>{' '}
+                <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a>{' '}
                 and we will delete it promptly.
               </p>
             </div>
@@ -624,7 +624,7 @@ export default function PrivacyPolicy() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">8.2 Other State Residents</h3>
             <p className="text-foreground/80">
               If you are a resident of Virginia, Colorado, Connecticut, Utah, or Nevada, you have similar rights to access, correct, delete, and port your data. Contact us at{' '}
-              <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a>{' '}
+              <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a>{' '}
               to exercise these rights.
             </p>
           </section>
@@ -660,7 +660,7 @@ export default function PrivacyPolicy() {
               <p className="font-semibold text-foreground mb-2">Zensus Inc.</p>
               <p className="text-foreground/80 text-sm">
                 <strong className="text-foreground">Email:</strong>{' '}
-                <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a><br />
+                <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
                 <strong className="text-foreground">Website:</strong>{' '}
                 <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>
               </p>

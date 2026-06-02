@@ -318,10 +318,10 @@ const Subprocessors = () => (
             <p>
               For questions about this list or any subprocessor, email{" "}
               <a
-                href="mailto:hello@zensus.app"
+                href="mailto:support@zensus.app"
                 className="text-primary hover:underline"
               >
-                hello@zensus.app
+                support@zensus.app
               </a>
               .
             </p>

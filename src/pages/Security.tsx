@@ -134,10 +134,10 @@ const Security = () => (
           <p>
             Security questions, disclosures, or procurement inquiries go to{" "}
             <a
-              href="mailto:hello@zensus.app"
+              href="mailto:support@zensus.app"
               className="text-primary hover:underline"
             >
-              hello@zensus.app
+              support@zensus.app
             </a>
             .
           </p>

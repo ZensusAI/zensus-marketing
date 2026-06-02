@@ -74,7 +74,7 @@ export default function TermsPage() {
 
             <p className="text-foreground/80">
               <strong className="text-foreground">Contact Information:</strong><br />
-              Email: <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a><br />
+              Email: <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
               Website: <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>
             </p>
           </section>
@@ -96,7 +96,7 @@ export default function TermsPage() {
               <li>Maintaining the security of your email account (used for authentication)</li>
               <li>All activities that occur under your account</li>
               <li>Ensuring the accuracy of your account information</li>
-              <li>Notifying us immediately at <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a> of any unauthorized access</li>
+              <li>Notifying us immediately at <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a> of any unauthorized access</li>
             </ul>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">2.3 Account Eligibility</h3>
@@ -268,7 +268,7 @@ export default function TermsPage() {
               <p className="font-semibold text-foreground mb-2">Enterprise Plans:</p>
               <p className="text-foreground/80 text-sm">
                 Custom plans available for larger organizations. Contact{' '}
-                <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a>{' '}
+                <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a>{' '}
                 for enterprise pricing.
               </p>
             </div>
@@ -348,7 +348,7 @@ export default function TermsPage() {
             <p className="text-foreground/80 mb-3">You may terminate your account at any time by:</p>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
               <li>Using the "Delete Account" option in your account settings</li>
-              <li>Emailing us at <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a></li>
+              <li>Emailing us at <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a></li>
             </ul>
             <p className="text-foreground/80 mt-3">Upon termination, you will lose access to your account and data, except as required by law.</p>
 
@@ -374,7 +374,7 @@ export default function TermsPage() {
               Authenticated Zensus users can self-serve a JSON export of the personal data we hold from the product app at{' '}
               <a href="https://app.zensus.app" className="text-primary hover:underline">app.zensus.app</a>.
               You may also request an export by email at{' '}
-              <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a>;
+              <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a>;
               we will respond within 30 days.
             </p>
           </section>
@@ -539,7 +539,7 @@ export default function TermsPage() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">12.1 Informal Resolution</h3>
             <p className="text-foreground/80 mb-3">
               Before filing any formal claim, contact us at{' '}
-              <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a>{' '}
+              <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a>{' '}
               to attempt informal resolution. We will attempt to resolve disputes within 30 days.
             </p>
 
@@ -570,7 +570,7 @@ export default function TermsPage() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">12.5 Opt-Out</h3>
             <p className="text-foreground/80">
               You may opt out of arbitration within 30 days of accepting these Terms by emailing{' '}
-              <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a>{' '}
+              <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a>{' '}
               with subject line "Arbitration Opt-Out."
             </p>
 
@@ -616,7 +616,7 @@ export default function TermsPage() {
             <div className="rounded-lg border border-border bg-muted/30 p-5 my-4 not-prose">
               <p className="font-semibold text-foreground">Zensus Inc.</p>
               <p className="text-foreground/80 text-sm">
-                Email: <a href="mailto:hello@zensus.app" className="text-primary hover:underline">hello@zensus.app</a><br />
+                Email: <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
                 Website: <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>
               </p>
             </div>
