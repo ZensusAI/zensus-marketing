@@ -63,7 +63,14 @@ let loadStarted = false;
 /** Opt intent recorded before the SDK finished loading. */
 let optInRequested = false;
 let optOutRequested = false;
-/** Single last-write-wins pageview slot, flushed on load if opted in. */
+/**
+ * Single last-write-wins pageview slot, flushed on load if opted in. If the
+ * visitor navigates client-side during the brief chunk-load window only the
+ * last route's pageview survives; the funnel-critical entry pageview is never
+ * the casualty (it flushes on the first resolve, or ConsentBanner re-captures
+ * it on implied consent). One slot also collapses an implied-consent re-capture
+ * of the same URL to a single $pageview.
+ */
 let pendingPageview: string | null = null;
 /** Named events queued before load, flushed on load if opted in. */
 const pendingEvents: Array<{ name: EventName; props?: Record<string, unknown> }> =
@@ -92,6 +99,10 @@ export function initAnalytics(): Promise<void> {
   loadStarted = true;
 
   return import("posthog-js").then(({ default: posthog }) => {
+    // Defensive: posthog.init() runs only here, guarded by loadStarted, so in
+    // practice __loaded is always false at this point. If a second init path is
+    // ever added, adopt the existing instance rather than re-initialising (the
+    // buffered intent below is only meaningful on the first, real init).
     if (posthog.__loaded) {
       ph = posthog;
       return;
@@ -104,12 +115,12 @@ export function initAnalytics(): Promise<void> {
       // so we get the correct pathname for every client-side navigation.
       capture_pageview: false,
       capture_pageleave: true,
-      // See file header — funnel-only events, cost + EU data minimisation.
+      // See file header: funnel-only events, cost + EU data minimisation.
       autocapture: false,
       // Write the distinct_id cookie on `.zensus.app` so app.zensus.app reads
       // the same anonymous id and the two sites form a single funnel.
       cross_subdomain_cookie: true,
-      // Start opted OUT — no capture and no analytics cookie until consent is
+      // Start opted OUT: no capture and no analytics cookie until consent is
       // resolved. ConsentBanner calls grantCapturing()/denyCapturing() based on
       // the visitor's region + choice; main.tsx opts in synchronously for a
       // returning "granted" visitor. (See lib/consent.ts + ConsentBanner.tsx.)
