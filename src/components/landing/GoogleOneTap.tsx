@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
-import { generateNonce, buildHandoffUrl } from "@/lib/google-one-tap";
 
 const GIS_SRC = "https://accounts.google.com/gsi/client";
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -62,16 +60,28 @@ function loadGisScript(): Promise<void> {
  */
 export function GoogleOneTap() {
   useEffect(() => {
-    if (!isSupabaseConfigured || !supabase || !GOOGLE_CLIENT_ID) return;
+    // Cheap gate first: GOOGLE_CLIENT_ID is the One Tap feature flag, inlined at
+    // build time, so an unconfigured deploy never pays the Supabase chunk.
+    if (!GOOGLE_CLIENT_ID) return;
 
     // StrictMode-safe via the `cancelled` flag: if this effect is double-
     // invoked (mount, cleanup, mount), the first run's cleanup sets cancelled
     // and its async start() aborts at the next check; the second run completes.
     // An "initialized" latch would instead leave One Tap permanently aborted.
-    const client = supabase;
     let cancelled = false;
 
     async function start() {
+      // Lazy-load Supabase (~100KB) + the nonce helpers so they stay out of the
+      // eager homepage bundle; One Tap is a post-load interaction, so fetching
+      // the SDK only when this effect runs costs nothing on first paint.
+      const [{ supabase, isSupabaseConfigured }, { generateNonce, buildHandoffUrl }] =
+        await Promise.all([
+          import("@/lib/supabase"),
+          import("@/lib/google-one-tap"),
+        ]);
+      if (cancelled || !isSupabaseConfigured || !supabase) return;
+      const client = supabase;
+
       // Skip entirely if the visitor already has a session.
       const { data } = await client.auth.getSession();
       if (cancelled || data.session) return;
