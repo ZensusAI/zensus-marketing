@@ -16,6 +16,16 @@
  * arrival. The app already runs with `cross_subdomain_cookie` true (verified
  * live), so a single PostHog project key is all that's required to join them.
  *
+ * Loading: posthog-js (~150KB) is **lazy-loaded** via dynamic import so it never
+ * ships in the eager homepage bundle. Until the chunk resolves, capture intent
+ * is buffered in this module and flushed on load. Buffered intent is only
+ * flushed when the visitor is opted in, so nothing is ever captured before
+ * consent, and the buffered pageview is a single last-write-wins slot so an
+ * implied-consent opt-in that races the load cannot emit a duplicate entry
+ * $pageview. This preserves the returning-consented-visitor entry pageview
+ * (main.tsx opts in before render; PostHogPageview fires on mount) while keeping
+ * the SDK off the critical path.
+ *
  * Safe-by-default:
  * - No-ops when VITE_PUBLIC_POSTHOG_KEY is unset (e.g. Vercel preview builds).
  * - Skips init during the Puppeteer prerender crawl (`window.__PRERENDER__`,
@@ -26,7 +36,7 @@
  *   deferred follow-on.
  */
 
-import posthog from "posthog-js";
+import type { PostHog } from "posthog-js";
 
 const POSTHOG_KEY = import.meta.env.VITE_PUBLIC_POSTHOG_KEY as
   | string
@@ -44,7 +54,20 @@ export const EVENTS = {
 
 export type EventName = (typeof EVENTS)[keyof typeof EVENTS];
 
-// ─── Init ────────────────────────────────────────────────────────────────────
+// ─── Lazy-load state ─────────────────────────────────────────────────────────
+
+/** The posthog-js singleton, set once the dynamic import resolves and init runs. */
+let ph: PostHog | null = null;
+/** Guards against kicking off the import more than once. */
+let loadStarted = false;
+/** Opt intent recorded before the SDK finished loading. */
+let optInRequested = false;
+let optOutRequested = false;
+/** Single last-write-wins pageview slot, flushed on load if opted in. */
+let pendingPageview: string | null = null;
+/** Named events queued before load, flushed on load if opted in. */
+const pendingEvents: Array<{ name: EventName; props?: Record<string, unknown> }> =
+  [];
 
 /** True during the Puppeteer prerender crawl (scripts/prerender.mjs). */
 function isPrerender(): boolean {
@@ -54,72 +77,101 @@ function isPrerender(): boolean {
   );
 }
 
-/**
- * Initialise PostHog once, on the client only. No-ops when the key is unset or
- * during prerender. Call from main.tsx before rendering the app.
- */
-export function initAnalytics(): void {
-  if (typeof window === "undefined") return;
-  if (isPrerender()) return;
-  if (!POSTHOG_KEY) return;
-  if (posthog.__loaded) return;
+// ─── Init ────────────────────────────────────────────────────────────────────
 
-  posthog.init(POSTHOG_KEY, {
-    api_host: POSTHOG_HOST,
-    // Mirror app.zensus.app: only create a person record after identify().
-    person_profiles: "identified_only",
-    // $pageview is captured manually in PostHogPageview on each route change,
-    // so we get the correct pathname for every client-side navigation.
-    capture_pageview: false,
-    capture_pageleave: true,
-    // See file header — funnel-only events, cost + EU data minimisation.
-    autocapture: false,
-    // Write the distinct_id cookie on `.zensus.app` so app.zensus.app reads the
-    // same anonymous id and the two sites form a single funnel.
-    cross_subdomain_cookie: true,
-    // Start opted OUT — no capture and no analytics cookie until consent is
-    // resolved. ConsentBanner calls grantCapturing()/denyCapturing() based on
-    // the visitor's region + choice; main.tsx opts in synchronously for a
-    // returning "granted" visitor. (See lib/consent.ts + ConsentBanner.tsx.)
-    opt_out_capturing_by_default: true,
+/**
+ * Lazy-load and initialise PostHog once, on the client only. No-ops when the
+ * key is unset or during prerender. Returns the load promise so callers/tests
+ * can await readiness; main.tsx calls it fire-and-forget before rendering.
+ */
+export function initAnalytics(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  if (isPrerender()) return Promise.resolve();
+  if (!POSTHOG_KEY) return Promise.resolve();
+  if (loadStarted) return Promise.resolve();
+  loadStarted = true;
+
+  return import("posthog-js").then(({ default: posthog }) => {
+    if (posthog.__loaded) {
+      ph = posthog;
+      return;
+    }
+    posthog.init(POSTHOG_KEY, {
+      api_host: POSTHOG_HOST,
+      // Mirror app.zensus.app: only create a person record after identify().
+      person_profiles: "identified_only",
+      // $pageview is captured manually in PostHogPageview on each route change,
+      // so we get the correct pathname for every client-side navigation.
+      capture_pageview: false,
+      capture_pageleave: true,
+      // See file header — funnel-only events, cost + EU data minimisation.
+      autocapture: false,
+      // Write the distinct_id cookie on `.zensus.app` so app.zensus.app reads
+      // the same anonymous id and the two sites form a single funnel.
+      cross_subdomain_cookie: true,
+      // Start opted OUT — no capture and no analytics cookie until consent is
+      // resolved. ConsentBanner calls grantCapturing()/denyCapturing() based on
+      // the visitor's region + choice; main.tsx opts in synchronously for a
+      // returning "granted" visitor. (See lib/consent.ts + ConsentBanner.tsx.)
+      opt_out_capturing_by_default: true,
+    });
+    ph = posthog;
+
+    // Apply opt intent recorded while the SDK was loading.
+    if (optOutRequested) {
+      posthog.opt_out_capturing();
+    } else if (optInRequested) {
+      posthog.opt_in_capturing();
+    }
+    // Flush buffered intent ONLY when the visitor is opted in, so we never
+    // capture before consent.
+    if (optInRequested && !optOutRequested) {
+      if (pendingPageview) {
+        posthog.capture("$pageview", { $current_url: pendingPageview });
+      }
+      for (const e of pendingEvents) posthog.capture(e.name, e.props);
+    }
+    pendingPageview = null;
+    pendingEvents.length = 0;
   });
 }
 
 /** Start capturing (call once the visitor has consented / implied consent). */
 export function grantCapturing(): void {
-  const ph = getPostHog();
-  if (!ph) return;
-  ph.opt_in_capturing();
+  optInRequested = true;
+  optOutRequested = false;
+  if (ph) ph.opt_in_capturing();
 }
 
 /** Stop capturing and clear analytics persistence (visitor declined). */
 export function denyCapturing(): void {
-  const ph = getPostHog();
-  if (!ph) return;
-  ph.opt_out_capturing();
+  optOutRequested = true;
+  optInRequested = false;
+  // Drop anything buffered before the decision; a declined visitor is not
+  // captured retroactively.
+  pendingPageview = null;
+  pendingEvents.length = 0;
+  if (ph) ph.opt_out_capturing();
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-/** Returns the posthog singleton only when it is available and initialised. */
-function getPostHog(): typeof posthog | null {
-  if (typeof window === "undefined") return null;
-  if (!posthog.__loaded) return null;
-  return posthog;
-}
-
-/** Capture a $pageview for the given absolute URL. No-ops if uninitialised. */
+/** Capture a $pageview for the given absolute URL. Buffers until the SDK loads. */
 export function capturePageview(url: string): void {
-  const ph = getPostHog();
-  if (!ph) return;
-  ph.capture("$pageview", { $current_url: url });
+  if (ph) {
+    ph.capture("$pageview", { $current_url: url });
+    return;
+  }
+  pendingPageview = url;
 }
 
-/** Fire a named event with optional properties. No-ops if uninitialised. */
+/** Fire a named event with optional properties. Buffers until the SDK loads. */
 export function track(event: EventName, props?: Record<string, unknown>): void {
-  const ph = getPostHog();
-  if (!ph) return;
-  ph.capture(event, props);
+  if (ph) {
+    ph.capture(event, props);
+    return;
+  }
+  pendingEvents.push({ name: event, props });
 }
 
 /** Convenience: record a CTA click with its on-page location. */
