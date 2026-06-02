@@ -25,7 +25,7 @@ const changelogGraph = (items: ChangelogEntry[]) => ({
     return {
       "@type": "Article",
       headline: entry.title,
-      description: entry.body,
+      description: entry.body.join(" "),
       datePublished: entry.date,
       dateModified: entry.date,
       articleSection: entry.category,
@@ -36,7 +36,7 @@ const changelogGraph = (items: ChangelogEntry[]) => ({
       inLanguage: "en-US",
       speakable: {
         "@type": "SpeakableSpecification",
-        cssSelector: [`#${slug} h2`, `#${slug} p`],
+        cssSelector: [`#${slug} h2`, `#${slug} li`],
       },
     };
   }),
@@ -46,93 +46,108 @@ interface ChangelogEntry {
   date: string;
   category: ChangelogCategory;
   title: string;
-  body: string;
+  body: string[];
 }
 
 const entries: ChangelogEntry[] = [
   {
-    date: "2026-06-01",
-    category: "New",
-    title: "Cookie preferences for EEA, UK, and Switzerland",
-    body: "Visitors from the EEA, UK, and Switzerland see a compact preference notice on their first visit. Accept or decline analytics tracking, and change your mind at any time. Your choice persists across sessions.",
-  },
-  {
     date: "2026-05-31",
     category: "New",
     title: "Sign in with Google from the homepage",
-    body: "A one-tap Google sign-in prompt now appears when you visit zensus.app. If you already have a Google account, you can create your Zensus account or sign back in without filling out a form.",
+    body: [
+      "One-tap Google sign-in on the homepage.",
+      "Create or return to your account without filling out a form.",
+    ],
   },
   {
     date: "2026-05-24",
     category: "Improved",
-    title: "Dedicated support page and instant acknowledgment email",
-    body: "The support form is now at zensus.app/support and does not require you to be logged in. When you submit a request, you receive a confirmation email within seconds that summarizes what you sent and sets expectations for a reply.",
+    title: "Support page and acknowledgment email",
+    body: [
+      "Support form at zensus.app/support, no login required.",
+      "Instant confirmation email sent the moment you submit.",
+    ],
   },
   {
     date: "2026-05-19",
     category: "New",
     title: "14-day free trial",
-    body: "Zensus now starts with a 14-day free trial. Connect your accounts, explore every feature, and decide before your card is charged. Nothing is locked or limited during the trial period.",
+    body: [
+      "Full access for 14 days before your card is charged.",
+      "No feature limits during the trial period.",
+    ],
   },
   {
     date: "2026-05-05",
     category: "New",
     title: "Runway empty state and sharper financial summaries",
-    body: "If you have not connected Plaid, QuickBooks, or HubSpot yet, Runway greets you with a clear empty state instead of a confusing half-loaded view. Summary rows now include short explanations on hover, revenue appears explicitly in the breakdown, and baseline other revenue lines up correctly when HubSpot subscription revenue is in the mix.",
+    body: [
+      "Runway shows a clear empty state before you connect any accounts.",
+      "Revenue appears explicitly in breakdowns; summary rows include hover explanations.",
+    ],
   },
   {
     date: "2026-05-02",
     category: "Improved",
     title: "Activity tab: next dates and cleaner vendor rows",
-    body: "Recurring rows show when the next hit is expected, so you are not guessing from cadence labels alone. Vendors that were split into noisy partitions collapse under a parent row you can expand when you need detail. Classification feeds and irregular schedules got tighter so the list matches how you actually spend.",
-  },
-  {
-    date: "2026-04-21",
-    category: "Improved",
-    title: "Clearer runway chart tooltips",
-    body: "The Level 1 runway chart tooltip is rebuilt end to end: vendor names read cleanly, subtotals reconcile with the rows you see, and scenario math matches what the chart is drawing. Less squinting, fewer moments where the numbers almost add up but do not.",
+    body: [
+      "Recurring rows show the expected next transaction date.",
+      "Noisy vendor partitions collapse under a single expandable parent row.",
+    ],
   },
   {
     date: "2026-04-19",
     category: "New",
     title: "Forecast categories and Financials overrides",
-    body: "Transactions and runway math now share a single forecast-category vocabulary from sync through the engine to the Financials tab. Override a line when reality differs from the model, revert a single row, or reset everything with a clear confirmation. Saves debounce and recover gracefully so you are not fighting stale numbers after you step away.",
+    body: [
+      "Override any forecast line when reality differs from the model.",
+      "Revert a single row or reset everything from the Financials tab.",
+    ],
   },
   {
     date: "2026-04-17",
     category: "New",
     title: "Slack cash-crunch alerts",
-    body: "Set a dollar floor and Zensus fires a Slack alert the moment your 30-day projection crosses it. Re-alerts on material change: a week earlier breach or a 10% dip in minimum balance. Snooze or adjust your threshold directly from Slack.",
+    body: [
+      "Set a dollar floor; Zensus fires a Slack alert when your 30-day projection crosses it.",
+      "Re-alerts on a week-earlier breach or a 10% balance dip; snooze or adjust from Slack.",
+    ],
   },
   {
     date: "2026-04-14",
     category: "Improved",
     title: "Scenario drill-down with dual projection",
-    body: "Scenarios now render side by side with the baseline at day level. Ask a question, see both numbers, decide. Works at month, week, and day granularity with stable scenario identity across levels.",
+    body: [
+      "Scenarios render side by side with the baseline at month, week, or day granularity.",
+      "Ask a question, see both numbers, decide.",
+    ],
   },
   {
     date: "2026-04-10",
     category: "New",
     title: "Vendor normalization",
-    body: "Stripe payouts, ACH transfers, and card purchases reconcile cleanly. Same-day internal transfers no longer show up as fake burn spikes. Your expense categories are meaningfully accurate now.",
-  },
-  {
-    date: "2026-04-07",
-    category: "Security",
-    title: "External synthetic monitoring on api.zensus.app",
-    body: "Route 53 health checks run against the API every minute from outside our infrastructure. If the API goes down, we get paged in Slack within one cycle. Built into the platform, no action required from you.",
+    body: [
+      "Stripe payouts, ACH transfers, and card purchases reconcile cleanly.",
+      "Internal transfers no longer appear as burn spikes.",
+    ],
   },
   {
     date: "2026-04-03",
     category: "Improved",
     title: "Subscription-aware projections for HubSpot deals",
-    body: "Annual and quarterly contracts in HubSpot now flow into projections on their real billing dates, not smeared into monthly MRR. Your runway forecast respects contract cadence.",
+    body: [
+      "Annual and quarterly contracts flow into projections on their real billing dates, not smeared as MRR.",
+      "Runway forecast respects contract cadence.",
+    ],
   },
   {
     date: "2026-04-01",
     category: "Improved",
     title: "Real-time webhook sync across Plaid, QuickBooks, HubSpot",
-    body: "When a transaction clears in Plaid, an invoice changes in QuickBooks, or a subscription updates in HubSpot, your runway recalculates. No more waiting for scheduled refreshes.",
+    body: [
+      "Plaid, QuickBooks, and HubSpot sync on change, not a schedule.",
+      "Runway recalculates the moment a transaction clears or an invoice changes.",
+    ],
   },
 ];
 
@@ -212,9 +227,11 @@ const Changelog = () => (
                   <h2 className="text-xl font-semibold text-foreground mb-2">
                     {entry.title}
                   </h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {entry.body}
-                  </p>
+                  <ul className="space-y-1 list-disc list-inside text-muted-foreground leading-relaxed">
+                    {entry.body.map((bullet, i) => (
+                      <li key={i}>{bullet}</li>
+                    ))}
+                  </ul>
                 </div>
               </article>
             </li>
