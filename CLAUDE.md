@@ -36,7 +36,7 @@ No test runner is configured.
 
 **Landing page composition (`src/pages/Index.tsx`):** A deliberate 300ms `<PageSkeleton />` gate before rendering the real page to avoid flash-of-unstyled-content, then hash-scrolls to any `#section` in the URL after mount. Section components live under `src/components/landing/` and are composed top-to-bottom inside `<Index>`.
 
-**Styling:** shadcn/ui (slate base) with CSS variables. `tailwind.config.ts` defines custom animations (`fade-in`, `fade-in-up`, `slide-in-*`, `pulse-glow`, `shine`) that the landing sections rely on; prefer these over adding new one-offs. Fonts are **Geist** (sans/display) and **Geist Mono**, loaded from Google Fonts in `index.html` and wired through `fontFamily.sans`, `fontFamily.display`, and `fontFamily.mono` in `tailwind.config.ts`.
+**Styling:** shadcn/ui (slate base) with CSS variables. `tailwind.config.ts` defines custom animations (`fade-in`, `fade-in-up`, `slide-in-*`, `pulse-glow`, `shine`) that the landing sections rely on; prefer these over adding new one-offs. Fonts are **Geist** (sans/display) and **Geist Mono**, wired through `fontFamily.sans`, `fontFamily.display`, and `fontFamily.mono` in `tailwind.config.ts`. They are **self-hosted**, not loaded from Google Fonts: the variable woff2 files live in `public/fonts/` (one file per family covers all weights, vendored from `@fontsource-variable/geist` + `@fontsource-variable/geist-mono`), `@font-face` declarations are at the top of `src/index.css`, and the sans file is preloaded in `index.html`. This removes a render-blocking cross-origin request to `fonts.googleapis.com`/`fonts.gstatic.com` that delayed first paint on slow connections. Do not re-add a Google Fonts `<link>`.
 
 ## SEO and prerender
 

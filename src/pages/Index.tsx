@@ -53,10 +53,14 @@ const Index = () => {
         {/* Preload the LCP hero image (AVIF) — one variant per breakpoint, exactly
             matching the <picture> in Hero.tsx so a single resource is fetched. With
             createRoot re-rendering the <img> at bundle time, this caches the bytes
-            during HTML parse so the re-render paints instantly. Home-only. */}
-        <link rel="preload" as="image" type="image/avif" href="/hero-aurora-800.avif" media="(max-width: 768px)" />
-        <link rel="preload" as="image" type="image/avif" href="/hero-aurora-1200.avif" media="(min-width: 769px) and (max-width: 1280px)" />
-        <link rel="preload" as="image" type="image/avif" href="/hero-aurora-1920.avif" media="(min-width: 1281px)" />
+            during HTML parse so the re-render paints instantly. Home-only.
+            fetchpriority="high" mirrors the <img>'s own hint onto the preload so the
+            hero image outranks the ~600KB of product screenshots and the JS bundle
+            for bandwidth on constrained connections (Lighthouse lcp-discovery-insight
+            flagged the missing hint). */}
+        <link rel="preload" as="image" type="image/avif" href="/hero-aurora-800.avif" media="(max-width: 768px)" fetchPriority="high" />
+        <link rel="preload" as="image" type="image/avif" href="/hero-aurora-1200.avif" media="(min-width: 769px) and (max-width: 1280px)" fetchPriority="high" />
+        <link rel="preload" as="image" type="image/avif" href="/hero-aurora-1920.avif" media="(min-width: 1281px)" fetchPriority="high" />
       </Helmet>
       <Navbar />
       {/* Google One Tap (ZEN-365): self-gates on config + existing session,

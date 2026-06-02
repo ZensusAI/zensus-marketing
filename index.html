@@ -15,9 +15,14 @@
     <meta name="twitter:site" content="@zensusai" />
     <meta name="twitter:creator" content="@zensusai" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Geist is self-hosted (see the @font-face block in src/index.css). We
+         preload only the sans variable file (the primary text + headline font)
+         so the fallback->Geist swap is near-instant; Geist Mono loads on demand
+         via @font-face. This replaces a render-blocking Google Fonts stylesheet
+         plus two cross-origin preconnects that delayed first paint on slow
+         connections. crossorigin is required: fonts are always fetched in CORS
+         mode, so without it the preload would not match the @font-face request. -->
+    <link rel="preload" href="/fonts/geist-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
