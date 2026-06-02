@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Self-hosted Geist (variable, latin) replaces the render-blocking Google
+   Fonts <link> that used to live in index.html. Serving woff2 from our own
+   origin removes the cross-origin round trip to fonts.googleapis.com +
+   fonts.gstatic.com that gated first paint on high-latency connections
+   (Lighthouse flagged ~851ms of render-blocking time from that request).
+   A single variable file covers every weight (100-900). font-display: swap
+   keeps text visible immediately; the sans file is preloaded in index.html so
+   the fallback to Geist swap is near-instant. Files vendored from the
+   @fontsource-variable/geist and @fontsource-variable/geist-mono packages. */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/geist-latin-variable.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/geist-mono-latin-variable.woff2") format("woff2");
+}
+
 /* Zensus Design System - Dark theme with green accent */
 
 @layer base {
