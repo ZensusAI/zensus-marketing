@@ -38,6 +38,7 @@ Each child keeps the existing pattern: label plus one-line description.
 2. Replace the `NAV` array with the three-menu structure above. `NavLinkItem` top-level entries become unused by the data but the type union and render branches stay (cheap, and future top-level links remain possible).
 3. Active-state dots: `groupActive` already checks `pathname` against children; anchor children never match a pathname, which is correct.
 4. No styling changes. Desktop spacing (`gap-8`) and the mobile accordion behavior are unchanged.
+5. **Three independent `NavigationMenu.Root` instances** (one per dropdown), exactly as `DesktopMenu` works today. A single shared Root would require reworking the per-item panel positioning (`absolute left-0` anchors to the Root, not the Item). Three Roots keep the change minimal; the only trade-off is no Radix-coordinated hover handoff between adjacent menus, which the current site never had anyway.
 
 ## /use-cases page
 
@@ -66,8 +67,8 @@ No em-dashes anywhere. Real brand name in examples.
 
 1. `src/App.tsx`: lazy `UseCases` route at `/use-cases`, above the catch-all.
 2. `scripts/prerender.mjs`: add `/use-cases` to `STATIC_ROUTES`.
-3. `scripts/generate-og.mjs`: add a `use-cases` entry (the script keeps its own route list; verified it does not reuse `STATIC_ROUTES`).
-4. `scripts/generate-sitemap.mjs`: add `/use-cases` to `STATIC_URLS`, regenerate `public/sitemap.xml`.
+3. `scripts/generate-og.mjs`: add a `CARDS` entry (the script keeps its own list; verified it does not reuse `STATIC_ROUTES`): `{ slug: "use-cases", category: "Use Cases", title: "Who uses Zensus", subtitle: "Founders with annual contracts, seasonal revenue, usage-based pricing, and payroll on the line.", accent: "green" }`.
+4. `scripts/generate-sitemap.mjs`: add `{ loc: "https://zensus.app/use-cases", changefreq: "monthly", priority: "0.7" }` to `STATIC_URLS`, regenerate `public/sitemap.xml`.
 5. `public/llms.txt` and `public/llms-full.txt`: add a Use Cases link.
 
 ## Error handling
