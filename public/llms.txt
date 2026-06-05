@@ -2,7 +2,7 @@
 
 > AI-native cash flow forecasting and runway planning for startup founders.
 
-Zensus helps founders with variable revenue know exactly when their cash runs out — and what to do about it. Connect QuickBooks, your bank account via Plaid, or HubSpot subscriptions. Get real-time runway projections and ask an AI agent questions about your business survival.
+Zensus helps founders with variable revenue know exactly when their cash runs out, and what to do about it. Connect QuickBooks, your bank account via Plaid, or HubSpot subscriptions. Get real-time runway projections and ask an AI agent questions about your business survival.
 
 ## Key Features
 
@@ -34,6 +34,7 @@ Founders and operators of startups with variable revenue, complex hiring plans, 
 - [Blog](https://zensus.app/blog)
 - [What Is Cash Flow Forecasting?](https://zensus.app/blog/what-is-cash-flow-forecasting)
 - [What Is a 13-Week Cash Flow Forecast?](https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast)
+- [Will I Make Payroll?](https://zensus.app/blog/will-i-make-payroll)
 - [Changelog](https://zensus.app/changelog)
 - [Security](https://zensus.app/security)
 - [Integrations](https://zensus.app/integrations)
