@@ -88,7 +88,7 @@ const BlogPost = () => {
         <meta property="og:image" content={meta.ogImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={`${meta.title} — Zensus Blog`} />
+        <meta property="og:image:alt" content={`${meta.title} | Zensus Blog`} />
         <meta property="article:published_time" content={meta.date} />
         <meta property="article:modified_time" content={published} />
         <meta property="article:section" content={meta.category} />
