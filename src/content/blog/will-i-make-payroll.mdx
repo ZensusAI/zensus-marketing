@@ -11,6 +11,7 @@ export const meta = {
   author: 'ajin',
   tags: ['Cash Flow', 'Payroll', 'Guides'],
   featured: false,
+  thumbnail: '/blog/will-i-make-payroll/june-payroll-calendar-projection.png',
   ogImage: 'https://zensus.app/og/blog/will-i-make-payroll.png',
   ogTitle: 'Will I Make Payroll?',
   ogSubtitle:
@@ -44,6 +45,8 @@ export const meta = {
   ],
 };
 
+import { BlogFigure } from '@/components/blog/BlogFigure';
+
 <p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">
   To know whether you'll make payroll, project your available cash forward to the payroll date, subtract every committed outflow due before then, add only the inflows you're confident will clear in time, and compare the result to your minimum cash buffer. If the projected balance stays above your buffer, you'll make payroll. If it dips below, you have a gap, and the whole point is to see it weeks ahead, not the morning the run is due.
 </p>
@@ -55,6 +58,12 @@ export const meta = {
 ## The method: project to the payroll date
 
 <p>The reliable way to know if you'll make payroll is to build a short cash projection that ends on your payroll date. You don't need a finance degree or a 40-tab spreadsheet. You need five inputs.</p>
+
+<BlogFigure
+  src="/blog/will-i-make-payroll/payroll-projection-method.png"
+  alt="Five-step payroll cash projection method: available cash, payroll dates, add inflows, subtract outflows, compare to cash buffer"
+  caption="The five inputs of a payroll cash projection, from available cash to the final buffer check."
+/>
 
 ### 1. Start with your available cash, not your balance
 
@@ -118,6 +127,12 @@ export const meta = {
   <li><strong>Before June 30 payroll:</strong> 56,000 + 18,000 = $74,000, then −42,000 = <strong>$32,000</strong>. Still above $25,000, but only by $7,000. ⚠️</li>
 </ul>
 
+<BlogFigure
+  src="/blog/will-i-make-payroll/june-payroll-calendar-projection.png"
+  alt="June cash flow timeline with rent, invoice, payroll, and contract events, the projected balance ending at $32,000 just above a $25,000 cash buffer"
+  caption="The June projection: the balance clears both payroll runs, but the second one leaves only $7,000 above the $25,000 buffer."
+/>
+
 <p>The bank balance on June 1 ($80,000) looked like nearly two payrolls of cushion. The projection tells the real story: the second run lands you within $7,000 of your floor, and that's <em>only</em> if the quarterly contract clears on the 22nd as expected. If it slips to July, June 30 payroll drops you to $14,000, below your buffer. You now know, on June 1, exactly which inflow to chase and by when.</p>
 
 <p>That gap is invisible on a bank statement and invisible in a flat "monthly revenue minus monthly expenses" model. It only shows up when you place each flow on the date it actually moves.</p>
@@ -125,6 +140,12 @@ export const meta = {
 ## The mistake most founders make
 
 <p>The single most common payroll-cash error is using <strong>averages instead of timing</strong>. "We bring in about $120k a month and spend about $100k, so we're fine" hides the fact that the $120k arrives in two lumps on the 12th and 27th while payroll, rent, and a tax bill all clear before the 15th. Monthly averages smooth over exactly the timing mismatches that cause a missed payroll.</p>
+
+<BlogFigure
+  src="/blog/will-i-make-payroll/monthly-averages-vs-timing.png"
+  alt="Monthly average of $120k revenue in versus $100k expenses out compared with actual timing, where rent, taxes, and payroll clear before mid-month inflows land"
+  caption="Averages say the month is fine. The calendar shows rent, taxes, and payroll clearing before most of the cash arrives."
+/>
 
 <p>The second mistake is <strong>optimistic receivables</strong>: assuming customers pay on the due date. Date your inflows by when each customer actually pays, and your forecast stops lying to you.</p>
 
@@ -135,6 +156,12 @@ export const meta = {
 ## What's a safe cash buffer before payroll?
 
 <p>Keep at least one full payroll run in reserve above your projected low point, and ideally two. As a broader floor, many founders target two to six months of total operating expenses. The lumpier and less predictable your revenue, the larger that buffer should be: a business living on a few large annual contracts needs more cushion than one with smooth monthly subscriptions, because a single late payment moves the needle further. For context on how thin most buffers run: JPMorgan Chase Institute's analysis of nearly 600,000 small businesses found the <a href="https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/report-cash-flows-balances-and-buffer-days" className="font-medium text-primary underline-offset-4 hover:underline">median holds just 27 cash buffer days</a>, under a month of typical outflows.</p>
+
+<BlogFigure
+  src="/blog/will-i-make-payroll/cash-buffer-floor.png"
+  alt="Cash balance area chart dipping toward but staying above a dashed cash buffer line at two payroll dates, with one to two payroll runs of headroom"
+  caption="Keep one to two full payroll runs between your projected low point and your cash floor."
+/>
 
 ## Your "will I make payroll" checklist
 
