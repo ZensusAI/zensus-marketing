@@ -94,6 +94,7 @@ Only you. Your financial data is never shared, sold, or used to train AI models.
 - Will I Make Payroll? (blog): https://zensus.app/blog/will-i-make-payroll
 - Changelog: https://zensus.app/changelog
 - Security: https://zensus.app/security
+- Use Cases: https://zensus.app/use-cases
 - Integrations: https://zensus.app/integrations
 - Plaid integration: https://zensus.app/integrations/plaid
 - QuickBooks integration: https://zensus.app/integrations/quickbooks

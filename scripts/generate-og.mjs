@@ -64,6 +64,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "use-cases",
+    category: "Use Cases",
+    title: "Who uses Zensus",
+    subtitle:
+      "Founders with annual contracts, seasonal revenue, usage-based pricing, and payroll on the line.",
+    accent: "green",
+  },
+  {
     slug: "about",
     category: "About",
     title: "About Zensus",

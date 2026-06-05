@@ -37,6 +37,7 @@ Founders and operators of startups with variable revenue, complex hiring plans, 
 - [Will I Make Payroll?](https://zensus.app/blog/will-i-make-payroll)
 - [Changelog](https://zensus.app/changelog)
 - [Security](https://zensus.app/security)
+- [Use Cases](https://zensus.app/use-cases)
 - [Integrations](https://zensus.app/integrations)
 - [Plaid integration](https://zensus.app/integrations/plaid)
 - [QuickBooks integration](https://zensus.app/integrations/quickbooks)

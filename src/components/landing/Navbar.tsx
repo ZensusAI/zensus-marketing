@@ -18,6 +18,9 @@ interface NavChild {
   href: string;
   label: string;
   description: string;
+  // Hash-anchor children (e.g. /#features) render as plain <a> tags so the
+  // browser handles the jump natively; router children render as <Link>.
+  isRoute?: boolean;
 }
 
 interface NavMenu {
@@ -30,24 +33,63 @@ type NavEntry = NavLinkItem | NavMenu;
 const isMenu = (entry: NavEntry): entry is NavMenu => "children" in entry;
 
 const NAV: NavEntry[] = [
-  { href: "/#features", label: "Product", isRoute: false },
-  { href: "/integrations", label: "Integrations", isRoute: true },
+  {
+    label: "Product",
+    children: [
+      {
+        href: "/#features",
+        label: "Features",
+        description: "Runway, alerts, and scenario planning in one view.",
+        isRoute: false,
+      },
+      {
+        href: "/integrations",
+        label: "Integrations",
+        description: "Plaid, QuickBooks, HubSpot, and Slack.",
+      },
+      {
+        href: "/use-cases",
+        label: "Use Cases",
+        description: "Who Zensus is for and the problems it solves.",
+      },
+      {
+        href: "/security",
+        label: "Security",
+        description: "How Zensus protects your financial data.",
+      },
+    ],
+  },
   {
     label: "Resources",
     children: [
+      {
+        href: "/blog",
+        label: "Blog",
+        description: "Guides, product updates, and announcements.",
+      },
       {
         href: "/changelog",
         label: "Changelog",
         description: "Ship notes and what's new in Zensus.",
       },
       {
-        href: "/blog",
-        label: "Blog",
-        description: "Guides, product updates, and announcements.",
+        href: "/#faq",
+        label: "FAQ",
+        description: "Quick answers about pricing, data, and setup.",
+        isRoute: false,
       },
     ],
   },
-  { href: "/security", label: "Security", isRoute: true },
+  {
+    label: "Company",
+    children: [
+      {
+        href: "/about",
+        label: "About",
+        description: "The company and the founder behind Zensus.",
+      },
+    ],
+  },
 ];
 
 // Flip a boolean when the user has scrolled past a small threshold. We use
@@ -148,24 +190,33 @@ function DesktopMenu({ menu }: { menu: NavMenu }) {
             <div className="w-72 rounded-xl border border-border bg-background/95 p-2 shadow-2xl backdrop-blur-xl">
               {menu.children.map((child) => {
                 const active = child.href === pathname;
+                const className = `block rounded-lg px-3 py-2.5 transition-colors ${focusRing} ${
+                  active ? "bg-primary/5" : "hover:bg-muted/50"
+                }`;
+                const body = (
+                  <>
+                    <span className="flex items-center gap-1.5 text-[15px] font-semibold text-white">
+                      {child.label}
+                      {active && (
+                        <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
+                      )}
+                    </span>
+                    <span className="mt-0.5 block text-[13px] leading-snug text-muted-foreground">
+                      {child.description}
+                    </span>
+                  </>
+                );
                 return (
                   <NavigationMenu.Link asChild key={child.href}>
-                    <Link
-                      to={child.href}
-                      className={`block rounded-lg px-3 py-2.5 transition-colors ${focusRing} ${
-                        active ? "bg-primary/5" : "hover:bg-muted/50"
-                      }`}
-                    >
-                      <span className="flex items-center gap-1.5 text-[15px] font-semibold text-white">
-                        {child.label}
-                        {active && (
-                          <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
-                        )}
-                      </span>
-                      <span className="mt-0.5 block text-[13px] leading-snug text-muted-foreground">
-                        {child.description}
-                      </span>
-                    </Link>
+                    {child.isRoute === false ? (
+                      <a href={child.href} className={className}>
+                        {body}
+                      </a>
+                    ) : (
+                      <Link to={child.href} className={className}>
+                        {body}
+                      </Link>
+                    )}
                   </NavigationMenu.Link>
                 );
               })}
@@ -233,20 +284,31 @@ function MobileMenuGroup({ menu, onClose }: { menu: NavMenu; onClose: () => void
         }`}
       >
         <div className="flex flex-col gap-1 border-l border-border/60 pl-3 py-1">
-          {menu.children.map((child) => (
-            <NavLink
-              key={child.href}
-              to={child.href}
-              onClick={onClose}
-              className={({ isActive }) =>
-                `px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} ${
-                  isActive ? "bg-primary/5 text-white" : "text-muted-foreground hover:bg-muted/40 hover:text-white"
-                }`
-              }
-            >
-              {child.label}
-            </NavLink>
-          ))}
+          {menu.children.map((child) =>
+            child.isRoute === false ? (
+              <a
+                key={child.href}
+                href={child.href}
+                onClick={onClose}
+                className={`px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} text-muted-foreground hover:bg-muted/40 hover:text-white`}
+              >
+                {child.label}
+              </a>
+            ) : (
+              <NavLink
+                key={child.href}
+                to={child.href}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} ${
+                    isActive ? "bg-primary/5 text-white" : "text-muted-foreground hover:bg-muted/40 hover:text-white"
+                  }`
+                }
+              >
+                {child.label}
+              </NavLink>
+            ),
+          )}
         </div>
       </div>
     </div>
