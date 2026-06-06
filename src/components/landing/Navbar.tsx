@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { Button } from "@/components/ui/button";
-import { TalkToUsButton } from "./TalkToUsButton";
 import { SIGN_IN_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
 import zensusLogo from "@/assets/zensus-logo.png";
@@ -33,6 +32,16 @@ type NavEntry = NavLinkItem | NavMenu;
 const isMenu = (entry: NavEntry): entry is NavMenu => "children" in entry;
 
 const NAV: NavEntry[] = [
+  {
+    label: "Company",
+    children: [
+      {
+        href: "/about",
+        label: "About Us",
+        description: "The company and the founder behind Zensus.",
+      },
+    ],
+  },
   {
     label: "Product",
     children: [
@@ -77,16 +86,6 @@ const NAV: NavEntry[] = [
         label: "FAQ",
         description: "Quick answers about pricing, data, and setup.",
         isRoute: false,
-      },
-    ],
-  },
-  {
-    label: "Company",
-    children: [
-      {
-        href: "/about",
-        label: "About",
-        description: "The company and the founder behind Zensus.",
       },
     ],
   },
@@ -459,10 +458,23 @@ const Navbar = () => {
                   Sign in
                 </a>
               </Button>
-              <TalkToUsButton
+              <Button
+                asChild
                 size="sm"
-                className="shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow"
-              />
+                className={`rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow ${focusRing}`}
+              >
+                <a
+                  href={SIGN_IN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCtaClick("navbar_desktop", { destination: "login" })
+                  }
+                >
+                  Get Started
+                  <ArrowRight size={16} className="ml-2" />
+                </a>
+              </Button>
             </div>
 
             <button
@@ -506,10 +518,24 @@ const Navbar = () => {
                   Sign in
                 </a>
               </Button>
-              <TalkToUsButton
+              <Button
+                asChild
                 size="lg"
-                className="w-full justify-center shadow-[0_0_24px_hsl(var(--primary)/0.3)]"
-              />
+                className={`w-full justify-center rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_24px_hsl(var(--primary)/0.3)] ${focusRing}`}
+              >
+                <a
+                  href={SIGN_IN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    trackCtaClick("navbar_mobile", { destination: "login" });
+                    close();
+                  }}
+                >
+                  Get Started
+                  <ArrowRight size={16} className="ml-2" />
+                </a>
+              </Button>
             </div>
           </div>
         </div>
