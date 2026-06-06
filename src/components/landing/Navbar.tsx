@@ -166,19 +166,25 @@ function DesktopNav({ entries }: { entries: NavEntry[] }) {
   const rootRef = useRef<HTMLElement>(null);
   // Horizontal center of the active trigger, relative to the nav root. The
   // shared viewport translates to sit centered under it; transitioning that
-  // transform is what makes the panel glide between menus.
-  const [center, setCenter] = useState(0);
+  // transform is what makes the panel glide between menus. null until the
+  // first open so the first panel appears in place instead of flying in
+  // from the nav's left edge.
+  const [center, setCenter] = useState<number | null>(null);
+  // The transform transition is enabled one commit AFTER the first center is
+  // measured: adding the class alone animates nothing, so the first open
+  // jumps into position and every later move glides.
+  const [glide, setGlide] = useState(false);
+  useEffect(() => {
+    if (center !== null) setGlide(true);
+  }, [center]);
   // Radix does not stamp data-state on force-mounted Content inside a shared
-  // Viewport, so we track the open menu ourselves to toggle which panel is
-  // visible. lastValue keeps the outgoing panel visible while the viewport
-  // fades out on close, instead of emptying the box mid-fade.
+  // Viewport, so we mirror the open menu ourselves to toggle which panel is
+  // visible.
   const [value, setValue] = useState("");
-  const lastValue = useRef("");
 
   const handleValueChange = (next: string) => {
     setValue(next);
     if (!next || !rootRef.current) return;
-    lastValue.current = next;
     const trigger = rootRef.current.querySelector<HTMLElement>(
       `[data-nav-trigger="${CSS.escape(next)}"]`,
     );
@@ -187,8 +193,6 @@ function DesktopNav({ entries }: { entries: NavEntry[] }) {
     const box = trigger.getBoundingClientRect();
     setCenter(box.left - rootBox.left + box.width / 2);
   };
-
-  const shownMenu = value || lastValue.current;
 
   return (
     <NavigationMenu.Root
@@ -231,13 +235,18 @@ function DesktopNav({ entries }: { entries: NavEntry[] }) {
 
               {/* Rendered into the shared Viewport below. Stacked absolutely;
                   the inactive panels crossfade out while the viewport glides
-                  and resizes, which reads as one continuous panel. */}
+                  and resizes, which reads as one continuous panel. visibility
+                  (not just opacity) gates the hidden panels: it removes their
+                  links from the tab order and from hit-testing, and because
+                  visibility participates in the transition its flip to hidden
+                  waits for the fade-out to finish. Pointer events inherit
+                  from the Viewport (auto only while open). */}
               <NavigationMenu.Content
                 forceMount
-                className={`absolute left-0 top-0 w-72 p-2 transition-opacity duration-200 ${
-                  shownMenu === menu.label
-                    ? "opacity-100 pointer-events-auto"
-                    : "opacity-0 pointer-events-none"
+                className={`absolute left-0 top-0 w-72 p-2 transition-[opacity,visibility] duration-200 motion-reduce:transition-none ${
+                  value === menu.label
+                    ? "visible opacity-100"
+                    : "invisible opacity-0"
                 }`}
               >
                 {menu.children.map((child) => {
@@ -280,17 +289,23 @@ function DesktopNav({ entries }: { entries: NavEntry[] }) {
 
       {/* The wrapper owns the horizontal glide (transform transition toward
           the active trigger); the Viewport owns the size morph via Radix's
-          measured CSS variables and the open/close fade. */}
+          measured CSS variables and the open/close fade. The wrapper only
+          accepts pointer events while a menu is open: open, its pt-3 strip
+          bridges the hover gap between trigger and panel; closed, the whole
+          subtree is inert so the invisible panel can never block clicks on
+          page content beneath it. */}
       <div
-        className="absolute left-0 top-full pt-3 transition-transform duration-300 ease-out"
-        style={{ transform: `translateX(calc(${center}px - 50%))` }}
+        className={`absolute left-0 top-full pt-3 ${
+          glide ? "transition-transform duration-300 ease-out motion-reduce:transition-none" : ""
+        } ${value ? "pointer-events-auto" : "pointer-events-none"}`}
+        style={{ transform: `translateX(calc(${center ?? 0}px - 50%))` }}
       >
         <NavigationMenu.Viewport
           forceMount
           className={[
             "relative overflow-hidden rounded-xl border border-border bg-background/95 shadow-2xl backdrop-blur-xl",
             "h-[var(--radix-navigation-menu-viewport-height)] w-[var(--radix-navigation-menu-viewport-width)]",
-            "transition-[width,height,opacity,transform] duration-300 ease-out",
+            "transition-[height,opacity,transform] duration-300 ease-out motion-reduce:transition-none",
             "translate-y-1 opacity-0 pointer-events-none",
             "data-[state=open]:translate-y-0 data-[state=open]:opacity-100 data-[state=open]:pointer-events-auto",
           ].join(" ")}
@@ -465,7 +480,7 @@ const Navbar = () => {
             the open/close is smooth, not a hard swap. */}
         <div
           className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
-            isOpen ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0"
+            isOpen ? "max-h-[44rem] opacity-100" : "max-h-0 opacity-0"
           }`}
           aria-hidden={!isOpen}
         >
