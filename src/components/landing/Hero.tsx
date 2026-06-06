@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ScenarioPrompt } from "./ScenarioPrompt";
 import { TryItNowButton } from "./TryItNowButton";
+import { TalkToUsButton } from "./TalkToUsButton";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 
 // Track window.scrollY with rAF-throttled updates. Used to drive a subtle
@@ -114,7 +115,13 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col items-center gap-4">
-            <TryItNowButton />
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <TryItNowButton />
+              <TalkToUsButton
+                variant="ghost"
+                className="h-10 border border-border/80 hover:border-primary/60"
+              />
+            </div>
             <ScenarioPrompt />
           </div>
         </div>

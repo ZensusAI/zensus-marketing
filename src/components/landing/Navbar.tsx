@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { Button } from "@/components/ui/button";
-import { TalkToUsButton } from "./TalkToUsButton";
 import { SIGN_IN_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
 import zensusLogo from "@/assets/zensus-logo.png";
@@ -18,6 +17,9 @@ interface NavChild {
   href: string;
   label: string;
   description: string;
+  // Hash-anchor children (e.g. /#features) render as plain <a> tags so the
+  // browser handles the jump natively; router children render as <Link>.
+  isRoute?: boolean;
 }
 
 interface NavMenu {
@@ -30,24 +32,63 @@ type NavEntry = NavLinkItem | NavMenu;
 const isMenu = (entry: NavEntry): entry is NavMenu => "children" in entry;
 
 const NAV: NavEntry[] = [
-  { href: "/#features", label: "Product", isRoute: false },
-  { href: "/integrations", label: "Integrations", isRoute: true },
+  {
+    label: "Company",
+    children: [
+      {
+        href: "/about",
+        label: "About Us",
+        description: "The company and the founder behind Zensus.",
+      },
+    ],
+  },
+  {
+    label: "Product",
+    children: [
+      {
+        href: "/#features",
+        label: "Features",
+        description: "Runway, alerts, and scenario planning in one view.",
+        isRoute: false,
+      },
+      {
+        href: "/integrations",
+        label: "Integrations",
+        description: "Plaid, QuickBooks, HubSpot, and Slack.",
+      },
+      {
+        href: "/use-cases",
+        label: "Use Cases",
+        description: "Who Zensus is for and the problems it solves.",
+      },
+      {
+        href: "/security",
+        label: "Security",
+        description: "How Zensus protects your financial data.",
+      },
+    ],
+  },
   {
     label: "Resources",
     children: [
+      {
+        href: "/blog",
+        label: "Blog",
+        description: "Guides, product updates, and announcements.",
+      },
       {
         href: "/changelog",
         label: "Changelog",
         description: "Ship notes and what's new in Zensus.",
       },
       {
-        href: "/blog",
-        label: "Blog",
-        description: "Guides, product updates, and announcements.",
+        href: "/#faq",
+        label: "FAQ",
+        description: "Quick answers about pricing, data, and setup.",
+        isRoute: false,
       },
     ],
   },
-  { href: "/security", label: "Security", isRoute: true },
 ];
 
 // Flip a boolean when the user has scrolled past a small threshold. We use
@@ -78,6 +119,11 @@ function useScrolled(threshold = 8) {
 
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+
+// Primary CTA styling shared by the desktop and mobile "Get Started" buttons
+// so the label, colors, and hover state cannot drift between the two.
+const navCtaBase =
+  "rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90";
 
 const desktopLinkBase =
   "relative text-[15px] font-semibold text-white rounded transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-[width] after:duration-200 hover:after:w-full";
@@ -110,52 +156,110 @@ function DesktopLink({ link }: { link: NavLinkItem }) {
   );
 }
 
-// Desktop "Resources"-style dropdown, built on the Radix NavigationMenu
-// primitive (hover intent, keyboard nav, and Escape come for free). We omit the
-// shadcn Viewport and render the panel in place so its links stay in the static
-// prerendered HTML via `forceMount` — Googlebot and AI crawlers see the same
-// anchors whether or not the menu is open.
-function DesktopMenu({ menu }: { menu: NavMenu }) {
+// Desktop dropdowns, built on a single Radix NavigationMenu root with a shared
+// Viewport (the Stripe-style "morphing dropdown"). One panel stays open while
+// the pointer slides between triggers: it glides horizontally under the active
+// trigger and morphs its height to fit the next menu, instead of closing and
+// reopening. Hover intent, keyboard nav, and Escape come for free. We style
+// the shared Viewport ourselves (no shadcn wrapper) and `forceMount` both the
+// Viewport and every Content so all dropdown links stay in the static
+// prerendered HTML — Googlebot and AI crawlers see the same anchors whether or
+// not a menu is open.
+function DesktopNav({ entries }: { entries: NavEntry[] }) {
   const { pathname } = useLocation();
-  const groupActive = menu.children.some((c) => c.href === pathname);
+  const rootRef = useRef<HTMLElement>(null);
+  // Horizontal center of the active trigger, relative to the nav root. The
+  // shared viewport translates to sit centered under it; transitioning that
+  // transform is what makes the panel glide between menus. null until the
+  // first open so the first panel appears in place instead of flying in
+  // from the nav's left edge.
+  const [center, setCenter] = useState<number | null>(null);
+  // The transform transition is enabled one commit AFTER the first center is
+  // measured: adding the class alone animates nothing, so the first open
+  // jumps into position and every later move glides.
+  const [glide, setGlide] = useState(false);
+  useEffect(() => {
+    if (center !== null) setGlide(true);
+  }, [center]);
+  // Radix does not stamp data-state on force-mounted Content inside a shared
+  // Viewport, so we mirror the open menu ourselves to toggle which panel is
+  // visible.
+  const [value, setValue] = useState("");
+
+  const handleValueChange = (next: string) => {
+    setValue(next);
+    if (!next || !rootRef.current) return;
+    const trigger = rootRef.current.querySelector<HTMLElement>(
+      `[data-nav-trigger="${CSS.escape(next)}"]`,
+    );
+    if (!trigger) return;
+    const rootBox = rootRef.current.getBoundingClientRect();
+    const box = trigger.getBoundingClientRect();
+    setCenter(box.left - rootBox.left + box.width / 2);
+  };
 
   return (
-    <NavigationMenu.Root delayDuration={100} aria-label={menu.label} className="relative">
-      <NavigationMenu.List className="m-0 flex list-none p-0">
-        <NavigationMenu.Item>
-          <NavigationMenu.Trigger
-            className={`group/res flex items-center gap-1.5 ${desktopLinkBase} ${focusRing} data-[state=open]:after:w-full`}
-          >
-            <span className="flex items-center gap-1.5">
-              {menu.label}
-              {groupActive && (
-                <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
-              )}
-            </span>
-            <ChevronDown
-              aria-hidden
-              className="h-3.5 w-3.5 transition-transform duration-200 group-data-[state=open]/res:rotate-180"
-            />
-          </NavigationMenu.Trigger>
+    <NavigationMenu.Root
+      ref={rootRef}
+      delayDuration={100}
+      onValueChange={handleValueChange}
+      aria-label="Main"
+      className="relative"
+    >
+      <NavigationMenu.List className="m-0 flex list-none items-center gap-8 p-0">
+        {entries.map((entry) => {
+          if (!isMenu(entry)) {
+            // Plain top-level links (none today) still slot into the shared
+            // list so future additions keep their position among the menus.
+            return (
+              <NavigationMenu.Item key={entry.href} className="flex">
+                <DesktopLink link={entry} />
+              </NavigationMenu.Item>
+            );
+          }
+          const menu = entry;
+          const groupActive = menu.children.some((c) => c.href === pathname);
+          return (
+            <NavigationMenu.Item key={menu.label} value={menu.label}>
+              <NavigationMenu.Trigger
+                data-nav-trigger={menu.label}
+                className={`group/res flex items-center gap-1.5 ${desktopLinkBase} ${focusRing} data-[state=open]:after:w-full`}
+              >
+                <span className="flex items-center gap-1.5">
+                  {menu.label}
+                  {groupActive && (
+                    <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
+                  )}
+                </span>
+                <ChevronDown
+                  aria-hidden
+                  className="h-3.5 w-3.5 transition-transform duration-200 group-data-[state=open]/res:rotate-180"
+                />
+              </NavigationMenu.Trigger>
 
-          {/* Default to hidden + non-interactive; reveal only on the open
-              state. This stays correct whether or not Radix stamps a
-              data-state="closed" on force-mounted, inactive content. */}
-          <NavigationMenu.Content
-            forceMount
-            className="absolute left-0 top-full pt-3 translate-y-1 opacity-0 pointer-events-none transition-[opacity,transform] duration-200 data-[state=open]:translate-y-0 data-[state=open]:opacity-100 data-[state=open]:pointer-events-auto"
-          >
-            <div className="w-72 rounded-xl border border-border bg-background/95 p-2 shadow-2xl backdrop-blur-xl">
-              {menu.children.map((child) => {
-                const active = child.href === pathname;
-                return (
-                  <NavigationMenu.Link asChild key={child.href}>
-                    <Link
-                      to={child.href}
-                      className={`block rounded-lg px-3 py-2.5 transition-colors ${focusRing} ${
-                        active ? "bg-primary/5" : "hover:bg-muted/50"
-                      }`}
-                    >
+              {/* Rendered into the shared Viewport below. Stacked absolutely;
+                  the inactive panels crossfade out while the viewport glides
+                  and resizes, which reads as one continuous panel. visibility
+                  (not just opacity) gates the hidden panels: it removes their
+                  links from the tab order and from hit-testing, and because
+                  visibility participates in the transition its flip to hidden
+                  waits for the fade-out to finish. Pointer events inherit
+                  from the Viewport (auto only while open). */}
+              <NavigationMenu.Content
+                forceMount
+                className={`absolute left-0 top-0 w-72 p-2 transition-[opacity,visibility] duration-200 motion-reduce:transition-none ${
+                  value === menu.label
+                    ? "visible opacity-100"
+                    : "invisible opacity-0"
+                }`}
+              >
+                {menu.children.map((child) => {
+                  const active = child.href === pathname;
+                  const className = `block rounded-lg px-3 py-2.5 transition-colors ${focusRing} ${
+                    active ? "bg-primary/5" : "hover:bg-muted/50"
+                  }`;
+                  const body = (
+                    <>
                       <span className="flex items-center gap-1.5 text-[15px] font-semibold text-white">
                         {child.label}
                         {active && (
@@ -165,14 +269,52 @@ function DesktopMenu({ menu }: { menu: NavMenu }) {
                       <span className="mt-0.5 block text-[13px] leading-snug text-muted-foreground">
                         {child.description}
                       </span>
-                    </Link>
-                  </NavigationMenu.Link>
-                );
-              })}
-            </div>
-          </NavigationMenu.Content>
-        </NavigationMenu.Item>
+                    </>
+                  );
+                  return (
+                    <NavigationMenu.Link asChild key={child.href}>
+                      {child.isRoute === false ? (
+                        <a href={child.href} className={className}>
+                          {body}
+                        </a>
+                      ) : (
+                        <Link to={child.href} className={className}>
+                          {body}
+                        </Link>
+                      )}
+                    </NavigationMenu.Link>
+                  );
+                })}
+              </NavigationMenu.Content>
+            </NavigationMenu.Item>
+          );
+        })}
       </NavigationMenu.List>
+
+      {/* The wrapper owns the horizontal glide (transform transition toward
+          the active trigger); the Viewport owns the size morph via Radix's
+          measured CSS variables and the open/close fade. The wrapper only
+          accepts pointer events while a menu is open: open, its pt-3 strip
+          bridges the hover gap between trigger and panel; closed, the whole
+          subtree is inert so the invisible panel can never block clicks on
+          page content beneath it. */}
+      <div
+        className={`absolute left-0 top-full pt-3 ${
+          glide ? "transition-transform duration-300 ease-out motion-reduce:transition-none" : ""
+        } ${value ? "pointer-events-auto" : "pointer-events-none"}`}
+        style={{ transform: `translateX(calc(${center ?? 0}px - 50%))` }}
+      >
+        <NavigationMenu.Viewport
+          forceMount
+          className={[
+            "relative overflow-hidden rounded-xl border border-border bg-background/95 shadow-2xl backdrop-blur-xl",
+            "h-[var(--radix-navigation-menu-viewport-height)] w-[var(--radix-navigation-menu-viewport-width)]",
+            "transition-[height,opacity,transform] duration-300 ease-out motion-reduce:transition-none",
+            "translate-y-1 opacity-0 pointer-events-none",
+            "data-[state=open]:translate-y-0 data-[state=open]:opacity-100 data-[state=open]:pointer-events-auto",
+          ].join(" ")}
+        />
+      </div>
     </NavigationMenu.Root>
   );
 }
@@ -233,20 +375,31 @@ function MobileMenuGroup({ menu, onClose }: { menu: NavMenu; onClose: () => void
         }`}
       >
         <div className="flex flex-col gap-1 border-l border-border/60 pl-3 py-1">
-          {menu.children.map((child) => (
-            <NavLink
-              key={child.href}
-              to={child.href}
-              onClick={onClose}
-              className={({ isActive }) =>
-                `px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} ${
-                  isActive ? "bg-primary/5 text-white" : "text-muted-foreground hover:bg-muted/40 hover:text-white"
-                }`
-              }
-            >
-              {child.label}
-            </NavLink>
-          ))}
+          {menu.children.map((child) =>
+            child.isRoute === false ? (
+              <a
+                key={child.href}
+                href={child.href}
+                onClick={onClose}
+                className={`px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} text-muted-foreground hover:bg-muted/40 hover:text-white`}
+              >
+                {child.label}
+              </a>
+            ) : (
+              <NavLink
+                key={child.href}
+                to={child.href}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} ${
+                    isActive ? "bg-primary/5 text-white" : "text-muted-foreground hover:bg-muted/40 hover:text-white"
+                  }`
+                }
+              >
+                {child.label}
+              </NavLink>
+            ),
+          )}
         </div>
       </div>
     </div>
@@ -292,14 +445,8 @@ const Navbar = () => {
             <span className="text-xl font-semibold text-foreground">Zensus</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 justify-self-center">
-            {NAV.map((entry) =>
-              isMenu(entry) ? (
-                <DesktopMenu key={entry.label} menu={entry} />
-              ) : (
-                <DesktopLink key={entry.href} link={entry} />
-              ),
-            )}
+          <div className="hidden md:block justify-self-center">
+            <DesktopNav entries={NAV} />
           </div>
 
           <div className="flex items-center gap-3 justify-self-end">
@@ -316,10 +463,23 @@ const Navbar = () => {
                   Sign in
                 </a>
               </Button>
-              <TalkToUsButton
+              <Button
+                asChild
                 size="sm"
-                className="shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow"
-              />
+                className={`${navCtaBase} shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow ${focusRing}`}
+              >
+                <a
+                  href={SIGN_IN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCtaClick("navbar_desktop", { destination: "get_started" })
+                  }
+                >
+                  Get Started
+                  <ArrowRight size={16} className="ml-2" />
+                </a>
+              </Button>
             </div>
 
             <button
@@ -337,7 +497,7 @@ const Navbar = () => {
             the open/close is smooth, not a hard swap. */}
         <div
           className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
-            isOpen ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0"
+            isOpen ? "max-h-[44rem] opacity-100" : "max-h-0 opacity-0"
           }`}
           aria-hidden={!isOpen}
         >
@@ -363,10 +523,24 @@ const Navbar = () => {
                   Sign in
                 </a>
               </Button>
-              <TalkToUsButton
+              <Button
+                asChild
                 size="lg"
-                className="w-full justify-center shadow-[0_0_24px_hsl(var(--primary)/0.3)]"
-              />
+                className={`w-full justify-center ${navCtaBase} shadow-[0_0_24px_hsl(var(--primary)/0.3)] ${focusRing}`}
+              >
+                <a
+                  href={SIGN_IN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    trackCtaClick("navbar_mobile", { destination: "get_started" });
+                    close();
+                  }}
+                >
+                  Get Started
+                  <ArrowRight size={16} className="ml-2" />
+                </a>
+              </Button>
             </div>
           </div>
         </div>

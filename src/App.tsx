@@ -25,6 +25,7 @@ const Terms = lazy(() => import("./pages/Terms"));
 const Subprocessors = lazy(() => import("./pages/Subprocessors"));
 const Support = lazy(() => import("./pages/Support"));
 const Integrations = lazy(() => import("./pages/Integrations"));
+const UseCases = lazy(() => import("./pages/UseCases"));
 const PlaidIntegration = lazy(() => import("./pages/integrations/Plaid"));
 const QuickBooksIntegration = lazy(
   () => import("./pages/integrations/QuickBooks"),
@@ -71,6 +72,7 @@ const App = () => (
             />
             <Route path="/integrations/slack" element={<SlackIntegration />} />
             <Route path="/changelog" element={<Changelog />} />
+            <Route path="/use-cases" element={<UseCases />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
