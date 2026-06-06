@@ -60,7 +60,7 @@ const serviceSchema = {
   name: "Zensus + QuickBooks integration",
   serviceType: "Accounting data integration for cash flow forecasting",
   description:
-    "Connect QuickBooks Online to Zensus via Intuit OAuth for live expenses, invoices, and AR/AP feeding a subscription-aware runway forecast.",
+    "Connect QuickBooks Online to Zensus via Intuit OAuth for live expenses, invoices, and AR/AP feeding a subscription-aware cash flow forecast.",
   provider: { "@id": "https://zensus.app/#organization" },
   areaServed: "US",
   url: "https://zensus.app/integrations/quickbooks",

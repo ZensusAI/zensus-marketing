@@ -5,7 +5,7 @@ export const meta = {
   description:
     'A practical guide to MCP (Model Context Protocol) and CLI access for AI agents in finance. What each one is, the compliance tradeoffs, and what changes now that QuickBooks and Xero ship MCP servers.',
   date: '2026-05-28',
-  dateModified: '2026-05-28',
+  dateModified: '2026-06-06',
   category: 'Guide',
   readTime: '10 min read',
   slug: 'mcp-vs-cli-for-finance-teams',
@@ -369,7 +369,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 ## How Zensus Thinks About Agent Access to Finance Data
 
 
-Zensus is a cash flow forecasting and runway-planning platform for founders with variable revenue. The product, described on the [features page](https://zensus.app/#features), is built around four data sources: bank (via Plaid), accounting (via QuickBooks), CRM (HubSpot), and notifications (Slack).
+Zensus is a cash flow forecasting and planning platform for founders with variable revenue. The product, described on the [features page](https://zensus.app/#features), is built around four data sources: bank (via Plaid), accounting (via QuickBooks), CRM (HubSpot), and notifications (Slack).
 
 
 <p>Zensus is not an MCP server today. The integrations connect to QuickBooks, Plaid, HubSpot, and Slack through their own OAuth flows. But the architectural principles MCP encodes are the principles the product is built on.</p>
@@ -384,10 +384,10 @@ Zensus is a cash flow forecasting and runway-planning platform for founders with
     <strong>Typed integrations, not shell access.</strong> Every data source is connected via a typed integration with scoped permissions. Read the per-source detail on the <a href="/integrations" className="font-medium text-primary underline-offset-4 hover:underline">integrations hub</a>, the <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks page</a>, and the <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid page</a>.
   </li>
   <li>
-    <strong>Audit-friendly data flow.</strong> Every sync is logged. The runway agent answers questions from a structured snapshot of your data, not by inventing a path to your bank session on the fly.
+    <strong>Audit-friendly data flow.</strong> Every sync is logged. The cash flow agent answers questions from a structured snapshot of your data, not by inventing a path to your bank session on the fly.
   </li>
   <li>
-    <strong>Scenarios in natural language, on top of typed data.</strong> Founders can ask scenario questions like "what if we lose our largest annual contract" and watch runway update live. Details on the <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">scenarios section</a>.
+    <strong>Scenarios in natural language, on top of typed data.</strong> Founders can ask scenario questions like "what if we lose our largest annual contract" and watch the cash flow forecast update live. Details on the <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">scenarios section</a>.
   </li>
   <li>
     <strong>Alerts that ride on the same trustworthy data layer.</strong> Set a cash floor on your 30-day projection and get <a href="/#features-alerts" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts when you breach it</a>, with re-alerts on material changes.
@@ -398,8 +398,8 @@ Zensus is a cash flow forecasting and runway-planning platform for founders with
 
 <BlogFigure
   src="/blog/mcp-vs-cli-for-finance-teams/zensus-typed-integration-architecture.png"
-  alt="Architecture diagram of how Zensus connects to finance data. Four dark integration cards aligned at the top, labeled Plaid, QuickBooks, HubSpot, and Slack, each carrying a green OAuth padlock badge and labeled with 'typed integration' and 'scoped OAuth' beneath. The cards feed downward into a wide 'Structured runway snapshot' layer rendered as a data-row strip. Below the snapshot, a glowing Zensus runway agent node reads from the snapshot via a single labeled arrow."
-  caption="Zensus is not an MCP server, but the architecture follows the same principles MCP encodes: typed integrations, scoped OAuth, and a structured snapshot the runway agent reads from, not a shell on your bank session."
+  alt="Architecture diagram of how Zensus connects to finance data. Four dark integration cards aligned at the top, labeled Plaid, QuickBooks, HubSpot, and Slack, each carrying a green OAuth padlock badge and labeled with 'typed integration' and 'scoped OAuth' beneath. The cards feed downward into a wide structured cash flow snapshot layer rendered as a data-row strip. Below the snapshot, a glowing Zensus cash flow agent node reads from the snapshot via a single labeled arrow."
+  caption="Zensus is not an MCP server, but the architecture follows the same principles MCP encodes: typed integrations, scoped OAuth, and a structured snapshot the cash flow agent reads from, not a shell on your bank session."
 />
 
 
@@ -431,5 +431,5 @@ Zensus is a cash flow forecasting and runway-planning platform for founders with
 
 
 <BlogCallout title="Run Your Cash Flow on a Trusted Data Layer">
-Zensus gives founders and finance teams a real-time runway built on typed, audit-friendly integrations with QuickBooks, Plaid, HubSpot, and Slack. [Talk to us](https://calendly.com/hello-zensus/introcall) or see [pricing](/pricing).
+Zensus gives founders and finance teams a real-time cash flow forecast built on typed, audit-friendly integrations with QuickBooks, Plaid, HubSpot, and Slack. [Talk to us](https://calendly.com/hello-zensus/introcall) or see [pricing](/pricing).
 </BlogCallout>

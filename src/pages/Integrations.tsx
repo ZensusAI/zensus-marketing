@@ -38,7 +38,7 @@ const CARDS: Card[] = [
   {
     slug: "hubspot",
     name: "HubSpot",
-    blurb: "Deals and subscriptions feed your runway. Annual and quarterly contracts hit on real dates.",
+    blurb: "Deals and subscriptions feed your cash flow forecast. Annual and quarterly contracts hit on real dates.",
     logo: hubspotLogo,
   },
   {

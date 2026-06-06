@@ -63,7 +63,7 @@ const Security = () => (
             You connect Plaid, QuickBooks, or HubSpot through OAuth. Those
             providers hold the credentials. Zensus receives scoped OAuth tokens,
             pulls the data we are authorized to read, and stores only what we
-            need to compute your runway. Data moves over TLS. At rest, it
+            need to compute your cash flow forecast. Data moves over TLS. At rest, it
             lives on encrypted AWS infrastructure.
           </p>
         </Section>
@@ -76,10 +76,10 @@ const Security = () => (
             </li>
             <li>
               Transactions and balances within the sync window required to
-              project your runway.
+              project your cash flow.
             </li>
             <li>Scenario chat history for your account only.</li>
-            <li>Derived runway projections and alert state.</li>
+            <li>Derived cash flow projections and alert state.</li>
           </ul>
         </Section>
 

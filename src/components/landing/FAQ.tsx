@@ -16,11 +16,11 @@ const faqGroups = [
       },
       {
         question: "Can I connect my HubSpot account?",
-        answer: "Yes. Zensus syncs your HubSpot subscriptions (including annual and quarterly contracts) so your runway projections reflect when revenue actually hits your bank, not just flat monthly estimates.",
+        answer: "Yes. Zensus syncs your HubSpot subscriptions (including annual and quarterly contracts) so your cash flow projections reflect when revenue actually hits your bank, not just flat monthly estimates.",
       },
       {
         question: "How long does setup take?",
-        answer: "Under 2 minutes. Connect your bank or QuickBooks with one click, and your runway is calculated instantly. No manual data entry.",
+        answer: "Under 2 minutes. Connect your bank or QuickBooks with one click, and your cash flow forecast is calculated instantly. No manual data entry.",
       },
     ],
   },
@@ -37,7 +37,7 @@ const faqGroups = [
       },
       {
         question: "How often does my data update?",
-        answer: "Your data syncs in real time via webhooks. The moment a transaction clears in Plaid, an invoice changes in QuickBooks, or a subscription updates in HubSpot, your runway recalculates. You can also trigger a manual sync from any source at any time.",
+        answer: "Your data syncs in real time via webhooks. The moment a transaction clears in Plaid, an invoice changes in QuickBooks, or a subscription updates in HubSpot, your cash flow forecast recalculates. You can also trigger a manual sync from any source at any time.",
       },
     ],
   },
@@ -59,7 +59,7 @@ const faqGroups = [
     items: [
       {
         question: "How does pricing work?",
-        answer: "Zensus Pro is $199 a month, billed monthly, cancel anytime. One plan with every integration (Plaid, QuickBooks, HubSpot, Slack), real-time runway, AI scenarios, and alerts. Every new account starts with a 14-day free trial — your card is collected up front but not charged until the trial ends. Cancel anytime before then at no cost. Annual billing is not available yet.",
+        answer: "Zensus Pro is $199 a month, billed monthly, cancel anytime. One plan with every integration (Plaid, QuickBooks, HubSpot, Slack), real-time cash flow, AI scenarios, and alerts. Every new account starts with a 14-day free trial — your card is collected up front but not charged until the trial ends. Cancel anytime before then at no cost. Annual billing is not available yet.",
       },
     ],
   },

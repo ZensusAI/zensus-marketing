@@ -81,8 +81,8 @@ const UseCases = () => (
               QuickBooks
             </Link>{" "}
             invoices and places each contract payment on the date it actually
-            lands, so your runway reflects the March 14 renewal, not a smooth
-            twelfth of it every month. For the weekly discipline behind this,
+            lands, so your cash flow forecast reflects the March 14 renewal,
+            not a smooth twelfth of it every month. For the weekly discipline behind this,
             see our guide to the{" "}
             <Link to="/blog/what-is-a-13-week-cash-flow-forecast" className={linkCls}>
               13-week cash flow forecast
@@ -139,13 +139,13 @@ const UseCases = () => (
           </p>
         </UseCase>
 
-        <UseCase title="Hiring and runway scenario planning">
+        <UseCase title="Hiring and cash flow scenario planning">
           <p>
             Before you sign an offer letter, ask Zensus what the hire does to
             your zero-cash date. The scenario agent answers in plain language,
             using your live financial data, and the{" "}
             <a href="/#features" className={linkCls}>
-              runway view
+              cash flow view
             </a>{" "}
             updates as real transactions clear. Your data stays yours: how we
             handle it is documented on the{" "}

@@ -110,7 +110,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-20 md:mb-28 lg:mb-36">
-            Connect your bank, QuickBooks, and HubSpot. Runway that knows your
+            Connect your bank, QuickBooks, and HubSpot. Cash flow that knows your
             annual contract hits March 14, not "sometime in Q1."
           </p>
 
