@@ -120,6 +120,11 @@ function useScrolled(threshold = 8) {
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
+// Primary CTA styling shared by the desktop and mobile "Get Started" buttons
+// so the label, colors, and hover state cannot drift between the two.
+const navCtaBase =
+  "rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90";
+
 const desktopLinkBase =
   "relative text-[15px] font-semibold text-white rounded transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-[width] after:duration-200 hover:after:w-full";
 
@@ -461,14 +466,14 @@ const Navbar = () => {
               <Button
                 asChild
                 size="sm"
-                className={`rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow ${focusRing}`}
+                className={`${navCtaBase} shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow ${focusRing}`}
               >
                 <a
                   href={SIGN_IN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() =>
-                    trackCtaClick("navbar_desktop", { destination: "login" })
+                    trackCtaClick("navbar_desktop", { destination: "get_started" })
                   }
                 >
                   Get Started
@@ -521,14 +526,14 @@ const Navbar = () => {
               <Button
                 asChild
                 size="lg"
-                className={`w-full justify-center rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_24px_hsl(var(--primary)/0.3)] ${focusRing}`}
+                className={`w-full justify-center ${navCtaBase} shadow-[0_0_24px_hsl(var(--primary)/0.3)] ${focusRing}`}
               >
                 <a
                   href={SIGN_IN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => {
-                    trackCtaClick("navbar_mobile", { destination: "login" });
+                    trackCtaClick("navbar_mobile", { destination: "get_started" });
                     close();
                   }}
                 >
