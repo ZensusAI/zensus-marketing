@@ -48,7 +48,7 @@ const NAV: NavEntry[] = [
       {
         href: "/#features",
         label: "Features",
-        description: "Runway, alerts, and scenario planning in one view.",
+        description: "Cash flow, alerts, and scenario planning in one view.",
         isRoute: false,
       },
       {

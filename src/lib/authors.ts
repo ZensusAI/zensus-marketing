@@ -11,7 +11,7 @@ export const authors = {
     name: "Ajin Sunny",
     position: "Founder & CEO, Zensus",
     avatar: "/authors/ajin.svg",
-    bio: "Ajin writes about cash flow forecasting, runway planning, and how AI changes the way founders run finance.",
+    bio: "Ajin writes about cash flow forecasting, financial planning, and how AI changes the way founders run finance.",
     url: "/about",
   },
 } as const satisfies Record<string, Author>;

@@ -32,7 +32,7 @@ const FAQS = [
   {
     question: "How do I get started with Zensus?",
     answer:
-      "Create an account at app.zensus.app, then connect your bank through Plaid or your books through QuickBooks (or upload a spreadsheet). Zensus builds your cash flow forecast and runway automatically from there.",
+      "Create an account at app.zensus.app, then connect your bank through Plaid or your books through QuickBooks (or upload a spreadsheet). Zensus builds your cash flow forecast automatically from there.",
   },
   {
     question: "Is my financial data secure?",

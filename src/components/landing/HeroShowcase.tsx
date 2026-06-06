@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const FRAMES = [
-  { src: dashboard1, alt: "Zensus runway dashboard with projection chart" },
-  { src: dashboard2, alt: "Zensus runway dashboard alternate view" },
+  { src: dashboard1, alt: "Zensus cash flow dashboard with projection chart" },
+  { src: dashboard2, alt: "Zensus cash flow dashboard alternate view" },
 ] as const;
 
 /** Time each frame stays fully visible before crossfading (between 2–3s). */
@@ -78,7 +78,7 @@ const HeroShowcase = () => {
               className="relative aspect-[16/10] w-full overflow-hidden bg-muted"
               role="group"
               aria-roledescription="carousel"
-              aria-label="Runway dashboard screenshots"
+              aria-label="Cash flow dashboard screenshots"
             >
               {FRAMES.map((frame, i) => (
                 <img

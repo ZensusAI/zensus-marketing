@@ -10,7 +10,7 @@ const steps = [
   {
     number: "2",
     icon: BarChart3,
-    title: "See your runway live",
+    title: "See your cash flow live",
     description: "Zero-cash date, day-by-day drill-down, and scenario chat ready in 60 seconds.",
   },
   {
@@ -30,7 +30,7 @@ const HowItWorks = () => {
             How it works
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From sign-up to runway number in under 2 minutes
+            From sign-up to a live cash flow forecast in under 2 minutes
           </p>
         </div>
 

@@ -28,7 +28,7 @@ const CARDS = [
     category: "",
     title: "Cash flow forecasting for founders with variable revenue",
     subtitle:
-      "Runway that matches the calendar. Connect your bank, QuickBooks, and HubSpot and see exactly when your cash runs out.",
+      "Cash flow that matches the calendar. Connect your bank, QuickBooks, and HubSpot and see exactly when your cash runs out.",
     accent: "green",
   },
   {
@@ -36,15 +36,15 @@ const CARDS = [
     category: "Pricing",
     title: "Zensus Pro, $199 a month",
     subtitle:
-      "One plan. Every integration. Real-time runway, AI scenarios, Slack alerts. Billed monthly, cancel anytime.",
+      "One plan. Every integration. Real-time cash flow, AI scenarios, Slack alerts. Billed monthly, cancel anytime.",
     accent: "green",
   },
   {
     slug: "blog",
     category: "Blog",
-    title: "Notes on runway and variable revenue",
+    title: "Notes on cash flow and variable revenue",
     subtitle:
-      "Practical guides on cash flow forecasting, runway planning, and financial decisions for founders.",
+      "Practical guides on cash flow forecasting and financial decisions for founders.",
     accent: "green",
   },
   {
@@ -124,7 +124,7 @@ const CARDS = [
     category: "Integration",
     title: "Plaid integration",
     subtitle:
-      "Live bank balances and categorized transactions piped straight into your runway forecast.",
+      "Live bank balances and categorized transactions piped straight into your cash flow forecast.",
     accent: "plaid",
   },
   {
@@ -132,7 +132,7 @@ const CARDS = [
     category: "Integration",
     title: "QuickBooks integration",
     subtitle:
-      "Sync accounts, invoices, bills, and vendors so your runway matches your books.",
+      "Sync accounts, invoices, bills, and vendors so your cash flow forecast matches your books.",
     accent: "quickbooks",
   },
   {
@@ -148,7 +148,7 @@ const CARDS = [
     category: "Integration",
     title: "Slack integration",
     subtitle:
-      "Runway alerts, low-cash warnings, and daily digests delivered where your team already works.",
+      "Cash flow alerts, low-cash warnings, and daily digests delivered where your team already works.",
     accent: "slack",
   },
   {
@@ -156,7 +156,7 @@ const CARDS = [
     category: "Austin",
     title: "Zensus Austin",
     subtitle:
-      "Cash flow forecasting for Austin founders with variable revenue and real billing-date runway visibility.",
+      "Cash flow forecasting for Austin founders with variable revenue and real billing-date visibility.",
     accent: "green",
   },
 ];

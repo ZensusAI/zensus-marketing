@@ -14,7 +14,7 @@ import { trackCtaClick } from "@/lib/analytics/events";
 
 const BULLETS = [
   "Connect QuickBooks, Plaid, and HubSpot in minutes",
-  "Real-time runway built on live financial data",
+  "Real-time cash flow forecast built on live financial data",
   "Run scenarios in plain English",
   "Slack alerts before cash runs out",
 ];
@@ -80,10 +80,10 @@ export function SignupModal({ children }: SignupModalProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-slate-950/10" />
             <div className="absolute inset-x-0 bottom-0 p-8">
               <DialogTitle className="text-2xl font-semibold leading-tight tracking-tight text-white">
-                Runway that adapts to your billing cadence.
+                Cash flow that adapts to your billing cadence.
               </DialogTitle>
               <DialogDescription className="mt-2 text-sm leading-relaxed text-slate-300">
-                Bank, accounting, CRM. One runway view, in real time.
+                Bank, accounting, CRM. One cash flow view, in real time.
               </DialogDescription>
             </div>
           </div>
@@ -94,7 +94,7 @@ export function SignupModal({ children }: SignupModalProps) {
               Start using Zensus
             </DialogTitle>
             <DialogDescription className="mb-6 text-sm text-stone-600 md:hidden">
-              Bank, accounting, CRM. One runway view, in real time.
+              Bank, accounting, CRM. One cash flow view, in real time.
             </DialogDescription>
 
             <ul className="mb-8 space-y-3">

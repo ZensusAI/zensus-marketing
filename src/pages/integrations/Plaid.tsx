@@ -30,7 +30,7 @@ const serviceSchema = {
   name: "Zensus + Plaid bank integration",
   serviceType: "Bank account data integration for cash flow forecasting",
   description:
-    "Connect your bank account to Zensus via Plaid for real-time transaction sync and runway projections based on actual cleared transactions.",
+    "Connect your bank account to Zensus via Plaid for real-time transaction sync and cash flow projections based on actual cleared transactions.",
   provider: { "@id": "https://zensus.app/#organization" },
   areaServed: "US",
   url: "https://zensus.app/integrations/plaid",

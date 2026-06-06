@@ -20,7 +20,7 @@ const TILES: Tile[] = [
   {
     Glyph: GlyphWebhookSync,
     title: "Real-time webhook sync",
-    body: "The moment a transaction clears, your runway updates.",
+    body: "The moment a transaction clears, your cash flow forecast updates.",
   },
   {
     Glyph: GlyphZeroCashDate,

@@ -7,8 +7,8 @@ const sections: IntegrationSection[] = [
     body: (
       <p>
         Deals and subscriptions from your HubSpot pipeline. Zensus maps each
-        deal to a projected billing record so your runway reflects when
-        revenue actually lands, including annual and quarterly contract
+        deal to a projected billing record so your cash flow forecast reflects
+        when revenue actually lands, including annual and quarterly contract
         terms.
       </p>
     ),
@@ -29,8 +29,8 @@ const sections: IntegrationSection[] = [
         You authorize HubSpot through OAuth 2.0. Zensus pulls deal data on
         connection and stays current via HubSpot webhooks. Multi-currency
         deals are stored with their native currency; no conversion is
-        applied, so your runway respects the currency you signed the deal
-        in.
+        applied, so your cash flow forecast respects the currency you signed
+        the deal in.
       </p>
     ),
   },
@@ -60,9 +60,9 @@ const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
   name: "Zensus + HubSpot integration",
-  serviceType: "CRM and subscription data integration for runway projection",
+  serviceType: "CRM and subscription data integration for cash flow projection",
   description:
-    "Connect HubSpot to Zensus via OAuth so deals and subscriptions feed runway projections that respect annual, quarterly, and multi-currency contract terms.",
+    "Connect HubSpot to Zensus via OAuth so deals and subscriptions feed cash flow projections that respect annual, quarterly, and multi-currency contract terms.",
   provider: { "@id": "https://zensus.app/#organization" },
   areaServed: "US",
   url: "https://zensus.app/integrations/hubspot",
@@ -81,10 +81,10 @@ const HubSpotIntegration = () => (
   <IntegrationPage
     slug="hubspot"
     displayName="HubSpot"
-    tagline="Deals and subscriptions feed your runway. Annual and quarterly contracts hit on their real dates, not smeared into MRR."
+    tagline="Deals and subscriptions feed your cash flow forecast. Annual and quarterly contracts hit on their real dates, not smeared into MRR."
     logoSrc={hubspotLogo}
     metaTitle="HubSpot Integration · Deals & Subscriptions in Zensus"
-    metaDescription="Connect HubSpot to Zensus via OAuth. Deals and subscriptions feed real-time runway projections that respect contract terms and currency."
+    metaDescription="Connect HubSpot to Zensus via OAuth. Deals and subscriptions feed real-time cash flow projections that respect contract terms and currency."
     sections={sections}
     serviceSchema={serviceSchema}
   />

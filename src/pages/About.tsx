@@ -88,7 +88,7 @@ const About = () => (
             <div className="space-y-4 text-base text-foreground leading-relaxed">
               <p>
                 Zensus connects your bank (via Plaid), QuickBooks, HubSpot,
-                and Slack, then gives you a real-time runway forecast that
+                and Slack, then gives you a real-time cash flow forecast that
                 respects how your business actually earns and spends money.
                 Annual contracts hit on their real billing dates. Subscription
                 revenue flows in with contract cadence. Same-day internal

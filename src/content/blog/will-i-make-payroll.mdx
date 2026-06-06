@@ -4,7 +4,7 @@ export const meta = {
   description:
     'A step-by-step way to know if you can make payroll: project cash to each payroll date, subtract committed outflows, and check it against your buffer.',
   date: '2026-06-01',
-  dateModified: '2026-06-05',
+  dateModified: '2026-06-06',
   category: 'Guide',
   readTime: '9 min read',
   slug: 'will-i-make-payroll',
@@ -181,8 +181,8 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>Doing this by hand works, right up until your forecast goes stale the moment a transaction clears or an invoice slips. That's the part Zensus automates.</p>
 
-<p>Connect your bank (via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>), <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a>, and Zensus places every recurring inflow and outflow (each payroll run, your annual and quarterly contracts, and your committed bills) on the exact day it actually hits your account. Your runway updates in real time as transactions clear, so the balance projected to each payroll date is always current, not a snapshot from last week. How Zensus handles your financial data is documented on the <a href="/security" className="font-medium text-primary underline-offset-4 hover:underline">security page</a>.</p>
+<p>Connect your bank (via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>), <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a>, and Zensus places every recurring inflow and outflow (each payroll run, your annual and quarterly contracts, and your committed bills) on the exact day it actually hits your account. Your cash flow forecast updates in real time as transactions clear, so the balance projected to each payroll date is always current, not a snapshot from last week. How Zensus handles your financial data is documented on the <a href="/security" className="font-medium text-primary underline-offset-4 hover:underline">security page</a>.</p>
 
 <p>Then set your cash floor once. Zensus watches your rolling 30-day projection and fires a <strong><a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alert</a> the moment it's on track to cross that floor</strong>, and re-alerts if the breach moves earlier or your minimum balance drops further. Instead of asking "will I make payroll?" every Monday, you find out the instant the answer changes.</p>
 
-<p>If you'd rather see it than build it, you can <a href="https://app.zensus.app/login?redirect=%2Fsubscribe">start a 14-day free trial</a> (plans are on the <a href="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">pricing page</a>) and have your real runway and your next two payroll dates in front of you in a couple of minutes.</p>
+<p>If you'd rather see it than build it, you can <a href="https://app.zensus.app/login?redirect=%2Fsubscribe">start a 14-day free trial</a> (plans are on the <a href="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">pricing page</a>) and have your live cash flow forecast and your next two payroll dates in front of you in a couple of minutes.</p>

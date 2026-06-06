@@ -1,12 +1,12 @@
 # Zensus
 
-> AI-native cash flow forecasting and runway planning for startup founders.
+> AI-native cash flow forecasting and planning for startup founders.
 
-Zensus helps founders with variable revenue know exactly when their cash runs out, and what to do about it. Connect QuickBooks, your bank account via Plaid, or HubSpot subscriptions. Get real-time runway projections and ask an AI agent questions about your business survival.
+Zensus helps founders with variable revenue know exactly when their cash runs out, and what to do about it. Connect QuickBooks, your bank account via Plaid, or HubSpot subscriptions. Get real-time cash flow projections and ask an AI agent questions about your business survival.
 
 ## Key Features
 
-- Real-time runway calculation with zero-cash date
+- Real-time cash flow projection with zero-cash date
 - Agentic multi-turn scenario planning (text and voice)
 - Subscription-intelligent revenue projections (annual, quarterly, monthly contracts)
 - Direct integrations: QuickBooks, Plaid bank feeds, HubSpot

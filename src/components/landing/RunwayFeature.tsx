@@ -46,12 +46,12 @@ const STEPS: StepDef[] = [
   {
     eyebrow: "Scenarios",
     headline: "Run scenarios with",
-    highlight: "your runway agent",
+    highlight: "your cash flow agent",
     description:
-      "Ask it in plain English: what if our biggest customer pays 30 days late and we hire two engineers? Your agent recalculates runway in real time.",
+      "Ask it in plain English: what if our biggest customer pays 30 days late and we hire two engineers? Your agent recalculates your cash flow in real time.",
     bullets: [
       "Stack multiple assumptions (hiring, churn, pricing) in a single conversation",
-      "Watch your runway update live as each scenario layer is applied",
+      "Watch your cash flow update live as each scenario layer is applied",
       "Compare before-and-after projections and revert any change instantly",
     ],
     icon: MessageCircle,
@@ -208,7 +208,7 @@ function ProductCanvas({
               <img
                 key={`${stepIdx}-${subIdx}`}
                 src={src}
-                alt={`${STEPS[stepIdx].headline} ${STEPS[stepIdx].highlight}. Zensus runway.`}
+                alt={`${STEPS[stepIdx].headline} ${STEPS[stepIdx].highlight}. Zensus cash flow.`}
                 loading={i === 0 ? "eager" : "lazy"}
                 width={1600}
                 height={1000}
@@ -281,14 +281,14 @@ const RunwayFeature = () => {
         <div className="mx-auto max-w-3xl pt-24 text-center md:pt-32">
           <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/40 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground backdrop-blur">
             <span className="h-1 w-1 rounded-full bg-primary" />
-            The runway product
+            The cash flow product
           </span>
           <h2 className="mt-6 font-display text-4xl font-bold tracking-tight sm:text-5xl">
             From the macro view{" "}
             <span className="text-gradient">to the day it hits.</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
-            Three moves, one runway. Project, ask, get pinged. So you never find out about a
+            Three moves, one cash flow view. Project, ask, get pinged. So you never find out about a
             cash crunch from a bank balance.
           </p>
         </div>
