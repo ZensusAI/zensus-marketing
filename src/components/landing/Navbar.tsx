@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
@@ -152,78 +152,150 @@ function DesktopLink({ link }: { link: NavLinkItem }) {
   );
 }
 
-// Desktop "Resources"-style dropdown, built on the Radix NavigationMenu
-// primitive (hover intent, keyboard nav, and Escape come for free). We omit the
-// shadcn Viewport and render the panel in place so its links stay in the static
-// prerendered HTML via `forceMount` — Googlebot and AI crawlers see the same
-// anchors whether or not the menu is open.
-function DesktopMenu({ menu }: { menu: NavMenu }) {
+// Desktop dropdowns, built on a single Radix NavigationMenu root with a shared
+// Viewport (the Stripe-style "morphing dropdown"). One panel stays open while
+// the pointer slides between triggers: it glides horizontally under the active
+// trigger and morphs its height to fit the next menu, instead of closing and
+// reopening. Hover intent, keyboard nav, and Escape come for free. We style
+// the shared Viewport ourselves (no shadcn wrapper) and `forceMount` both the
+// Viewport and every Content so all dropdown links stay in the static
+// prerendered HTML — Googlebot and AI crawlers see the same anchors whether or
+// not a menu is open.
+function DesktopNav({ entries }: { entries: NavEntry[] }) {
   const { pathname } = useLocation();
-  const groupActive = menu.children.some((c) => c.href === pathname);
+  const rootRef = useRef<HTMLElement>(null);
+  // Horizontal center of the active trigger, relative to the nav root. The
+  // shared viewport translates to sit centered under it; transitioning that
+  // transform is what makes the panel glide between menus.
+  const [center, setCenter] = useState(0);
+  // Radix does not stamp data-state on force-mounted Content inside a shared
+  // Viewport, so we track the open menu ourselves to toggle which panel is
+  // visible. lastValue keeps the outgoing panel visible while the viewport
+  // fades out on close, instead of emptying the box mid-fade.
+  const [value, setValue] = useState("");
+  const lastValue = useRef("");
+
+  const handleValueChange = (next: string) => {
+    setValue(next);
+    if (!next || !rootRef.current) return;
+    lastValue.current = next;
+    const trigger = rootRef.current.querySelector<HTMLElement>(
+      `[data-nav-trigger="${CSS.escape(next)}"]`,
+    );
+    if (!trigger) return;
+    const rootBox = rootRef.current.getBoundingClientRect();
+    const box = trigger.getBoundingClientRect();
+    setCenter(box.left - rootBox.left + box.width / 2);
+  };
+
+  const shownMenu = value || lastValue.current;
 
   return (
-    <NavigationMenu.Root delayDuration={100} aria-label={menu.label} className="relative">
-      <NavigationMenu.List className="m-0 flex list-none p-0">
-        <NavigationMenu.Item>
-          <NavigationMenu.Trigger
-            className={`group/res flex items-center gap-1.5 ${desktopLinkBase} ${focusRing} data-[state=open]:after:w-full`}
-          >
-            <span className="flex items-center gap-1.5">
-              {menu.label}
-              {groupActive && (
-                <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
-              )}
-            </span>
-            <ChevronDown
-              aria-hidden
-              className="h-3.5 w-3.5 transition-transform duration-200 group-data-[state=open]/res:rotate-180"
-            />
-          </NavigationMenu.Trigger>
+    <NavigationMenu.Root
+      ref={rootRef}
+      delayDuration={100}
+      onValueChange={handleValueChange}
+      aria-label="Main"
+      className="relative"
+    >
+      <NavigationMenu.List className="m-0 flex list-none items-center gap-8 p-0">
+        {entries.map((entry) => {
+          if (!isMenu(entry)) {
+            // Plain top-level links (none today) still slot into the shared
+            // list so future additions keep their position among the menus.
+            return (
+              <NavigationMenu.Item key={entry.href} className="flex">
+                <DesktopLink link={entry} />
+              </NavigationMenu.Item>
+            );
+          }
+          const menu = entry;
+          const groupActive = menu.children.some((c) => c.href === pathname);
+          return (
+            <NavigationMenu.Item key={menu.label} value={menu.label}>
+              <NavigationMenu.Trigger
+                data-nav-trigger={menu.label}
+                className={`group/res flex items-center gap-1.5 ${desktopLinkBase} ${focusRing} data-[state=open]:after:w-full`}
+              >
+                <span className="flex items-center gap-1.5">
+                  {menu.label}
+                  {groupActive && (
+                    <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
+                  )}
+                </span>
+                <ChevronDown
+                  aria-hidden
+                  className="h-3.5 w-3.5 transition-transform duration-200 group-data-[state=open]/res:rotate-180"
+                />
+              </NavigationMenu.Trigger>
 
-          {/* Default to hidden + non-interactive; reveal only on the open
-              state. This stays correct whether or not Radix stamps a
-              data-state="closed" on force-mounted, inactive content. */}
-          <NavigationMenu.Content
-            forceMount
-            className="absolute left-0 top-full pt-3 translate-y-1 opacity-0 pointer-events-none transition-[opacity,transform] duration-200 data-[state=open]:translate-y-0 data-[state=open]:opacity-100 data-[state=open]:pointer-events-auto"
-          >
-            <div className="w-72 rounded-xl border border-border bg-background/95 p-2 shadow-2xl backdrop-blur-xl">
-              {menu.children.map((child) => {
-                const active = child.href === pathname;
-                const className = `block rounded-lg px-3 py-2.5 transition-colors ${focusRing} ${
-                  active ? "bg-primary/5" : "hover:bg-muted/50"
-                }`;
-                const body = (
-                  <>
-                    <span className="flex items-center gap-1.5 text-[15px] font-semibold text-white">
-                      {child.label}
-                      {active && (
-                        <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
+              {/* Rendered into the shared Viewport below. Stacked absolutely;
+                  the inactive panels crossfade out while the viewport glides
+                  and resizes, which reads as one continuous panel. */}
+              <NavigationMenu.Content
+                forceMount
+                className={`absolute left-0 top-0 w-72 p-2 transition-opacity duration-200 ${
+                  shownMenu === menu.label
+                    ? "opacity-100 pointer-events-auto"
+                    : "opacity-0 pointer-events-none"
+                }`}
+              >
+                {menu.children.map((child) => {
+                  const active = child.href === pathname;
+                  const className = `block rounded-lg px-3 py-2.5 transition-colors ${focusRing} ${
+                    active ? "bg-primary/5" : "hover:bg-muted/50"
+                  }`;
+                  const body = (
+                    <>
+                      <span className="flex items-center gap-1.5 text-[15px] font-semibold text-white">
+                        {child.label}
+                        {active && (
+                          <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
+                        )}
+                      </span>
+                      <span className="mt-0.5 block text-[13px] leading-snug text-muted-foreground">
+                        {child.description}
+                      </span>
+                    </>
+                  );
+                  return (
+                    <NavigationMenu.Link asChild key={child.href}>
+                      {child.isRoute === false ? (
+                        <a href={child.href} className={className}>
+                          {body}
+                        </a>
+                      ) : (
+                        <Link to={child.href} className={className}>
+                          {body}
+                        </Link>
                       )}
-                    </span>
-                    <span className="mt-0.5 block text-[13px] leading-snug text-muted-foreground">
-                      {child.description}
-                    </span>
-                  </>
-                );
-                return (
-                  <NavigationMenu.Link asChild key={child.href}>
-                    {child.isRoute === false ? (
-                      <a href={child.href} className={className}>
-                        {body}
-                      </a>
-                    ) : (
-                      <Link to={child.href} className={className}>
-                        {body}
-                      </Link>
-                    )}
-                  </NavigationMenu.Link>
-                );
-              })}
-            </div>
-          </NavigationMenu.Content>
-        </NavigationMenu.Item>
+                    </NavigationMenu.Link>
+                  );
+                })}
+              </NavigationMenu.Content>
+            </NavigationMenu.Item>
+          );
+        })}
       </NavigationMenu.List>
+
+      {/* The wrapper owns the horizontal glide (transform transition toward
+          the active trigger); the Viewport owns the size morph via Radix's
+          measured CSS variables and the open/close fade. */}
+      <div
+        className="absolute left-0 top-full pt-3 transition-transform duration-300 ease-out"
+        style={{ transform: `translateX(calc(${center}px - 50%))` }}
+      >
+        <NavigationMenu.Viewport
+          forceMount
+          className={[
+            "relative overflow-hidden rounded-xl border border-border bg-background/95 shadow-2xl backdrop-blur-xl",
+            "h-[var(--radix-navigation-menu-viewport-height)] w-[var(--radix-navigation-menu-viewport-width)]",
+            "transition-[width,height,opacity,transform] duration-300 ease-out",
+            "translate-y-1 opacity-0 pointer-events-none",
+            "data-[state=open]:translate-y-0 data-[state=open]:opacity-100 data-[state=open]:pointer-events-auto",
+          ].join(" ")}
+        />
+      </div>
     </NavigationMenu.Root>
   );
 }
@@ -354,14 +426,8 @@ const Navbar = () => {
             <span className="text-xl font-semibold text-foreground">Zensus</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8 justify-self-center">
-            {NAV.map((entry) =>
-              isMenu(entry) ? (
-                <DesktopMenu key={entry.label} menu={entry} />
-              ) : (
-                <DesktopLink key={entry.href} link={entry} />
-              ),
-            )}
+          <div className="hidden md:block justify-self-center">
+            <DesktopNav entries={NAV} />
           </div>
 
           <div className="flex items-center gap-3 justify-self-end">
