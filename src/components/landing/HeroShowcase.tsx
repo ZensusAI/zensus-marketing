@@ -54,22 +54,24 @@ const HeroShowcase = () => {
               "ring-1 ring-black/5 dark:ring-white/10",
             )}
           >
-            {/* Browser-style window chrome (decorative; not a live browser). */}
+            {/* Browser-style window chrome (decorative; not a live browser).
+                Forest surface per the brand book: the data window sits in a
+                Forest frame on the cream canvas. */}
             <div
-              className="flex items-center gap-3 border-b border-white/[0.06] bg-zinc-950 px-3 py-2.5 sm:px-4 sm:py-3"
+              className="flex items-center gap-3 border-b border-[hsl(var(--forest-border)/0.6)] bg-[hsl(var(--forest))] px-3 py-2.5 sm:px-4 sm:py-3"
               aria-hidden
             >
               <div className="flex shrink-0 gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-                <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-                <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
               </div>
               <div className="flex min-w-0 flex-1 justify-center">
-                <div className="truncate rounded-full border border-white/10 bg-zinc-900/80 px-3 py-1 text-center font-mono text-[11px] text-zinc-400 sm:text-xs sm:px-4">
+                <div className="truncate rounded-md border border-[hsl(var(--forest-border)/0.8)] bg-[hsl(var(--forest-raised)/0.8)] px-3 py-1 text-center font-mono text-[11px] text-[hsl(var(--forest-muted))] sm:text-xs sm:px-4">
                   app.zensus.app
                 </div>
               </div>
-              <span className="shrink-0 text-[10px] font-medium uppercase tracking-widest text-zinc-500">
+              <span className="shrink-0 text-[10px] font-medium uppercase tracking-widest text-[hsl(var(--sage-light))]">
                 Live
               </span>
             </div>

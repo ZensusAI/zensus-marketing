@@ -27,7 +27,7 @@ export const TryItNowButton = ({ className }: TryItNowButtonProps) => (
           "hover:bg-primary/90 font-semibold text-[15px]",
         )}
       >
-        Try it Now
+        Start free trial
         <ArrowRight
           size={16}
           className="ml-2 transition-transform group-hover:translate-x-1"

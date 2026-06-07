@@ -1,10 +1,10 @@
 const GREEN = "#21C55C";
 const AMBER = "#F59E0B";
 const RED = "#EF4444";
-const MUTED = "rgba(247,245,242,0.4)";
-const AXIS = "rgba(247,245,242,0.22)";
-const GRID = "rgba(247,245,242,0.08)";
-const BG = "#0A0A0B";
+const MUTED = "hsl(var(--foreground) / 0.4)";
+const AXIS = "hsl(var(--foreground) / 0.22)";
+const GRID = "hsl(var(--foreground) / 0.08)";
+const BG = "hsl(var(--surface-raised))";
 
 const svgProps = {
   width: "32",
@@ -63,7 +63,7 @@ export const GlyphFragmented = () => (
       y1="9.2"
       x2="13.6"
       y2="14"
-      stroke="rgba(247,245,242,0.25)"
+      stroke="hsl(var(--foreground) / 0.25)"
       strokeDasharray="2 2"
       strokeWidth="0.7"
     />
@@ -72,7 +72,7 @@ export const GlyphFragmented = () => (
       y1="14"
       x2="22"
       y2="11.2"
-      stroke="rgba(247,245,242,0.2)"
+      stroke="hsl(var(--foreground) / 0.2)"
       strokeDasharray="2 2"
       strokeWidth="0.7"
     />
@@ -89,7 +89,7 @@ export const GlyphFork = () => (
   <svg {...svgProps} strokeLinecap="round" strokeLinejoin="round">
     <line x1="3" y1="26" x2="29" y2="26" stroke={AXIS} strokeWidth="0.8" />
     <line x1="3" y1="26" x2="3" y2="5" stroke={AXIS} strokeWidth="0.8" />
-    <path d="M5 22 L15 16" stroke="rgba(247,245,242,0.55)" strokeWidth="2.4" fill="none" />
+    <path d="M5 22 L15 16" stroke="hsl(var(--foreground) / 0.55)" strokeWidth="2.4" fill="none" />
     <path d="M15 16 L25 7" stroke={GREEN} strokeWidth="2.6" fill="none" />
     <path d="M15 16 L25 25" stroke={RED} strokeWidth="2.6" fill="none" />
     <path d="M15 12.8 L18 16 L15 19.2 L12 16 Z" fill={AMBER} stroke={BG} strokeWidth="0.6" />

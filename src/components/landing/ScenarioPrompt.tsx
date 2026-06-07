@@ -15,20 +15,25 @@ interface ScenarioPromptProps {
 export const ScenarioPrompt = ({ className, visible = true }: ScenarioPromptProps) => (
   <div
     className={cn(
-      "inline-flex items-center gap-3 rounded-xl border px-4 py-3 font-mono text-sm",
-      "border-primary/30 bg-[hsl(var(--surface-raised))] text-foreground",
+      "inline-flex items-center gap-3 rounded-xl border px-4 py-3 font-mono text-sm max-w-full",
+      // Forest terminal chip ("Forest holds the data"): stays dark on the
+      // cream canvas so the rotating prompts read like a live console.
+      "border-[hsl(var(--forest-border))] bg-[hsl(var(--forest))] text-[hsl(var(--forest-foreground))]",
       "transition-all duration-500",
       visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
       className,
     )}
     aria-label="Example scenario prompts that Zensus can answer"
   >
-    <span className="text-primary font-semibold text-base">&gt;</span>
-    <div className="relative flex-1 h-5 overflow-hidden min-w-[20rem] max-w-[36rem]">
+    <span className="text-[hsl(var(--sage-light))] font-semibold text-base">&gt;</span>
+    {/* Fluid on small screens (the fixed 20rem floor used to push the chip
+        past a 390px viewport and clip the prompt). Long prompts truncate
+        with an ellipsis instead of running off-screen. */}
+    <div className="relative h-5 overflow-hidden w-[min(27rem,calc(100vw-8rem))]">
       {PHRASES.map((phrase, i) => (
         <span
           key={phrase}
-          className="absolute inset-0 whitespace-nowrap opacity-0"
+          className="absolute inset-0 truncate opacity-0"
           style={{
             animation: `scenario-rotate 20s infinite`,
             animationDelay: `${i * 5}s`,

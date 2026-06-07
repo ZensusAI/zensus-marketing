@@ -67,6 +67,18 @@
 
     --surface-raised: 220 13% 9%;  /* #14161A, for bento tiles, scenario prompt */
     --caution: 38 92% 50%;          /* amber, reserved for UI alerts */
+
+    /* Brand constants (theme-independent): Forest product surfaces and the
+       Sage scale from the brand book. Defined at :root so components that
+       reference them (Footer, showcase chrome) work on every route. */
+    --forest: 152 30% 8%;          /* Forest #0F1C16 */
+    --forest-raised: 155 24% 13%;
+    --forest-border: 153 18% 22%;
+    --forest-foreground: 43 92% 95%;
+    --forest-muted: 152 10% 62%;
+    --sage-light: 147 65% 56%;     /* #48D88A */
+    --sage-deep: 154 88% 32%;      /* #0A9A5C */
+    --sage-dark: 154 74% 21%;      /* #0E5C3A */
   }
 
   .dark {
@@ -101,6 +113,95 @@
     --surface-raised: 220 13% 9%;  /* #14161A, for bento tiles, scenario prompt */
     --caution: 38 92% 50%;          /* amber, reserved for UI alerts */
   }
+
+  /* Cream-first brand theme (brand book: "Cream first. Sage signals. Forest
+     holds the data."). Scoped to a class on <html> so individual routes can
+     opt in (ThemeScope in App.tsx toggles it per route; the landing page is
+     the only cream route today) while the rest of the site keeps the dark
+     theme until it is migrated. Promoting the whole site later = move these
+     values into :root. Written as :root.theme-cream so it always beats
+     :root and .dark. */
+  :root.theme-cream {
+    --background: 43 92% 95%;      /* Cream #FEF7E6 (canvas) */
+    --foreground: 172 24% 13%;     /* Ink #1A2A28 (type) */
+
+    --card: 45 100% 98%;           /* Cream Bright #FFFDF7 (card, tile) */
+    --card-foreground: 172 24% 13%;
+
+    --popover: 45 100% 98%;
+    --popover-foreground: 172 24% 13%;
+
+    --primary: 150 71% 45%;        /* Sage #22C573 (brand, CTA) */
+    --primary-foreground: 152 30% 8%;  /* Forest text on sage fills */
+
+    --secondary: 43 69% 90%;       /* Cream Warm #F7EDD4 (section band) */
+    --secondary-foreground: 172 24% 13%;
+
+    --muted: 43 69% 90%;
+    --muted-foreground: 170 13% 36%;   /* muted ink, AA on cream */
+
+    --accent: 150 71% 45%;
+    --accent-foreground: 152 30% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 42 56% 82%;          /* Cream Deep #EBDCB8 (hairline) */
+    --input: 42 56% 82%;
+    --ring: 154 88% 32%;           /* Sage Deep, visible focus on cream */
+
+    --gradient-start: 150 71% 45%;
+    --gradient-end: 154 88% 32%;
+    --glow: 150 71% 45%;
+
+    --surface-raised: 45 100% 98%; /* raised tiles go Cream Bright */
+    /* Forest + sage-scale constants inherit from :root above; the forest
+       tokens are what "Forest holds the data" surfaces use on this canvas. */
+  }
+}
+
+/* Brand-book "sage as text": on cream, raw Sage (#22C573) fails contrast for
+   copy and small icons, so the scoped theme remaps the text-primary utility
+   to Sage Dark (#0E5C3A). Lives outside @layer so it wins over Tailwind's
+   utilities layer. The hover variant is covered too (FAQ triggers use
+   hover:text-primary); fills (bg-primary) intentionally stay bright Sage. */
+:root.theme-cream .text-primary,
+:root.theme-cream .hover\:text-primary:hover {
+  color: hsl(var(--sage-dark));
+}
+
+/* Glows are a dark-theme device; on cream they read as smudges. Swap for a
+   soft ink-tinted elevation with a sage halo. */
+:root.theme-cream .glow {
+  box-shadow:
+    0 18px 40px -18px hsl(172 24% 13% / 0.18),
+    0 0 32px hsl(var(--glow) / 0.14);
+}
+:root.theme-cream .glow-sm {
+  box-shadow:
+    0 10px 24px -12px hsl(172 24% 13% / 0.14),
+    0 0 16px hsl(var(--glow) / 0.1);
+}
+
+/* White partner marks (e.g. the Plaid wordmark) are invisible on cream;
+   repaint them ink. Dark routes are untouched. */
+:root.theme-cream .logo-on-light {
+  filter: brightness(0) opacity(0.82);
+}
+
+:root.theme-cream .text-gradient {
+  background-image: linear-gradient(90deg, hsl(var(--sage-dark)), hsl(var(--sage-deep)));
+}
+
+/* Glyph frames (Problem and Bento icons): Cream Warm tiles so the frame
+   reads against the cream-bright cards it sits on (matching backgrounds made
+   the frames invisible), with a cream-deep hairline and a faint sage halo. */
+:root.theme-cream .glyph-frame {
+  border: 1px solid hsl(42 56% 82% / 0.9);
+  background:
+    linear-gradient(hsl(172 24% 13% / 0.04) 1px, transparent 1px) 0 0 / 8px 8px,
+    radial-gradient(circle at 50% 50%, hsl(150 71% 45% / 0.1), transparent 70%),
+    hsl(43 69% 90%);
 }
 
 @layer base {
