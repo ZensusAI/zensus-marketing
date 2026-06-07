@@ -116,10 +116,11 @@
 
   /* Cream-first brand theme (brand book: "Cream first. Sage signals. Forest
      holds the data."). Scoped to a class on <html> so individual routes can
-     opt in (the landing page does, via a layout effect in Index.tsx) while
-     the rest of the site keeps the dark theme until it is migrated.
-     Promoting the whole site later = move these values into :root.
-     Written as :root.theme-cream so it always beats :root and .dark. */
+     opt in (ThemeScope in App.tsx toggles it per route; the landing page is
+     the only cream route today) while the rest of the site keeps the dark
+     theme until it is migrated. Promoting the whole site later = move these
+     values into :root. Written as :root.theme-cream so it always beats
+     :root and .dark. */
   :root.theme-cream {
     --background: 43 92% 95%;      /* Cream #FEF7E6 (canvas) */
     --foreground: 172 24% 13%;     /* Ink #1A2A28 (type) */
@@ -162,8 +163,10 @@
 /* Brand-book "sage as text": on cream, raw Sage (#22C573) fails contrast for
    copy and small icons, so the scoped theme remaps the text-primary utility
    to Sage Dark (#0E5C3A). Lives outside @layer so it wins over Tailwind's
-   utilities layer. Fills (bg-primary) intentionally stay bright Sage. */
-:root.theme-cream .text-primary {
+   utilities layer. The hover variant is covered too (FAQ triggers use
+   hover:text-primary); fills (bg-primary) intentionally stay bright Sage. */
+:root.theme-cream .text-primary,
+:root.theme-cream .hover\:text-primary:hover {
   color: hsl(var(--sage-dark));
 }
 

@@ -107,10 +107,14 @@ const HowItWorks = () => {
   const reducedMotion = usePrefersReducedMotion();
   const rowRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
+  // Whether the row is currently on screen. The projection cycle pauses
+  // while it is not (the entrance choreography stays one-shot via active).
+  const [visible, setVisible] = useState(false);
   // Number of provider rows that have finished linking (diorama 1).
   const [linked, setLinked] = useState(0);
   // Which cash event last revised the projection (diorama 2). -1 = none yet.
   const [eventIdx, setEventIdx] = useState(-1);
+  const eventIdxRef = useRef(-1);
   const projPathRef = useRef<SVGPathElement>(null);
   const projDotRef = useRef<SVGCircleElement>(null);
   const anchorsRef = useRef<number[]>([...BASE_ANCHORS]);
@@ -118,18 +122,21 @@ const HowItWorks = () => {
 
   useEffect(() => {
     if (reducedMotion) {
+      // Static finished state, internally consistent: everything linked and
+      // the projection already revised by the first event (this is also the
+      // state the prerender captures).
       setActive(true);
       setLinked(PROVIDERS.length);
+      setEventIdx(0);
+      eventIdxRef.current = 0;
       return;
     }
     const el = rowRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setActive(true);
-          io.disconnect();
-        }
+        setVisible(entry.isIntersecting);
+        if (entry.isIntersecting) setActive(true);
       },
       { threshold: 0.3 },
     );
@@ -149,8 +156,11 @@ const HowItWorks = () => {
   // Diorama 2: every few seconds a cash event lands and the projection
   // half of the line re-draws to its revised trajectory (rAF interpolation
   // of the anchor points; attributes mutated directly to avoid re-renders).
+  // Gated on visibility: the cycle pauses while the section is off-screen
+  // (cleanup clears the interval and any in-flight tween) and resumes from
+  // the current event when it scrolls back in.
   useEffect(() => {
-    if (!active || reducedMotion) return;
+    if (!active || !visible || reducedMotion) return;
 
     const reviseTo = (target: number[]) => {
       cancelAnimationFrame(projRafRef.current);
@@ -169,24 +179,27 @@ const HowItWorks = () => {
       projRafRef.current = requestAnimationFrame(tick);
     };
 
-    let idx = -1;
     let intervalId = 0;
     const advance = () => {
-      idx = (idx + 1) % EVENTS.length;
+      const idx = (eventIdxRef.current + 1) % EVENTS.length;
+      eventIdxRef.current = idx;
       setEventIdx(idx);
       reviseTo(EVENTS[idx].anchors);
     };
     // First revision after the draw-in finishes, then a steady cadence.
-    const first = window.setTimeout(() => {
-      advance();
-      intervalId = window.setInterval(advance, 3400);
-    }, 2100);
+    const first = window.setTimeout(
+      () => {
+        advance();
+        intervalId = window.setInterval(advance, 3400);
+      },
+      eventIdxRef.current < 0 ? 2100 : 1200,
+    );
     return () => {
       clearTimeout(first);
       clearInterval(intervalId);
       cancelAnimationFrame(projRafRef.current);
     };
-  }, [active, reducedMotion]);
+  }, [active, visible, reducedMotion]);
 
   return (
     <section id="how-it-works" className="section-padding scroll-mt-28 bg-secondary/30">
@@ -260,7 +273,7 @@ const HowItWorks = () => {
                 </text>
                 <path
                   ref={projPathRef}
-                  d={buildProjD(BASE_ANCHORS)}
+                  d={buildProjD(reducedMotion ? EVENTS[0].anchors : BASE_ANCHORS)}
                   pathLength={1}
                   fill="none"
                   strokeWidth="2"
@@ -276,7 +289,10 @@ const HowItWorks = () => {
                         }
                   }
                 />
-                {/* Kink marker: where the current event hit the timeline. */}
+                {/* Kink marker: where the current event hit the timeline.
+                    Its fade-in is delayed so it lands as the 700ms line
+                    revision settles, instead of floating off the still-moving
+                    line. */}
                 {eventIdx >= 0 && (
                   <circle
                     key={eventIdx}
@@ -286,9 +302,20 @@ const HowItWorks = () => {
                     fill="none"
                     strokeWidth="1.5"
                     className="animate-fade-in stroke-[hsl(var(--primary))]"
+                    style={
+                      reducedMotion
+                        ? undefined
+                        : { animationDelay: "450ms", animationFillMode: "backwards" }
+                    }
                   />
                 )}
-                <circle ref={projDotRef} cx="154" cy={BASE_ANCHORS[3]} r="3" className="fill-[hsl(var(--primary))]" />
+                <circle
+                  ref={projDotRef}
+                  cx="154"
+                  cy={reducedMotion ? EVENTS[0].anchors[3] : BASE_ANCHORS[3]}
+                  r="3"
+                  className="fill-[hsl(var(--primary))]"
+                />
               </svg>
               {/* The cash event that just revised the line, with its impact. */}
               <p className="mt-2 h-4 font-mono text-[10px] text-muted-foreground" aria-live="off">
@@ -306,9 +333,7 @@ const HowItWorks = () => {
                     </span>
                   </span>
                 ) : (
-                  <span className={reducedMotion ? "" : "text-muted-foreground/60"}>
-                    {reducedMotion ? `${EVENTS[0].label} ${EVENTS[0].delta}` : "projection live"}
-                  </span>
+                  <span className="text-muted-foreground/60">projection live</span>
                 )}
               </p>
             </div>

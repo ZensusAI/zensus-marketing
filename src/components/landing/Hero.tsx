@@ -26,9 +26,9 @@ const Hero = () => {
       id="hero"
       className="relative flex items-center pt-24 pb-4 md:pt-32 md:pb-6 lg:pt-40 lg:pb-8 overflow-hidden bg-background"
     >
-      {/* Cream brand canvas (tokens come from :root.theme-cream, applied by
-          Index.tsx). A faint sage bloom keeps the hero from feeling flat
-          without reintroducing a hero image. */}
+      {/* Cream brand canvas (tokens come from :root.theme-cream, toggled
+          per route by ThemeScope in App.tsx). A faint sage bloom keeps the
+          hero from feeling flat without reintroducing a hero image. */}
       <div
         className="absolute inset-0 pointer-events-none [background:radial-gradient(60rem_24rem_at_50%_-4rem,hsl(var(--primary)/0.12),transparent_70%)]"
         aria-hidden

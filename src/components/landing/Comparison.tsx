@@ -12,8 +12,9 @@ import { Check, X } from "lucide-react";
  *   instead of asserting absence as fact.
  * - The caption dates the comparison. Re-verify vendor pages quarterly
  *   (next review: September 2026) or when a competitor ships changes.
- * Source notes live in the research brief from 2026-06-07 (vendor pricing
- * and feature pages for floatapp.com, cashflowfrog.com, forecastr.co).
+ * Per-cell source notes live in docs/comparison-substantiation-2026-06-07.md
+ * (vendor pricing and feature pages for floatapp.com, cashflowfrog.com,
+ * forecastr.co). Update that file with every change to ROWS.
  */
 
 type Cell =
