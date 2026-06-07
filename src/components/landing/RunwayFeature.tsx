@@ -166,36 +166,38 @@ function ProductCanvas({
       {/* Soft glow under the frame */}
       <div className="pointer-events-none absolute -inset-x-12 -bottom-12 h-40 bg-gradient-to-t from-primary/10 via-primary/5 to-transparent blur-3xl" />
 
-      {/* Browser chrome card */}
-      <div className="relative overflow-hidden rounded-2xl border border-border/70 bg-[hsl(var(--surface-raised))] shadow-2xl shadow-black/50 ring-1 ring-white/5">
+      {/* Browser chrome card. Forest surface per the brand book ("Forest
+          holds the data"): the dark product screenshots live inside a Forest
+          frame so they read as one window on the cream canvas. */}
+      <div className="relative overflow-hidden rounded-2xl border border-[hsl(var(--forest-border))] bg-[hsl(var(--forest))] shadow-2xl shadow-[hsl(var(--forest)/0.3)] ring-1 ring-black/5">
         {/* Top bar */}
-        <div className="flex items-center gap-3 border-b border-border/60 bg-card/40 px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-[hsl(var(--forest-border)/0.6)] bg-[hsl(var(--forest-raised)/0.5)] px-4 py-3">
           <div className="flex gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-border" />
-            <span className="h-2.5 w-2.5 rounded-full bg-border" />
-            <span className="h-2.5 w-2.5 rounded-full bg-border" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
           </div>
           <div className="flex flex-1 justify-center">
-            <div className="rounded-md border border-border/60 bg-background/40 px-3 py-1 font-mono text-[11px] text-muted-foreground">
+            <div className="rounded-md border border-[hsl(var(--forest-border)/0.6)] bg-[hsl(var(--forest-raised)/0.5)] px-3 py-1 font-mono text-[11px] text-[hsl(var(--forest-muted))]">
               app.zensus.app/runway
             </div>
           </div>
-          <div className="hidden font-mono text-[10px] uppercase tracking-wider text-muted-foreground sm:block">
+          <div className="hidden font-mono text-[10px] uppercase tracking-wider text-[hsl(var(--sage-light))] sm:block">
             Live
           </div>
         </div>
 
         {/* Canvas surface: aspect resizes per active step to match the source screenshots */}
         <div
-          className="relative bg-background/40 transition-[aspect-ratio] duration-500 ease-out"
+          className="relative bg-[hsl(var(--forest-raised)/0.4)] transition-[aspect-ratio] duration-500 ease-out"
           style={{ aspectRatio: STEPS[activeIndex]?.aspect ?? "16 / 10" }}
         >
-          {/* Grid texture */}
+          {/* Grid texture (cream lines on forest) */}
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.04]"
             style={{
               backgroundImage:
-                "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+                "linear-gradient(hsl(var(--forest-foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--forest-foreground)) 1px, transparent 1px)",
               backgroundSize: "24px 24px",
             }}
           />
@@ -279,7 +281,9 @@ const RunwayFeature = () => {
       <div className="section-container relative">
         {/* Header */}
         <div className="mx-auto max-w-3xl pt-24 text-center md:pt-32">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/40 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground backdrop-blur">
+          {/* Unboxed eyebrow (dot + mono caps, same idiom as the trust bar
+              chips). The old pill badge read as a generic template element. */}
+          <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
             <span className="h-1 w-1 rounded-full bg-primary" />
             The cash flow product
           </span>

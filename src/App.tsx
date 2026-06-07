@@ -1,9 +1,9 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useLayoutEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { PostHogPageview } from "./lib/analytics/PostHogPageview";
@@ -38,6 +38,28 @@ const SlackIntegration = lazy(() => import("./pages/integrations/Slack"));
 // a lazy route. A blank placeholder is fine.
 const RouteFallback = () => <div className="min-h-screen bg-background" />;
 
+// Routes that use the cream-first brand theme (tokens in index.css under
+// :root.theme-cream). The class lives on <html> so portaled UI inherits it.
+//
+// This MUST be toggled per route here, not added/removed by the landing page
+// component: prerender writes dist/index.html (with the class baked in) first
+// and then serves that same shell for every other route, so a page that never
+// mounts Index would otherwise inherit cream and never remove it. Driving the
+// class from the current pathname keeps every route, prerendered or
+// client-navigated, on its own theme.
+const CREAM_ROUTES = new Set(["/"]);
+
+const ThemeScope = () => {
+  const { pathname } = useLocation();
+  useLayoutEffect(() => {
+    document.documentElement.classList.toggle(
+      "theme-cream",
+      CREAM_ROUTES.has(pathname),
+    );
+  }, [pathname]);
+  return null;
+};
+
 const App = () => (
   <HelmetProvider>
     <TooltipProvider>
@@ -45,6 +67,7 @@ const App = () => (
       <Sonner />
       <ConsentBanner />
       <BrowserRouter>
+        <ThemeScope />
         <PostHogPageview />
         <Analytics />
         <SpeedInsights />

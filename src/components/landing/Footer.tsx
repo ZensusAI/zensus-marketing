@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { Linkedin, Mail } from "lucide-react";
 import { TALK_TO_US_URL } from "@/lib/constants";
+import zensusLogo from "@/assets/zensus-logo.png";
 
 const COMPANY_LINKEDIN = "https://www.linkedin.com/company/zensusai";
 const CONTACT_EMAIL = "support@zensus.app";
 
 const socialLinkClass =
-  "inline-flex items-center gap-2 rounded-sm text-sm font-medium text-gray-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900";
+  "inline-flex items-center gap-2 rounded-sm text-sm font-medium text-[hsl(var(--forest-muted))] transition-colors hover:text-[hsl(var(--forest-foreground))] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[hsl(var(--sage-light))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--forest))]";
 
 /** Google Maps embed: city of Austin, TX only (no street address). */
 const AUSTIN_MAP_EMBED_SRC =
@@ -60,7 +61,7 @@ const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
 ];
 
 const linkClass =
-  "text-sm text-gray-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900 rounded-sm";
+  "text-sm text-[hsl(var(--forest-muted))] transition-colors hover:text-[hsl(var(--forest-foreground))] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[hsl(var(--sage-light))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--forest))] rounded-sm";
 
 function FooterLinkItem({ link }: { link: FooterLink }) {
   if (link.external) {
@@ -93,7 +94,7 @@ function FooterLinkItem({ link }: { link: FooterLink }) {
 function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <div>
-      <h3 className="mb-4 text-sm font-semibold tracking-wide text-white">{title}</h3>
+      <h3 className="mb-4 text-sm font-semibold tracking-wide text-[hsl(var(--forest-foreground))]">{title}</h3>
       <ul className="space-y-3">
         {links.map((link) => (
           <li key={link.label}>
@@ -106,13 +107,35 @@ function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) 
 }
 
 const Footer = () => {
+  // Forest close: the footer is the page's deepest brand surface and is
+  // styled with the global forest constants so it reads identically on
+  // cream (landing) and dark (other routes).
   return (
-    <footer className="border-t-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-sm dark:from-gray-800 dark:via-gray-700 dark:to-gray-800">
+    <footer className="border-t border-[hsl(var(--forest-border)/0.5)] bg-[hsl(var(--forest))]">
       <div className="section-container py-12 md:py-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="flex flex-col gap-8 lg:col-span-4">
+            {/* Brand sign-off: same lockup drawing as the navbar and OG cards
+                (32px tile, 22px name, -0.02em tracking, 9px gap), cream on
+                forest. */}
+            <Link
+              to="/"
+              className="inline-flex w-fit items-center gap-[9px] rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[hsl(var(--sage-light))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--forest))]"
+              aria-label="Zensus home"
+            >
+              <img
+                src={zensusLogo}
+                alt=""
+                width={32}
+                height={32}
+                className="h-8 w-8 rounded-lg"
+              />
+              <span className="text-[22px] font-semibold tracking-[-0.02em] text-[hsl(var(--forest-foreground))]">
+                Zensus
+              </span>
+            </Link>
             <div className="w-full max-w-md">
-              <p className="text-left text-base font-semibold text-gray-300">Austin, TX</p>
+              <p className="text-left text-base font-semibold text-[hsl(var(--forest-foreground))]">Austin, TX</p>
               <div className="relative mt-3 aspect-[5/2] w-full overflow-hidden rounded-xl border border-white/10 bg-black/20 shadow-inner">
                 <iframe
                   title="Map centered on Austin, Texas"
@@ -154,7 +177,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
-          <p className="text-center text-sm text-muted-foreground sm:text-left">
+          <p className="text-center text-sm text-[hsl(var(--forest-muted))] sm:text-left">
             © {new Date().getFullYear()} Zensus. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 sm:justify-end">
