@@ -32,7 +32,7 @@ const PricingPreview = () => (
           </Button>
           <Link
             to="/pricing"
-            className="text-sm text-muted-foreground hover:text-foreground"
+            className="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
           >
             See what is included
           </Link>

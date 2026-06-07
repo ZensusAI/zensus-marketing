@@ -9,7 +9,7 @@ const painPoints = [
   {
     Glyph: GlyphRunway,
     title: '"How many months do I have left?"',
-    description: "You check your bank balance, do mental math, and still aren't sure",
+    description: "Your balance is a number. What you need is a date, and mental math from a bank tab will not get you there",
   },
   {
     Glyph: GlyphFragmented,
@@ -19,7 +19,7 @@ const painPoints = [
   {
     Glyph: GlyphFork,
     title: '"Can I afford to hire?"',
-    description: "No way to simulate decisions before committing real money",
+    description: "Hires, raises, new tools: every commitment is a bet you cannot test before you make it with real money",
   },
   {
     Glyph: GlyphCliff,
@@ -33,7 +33,9 @@ const Problem = () => {
     <section id="problem" className="section-padding bg-background">
       <div className="section-container">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
+          {/* One size step below the hero H1: this is a long conversational
+              sentence and at 5xl it competed with the hero for hierarchy. */}
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-6">
             You check your bank every Monday and still aren't sure you can make payroll in six weeks.
           </h2>
           <p className="text-lg text-muted-foreground">

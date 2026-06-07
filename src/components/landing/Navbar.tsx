@@ -126,7 +126,7 @@ const navCtaBase =
   "rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90";
 
 const desktopLinkBase =
-  "relative text-[15px] font-semibold text-white rounded transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-[width] after:duration-200 hover:after:w-full";
+  "relative text-[15px] font-semibold text-foreground rounded transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-[width] after:duration-200 hover:after:w-full";
 
 function DesktopLink({ link }: { link: NavLinkItem }) {
   if (!link.isRoute) {
@@ -260,7 +260,7 @@ function DesktopNav({ entries }: { entries: NavEntry[] }) {
                   }`;
                   const body = (
                     <>
-                      <span className="flex items-center gap-1.5 text-[15px] font-semibold text-white">
+                      <span className="flex items-center gap-1.5 text-[15px] font-semibold text-foreground">
                         {child.label}
                         {active && (
                           <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
@@ -320,7 +320,7 @@ function DesktopNav({ entries }: { entries: NavEntry[] }) {
 }
 
 const mobileLinkBase =
-  "px-2 py-3 text-[17px] font-semibold text-white rounded-lg transition-colors";
+  "px-2 py-3 text-[17px] font-semibold text-foreground rounded-lg transition-colors";
 
 function MobileLink({ link, onClose }: { link: NavLinkItem; onClose: () => void }) {
   if (!link.isRoute) {
@@ -381,7 +381,7 @@ function MobileMenuGroup({ menu, onClose }: { menu: NavMenu; onClose: () => void
                 key={child.href}
                 href={child.href}
                 onClick={onClose}
-                className={`px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} text-muted-foreground hover:bg-muted/40 hover:text-white`}
+                className={`px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} text-muted-foreground hover:bg-muted/40 hover:text-foreground`}
               >
                 {child.label}
               </a>
@@ -392,7 +392,7 @@ function MobileMenuGroup({ menu, onClose }: { menu: NavMenu; onClose: () => void
                 onClick={onClose}
                 className={({ isActive }) =>
                   `px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} ${
-                    isActive ? "bg-primary/5 text-white" : "text-muted-foreground hover:bg-muted/40 hover:text-white"
+                    isActive ? "bg-primary/5 text-foreground" : "text-muted-foreground hover:bg-muted/40 hover:text-foreground"
                   }`
                 }
               >
@@ -432,7 +432,7 @@ const Navbar = () => {
         <div className="grid grid-cols-[1fr_auto_1fr] h-16 items-center group-data-[scrolled=true]/nav:h-14 transition-[height] duration-300">
           <Link
             to="/"
-            className={`group/logo flex items-center gap-2 rounded justify-self-start ${focusRing}`}
+            className={`group/logo flex items-center gap-[9px] rounded justify-self-start ${focusRing}`}
             aria-label="Zensus home"
           >
             <img
@@ -442,7 +442,11 @@ const Navbar = () => {
               width={32}
               height={32}
             />
-            <span className="text-xl font-semibold text-foreground">Zensus</span>
+            {/* 22px / -0.02em matches the OG-card lockup ratio (44px tile,
+                28px name) so the brand lockup is one drawing everywhere. */}
+            <span className="text-[22px] font-semibold tracking-[-0.02em] text-foreground">
+              Zensus
+            </span>
           </Link>
 
           <div className="hidden md:block justify-self-center">
