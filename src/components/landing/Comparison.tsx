@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 
 /**
@@ -79,10 +80,41 @@ const ROWS: Row[] = [
   },
 ];
 
-function CellMark({ cell }: { cell: Cell }) {
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  return reduced;
+}
+
+interface CellMarkProps {
+  cell: Cell;
+  /** Whether the cascade has been triggered (marks pop in top to bottom). */
+  landed: boolean;
+  /** Per-cell stagger within the cascade. */
+  delayMs: number;
+  instant: boolean;
+}
+
+function CellMark({ cell, landed, delayMs, instant }: CellMarkProps) {
+  // Marks scale-pop in once the table scrolls into view, cascading down the
+  // rows. Reduced motion renders them in place.
+  const reveal = instant
+    ? ""
+    : `transition-all duration-300 ease-out motion-reduce:transition-none ${
+        landed ? "scale-100 opacity-100" : "scale-50 opacity-0"
+      }`;
+  const style = instant ? undefined : { transitionDelay: `${delayMs}ms` };
+
   if (cell.mark === "yes") {
     return (
-      <span className="inline-flex flex-col items-center gap-0.5">
+      <span className={`inline-flex flex-col items-center gap-0.5 ${reveal}`} style={style}>
         <Check size={18} strokeWidth={2.5} className="text-primary" aria-label="Yes" />
         {cell.note && (
           <span className="text-[11px] leading-tight text-muted-foreground">{cell.note}</span>
@@ -92,21 +124,46 @@ function CellMark({ cell }: { cell: Cell }) {
   }
   if (cell.mark === "yes-footnote") {
     return (
-      <span className="inline-flex items-start">
+      <span className={`inline-flex items-start ${reveal}`} style={style}>
         <Check size={18} strokeWidth={2.5} className="text-primary" aria-label="Yes, with caveat" />
         <span className="text-[11px] text-muted-foreground">{cell.symbol}</span>
       </span>
     );
   }
   return (
-    <span className="inline-flex items-start text-muted-foreground/50">
+    <span className={`inline-flex items-start text-muted-foreground/50 ${reveal}`} style={style}>
       <X size={16} strokeWidth={2} aria-label="No" />
       {cell.footnote && <span className="text-[11px]">*</span>}
     </span>
   );
 }
 
-const Comparison = () => (
+const Comparison = () => {
+  const reducedMotion = usePrefersReducedMotion();
+  const tableRef = useRef<HTMLDivElement>(null);
+  const [landed, setLanded] = useState(false);
+
+  useEffect(() => {
+    if (reducedMotion) {
+      setLanded(true);
+      return;
+    }
+    const el = tableRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLanded(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reducedMotion]);
+
+  return (
   <section id="compare" className="section-padding scroll-mt-28 bg-background">
     <div className="section-container">
       <div className="max-w-3xl mx-auto text-center mb-12">
@@ -119,7 +176,7 @@ const Comparison = () => (
       </div>
 
       {/* Horizontal scroll on small screens; the matrix needs its width. */}
-      <div className="mx-auto max-w-4xl overflow-x-auto">
+      <div ref={tableRef} className="mx-auto max-w-4xl overflow-x-auto">
         <table className="w-full min-w-[640px] border-collapse text-sm">
           <caption className="caption-bottom pt-5 text-left text-xs leading-relaxed text-muted-foreground">
             * Not found on the vendor's public pages as of June 2026.{" "}
@@ -168,7 +225,14 @@ const Comparison = () => (
                         : ""
                     }`}
                   >
-                    <CellMark cell={cell} />
+                    {/* Cascade: rows land top to bottom (120ms apart), with a
+                        small left-to-right ripple inside each row. */}
+                    <CellMark
+                      cell={cell}
+                      landed={landed}
+                      delayMs={i * 120 + j * 45}
+                      instant={reducedMotion}
+                    />
                   </td>
                 ))}
               </tr>
@@ -178,6 +242,7 @@ const Comparison = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default Comparison;
