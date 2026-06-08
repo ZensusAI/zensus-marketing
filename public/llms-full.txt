@@ -82,6 +82,7 @@ Only you. Your financial data is never shared, sold, or used to train AI models.
 - **What Is Cash Flow Forecasting?** Practical guide for founders and finance teams on liquidity visibility, forecast accuracy, and financial planning: https://zensus.app/blog/what-is-cash-flow-forecasting
 - **What Is a 13-Week Cash Flow Forecast?** Weekly liquidity model for SaaS founders covering payroll, rolling forecasts, ARR vs cash, and 2026 runway benchmarks: https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast
 - **Will I Make Payroll?** A step-by-step method to know weeks in advance, with a worked example, a cash buffer rule of thumb, and a pre-payroll checklist: https://zensus.app/blog/will-i-make-payroll
+- **Forecasting AI Compute Costs for Founders (2026)** How to model AI inference and agent costs as a cash flow line item, with the inference cost paradox and unit economics benchmarks: https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
 
 ## Links
 
@@ -92,6 +93,7 @@ Only you. Your financial data is never shared, sold, or used to train AI models.
 - What Is Cash Flow Forecasting? (blog): https://zensus.app/blog/what-is-cash-flow-forecasting
 - What Is a 13-Week Cash Flow Forecast? (blog): https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast
 - Will I Make Payroll? (blog): https://zensus.app/blog/will-i-make-payroll
+- Forecasting AI Compute Costs for Founders (blog): https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
 - Changelog: https://zensus.app/changelog
 - Security: https://zensus.app/security
 - Use Cases: https://zensus.app/use-cases
