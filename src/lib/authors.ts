@@ -14,6 +14,12 @@ export const authors = {
     bio: "Ajin writes about cash flow forecasting, financial planning, and how AI changes the way founders run finance.",
     url: "/about",
   },
+  ashwin: {
+    name: "Ashwin Menon",
+    position: "Software Developer, Zensus",
+    avatar: "/authors/ashwin.svg",
+    url: "https://www.linkedin.com/in/ashwinmenon502/",
+  },
 } as const satisfies Record<string, Author>;
 
 export type AuthorKey = keyof typeof authors;
