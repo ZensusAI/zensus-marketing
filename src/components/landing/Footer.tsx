@@ -25,6 +25,7 @@ const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
     links: [
       { label: "Features", href: "/#features" },
       { label: "Use Cases", href: "/use-cases" },
+      { label: "Runway Calculator", href: "/tools/runway-calculator" },
       { label: "FAQ", href: "/#faq" },
       { label: "Pricing", href: "/pricing" },
       { label: "Book a call", href: TALK_TO_US_URL, external: true },

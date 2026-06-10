@@ -64,6 +64,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "tools-runway-calculator",
+    category: "Free Tool",
+    title: "Startup runway calculator",
+    subtitle:
+      "Your zero-cash date, plus what a new hire at fully loaded cost does to it.",
+    accent: "green",
+  },
+  {
     slug: "use-cases",
     category: "Use Cases",
     title: "Who uses Zensus",

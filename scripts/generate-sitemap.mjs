@@ -21,6 +21,7 @@ const STATIC_URLS = [
   { loc: "https://zensus.app/changelog", changefreq: "weekly", priority: "0.7" },
   { loc: "https://zensus.app/security", changefreq: "monthly", priority: "0.7" },
   { loc: "https://zensus.app/use-cases", changefreq: "monthly", priority: "0.7" },
+  { loc: "https://zensus.app/tools/runway-calculator", changefreq: "monthly", priority: "0.8" },
   { loc: "https://zensus.app/about", changefreq: "monthly", priority: "0.6" },
   { loc: "https://zensus.app/privacy", changefreq: "yearly", priority: "0.3" },
   { loc: "https://zensus.app/terms", changefreq: "yearly", priority: "0.3" },
