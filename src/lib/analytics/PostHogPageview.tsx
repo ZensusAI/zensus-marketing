@@ -7,7 +7,7 @@ import { capturePageview } from "./events";
  * route change. Must be rendered inside <BrowserRouter> (it uses useLocation).
  *
  * `capture_pageview` is disabled in initAnalytics(), so this is the single
- * source of pageviews — giving an accurate pathname for each react-router
+ * source of pageviews, giving an accurate pathname for each react-router
  * navigation (the SPA never does a full document load between pages).
  */
 export function PostHogPageview() {

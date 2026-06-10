@@ -38,9 +38,16 @@ const AccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
 >(({ className, children, ...props }, ref) => (
+  // forceMount keeps collapsed answers in the DOM (hidden via CSS) so the
+  // Puppeteer prerender serializes them and AI crawlers reading plain HTML
+  // see answer text, not just FAQPage JSON-LD. Without it, Radix unmounts
+  // closed items and every prerendered FAQ ships as questions with empty
+  // answers. Tradeoff: the close animation is skipped (display:none is
+  // immediate); the open animation still runs.
   <AccordionPrimitive.Content
     ref={ref}
-    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    forceMount
+    className="overflow-hidden text-sm transition-all data-[state=closed]:hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
     <div className={cn("pb-4 pt-0", className)}>{children}</div>

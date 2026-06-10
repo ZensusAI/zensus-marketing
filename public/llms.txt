@@ -36,6 +36,7 @@ Founders and operators of startups with variable revenue, complex hiring plans, 
 - [What Is a 13-Week Cash Flow Forecast?](https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast)
 - [Will I Make Payroll?](https://zensus.app/blog/will-i-make-payroll)
 - [Forecasting AI Compute Costs for Founders](https://zensus.app/blog/forecasting-ai-compute-costs-for-founders)
+- [MCP vs CLI for Finance Teams](https://zensus.app/blog/mcp-vs-cli-for-finance-teams)
 - [Changelog](https://zensus.app/changelog)
 - [Security](https://zensus.app/security)
 - [Use Cases](https://zensus.app/use-cases)

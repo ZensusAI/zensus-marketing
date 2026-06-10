@@ -174,7 +174,7 @@ export default function TermsPage() {
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
               <li>You have the right to upload and use the financial data you provide</li>
               <li>Your data does not infringe on the rights of third parties</li>
-              <li>You understand that forecasts are based on the data you provide—garbage in, garbage out</li>
+              <li>You understand that forecasts are based on the data you provide: garbage in, garbage out</li>
             </ul>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.3 QuickBooks Integration</h3>
@@ -443,7 +443,7 @@ export default function TermsPage() {
               </p>
               <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm mb-3">
                 <li>AI-generated scenarios may contain errors or "hallucinations"</li>
-                <li>Forecasts are based on data you provide and historical patterns—they do not predict the future</li>
+                <li>Forecasts are based on data you provide and historical patterns; they do not predict the future</li>
                 <li>Runway calculations are estimates and actual results may vary significantly</li>
                 <li>We are not liable for business decisions made using our Services</li>
               </ul>

@@ -4,6 +4,12 @@ export interface Author {
   avatar: string;
   bio?: string;
   url?: string;
+  /** Stable Person @id referenced by BlogPosting JSON-LD. Must match the
+      author's anchor on /about so the visible byline and the structured
+      data always credit the same human. */
+  personId: string;
+  jobTitle: string;
+  sameAs: string[];
 }
 
 export const authors = {
@@ -13,12 +19,22 @@ export const authors = {
     avatar: "/authors/ajin.svg",
     bio: "Ajin writes about cash flow forecasting, financial planning, and how AI changes the way founders run finance.",
     url: "/about",
+    personId: "https://zensus.app/about#ajin-sunny",
+    jobTitle: "Founder & CEO",
+    sameAs: [
+      "https://www.linkedin.com/in/ajinsunny/",
+      "https://ajinsunny.com",
+    ],
   },
   ashwin: {
     name: "Ashwin Menon",
     position: "Software Developer, Zensus",
     avatar: "/authors/ashwin.svg",
-    url: "https://www.linkedin.com/in/ashwinmenon502/",
+    bio: "Ashwin is a software developer at Zensus and writes about the engineering behind AI products and founder finance.",
+    url: "/about",
+    personId: "https://zensus.app/about#ashwin-menon",
+    jobTitle: "Software Developer",
+    sameAs: ["https://www.linkedin.com/in/ashwinmenon502/"],
   },
 } as const satisfies Record<string, Author>;
 

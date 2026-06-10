@@ -2,7 +2,7 @@
 //
 // The decision is stored in a cookie scoped to the registrable domain
 // (.zensus.app) so app.zensus.app honors the same choice the visitor made on
-// the marketing site — they only see one banner across the whole funnel. This
+// the marketing site; they only see one banner across the whole funnel. This
 // rides the same cross-subdomain cookie mechanism PostHog uses for the
 // distinct_id. The consent cookie itself is strictly necessary, so it's fine to
 // set before the visitor has opted into analytics.

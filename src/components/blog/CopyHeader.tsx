@@ -52,7 +52,7 @@ export function CopyHeader({
     try {
       await navigator.clipboard.writeText(url);
     } catch {
-      // ignore — clipboard not available
+      // ignore; clipboard not available
     }
     const el = document.getElementById(id);
     if (el) {

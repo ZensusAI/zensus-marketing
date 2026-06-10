@@ -22,13 +22,13 @@ function currentUrl(): string {
  * nothing is captured and no analytics cookie is set until we decide here:
  *
  * - A decision is already stored (.zensus.app cookie): "granted" is applied
- *   synchronously in main.tsx; "denied" stays opted out — either way, no banner.
+ *   synchronously in main.tsx; "denied" stays opted out; either way, no banner.
  * - No decision yet → ask /api/geo:
  *     • EEA / UK / CH → show this banner; stay opted out until the visitor chooses.
  *     • elsewhere     → implied consent: opt in immediately and record the entry pageview.
  *
  * Renders nothing by default, so the Puppeteer prerender never bakes a visible
- * banner into the static HTML — it only appears after the client-side check.
+ * banner into the static HTML; it only appears after the client-side check.
  */
 export function ConsentBanner() {
   const [visible, setVisible] = useState(false);

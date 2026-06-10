@@ -68,7 +68,7 @@ const pricingFaqs = [
   {
     question: "Is there a free trial?",
     answer:
-      "Yes — 14 days, no charge today. We collect your card up front so the subscription continues automatically if Zensus is working for you, and you can cancel anytime before the trial ends with no charge.",
+      "Yes. 14 days, no charge today. We collect your card up front so the subscription continues automatically if Zensus is working for you, and you can cancel anytime before the trial ends with no charge.",
   },
 ];
 

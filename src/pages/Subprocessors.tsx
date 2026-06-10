@@ -164,14 +164,6 @@ const CATEGORIES: Category[] = [
     title: "Web fonts and embedded content",
     vendors: [
       {
-        name: "Google Fonts",
-        country: "United States",
-        purpose:
-          "Delivery of the Geist and Geist Mono webfonts used by the marketing site.",
-        dataCategories:
-          "Visitor IP and user-agent (transmitted to Google when fonts are fetched).",
-      },
-      {
         name: "Google Maps",
         country: "United States",
         purpose:
@@ -245,7 +237,7 @@ const Subprocessors = () => (
           Subprocessors
         </h1>
         <p className="text-sm text-muted-foreground mb-6">
-          Last updated: May 18, 2026
+          Last updated: June 10, 2026
         </p>
         <p className="text-lg text-muted-foreground mb-12">
           Zensus uses trusted third-party services to operate our platform.

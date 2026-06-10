@@ -208,7 +208,7 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
                   <li>We use PostHog (PostHog, Inc.) for analytics across our marketing site (<a href="https://zensus.app" className="text-primary hover:underline">zensus.app</a>) and the product app (app.zensus.app). PostHog records page views, navigation, and funnel events, and sets a first-party analytics cookie scoped to the .zensus.app domain so a single visit is measured consistently across both sites. This data is stored in PostHog's US cloud.</li>
                   <li>PostHog also captures session recordings (replays of on-page interactions) to help us debug and improve the experience; form inputs are masked by default.</li>
-                  <li>This activity is pseudonymous — tied to a random identifier, not your name — until you sign in. See{' '}
+                  <li>This activity is pseudonymous (tied to a random identifier, not your name) until you sign in. See{' '}
                     <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PostHog's Privacy Policy</a>.</li>
                 </ul>
               </div>

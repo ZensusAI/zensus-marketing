@@ -13,7 +13,7 @@ const prefersReducedMotion = () =>
 
 const Hero = () => {
   // The shimmer is decorative; fall back to plain text under reduced motion.
-  // The headline itself ALWAYS renders visible — it's the page's value
+  // The headline itself ALWAYS renders visible; it's the page's value
   // proposition and must never wait on JS hydration to appear (the entrance
   // is a pure-CSS `motion-safe:animate-fade-in`, so it runs at first paint,
   // not after the bundle hydrates).

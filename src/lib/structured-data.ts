@@ -24,9 +24,16 @@ export const HOME_CRUMB: BreadcrumbCrumb = {
 };
 
 const ORGANIZATION_ID = "https://zensus.app/#organization";
-const FOUNDER_PERSON_ID = "https://zensus.app/about#ajin-sunny";
 
 const BLOG_ID = "https://zensus.app/blog#blog";
+
+/** Subset of an Author (src/lib/authors.ts) needed to emit a Person node. */
+export interface SchemaAuthor {
+  personId: string;
+  name: string;
+  jobTitle: string;
+  sameAs: string[];
+}
 
 export interface BlogPostingSchemaInput {
   headline: string;
@@ -36,9 +43,10 @@ export interface BlogPostingSchemaInput {
   url: string;
   image: string;
   articleSection: string;
+  author: SchemaAuthor;
 }
 
-/** BlogPosting JSON-LD for /blog/<slug> — preferred over generic Article for blog URLs. */
+/** BlogPosting JSON-LD for /blog/<slug>; preferred over generic Article for blog URLs. */
 export const blogPostingSchema = ({
   headline,
   description,
@@ -47,6 +55,7 @@ export const blogPostingSchema = ({
   url,
   image,
   articleSection,
+  author,
 }: BlogPostingSchemaInput) => ({
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -58,7 +67,15 @@ export const blogPostingSchema = ({
   url,
   image: [image],
   articleSection,
-  author: { "@id": FOUNDER_PERSON_ID },
+  author: {
+    "@type": "Person",
+    "@id": author.personId,
+    name: author.name,
+    jobTitle: author.jobTitle,
+    worksFor: { "@id": ORGANIZATION_ID },
+    url: "https://zensus.app/about",
+    sameAs: author.sameAs,
+  },
   publisher: { "@id": ORGANIZATION_ID },
   inLanguage: "en-US",
   isPartOf: {

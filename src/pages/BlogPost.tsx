@@ -63,6 +63,7 @@ const BlogPost = () => {
     url: pageUrl,
     image: meta.ogImage,
     articleSection: meta.category,
+    author,
   });
 
   const faqLd = meta.faqs?.length ? faqPageSchema(meta.faqs) : null;
