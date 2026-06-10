@@ -13,6 +13,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { formatPostDate, getPostBySlug, postUrl } from "@/lib/blog";
 import { getAuthor } from "@/lib/authors";
+import { blogStats } from "@/generated/blog-stats";
 import {
   blogPostingSchema,
   breadcrumbSchema,
@@ -64,6 +65,9 @@ const BlogPost = () => {
     image: meta.ogImage,
     articleSection: meta.category,
     author,
+    images: blogStats[meta.slug]?.images,
+    wordCount: blogStats[meta.slug]?.wordCount,
+    keywords: meta.tags,
   });
 
   const faqLd = meta.faqs?.length ? faqPageSchema(meta.faqs) : null;

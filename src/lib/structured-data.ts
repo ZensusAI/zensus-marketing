@@ -44,6 +44,10 @@ export interface BlogPostingSchemaInput {
   image: string;
   articleSection: string;
   author: SchemaAuthor;
+  /** In-article figure URLs appended to the OG image in the image array. */
+  images?: string[];
+  wordCount?: number;
+  keywords?: string[];
 }
 
 /** BlogPosting JSON-LD for /blog/<slug>; preferred over generic Article for blog URLs. */
@@ -56,6 +60,9 @@ export const blogPostingSchema = ({
   image,
   articleSection,
   author,
+  images,
+  wordCount,
+  keywords,
 }: BlogPostingSchemaInput) => ({
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -65,8 +72,10 @@ export const blogPostingSchema = ({
   datePublished,
   dateModified,
   url,
-  image: [image],
+  image: [image, ...(images ?? []).filter((href) => href !== image)],
   articleSection,
+  ...(wordCount ? { wordCount } : {}),
+  ...(keywords?.length ? { keywords } : {}),
   author: {
     "@type": "Person",
     "@id": author.personId,

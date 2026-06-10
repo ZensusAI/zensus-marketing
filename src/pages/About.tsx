@@ -18,6 +18,16 @@ const breadcrumbs = breadcrumbSchema([
 // Ashwin's Person node lives here because his BlogPosting author @id points
 // at /about#ashwin-menon. Ajin's node ships in the sitewide @graph in
 // index.html, so only Ashwin needs a page-level block.
+const aboutPageLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": "https://zensus.app/about#aboutpage",
+  url: PAGE_URL,
+  name: "About Zensus",
+  about: { "@id": "https://zensus.app/#organization" },
+  mainEntity: { "@id": "https://zensus.app/#organization" },
+};
+
 const ashwinPersonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -79,6 +89,7 @@ const About = () => (
       <link rel="canonical" href={PAGE_URL} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       <script type="application/ld+json">{JSON.stringify(ashwinPersonLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(aboutPageLd)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

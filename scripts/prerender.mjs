@@ -40,6 +40,7 @@ const STATIC_ROUTES = [
   "/integrations/hubspot",
   "/integrations/slack",
   "/use-cases",
+  "/tools/runway-calculator",
 ];
 
 // Minimal static file server over dist/ with SPA fallback to index.html

@@ -101,6 +101,7 @@ The 13-week cash flow forecast is the standard short-term liquidity model: one f
 - Carta's State of Seed data shows the median time from seed to Series A now runs over two years, which is why 2026 runway guidance is 18 to 24 months after funding.
 - Investors look for a burn multiple below 2x for venture-stage SaaS (David Sacks's threshold).
 - Best practice is three scenarios per forecast: base case, upside, and downside; the spread between them matters more than any single number.
+- A free downloadable 13-week template (XLSX with chained weekly balances and a cash buffer check) is available at https://zensus.app/templates/13-week-cash-flow-template.xlsx
 
 ### Will I Make Payroll?
 https://zensus.app/blog/will-i-make-payroll
@@ -133,6 +134,18 @@ A practical comparison of Model Context Protocol (MCP) servers and CLI access fo
 - QuickBooks and Xero now ship MCP servers, which moves agent access from custom integration work to a supported vendor surface.
 - For finance teams, the compliance tradeoff favors MCP: least-privilege scopes, structured tool definitions, and audit logs.
 - Zensus's runway agent uses typed integrations and scoped tools (the same architecture the guide recommends) to keep inference costs low and behavior predictable.
+
+## Free Tools
+
+### Startup Runway Calculator
+https://zensus.app/tools/runway-calculator
+
+Free interactive calculator: enter cash, monthly revenue, and monthly expenses to get your runway in months and your projected zero-cash date. Models hiring impact at 1.3x loaded salary cost and the timing of annual contract payments. No signup required.
+
+### 13-Week Cash Flow Template
+https://zensus.app/templates/13-week-cash-flow-template.xlsx
+
+Free XLSX template: 13 weekly columns with inflow and outflow line items, chained opening and closing balances, net cash flow, and a cash buffer floor check. Works in Excel, Google Sheets, and Numbers. No email required.
 
 ## Links
 

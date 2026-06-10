@@ -3,24 +3,79 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import FinalCTABand from "@/components/landing/FinalCTABand";
-import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
   { name: "Use Cases", url: "https://zensus.app/use-cases" },
 ]);
 
+// The five segments below, as structured data. Anchor ids must match the
+// id prop on each <UseCase> section.
+const SEGMENTS = [
+  { id: "saas-contracts", name: "SaaS founders with annual and quarterly contracts" },
+  { id: "payroll", name: "Making payroll with confidence" },
+  { id: "agencies", name: "Agencies and client services with late payers" },
+  { id: "seasonal-revenue", name: "Seasonal and usage-based revenue" },
+  { id: "hiring-scenarios", name: "Hiring and cash flow scenario planning" },
+];
+
+const segmentItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Zensus use cases",
+  numberOfItems: SEGMENTS.length,
+  itemListElement: SEGMENTS.map((segment, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: segment.name,
+    url: `https://zensus.app/use-cases#${segment.id}`,
+  })),
+};
+
+const FAQS = [
+  {
+    question: "Who is Zensus for?",
+    answer:
+      "Zensus is for startup founders and small finance teams with lumpy cash flow: annual and quarterly contracts, seasonal swings, usage-based pricing, late-paying clients, and payroll that has to clear. It connects QuickBooks, bank accounts via Plaid, and HubSpot, and costs $199 per month on a single plan.",
+  },
+  {
+    question: "Does Zensus work for agencies with late-paying clients?",
+    answer:
+      "Yes. Zensus reads actual payment behavior from your bank feed via Plaid and dates inflows by when clients really pay. If a client pays net-45 on net-30 terms, the forecast uses the 45-day reality instead of the invoice due date.",
+  },
+  {
+    question: "Can Zensus model annual and quarterly contracts?",
+    answer:
+      "Yes. Zensus places each contract payment on the date it actually lands in the bank, so a $24,000 annual renewal shows up as one March 14 inflow rather than $2,000 smeared across every month.",
+  },
+  {
+    question: "How does Zensus help me decide whether I can afford a hire?",
+    answer:
+      "Ask the scenario agent in plain language. It recalculates your zero-cash date with the new salary included, using your live financial data, and the projection keeps updating as real transactions clear.",
+  },
+  {
+    question: "How do payroll alerts work?",
+    answer:
+      "You set a cash floor. Zensus projects your balance to every upcoming payroll date and sends a Slack alert the moment your 30-day projection is on track to cross that floor, with re-alerts on material changes.",
+  },
+];
+
+const faqLd = faqPageSchema(FAQS);
+
 const linkCls =
   "font-medium text-primary underline-offset-4 hover:underline";
 
 const UseCase = ({
+  id,
   title,
   children,
 }: {
+  id: string;
   title: string;
   children: React.ReactNode;
 }) => (
-  <section className="mb-12">
+  <section id={id} className="mb-12 scroll-mt-28">
     <h2 className="text-xl sm:text-2xl font-semibold mb-3 text-foreground">
       {title}
     </h2>
@@ -59,6 +114,8 @@ const UseCases = () => (
       <meta name="twitter:image" content="https://zensus.app/og/use-cases.png" />
       <link rel="canonical" href="https://zensus.app/use-cases" />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      <script type="application/ld+json">{JSON.stringify(segmentItemList)}</script>
+      <script type="application/ld+json">{JSON.stringify(faqLd)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">
@@ -73,7 +130,7 @@ const UseCases = () => (
           payroll that has to clear no matter what.
         </p>
 
-        <UseCase title="SaaS founders with annual and quarterly contracts">
+        <UseCase id="saas-contracts" title="SaaS founders with annual and quarterly contracts">
           <p>
             Annual contracts make revenue look healthy while the bank account
             runs dry between renewals. Zensus syncs your{" "}
@@ -91,7 +148,7 @@ const UseCases = () => (
           </p>
         </UseCase>
 
-        <UseCase title="Making payroll with confidence">
+        <UseCase id="payroll" title="Making payroll with confidence">
           <p>
             The question is never "what is my balance", it is "will the balance
             clear payroll on the 15th". Zensus projects your cash to every
@@ -108,7 +165,7 @@ const UseCases = () => (
           </p>
         </UseCase>
 
-        <UseCase title="Agencies and client services with late payers">
+        <UseCase id="agencies" title="Agencies and client services with late payers">
           <p>
             When a client always pays net-45 on net-30 terms, a forecast built
             on due dates lies to you. Zensus reads actual payment behavior from
@@ -125,7 +182,7 @@ const UseCases = () => (
           </p>
         </UseCase>
 
-        <UseCase title="Seasonal and usage-based revenue">
+        <UseCase id="seasonal-revenue" title="Seasonal and usage-based revenue">
           <p>
             The lumpier your inflows, the bigger the buffer you need and the
             earlier you need warning. Zensus tracks your projected low point
@@ -139,7 +196,7 @@ const UseCases = () => (
           </p>
         </UseCase>
 
-        <UseCase title="Hiring and cash flow scenario planning">
+        <UseCase id="hiring-scenarios" title="Hiring and cash flow scenario planning">
           <p>
             Before you sign an offer letter, ask Zensus what the hire does to
             your zero-cash date. The scenario agent answers in plain language,
@@ -155,6 +212,24 @@ const UseCases = () => (
             .
           </p>
         </UseCase>
+
+        <section id="faq" className="border-t border-border pt-10">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-foreground">
+            Frequently asked questions
+          </h2>
+          <dl className="space-y-6">
+            {FAQS.map((faq) => (
+              <div key={faq.question}>
+                <dt className="font-medium text-foreground mb-1">
+                  {faq.question}
+                </dt>
+                <dd className="text-muted-foreground leading-relaxed">
+                  {faq.answer}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
       </div>
       <FinalCTABand />
     </main>
