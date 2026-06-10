@@ -20,7 +20,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "what-is-a-13-week-cash-flow-forecast": {
-    "wordCount": 1710,
+    "wordCount": 1772,
     "images": [
       "https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast/13-week-cash-flow-forecast.webp",
       "https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast/revenue-earned-vs-cash-received.webp",
