@@ -10,6 +10,19 @@ import hubspotLogo from "@/assets/integrations/hubspot.svg";
 import slackLogo from "@/assets/integrations/slack.svg";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
+const integrationsItemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Zensus integrations",
+  numberOfItems: 4,
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Plaid", url: "https://zensus.app/integrations/plaid" },
+    { "@type": "ListItem", position: 2, name: "QuickBooks", url: "https://zensus.app/integrations/quickbooks" },
+    { "@type": "ListItem", position: 3, name: "HubSpot", url: "https://zensus.app/integrations/hubspot" },
+    { "@type": "ListItem", position: 4, name: "Slack", url: "https://zensus.app/integrations/slack" },
+  ],
+};
+
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
   { name: "Integrations", url: "https://zensus.app/integrations" },
@@ -85,6 +98,7 @@ const Integrations = () => (
       <meta name="twitter:image" content="https://zensus.app/og/integrations.png" />
       <link rel="canonical" href="https://zensus.app/integrations" />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      <script type="application/ld+json">{JSON.stringify(integrationsItemList)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">

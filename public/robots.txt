@@ -37,6 +37,21 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
 User-agent: *
 Allow: /
 
