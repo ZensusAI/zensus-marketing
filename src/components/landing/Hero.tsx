@@ -4,8 +4,8 @@ import { TryItNowButton } from "./TryItNowButton";
 import { TalkToUsButton } from "./TalkToUsButton";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 
-const H1_SENTENCE_1 = "Know exactly when your cash runs out.";
-const H1_SENTENCE_2 = "And exactly what to do about it.";
+const H1_SENTENCE_1 = "Cash flow forecasting for startups.";
+const H1_SENTENCE_2 = "Know exactly when cash runs out.";
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
