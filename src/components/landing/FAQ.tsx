@@ -59,7 +59,7 @@ const faqGroups = [
     items: [
       {
         question: "How does pricing work?",
-        answer: "Zensus Pro is $199 a month, billed monthly, cancel anytime. One plan with every integration (Plaid, QuickBooks, HubSpot, Slack), real-time cash flow, AI scenarios, and alerts. Every new account starts with a 14-day free trial — your card is collected up front but not charged until the trial ends. Cancel anytime before then at no cost. Annual billing is not available yet.",
+        answer: "Zensus Pro is $199 a month, billed monthly, cancel anytime. One plan with every integration (Plaid, QuickBooks, HubSpot, Slack), real-time cash flow, AI scenarios, and alerts. Every new account starts with a 14-day free trial. Your card is collected up front but not charged until the trial ends. Cancel anytime before then at no cost. Annual billing is not available yet.",
       },
     ],
   },

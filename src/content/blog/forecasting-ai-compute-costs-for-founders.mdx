@@ -2,9 +2,9 @@ export const meta = {
   title: 'Forecasting AI Compute Costs: A Founder Guide for 2026',
   seoTitle: 'Forecasting AI Compute Costs (2026) | Zensus',
   description:
-    'How to model AI inference and agent costs as a line item in your cash flow forecast. Real benchmarks, the inference cost paradox, and what to plan for as API pricing normalizes.',
+    'How to model AI inference and agent costs as a line item in your cash flow forecast: the inference cost paradox, margins, and scenario planning.',
   date: '2026-06-09',
-  dateModified: '2026-06-09',
+  dateModified: '2026-06-10',
   category: 'Guide',
   readTime: '12 min read',
   slug: 'forecasting-ai-compute-costs-for-founders',
@@ -37,7 +37,7 @@ export const meta = {
       question:
         'What is a healthy inference-to-revenue ratio?',
       answer:
-        'Many operators target an inference-to-revenue ratio below 10%, particularly for chat-heavy AI applications.',
+        'A common operator target is an inference-to-revenue ratio below 10% for chat-heavy AI applications. Zensus uses the same threshold in its own planning.',
     },
     {
       question: 'Will API prices keep falling?',
@@ -107,7 +107,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>The result is a cost structure that behaves very differently from traditional SaaS. A customer generating 10 times more AI activity may generate 10 times more compute spend. That makes <strong>forecasting AI compute costs for founders in 2026</strong> fundamentally different from forecasting traditional cloud infrastructure.</p>
 
 
-<p>This challenge is becoming increasingly important as AI adoption grows. Industry forecasts suggest token consumption could increase dramatically over the next decade, even as per-token pricing continues to decline. Goldman Sachs projects usage could multiply sharply toward 2030 as agent adoption scales.</p>
+<p>This challenge is becoming increasingly important as AI adoption grows. <a href="https://www.goldmansachs.com/insights/articles/ai-agents-forecast-to-boost-tech-cash-flow-as-usage-soars" className="font-medium text-primary underline-offset-4 hover:underline">Goldman Sachs Research projects</a> that AI token consumption will multiply roughly 24 times by 2030, to about 120 quadrillion tokens a month, as agent adoption scales. Per-token prices keep falling. Total consumption is growing faster.</p>
 
 
 <p>For founders, this means AI compute is no longer simply a technical concern. It is a financial planning concern.</p>
@@ -125,7 +125,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>At first glance, that seems impossible. Historically, per-token inference costs have declined significantly year after year. New models are more efficient, competition is increasing, and providers continue to optimize infrastructure.</p>
 
 
-<p>Yet enterprise AI spending continues to rise. Industry surveys in 2026 describe AI inference as a dominant share of enterprise AI budgets, because usage is growing faster than costs are falling.</p>
+<p>Yet enterprise AI spending continues to rise. The same Goldman Sachs analysis expects enterprise agents alone to consume 56 quadrillion tokens a month by 2030, with global daily AI query volume growing from roughly 5 billion in 2025 to 23 billion. Inference dominates enterprise AI budgets because usage is growing faster than costs are falling.</p>
 
 
 <p className="mb-2 font-medium text-foreground">Imagine a startup that launched an AI-powered fraud analysis agent:</p>
@@ -152,7 +152,9 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 
 <BlogFigure
-  src="/blog/forecasting-ai-compute-costs-for-founders/inference-cost-paradox.png"
+  src="/blog/forecasting-ai-compute-costs-for-founders/inference-cost-paradox.webp"
+  width={1024}
+  height={576}
   alt="Inference cost paradox: cost per token falling from GPT-4 to Claude 3.5 while total AI bill rises with more users, agents, and requests"
   caption="Model prices keep falling, but total AI spending rises as usage scales faster than per-token costs decline."
 />
@@ -167,7 +169,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>AI-first companies operate differently. Every customer interaction may generate real-time compute expenses. The result is a new margin profile.</p>
 
 
-<p>Many AI-native products operate in the 50% to 60% gross margin range, significantly below traditional SaaS benchmarks.</p>
+<p><a href="https://a16z.com/the-new-business-of-ai-and-how-its-different-from-traditional-software/" className="font-medium text-primary underline-offset-4 hover:underline">Andreessen Horowitz flagged this pattern</a> as early as 2020: many AI-native products operate in the 50% to 60% gross margin range, significantly below traditional SaaS benchmarks, because every request carries real compute cost.</p>
 
 
 <p>Investors are increasingly evaluating startups through this lens. A company growing rapidly but spending an increasing percentage of revenue on inference may be viewed as less attractive than a slower-growing company with healthier economics.</p>
@@ -237,9 +239,11 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 
 <BlogFigure
-  src="/blog/forecasting-ai-compute-costs-for-founders/ai-compute-cash-flow-forecast.png"
+  src="/blog/forecasting-ai-compute-costs-for-founders/ai-compute-cash-flow-forecast.webp"
+  width={1024}
+  height={576}
   alt="Cash flow forecast table with AI compute as a variable expense line driven by users, LLM requests, agents, and tokens consumed, alongside runway and cash balance KPIs"
-  caption="AI compute scales with usage—and belongs as a variable line in the same forecast that tracks runway and cash balance."
+  caption="AI compute scales with usage and belongs as a variable line in the same forecast that tracks runway and cash balance."
 />
 
 
@@ -287,7 +291,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 </ul>
 
 
-<p>This metric provides a quick way to evaluate unit economics. Current industry discussions suggest that keeping inference costs below 10% of revenue is generally considered healthy for chat-heavy AI products.</p>
+<p>This metric provides a quick way to evaluate unit economics. A practical benchmark we use at Zensus: keep inference spend below 10% of revenue for a chat-heavy product. Above that line, compute is no longer a rounding error; it is a first-class cost driver that belongs in the forecast.</p>
 
 
 <p>Above that level, scaling becomes more challenging. Margins compress. Runway shrinks. Fundraising conversations become harder. Below that level, startups typically have more flexibility to invest in growth while maintaining sustainable economics.</p>
@@ -350,13 +354,15 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 
 <BlogFigure
-  src="/blog/forecasting-ai-compute-costs-for-founders/ai-compute-scenarios-runway.png"
+  src="/blog/forecasting-ai-compute-costs-for-founders/ai-compute-scenarios-runway.webp"
+  width={1024}
+  height={583}
   alt="Base, upside, and downside AI compute scenarios showing how compute spend trends affect projected runway from roughly 9 to 28 months"
   caption="Stress-test base, upside, and downside cases: AI compute spend drives cash burn, which directly determines runway."
 />
 
 
-<p>The purpose of forecasting is not prediction. It is preparation. The best founders understand how their business performs across all three scenarios—and can <a href="https://zensus.app/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">iterate those cases in one place</a> instead of copying three spreadsheet tabs.</p>
+<p>The purpose of forecasting is not prediction. It is preparation. The best founders understand how their business performs across all three scenarios, and can <a href="https://zensus.app/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">iterate those cases in one place</a> instead of copying three spreadsheet tabs.</p>
 
 
 ## Architecture Determines Economics
@@ -368,7 +374,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>Two companies using the same model can have radically different cost structures. A poorly designed workflow may make unnecessary model calls, re-run retrieval steps, duplicate context processing, and increase token usage dramatically. A well-designed workflow minimizes expensive operations.</p>
 
 
-<p>This is one reason Zensus intentionally uses a cost-efficient architecture for its runway agent—the same typed, scoped approach we describe in our guide on <a href="/blog/mcp-vs-cli-for-finance-teams" className="font-medium text-primary underline-offset-4 hover:underline">MCP vs CLI for finance teams</a>. Instead of repeatedly querying large contexts, the system relies on structured financial snapshots, <a href="https://zensus.app/integrations" className="font-medium text-primary underline-offset-4 hover:underline">typed integrations</a>, scoped tools, and purpose-built workflows. The result is lower inference cost per request and more predictable scaling economics.</p>
+<p>This is one reason Zensus intentionally uses a cost-efficient architecture for its runway agent, the same typed, scoped approach we describe in our guide on <a href="/blog/mcp-vs-cli-for-finance-teams" className="font-medium text-primary underline-offset-4 hover:underline">MCP vs CLI for finance teams</a>. Instead of repeatedly querying large contexts, the system relies on structured financial snapshots, <a href="https://zensus.app/integrations" className="font-medium text-primary underline-offset-4 hover:underline">typed integrations</a>, scoped tools, and purpose-built workflows. The result is lower inference cost per request and more predictable scaling economics.</p>
 
 
 <p>The same principle applies to every founder building AI products. The architecture of your AI features determines your future compute bill.</p>
@@ -396,7 +402,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 </ul>
 
 
-<p>These are not engineering questions. They are financial planning questions—and the same model supports <a href="https://zensus.app/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">weekly drill-down</a>, <a href="https://zensus.app/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">scenario planning</a>, and <a href="https://zensus.app/#features-alerts" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when your 30-day projection crosses a threshold you set.</p>
+<p>These are not engineering questions. They are financial planning questions, and the same model supports <a href="https://zensus.app/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">weekly drill-down</a>, <a href="https://zensus.app/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">scenario planning</a>, and <a href="https://zensus.app/#features-alerts" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when your 30-day projection crosses a threshold you set.</p>
 
 
 ## Final Thoughts
@@ -408,7 +414,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>The goal is not minimizing tokens. The goal is understanding future spend.</p>
 
 
-<p>Just as startups forecast revenue, payroll, and infrastructure, they should <strong>forecast AI compute costs</strong>. Because in 2026, AI compute is no longer just a cloud expense. It is part of the business model itself. For the broader forecasting framework—including methods, horizons, and accuracy practices—see our guide on <a href="/blog/what-is-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">cash flow forecasting</a>.</p>
+<p>Just as startups forecast revenue, payroll, and infrastructure, they should <strong>forecast AI compute costs</strong>. Because in 2026, AI compute is no longer just a cloud expense. It is part of the business model itself. For the broader forecasting framework (methods, horizons, and accuracy practices), see our guide on <a href="/blog/what-is-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">cash flow forecasting</a>.</p>
 
 
 <BlogCallout title="Improve Financial Visibility with Zensus">

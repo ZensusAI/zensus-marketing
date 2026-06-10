@@ -15,6 +15,20 @@ const breadcrumbs = breadcrumbSchema([
   { name: "About", url: PAGE_URL },
 ]);
 
+// Ashwin's Person node lives here because his BlogPosting author @id points
+// at /about#ashwin-menon. Ajin's node ships in the sitewide @graph in
+// index.html, so only Ashwin needs a page-level block.
+const ashwinPersonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://zensus.app/about#ashwin-menon",
+  name: "Ashwin Menon",
+  jobTitle: "Software Developer",
+  worksFor: { "@id": "https://zensus.app/#organization" },
+  url: PAGE_URL,
+  sameAs: ["https://www.linkedin.com/in/ashwinmenon502/"],
+};
+
 const personalLinks = [
   { label: "LinkedIn", href: PERSONAL_LINKEDIN, external: true },
   { label: "ajinsunny.com", href: PERSONAL_SITE, external: true },
@@ -64,6 +78,7 @@ const About = () => (
       <meta name="twitter:image" content="https://zensus.app/og/about.png" />
       <link rel="canonical" href={PAGE_URL} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      <script type="application/ld+json">{JSON.stringify(ashwinPersonLd)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">
@@ -143,7 +158,7 @@ const About = () => (
           </section>
 
           {/* Meet the founder */}
-          <section className="border-t border-border pt-10 mb-12">
+          <section id="ajin-sunny" className="border-t border-border pt-10 mb-12">
             <h2 className="text-2xl font-semibold text-foreground mb-2">
               Meet the founder
             </h2>
@@ -176,6 +191,34 @@ const About = () => (
                   {link.external && <ExternalLink size={14} />}
                 </a>
               ))}
+            </div>
+          </section>
+
+          {/* Team */}
+          <section id="ashwin-menon" className="border-t border-border pt-10 mb-12">
+            <h2 className="text-2xl font-semibold text-foreground mb-2">
+              Team
+            </h2>
+            <p className="text-sm text-muted-foreground mb-6">
+              Ashwin Menon, Software Developer
+            </p>
+            <div className="space-y-4 text-base text-foreground leading-relaxed">
+              <p>
+                Ashwin Menon is a software developer at Zensus. He works
+                across the product and writes on the Zensus blog about the
+                engineering behind AI products and founder finance.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-4 mt-6">
+              <a
+                href="https://www.linkedin.com/in/ashwinmenon502/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+              >
+                LinkedIn
+                <ExternalLink size={14} />
+              </a>
             </div>
           </section>
 

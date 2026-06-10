@@ -79,10 +79,60 @@ Only you. Your financial data is never shared, sold, or used to train AI models.
 
 ## Guides
 
-- **What Is Cash Flow Forecasting?** Practical guide for founders and finance teams on liquidity visibility, forecast accuracy, and financial planning: https://zensus.app/blog/what-is-cash-flow-forecasting
-- **What Is a 13-Week Cash Flow Forecast?** Weekly liquidity model for SaaS founders covering payroll, rolling forecasts, ARR vs cash, and 2026 runway benchmarks: https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast
-- **Will I Make Payroll?** A step-by-step method to know weeks in advance, with a worked example, a cash buffer rule of thumb, and a pre-payroll checklist: https://zensus.app/blog/will-i-make-payroll
-- **Forecasting AI Compute Costs for Founders (2026)** How to model AI inference and agent costs as a cash flow line item, with the inference cost paradox and unit economics benchmarks: https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
+### What Is Cash Flow Forecasting?
+https://zensus.app/blog/what-is-cash-flow-forecasting
+
+Cash flow forecasting predicts how much cash a business will have on hand at future points in time, based on expected inflows and outflows. Key facts from the guide:
+
+- Direct forecasting projects actual cash receipts and payments; it is the accurate method for horizons up to about 13 weeks.
+- Indirect forecasting derives cash from projected income statements and balance sheets; it suits longer strategic horizons.
+- A rolling forecast continuously extends the planning window (for example, always showing the next 13 weeks) by adding a new period as each week closes.
+- The most common failure mode is forecasting revenue recognition instead of cash timing: a $24,000 annual contract is $24,000 of cash on day one, not $2,000 a month.
+- Zensus automates the repetitive parts of the workflow: data sync from Plaid, QuickBooks, and HubSpot, expense categorization, and projection updates.
+
+### What Is a 13-Week Cash Flow Forecast?
+https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast
+
+The 13-week cash flow forecast is the standard short-term liquidity model: one fiscal quarter of weekly cash visibility. Key facts from the guide:
+
+- 13 weeks is long enough to capture payroll cycles, receivables, payables, and quarterly billing events, but short enough for direct forecasting to stay accurate.
+- A company can report $1M ARR with strong growth and still hit cash pressure; ARR is not cash timing.
+- Annual prepaid contracts can extend runway by several months without changing price or customer count.
+- Carta's State of Seed data shows the median time from seed to Series A now runs over two years, which is why 2026 runway guidance is 18 to 24 months after funding.
+- Investors look for a burn multiple below 2x for venture-stage SaaS (David Sacks's threshold).
+- Best practice is three scenarios per forecast: base case, upside, and downside; the spread between them matters more than any single number.
+
+### Will I Make Payroll?
+https://zensus.app/blog/will-i-make-payroll
+
+A step-by-step method for founders to know weeks in advance whether payroll clears. Key facts from the guide:
+
+- JPMorgan Chase Institute research across roughly 600,000 small businesses found the median business holds just 27 cash buffer days.
+- The method: project cash to each payroll date using committed inflows only, subtract total payroll cost including taxes and benefits, and keep a cash buffer above a floor you set.
+- Worked example: $80,000 starting cash, $42,000 of payroll runs, $25,000 buffer, leaving a $7,000 margin of safety.
+- Employer payroll taxes follow IRS deposit schedules, so the cash leaves the account on a predictable calendar.
+- Zensus projects payroll coverage continuously and sends Slack alerts when a 30-day projection crosses your cash floor.
+
+### Forecasting AI Compute Costs for Founders (2026)
+https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
+
+How to model AI inference and agent costs as a first-class line item in a cash flow forecast. Key facts from the guide:
+
+- Goldman Sachs Research projects AI token consumption will multiply roughly 24 times by 2030, to about 120 quadrillion tokens a month.
+- The inference cost paradox: per-token prices keep falling, yet total spend rises because usage grows faster than costs fall.
+- Andreessen Horowitz observed that many AI-native products run 50% to 60% gross margins, versus 80% to 90% for traditional SaaS.
+- A practical operator benchmark: keep inference spend below 10% of revenue for chat-heavy products. Zensus uses the same threshold in its own planning.
+- Forecast AI compute under three scenarios (base, upside, downside) because usage-driven costs scale with adoption, not headcount.
+
+### MCP vs CLI for Finance Teams
+https://zensus.app/blog/mcp-vs-cli-for-finance-teams
+
+A practical comparison of Model Context Protocol (MCP) servers and CLI access for AI agents working with financial data. Key facts from the guide:
+
+- MCP gives agents typed, scoped, auditable access to financial systems; CLI access is broader but harder to constrain and audit.
+- QuickBooks and Xero now ship MCP servers, which moves agent access from custom integration work to a supported vendor surface.
+- For finance teams, the compliance tradeoff favors MCP: least-privilege scopes, structured tool definitions, and audit logs.
+- Zensus's runway agent uses typed integrations and scoped tools (the same architecture the guide recommends) to keep inference costs low and behavior predictable.
 
 ## Links
 
@@ -94,6 +144,7 @@ Only you. Your financial data is never shared, sold, or used to train AI models.
 - What Is a 13-Week Cash Flow Forecast? (blog): https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast
 - Will I Make Payroll? (blog): https://zensus.app/blog/will-i-make-payroll
 - Forecasting AI Compute Costs for Founders (blog): https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
+- MCP vs CLI for Finance Teams (blog): https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 - Changelog: https://zensus.app/changelog
 - Security: https://zensus.app/security
 - Use Cases: https://zensus.app/use-cases

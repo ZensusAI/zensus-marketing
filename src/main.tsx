@@ -4,7 +4,7 @@ import "./index.css";
 import { initAnalytics, grantCapturing } from "./lib/analytics/events";
 import { readConsent } from "./lib/consent";
 
-// Initialise PostHog (opted OUT by default — no cookie/capture yet). No-ops if
+// Initialise PostHog (opted OUT by default, no cookie/capture yet). No-ops if
 // the key is unset or during the prerender crawl, so it is safe unconditionally.
 initAnalytics();
 

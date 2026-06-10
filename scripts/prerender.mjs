@@ -126,6 +126,35 @@ async function prerender() {
       await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
       // Give React hydration and Helmet an extra beat to settle.
       await new Promise((r) => setTimeout(r, 500));
+      // Scrub the snapshot before serializing:
+      // 1. Google One Tap injects a render-blocking cross-origin stylesheet,
+      //    ~7KB of button CSS, and the gsi/client script while Puppeteer has
+      //    the page open. Baking those into every static page penalizes first
+      //    paint on all routes; One Tap re-creates everything it needs at
+      //    runtime, so the snapshot must not carry them.
+      // 2. The static index.html template ships generic og/twitter tags that
+      //    Helmet replaces per route. Both copies survive serialization, and
+      //    first-tag-wins scrapers then read og:type "website" on articles.
+      //    Drop any template tag that a Helmet (data-rh) tag supersedes.
+      await page.evaluate(() => {
+        document.getElementById("googleidentityservice")?.remove();
+        document.getElementById("googleidentityservice_button_styles")?.remove();
+        document
+          .querySelectorAll('script[src*="accounts.google.com/gsi"]')
+          .forEach((el) => el.remove());
+        document
+          .querySelectorAll("#credential_picker_container, #credential_picker_iframe")
+          .forEach((el) => el.remove());
+
+        document.querySelectorAll("meta:not([data-rh])").forEach((tag) => {
+          const key = tag.getAttribute("property") ?? tag.getAttribute("name");
+          if (!key) return;
+          const helmetDup = document.querySelector(
+            `meta[data-rh][property="${key}"], meta[data-rh][name="${key}"]`,
+          );
+          if (helmetDup) tag.remove();
+        });
+      });
       const html = await page.content();
       await page.close();
 

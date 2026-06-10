@@ -19,7 +19,7 @@ import { GoogleOneTap } from "@/components/landing/GoogleOneTap";
 const Index = () => {
   // Render the prerendered content immediately. (Previously this gated the
   // whole page behind a 300ms `isLoading` skeleton, which on hydration
-  // unmounted the prerendered hero — including the LCP image — and remounted
+  // unmounted the prerendered hero (including the LCP image) and remounted
   // it a beat later, delaying Largest Contentful Paint. There is no async
   // data here, so the loading state was pure cost.)
   // The cream brand theme is applied by ThemeScope in App.tsx (per-route

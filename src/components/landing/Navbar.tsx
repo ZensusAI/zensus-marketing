@@ -163,7 +163,7 @@ function DesktopLink({ link }: { link: NavLinkItem }) {
 // reopening. Hover intent, keyboard nav, and Escape come for free. We style
 // the shared Viewport ourselves (no shadcn wrapper) and `forceMount` both the
 // Viewport and every Content so all dropdown links stay in the static
-// prerendered HTML — Googlebot and AI crawlers see the same anchors whether or
+// prerendered HTML; Googlebot and AI crawlers see the same anchors whether or
 // not a menu is open.
 function DesktopNav({ entries }: { entries: NavEntry[] }) {
   const { pathname } = useLocation();

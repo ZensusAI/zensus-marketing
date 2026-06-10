@@ -1,14 +1,18 @@
 // Regenerate public/sitemap.xml with static routes plus /blog/<slug> entries.
+//
+// lastmod policy: only blog URLs carry lastmod, sourced from each post's
+// exported meta (dateModified, falling back to date). Static routes omit
+// lastmod rather than stamping the build date; a lastmod that contradicts
+// on-page dates teaches crawlers to distrust the field sitewide.
 
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getBlogSlugs } from "./blog-slugs.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const blogDir = join(__dirname, "..", "src", "content", "blog");
 const outPath = join(__dirname, "..", "public", "sitemap.xml");
-
-const today = new Date().toISOString().slice(0, 10);
 
 const STATIC_URLS = [
   { loc: "https://zensus.app/", changefreq: "weekly", priority: "1.0" },
@@ -29,10 +33,19 @@ const STATIC_URLS = [
   { loc: "https://zensus.app/integrations/slack", changefreq: "monthly", priority: "0.7" },
 ];
 
-function urlEntry({ loc, changefreq, priority }) {
+// Pull date fields out of a post's `export const meta = {...}` block without
+// evaluating MDX. Dates are plain ISO string literals in every post.
+async function getPostLastmod(slug) {
+  const source = await readFile(join(blogDir, `${slug}.mdx`), "utf-8");
+  const field = (name) =>
+    source.match(new RegExp(`${name}:\\s*['"](\\d{4}-\\d{2}-\\d{2})['"]`))?.[1];
+  return field("dateModified") ?? field("date") ?? null;
+}
+
+function urlEntry({ loc, lastmod, changefreq, priority }) {
+  const lastmodLine = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : "";
   return `  <url>
-    <loc>${loc}</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${loc}</loc>${lastmodLine}
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`;
@@ -40,13 +53,25 @@ function urlEntry({ loc, changefreq, priority }) {
 
 async function generate() {
   const slugs = await getBlogSlugs();
-  const blogUrls = slugs.map((slug) => ({
-    loc: `https://zensus.app/blog/${slug}`,
-    changefreq: "weekly",
-    priority: "0.85",
-  }));
+  const blogUrls = await Promise.all(
+    slugs.map(async (slug) => ({
+      loc: `https://zensus.app/blog/${slug}`,
+      lastmod: await getPostLastmod(slug),
+      changefreq: "weekly",
+      priority: "0.85",
+    })),
+  );
 
-  const urls = [...STATIC_URLS, ...blogUrls];
+  // The blog index is as fresh as its newest post.
+  const newestPost = blogUrls
+    .map((u) => u.lastmod)
+    .filter(Boolean)
+    .sort()
+    .at(-1);
+  const urls = [...STATIC_URLS, ...blogUrls].map((url) =>
+    url.loc === "https://zensus.app/blog" ? { ...url, lastmod: newestPost } : url,
+  );
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(urlEntry).join("\n")}
