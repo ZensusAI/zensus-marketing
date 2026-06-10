@@ -26,7 +26,7 @@ const CARDS = [
   {
     slug: "home",
     category: "",
-    title: "Cash flow forecasting for founders with variable revenue",
+    title: "Cash flow forecasting for startups with variable revenue",
     subtitle:
       "Cash flow that matches the calendar. Connect your bank, QuickBooks, and HubSpot and see exactly when your cash runs out.",
     accent: "green",
