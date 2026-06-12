@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository purpose
 
-Marketing site for Zensus (`zensus.app`). The **product app** lives at a separate domain (`app.zensus.app`) and is not in this repo. This repo serves the public landing, pricing, blog, changelog, security, integrations (hub + per-provider sub-pages for Plaid, QuickBooks, HubSpot, and Slack), `/privacy`, `/terms`, and `/subprocessors` pages. A small set of product-surface routes (`/support`, `/features`, `/forecast`) are 301'd to `app.zensus.app` at the edge via `vercel.json`, not by a React component; everything else is a real React route served from this repo.
+Marketing site for Zensus (`zensus.app`). The **product app** lives at a separate domain (`app.zensus.app`) and is not in this repo. This repo serves the public landing, pricing, blog, changelog, security, integrations (hub + per-provider sub-pages for Plaid, QuickBooks, HubSpot, and Slack), `/privacy`, `/terms`, and `/subprocessors` pages. A small set of legacy routes are permanently redirected at the edge via `vercel.json`, not by a React component: `/forecast` and `/runway` go to `app.zensus.app/runway`, while `/features` and `/talk` go to the homepage (old pre-migration app paths). Everything else is a real React route served from this repo. Keep these edge redirects single-hop to a 200 page and never redirect to a URL with a `#fragment`; Google Search Console reports fragment targets as "Redirect error".
 
 ## Commands
 

@@ -4,12 +4,22 @@
   "redirects": [
     {
       "source": "/features",
-      "destination": "https://zensus.app/#features",
+      "destination": "https://zensus.app/",
       "permanent": true
     },
     {
       "source": "/forecast",
       "destination": "https://app.zensus.app/runway",
+      "permanent": true
+    },
+    {
+      "source": "/runway",
+      "destination": "https://app.zensus.app/runway",
+      "permanent": true
+    },
+    {
+      "source": "/talk",
+      "destination": "https://zensus.app/",
       "permanent": true
     }
   ],
