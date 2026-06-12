@@ -125,6 +125,18 @@ How to model AI inference and agent costs as a first-class line item in a cash f
 - A practical operator benchmark: keep inference spend below 10% of revenue for chat-heavy products. Zensus uses the same threshold in its own planning.
 - Forecast AI compute under three scenarios (base, upside, downside) because usage-driven costs scale with adoption, not headcount.
 
+### Runway vs Burn Rate for Founders (2026)
+https://zensus.app/blog/runway-vs-burn-rate-for-founders
+
+The difference between runway, burn rate, net burn, gross burn, and burn multiple, and what investors expect in 2026. Key facts from the guide:
+
+- Burn rate measures speed of spending; runway measures time until cash runs out at the current net burn rate.
+- Gross burn is total monthly outflows; net burn subtracts cash inflows and is what most investors care about.
+- The classic formula (cash ÷ net burn) breaks quickly when hires, churn, or variable costs like AI compute change mid-month.
+- Burn multiple (net burn ÷ net new ARR) has become a primary capital-efficiency metric; below 2x is the common investor threshold David Sacks popularized.
+- 2026 runway guidance has shifted to 18–24 months post-fundraise, up from 12–15 months in 2021.
+- Rolling cash flow forecasts tied to live bank, accounting, and subscription data produce more accurate runway than static spreadsheets.
+
 ### MCP vs CLI for Finance Teams
 https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 
@@ -157,6 +169,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - What Is a 13-Week Cash Flow Forecast? (blog): https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast
 - Will I Make Payroll? (blog): https://zensus.app/blog/will-i-make-payroll
 - Forecasting AI Compute Costs for Founders (blog): https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
+- Runway vs Burn Rate for Founders (blog): https://zensus.app/blog/runway-vs-burn-rate-for-founders
 - MCP vs CLI for Finance Teams (blog): https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 - Changelog: https://zensus.app/changelog
 - Security: https://zensus.app/security
