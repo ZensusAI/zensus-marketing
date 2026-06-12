@@ -30,7 +30,6 @@ export const authors = {
     name: "Ashwin Menon",
     position: "Software Developer, Zensus",
     avatar: "/authors/ashwin.svg",
-    bio: "Ashwin is a software developer at Zensus and writes about the engineering behind AI products and founder finance.",
     url: "/about",
     personId: "https://zensus.app/about#ashwin-menon",
     jobTitle: "Software Developer",
