@@ -12,7 +12,7 @@ const PricingPreview = () => (
           Start free for 14 days.
         </h2>
         <p className="text-lg text-muted-foreground mb-8">
-          Every integration, real-time cash flow intelligence, AI scenarios, and
+          Every integration, real-time cash flow intelligence, scenario modeling, and
           Slack alerts. Then $199 a month after your trial. Less than a single
           hour with a fractional CFO.
         </p>

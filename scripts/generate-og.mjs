@@ -36,7 +36,7 @@ const CARDS = [
     category: "Pricing",
     title: "Zensus Pro, $199 a month",
     subtitle:
-      "One plan. Every integration. Real-time cash flow, AI scenarios, Slack alerts. Billed monthly, cancel anytime.",
+      "One plan. Every integration. Real-time cash flow, scenario modeling, Slack alerts. Billed monthly, cancel anytime.",
     accent: "green",
   },
   {

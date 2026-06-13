@@ -22,7 +22,7 @@ const dataFeatures = [
 
 const cashFlowFeatures = [
   "Real-time cash position with zero-cash-date forecast",
-  "AI scenario modeling with chat history",
+  "Scenario modeling with chat history",
   "Slack alerts when your cash crosses a threshold you set",
   "Subscription-aware revenue projections",
 ];
@@ -78,7 +78,7 @@ const Pricing = () => (
       <title>Zensus Pricing · $199/mo Cash Flow Forecasting for Founders</title>
       <meta
         name="description"
-        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, AI scenarios, and Slack alerts."
+        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."
       />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://zensus.app/pricing" />
@@ -86,7 +86,7 @@ const Pricing = () => (
       <meta property="og:title" content="Zensus Pricing · $199/mo Cash Flow Forecasting for Founders" />
       <meta
         property="og:description"
-        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, AI scenarios, and Slack alerts."
+        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."
       />
       <meta property="og:image" content="https://zensus.app/og/pricing.png" />
       <meta property="og:image:width" content="1200" />
@@ -96,7 +96,7 @@ const Pricing = () => (
       <meta name="twitter:title" content="Zensus Pricing · $199/mo Cash Flow Forecasting for Founders" />
       <meta
         name="twitter:description"
-        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, AI scenarios, and Slack alerts."
+        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."
       />
       <meta name="twitter:image" content="https://zensus.app/og/pricing.png" />
       <link rel="canonical" href="https://zensus.app/pricing" />
@@ -111,7 +111,7 @@ const Pricing = () => (
               Start free. 14 days on us.
             </h1>
             <p className="text-sm text-muted-foreground">
-              Every integration, real-time cash flow intelligence, and AI scenarios. 14-day free trial, then $199 a month. Cancel anytime.
+              Every integration, real-time cash flow intelligence, and scenario modeling. 14-day free trial, then $199 a month. Cancel anytime.
             </p>
           </div>
 
