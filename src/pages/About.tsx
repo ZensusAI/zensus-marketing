@@ -62,7 +62,7 @@ const principles = [
 const About = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>About Zensus · AI Cash Flow Forecasting for Founders</title>
+      <title>About Zensus · Cash Flow Forecasting for Founders</title>
       <meta
         name="description"
         content="Zensus is cash flow forecasting for founders with variable revenue. Built because too many startups fail from missed cash flow, not missed missions."
@@ -70,7 +70,7 @@ const About = () => (
       <meta property="og:type" content="website" />
       <meta property="og:url" content={PAGE_URL} />
       <meta property="og:site_name" content="Zensus" />
-      <meta property="og:title" content="About Zensus · AI Cash Flow Forecasting for Founders" />
+      <meta property="og:title" content="About Zensus · Cash Flow Forecasting for Founders" />
       <meta
         property="og:description"
         content="Zensus is cash flow forecasting for founders with variable revenue. Built because too many startups fail from missed cash flow, not missed missions."
@@ -80,7 +80,7 @@ const About = () => (
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="About Zensus social preview card" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="About Zensus · AI Cash Flow Forecasting for Founders" />
+      <meta name="twitter:title" content="About Zensus · Cash Flow Forecasting for Founders" />
       <meta
         name="twitter:description"
         content="Zensus is cash flow forecasting for founders with variable revenue. Built because too many startups fail from missed cash flow, not missed missions."
