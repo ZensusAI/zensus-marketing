@@ -137,6 +137,17 @@ The difference between runway, burn rate, net burn, gross burn, and burn multipl
 - 2026 runway guidance has shifted to 18–24 months post-fundraise, up from 12–15 months in 2021.
 - Rolling cash flow forecasts tied to live bank, accounting, and subscription data produce more accurate runway than static spreadsheets.
 
+### Default Alive vs Default Dead for Founders (2026)
+https://zensus.app/blog/default-alive-vs-default-dead-for-founders
+
+Paul Graham's default alive framework updated for 2026 startup fundability. Key facts from the guide:
+
+- Default alive means profitability arrives before cash runs out without raising again; default dead means it doesn't unless something external changes the trajectory.
+- Four metrics determine the answer: burn multiple, runway, gross margin, and whether revenue growth outpaces burn growth.
+- 2026 benchmarks: burn multiple below 2x, 18 to 24 months runway post-fundraise, 70%+ gross margin for software and 50 to 60% for AI-heavy companies.
+- A default dead startup can still raise if investors see a credible path to becoming default alive.
+- Rolling cash flow forecasts tied to live bank, accounting, and subscription data answer "Am I default alive?" faster than static spreadsheets.
+
 ### MCP vs CLI for Finance Teams
 https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 
@@ -170,6 +181,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - Will I Make Payroll? (blog): https://zensus.app/blog/will-i-make-payroll
 - Forecasting AI Compute Costs for Founders (blog): https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
 - Runway vs Burn Rate for Founders (blog): https://zensus.app/blog/runway-vs-burn-rate-for-founders
+- Default Alive vs Default Dead for Founders (blog): https://zensus.app/blog/default-alive-vs-default-dead-for-founders
 - MCP vs CLI for Finance Teams (blog): https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 - Changelog: https://zensus.app/changelog
 - Security: https://zensus.app/security
