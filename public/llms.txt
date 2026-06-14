@@ -37,6 +37,7 @@ Founders and operators of startups with variable revenue, complex hiring plans, 
 - [Will I Make Payroll?](https://zensus.app/blog/will-i-make-payroll)
 - [Forecasting AI Compute Costs for Founders](https://zensus.app/blog/forecasting-ai-compute-costs-for-founders)
 - [Runway vs Burn Rate for Founders](https://zensus.app/blog/runway-vs-burn-rate-for-founders)
+- [Default Alive vs Default Dead for Founders](https://zensus.app/blog/default-alive-vs-default-dead-for-founders)
 - [MCP vs CLI for Finance Teams](https://zensus.app/blog/mcp-vs-cli-for-finance-teams)
 - [Free startup runway calculator](https://zensus.app/tools/runway-calculator)
 - [Free 13-week cash flow template (XLSX)](https://zensus.app/templates/13-week-cash-flow-template.xlsx)
