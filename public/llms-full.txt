@@ -165,6 +165,11 @@ https://zensus.app/tools/runway-calculator
 
 Free interactive calculator: enter cash, monthly revenue, and monthly expenses to get your runway in months and your projected zero-cash date. Models hiring impact at 1.3x loaded salary cost and the timing of annual contract payments. No signup required.
 
+### Payroll Calendar Calculator
+https://zensus.app/tools/payroll-calendar
+
+Free payroll calendar tool: enter first pay date and frequency (weekly, biweekly, semimonthly, monthly) to count pay periods in 2026 and 2027, highlight three-paycheck months, flag a 27-period biweekly year, and show monthly cash outflow per run. Targets how many pay periods in 2026 and biweekly payroll calendar 2027 queries.
+
 ### 13-Week Cash Flow Template
 https://zensus.app/templates/13-week-cash-flow-template.xlsx
 
@@ -182,6 +187,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - Forecasting AI Compute Costs for Founders (blog): https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
 - Runway vs Burn Rate for Founders (blog): https://zensus.app/blog/runway-vs-burn-rate-for-founders
 - Default Alive vs Default Dead for Founders (blog): https://zensus.app/blog/default-alive-vs-default-dead-for-founders
+- Payroll calendar calculator (tool): https://zensus.app/tools/payroll-calendar
 - MCP vs CLI for Finance Teams (blog): https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 - Changelog: https://zensus.app/changelog
 - Security: https://zensus.app/security
