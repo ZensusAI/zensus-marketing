@@ -72,6 +72,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "tools-payroll-calendar",
+    category: "Free Tool",
+    title: "Payroll calendar calculator",
+    subtitle:
+      "Pay periods in 2026 and 2027, three-paycheck months, and monthly cash impact.",
+    accent: "green",
+  },
+  {
     slug: "use-cases",
     category: "Use Cases",
     title: "Who uses Zensus",

@@ -41,6 +41,7 @@ const STATIC_ROUTES = [
   "/integrations/slack",
   "/use-cases",
   "/tools/runway-calculator",
+  "/tools/payroll-calendar",
 ];
 
 // Minimal static file server over dist/ with SPA fallback to index.html

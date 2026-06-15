@@ -40,6 +40,7 @@ Founders and operators of startups with variable revenue, complex hiring plans, 
 - [Default Alive vs Default Dead for Founders](https://zensus.app/blog/default-alive-vs-default-dead-for-founders)
 - [MCP vs CLI for Finance Teams](https://zensus.app/blog/mcp-vs-cli-for-finance-teams)
 - [Free startup runway calculator](https://zensus.app/tools/runway-calculator)
+- [Free payroll calendar calculator](https://zensus.app/tools/payroll-calendar)
 - [Free 13-week cash flow template (XLSX)](https://zensus.app/templates/13-week-cash-flow-template.xlsx)
 - [Changelog](https://zensus.app/changelog)
 - [Security](https://zensus.app/security)
