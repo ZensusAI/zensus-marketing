@@ -17,6 +17,7 @@ type FooterLink = {
   label: string;
   href: string;
   external?: boolean;
+  children?: FooterLink[];
 };
 
 const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
@@ -25,8 +26,14 @@ const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
     links: [
       { label: "Features", href: "/#features" },
       { label: "Use Cases", href: "/use-cases" },
-      { label: "Runway Calculator", href: "/tools/runway-calculator" },
-      { label: "Payroll Calendar", href: "/tools/payroll-calendar" },
+      {
+        label: "Tools",
+        href: "#",
+        children: [
+          { label: "Runway Calculator", href: "/tools/runway-calculator" },
+          { label: "Payroll Calendar", href: "/tools/payroll-calendar" },
+        ],
+      },
       { label: "FAQ", href: "/#faq" },
       { label: "Pricing", href: "/pricing" },
       { label: "Book a call", href: TALK_TO_US_URL, external: true },
@@ -66,6 +73,29 @@ const linkClass =
   "text-sm text-[hsl(var(--forest-muted))] transition-colors hover:text-[hsl(var(--forest-foreground))] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[hsl(var(--sage-light))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--forest))] rounded-sm";
 
 function FooterLinkItem({ link }: { link: FooterLink }) {
+  if (link.children && link.children.length > 0) {
+    return (
+      <details className="group">
+        <summary className={`${linkClass} inline-flex cursor-pointer list-none items-center gap-1.5`}>
+          {link.label}
+          <span
+            className="text-xs transition-transform duration-150 group-open:rotate-180"
+            aria-hidden
+          >
+            ▾
+          </span>
+        </summary>
+        <ul className="mt-2 space-y-2 pl-3">
+          {link.children.map((child) => (
+            <li key={child.label}>
+              <FooterLinkItem link={child} />
+            </li>
+          ))}
+        </ul>
+      </details>
+    );
+  }
+
   if (link.external) {
     return (
       <a
