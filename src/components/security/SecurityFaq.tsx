@@ -13,7 +13,7 @@ const FAQS: FaqItem[] = [
   {
     question: "Is my financial data safe with Zensus?",
     answer:
-      "Every integration token is encrypted at rest with AES-256-GCM, data moves over TLS, and everything sits on encrypted AWS infrastructure in a United States region. Every database query is scoped to your account, so cross-account access is not possible by design.",
+      "Every integration token is encrypted at rest with AES-256-GCM, data moves over TLS, and your stored data sits on encrypted AWS infrastructure in a United States region. Every database query is scoped to your account, so cross-account access is not possible by design.",
   },
   {
     question: "Does Zensus store my bank password?",

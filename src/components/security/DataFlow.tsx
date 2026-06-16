@@ -15,7 +15,7 @@ const STEPS = [
     n: "02",
     icon: KeyRound,
     label: "Scoped OAuth tokens",
-    note: "Plaid and Intuit hold the credentials",
+    note: "Each provider holds the credentials",
   },
   {
     n: "03",
@@ -54,7 +54,7 @@ const DataFlow = () => (
       ))}
     </div>
     <p className="mt-4 font-mono text-xs leading-relaxed text-muted-foreground">
-      Your bank password never touches Zensus. Plaid and Intuit hold the credentials.
+      Your bank password never touches Zensus. Credentials stay with each provider.
     </p>
   </div>
 );
