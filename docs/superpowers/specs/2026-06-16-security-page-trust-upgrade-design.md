@@ -1,7 +1,7 @@
 # Security page trust upgrade
 
 Date: 2026-06-16
-Status: Revised after Codex review (pending founder spec review)
+Status: Approved (Codex-reviewed; founder resolved safe-harbor + ninth signal)
 Route: `/security` (in place, no new route)
 
 Review history: reviewed by Codex on 2026-06-16 (session
@@ -82,8 +82,8 @@ Newly confirmed by the founder (added):
 - Encrypted backups with a tested recovery process.
 - Responsible disclosure policy with a security contact.
 
-Surfaced from `vercel.json` during Codex review (verifiable, recommended as an
-optional ninth signal pending founder OK):
+Surfaced from `vercel.json` during Codex review (verifiable; founder confirmed
+as the ninth signal):
 - HTTP security headers on every response: HSTS with `preload`
   (`max-age=63072000; includeSubDomains; preload`), a strict Content-Security-
   Policy, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`,
@@ -128,9 +128,8 @@ disclosure section can render `id="responsible-disclosure"`, which the
    - US data residency, "Stored data in an AWS US region"
    - Encrypted backups, "Tested recovery, not a first-time restore"
    - Static analysis in CI, "Semgrep and Gitleaks on every commit"
-   - (optional ninth, recommended) Security headers, "HSTS, CSP, clickjacking
-     protection" (verifiable in `vercel.json`; include only if the founder
-     wants the ninth card)
+   - Security headers, "HSTS, CSP, clickjacking protection" (ninth card,
+     confirmed; verifiable in `vercel.json`)
 3. **Data flow at a glance** (kept prose).
 4. **What Zensus stores / never stores** (restructured): two side-by-side
    bordered cards. Left "Stores" lists OAuth tokens (encrypted), transactions
@@ -155,15 +154,14 @@ disclosure section can render `id="responsible-disclosure"`, which the
     - Hosting: AWS, United States region
     - Backups: Encrypted, recovery tested
     - AI training: None on your data
-    - Transport: HSTS preload, strict CSP, clickjacking protection (optional
-      row, pairs with the optional ninth control card)
+    - Transport: HSTS preload, strict CSP, clickjacking protection (pairs with
+      the ninth control card)
     Followed by the existing sentence that data-protection and access-control
     practices are documented and reviewable on request.
 11. **Responsible disclosure** (new prose, renders `id="responsible-disclosure"`):
     report issues to `support@zensus.app` (temporary contact; see dependency
-    below), good-faith research welcome, with safe-harbor wording that needs
-    founder sign-off (see dependency), and a pointer to
-    `/.well-known/security.txt`.
+    below), good-faith research welcome, with a tightly-scoped safe harbor
+    (founder approved), and a pointer to `/.well-known/security.txt`.
 12. **Need documentation for procurement?** (restructured Contact + CTA):
     request the security overview, data-handling details, and the existing
     `/subprocessors` page (link it directly rather than only offering it on
@@ -185,22 +183,18 @@ Data residency:
 > your procurement process needs the specific region or a data-flow diagram,
 > ask and we will share it.
 
-Responsible disclosure (safe-harbor sentence needs founder sign-off; two
-options below):
+Responsible disclosure (founder approved a tightly-scoped safe harbor):
 > Found a security issue? Email support@zensus.app and we will work with you on
-> it. We welcome good-faith research: report a vulnerability responsibly, give
-> us reasonable time to fix it, and do not access, modify, or delete data that
-> is not your own. Our machine-readable policy lives at
-> /.well-known/security.txt.
-
-Optional safe-harbor sentence to append only with founder sign-off:
-> If you follow this policy in good faith, we will not pursue legal action
-> against you for your research.
+> it. We support good-faith security research. If you report a vulnerability
+> responsibly, test only against your own account, give us reasonable time to
+> fix the issue before disclosing it, and do not access, modify, or delete data
+> that is not your own, we will not pursue legal action against you for your
+> research. Our machine-readable policy lives at /.well-known/security.txt.
 
 Note (Codex P0 / RFC 9116): `security.txt` and this page do not by themselves
-grant authorization to test. The safe-harbor sentence is a real commitment, so
-it ships only if the founder approves it; otherwise the page welcomes good-faith
-research without the explicit no-legal-action promise.
+grant blanket authorization to test. The safe harbor is scoped to good-faith
+research against the researcher's own account, which keeps the commitment
+defensible for a product holding real financial data.
 
 ### Helmet / SEO
 
@@ -237,10 +231,10 @@ procurement keyword) without overstating anything.
   find-and-replace. (`vercel.json` currently redirects only `/features`, not
   `/support`; regardless, this is an email address, not a route, so edge
   redirects do not affect it.)
-- **Safe-harbor wording needs founder sign-off.** The "no legal action" sentence
-  is a real legal commitment. It ships only if the founder approves it (see the
-  responsible-disclosure copy options); default is the good-faith-research
-  welcome without the explicit promise.
+- **Safe-harbor wording is founder-approved, scoped.** The "no legal action"
+  sentence is a real commitment; the founder approved shipping it, scoped to
+  good-faith research against the researcher's own account, with reasonable
+  disclosure time and no access to data that is not theirs.
 - **security.txt delivery is low-risk.** Vite copies `publicDir` to the build
   output as-is (`build.copyPublicDir` defaults to `true`), and `vercel.json` has
   no rewrites and only a `/features` redirect, so the file serves at
