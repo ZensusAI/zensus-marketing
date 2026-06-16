@@ -1,8 +1,14 @@
 # Security page trust upgrade
 
 Date: 2026-06-16
-Status: Approved (pending spec review)
+Status: Revised after Codex review (pending founder spec review)
 Route: `/security` (in place, no new route)
+
+Review history: reviewed by Codex on 2026-06-16 (session
+`019ece64-1faa-7e60-8687-5425b18c7757`). All P0/P1/P2 findings folded in below:
+US-residency wording tightened, safe-harbor language flagged for sign-off,
+test-runner and `vercel.json` facts corrected, `security.txt` `Policy` pointed
+at a dedicated anchor, Vite/Vercel risk right-sized, `/subprocessors` linked.
 
 ## Context
 
@@ -72,12 +78,26 @@ Already published on the page (kept):
 - Hosted on AWS.
 
 Newly confirmed by the founder (added):
-- US data residency (AWS US region).
+- US data residency for stored application data (AWS US region).
 - Encrypted backups with a tested recovery process.
 - Responsible disclosure policy with a security contact.
 
+Surfaced from `vercel.json` during Codex review (verifiable, recommended as an
+optional ninth signal pending founder OK):
+- HTTP security headers on every response: HSTS with `preload`
+  (`max-age=63072000; includeSubDomains; preload`), a strict Content-Security-
+  Policy, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`,
+  `Referrer-Policy: strict-origin-when-cross-origin`, and a locked-down
+  `Permissions-Policy`.
+
 Explicitly not claimed: MFA / SSO (unconfirmed), and any compliance
 certification.
+
+Honesty caveat on residency (Codex P0): the page already discloses that running
+a scenario sends the request to Claude (Anthropic) per request. So the residency
+claim is scoped to *stored* application data in AWS US, not an absolute "all
+data and all processing is US-only." The data-residency copy reflects that
+scope.
 
 ## Design
 
@@ -88,6 +108,10 @@ small bordered-card `Control` component in the same file. If the file grows
 unwieldy later, the grid can be extracted to `src/components/security/`; not
 needed now.
 
+The `Section` component gains an optional `id` prop so the responsible-
+disclosure section can render `id="responsible-disclosure"`, which the
+`security.txt` `Policy` field and any deep links can target.
+
 ### Page order
 
 1. **Hero** (kept): H1 "How Zensus handles your financial data" + existing lead
@@ -95,15 +119,18 @@ needed now.
 2. **Controls at a glance** (new): unboxed mono eyebrow `CONTROLS AT A GLANCE`,
    then a responsive grid (2 cols mobile, up to 4 on desktop) of bordered
    `rounded-md` cards. Each card: a lucide icon, a short title, a one-line
-   descriptor. Eight cards:
+   descriptor. Eight confirmed cards, plus an optional ninth:
    - Encryption at rest, "AES-256-GCM"
    - Encryption in transit, "TLS on every request"
    - Bank-level OAuth, "Plaid and Intuit hold credentials"
    - Account-level isolation, "Every query scoped to your user"
    - No AI training, "Your data never trains a model"
-   - US data residency, "AWS, United States region"
+   - US data residency, "Stored data in an AWS US region"
    - Encrypted backups, "Tested recovery, not a first-time restore"
    - Static analysis in CI, "Semgrep and Gitleaks on every commit"
+   - (optional ninth, recommended) Security headers, "HSTS, CSP, clickjacking
+     protection" (verifiable in `vercel.json`; include only if the founder
+     wants the ninth card)
 3. **Data flow at a glance** (kept prose).
 4. **What Zensus stores / never stores** (restructured): two side-by-side
    bordered cards. Left "Stores" lists OAuth tokens (encrypted), transactions
@@ -114,9 +141,11 @@ needed now.
 6. **Backups and recovery** (new prose): regular encrypted backups on AWS, the
    recovery process is tested so a restore is a known procedure rather than a
    first-time experiment during an incident.
-7. **Data residency** (new prose): Zensus runs on AWS in a US region; financial
-   data, OAuth tokens, and scenario history stay in US infrastructure; specific
-   region or a data-flow diagram available on request.
+7. **Data residency** (new prose): Zensus runs on AWS in a US region; stored
+   application data (OAuth tokens, in-window transactions, scenario history)
+   resides in that US infrastructure; the per-request Claude processing path is
+   acknowledged (it is already covered in the AI section); specific region or a
+   data-flow diagram available on request.
 8. **CI security** (kept prose).
 9. **AI and your data** (kept prose).
 10. **Compliance status** (restructured from "Compliance posture"): honest
@@ -126,16 +155,19 @@ needed now.
     - Hosting: AWS, United States region
     - Backups: Encrypted, recovery tested
     - AI training: None on your data
+    - Transport: HSTS preload, strict CSP, clickjacking protection (optional
+      row, pairs with the optional ninth control card)
     Followed by the existing sentence that data-protection and access-control
     practices are documented and reviewable on request.
-11. **Responsible disclosure** (new prose): report issues to
-    `support@zensus.app` (temporary contact; see dependency below), good-faith
-    research welcome, no legal action against researchers who report
-    responsibly and avoid accessing data that is not their own, and a pointer
-    to `/.well-known/security.txt`.
+11. **Responsible disclosure** (new prose, renders `id="responsible-disclosure"`):
+    report issues to `support@zensus.app` (temporary contact; see dependency
+    below), good-faith research welcome, with safe-harbor wording that needs
+    founder sign-off (see dependency), and a pointer to
+    `/.well-known/security.txt`.
 12. **Need documentation for procurement?** (restructured Contact + CTA):
-    request the security overview, subprocessor list, and data-handling
-    details; `mailto:support@zensus.app` plus the existing `TalkToUsButton`.
+    request the security overview, data-handling details, and the existing
+    `/subprocessors` page (link it directly rather than only offering it on
+    request); `mailto:support@zensus.app` plus the existing `TalkToUsButton`.
 
 ### Copy drafts for new sections
 
@@ -146,17 +178,29 @@ Backups and recovery:
 > time during an incident.
 
 Data residency:
-> Zensus runs on AWS in a United States region. Your financial data, OAuth
-> tokens, and scenario history stay in US infrastructure. If your procurement
-> process needs the specific region or a data-flow diagram, ask and we will
-> share it.
+> Zensus runs on AWS in a United States region. Your stored data, including
+> OAuth tokens, the transactions inside the sync window, and your scenario
+> history, lives in that US infrastructure. When you run a scenario, the request
+> is processed by Claude as described above and the result returns to you. If
+> your procurement process needs the specific region or a data-flow diagram,
+> ask and we will share it.
 
-Responsible disclosure:
+Responsible disclosure (safe-harbor sentence needs founder sign-off; two
+options below):
 > Found a security issue? Email support@zensus.app and we will work with you on
-> it. We welcome good-faith research and will not pursue legal action against
-> researchers who report responsibly, give us reasonable time to fix the issue,
-> and avoid accessing data that is not their own. Our machine-readable policy
-> lives at /.well-known/security.txt.
+> it. We welcome good-faith research: report a vulnerability responsibly, give
+> us reasonable time to fix it, and do not access, modify, or delete data that
+> is not your own. Our machine-readable policy lives at
+> /.well-known/security.txt.
+
+Optional safe-harbor sentence to append only with founder sign-off:
+> If you follow this policy in good faith, we will not pursue legal action
+> against you for your research.
+
+Note (Codex P0 / RFC 9116): `security.txt` and this page do not by themselves
+grant authorization to test. The safe-harbor sentence is a real commitment, so
+it ships only if the founder approves it; otherwise the page welcomes good-faith
+research without the explicit no-legal-action promise.
 
 ### Helmet / SEO
 
@@ -170,34 +214,47 @@ procurement keyword) without overstating anything.
    `Control` component, two-column store / never-store, compliance-status
    definition rows, three new prose sections, extended meta description. Same
    route, same chrome.
-2. `public/.well-known/security.txt` (new), RFC 9116:
+2. `public/.well-known/security.txt` (new), RFC 9116. Required fields are
+   `Contact` and `Expires` only; `Expires` is valid RFC 3339 and under one year
+   out. `Policy` points at the dedicated disclosure anchor, not the generic
+   page. No `Encryption` field (no PGP key in place; an omitted field beats a
+   weak placeholder). Lead with a comment marking the contact as temporary:
    ```
+   # Temporary security contact: support@zensus.app (swap to security@ later)
    Contact: mailto:support@zensus.app
    Expires: 2027-06-15T23:59:59.000Z
    Preferred-Languages: en
    Canonical: https://zensus.app/.well-known/security.txt
-   Policy: https://zensus.app/security
+   Policy: https://zensus.app/security#responsible-disclosure
    ```
 
 ## Dependencies and assumptions
 
 - **Security contact is temporary.** The page and `security.txt` use
   `support@zensus.app` for now, by founder request, to be swapped to
-  `security@zensus.app` later. A code comment in `Security.tsx` and a note in
+  `security@zensus.app` later. A code comment in `Security.tsx` and a comment in
   `security.txt` mark it as the temporary contact so the future swap is a quick
-  find-and-replace. The founder selected `support@zensus.app` as the contact
-  for now. Note the `/support` *route* is edge-redirected in `vercel.json`, but
-  that is a URL route and does not affect the email address of the same name.
-- **security.txt must reach `dist/`.** Vite copies `public/` to the build
-  output root. Verify the dotfile lands at `dist/.well-known/security.txt`
-  after `npm run build`; if Vite strips the dotdir, fall back to a `vercel.json`
-  route or rename strategy. Confirm `vercel.json` has no redirect or rewrite
-  that swallows `/.well-known/*`.
+  find-and-replace. (`vercel.json` currently redirects only `/features`, not
+  `/support`; regardless, this is an email address, not a route, so edge
+  redirects do not affect it.)
+- **Safe-harbor wording needs founder sign-off.** The "no legal action" sentence
+  is a real legal commitment. It ships only if the founder approves it (see the
+  responsible-disclosure copy options); default is the good-faith-research
+  welcome without the explicit promise.
+- **security.txt delivery is low-risk.** Vite copies `publicDir` to the build
+  output as-is (`build.copyPublicDir` defaults to `true`), and `vercel.json` has
+  no rewrites and only a `/features` redirect, so the file serves at
+  `https://zensus.app/.well-known/security.txt`. `cleanUrls: true` only affects
+  `.html`, not `.txt`. Still confirm `dist/.well-known/security.txt` exists
+  after `npm run build` as a sanity check.
 
 ## Verification
 
-No test runner is configured. Verify by:
+The repo uses vitest (`npm test`), though there is no page-specific coverage for
+`/security` yet (this change is presentational, so no new unit test is
+warranted). Verify by:
 - `npm run lint` passes.
+- `npm test` passes (no regressions in existing suites).
 - `npm run build` succeeds and `dist/.well-known/security.txt` exists with the
   expected content.
 - `npm run preview` (or serve `dist/`): `/security` renders the grid, the
