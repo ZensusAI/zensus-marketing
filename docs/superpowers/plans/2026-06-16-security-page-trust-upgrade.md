@@ -120,7 +120,7 @@ const Control = ({ icon: Icon, title, detail }: { icon: LucideIcon; title: strin
 );
 
 const COMPLIANCE_ROWS: [string, string][] = [
-  ["SOC 2", "In progress, working toward it"],
+  ["SOC 2", "Evidence available on request"],
   ["Encryption", "AES-256-GCM at rest, TLS in transit"],
   ["Hosting", "AWS, United States region"],
   ["Backups", "Encrypted, recovery tested"],
@@ -273,10 +273,10 @@ const Security = () => (
             ))}
           </dl>
           <p>
-            Zensus is not yet SOC 2 certified, and we are working toward it. In
-            the meantime, our data protection and access control practices are
-            documented and reviewable on request. If your procurement process
-            needs specific evidence, talk to us and we will share what we have.
+            Zensus is not yet SOC 2 certified. Our data protection and access
+            control practices are documented and reviewable on request. If your
+            procurement process needs specific evidence, talk to us and we will
+            share what we have.
           </p>
         </Section>
 

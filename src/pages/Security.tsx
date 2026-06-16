@@ -95,7 +95,7 @@ const PROTECTIONS: { title: string; body: string }[] = [
 ];
 
 const COMPLIANCE: { area: string; detail: string; active: boolean; status: string }[] = [
-  { area: "SOC 2", detail: "Type II readiness underway", active: false, status: "In progress" },
+  { area: "SOC 2", detail: "Evidence available on request", active: false, status: "Not certified" },
   { area: "Encryption", detail: "AES-256-GCM at rest, TLS in transit", active: true, status: "Active" },
   { area: "Hosting", detail: "AWS, United States region", active: true, status: "Active" },
   { area: "Backups", detail: "Encrypted, recovery tested", active: true, status: "Active" },
@@ -300,10 +300,10 @@ const Security = () => (
                 <ExternalLink className="h-3 w-3" aria-hidden="true" />
               </a>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Zensus is not yet SOC 2 certified, and we are working toward it.
-                Our data protection and access control practices are documented
-                and reviewable on request. If your procurement process needs
-                specific evidence, talk to us and we will share what we have.
+                Zensus is not yet SOC 2 certified. Our data protection and
+                access control practices are documented and reviewable on
+                request. If your procurement process needs specific evidence,
+                talk to us and we will share what we have.
               </p>
             </div>
           </Block>

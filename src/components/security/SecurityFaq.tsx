@@ -33,7 +33,7 @@ const FAQS: FaqItem[] = [
   {
     question: "Is Zensus SOC 2 certified?",
     answer:
-      "Not yet. We are working toward it, and in the meantime our data-protection and access-control practices are documented and reviewable on request. We would rather tell you exactly where we stand than imply a certification we do not hold.",
+      "Not yet. Our data-protection and access-control practices are documented and reviewable on request, and we would rather tell you exactly where we stand than imply a certification we do not hold.",
   },
 ];
 

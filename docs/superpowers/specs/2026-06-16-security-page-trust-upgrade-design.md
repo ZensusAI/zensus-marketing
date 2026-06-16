@@ -149,7 +149,7 @@ disclosure section can render `id="responsible-disclosure"`, which the
 9. **AI and your data** (kept prose).
 10. **Compliance status** (restructured from "Compliance posture"): honest
     labeled rows (a definition list), not badges:
-    - SOC 2: In progress, working toward it
+    - SOC 2: Not certified (evidence available on request)
     - Encryption: AES-256-GCM at rest, TLS in transit
     - Hosting: AWS, United States region
     - Backups: Encrypted, recovery tested
