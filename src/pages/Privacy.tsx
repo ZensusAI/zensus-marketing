@@ -85,9 +85,9 @@ export default function PrivacyPolicy() {
               </div>
 
               <div>
-                <p className="font-semibold text-foreground mb-2">Via Google OAuth or Sign in with Apple:</p>
+                <p className="font-semibold text-foreground mb-2">Via Google OAuth:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>Email address (or Apple-relay address for Sign in with Apple)</li>
+                  <li>Email address</li>
                   <li>Full name (if provided by the identity provider)</li>
                   <li>Profile picture URL (if provided by the identity provider)</li>
                   <li>Provider subject identifier</li>
