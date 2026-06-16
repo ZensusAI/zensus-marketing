@@ -95,7 +95,6 @@ const PROTECTIONS: { title: string; body: string }[] = [
 ];
 
 const COMPLIANCE: { area: string; detail: string; active: boolean; status: string }[] = [
-  { area: "SOC 2", detail: "Evidence available on request", active: false, status: "Not certified" },
   { area: "Encryption", detail: "AES-256-GCM at rest, TLS in transit", active: true, status: "Active" },
   { area: "Hosting", detail: "AWS, United States region", active: true, status: "Active" },
   { area: "Backups", detail: "Encrypted, recovery tested", active: true, status: "Active" },

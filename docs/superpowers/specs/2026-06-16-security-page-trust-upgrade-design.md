@@ -148,16 +148,17 @@ disclosure section can render `id="responsible-disclosure"`, which the
 8. **CI security** (kept prose).
 9. **AI and your data** (kept prose).
 10. **Compliance status** (restructured from "Compliance posture"): honest
-    labeled rows (a definition list), not badges:
-    - SOC 2: Not certified (evidence available on request)
+    rows of live, verifiable controls, not badges:
     - Encryption: AES-256-GCM at rest, TLS in transit
     - Hosting: AWS, United States region
     - Backups: Encrypted, recovery tested
     - AI training: None on your data
     - Transport: HSTS preload, strict CSP, clickjacking protection (pairs with
       the ninth control card)
-    Followed by the existing sentence that data-protection and access-control
-    practices are documented and reviewable on request.
+    SOC 2 is intentionally NOT a row in this table (it is not a tracked active
+    control, and listing it implies progress we do not claim). SOC 2 status is
+    disclosed plainly in the prose below the table and in the FAQ: not yet
+    certified, evidence available on request.
 11. **Responsible disclosure** (new prose, renders `id="responsible-disclosure"`):
     report issues to `support@zensus.app` (temporary contact; see dependency
     below), good-faith research welcome, with a tightly-scoped safe harbor
