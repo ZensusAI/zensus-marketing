@@ -63,13 +63,6 @@ const CATEGORIES: Category[] = [
         dataCategories:
           "Email, name, Google sub identifier (only if you choose Google sign-in).",
       },
-      {
-        name: "Apple (Sign in with Apple)",
-        country: "United States",
-        purpose: "Optional Apple OAuth sign-in.",
-        dataCategories:
-          "Email or relay address, Apple sub identifier (only if you choose Apple sign-in).",
-      },
     ],
   },
   {
@@ -137,13 +130,6 @@ const CATEGORIES: Category[] = [
         country: "United States",
         purpose: "Speech-to-text transcription for the voice assistant.",
         dataCategories: "Voice audio submitted to the voice agent.",
-      },
-      {
-        name: "Hugging Face",
-        country: "United States",
-        purpose:
-          "Emotion detection on audio-derived text snippets for adaptive voice output.",
-        dataCategories: "Short text snippets derived from voice audio.",
       },
     ],
   },
@@ -237,7 +223,7 @@ const Subprocessors = () => (
           Subprocessors
         </h1>
         <p className="text-sm text-muted-foreground mb-6">
-          Last updated: June 10, 2026
+          Last updated: June 16, 2026
         </p>
         <p className="text-lg text-muted-foreground mb-12">
           Zensus uses trusted third-party services to operate our platform.
