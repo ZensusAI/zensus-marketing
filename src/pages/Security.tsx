@@ -9,63 +9,130 @@ import {
   DatabaseBackup,
   ScanLine,
   ShieldCheck,
+  Check,
+  Minus,
+  ExternalLink,
   type LucideIcon,
 } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import DataFlow from "@/components/security/DataFlow";
+import SecurityFaq from "@/components/security/SecurityFaq";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+import { cn } from "@/lib/utils";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
   { name: "Security", url: "https://zensus.app/security" },
 ]);
 
-const Section = ({
-  title,
-  id,
-  children,
-}: {
-  title: string;
-  id?: string;
-  children: React.ReactNode;
-}) => (
-  <section id={id} className="mb-10 scroll-mt-24">
-    <h2 className="text-xl font-semibold mb-3 text-foreground">{title}</h2>
-    <div className="text-muted-foreground leading-relaxed space-y-3">{children}</div>
-  </section>
-);
+// Spec-sheet stats shown directly under the hero, hairline-separated.
+const STATS: [string, string][] = [
+  ["Last reviewed", "June 2026"],
+  ["Encryption", "AES-256-GCM"],
+  ["Hosting", "AWS, US region"],
+  ["AI training", "None"],
+];
 
-// Controls shown in the "at a glance" grid. Every entry is a real, currently
-// true control (see the security spec). Do not add a control that is not true.
+// Every control is a real, currently true control. Detail strings render in
+// Geist Mono: the technical exactness is part of how the page conveys trust.
 const CONTROLS: { icon: LucideIcon; title: string; detail: string }[] = [
   { icon: Lock, title: "Encryption at rest", detail: "AES-256-GCM" },
   { icon: Cable, title: "Encryption in transit", detail: "TLS on every request" },
   { icon: KeyRound, title: "Bank-level OAuth", detail: "Plaid and Intuit hold credentials" },
-  { icon: Users, title: "Account-level isolation", detail: "Every query scoped to your user" },
+  { icon: Users, title: "Account isolation", detail: "Every query scoped to your user" },
   { icon: EyeOff, title: "No AI training", detail: "Your data never trains a model" },
   { icon: MapPin, title: "US data residency", detail: "Stored data in an AWS US region" },
-  { icon: DatabaseBackup, title: "Encrypted backups", detail: "Tested recovery, not a first-time restore" },
-  { icon: ScanLine, title: "Static analysis in CI", detail: "Semgrep and Gitleaks on every commit" },
+  { icon: DatabaseBackup, title: "Encrypted backups", detail: "Tested recovery, not a first restore" },
+  { icon: ScanLine, title: "Static analysis in CI", detail: "Semgrep and Gitleaks on commit" },
   { icon: ShieldCheck, title: "Security headers", detail: "HSTS, CSP, clickjacking protection" },
 ];
 
+const STORES = [
+  "OAuth tokens for each connected provider, encrypted at rest with AES-256-GCM.",
+  "Transactions and balances within the sync window needed to project your runway.",
+  "Scenario chat history for your account only.",
+  "Derived runway projections and alert state.",
+];
+
+const NEVER_STORES = [
+  "Bank or QuickBooks passwords. Plaid and Intuit hold those.",
+  "Payment card details.",
+  "Raw transactions outside the sync window needed for projections.",
+];
+
+const PROTECTIONS: { title: string; body: string }[] = [
+  {
+    title: "Account isolation",
+    body: "Every database query is filtered by user ID. Zensus staff cannot reach your data without an explicit, audited authorization path. Cross-account access is impossible by design, not just by policy.",
+  },
+  {
+    title: "Backups and recovery",
+    body: "Your data is backed up on a regular schedule, encrypted at rest on the same AWS infrastructure. We test the recovery process, so a restore is a known procedure, not a first-time experiment during an incident.",
+  },
+  {
+    title: "Data residency",
+    body: "Zensus runs on AWS in a United States region. Your stored data, OAuth tokens, in-window transactions, and scenario history, lives in that US infrastructure. When you run a scenario, the request is processed by Claude per request and returns to you.",
+  },
+  {
+    title: "Pipeline security",
+    body: "The backend runs Semgrep static analysis on every commit. Gitleaks blocks any pull request that introduces a secret. Dependencies are tracked with automated vulnerability alerts.",
+  },
+  {
+    title: "AI and your data",
+    body: "Your data never trains a model. Scenarios are sent to Claude per request, analyzed, and returned to you. No fine-tuning, no memory, and no data crossing between accounts.",
+  },
+];
+
+const COMPLIANCE: { area: string; detail: string; active: boolean; status: string }[] = [
+  { area: "SOC 2", detail: "Type II readiness underway", active: false, status: "In progress" },
+  { area: "Encryption", detail: "AES-256-GCM at rest, TLS in transit", active: true, status: "Active" },
+  { area: "Hosting", detail: "AWS, United States region", active: true, status: "Active" },
+  { area: "Backups", detail: "Encrypted, recovery tested", active: true, status: "Active" },
+  { area: "Data isolation", detail: "Per-user, enforced at query level", active: true, status: "Active" },
+  { area: "AI training", detail: "None on your data", active: true, status: "Active" },
+  { area: "HTTP headers", detail: "HSTS preload, CSP, X-Frame-Options DENY", active: true, status: "Active" },
+];
+
 const Control = ({ icon: Icon, title, detail }: { icon: LucideIcon; title: string; detail: string }) => (
-  <div className="rounded-md border border-border bg-card p-4">
-    <Icon className="h-5 w-5 text-primary mb-2" aria-hidden="true" />
-    <h3 className="text-sm font-semibold text-foreground">{title}</h3>
-    <p className="mt-1 text-sm text-muted-foreground">{detail}</p>
-  </div>
+  <Card className="rounded-md border-border bg-card shadow-none transition-colors hover:border-primary/40">
+    <CardContent className="p-5">
+      <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
+      <h3 className="mt-3 text-sm font-semibold text-foreground">{title}</h3>
+      <p className="mt-1 font-mono text-xs leading-relaxed text-muted-foreground">{detail}</p>
+    </CardContent>
+  </Card>
 );
 
-const COMPLIANCE_ROWS: [string, string][] = [
-  ["SOC 2", "In progress, working toward it"],
-  ["Encryption", "AES-256-GCM at rest, TLS in transit"],
-  ["Hosting", "AWS, United States region"],
-  ["Backups", "Encrypted, recovery tested"],
-  ["AI training", "None on your data"],
-  ["Transport", "HSTS preload, strict CSP, clickjacking protection"],
-];
+const Block = ({
+  n,
+  title,
+  id,
+  children,
+}: {
+  n: string;
+  title: string;
+  id?: string;
+  children: React.ReactNode;
+}) => (
+  <section id={id} className="scroll-mt-24 border-t border-border pt-14">
+    <div className="mb-6 flex items-baseline gap-4">
+      <span className="font-mono text-xs tracking-widest text-primary">{n}</span>
+      <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{title}</h2>
+    </div>
+    {children}
+  </section>
+);
 
 const Security = () => (
   <div className="min-h-screen bg-background">
@@ -98,168 +165,199 @@ const Security = () => (
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>
     <Navbar />
-    <main className="pt-24 pb-16">
-      <div className="section-container max-w-3xl">
-        <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
+    <main className="pt-24 pb-20">
+      <div className="section-container max-w-4xl">
+        {/* Hero */}
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary">Security</p>
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-6xl">
           How Zensus handles your financial data
         </h1>
-        <p className="text-lg text-muted-foreground mb-10">
-          Zensus is built for founders who need real-time cash forecasting
-          across multiple financial tools. That access is serious. Here is
-          exactly what we hold, what we do not, and how it is protected.
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+          Bank-level access, handled with bank-level care. Zensus reads from your
+          banks, books, and CRM to forecast cash. Here is exactly what we hold,
+          what we never touch, and how it is protected.
         </p>
 
-        <section className="mb-12">
-          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-            Controls at a glance
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {CONTROLS.map((c) => (
-              <Control key={c.title} icon={c.icon} title={c.title} detail={c.detail} />
-            ))}
-          </div>
-        </section>
-
-        <Section title="Data flow at a glance">
-          <p>
-            You connect Plaid, QuickBooks, or HubSpot through OAuth. Those
-            providers hold the credentials. Zensus receives scoped OAuth tokens,
-            pulls the data we are authorized to read, and stores only what we
-            need to compute your runway. Data moves over TLS. At rest, it
-            lives on encrypted AWS infrastructure.
-          </p>
-        </Section>
-
-        <Section title="What Zensus stores and never stores">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-md border border-border bg-card p-5">
-              <h3 className="text-base font-semibold text-foreground mb-3">Stores</h3>
-              <ul className="space-y-2 text-sm">
-                <li>OAuth tokens for each connected provider, encrypted at rest with AES-256-GCM.</li>
-                <li>Transactions and balances within the sync window required to project your runway.</li>
-                <li>Scenario chat history for your account only.</li>
-                <li>Derived runway projections and alert state.</li>
-              </ul>
+        <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-4">
+          {STATS.map(([label, value]) => (
+            <div key={label} className="bg-background p-4">
+              <dt className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                {label}
+              </dt>
+              <dd className="mt-1 font-mono text-sm text-foreground">{value}</dd>
             </div>
-            <div className="rounded-md border border-border bg-card p-5">
-              <h3 className="text-base font-semibold text-foreground mb-3">Never stores</h3>
-              <ul className="space-y-2 text-sm">
-                <li>Bank or QuickBooks passwords. Plaid and Intuit hold those.</li>
-                <li>Payment card details.</li>
-                <li>Raw transactions outside the sync window needed for projections.</li>
-              </ul>
+          ))}
+        </dl>
+
+        <div className="mt-16 space-y-14">
+          <Block n="01" title="Controls at a glance">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {CONTROLS.map((c) => (
+                <Control key={c.title} icon={c.icon} title={c.title} detail={c.detail} />
+              ))}
             </div>
-          </div>
-        </Section>
+          </Block>
 
-        <Section title="Account-level isolation">
-          <p>
-            Every database query is filtered by user ID. Zensus staff cannot
-            access your data without an explicit authorization path that is
-            audited. Cross-account access is not possible by design, not just
-            by policy.
-          </p>
-        </Section>
+          <Block n="02" title="How your data flows">
+            <p className="mb-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              You connect through OAuth. Credentials stay with the provider.
+              Zensus only ever holds scoped tokens, and stores only what it needs
+              to compute your runway.
+            </p>
+            <DataFlow />
+          </Block>
 
-        <Section title="Backups and recovery">
-          <p>
-            Your data is backed up on a regular schedule. Backups are encrypted
-            at rest on the same AWS infrastructure, and we test our recovery
-            process, so a restore is a known procedure rather than something we
-            attempt for the first time during an incident.
-          </p>
-        </Section>
+          <Block n="03" title="What we store, and never store">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Card className="rounded-md border-border bg-card shadow-none">
+                <CardContent className="p-6">
+                  <p className="mb-4 font-mono text-xs uppercase tracking-widest text-primary">
+                    Stores
+                  </p>
+                  <ul className="space-y-3">
+                    {STORES.map((item) => (
+                      <li key={item} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card className="rounded-md border-border bg-card shadow-none">
+                <CardContent className="p-6">
+                  <p className="mb-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    Never stores
+                  </p>
+                  <ul className="space-y-3">
+                    {NEVER_STORES.map((item) => (
+                      <li key={item} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                        <Minus className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </Block>
 
-        <Section title="Data residency">
-          <p>
-            Zensus runs on AWS in a United States region. Your stored data,
-            including OAuth tokens, the transactions inside the sync window, and
-            your scenario history, lives in that US infrastructure. When you run
-            a scenario, the request is processed by Claude as described below
-            and the result returns to you. If your procurement process needs the
-            specific region or a data-flow diagram, ask and we will share it.
-          </p>
-        </Section>
+          <Block n="04" title="How your data is protected">
+            <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+              {PROTECTIONS.map((p) => (
+                <div key={p.title}>
+                  <h3 className="mb-1.5 text-base font-semibold text-foreground">{p.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+                </div>
+              ))}
+            </div>
+          </Block>
 
-        <Section title="CI security">
-          <p>
-            Our backend repository runs Semgrep static analysis on every
-            commit. Gitleaks scans for accidentally committed credentials and
-            blocks PRs that introduce them. Dependencies are kept current
-            through automated vulnerability alerts.
-          </p>
-        </Section>
-
-        <Section title="AI and your data">
-          <p>
-            Your data never trains any AI model. When you run a scenario, your
-            data is sent per request to Claude, analyzed, and the conversation
-            returns to you. No fine-tuning, no memory, no training, no data
-            crossing into other customer accounts.
-          </p>
-        </Section>
-
-        <Section title="Compliance status">
-          <dl className="divide-y divide-border rounded-md border border-border">
-            {COMPLIANCE_ROWS.map(([label, value]) => (
-              <div
-                key={label}
-                className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:justify-between"
+          <Block n="05" title="Compliance status">
+            <div className="overflow-hidden rounded-md border border-border">
+              <Table>
+                <TableHeader>
+                  <TableRow className="hover:bg-transparent">
+                    <TableHead className="font-mono text-xs uppercase tracking-wider">Area</TableHead>
+                    <TableHead className="font-mono text-xs uppercase tracking-wider">Detail</TableHead>
+                    <TableHead className="text-right font-mono text-xs uppercase tracking-wider">
+                      Status
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {COMPLIANCE.map((row) => (
+                    <TableRow key={row.area}>
+                      <TableCell className="font-medium text-foreground">{row.area}</TableCell>
+                      <TableCell className="font-mono text-xs text-muted-foreground">
+                        {row.detail}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <span className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground">
+                          <span
+                            className={cn(
+                              "h-1.5 w-1.5 rounded-full",
+                              row.active ? "bg-primary" : "border border-muted-foreground",
+                            )}
+                            aria-hidden="true"
+                          />
+                          {row.status}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+            <div className="mt-5 space-y-2">
+              <a
+                href="https://securityheaders.com/?q=https%3A%2F%2Fzensus.app&followRedirects=on"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-mono text-xs text-primary hover:underline"
               >
-                <dt className="text-sm font-medium text-foreground">{label}</dt>
-                <dd className="text-sm text-muted-foreground sm:text-right">{value}</dd>
-              </div>
-            ))}
-          </dl>
-          <p>
-            Zensus is not yet SOC 2 certified, and we are working toward it. In
-            the meantime, our data protection and access control practices are
-            documented and reviewable on request. If your procurement process
-            needs specific evidence, talk to us and we will share what we have.
-          </p>
-        </Section>
+                Verify our HTTP security headers
+                <ExternalLink className="h-3 w-3" aria-hidden="true" />
+              </a>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Zensus is not yet SOC 2 certified, and we are working toward it.
+                Our data protection and access control practices are documented
+                and reviewable on request. If your procurement process needs
+                specific evidence, talk to us and we will share what we have.
+              </p>
+            </div>
+          </Block>
 
-        {/* Temporary security contact: support@zensus.app (swap to security@ later) */}
-        <Section title="Responsible disclosure" id="responsible-disclosure">
-          <p>
-            Found a security issue? Email{" "}
-            <a href="mailto:support@zensus.app" className="text-primary hover:underline">
-              support@zensus.app
-            </a>{" "}
-            and we will work with you on it. We support good-faith security
-            research. If you report a vulnerability responsibly, test only
-            against your own account, give us reasonable time to fix the issue
-            before disclosing it, and do not access, modify, or delete data that
-            is not your own, we will not pursue legal action against you for
-            your research.
-          </p>
-          <p>
-            Our machine-readable policy lives at{" "}
-            <a href="/.well-known/security.txt" className="text-primary hover:underline">
-              /.well-known/security.txt
-            </a>
-            .
-          </p>
-        </Section>
+          {/* Temporary security contact: support@zensus.app (swap to security@ later) */}
+          <Block n="06" title="Responsible disclosure" id="responsible-disclosure">
+            <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
+              <p>
+                Found a security issue? Email{" "}
+                <a href="mailto:support@zensus.app" className="text-primary hover:underline">
+                  support@zensus.app
+                </a>{" "}
+                and we will work with you on it. We support good-faith security
+                research. If you report a vulnerability responsibly, test only
+                against your own account, give us reasonable time to fix the issue
+                before disclosing it, and do not access, modify, or delete data
+                that is not your own, we will not pursue legal action against you
+                for your research.
+              </p>
+              <p>
+                Our machine-readable policy lives at{" "}
+                <a
+                  href="/.well-known/security.txt"
+                  className="font-mono text-primary hover:underline"
+                >
+                  /.well-known/security.txt
+                </a>
+                .
+              </p>
+            </div>
+          </Block>
 
-        <Section title="Need documentation for procurement?">
-          <p>
-            Request our security overview and data-handling details, and review
-            the{" "}
-            <a href="/subprocessors" className="text-primary hover:underline">
-              subprocessors
-            </a>{" "}
-            we rely on. Security questions, disclosures, and procurement
-            inquiries go to{" "}
-            <a href="mailto:support@zensus.app" className="text-primary hover:underline">
-              support@zensus.app
-            </a>
-            .
-          </p>
-        </Section>
+          <Block n="07" title="Common security questions">
+            <SecurityFaq />
+          </Block>
 
-        <div className="mt-12 text-center">
-          <TalkToUsButton size="lg" />
+          <Block n="08" title="Documentation for procurement">
+            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              Request our security overview and data-handling details, and review
+              the{" "}
+              <a href="/subprocessors" className="text-primary hover:underline">
+                subprocessors
+              </a>{" "}
+              we rely on. Security questions, disclosures, and procurement
+              inquiries go to{" "}
+              <a href="mailto:support@zensus.app" className="text-primary hover:underline">
+                support@zensus.app
+              </a>
+              .
+            </p>
+            <div className="mt-8">
+              <TalkToUsButton size="lg" />
+            </div>
+          </Block>
         </div>
       </div>
     </main>
