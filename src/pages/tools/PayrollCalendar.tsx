@@ -352,6 +352,10 @@ const PayrollCalendar = () => {
                 <Link to="/blog/will-i-make-payroll" className={linkCls}>
                   Will I Make Payroll?
                 </Link>
+                {" "}and{" "}
+                <Link to="/blog/what-happens-if-you-miss-payroll" className={linkCls}>
+                  What Happens If You Miss Payroll?
+                </Link>
                 , our guide to{" "}
                 <Link to="/blog/what-is-cash-flow-forecasting" className={linkCls}>
                   cash flow forecasting

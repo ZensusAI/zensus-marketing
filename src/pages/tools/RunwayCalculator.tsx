@@ -468,6 +468,10 @@ const RunwayCalculator = () => {
                 <Link to="/blog/will-i-make-payroll" className={linkCls}>
                   you will make payroll
                 </Link>
+                , learn the 7-day response in{" "}
+                <Link to="/blog/what-happens-if-you-miss-payroll" className={linkCls}>
+                  what happens if you miss payroll
+                </Link>
                 , or map your pay dates with the{" "}
                 <Link to="/tools/payroll-calendar" className={linkCls}>
                   payroll calendar calculator
