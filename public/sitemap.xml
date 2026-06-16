@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://zensus.app/blog</loc>
-    <lastmod>2026-06-15</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -112,6 +112,12 @@
   <url>
     <loc>https://zensus.app/blog/runway-vs-burn-rate-for-founders</loc>
     <lastmod>2026-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://zensus.app/blog/what-happens-if-you-miss-payroll</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>

@@ -158,6 +158,17 @@ A practical comparison of Model Context Protocol (MCP) servers and CLI access fo
 - For finance teams, the compliance tradeoff favors MCP: least-privilege scopes, structured tool definitions, and audit logs.
 - Zensus's runway agent uses typed integrations and scoped tools (the same architecture the guide recommends) to keep inference costs low and behavior predictable.
 
+### What Happens If You Miss Payroll? A Founder's 7-Day Emergency Playbook
+https://zensus.app/blog/what-happens-if-you-miss-payroll
+
+A founder-first playbook for payroll emergencies, legal risk, and short-term cash survival. Key facts from the guide:
+
+- What happens if you miss payroll: legal exposure, payroll penalties, payroll tax issues, employee trust damage, and investor confidence risk.
+- What to do if you cannot make payroll: confirm the cash gap, stop non-essential spend, accelerate collections, communicate early, and evaluate bridge capital.
+- Most startup missed payroll events begin as payroll cash flow forecasting failures weeks before payday, not surprises on payday morning.
+- A practical 7-day sequence helps founders move from payroll emergency to payroll compliance recovery and forward planning.
+- The guide links payroll calendar timing, 13-week forecasting, and scenario modeling into one payroll liquidity management workflow.
+
 ## Free Tools
 
 ### Startup Runway Calculator
@@ -184,6 +195,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - What Is Cash Flow Forecasting? (blog): https://zensus.app/blog/what-is-cash-flow-forecasting
 - What Is a 13-Week Cash Flow Forecast? (blog): https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast
 - Will I Make Payroll? (blog): https://zensus.app/blog/will-i-make-payroll
+- What Happens If You Miss Payroll? (blog): https://zensus.app/blog/what-happens-if-you-miss-payroll
 - Forecasting AI Compute Costs for Founders (blog): https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
 - Runway vs Burn Rate for Founders (blog): https://zensus.app/blog/runway-vs-burn-rate-for-founders
 - Default Alive vs Default Dead for Founders (blog): https://zensus.app/blog/default-alive-vs-default-dead-for-founders
