@@ -137,16 +137,17 @@ The difference between runway, burn rate, net burn, gross burn, and burn multipl
 - 2026 runway guidance has shifted to 18–24 months post-fundraise, up from 12–15 months in 2021.
 - Rolling cash flow forecasts tied to live bank, accounting, and subscription data produce more accurate runway than static spreadsheets.
 
-### Default Alive vs Default Dead for Founders (2026)
-https://zensus.app/blog/default-alive-vs-default-dead-for-founders
+### ARR vs Cash for Founders
+https://zensus.app/blog/arr-vs-cash-for-founders
 
-Paul Graham's default alive framework updated for 2026 startup fundability. Key facts from the guide:
+Why ARR and bank balance diverge for SaaS companies. Key facts from the guide:
 
-- Default alive means profitability arrives before cash runs out without raising again; default dead means it doesn't unless something external changes the trajectory.
-- Four metrics determine the answer: burn multiple, runway, gross margin, and whether revenue growth outpaces burn growth.
-- 2026 benchmarks: burn multiple below 2x, 18 to 24 months runway post-fundraise, 70%+ gross margin for software and 50 to 60% for AI-heavy companies.
-- A default dead startup can still raise if investors see a credible path to becoming default alive.
-- Rolling cash flow forecasts tied to live bank, accounting, and subscription data answer "Am I default alive?" faster than static spreadsheets.
+- ARR measures recurring revenue sold; cash flow measures money actually in the bank. Companies spend cash, not ARR.
+- A $120,000 annual prepaid contract adds $120,000 to cash on day one but only $10,000 of recognized revenue per month.
+- Deferred revenue is cash collected before service is delivered; it is not the same as available liquidity.
+- Two companies at $1M ARR can have completely different runway depending on annual vs monthly billing mix.
+- Subscription cash flow forecasting requires billing schedules, renewal timing, and collections behavior, not ARR alone.
+- Zensus syncs HubSpot subscriptions and projects when annual and quarterly contracts hit the bank, not flat monthly spreads.
 
 ### MCP vs CLI for Finance Teams
 https://zensus.app/blog/mcp-vs-cli-for-finance-teams
@@ -158,28 +159,12 @@ A practical comparison of Model Context Protocol (MCP) servers and CLI access fo
 - For finance teams, the compliance tradeoff favors MCP: least-privilege scopes, structured tool definitions, and audit logs.
 - Zensus's runway agent uses typed integrations and scoped tools (the same architecture the guide recommends) to keep inference costs low and behavior predictable.
 
-### What Happens If You Miss Payroll? A Founder's 7-Day Emergency Playbook
-https://zensus.app/blog/what-happens-if-you-miss-payroll
-
-A founder-first playbook for payroll emergencies, legal risk, and short-term cash survival. Key facts from the guide:
-
-- What happens if you miss payroll: legal exposure, payroll penalties, payroll tax issues, employee trust damage, and investor confidence risk.
-- What to do if you cannot make payroll: confirm the cash gap, stop non-essential spend, accelerate collections, communicate early, and evaluate bridge capital.
-- Most startup missed payroll events begin as payroll cash flow forecasting failures weeks before payday, not surprises on payday morning.
-- A practical 7-day sequence helps founders move from payroll emergency to payroll compliance recovery and forward planning.
-- The guide links payroll calendar timing, 13-week forecasting, and scenario modeling into one payroll liquidity management workflow.
-
 ## Free Tools
 
 ### Startup Runway Calculator
 https://zensus.app/tools/runway-calculator
 
 Free interactive calculator: enter cash, monthly revenue, and monthly expenses to get your runway in months and your projected zero-cash date. Models hiring impact at 1.3x loaded salary cost and the timing of annual contract payments. No signup required.
-
-### Payroll Calendar Calculator
-https://zensus.app/tools/payroll-calendar
-
-Free payroll calendar tool: enter first pay date and frequency (weekly, biweekly, semimonthly, monthly) to count pay periods in 2026 and 2027, highlight three-paycheck months, flag a 27-period biweekly year, and show monthly cash outflow per run. Targets how many pay periods in 2026 and biweekly payroll calendar 2027 queries.
 
 ### 13-Week Cash Flow Template
 https://zensus.app/templates/13-week-cash-flow-template.xlsx
@@ -195,11 +180,9 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - What Is Cash Flow Forecasting? (blog): https://zensus.app/blog/what-is-cash-flow-forecasting
 - What Is a 13-Week Cash Flow Forecast? (blog): https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast
 - Will I Make Payroll? (blog): https://zensus.app/blog/will-i-make-payroll
-- What Happens If You Miss Payroll? (blog): https://zensus.app/blog/what-happens-if-you-miss-payroll
+- ARR vs Cash for Founders (blog): https://zensus.app/blog/arr-vs-cash-for-founders
 - Forecasting AI Compute Costs for Founders (blog): https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
 - Runway vs Burn Rate for Founders (blog): https://zensus.app/blog/runway-vs-burn-rate-for-founders
-- Default Alive vs Default Dead for Founders (blog): https://zensus.app/blog/default-alive-vs-default-dead-for-founders
-- Payroll calendar calculator (tool): https://zensus.app/tools/payroll-calendar
 - MCP vs CLI for Finance Teams (blog): https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 - Changelog: https://zensus.app/changelog
 - Security: https://zensus.app/security
