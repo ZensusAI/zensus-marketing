@@ -4,7 +4,7 @@ import { TryItNowButton } from "./TryItNowButton";
 import { TalkToUsButton } from "./TalkToUsButton";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 
-const H1_SENTENCE_1 = "Cash flow forecasting for any business.";
+const H1_SENTENCE_1 = "Cash flow forecasting for unpredictable revenue.";
 const H1_SENTENCE_2 = "Know exactly when cash runs out.";
 
 const prefersReducedMotion = () =>
