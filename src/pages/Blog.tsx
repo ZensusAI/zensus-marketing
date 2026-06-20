@@ -59,28 +59,28 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Zensus Blog · Cash Flow Guides for Founders</title>
+        <title>Zensus Blog · Cash Flow Guides for Businesses</title>
         <meta
           name="description"
-          content="Case studies and practical guides on cash flow forecasting and financial decision-making for founders with variable revenue."
+          content="Case studies and practical guides on cash flow forecasting and financial decision-making for businesses of any size."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://zensus.app/blog" />
         <meta property="og:site_name" content="Zensus" />
-        <meta property="og:title" content="Zensus Blog · Cash Flow Guides for Founders" />
+        <meta property="og:title" content="Zensus Blog · Cash Flow Guides for Businesses" />
         <meta
           property="og:description"
-          content="Case studies and practical guides on cash flow forecasting for founders with variable revenue."
+          content="Case studies and practical guides on cash flow forecasting for businesses of any size."
         />
         <meta property="og:image" content="https://zensus.app/og/blog.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Blog page social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Zensus Blog · Cash Flow Guides for Founders" />
+        <meta name="twitter:title" content="Zensus Blog · Cash Flow Guides for Businesses" />
         <meta
           name="twitter:description"
-          content="Case studies and practical guides on cash flow forecasting for founders with variable revenue."
+          content="Case studies and practical guides on cash flow forecasting for businesses of any size."
         />
         <meta name="twitter:image" content="https://zensus.app/og/blog.png" />
         <link rel="canonical" href="https://zensus.app/blog" />
@@ -121,7 +121,7 @@ const Blog = () => {
               </h1>
               <p className="max-w-2xl text-base text-muted-foreground md:text-lg">
                 Practical guides on cash flow forecasting and financial
-                decision-making for founders and finance teams.
+                decision-making for business owners and finance teams.
               </p>
             </div>
 

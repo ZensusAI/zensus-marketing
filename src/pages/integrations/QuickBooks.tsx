@@ -71,7 +71,7 @@ const serviceSchema = {
   },
   audience: {
     "@type": "Audience",
-    audienceType: "Founders and operators with variable revenue",
+    audienceType: "Businesses of any size",
   },
 };
 

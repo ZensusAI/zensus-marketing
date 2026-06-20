@@ -62,28 +62,28 @@ const principles = [
 const About = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>About Zensus · Cash Flow Forecasting for Founders</title>
+      <title>About Zensus · Cash Flow Forecasting</title>
       <meta
         name="description"
-        content="Zensus is cash flow forecasting for founders with variable revenue. Built because too many startups fail from missed cash flow, not missed missions."
+        content="Zensus is cash flow forecasting for businesses of any size. Built because too many businesses fail from missed cash flow, not missed missions."
       />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={PAGE_URL} />
       <meta property="og:site_name" content="Zensus" />
-      <meta property="og:title" content="About Zensus · Cash Flow Forecasting for Founders" />
+      <meta property="og:title" content="About Zensus · Cash Flow Forecasting" />
       <meta
         property="og:description"
-        content="Zensus is cash flow forecasting for founders with variable revenue. Built because too many startups fail from missed cash flow, not missed missions."
+        content="Zensus is cash flow forecasting for businesses of any size. Built because too many businesses fail from missed cash flow, not missed missions."
       />
       <meta property="og:image" content="https://zensus.app/og/about.png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="About Zensus social preview card" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="About Zensus · Cash Flow Forecasting for Founders" />
+      <meta name="twitter:title" content="About Zensus · Cash Flow Forecasting" />
       <meta
         name="twitter:description"
-        content="Zensus is cash flow forecasting for founders with variable revenue. Built because too many startups fail from missed cash flow, not missed missions."
+        content="Zensus is cash flow forecasting for businesses of any size. Built because too many businesses fail from missed cash flow, not missed missions."
       />
       <meta name="twitter:image" content="https://zensus.app/og/about.png" />
       <link rel="canonical" href={PAGE_URL} />
@@ -103,7 +103,7 @@ const About = () => (
             About Zensus
           </h1>
           <p className="text-lg text-muted-foreground mb-12">
-            Cash flow forecasting built for founders with variable revenue.
+            Cash flow forecasting built for businesses of any size.
           </p>
 
           {/* What we do */}
@@ -135,7 +135,7 @@ const About = () => (
             </h2>
             <div className="space-y-4 text-base text-foreground leading-relaxed">
               <p>
-                Most founders check their bank balance every Monday and still
+                Most business owners check their bank balance every Monday and still
                 aren't sure they can make payroll in six weeks. That isn't a
                 financial strategy. It's anxiety with a spreadsheet.
               </p>

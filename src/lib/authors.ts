@@ -17,7 +17,7 @@ export const authors = {
     name: "Ajin Sunny",
     position: "Founder & CEO, Zensus",
     avatar: "/authors/ajin.svg",
-    bio: "Ajin writes about cash flow forecasting, financial planning, and how AI changes the way founders run finance.",
+    bio: "Ajin writes about cash flow forecasting, financial planning, and how AI changes the way businesses run finance.",
     url: "/about",
     personId: "https://zensus.app/about#ajin-sunny",
     jobTitle: "Founder & CEO",
