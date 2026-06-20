@@ -39,7 +39,7 @@ const Problem = () => {
             You check your bank every Monday and still aren't sure you can make payroll in six weeks.
           </h2>
           <p className="text-lg text-muted-foreground">
-            Most founders check their bank balance and hope for the best. That's not a financial strategy.
+            Most business owners check their bank balance and hope for the best. That's not a financial strategy.
           </p>
         </div>
 

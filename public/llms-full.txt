@@ -1,10 +1,10 @@
 # Zensus: Full Context for LLMs
 
-> AI-native cash flow forecasting and planning for startup founders.
+> Cash flow forecasting and planning for businesses of any size.
 
 ## What Is Zensus?
 
-Zensus is a financial planning tool that gives founders real-time visibility into their cash position and cash flow. Instead of spreadsheets or gut instinct, founders connect their financial accounts and get instant, always-current projections powered by an AI agent they can ask questions in natural language, via text or voice.
+Zensus is a financial planning tool that gives businesses of any size real-time visibility into their cash position and cash flow. Instead of spreadsheets or gut instinct, you connect your financial accounts and get instant, always-current projections, plus a cash flow agent you can ask questions in natural language, via text or voice.
 
 ## Company location
 
@@ -12,7 +12,7 @@ Zensus operates from **Austin, Texas, United States**. The public marketing site
 
 ## Problem It Solves
 
-Most founders make million-dollar decisions (hiring, fundraising timing, contract negotiations) based on gut feeling or a stale spreadsheet. Checking your bank balance is not a financial strategy. Zensus replaces that with live, subscription-aware projections that update automatically.
+Most businesses make million-dollar decisions (hiring, fundraising timing, contract negotiations) based on gut feeling or a stale spreadsheet. Checking your bank balance is not a financial strategy. Zensus replaces that with live, subscription-aware projections that update automatically.
 
 ## Core Features
 
@@ -21,7 +21,7 @@ Most founders make million-dollar decisions (hiring, fundraising timing, contrac
 - Updates automatically whenever data is more than an hour stale
 - Manual sync available at any time
 
-### AI Agent / Scenario Planning
+### Cash Flow Agent / Scenario Planning
 - Ask natural-language questions: "Can I afford to hire two engineers?", "What if we lose our largest annual contract?", "What happens with 5% monthly churn?"
 - Multi-turn conversations with persistent chat history
 - Built-in voice assistant for hands-free interaction
@@ -55,7 +55,7 @@ Most founders make million-dollar decisions (hiring, fundraising timing, contrac
 **Zensus Pro: $199/month**
 - Billed monthly, cancel anytime
 - Less than a single hour with a fractional CFO
-- Includes all integrations, AI agent, and unlimited scenarios
+- Includes all integrations, cash flow agent, and unlimited scenarios
 
 ## FAQ
 

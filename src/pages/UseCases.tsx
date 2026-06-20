@@ -13,7 +13,7 @@ const breadcrumbs = breadcrumbSchema([
 // The five segments below, as structured data. Anchor ids must match the
 // id prop on each <UseCase> section.
 const SEGMENTS = [
-  { id: "saas-contracts", name: "SaaS founders with annual and quarterly contracts" },
+  { id: "saas-contracts", name: "SaaS companies with annual and quarterly contracts" },
   { id: "payroll", name: "Making payroll with confidence" },
   { id: "agencies", name: "Agencies and client services with late payers" },
   { id: "seasonal-revenue", name: "Seasonal and usage-based revenue" },
@@ -37,7 +37,7 @@ const FAQS = [
   {
     question: "Who is Zensus for?",
     answer:
-      "Zensus is for startup founders and small finance teams with lumpy cash flow: annual and quarterly contracts, seasonal swings, usage-based pricing, late-paying clients, and payroll that has to clear. It connects QuickBooks, bank accounts via Plaid, and HubSpot, and costs $199 per month on a single plan.",
+      "Zensus is for businesses of any size with lumpy cash flow: annual and quarterly contracts, seasonal swings, usage-based pricing, late-paying clients, and payroll that has to clear. It connects QuickBooks, bank accounts via Plaid, and HubSpot, and costs $199 per month on a single plan.",
   },
   {
     question: "Does Zensus work for agencies with late-paying clients?",
@@ -91,7 +91,7 @@ const UseCases = () => (
       <title>Zensus Use Cases · Who It's For and What It Solves</title>
       <meta
         name="description"
-        content="Zensus is cash flow forecasting for founders with variable revenue: annual contracts, seasonal income, usage-based pricing, late-paying clients, and payroll on the line."
+        content="Zensus is cash flow forecasting for businesses of any size: annual contracts, seasonal income, usage-based pricing, late-paying clients, and payroll on the line."
       />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://zensus.app/use-cases" />
@@ -99,7 +99,7 @@ const UseCases = () => (
       <meta property="og:title" content="Zensus Use Cases · Who It's For and What It Solves" />
       <meta
         property="og:description"
-        content="Founders with annual contracts, seasonal revenue, usage-based pricing, and payroll on the line."
+        content="Businesses of any size with annual contracts, seasonal revenue, usage-based pricing, and payroll on the line."
       />
       <meta property="og:image" content="https://zensus.app/og/use-cases.png" />
       <meta property="og:image:width" content="1200" />
@@ -109,7 +109,7 @@ const UseCases = () => (
       <meta name="twitter:title" content="Zensus Use Cases · Who It's For and What It Solves" />
       <meta
         name="twitter:description"
-        content="Founders with annual contracts, seasonal revenue, usage-based pricing, and payroll on the line."
+        content="Businesses of any size with annual contracts, seasonal revenue, usage-based pricing, and payroll on the line."
       />
       <meta name="twitter:image" content="https://zensus.app/og/use-cases.png" />
       <link rel="canonical" href="https://zensus.app/use-cases" />
@@ -124,13 +124,13 @@ const UseCases = () => (
           Who uses Zensus
         </h1>
         <p className="text-lg text-muted-foreground mb-12">
-          Zensus is built for founders and finance teams whose cash does not
+          Zensus is built for businesses and finance teams whose cash does not
           arrive in smooth monthly slices: annual and quarterly contracts,
           seasonal swings, usage-based pricing, late-paying clients, and a
           payroll that has to clear no matter what.
         </p>
 
-        <UseCase id="saas-contracts" title="SaaS founders with annual and quarterly contracts">
+        <UseCase id="saas-contracts" title="SaaS companies with annual and quarterly contracts">
           <p>
             Annual contracts make revenue look healthy while the bank account
             runs dry between renewals. Zensus syncs your{" "}

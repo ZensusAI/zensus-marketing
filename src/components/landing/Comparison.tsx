@@ -172,7 +172,7 @@ const Comparison = () => {
           How Zensus compares.
         </h2>
         <p className="text-lg text-muted-foreground">
-          Against the tools founders actually shortlist for cash flow forecasting.
+          Against the tools businesses actually shortlist for cash flow forecasting.
         </p>
       </div>
 
