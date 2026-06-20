@@ -1,6 +1,6 @@
 # Zensus
 
-> Cash flow forecasting and planning for businesses of any size.
+> Cash flow forecasting and planning for businesses with unpredictable revenue.
 
 Zensus helps businesses of any size know exactly when their cash runs out, and what to do about it. Connect QuickBooks, your bank account via Plaid, or HubSpot subscriptions. Get real-time cash flow projections and ask your cash flow agent questions about your business survival.
 

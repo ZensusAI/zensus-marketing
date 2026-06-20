@@ -1,6 +1,6 @@
 # Zensus: Full Context for LLMs
 
-> Cash flow forecasting and planning for businesses of any size.
+> Cash flow forecasting and planning for businesses with unpredictable revenue.
 
 ## What Is Zensus?
 
