@@ -37,6 +37,7 @@ Businesses of any size with variable revenue, complex hiring plans, annual contr
 - [Will I Make Payroll?](https://zensus.app/blog/will-i-make-payroll)
 - [What Happens If You Miss Payroll?](https://zensus.app/blog/what-happens-if-you-miss-payroll)
 - [ARR vs Cash for Founders](https://zensus.app/blog/arr-vs-cash-for-founders)
+- [Can QuickBooks Forecast Cash Flow?](https://zensus.app/blog/can-quickbooks-forecast-cash-flow)
 - [Forecasting AI Compute Costs for Founders](https://zensus.app/blog/forecasting-ai-compute-costs-for-founders)
 - [Runway vs Burn Rate for Founders](https://zensus.app/blog/runway-vs-burn-rate-for-founders)
 - [Default Alive vs Default Dead for Founders](https://zensus.app/blog/default-alive-vs-default-dead-for-founders)

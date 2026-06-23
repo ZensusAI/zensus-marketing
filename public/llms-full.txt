@@ -149,6 +149,18 @@ Why ARR and bank balance diverge for SaaS companies. Key facts from the guide:
 - Subscription cash flow forecasting requires billing schedules, renewal timing, and collections behavior, not ARR alone.
 - Zensus syncs HubSpot subscriptions and projects when annual and quarterly contracts hit the bank, not flat monthly spreads.
 
+### Can QuickBooks Forecast Cash Flow?
+https://zensus.app/blog/can-quickbooks-forecast-cash-flow
+
+What QuickBooks Cash Flow Planner does and does not do for founders. Key facts from the guide:
+
+- QuickBooks Cash Flow Planner forecasts expected cash inflows and outflows over roughly 30 to 90 days using bank activity, unpaid invoices, unpaid bills, and manual planner entries.
+- It is designed for short-term operational liquidity, not runway modeling, hiring scenarios, or board-level planning.
+- Unpaid invoices due in the future can be included in forecasts, but collection timing assumptions may not match reality.
+- Cash Flow Planner is not available when QuickBooks Multicurrency is enabled.
+- Venture-backed startups often keep QuickBooks for accounting and add a dedicated forecasting layer for runway, scenarios, and subscription-aware collections timing.
+- Zensus connects to QuickBooks via OAuth and extends forecasting with Plaid bank data, HubSpot subscriptions, scenario planning, and Slack alerts.
+
 ### MCP vs CLI for Finance Teams
 https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 
@@ -181,6 +193,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - What Is a 13-Week Cash Flow Forecast? (blog): https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast
 - Will I Make Payroll? (blog): https://zensus.app/blog/will-i-make-payroll
 - ARR vs Cash for Founders (blog): https://zensus.app/blog/arr-vs-cash-for-founders
+- Can QuickBooks Forecast Cash Flow? (blog): https://zensus.app/blog/can-quickbooks-forecast-cash-flow
 - Forecasting AI Compute Costs for Founders (blog): https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
 - Runway vs Burn Rate for Founders (blog): https://zensus.app/blog/runway-vs-burn-rate-for-founders
 - MCP vs CLI for Finance Teams (blog): https://zensus.app/blog/mcp-vs-cli-for-finance-teams
