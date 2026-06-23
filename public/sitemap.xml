@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://zensus.app/blog</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -94,6 +94,12 @@
   <url>
     <loc>https://zensus.app/blog/arr-vs-cash-for-founders</loc>
     <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://zensus.app/blog/can-quickbooks-forecast-cash-flow</loc>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
