@@ -42,6 +42,9 @@ const STATIC_ROUTES = [
   "/use-cases",
   "/tools/runway-calculator",
   "/tools/payroll-calendar",
+  "/compare/zensus-vs-float",
+  "/compare/zensus-vs-pulse",
+  "/llm-info",
 ];
 
 // Minimal static file server over dist/ with SPA fallback to index.html

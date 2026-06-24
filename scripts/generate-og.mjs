@@ -80,6 +80,30 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "compare-zensus-vs-float",
+    category: "Compare",
+    title: "Zensus vs Float",
+    subtitle:
+      "Cash flow forecasting comparison: pricing, integrations, scenarios, and who each tool fits.",
+    accent: "green",
+  },
+  {
+    slug: "compare-zensus-vs-pulse",
+    category: "Compare",
+    title: "Zensus vs Pulse",
+    subtitle:
+      "Cash flow tool comparison: price, QuickBooks sync, automation, and founder use cases.",
+    accent: "green",
+  },
+  {
+    slug: "llm-info",
+    category: "AI",
+    title: "Zensus entity summary",
+    subtitle:
+      "Machine-readable facts for AI systems: founder, pricing, integrations, guides, and tools.",
+    accent: "green",
+  },
+  {
     slug: "use-cases",
     category: "Use Cases",
     title: "Who uses Zensus",
