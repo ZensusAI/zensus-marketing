@@ -93,3 +93,17 @@ bookkeeping/tax/CFO services bundle rather than self-serve software;
 Mosaic, Abacum, Aleph, and Concourse target mid-market finance teams.
 Forecastr was included as the rising founder-targeted alternative
 (G2 Leader Fall 2025, Series A August 2024, Forecastr 2.0 launched 2025).
+
+## Pulse (pulseapp.com)
+
+- Pricing: Basics $29/mo; Premium (Extra Features) $89/mo. 30-day free
+  trial on new accounts. Source: https://pulseapp.com/pricing
+- Data sources: QuickBooks Online sync on homepage. Plaid bank feed and
+  CRM not found on vendor public pages.
+  Source: https://pulseapp.com
+- Scenarios: toggle income and expense entries on/off. No built-in
+  plain-English AI agent on public pages.
+  Source: https://pulseapp.com/pricing
+- Multi-currency: Premium tier. Source: https://pulseapp.com/pricing
+
+Used in `/compare/zensus-vs-pulse` (June 2026).

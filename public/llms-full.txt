@@ -178,6 +178,29 @@ https://zensus.app/tools/runway-calculator
 
 Free interactive calculator: enter cash, monthly revenue, and monthly expenses to get your runway in months and your projected zero-cash date. Models hiring impact at 1.3x loaded salary cost and the timing of annual contract payments. No signup required.
 
+### Payroll Calendar Calculator
+https://zensus.app/tools/payroll-calendar
+
+Free tool: count pay periods in 2026 and 2027, highlight three-paycheck months, flag 27-period biweekly years, and show monthly payroll cash impact.
+
+## Comparisons
+
+### Zensus vs Float
+https://zensus.app/compare/zensus-vs-float
+
+Honest comparison for founders evaluating Float alternatives. Float: revenue-tiered pricing from $31/mo USD, Xero/QBO/FreeAgent, 13-week and 36-month forecasts, multi-company dashboard. Zensus: flat $199/mo, Plaid plus QuickBooks plus HubSpot, plain-English scenarios, Slack alerts.
+
+### Zensus vs Pulse
+https://zensus.app/compare/zensus-vs-pulse
+
+Honest comparison for Pulse app alternatives. Pulse: $29/mo Basics, $89/mo Premium, QuickBooks Online sync, manual scenario toggles. Zensus: $199/mo automated forecast from bank and CRM data with subscription-aware timing.
+
+## LLM entity page
+
+https://zensus.app/llm-info
+
+HTML entity summary for AI crawlers: founder, founded 2025-08, Austin TX, $199/mo pricing, integrations, guides, tools, and links to llms.txt.
+
 ### 13-Week Cash Flow Template
 https://zensus.app/templates/13-week-cash-flow-template.xlsx
 
@@ -205,3 +228,6 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - QuickBooks integration: https://zensus.app/integrations/quickbooks
 - HubSpot integration: https://zensus.app/integrations/hubspot
 - Slack integration: https://zensus.app/integrations/slack
+- Zensus vs Float: https://zensus.app/compare/zensus-vs-float
+- Zensus vs Pulse: https://zensus.app/compare/zensus-vs-pulse
+- LLM entity summary: https://zensus.app/llm-info

@@ -28,6 +28,9 @@ const Integrations = lazy(() => import("./pages/Integrations"));
 const UseCases = lazy(() => import("./pages/UseCases"));
 const RunwayCalculator = lazy(() => import("./pages/tools/RunwayCalculator"));
 const PayrollCalendar = lazy(() => import("./pages/tools/PayrollCalendar"));
+const ZensusVsFloat = lazy(() => import("./pages/compare/ZensusVsFloat"));
+const ZensusVsPulse = lazy(() => import("./pages/compare/ZensusVsPulse"));
+const LlmInfo = lazy(() => import("./pages/LlmInfo"));
 const PlaidIntegration = lazy(() => import("./pages/integrations/Plaid"));
 const QuickBooksIntegration = lazy(
   () => import("./pages/integrations/QuickBooks"),
@@ -106,6 +109,15 @@ const App = () => (
               path="/tools/payroll-calendar"
               element={<PayrollCalendar />}
             />
+            <Route
+              path="/compare/zensus-vs-float"
+              element={<ZensusVsFloat />}
+            />
+            <Route
+              path="/compare/zensus-vs-pulse"
+              element={<ZensusVsPulse />}
+            />
+            <Route path="/llm-info" element={<LlmInfo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
