@@ -161,6 +161,17 @@ What QuickBooks Cash Flow Planner does and does not do for founders. Key facts f
 - Venture-backed startups often keep QuickBooks for accounting and add a dedicated forecasting layer for runway, scenarios, and subscription-aware collections timing.
 - Zensus connects to QuickBooks via OAuth and extends forecasting with Plaid bank data, HubSpot subscriptions, scenario planning, and Slack alerts.
 
+### Zero Cash Date for Founders
+https://zensus.app/blog/zero-cash-date-for-founders
+
+How to calculate zero cash date with weekly forecasts instead of monthly runway averages. Key facts from the guide:
+
+- Zero cash date is the calendar day projected cash reaches zero; runway is a smoothed month count and can overstate survival time.
+- Monthly burn of $50k on $300k cash implies six months, but a 15-week model with lumpy payroll can exhaust cash around month 4.5.
+- Weekly forecasting captures payroll clustering, collection delays, vendor spikes, and tax timing.
+- A rolling 13-week cash flow forecast is the standard operational horizon for zero cash date planning.
+- Zensus calculates zero-cash date from Plaid, QuickBooks, and HubSpot data with weekly drill-down and Slack alerts.
+
 ### MCP vs CLI for Finance Teams
 https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 
@@ -217,6 +228,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - Will I Make Payroll? (blog): https://zensus.app/blog/will-i-make-payroll
 - ARR vs Cash for Founders (blog): https://zensus.app/blog/arr-vs-cash-for-founders
 - Can QuickBooks Forecast Cash Flow? (blog): https://zensus.app/blog/can-quickbooks-forecast-cash-flow
+- Zero Cash Date for Founders (blog): https://zensus.app/blog/zero-cash-date-for-founders
 - Forecasting AI Compute Costs for Founders (blog): https://zensus.app/blog/forecasting-ai-compute-costs-for-founders
 - Runway vs Burn Rate for Founders (blog): https://zensus.app/blog/runway-vs-burn-rate-for-founders
 - MCP vs CLI for Finance Teams (blog): https://zensus.app/blog/mcp-vs-cli-for-finance-teams
