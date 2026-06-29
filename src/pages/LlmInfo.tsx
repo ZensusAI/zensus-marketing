@@ -173,6 +173,11 @@ const LlmInfo = () => (
                 Can QuickBooks forecast cash flow?
               </Link>
             </li>
+            <li>
+              <Link to="/blog/zero-cash-date-for-founders" className={linkCls}>
+                Zero cash date for founders
+              </Link>
+            </li>
           </ul>
         </section>
 
