@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://zensus.app/blog</loc>
-    <lastmod>2026-06-29</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -127,6 +127,12 @@
   <url>
     <loc>https://zensus.app/blog/forecasting-ai-compute-costs-for-founders</loc>
     <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://zensus.app/blog/hubspot-pipeline-to-cash-forecast</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
