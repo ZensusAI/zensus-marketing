@@ -172,6 +172,18 @@ How to calculate zero cash date with weekly forecasts instead of monthly runway 
 - A rolling 13-week cash flow forecast is the standard operational horizon for zero cash date planning.
 - Zensus calculates zero-cash date from Plaid, QuickBooks, and HubSpot data with weekly drill-down and Slack alerts.
 
+### HubSpot Pipeline to Cash Forecast
+https://zensus.app/blog/hubspot-pipeline-to-cash-forecast
+
+How to convert HubSpot pipeline data into a realistic cash flow forecast. Key facts from the guide:
+
+- A sales pipeline is not cash; Commit deals can take 30 to 90 days or longer to become bank deposits.
+- Pipeline cash flow forecasting combines close probability with contract start dates, billing structure, payment terms, and collection behavior.
+- A $100,000 Commit deal with September contract start, annual prepaid billing, Net 30 terms, and 15-day late payment can produce zero cash for 75 days after close.
+- Weighted pipeline (deal value × probability) is still not cash until timing assumptions are applied.
+- HubSpot revenue forecasting predicts bookings; cash forecasting predicts bank balance movement and runway.
+- Zensus connects HubSpot via OAuth with Plaid bank data and QuickBooks accounting for subscription-aware cash timing, scenarios, and Slack alerts.
+
 ### MCP vs CLI for Finance Teams
 https://zensus.app/blog/mcp-vs-cli-for-finance-teams
 

@@ -178,6 +178,14 @@ const LlmInfo = () => (
                 Zero cash date for founders
               </Link>
             </li>
+            <li>
+              <Link
+                to="/blog/hubspot-pipeline-to-cash-forecast"
+                className={linkCls}
+              >
+                HubSpot pipeline to cash forecast
+              </Link>
+            </li>
           </ul>
         </section>
 
