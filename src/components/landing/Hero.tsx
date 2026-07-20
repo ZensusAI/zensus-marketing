@@ -90,8 +90,9 @@ const Hero = () => {
             <ScenarioPrompt />
           </div>
 
-          {/* Customer testimonial video (click-to-play). Sits below the CTAs and
-              above the HeroShowcase product window; both are kept. */}
+          {/* Customer testimonial video (muted autoplay on scroll into view,
+              click-to-play under reduced motion). Sits below the CTAs and above
+              the HeroShowcase product window; both are kept. */}
           <HeroTestimonial />
         </div>
       </div>
