@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ScenarioPrompt } from "./ScenarioPrompt";
 import { TryItNowButton } from "./TryItNowButton";
 import { TalkToUsButton } from "./TalkToUsButton";
+import HeroTestimonial from "./HeroTestimonial";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 
 const H1_SENTENCE_1 = "Cash flow forecasting for unpredictable revenue.";
@@ -88,6 +89,10 @@ const Hero = () => {
             </div>
             <ScenarioPrompt />
           </div>
+
+          {/* Customer testimonial video (click-to-play). Sits below the CTAs and
+              above the HeroShowcase product window; both are kept. */}
+          <HeroTestimonial />
         </div>
       </div>
     </section>
