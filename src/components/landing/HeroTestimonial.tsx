@@ -13,7 +13,16 @@ const HeroTestimonial = () => {
   // manual click-to-play. On scroll-in we try to start WITH sound, but browsers
   // block autoplay with audio unless the visitor already interacted with the
   // page, so we fall back to muted playback and show a "Tap for sound" control.
-  const [reduced, setReduced] = useState(false);
+  // Initialize from the media query on the FIRST render (matching Hero.tsx's
+  // `shimmer` pattern) so a reduced-motion visitor, and the reduced-motion
+  // emulated prerender, never even install the autoplay observer for one effect
+  // pass. Starting at `false` and correcting in an effect left a window where
+  // the IntersectionObserver could fire and start playback before teardown.
+  const [reduced, setReduced] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
   const [started, setStarted] = useState(false);
   // `muted` mirrors the element's own state (kept in sync via onVolumeChange),
   // so it stays correct whether the viewer uses the "Tap for sound" button or
@@ -42,7 +51,7 @@ const HeroTestimonial = () => {
   // scrolls into view (preload="none" plus play() on intersection) and pauses
   // when it leaves, so scrolling away also stops the sound.
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || typeof IntersectionObserver === "undefined") return;
     const frame = frameRef.current;
     const video = videoRef.current;
     if (!frame || !video) return;
@@ -143,6 +152,7 @@ const HeroTestimonial = () => {
             width={1600}
             height={900}
             loading="eager"
+            fetchPriority="high"
             decoding="async"
             aria-hidden
             className="pointer-events-none absolute inset-0 h-full w-full object-cover"
