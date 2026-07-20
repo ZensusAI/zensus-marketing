@@ -3,7 +3,8 @@ import { Play, VolumeX } from "lucide-react";
 
 // Self-hosted customer testimonial. The MP4 and its poster live in public/demo/
 // and are referenced by absolute path (like the other public assets), so Vite
-// does not hash them and neither image-optimizer script touches the video.
+// does not hash them and neither image-optimizer script touches the video. The
+// clip ships with burned-in (open) captions, so muted playback stays legible.
 const VIDEO_SRC = "/demo/product-demo.mp4";
 const POSTER_SRC = "/demo/product-demo-poster.webp";
 
@@ -12,13 +13,21 @@ const HeroTestimonial = () => {
   // manual click-to-play. On scroll-in we try to start WITH sound, but browsers
   // block autoplay with audio unless the visitor already interacted with the
   // page, so we fall back to muted playback and show a "Tap for sound" control.
-  // `started` drops the poster once frames paint; `muted` drives the unmute
-  // affordance. Native controls (shown once started) provide pause/seek.
   const [reduced, setReduced] = useState(false);
   const [started, setStarted] = useState(false);
+  // `muted` mirrors the element's own state (kept in sync via onVolumeChange),
+  // so it stays correct whether the viewer uses the "Tap for sound" button or
+  // the native control bar. It is the single source of truth for the button.
   const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
+  // Effect guards: whether the card is currently in view (to cancel a play()
+  // that resolves after we already scrolled away), whether an attempt is
+  // already running (re-entrancy), and whether the initial sound attempt has
+  // happened (so re-entry does not re-force unmute over the viewer's choice).
+  const inViewRef = useRef(false);
+  const attemptingRef = useRef(false);
+  const triedSoundRef = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -30,8 +39,8 @@ const HeroTestimonial = () => {
   }, []);
 
   // Scroll-triggered autoplay for motion users. The video only loads once it
-  // scrolls into view (preload="none" plus play() on intersection). It pauses
-  // when it leaves the viewport, so scrolling away also stops the sound.
+  // scrolls into view (preload="none" plus play() on intersection) and pauses
+  // when it leaves, so scrolling away also stops the sound.
   useEffect(() => {
     if (reduced) return;
     const frame = frameRef.current;
@@ -39,33 +48,45 @@ const HeroTestimonial = () => {
     if (!frame || !video) return;
 
     const playInView = async () => {
-      // Prefer sound. If the browser refuses autoplay-with-audio, retry muted.
+      if (attemptingRef.current) return;
+      attemptingRef.current = true;
       try {
-        video.muted = false;
-        await video.play();
-        setMuted(false);
-      } catch {
-        video.muted = true;
-        setMuted(true);
-        try {
+        if (!triedSoundRef.current) {
+          // First time in view: prefer sound, fall back to muted if the
+          // browser blocks autoplay-with-audio.
+          triedSoundRef.current = true;
+          try {
+            video.muted = false;
+            await video.play();
+          } catch {
+            video.muted = true;
+            await video.play();
+          }
+        } else {
+          // Later re-entries resume at whatever mute state the viewer left,
+          // without re-forcing sound on.
           await video.play();
-        } catch {
-          // Playback refused entirely: the poster stays put.
         }
+        // If we scrolled back out while play() was still pending, do not let it
+        // finish playing off-screen.
+        if (!inViewRef.current) video.pause();
+      } catch {
+        // Playback refused entirely: the poster stays put.
+      } finally {
+        attemptingRef.current = false;
       }
     };
 
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-            playInView();
-          } else if (!video.paused) {
-            video.pause();
-          }
+          const inView = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+          inViewRef.current = inView;
+          if (inView) playInView();
+          else if (!video.paused) video.pause();
         }
       },
-      { threshold: [0, 0.5, 1] },
+      { threshold: 0.5 },
     );
     io.observe(frame);
     return () => io.disconnect();
@@ -76,17 +97,16 @@ const HeroTestimonial = () => {
     const video = videoRef.current;
     if (!video) return;
     video.muted = false;
-    setMuted(false);
     if (video.paused) video.play().catch(() => {});
   };
 
-  // Reduced-motion path: an explicit click starts playback with sound.
+  // Reduced-motion path: an explicit click starts playback with sound. `started`
+  // is left to the onPlaying handler so the poster does not flash to a blank
+  // <video> box while preload="none" buffers.
   const handlePlay = () => {
     const video = videoRef.current;
     if (!video) return;
     video.muted = false;
-    setMuted(false);
-    setStarted(true);
     video.play().catch(() => {});
   };
 
@@ -105,21 +125,25 @@ const HeroTestimonial = () => {
           controls={started}
           aria-label="Video testimonial from Jameson Pitts, CEO of Sangfroid! Studios"
           onPlaying={() => setStarted(true)}
-          onEnded={() => setStarted(false)}
+          onVolumeChange={() => {
+            const video = videoRef.current;
+            if (video) setMuted(video.muted);
+          }}
           className="h-full w-full bg-black object-cover"
         />
 
-        {/* Poster stays mounted until the first frame paints, covering load and
-            buffering, and returns after the clip ends. */}
+        {/* Poster covers the frame until the first painted frame. It is eager,
+            not lazy: with the aurora hero image gone this is the largest paint
+            near the fold and a likely LCP element, and lazy-loading an LCP image
+            is a known anti-pattern. It is a small WebP, so eager is cheap. */}
         {!started && (
           <img
             src={POSTER_SRC}
             alt=""
             width={1600}
             height={900}
-            loading="lazy"
+            loading="eager"
             decoding="async"
-            fetchPriority="low"
             aria-hidden
             className="pointer-events-none absolute inset-0 h-full w-full object-cover"
           />
