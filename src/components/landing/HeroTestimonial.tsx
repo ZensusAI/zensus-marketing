@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Play } from "lucide-react";
+import { Play, VolumeX } from "lucide-react";
 
 // Self-hosted customer testimonial. The MP4 and its poster live in public/demo/
 // and are referenced by absolute path (like the other public assets), so Vite
@@ -9,12 +9,14 @@ const POSTER_SRC = "/demo/product-demo-poster.webp";
 
 const HeroTestimonial = () => {
   // Motion users get scroll-triggered autoplay; reduced-motion users get a
-  // manual click-to-play instead. Autoplay must be muted (browsers block
-  // autoplay with sound), so the burned-in captions carry the message and
-  // native controls let viewers unmute or pause. `started` drops the poster
-  // once frames paint and reveals the controls.
+  // manual click-to-play. On scroll-in we try to start WITH sound, but browsers
+  // block autoplay with audio unless the visitor already interacted with the
+  // page, so we fall back to muted playback and show a "Tap for sound" control.
+  // `started` drops the poster once frames paint; `muted` drives the unmute
+  // affordance. Native controls (shown once started) provide pause/seek.
   const [reduced, setReduced] = useState(false);
   const [started, setStarted] = useState(false);
+  const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
 
@@ -28,23 +30,36 @@ const HeroTestimonial = () => {
   }, []);
 
   // Scroll-triggered autoplay for motion users. The video only loads once it
-  // scrolls into view (preload="none" plus play() on intersection), so nothing
-  // downloads on first paint. It plays muted while in view and pauses when it
-  // leaves, so scrolling away also stops the sound if the viewer unmuted.
+  // scrolls into view (preload="none" plus play() on intersection). It pauses
+  // when it leaves the viewport, so scrolling away also stops the sound.
   useEffect(() => {
     if (reduced) return;
     const frame = frameRef.current;
     const video = videoRef.current;
     if (!frame || !video) return;
 
+    const playInView = async () => {
+      // Prefer sound. If the browser refuses autoplay-with-audio, retry muted.
+      try {
+        video.muted = false;
+        await video.play();
+        setMuted(false);
+      } catch {
+        video.muted = true;
+        setMuted(true);
+        try {
+          await video.play();
+        } catch {
+          // Playback refused entirely: the poster stays put.
+        }
+      }
+    };
+
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-            video.muted = true;
-            video.play().catch(() => {
-              // Autoplay refused for any reason: the poster and controls remain.
-            });
+            playInView();
           } else if (!video.paused) {
             video.pause();
           }
@@ -56,11 +71,21 @@ const HeroTestimonial = () => {
     return () => io.disconnect();
   }, [reduced]);
 
+  // Explicit unmute (the tap counts as the gesture browsers require for audio).
+  const unmute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = false;
+    setMuted(false);
+    if (video.paused) video.play().catch(() => {});
+  };
+
   // Reduced-motion path: an explicit click starts playback with sound.
   const handlePlay = () => {
     const video = videoRef.current;
     if (!video) return;
     video.muted = false;
+    setMuted(false);
     setStarted(true);
     video.play().catch(() => {});
   };
@@ -98,6 +123,19 @@ const HeroTestimonial = () => {
             aria-hidden
             className="pointer-events-none absolute inset-0 h-full w-full object-cover"
           />
+        )}
+
+        {/* Muted autoplay (browser blocked audio): one tap turns sound on. */}
+        {!reduced && started && muted && (
+          <button
+            type="button"
+            onClick={unmute}
+            aria-label="Turn on sound"
+            className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1.5 text-xs font-medium text-white shadow-md backdrop-blur transition-colors hover:bg-black/85"
+          >
+            <VolumeX className="h-4 w-4" aria-hidden />
+            Tap for sound
+          </button>
         )}
 
         {/* Reduced-motion users do not get autoplay, so offer a manual play with
