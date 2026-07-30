@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 
@@ -9,6 +10,29 @@ const PAGE_DESCRIPTION =
   "Machine-readable summary of Zensus: cash flow forecasting software, founder, location, pricing, integrations, guides, and free tools.";
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
+
+const breadcrumbLd = breadcrumbSchema([
+  HOME_CRUMB,
+  { name: "AI entity summary", url: PAGE_URL },
+]);
+
+// The site-wide @graph (Organization, WebSite, SoftwareApplication, Person)
+// ships in index.html on every prerendered route, so this page already carries
+// the full entity. These add the page-level nodes it was missing: a WebPage
+// pointing at the Organization/SoftwareApplication @ids, plus breadcrumbs.
+const webPageLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${PAGE_URL}#webpage`,
+  url: PAGE_URL,
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  inLanguage: "en-US",
+  isPartOf: { "@id": "https://zensus.app/#website" },
+  about: { "@id": "https://zensus.app/#organization" },
+  mainEntity: { "@id": "https://zensus.app/#software" },
+  primaryImageOfPage: "https://zensus.app/og/llm-info.png",
+};
 
 const LlmInfo = () => (
   <div className="min-h-screen bg-background">
@@ -28,6 +52,8 @@ const LlmInfo = () => (
       <meta name="twitter:description" content={PAGE_DESCRIPTION} />
       <meta name="twitter:image" content="https://zensus.app/og/llm-info.png" />
       <link rel="canonical" href={PAGE_URL} />
+      <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(webPageLd)}</script>
     </Helmet>
 
     <Navbar />

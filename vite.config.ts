@@ -19,6 +19,19 @@ export default defineConfig(() => ({
       }),
     },
     react(),
+    {
+      name: "stamp-site-modified",
+      // Replace the SoftwareApplication dateModified placeholder in index.html
+      // with the build date, so the freshness signal reflects the latest deploy
+      // instead of a hardcoded value that silently goes stale. Runs at build
+      // and in the dev server.
+      transformIndexHtml(html: string) {
+        return html.replace(
+          "__SITE_MODIFIED__",
+          new Date().toISOString().slice(0, 10),
+        );
+      },
+    },
   ],
   resolve: {
     alias: {
