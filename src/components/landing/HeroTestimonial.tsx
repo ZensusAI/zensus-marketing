@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Play, VolumeX } from "lucide-react";
+import { Play, Star, VolumeX } from "lucide-react";
 
 // Self-hosted customer testimonial. The MP4 and its poster live in public/demo/
 // and are referenced by absolute path (like the other public assets), so Vite
@@ -8,11 +8,16 @@ import { Play, VolumeX } from "lucide-react";
 // clip ships with burned-in (open) captions, so muted playback stays legible.
 const VIDEO_SRC = "/demo/product-demo.mp4";
 const POSTER_SRC = "/demo/product-demo-poster.webp";
+const G2_REVIEW_URL = "https://www.g2.com/products/zensus/reviews";
+// On-message verbatim excerpt from the video's burned-in captions (the customer
+// praising the HubSpot integration). Deliberately NOT the G2 review wording,
+// which leans on "AI-powered" and conflicts with the site's positioning.
+const TESTIMONIAL_QUOTE =
+  "One of my favorite features of Zensus is the HubSpot integration.";
 
 // VideoObject makes the self-hosted testimonial a citable video entity for AI
-// engines and Google Video. A Review node (author = Jameson Pitts, itemReviewed
-// = the Organization, reviewBody = his actual quote) should be added alongside
-// this once the quote text is confirmed; do not fabricate the quote.
+// engines and Google Video. The same customer's verified 5-star G2 review is
+// expressed as a Review node on SoftwareApplication in index.html.
 const videoLd = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
@@ -209,8 +214,28 @@ const HeroTestimonial = () => {
         )}
       </div>
 
-      <figcaption className="mt-3 text-center text-sm text-muted-foreground">
-        <span className="font-medium text-foreground">Jameson Pitts</span>, CEO of Sangfroid! Studios
+      <figcaption className="mt-4 text-center text-sm text-muted-foreground">
+        <p className="mx-auto max-w-xl text-base italic text-foreground">
+          {`"${TESTIMONIAL_QUOTE}"`}
+        </p>
+        <p className="mt-2">
+          <span className="font-medium text-foreground">Jameson Pitts</span>, CEO of Sangfroid! Studios
+        </p>
+        <a
+          href={G2_REVIEW_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Zensus 5.0 star rating on G2, verified review (opens in a new tab)"
+          className="mt-3 inline-flex items-center gap-1.5 font-medium text-foreground underline-offset-4 hover:text-primary hover:underline"
+        >
+          <span className="flex items-center gap-0.5" aria-hidden>
+            {[0, 1, 2, 3, 4].map((i) => (
+              <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+            ))}
+          </span>
+          5.0 on G2,{" "}
+          <span className="font-normal text-muted-foreground">verified review</span>
+        </a>
       </figcaption>
       </figure>
     </>
