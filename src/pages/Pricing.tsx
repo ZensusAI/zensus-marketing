@@ -111,7 +111,7 @@ const Pricing = () => (
               Start free. 14 days on us.
             </h1>
             <p className="text-sm text-muted-foreground">
-              Every integration, real-time cash flow intelligence, and scenario modeling. 14-day free trial, then $199 a month. Cancel anytime.
+              Every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts. One price. Everything included. 14-day free trial, then $199 a month. Cancel anytime.
             </p>
           </div>
 
