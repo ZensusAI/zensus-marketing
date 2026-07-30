@@ -8,7 +8,7 @@ Zensus is a financial planning tool that gives businesses of any size real-time 
 
 ## Company location
 
-Zensus is a US company (Zensus, Inc.) headquartered in **Kochi, Kerala, India**. The public marketing site footer includes a city-level map of the Kochi area (not a street address).
+Zensus is a US company (Zensus, Inc.) with offices in **Austin, Texas** and **Kochi, Kerala, India**. The public marketing site footer includes city-level maps of both areas (not street addresses).
 
 ## Problem It Solves
 
@@ -222,7 +222,7 @@ Honest comparison for Pulse app alternatives. Pulse: $29/mo Basics, $89/mo Premi
 
 https://zensus.app/llm-info
 
-HTML entity summary for AI crawlers: founder, founded 2025-08, US company headquartered in Kochi, Kerala, India, $199/mo pricing, integrations, guides, tools, and links to llms.txt.
+HTML entity summary for AI crawlers: founder, founded 2025-08, US company with offices in Austin, Texas and Kochi, Kerala, India, $199/mo pricing, integrations, guides, tools, and links to llms.txt.
 
 ### 13-Week Cash Flow Template
 https://zensus.app/templates/13-week-cash-flow-template.xlsx
