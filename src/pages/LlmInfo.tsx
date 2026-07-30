@@ -77,8 +77,12 @@ const LlmInfo = () => (
               (2025-08)
             </li>
             <li>
-              <strong className="text-foreground">Headquarters:</strong> Austin,
-              Texas, United States
+              <strong className="text-foreground">Country:</strong> United States
+              (US company)
+            </li>
+            <li>
+              <strong className="text-foreground">Headquarters:</strong> Kochi,
+              Kerala, India
             </li>
             <li>
               <strong className="text-foreground">Website:</strong>{" "}

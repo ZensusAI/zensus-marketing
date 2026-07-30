@@ -191,14 +191,6 @@ const CARDS = [
       "Cash flow alerts, low-cash warnings, and daily digests delivered where your team already works.",
     accent: "slack",
   },
-  {
-    slug: "austin",
-    category: "Austin",
-    title: "Zensus Austin",
-    subtitle:
-      "Cash flow forecasting for Austin founders with variable revenue and real billing-date visibility.",
-    accent: "green",
-  },
 ];
 
 // Minimal static server for the repo root. The template lives at
