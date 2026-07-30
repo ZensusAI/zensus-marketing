@@ -75,8 +75,10 @@ const Hero = () => {
               canvas it read as dead space and pushed the CTAs below the
               natural eye path. */}
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 md:mb-12">
-            Connect your bank, QuickBooks, and HubSpot. Cash flow that knows your
-            annual contract hits March 14, not "sometime in Q1."
+            Zensus is cash flow forecasting software for businesses with
+            unpredictable revenue. It connects your bank, QuickBooks, and HubSpot
+            for a forecast that knows your annual contract hits March 14, not
+            "sometime in Q1."
           </p>
 
           <div className="flex flex-col items-center gap-4">

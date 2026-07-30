@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Play, VolumeX } from "lucide-react";
 
 // Self-hosted customer testimonial. The MP4 and its poster live in public/demo/
@@ -7,6 +8,22 @@ import { Play, VolumeX } from "lucide-react";
 // clip ships with burned-in (open) captions, so muted playback stays legible.
 const VIDEO_SRC = "/demo/product-demo.mp4";
 const POSTER_SRC = "/demo/product-demo-poster.webp";
+
+// VideoObject makes the self-hosted testimonial a citable video entity for AI
+// engines and Google Video. A Review node (author = Jameson Pitts, itemReviewed
+// = the Organization, reviewBody = his actual quote) should be added alongside
+// this once the quote text is confirmed; do not fabricate the quote.
+const videoLd = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: "Zensus customer testimonial: Jameson Pitts, CEO of Sangfroid! Studios",
+  description:
+    "Customer video testimonial for Zensus by Jameson Pitts, CEO of Sangfroid! Studios.",
+  thumbnailUrl: "https://zensus.app/demo/product-demo-poster.webp",
+  contentUrl: "https://zensus.app/demo/product-demo.mp4",
+  uploadDate: "2026-07-21",
+  duration: "PT14S",
+};
 
 const HeroTestimonial = () => {
   // Motion users get scroll-triggered autoplay; reduced-motion users get a
@@ -120,7 +137,11 @@ const HeroTestimonial = () => {
   };
 
   return (
-    <figure className="mx-auto mt-10 w-full max-w-2xl">
+    <>
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(videoLd)}</script>
+      </Helmet>
+      <figure className="mx-auto mt-10 w-full max-w-2xl">
       <div
         ref={frameRef}
         className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-muted shadow-xl ring-1 ring-black/5 dark:ring-white/10"
@@ -191,7 +212,8 @@ const HeroTestimonial = () => {
       <figcaption className="mt-3 text-center text-sm text-muted-foreground">
         <span className="font-medium text-foreground">Jameson Pitts</span>, CEO of Sangfroid! Studios
       </figcaption>
-    </figure>
+      </figure>
+    </>
   );
 };
 
