@@ -153,7 +153,7 @@ const CATEGORIES: Category[] = [
         name: "Google Maps",
         country: "United States",
         purpose:
-          "Embedded city-level map of Austin, TX shown in the marketing-site footer.",
+          "Embedded city-level map of Kochi, Kerala, India shown in the marketing-site footer.",
         dataCategories:
           "Visitor IP and user-agent (transmitted to Google when the embedded map loads).",
       },

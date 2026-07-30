@@ -9,9 +9,9 @@ const CONTACT_EMAIL = "support@zensus.app";
 const socialLinkClass =
   "inline-flex items-center gap-2 rounded-sm text-sm font-medium text-[hsl(var(--forest-muted))] transition-colors hover:text-[hsl(var(--forest-foreground))] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[hsl(var(--sage-light))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--forest))]";
 
-/** Google Maps embed: city of Austin, TX only (no street address). */
-const AUSTIN_MAP_EMBED_SRC =
-  "https://www.google.com/maps?q=Austin%2C+TX&z=11&output=embed";
+/** Google Maps embed: city of Kochi, Kerala, India only (no street address). */
+const KOCHI_MAP_EMBED_SRC =
+  "https://www.google.com/maps?q=Kochi%2C+Kerala%2C+India&z=11&output=embed";
 
 type FooterLink = {
   label: string;
@@ -168,11 +168,11 @@ const Footer = () => {
               </span>
             </Link>
             <div className="w-full max-w-md">
-              <p className="text-left text-base font-semibold text-[hsl(var(--forest-foreground))]">Austin, TX</p>
+              <p className="text-left text-base font-semibold text-[hsl(var(--forest-foreground))]">Kochi, Kerala, India</p>
               <div className="relative mt-3 aspect-[5/2] w-full overflow-hidden rounded-xl border border-white/10 bg-black/20 shadow-inner">
                 <iframe
-                  title="Map centered on Austin, Texas"
-                  src={AUSTIN_MAP_EMBED_SRC}
+                  title="Map centered on Kochi, Kerala, India"
+                  src={KOCHI_MAP_EMBED_SRC}
                   className="absolute inset-0 h-full w-full"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
