@@ -1,5 +1,7 @@
 # Austin / location SEO — current scope (downscoped)
 
+> **SUPERSEDED (2026-07-30).** The location strategy changed: Zensus now presents as a US company with two offices, Austin, TX and Kochi, Kerala, India, shown in the footer (city-level maps for both) and reflected consistently in the Organization schema, /llm-info, and llms.txt. The single-Austin-office assumptions below are outdated; kept for history.
+
 **Status (now):** No dedicated `/austin` landing page and **no** customer testimonial until permission exists. Local / entity signals are handled via **footer + site-wide Organization schema + city-level map embed**.
 
 **Later:** When a real Austin customer quote is approved, ship a **Case Study** page (separate ticket) so SEO/GEO can pick up Experience signals from that URL; revisit a fuller **location page** playbook only after traction (see [Semrush: location page SEO](https://www.semrush.com/blog/location-page-seo/) for when a dedicated local URL is worth the investment).
