@@ -14,6 +14,15 @@ nominative fair use):
 - Pricing figures come from the vendor's own pricing page only.
 - The caption dates the comparison and disclaims affiliation.
 
+## Update, July 29, 2026
+
+The "Transparent self-serve pricing" row was removed from the homepage
+comparison matrix. Pricing transparency is now emphasized in the pricing
+section (`src/components/landing/PricingPreview.tsx`) instead. The per-vendor
+pricing figures below are retained as evidence (they still back the
+`/compare/*` pages), but the matrix no longer renders a pricing row, so the
+"Table cells:" summaries below have dropped their transparent-pricing entry.
+
 ## Float (floatapp.com)
 
 - Pricing: Early $50/mo, Growing $85/mo, Scaling $115/mo, 14-day free
@@ -32,8 +41,7 @@ nominative fair use):
 
 Table cells: bank feed = no (footnoted), accounting sync = yes,
 CRM = no (footnoted), built-in plain-English scenarios = no (footnoted),
-Slack threshold alerts = no (footnoted), transparent pricing = yes
-("from $50/mo").
+Slack threshold alerts = no (footnoted).
 
 ## Cash Flow Frog (cashflowfrog.com)
 
@@ -51,8 +59,7 @@ Slack threshold alerts = no (footnoted), transparent pricing = yes
 
 Table cells: bank feed = yes, accounting sync = yes, CRM = no (footnoted),
 built-in plain-English scenarios = yes with dagger (external connector),
-Slack threshold alerts = no (footnoted), transparent pricing = yes
-("from $55/mo").
+Slack threshold alerts = no (footnoted).
 
 ## Forecastr (forecastr.co)
 
@@ -71,16 +78,13 @@ Slack threshold alerts = no (footnoted), transparent pricing = yes
 
 Table cells: bank feed = no (footnoted), accounting sync = yes,
 CRM = no (footnoted), built-in plain-English scenarios = no (footnoted),
-Slack threshold alerts = no (footnoted), transparent pricing = no
-(unfootnoted deliberately: the absence of public self-serve pricing is
-positively verified from their own pricing page, not merely "not found").
+Slack threshold alerts = no (footnoted).
 
 ## Zensus column
 
 All Zensus cells reflect the shipped product: Plaid bank feed, QuickBooks
 accounting sync, HubSpot CRM-aware forecasting, built-in plain-English
-scenario chat, Slack threshold alerts, $199/mo flat self-serve pricing
-with a 14-day trial.
+scenario chat, and Slack threshold alerts.
 
 ## Landscape notes from the same research pass
 

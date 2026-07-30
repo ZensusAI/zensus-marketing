@@ -12,9 +12,9 @@ const PricingPreview = () => (
           Start free for 14 days.
         </h2>
         <p className="text-lg text-muted-foreground mb-8">
-          Every integration, real-time cash flow intelligence, scenario modeling, and
-          Slack alerts. Then $199 a month after your trial. Less than a single
-          hour with a fractional CFO.
+          Every integration, real-time cash flow intelligence, scenario
+          modeling, and Slack alerts. One price. Everything included. $199/mo
+          after your trial. Less than a single hour with a fractional CFO.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button asChild size="lg" className="rounded-full">

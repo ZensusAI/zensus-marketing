@@ -70,15 +70,6 @@ const ROWS: Row[] = [
       { mark: "yes" },
     ],
   },
-  {
-    label: "Transparent self-serve pricing",
-    cells: [
-      { mark: "yes", note: "from $50/mo" },
-      { mark: "yes", note: "from $55/mo" },
-      { mark: "no" },
-      { mark: "yes", note: "$199/mo flat" },
-    ],
-  },
 ];
 
 function usePrefersReducedMotion(): boolean {
