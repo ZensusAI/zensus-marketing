@@ -107,8 +107,8 @@ const LlmInfo = () => (
               (US company)
             </li>
             <li>
-              <strong className="text-foreground">Offices:</strong> Austin,
-              Texas, United States; and Kochi, Kerala, India
+              <strong className="text-foreground">Headquarters:</strong> Austin,
+              Texas, United States
             </li>
             <li>
               <strong className="text-foreground">Website:</strong>{" "}
