@@ -107,10 +107,6 @@ const LlmInfo = () => (
               (US company)
             </li>
             <li>
-              <strong className="text-foreground">Headquarters:</strong> Austin,
-              Texas, United States
-            </li>
-            <li>
               <strong className="text-foreground">Website:</strong>{" "}
               <a href="https://zensus.app" className={linkCls}>
                 https://zensus.app

@@ -147,19 +147,6 @@ const CATEGORIES: Category[] = [
     ],
   },
   {
-    title: "Web fonts and embedded content",
-    vendors: [
-      {
-        name: "Google Maps",
-        country: "United States",
-        purpose:
-          "Embedded city-level map of Austin, TX shown in the marketing-site footer.",
-        dataCategories:
-          "Visitor IP and user-agent (transmitted to Google when the embedded map loads).",
-      },
-    ],
-  },
-  {
     title: "Analytics and marketing intelligence",
     vendors: [
       {
