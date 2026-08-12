@@ -1,31 +1,18 @@
-import { useState } from "react";
 import { ScenarioPrompt } from "./ScenarioPrompt";
 import { TryItNowButton } from "./TryItNowButton";
 import { TalkToUsButton } from "./TalkToUsButton";
 import HeroTestimonial from "./HeroTestimonial";
-import { TextShimmer } from "@/components/ui/text-shimmer";
+import { TextHoverHalo } from "@/components/ui/text-hover-halo";
 
-const H1_SENTENCE_1 = "Cash flow forecasting for unpredictable revenue.";
-const H1_SENTENCE_2 = "Know exactly when cash runs out.";
-
-const prefersReducedMotion = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const H1_LINE_1 = "Your cash flow,";
+const H1_LINE_2 = "mapped 13 weeks ahead.";
+const H1_SENTENCE_2 = "Built for businesses with unpredictable revenue.";
 
 const Hero = () => {
-  // The shimmer is decorative; fall back to plain text under reduced motion.
-  // The headline itself ALWAYS renders visible; it's the page's value
-  // proposition and must never wait on JS hydration to appear (the entrance
-  // is a pure-CSS `motion-safe:animate-fade-in`, so it runs at first paint,
-  // not after the bundle hydrates).
-  const [shimmer] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return !prefersReducedMotion();
-  });
   return (
     <section
       id="hero"
-      className="relative flex items-center pt-24 pb-4 md:pt-32 md:pb-6 lg:pt-40 lg:pb-8 overflow-hidden bg-background"
+      className="relative flex items-center pt-24 pb-4 md:pt-24 md:pb-6 lg:pt-32 lg:pb-8 overflow-hidden bg-background"
     >
       {/* Cream brand canvas (tokens come from :root.theme-cream, toggled
           per route by ThemeScope in App.tsx). A faint sage bloom keeps the
@@ -35,68 +22,53 @@ const Hero = () => {
         aria-hidden
       />
 
-      <div className="section-container relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-5 motion-safe:animate-fade-in text-foreground">
-            <span className="block">
-              {shimmer ? (
-                <TextShimmer
-                  as="span"
-                  duration={5}
-                  spread={2.5}
-                  ease={[0.65, 0, 0.35, 1]}
-                  className="[--base-color:hsl(var(--foreground))]"
-                >
-                  {H1_SENTENCE_1}
-                </TextShimmer>
-              ) : (
-                <span>{H1_SENTENCE_1}</span>
-              )}
-            </span>
-            <span className="block">
-              {shimmer ? (
-                <TextShimmer
-                  as="span"
-                  duration={5}
-                  spread={2.5}
-                  ease={[0.65, 0, 0.35, 1]}
-                  className="[--base-color:hsl(var(--foreground))]"
-                >
-                  {H1_SENTENCE_2}
-                </TextShimmer>
-              ) : (
-                <span>{H1_SENTENCE_2}</span>
-              )}
-            </span>
-          </h1>
+      <div className="section-container relative z-10 max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-12 xl:px-16">
+        {/* Top 2-Column Desktop Grid (Taglines & Description on Left, Video Testimonial on Right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-24 items-center">
+          {/* Left Column: Tagline & Description */}
+          <div className="lg:col-span-7 xl:col-span-7 text-center lg:text-left">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-[1.08] mb-5 motion-safe:animate-fade-in text-foreground">
+              <span className="block lg:whitespace-nowrap">
+                <TextHoverHalo as="span">
+                  {H1_LINE_1}
+                </TextHoverHalo>
+              </span>
+              <span className="block lg:whitespace-nowrap">
+                <TextHoverHalo as="span">
+                  {H1_LINE_2}
+                </TextHoverHalo>
+              </span>
+            </h1>
 
-          {/* Tight gap to the CTAs: the old mb-20/28/36 existed to let the
-              aurora hero image breathe behind the text. On the flat cream
-              canvas it read as dead space and pushed the CTAs below the
-              natural eye path. */}
-          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 md:mb-12">
-            Zensus is cash flow forecasting software for businesses with
-            unpredictable revenue. It connects your bank, QuickBooks, and HubSpot
-            for a forecast that knows your annual contract hits March 14, not
-            "sometime in Q1."
-          </p>
+            <p className="text-lg sm:text-xl lg:text-2xl font-medium tracking-tight text-foreground/90 mb-6 leading-snug">
+              {H1_SENTENCE_2}
+            </p>
 
-          <div className="flex flex-col items-center gap-4">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <TryItNowButton />
-              <TalkToUsButton
-                variant="ghost"
-                className="h-10 border border-border bg-card text-foreground hover:border-primary/60"
-              />
-            </div>
-            <ScenarioPrompt />
+            <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              Zensus is 13-week cash flow forecasting software for businesses with
+              unpredictable revenue. It connects your bank, QuickBooks, and HubSpot
+              for a forecast that knows your annual contract hits March 14, not
+              "sometime in Q1."
+            </p>
           </div>
 
-          {/* Customer testimonial video (autoplay on scroll into view, muted
-              with a tap-for-sound control per browser autoplay policy;
-              click-to-play under reduced motion). Sits below the CTAs and above
-              the HeroShowcase product window; both are kept. */}
-          <HeroTestimonial />
+          {/* Right Column: Customer Testimonial Video */}
+          <div className="lg:col-span-5 xl:col-span-5 w-full">
+            <HeroTestimonial className="mt-0 w-full max-w-none" />
+          </div>
+        </div>
+
+        {/* Centered CTAs & Terminal Input Field below the grid */}
+        <div className="mt-10 sm:mt-12 flex flex-col items-center justify-center text-center gap-4 max-w-3xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
+            <TryItNowButton size="lg" />
+            <TalkToUsButton
+              size="lg"
+              variant="ghost"
+              className="border border-border bg-card text-foreground hover:border-primary/60"
+            />
+          </div>
+          <ScenarioPrompt />
         </div>
       </div>
     </section>

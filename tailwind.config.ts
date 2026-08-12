@@ -18,6 +18,7 @@ export default {
       fontFamily: {
         sans: ["Geist", "system-ui", "sans-serif"],
         display: ["Geist", "system-ui", "sans-serif"],
+        serif: ["Instrument Serif", "Playfair Display", "Georgia", "serif"],
         mono: ["Geist Mono", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       colors: {

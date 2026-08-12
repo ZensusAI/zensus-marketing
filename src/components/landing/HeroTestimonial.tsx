@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Play, Star, VolumeX } from "lucide-react";
+import { Play, Star, Volume2, VolumeX } from "lucide-react";
+import { PencilSketchFrame } from "./PencilSketchFrame";
 
 // Self-hosted customer testimonial. The MP4 and its poster live in public/demo/
 // and are referenced by absolute path (like the other public assets), so Vite
@@ -30,7 +31,13 @@ const videoLd = {
   duration: "PT14S",
 };
 
-const HeroTestimonial = () => {
+import { cn } from "@/lib/utils";
+
+interface HeroTestimonialProps {
+  className?: string;
+}
+
+const HeroTestimonial = ({ className }: HeroTestimonialProps = {}) => {
   // Motion users get scroll-triggered autoplay; reduced-motion users get a
   // manual click-to-play. On scroll-in we try to start WITH sound, but browsers
   // block autoplay with audio unless the visitor already interacted with the
@@ -123,6 +130,14 @@ const HeroTestimonial = () => {
     return () => io.disconnect();
   }, [reduced]);
 
+  // Explicit audio toggle (tap to unmute/mute).
+  const toggleAudio = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    if (video.paused) video.play().catch(() => {});
+  };
+
   // Explicit unmute (the tap counts as the gesture browsers require for audio).
   const unmute = () => {
     const video = videoRef.current;
@@ -146,18 +161,22 @@ const HeroTestimonial = () => {
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(videoLd)}</script>
       </Helmet>
-      <figure className="mx-auto mt-10 w-full max-w-2xl">
-      <div
-        ref={frameRef}
-        className="relative aspect-video w-full overflow-hidden rounded-2xl border border-border bg-muted shadow-xl ring-1 ring-black/5 dark:ring-white/10"
-      >
+      <figure className={cn("mx-auto mt-10 w-full max-w-2xl", className)}>
+        <div className="relative w-full">
+          {/* Animated pencil sketch outline frame behind/around video player */}
+          <PencilSketchFrame />
+
+          <div
+            ref={frameRef}
+            className="relative z-10 aspect-video w-full overflow-hidden rounded-2xl border border-border bg-muted shadow-xl ring-1 ring-black/5 dark:ring-white/10"
+          >
         <video
           ref={videoRef}
           src={VIDEO_SRC}
           preload="none"
           playsInline
+          loop
           muted
-          controls={started}
           aria-label="Video testimonial from Jameson Pitts, CEO of Sangfroid! Studios"
           onPlaying={() => setStarted(true)}
           onVolumeChange={() => {
@@ -185,16 +204,25 @@ const HeroTestimonial = () => {
           />
         )}
 
-        {/* Muted autoplay (browser blocked audio): one tap turns sound on. */}
-        {!reduced && started && muted && (
+        {/* Audio toggle button: turns sound on/off without native video controls */}
+        {!reduced && started && (
           <button
             type="button"
-            onClick={unmute}
-            aria-label="Turn on sound"
-            className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1.5 text-xs font-medium text-white shadow-md backdrop-blur transition-colors hover:bg-black/85"
+            onClick={toggleAudio}
+            aria-label={muted ? "Turn on sound" : "Mute sound"}
+            className="absolute right-3 top-3 z-20 flex items-center gap-1.5 rounded-full bg-black/75 px-3 py-1.5 text-xs font-medium text-white shadow-md backdrop-blur transition-all hover:bg-black/90"
           >
-            <VolumeX className="h-4 w-4" aria-hidden />
-            Tap for sound
+            {muted ? (
+              <>
+                <VolumeX className="h-4 w-4 text-white/80" aria-hidden />
+                <span>Tap for sound</span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="h-4 w-4 text-emerald-400" aria-hidden />
+                <span>Sound on</span>
+              </>
+            )}
           </button>
         )}
 
@@ -212,6 +240,7 @@ const HeroTestimonial = () => {
             </span>
           </button>
         )}
+      </div>
       </div>
 
       <figcaption className="mt-4 text-center text-sm text-muted-foreground">
