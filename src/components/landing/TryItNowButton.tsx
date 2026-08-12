@@ -6,9 +6,10 @@ import { cn } from "@/lib/utils";
 
 interface TryItNowButtonProps {
   className?: string;
+  size?: "md" | "lg";
 }
 
-export const TryItNowButton = ({ className }: TryItNowButtonProps) => (
+export const TryItNowButton = ({ className, size = "md" }: TryItNowButtonProps) => (
   <ShineBorder
     shineColor={["hsl(42 55% 78%)", "hsl(48 85% 90%)"]}
     duration={3}
@@ -16,15 +17,14 @@ export const TryItNowButton = ({ className }: TryItNowButtonProps) => (
     borderWidth={1}
     glow
     transparentInner
-    className={className}
+    className={cn("inline-flex shrink-0", className)}
   >
     <SignupModal>
       <Button
         type="button"
-        size="lg"
         className={cn(
-          "group h-10 px-6 rounded-full bg-primary text-primary-foreground",
-          "hover:bg-primary/90 font-semibold text-[15px]",
+          "group rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-[15px] shadow-md transition-transform active:scale-[0.98]",
+          size === "lg" ? "h-12 px-8" : "h-10 px-6",
         )}
       >
         Start free trial
