@@ -5,8 +5,8 @@ import { TalkToUsButton } from "./TalkToUsButton";
 import HeroTestimonial from "./HeroTestimonial";
 import { TextShimmer } from "@/components/ui/text-shimmer";
 
-const H1_SENTENCE_1 = "Cash flow forecasting for unpredictable revenue.";
-const H1_SENTENCE_2 = "Know exactly when cash runs out.";
+const H1_SENTENCE_1 = "Your cash flow, mapped 13 weeks ahead.";
+const H1_SENTENCE_2 = "Built for businesses with unpredictable revenue.";
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
@@ -75,7 +75,7 @@ const Hero = () => {
               canvas it read as dead space and pushed the CTAs below the
               natural eye path. */}
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 md:mb-12">
-            Zensus is cash flow forecasting software for businesses with
+            Zensus is 13-week cash flow forecasting software for businesses with
             unpredictable revenue. It connects your bank, QuickBooks, and HubSpot
             for a forecast that knows your annual contract hits March 14, not
             "sometime in Q1."

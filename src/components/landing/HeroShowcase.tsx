@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import dashboard1 from "@/assets/dashboard-1.webp";
-import dashboard2 from "@/assets/dashboard-2.webp";
+import dashboard13week from "@/assets/dashboard-13week.webp";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const FRAMES = [
   { src: dashboard1, alt: "Zensus cash flow dashboard with projection chart" },
-  { src: dashboard2, alt: "Zensus cash flow dashboard alternate view" },
+  { src: dashboard13week, alt: "Zensus 13-week cash flow view and budget breakdown" },
 ] as const;
 
-/** Time each frame stays fully visible before crossfading (between 2–3s). */
-const FRAME_MS = 3500;
+/** Time each frame stays fully visible before crossfading (6 seconds). */
+const FRAME_MS = 6000;
 
 function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
