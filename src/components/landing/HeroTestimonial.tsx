@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Play, Star, Volume2, VolumeX } from "lucide-react";
-import { PencilSketchFrame } from "./PencilSketchFrame";
 
 // Self-hosted customer testimonial. The MP4 and its poster live in public/demo/
 // and are referenced by absolute path (like the other public assets), so Vite
@@ -163,9 +162,6 @@ const HeroTestimonial = ({ className }: HeroTestimonialProps = {}) => {
       </Helmet>
       <figure className={cn("mx-auto mt-10 w-full max-w-2xl", className)}>
         <div className="relative w-full">
-          {/* Animated pencil sketch outline frame behind/around video player */}
-          <PencilSketchFrame />
-
           <div
             ref={frameRef}
             className="relative z-10 aspect-video w-full overflow-hidden rounded-2xl border border-border bg-muted shadow-xl ring-1 ring-black/5 dark:ring-white/10"

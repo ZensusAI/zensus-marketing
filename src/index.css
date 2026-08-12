@@ -13,52 +13,6 @@
   letter-spacing: -0.02em;
 }
 
-@keyframes pencil-stop-motion {
-  0% {
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-  25% {
-    transform: translate(-1.2px, 1px) rotate(0.3deg);
-  }
-  50% {
-    transform: translate(1px, -1.2px) rotate(-0.3deg);
-  }
-  75% {
-    transform: translate(-0.8px, -1px) rotate(0.2deg);
-  }
-}
-
-@keyframes pencil-draw {
-  0% {
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dashoffset: 60;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes pencil-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pencil-pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.25);
-    opacity: 0.95;
-  }
-}
 
 /* Self-hosted Geist (variable, latin) replaces the render-blocking Google
    Fonts <link> that used to live in index.html. Serving woff2 from our own
