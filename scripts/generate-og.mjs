@@ -26,9 +26,9 @@ const CARDS = [
   {
     slug: "home",
     category: "",
-    title: "Cash flow forecasting for startups with variable revenue",
+    title: "Your cash flow, mapped as far ahead as you need",
     subtitle:
-      "Cash flow that matches the calendar. Connect your bank, QuickBooks, and HubSpot and see exactly when your cash runs out.",
+      "A live, always-current picture of your cash position, built for businesses with unpredictable revenue.",
     accent: "green",
   },
   {

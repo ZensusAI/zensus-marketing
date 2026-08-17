@@ -39,20 +39,20 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Zensus · Your cash flow, mapped 13 weeks ahead</title>
-        <meta name="description" content="Your cash flow, mapped 13 weeks ahead. Built for businesses with unpredictable revenue. Connect your bank, QuickBooks, and HubSpot for real-time runway clarity." />
+        <title>Zensus · Your cash flow, mapped as far ahead as you need</title>
+        <meta name="description" content="Get a live, always-current picture of your cash position. Zensus helps businesses with unpredictable revenue plan payroll, hiring, and spending with confidence." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://zensus.app/" />
         <meta property="og:site_name" content="Zensus" />
-        <meta property="og:title" content="Zensus · Your cash flow, mapped 13 weeks ahead" />
-        <meta property="og:description" content="Your cash flow, mapped 13 weeks ahead. Built for businesses with unpredictable revenue." />
+        <meta property="og:title" content="Zensus · Your cash flow, mapped as far ahead as you need" />
+        <meta property="og:description" content="Get a live, always-current picture of your cash position. Built for businesses with unpredictable revenue." />
         <meta property="og:image" content="https://zensus.app/og/home.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Zensus homepage social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Zensus · Your cash flow, mapped 13 weeks ahead" />
-        <meta name="twitter:description" content="Your cash flow, mapped 13 weeks ahead. Built for businesses with unpredictable revenue." />
+        <meta name="twitter:title" content="Zensus · Your cash flow, mapped as far ahead as you need" />
+        <meta name="twitter:description" content="Get a live, always-current picture of your cash position. Built for businesses with unpredictable revenue." />
         <meta name="twitter:image" content="https://zensus.app/og/home.png" />
         <link rel="canonical" href="https://zensus.app/" />
         {/* The aurora hero image is gone (cream brand canvas replaced it), so
@@ -65,9 +65,9 @@ const Index = () => {
       <GoogleOneTap />
       <main>
         <Hero />
+        <Problem />
         <HeroShowcase />
         <TrustBar />
-        <Problem />
         <RunwayFeature />
         <Bento />
         <Comparison />

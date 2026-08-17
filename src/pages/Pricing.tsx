@@ -1,11 +1,18 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, Check, Database, TrendingUp } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Database,
+  Headphones,
+  Settings2,
+  TrendingUp,
+} from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { Button } from "@/components/ui/button";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
-import { START_TRIAL_URL } from "@/lib/constants";
+import { START_TRIAL_URL, TALK_TO_US_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
@@ -26,6 +33,14 @@ const cashFlowFeatures = [
   "Slack alerts when your cash crosses a threshold you set",
   "Subscription-aware revenue projections",
 ];
+
+const customSetupFeatures = [
+  "Tailored forecast setup",
+  "Custom integrations",
+  "Dedicated onboarding",
+];
+
+const customSupportFeatures = ["Priority support", "Team training"];
 
 const FeatureGroup = ({
   icon: Icon,
@@ -111,11 +126,11 @@ const Pricing = () => (
               Start free. 14 days on us.
             </h1>
             <p className="text-sm text-muted-foreground">
-              Every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts. One price. Everything included. 14-day free trial, then $199 a month. Cancel anytime.
+              Every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts. 14-day free trial, then $199 a month. Cancel anytime. Need a tailored setup instead? Talk to us.
             </p>
           </div>
 
-          <div className="max-w-md mx-auto">
+          <div className="mx-auto grid max-w-4xl items-start gap-6 md:grid-cols-2">
             <div className="relative p-6 sm:p-7 rounded-3xl bg-card border border-primary/30 glow-sm">
               <div className="text-center mb-6">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-primary/10 border border-primary/25 text-xs font-semibold text-primary">
@@ -170,7 +185,7 @@ const Pricing = () => (
               <p className="text-center text-sm text-muted-foreground mt-4">
                 Prefer a walkthrough first?{" "}
                 <a
-                  href="https://calendly.com/hello-zensus/introcall"
+                  href={TALK_TO_US_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary hover:underline"
@@ -178,6 +193,67 @@ const Pricing = () => (
                   Talk to us
                 </a>
                 .
+              </p>
+            </div>
+
+            <div className="relative p-6 sm:p-7 rounded-3xl bg-card border border-border">
+              <div className="text-center mb-6">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-secondary border border-border text-xs font-semibold text-muted-foreground">
+                  For complex setups
+                </div>
+                <h2 className="text-xl font-semibold text-foreground mb-2">
+                  Zensus Custom
+                </h2>
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-4xl font-bold text-foreground">
+                    Custom
+                  </span>
+                </div>
+                <p className="text-muted-foreground mt-2">
+                  Tailored setup for complex cash flow operations.
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Everything in Zensus Pro, shaped around your team.
+                </p>
+              </div>
+
+              <div className="space-y-3 mb-5">
+                <FeatureGroup
+                  icon={Settings2}
+                  title="Setup and integrations"
+                  features={customSetupFeatures}
+                />
+                <FeatureGroup
+                  icon={Headphones}
+                  title="Support and enablement"
+                  features={customSupportFeatures}
+                />
+              </div>
+
+              <Button
+                asChild
+                variant="outline"
+                className="w-full rounded-full"
+                size="lg"
+              >
+                <a
+                  href={TALK_TO_US_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    trackCtaClick("pricing_page", {
+                      destination: "talk_to_us",
+                      plan: "custom",
+                    })
+                  }
+                >
+                  Talk to us
+                  <ArrowRight size={18} className="ml-2" />
+                </a>
+              </Button>
+
+              <p className="text-center text-xs text-muted-foreground mt-3">
+                A 30-minute call to scope what your team needs.
               </p>
             </div>
           </div>

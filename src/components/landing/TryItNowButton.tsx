@@ -3,13 +3,19 @@ import { Button } from "@/components/ui/button";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { SignupModal } from "./SignupModal";
 import { cn } from "@/lib/utils";
+import { trackHeroTrialClick } from "@/lib/analytics/events";
 
 interface TryItNowButtonProps {
   className?: string;
   size?: "md" | "lg";
+  trackHeroConversion?: boolean;
 }
 
-export const TryItNowButton = ({ className, size = "md" }: TryItNowButtonProps) => (
+export const TryItNowButton = ({
+  className,
+  size = "md",
+  trackHeroConversion = false,
+}: TryItNowButtonProps) => (
   <ShineBorder
     shineColor={["hsl(42 55% 78%)", "hsl(48 85% 90%)"]}
     duration={3}
@@ -22,6 +28,7 @@ export const TryItNowButton = ({ className, size = "md" }: TryItNowButtonProps) 
     <SignupModal>
       <Button
         type="button"
+        onClick={trackHeroConversion ? trackHeroTrialClick : undefined}
         className={cn(
           "group rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-[15px] shadow-md transition-transform active:scale-[0.98]",
           size === "lg" ? "h-12 px-8" : "h-10 px-6",
