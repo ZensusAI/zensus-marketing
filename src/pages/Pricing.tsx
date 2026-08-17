@@ -130,8 +130,8 @@ const Pricing = () => (
             </p>
           </div>
 
-          <div className="mx-auto grid max-w-4xl items-start gap-6 md:grid-cols-2">
-            <div className="relative p-6 sm:p-7 rounded-3xl bg-card border border-primary/30 glow-sm">
+          <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+            <div className="relative flex h-full flex-col p-6 sm:p-7 rounded-3xl bg-card border border-primary/30 glow-sm">
               <div className="text-center mb-6">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-primary/10 border border-primary/25 text-xs font-semibold text-primary">
                   14-day free trial
@@ -151,7 +151,7 @@ const Pricing = () => (
                 </p>
               </div>
 
-              <div className="space-y-3 mb-5">
+              <div className="mb-5 flex-1 space-y-3">
                 <FeatureGroup
                   icon={Database}
                   title="Data and integrations"
@@ -164,39 +164,42 @@ const Pricing = () => (
                 />
               </div>
 
-              <Button asChild className="w-full rounded-full" size="lg">
-                <a
-                  href={START_TRIAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    trackCtaClick("pricing_page", { destination: "trial" })
-                  }
-                >
-                  Start 14-day free trial
-                  <ArrowRight size={18} className="ml-2" />
-                </a>
-              </Button>
+              <div className="mt-auto">
+                <Button asChild className="h-11 w-full shrink-0 rounded-full" size="lg">
+                  <a
+                    href={START_TRIAL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackCtaClick("pricing_page", { destination: "trial" })
+                    }
+                  >
+                    Start 14-day free trial
+                    <ArrowRight size={18} className="ml-2" />
+                  </a>
+                </Button>
 
-              <p className="text-center text-xs text-muted-foreground mt-3">
-                No charge today. Cancel anytime before your trial ends.
-              </p>
-
-              <p className="text-center text-sm text-muted-foreground mt-4">
-                Prefer a walkthrough first?{" "}
-                <a
-                  href={TALK_TO_US_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  Talk to us
-                </a>
-                .
-              </p>
+                <div className="mt-3 min-h-[4.25rem] space-y-4">
+                  <p className="text-center text-xs text-muted-foreground">
+                    No charge today. Cancel anytime before your trial ends.
+                  </p>
+                  <p className="text-center text-sm text-muted-foreground">
+                    Prefer a walkthrough first?{" "}
+                    <a
+                      href={TALK_TO_US_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      Talk to us
+                    </a>
+                    .
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="relative p-6 sm:p-7 rounded-3xl bg-card border border-border">
+            <div className="relative flex h-full flex-col p-6 sm:p-7 rounded-3xl bg-card border border-border">
               <div className="text-center mb-6">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-secondary border border-border text-xs font-semibold text-muted-foreground">
                   For complex setups
@@ -217,7 +220,7 @@ const Pricing = () => (
                 </p>
               </div>
 
-              <div className="space-y-3 mb-5">
+              <div className="mb-5 flex-1 space-y-3">
                 <FeatureGroup
                   icon={Settings2}
                   title="Setup and integrations"
@@ -230,31 +233,35 @@ const Pricing = () => (
                 />
               </div>
 
-              <Button
-                asChild
-                variant="outline"
-                className="w-full rounded-full"
-                size="lg"
-              >
-                <a
-                  href={TALK_TO_US_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    trackCtaClick("pricing_page", {
-                      destination: "talk_to_us",
-                      plan: "custom",
-                    })
-                  }
+              <div className="mt-auto">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-11 w-full shrink-0 rounded-full"
+                  size="lg"
                 >
-                  Talk to us
-                  <ArrowRight size={18} className="ml-2" />
-                </a>
-              </Button>
+                  <a
+                    href={TALK_TO_US_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackCtaClick("pricing_page", {
+                        destination: "talk_to_us",
+                        plan: "custom",
+                      })
+                    }
+                  >
+                    Talk to us
+                    <ArrowRight size={18} className="ml-2" />
+                  </a>
+                </Button>
 
-              <p className="text-center text-xs text-muted-foreground mt-3">
-                A 30-minute call to scope what your team needs.
-              </p>
+                <div className="mt-3 min-h-[4.25rem]">
+                  <p className="text-center text-xs text-muted-foreground">
+                    A 30-minute call to scope what your team needs.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
