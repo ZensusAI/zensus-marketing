@@ -43,10 +43,23 @@ const HeroShowcase = () => {
 
   return (
     <section
-      className="section-padding bg-background pb-10 pt-2 md:pb-14 md:pt-4"
+      className="bg-background pb-16 pt-0 md:pb-24"
       aria-label="Product preview"
     >
       <div className="section-container">
+        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">
+            Rolling cash forecast
+          </p>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            See the next 13 weeks before they hit your bank.
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            Zensus combines your bank, QuickBooks, and HubSpot data into a
+            weekly forecast that reflects when cash actually moves.
+          </p>
+        </div>
+
         <div className="mx-auto max-w-5xl">
           <div
             className={cn(

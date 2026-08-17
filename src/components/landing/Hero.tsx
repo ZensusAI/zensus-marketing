@@ -5,7 +5,7 @@ import HeroTestimonial from "./HeroTestimonial";
 import { TextHoverHalo } from "@/components/ui/text-hover-halo";
 
 const H1_LINE_1 = "Your cash flow,";
-const H1_LINE_2 = "mapped 13 weeks ahead.";
+const H1_LINE_2 = "mapped as far ahead as you need.";
 const H1_SENTENCE_2 = "Built for businesses with unpredictable revenue.";
 
 const Hero = () => {
@@ -33,7 +33,7 @@ const Hero = () => {
                   {H1_LINE_1}
                 </TextHoverHalo>
               </span>
-              <span className="block lg:whitespace-nowrap">
+              <span className="block text-balance">
                 <TextHoverHalo as="span">
                   {H1_LINE_2}
                 </TextHoverHalo>
@@ -45,10 +45,9 @@ const Hero = () => {
             </p>
 
             <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Zensus is 13-week cash flow forecasting software for businesses with
-              unpredictable revenue. It connects your bank, QuickBooks, and HubSpot
-              for a forecast that knows your annual contract hits March 14, not
-              "sometime in Q1."
+              Zensus gives you a live, always-current picture of your cash
+              position, so you can make payroll, hiring, and spending decisions
+              with confidence.
             </p>
           </div>
 
@@ -61,7 +60,7 @@ const Hero = () => {
         {/* Centered CTAs & Terminal Input Field below the grid */}
         <div className="mt-10 sm:mt-12 flex flex-col items-center justify-center text-center gap-4 max-w-3xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
-            <TryItNowButton size="lg" />
+            <TryItNowButton size="lg" trackHeroConversion />
             <TalkToUsButton
               size="lg"
               variant="ghost"

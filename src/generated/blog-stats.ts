@@ -35,7 +35,11 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
   },
   "hubspot-pipeline-to-cash-forecast": {
     "wordCount": 1753,
-    "images": []
+    "images": [
+      "https://zensus.app/blog/hubspot-pipeline-to-cash-forecast/from-deal-value-to-cash-forecast.png",
+      "https://zensus.app/blog/hubspot-pipeline-to-cash-forecast/pipeline-versus-cash-timeline-comparison.png",
+      "https://zensus.app/blog/hubspot-pipeline-to-cash-forecast/revenue-vs-cash-forecast-dashboard.png"
+    ]
   },
   "mcp-vs-cli-for-finance-teams": {
     "wordCount": 2194,

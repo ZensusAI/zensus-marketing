@@ -98,6 +98,19 @@ describe("marketing analytics helpers", () => {
     });
   });
 
+  it("records the hero trial modal open as a distinct CTA conversion", async () => {
+    const { posthog, events } = await loadFresh();
+    events.grantCapturing();
+    await events.initAnalytics();
+    posthog.capture.mockClear();
+    events.trackHeroTrialClick();
+    expect(posthog.capture).toHaveBeenCalledWith("marketing_cta_clicked", {
+      location: "hero",
+      destination: "trial",
+      action: "open_signup_modal",
+    });
+  });
+
   it("opting out drops buffered intent and opts out on load", async () => {
     const { posthog, events } = await loadFresh();
     events.capturePageview("https://zensus.app/");

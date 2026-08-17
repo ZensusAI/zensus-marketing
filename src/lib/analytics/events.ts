@@ -192,3 +192,11 @@ export function trackCtaClick(
 ): void {
   track(EVENTS.CTA_CLICKED, { location, ...props });
 }
+
+/** Record the hero trial CTA before it opens the signup modal. */
+export function trackHeroTrialClick(): void {
+  trackCtaClick("hero", {
+    destination: "trial",
+    action: "open_signup_modal",
+  });
+}
