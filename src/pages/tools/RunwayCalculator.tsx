@@ -9,17 +9,20 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-data";
+import { ToolEmailCapture } from "@/components/tools/ToolEmailCapture";
+import {
+  LOADED_COST_MULTIPLIER,
+  formatRunwayMonthLabel,
+  formatLocalDateIso,
+  monthlyHireCost,
+  simulateRunway,
+} from "@/lib/runway-calculator";
+const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
 const PAGE_URL = "https://zensus.app/tools/runway-calculator";
 const PAGE_TITLE = "Startup Runway Calculator · Zero-Cash Date and Hiring Impact";
 const PAGE_DESCRIPTION =
   "Free startup runway calculator: enter cash, revenue, and expenses to get your zero-cash date, then model what a new hire or an annual contract does to it.";
-
-// Fully loaded employee cost vs base salary (payroll taxes, benefits,
-// equipment). 1.25x to 1.4x is the common planning range; we use the middle.
-const LOADED_COST_MULTIPLIER = 1.3;
-const MAX_MONTHS = 48;
-const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
@@ -76,66 +79,6 @@ const usd = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-interface SimulationInput {
-  cash: number;
-  monthlyRevenue: number;
-  monthlyExpenses: number;
-  monthlyHireCost: number;
-  contractAmount: number;
-  /** 1-indexed month (from now) the contract payment lands; 0 disables it. */
-  contractMonth: number;
-}
-
-interface MonthRow {
-  index: number;
-  inflow: number;
-  outflow: number;
-  closing: number;
-}
-
-interface SimulationResult {
-  rows: MonthRow[];
-  /** Months until the balance crosses zero, fractional; null if it never does. */
-  runwayMonths: number | null;
-  zeroCashDate: Date | null;
-}
-
-function simulate(input: SimulationInput, startDate: Date): SimulationResult {
-  const rows: MonthRow[] = [];
-  let balance = input.cash;
-  let runwayMonths: number | null = null;
-
-  for (let month = 1; month <= MAX_MONTHS; month += 1) {
-    const contractInflow = month === input.contractMonth ? input.contractAmount : 0;
-    const inflow = input.monthlyRevenue + contractInflow;
-    const outflow = input.monthlyExpenses + input.monthlyHireCost;
-    const opening = balance;
-    balance = opening + inflow - outflow;
-
-    if (rows.length < 12) {
-      rows.push({ index: month, inflow, outflow, closing: balance });
-    }
-    if (runwayMonths === null && balance <= 0 && opening > 0) {
-      const burnedThisMonth = opening - balance;
-      const fraction = burnedThisMonth > 0 ? opening / burnedThisMonth : 0;
-      runwayMonths = month - 1 + fraction;
-    }
-    if (runwayMonths !== null && rows.length >= 12) break;
-  }
-
-  let zeroCashDate: Date | null = null;
-  if (runwayMonths !== null) {
-    zeroCashDate = new Date(startDate);
-    const wholeMonths = Math.floor(runwayMonths);
-    zeroCashDate.setMonth(zeroCashDate.getMonth() + wholeMonths);
-    zeroCashDate.setDate(
-      zeroCashDate.getDate() + Math.round((runwayMonths - wholeMonths) * 30.4),
-    );
-  }
-
-  return { rows, runwayMonths, zeroCashDate };
-}
-
 const dateFmt = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
   month: "long",
@@ -182,11 +125,11 @@ const RunwayCalculator = () => {
   const [contractMonth, setContractMonth] = useState(3);
 
   const today = useMemo(() => new Date(), []);
-  const monthlyHireCost = (hires * hireSalary * LOADED_COST_MULTIPLIER) / 12;
+  const monthlyHireCostValue = monthlyHireCost(hires, hireSalary);
 
   const base = useMemo(
     () =>
-      simulate(
+      simulateRunway(
         {
           cash,
           monthlyRevenue,
@@ -202,27 +145,37 @@ const RunwayCalculator = () => {
 
   const withHires = useMemo(
     () =>
-      simulate(
+      simulateRunway(
         {
           cash,
           monthlyRevenue,
           monthlyExpenses,
-          monthlyHireCost,
+          monthlyHireCost: monthlyHireCostValue,
           contractAmount: contractEnabled ? contractAmount : 0,
           contractMonth: contractEnabled ? contractMonth : 0,
         },
         today,
       ),
-    [cash, monthlyRevenue, monthlyExpenses, monthlyHireCost, contractEnabled, contractAmount, contractMonth, today],
+    [cash, monthlyRevenue, monthlyExpenses, monthlyHireCostValue, contractEnabled, contractAmount, contractMonth, today],
   );
 
   const active = hires > 0 ? withHires : base;
-  const netMonthly = monthlyRevenue - monthlyExpenses - monthlyHireCost;
-  const monthLabel = (index: number) => {
-    const d = new Date(today);
-    d.setMonth(d.getMonth() + index);
-    return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-  };
+  const netMonthly = monthlyRevenue - monthlyExpenses - monthlyHireCostValue;
+  const emailInputs = useMemo(
+    () => ({
+      cash,
+      monthlyRevenue,
+      monthlyExpenses,
+      hires,
+      hireSalary,
+      contractEnabled,
+      contractAmount,
+      contractMonth,
+      startDate: formatLocalDateIso(today),
+    }),
+    [cash, monthlyRevenue, monthlyExpenses, hires, hireSalary, contractEnabled, contractAmount, contractMonth, today],
+  );
+  const monthLabel = (index: number) => formatRunwayMonthLabel(today, index);
 
   return (
     <div className="min-h-screen bg-background">
@@ -277,7 +230,7 @@ const RunwayCalculator = () => {
                 </Label>
                 <span className="text-sm text-muted-foreground">
                   {hires > 0
-                    ? `${usd.format(monthlyHireCost)} per month fully loaded`
+                    ? `${usd.format(monthlyHireCostValue)} per month fully loaded`
                     : "drag to add hires"}
                 </span>
               </div>
@@ -388,7 +341,7 @@ const RunwayCalculator = () => {
           ) : null}
 
           {/* 12-month projection table */}
-          <div className="overflow-x-auto rounded-2xl border border-border mb-12">
+          <div className="overflow-x-auto rounded-2xl border border-border mb-8">
             <table className="w-full text-sm">
               <caption className="sr-only">
                 Twelve-month cash balance projection
@@ -417,6 +370,8 @@ const RunwayCalculator = () => {
               </tbody>
             </table>
           </div>
+
+          <ToolEmailCapture tool="runway" inputs={emailInputs} />
 
           {/* How it works */}
           <section className="mb-12">

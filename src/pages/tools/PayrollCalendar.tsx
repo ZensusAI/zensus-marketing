@@ -20,6 +20,7 @@ import {
   type PayFrequency,
   type YearSummary,
 } from "@/lib/payroll-calendar";
+import { ToolEmailCapture } from "@/components/tools/ToolEmailCapture";
 
 const PAGE_URL = "https://zensus.app/tools/payroll-calendar";
 const PAGE_TITLE = "Payroll Calendar Calculator · Pay Periods in 2026 and 2027";
@@ -179,6 +180,15 @@ const PayrollCalendar = () => {
   const y2026 = result.years.find((y) => y.year === 2026)!;
   const y2027 = result.years.find((y) => y.year === 2027)!;
 
+  const emailInputs = useMemo(
+    () => ({
+      firstPayDate,
+      frequency,
+      amountPerRun,
+    }),
+    [firstPayDate, frequency, amountPerRun],
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
@@ -322,6 +332,8 @@ const PayrollCalendar = () => {
 
           <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-foreground">2027 calendar</h2>
           <YearTable year={y2027} amountPerRun={amountPerRun} />
+
+          <ToolEmailCapture tool="payroll" inputs={emailInputs} />
 
           <section className="mb-12">
             <h2 className="text-xl sm:text-2xl font-semibold mb-3 text-foreground">
