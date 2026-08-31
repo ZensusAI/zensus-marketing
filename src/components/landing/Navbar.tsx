@@ -17,8 +17,6 @@ interface NavChild {
   href: string;
   label: string;
   description: string;
-  /** When true, appends a green "(Free)" suffix to the label. */
-  free?: boolean;
   // Hash-anchor children (e.g. /#features) render as plain <a> tags so the
   // browser handles the jump natively; router children render as <Link>.
   isRoute?: boolean;
@@ -32,16 +30,6 @@ interface NavMenu {
 type NavEntry = NavLinkItem | NavMenu;
 
 const isMenu = (entry: NavEntry): entry is NavMenu => "children" in entry;
-
-function NavChildLabel({ label, free }: { label: string; free?: boolean }) {
-  if (!free) return <>{label}</>;
-  return (
-    <>
-      {label}{" "}
-      <span className="font-semibold text-primary">(Free)</span>
-    </>
-  );
-}
 
 const NAV: NavEntry[] = [
   {
@@ -81,20 +69,23 @@ const NAV: NavEntry[] = [
     ],
   },
   {
-    label: "Resources",
+    label: "Free Tools",
     children: [
       {
         href: "/tools/runway-calculator",
         label: "Runway Calculator",
         description: "Model cash runway, zero-cash date, and hiring impact.",
-        free: true,
       },
       {
         href: "/tools/payroll-calendar",
         label: "Payroll Calendar",
         description: "Map pay dates and three-paycheck months for 2026 and 2027.",
-        free: true,
       },
+    ],
+  },
+  {
+    label: "Resources",
+    children: [
       {
         href: "/blog",
         label: "Blog",
@@ -285,7 +276,7 @@ function DesktopNav({ entries }: { entries: NavEntry[] }) {
                   const body = (
                     <>
                       <span className="flex items-center gap-1.5 text-[15px] font-semibold text-foreground">
-                        <NavChildLabel label={child.label} free={child.free} />
+                        {child.label}
                         {active && (
                           <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
                         )}
@@ -395,7 +386,7 @@ function MobileMenuGroup({ menu, onClose }: { menu: NavMenu; onClose: () => void
       </button>
       <div
         className={`overflow-hidden pl-3 transition-[max-height,opacity] duration-300 ease-out ${
-          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          open ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="flex flex-col gap-1 border-l border-border/60 pl-3 py-1">
@@ -407,7 +398,7 @@ function MobileMenuGroup({ menu, onClose }: { menu: NavMenu; onClose: () => void
                 onClick={onClose}
                 className={`px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} text-muted-foreground hover:bg-muted/40 hover:text-foreground`}
               >
-                <NavChildLabel label={child.label} free={child.free} />
+                {child.label}
               </a>
             ) : (
               <NavLink
@@ -420,7 +411,7 @@ function MobileMenuGroup({ menu, onClose }: { menu: NavMenu; onClose: () => void
                   }`
                 }
               >
-                <NavChildLabel label={child.label} free={child.free} />
+                {child.label}
               </NavLink>
             ),
           )}
