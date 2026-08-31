@@ -50,6 +50,16 @@ const POSTHOG_HOST =
 export const EVENTS = {
   /** Visitor clicked a CTA that hands off to the product app. */
   CTA_CLICKED: "marketing_cta_clicked",
+  /** Optional tool email capture prompt became visible below results. */
+  TOOL_EMAIL_PROMPT_VIEWED: "marketing_tool_email_prompt_viewed",
+  /** Visitor focused the tool email field. */
+  TOOL_EMAIL_STARTED: "marketing_tool_email_started",
+  /** Visitor submitted the tool email form. */
+  TOOL_EMAIL_SUBMITTED: "marketing_tool_email_submitted",
+  /** Tool breakdown email sent successfully. */
+  TOOL_EMAIL_SUCCEEDED: "marketing_tool_email_succeeded",
+  /** Tool breakdown email send failed. */
+  TOOL_EMAIL_FAILED: "marketing_tool_email_failed",
 } as const;
 
 export type EventName = (typeof EVENTS)[keyof typeof EVENTS];

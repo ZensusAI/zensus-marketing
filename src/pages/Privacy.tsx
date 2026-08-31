@@ -106,9 +106,19 @@ export default function PrivacyPolicy() {
             </div>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">1.2 Financial Data You Provide</h3>
-            <p className="text-foreground/80 mb-3">When you use our runway calculator or forecast features, we process:</p>
+            <p className="text-foreground/80 mb-3">When you use our runway calculator, payroll calendar, or forecast features, we process:</p>
 
             <div className="rounded-lg border border-border bg-muted/30 p-5 my-4 space-y-4">
+              <div>
+                <p className="font-semibold text-foreground mb-2">Free marketing tools (runway calculator and payroll calendar):</p>
+                <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
+                  <li>Calculator inputs you enter (cash, revenue, expenses, pay dates, payroll amounts, and related fields)</li>
+                  <li>Your email address, only if you choose to request a detailed breakdown by email</li>
+                  <li>We use your inputs to generate the on-page results in your browser and, when requested, to compose and send a breakdown email via AWS SES</li>
+                  <li>If you opt in, we may send occasional product updates; you can unsubscribe from those at any time</li>
+                </ul>
+              </div>
+
               <div>
                 <p className="font-semibold text-foreground mb-2">Runway Calculator Inputs:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
@@ -214,9 +224,9 @@ export default function PrivacyPolicy() {
               </div>
 
               <div>
-                <p className="font-semibold text-foreground mb-2">Support-form Bot Protection:</p>
+                <p className="font-semibold text-foreground mb-2">Support-form and calculator Bot Protection:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>When you submit the contact form on our support page (<a href="https://zensus.app/support" className="text-primary hover:underline">zensus.app/support</a>), we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects the form from spam and abuse and does not track you across sites. See Cloudflare's{' '}
+                  <li>When you submit the contact form on our support page (<a href="https://zensus.app/support" className="text-primary hover:underline">zensus.app/support</a>) or request a detailed breakdown from our free runway or payroll calculators, we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects these forms from spam and abuse and does not track you across sites. See Cloudflare's{' '}
                     <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Turnstile Privacy Addendum</a>.</li>
                 </ul>
               </div>
