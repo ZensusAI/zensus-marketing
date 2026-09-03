@@ -192,6 +192,11 @@ const LlmInfo = () => (
               </Link>
             </li>
             <li>
+              <Link to="/blog/cash-conversion-cycle" className={linkCls}>
+                Cash conversion cycle
+              </Link>
+            </li>
+            <li>
               <Link
                 to="/blog/can-quickbooks-forecast-cash-flow"
                 className={linkCls}
