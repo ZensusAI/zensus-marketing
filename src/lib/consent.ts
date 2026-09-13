@@ -1,11 +1,15 @@
-// Cross-domain cookie-consent state.
+// Cookie-consent state.
 //
-// The decision is stored in a cookie scoped to the registrable domain
-// (.zensus.app) so app.zensus.app honors the same choice the visitor made on
-// the marketing site; they only see one banner across the whole funnel. This
-// rides the same cross-subdomain cookie mechanism PostHog uses for the
-// distinct_id. The consent cookie itself is strictly necessary, so it's fine to
-// set before the visitor has opted into analytics.
+// The decision is stored in a cookie scoped to the site's registrable domain,
+// derived from SITE_HOST rather than hardcoded, so it follows a domain change
+// without an edit here. On a host that is not the site (localhost, Vercel
+// previews) the cookie is host-only: a Domain attribute naming a domain you are
+// not on is silently dropped by the browser.
+//
+// The consent cookie itself is strictly necessary, so it is fine to set before
+// the visitor has opted into analytics.
+
+import { SITE_HOST } from "@/lib/constants";
 
 export type ConsentDecision = "granted" | "denied";
 
@@ -23,11 +27,12 @@ export function readConsent(): ConsentDecision | null {
   return value === "granted" || value === "denied" ? value : null;
 }
 
-/** Persist the decision on .zensus.app (host-only off a zensus.app domain). */
+/** Persist the decision, scoped to SITE_HOST (host-only anywhere else). */
 export function writeConsent(decision: ConsentDecision): void {
   if (typeof document === "undefined") return;
-  const onZensus = /(^|\.)zensus\.app$/.test(window.location.hostname);
-  const domain = onZensus ? "; domain=.zensus.app" : "";
+  const host = window.location.hostname;
+  const onSite = host === SITE_HOST || host.endsWith(`.${SITE_HOST}`);
+  const domain = onSite ? `; domain=.${SITE_HOST}` : "";
   const secure = window.location.protocol === "https:" ? "; Secure" : "";
   document.cookie = `${COOKIE}=${decision}; path=/${domain}; max-age=${MAX_AGE}; SameSite=Lax${secure}`;
 }
