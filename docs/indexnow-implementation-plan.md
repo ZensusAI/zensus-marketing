@@ -1,6 +1,8 @@
 # IndexNow implementation plan (zensus-marketing)
 
-**Status:** Implemented — see `scripts/indexnow-ping.mjs`, `.github/workflows/indexnow.yml`, and `docs/indexnow.md`. Add repository secret **`INDEXNOW_KEY`** before relying on the GitHub Action.
+**Status:** Historical planning document. Kept for the rationale, not as a description of the current setup. Phase 1 shipped and is live: see `scripts/indexnow-ping.mjs` and `docs/indexnow.md`, which is the authoritative reference.
+
+**Phase 2 (the GitHub Action) was removed on 2026-09-13 and should not be revived from this document.** Its repository secret was never set, so it skipped on every run and never submitted a URL. It also duplicated Phase 1 with a smaller payload (2 URLs against the build ping's full sitemap). Ignore every instruction below about `.github/workflows/indexnow.yml` and the `INDEXNOW_KEY` repository secret.
 
 **Goal:** Satisfy GEO audit “ship IndexNow (key file + deploy-hook ping)” for Bing / Yandex / other IndexNow partners — **not** Google (non-participant).
 
