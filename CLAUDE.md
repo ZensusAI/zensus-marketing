@@ -41,7 +41,11 @@ exactly once in the DOM text), and `src/lib/site-url.test.ts` (see below).
 Run the suite before opening a PR.
 
 `.github/workflows/ci.yml` runs the em-dash check, lint, `npm run typecheck` and the
-test suite on every pull request and on every push to `main`. It deliberately does
+test suite on every pull request and on every push to `main`. Its Node version comes
+from `.nvmrc`, which says **24** because that is what the Vercel project builds with
+(`nodeVersion: "24.x"`). Keep those two in step: testing on a different major than
+production builds on is how something passes CI and then fails the deploy. It
+deliberately does
 **not** build: Vercel already builds each PR as a preview and each push to `main` for
 production, and that build is slow (Puppeteer prerenders 34 routes). CI covers exactly
 what the Vercel build does not, which before this workflow existed was the tests and

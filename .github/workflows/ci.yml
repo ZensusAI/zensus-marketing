@@ -53,10 +53,13 @@ jobs:
 
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          # Matches the Node 22 line used locally and by the Vercel build. There
-          # is no .nvmrc in this repo; if one is added, switch this to
-          # node-version-file so the two cannot drift.
-          node-version: '22'
+          # Read from .nvmrc rather than pinned here, so there is one place to
+          # change it. .nvmrc says 24 because that is what the Vercel project
+          # builds with (its nodeVersion is "24.x"). Testing on a different
+          # major than production builds on is how something passes CI and then
+          # fails the deploy, so keep these two in step: if the Vercel project's
+          # Node version is changed, change .nvmrc to match.
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       # `npm ci` rather than `npm install`, so a lockfile that has drifted from
