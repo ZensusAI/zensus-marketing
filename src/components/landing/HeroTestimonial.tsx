@@ -27,7 +27,11 @@ const videoLd = {
     "Customer video testimonial for Zensus by Jameson Pitts, CEO of Sangfroid! Studios.",
   thumbnailUrl: `${SITE_URL}/demo/product-demo-poster.webp`,
   contentUrl: `${SITE_URL}/demo/product-demo.mp4`,
-  uploadDate: "2026-07-21",
+  // Full ISO 8601 with an explicit offset. A bare "2026-07-21" is a valid
+  // schema.org Date but Google's VideoObject validator reports it as an
+  // invalid datetime and warns that the timezone is missing, and without one
+  // it falls back to Googlebot's own timezone.
+  uploadDate: "2026-07-21T00:00:00+00:00",
   duration: "PT14S",
 };
 
