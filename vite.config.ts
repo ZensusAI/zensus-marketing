@@ -46,27 +46,26 @@ export default defineConfig(() => ({
         // it is a clean, lazy, on-demand bundle instead of being folded into an
         // unrelated route chunk (rollup otherwise merged posthog into /privacy).
         //
-        // Supabase is deliberately NOT listed here. Forcing it into a manual
-        // chunk made rollup hoist the shared CommonJS interop helper into that
-        // chunk, which gave the entry a *static* import edge to 223KB of
-        // Supabase SDK for the sake of a ~140-byte helper. Every visitor paid
-        // for it on every route. Left to rollup's automatic chunking, the only
-        // edge is the real dynamic import in GoogleOneTap, so the chunk stays
-        // lazy and the entry has no static chunk imports at all. Verify after
-        // touching this that the built entry contains no `from"./supabase-`.
+        // Be sparing about adding entries here. Forcing a CommonJS dependency
+        // into a manual chunk makes rollup hoist the shared interop helper into
+        // that chunk, which gives the entry a *static* import edge to the whole
+        // bundle for the sake of a ~140-byte helper. That is what happened when
+        // Supabase was listed here (223KB paid by every visitor on every route,
+        // since removed with Google One Tap). After changing this, check that
+        // the built entry has no static chunk imports it did not have before.
         manualChunks: {
           posthog: ["posthog-js"],
         },
       },
     },
     // Vite eagerly emits a <link rel="modulepreload"> for a dynamically-imported
-    // chunk reachable from the entry, which would pull the ~220KB Supabase chunk
-    // on every homepage load and defeat the deferral. Drop the preload hints for
-    // these heavy lazy chunks so they download only when their feature actually
-    // runs; route chunks keep their normal preloads.
+    // chunk reachable from the entry, which would pull posthog-js on every
+    // homepage load and defeat the deferral. Drop the preload hint so it
+    // downloads only when analytics actually initialises; route chunks keep
+    // their normal preloads.
     modulePreload: {
       resolveDependencies: (_filename, deps) =>
-        deps.filter((dep) => !/\/(posthog|supabase)-[\w-]+\.js$/.test(dep)),
+        deps.filter((dep) => !/\/posthog-[\w-]+\.js$/.test(dep)),
     },
   },
   test: {
