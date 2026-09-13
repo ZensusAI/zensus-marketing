@@ -55,7 +55,7 @@ scripts/
 
 ## IndexNow
 
-Bing/Yandex URL notification on production build and on push to `main`. Setup and verification: [docs/indexnow.md](docs/indexnow.md). Add GitHub secret **`INDEXNOW_KEY`** and (recommended) Vercel **`INDEXNOW_KEY`** to match `public/<key>.txt`.
+Bing/Yandex URL notification, submitted at the end of the Vercel production build. Setup and verification: [docs/indexnow.md](docs/indexnow.md). Optionally set Vercel **`INDEXNOW_KEY`** to match `public/<key>.txt`.
 
 ## Links
 

@@ -60,9 +60,13 @@ const ALLOWED = new Set([
 ]);
 
 // .github is here because the IndexNow workflow hardcoded the origin and so
-// survived the zensus.finance cutover untouched, returning HTTP 200 while
-// telling Bing and Yandex that the old domain had changed. CI config is exactly
-// the kind of file that never gets read during a migration and never complains.
+// survived the zensus.finance cutover untouched. CI config is exactly the kind
+// of file that never gets read during a migration and never complains.
+//
+// That workflow has since been deleted, so this directory does not currently
+// exist. It stays in the list anyway: the next workflow anyone adds is guarded
+// from its first commit rather than from the next migration that misses it.
+// walk() tolerates the directory being absent for exactly this reason.
 const SCAN_DIRS = ["src", "api", "scripts", ".github"];
 const SCAN_EXT = [".ts", ".tsx", ".mjs", ".mdx", ".html", ".yml", ".yaml"];
 
@@ -80,7 +84,18 @@ const SCAN_EXT = [".ts", ".tsx", ".mjs", ".mdx", ".html", ".yml", ".yaml"];
 const ROOT_FILES = ["index.html"];
 
 function walk(dir: string, out: string[] = []): string[] {
-  for (const entry of readdirSync(join(repoRoot, dir))) {
+  let entries: string[];
+  try {
+    entries = readdirSync(join(repoRoot, dir));
+  } catch {
+    // A scanned directory can legitimately be absent: git does not track empty
+    // directories, so deleting the last file in one removes it from every fresh
+    // clone. Returning empty keeps the guard scanning everything else instead
+    // of failing with ENOENT on a directory nobody is using yet.
+    return out;
+  }
+
+  for (const entry of entries) {
     if (entry === "node_modules" || entry.startsWith(".")) continue;
     const rel = join(dir, entry);
     if (statSync(join(repoRoot, rel)).isDirectory()) {
