@@ -66,8 +66,6 @@ const Index = () => {
             public/ because SignupModal still uses /hero-aurora-1200.webp. */}
       </Helmet>
       <Navbar />
-      {/* Google One Tap (ZEN-365): self-gates on config + existing session,
-          renders only its own top-right prompt. No-op until env is configured. */}
       <main>
         <Hero />
         <Problem />
