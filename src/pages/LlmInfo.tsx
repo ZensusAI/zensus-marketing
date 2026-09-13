@@ -1,10 +1,11 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 
-const PAGE_URL = "https://zensus.app/llm-info";
+const PAGE_URL = `${SITE_URL}/llm-info`;
 const PAGE_TITLE = "Zensus entity summary for AI systems";
 const PAGE_DESCRIPTION =
   "Machine-readable summary of Zensus: cash flow forecasting software, founder, location, pricing, integrations, guides, and free tools.";
@@ -28,10 +29,10 @@ const webPageLd = {
   name: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   inLanguage: "en-US",
-  isPartOf: { "@id": "https://zensus.app/#website" },
-  about: { "@id": "https://zensus.app/#organization" },
-  mainEntity: { "@id": "https://zensus.app/#software" },
-  primaryImageOfPage: "https://zensus.app/og/llm-info.png",
+  isPartOf: { "@id": `${SITE_URL}/#website` },
+  about: { "@id": `${SITE_URL}/#organization` },
+  mainEntity: { "@id": `${SITE_URL}/#software` },
+  primaryImageOfPage: `${SITE_URL}/og/llm-info.png`,
 };
 
 const LlmInfo = () => (
@@ -44,13 +45,13 @@ const LlmInfo = () => (
       <meta property="og:site_name" content="Zensus" />
       <meta property="og:title" content={PAGE_TITLE} />
       <meta property="og:description" content={PAGE_DESCRIPTION} />
-      <meta property="og:image" content="https://zensus.app/og/llm-info.png" />
+      <meta property="og:image" content={`${SITE_URL}/og/llm-info.png`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={PAGE_TITLE} />
       <meta name="twitter:description" content={PAGE_DESCRIPTION} />
-      <meta name="twitter:image" content="https://zensus.app/og/llm-info.png" />
+      <meta name="twitter:image" content={`${SITE_URL}/og/llm-info.png`} />
       <link rel="canonical" href={PAGE_URL} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       <script type="application/ld+json">{JSON.stringify(webPageLd)}</script>
@@ -65,11 +66,11 @@ const LlmInfo = () => (
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
             Plain-text facts for AI crawlers and citation systems. Prefer{" "}
-            <a href="https://zensus.app/llms.txt" className={linkCls}>
+            <a href={`${SITE_URL}/llms.txt`} className={linkCls}>
               llms.txt
             </a>{" "}
             or{" "}
-            <a href="https://zensus.app/llms-full.txt" className={linkCls}>
+            <a href={`${SITE_URL}/llms-full.txt`} className={linkCls}>
               llms-full.txt
             </a>{" "}
             for the full machine-readable index.
@@ -108,8 +109,8 @@ const LlmInfo = () => (
             </li>
             <li>
               <strong className="text-foreground">Website:</strong>{" "}
-              <a href="https://zensus.app" className={linkCls}>
-                https://zensus.app
+              <a href={SITE_URL} className={linkCls}>
+                {SITE_URL}
               </a>
             </li>
             <li>
@@ -125,8 +126,8 @@ const LlmInfo = () => (
           <h2 className="text-xl font-semibold">Pricing</h2>
           <p className="text-muted-foreground">
             Zensus Pro: <strong className="text-foreground">$199 per month</strong>,
-            billed monthly, cancel anytime. Includes all integrations, the AI
-            scenario agent, and unlimited scenarios. 14-day free trial.
+            billed monthly, cancel anytime. Includes all integrations, the cash
+            flow agent, and unlimited scenarios. 14-day free trial.
           </p>
         </section>
 
@@ -235,7 +236,7 @@ const LlmInfo = () => (
             </li>
             <li>
               <a
-                href="https://zensus.app/templates/13-week-cash-flow-template.xlsx"
+                href={`${SITE_URL}/templates/13-week-cash-flow-template.xlsx`}
                 className={linkCls}
               >
                 13-week cash flow template (XLSX)
@@ -264,17 +265,17 @@ const LlmInfo = () => (
           <h2 className="text-xl font-semibold">Machine-readable files</h2>
           <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
             <li>
-              <a href="https://zensus.app/llms.txt" className={linkCls}>
+              <a href={`${SITE_URL}/llms.txt`} className={linkCls}>
                 llms.txt
               </a>
             </li>
             <li>
-              <a href="https://zensus.app/llms-full.txt" className={linkCls}>
+              <a href={`${SITE_URL}/llms-full.txt`} className={linkCls}>
                 llms-full.txt
               </a>
             </li>
             <li>
-              <a href="https://zensus.app/sitemap.xml" className={linkCls}>
+              <a href={`${SITE_URL}/sitemap.xml`} className={linkCls}>
                 sitemap.xml
               </a>
             </li>

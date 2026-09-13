@@ -1,7 +1,8 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
-const PAGE_URL = "https://zensus.app/terms";
+const PAGE_URL = `${SITE_URL}/terms`;
 const PAGE_DESCRIPTION =
   "Terms of Service for the Zensus platform. Subscription terms, acceptable use, intellectual property, and account responsibilities.";
 
@@ -21,14 +22,14 @@ export default function TermsPage() {
         <meta property="og:site_name" content="Zensus" />
         <meta property="og:title" content="Terms of Service · Zensus Cash Flow Platform" />
         <meta property="og:description" content={PAGE_DESCRIPTION} />
-        <meta property="og:image" content="https://zensus.app/og/terms.png" />
+        <meta property="og:image" content={`${SITE_URL}/og/terms.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Terms of Service social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Terms of Service · Zensus Cash Flow Platform" />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
-        <meta name="twitter:image" content="https://zensus.app/og/terms.png" />
+        <meta name="twitter:image" content={`${SITE_URL}/og/terms.png`} />
         <link rel="canonical" href={PAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       </Helmet>
@@ -61,7 +62,7 @@ export default function TermsPage() {
             <h2 className="text-2xl font-semibold text-foreground mb-4">1. Who We Are</h2>
             <p className="text-foreground/80 mb-4">
               Zensus Inc. ("Zensus," "we," "us," or "our") is a Delaware C-Corporation operating the Zensus platform at{' '}
-              <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>{' '}
+              <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>{' '}
               (the "Services"). We provide B2B SaaS tools for financial forecasting, runway calculation, and cash flow analysis.
             </p>
 
@@ -75,7 +76,7 @@ export default function TermsPage() {
             <p className="text-foreground/80">
               <strong className="text-foreground">Contact Information:</strong><br />
               Email: <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
-              Website: <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>
+              Website: <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>
             </p>
           </section>
 
@@ -203,7 +204,7 @@ export default function TermsPage() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.5 Data Privacy</h3>
             <p className="text-foreground/80">
               We take the security of your financial data seriously. Our collection, use, and protection of your data is governed by our Privacy Policy at{' '}
-              <a href="https://zensus.app/privacy" className="text-primary hover:underline">https://zensus.app/privacy</a>.
+              <a href={`${SITE_URL}/privacy`} className="text-primary hover:underline">{`${SITE_URL}/privacy`}</a>.
             </p>
           </section>
 
@@ -617,7 +618,7 @@ export default function TermsPage() {
               <p className="font-semibold text-foreground">Zensus Inc.</p>
               <p className="text-foreground/80 text-sm">
                 Email: <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
-                Website: <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>
+                Website: <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>
               </p>
             </div>
           </section>

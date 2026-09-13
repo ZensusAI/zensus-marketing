@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -16,7 +17,7 @@ import {
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
-  { name: "Blog", url: "https://zensus.app/blog" },
+  { name: "Blog", url: `${SITE_URL}/blog` },
 ]);
 
 const Blog = () => {
@@ -65,14 +66,14 @@ const Blog = () => {
           content="Case studies and practical guides on cash flow forecasting and financial decision-making for businesses of any size."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://zensus.app/blog" />
+        <meta property="og:url" content={`${SITE_URL}/blog`} />
         <meta property="og:site_name" content="Zensus" />
         <meta property="og:title" content="Zensus Blog · Cash Flow Guides for Businesses" />
         <meta
           property="og:description"
           content="Case studies and practical guides on cash flow forecasting for businesses of any size."
         />
-        <meta property="og:image" content="https://zensus.app/og/blog.png" />
+        <meta property="og:image" content={`${SITE_URL}/og/blog.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Blog page social preview card" />
@@ -82,8 +83,8 @@ const Blog = () => {
           name="twitter:description"
           content="Case studies and practical guides on cash flow forecasting for businesses of any size."
         />
-        <meta name="twitter:image" content="https://zensus.app/og/blog.png" />
-        <link rel="canonical" href="https://zensus.app/blog" />
+        <meta name="twitter:image" content={`${SITE_URL}/og/blog.png`} />
+        <link rel="canonical" href={`${SITE_URL}/blog`} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
         {posts.length > 0 ? (
           <script type="application/ld+json">

@@ -13,10 +13,35 @@ npm run dev        # Vite dev server on http://localhost:8080 (port set in vite.
 npm run build      # Production build
 npm run build:dev  # Build with development mode (unminified output, useful for debugging)
 npm run lint       # ESLint
+npm run typecheck  # tsc -b (see note below)
 npm run preview    # Preview the production build locally
 ```
 
-No test runner is configured.
+**Typechecking requires `npm run typecheck` (`tsc -b`), not `tsc --noEmit`.** The root
+`tsconfig.json` is a solution file: `"files": []` plus project references to
+`tsconfig.app.json` and `tsconfig.node.json`. A bare `tsc --noEmit` therefore checks
+nothing and exits 0 no matter what is broken, including JSX syntax errors. Build mode
+follows the references and actually checks.
+
+Tests run on **vitest** (`npx vitest run`, or `npm run test:watch`). Config lives in
+the `test` block of `vite.config.ts`; specs are `api/**/*.test.ts` and
+`src/**/*.test.{ts,tsx}`. Several guard invariants that are otherwise silent when
+broken, notably `src/lib/route-coverage.test.ts` (every route in `App.tsx`,
+`scripts/prerender.mjs`, `public/sitemap.xml`, and `scripts/generate-og.mjs` must
+agree) and `src/components/landing/Hero.test.tsx` (the homepage H1 must appear
+exactly once in the DOM text), and `src/lib/site-url.test.ts` (see below).
+Run the suite before opening a PR.
+
+## Single-origin invariant
+
+Every absolute URL the site emits derives from one value, so changing domains is a
+one-line edit. It is declared three times because three runtimes need it and none can
+import the others: `src/lib/constants.ts` (app bundle), `scripts/site.mjs` (build
+scripts), `api/_lib/site.ts` (serverless handlers). `src/lib/site-url.test.ts` asserts
+the three agree and that no bare `https://zensus.<tld>` literal exists anywhere else in
+`src/`, `api/` or `scripts/`. Do not hardcode the origin; import `SITE_URL` (or
+`SITE_HOST` for the display form, used by the OG card footer and the XLSX template).
+Blog prose links are site-relative (`/blog/x`, `/#features`) for the same reason.
 
 ## Lockfile policy
 
@@ -48,7 +73,8 @@ Per-route `<title>`, description, canonical, and og/twitter tags are emitted by 
 
 **Add a post:** drop `src/content/blog/<slug>.mdx` exporting a `meta` object (slug must match filename). `scripts/blog-slugs.mjs` discovers it; sitemap, prerender, OG, and IndexNow pick it up on the next build. No edits to `App.tsx`, `STATIC_ROUTES`, or any script needed.
 
-**Meta fields.** Required: `title`, `description`, `date`, `category`, `readTime`, `slug`, `ogImage`. Optional but encouraged: `seoTitle` (short string for the `<title>` tag, since `meta.title` can be long for the visible H1 and `BlogPosting.headline`), `ogTitle` / `ogSubtitle` (short for OG cards), `dateModified`, `faqs` (5 entries power both the in-page accordion and `FAQPage` JSON-LD), `tags` (drives the index `?tag=` filter), `featured`, `thumbnail`, `author` (key into `src/lib/authors.ts`, defaults to `ajin`).
+**Meta fields.** Required: `title`, `description`, `date`, `category`, `readTime`, `slug`, `ogImage` (**site-relative path**, e.g. `/og/blog/<slug>.png`; `BlogPost.tsx` resolves it
+against `SITE_URL` because Open Graph needs an absolute URL). Optional but encouraged: `seoTitle` (short string for the `<title>` tag, since `meta.title` can be long for the visible H1 and `BlogPosting.headline`), `ogTitle` / `ogSubtitle` (short for OG cards), `dateModified`, `faqs` (5 entries power both the in-page accordion and `FAQPage` JSON-LD), `tags` (drives the index `?tag=` filter), `featured`, `thumbnail`, `author` (key into `src/lib/authors.ts`, defaults to `ajin`).
 
 **Voice and structure** (optimized for AI citation as well as human reading):
 - Lead with `<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">` and one declarative sentence.

@@ -127,8 +127,12 @@ export function initAnalytics(): Promise<void> {
       capture_pageleave: true,
       // See file header: funnel-only events, cost + EU data minimisation.
       autocapture: false,
-      // Write the distinct_id cookie on `.zensus.app` so app.zensus.app reads
-      // the same anonymous id and the two sites form a single funnel.
+      // Scope the distinct_id cookie to the registrable domain so any future
+      // subdomain of this site shares one anonymous id. It does NOT reach the
+      // product app: app.zensus.app is a different registrable domain once the
+      // marketing site moves, and a cookie carries only one Domain attribute.
+      // Marketing visitors and product users are therefore separate PostHog
+      // people by design; see the domain-move notes before "fixing" this.
       cross_subdomain_cookie: true,
       // Start opted OUT: no capture and no analytics cookie until consent is
       // resolved. ConsentBanner calls grantCapturing()/denyCapturing() based on

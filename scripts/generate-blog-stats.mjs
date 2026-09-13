@@ -9,6 +9,7 @@
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { SITE_URL } from "./site.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const blogDir = join(__dirname, "..", "src", "content", "blog");
@@ -22,7 +23,7 @@ for (const file of files) {
   const source = await readFile(join(blogDir, file), "utf-8");
 
   const images = [...source.matchAll(/src="(\/blog\/[^"]+\.(?:webp|png|jpe?g))"/g)].map(
-    (m) => `https://zensus.app${m[1]}`,
+    (m) => `${SITE_URL}${m[1]}`,
   );
 
   const text = source

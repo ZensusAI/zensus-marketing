@@ -1,7 +1,7 @@
 import { escapeHtml } from "./sanitize.js";
+import { SITE_HOST, SITE_URL } from "./site.js";
 
-const LOGO_URL = "https://zensus.app/email-logo.png";
-const SITE_URL = "https://zensus.app";
+const LOGO_URL = `${SITE_URL}/email-logo.png`;
 const SAGE = "#22C573";
 const CREAM = "#FEF7E6";
 const INK = "#0f172a";
@@ -81,7 +81,7 @@ export function toolEmailHtml({
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px;">
           <tr>
             <td align="center" style="padding:18px 32px; font-family:${FONT}; font-size:12px; line-height:1.5; color:${MUTED}; text-align:center;">
-              You are receiving this because you requested a detailed breakdown from a Zensus calculator at <a href="${SITE_URL}" style="color:${MUTED}; text-decoration:underline;">zensus.app</a>. Questions? <a href="mailto:${safeFrom}" style="color:${MUTED}; text-decoration:underline;">${safeFrom}</a>
+              You are receiving this because you requested a detailed breakdown from a Zensus calculator at <a href="${SITE_URL}" style="color:${MUTED}; text-decoration:underline;">${SITE_HOST}</a>. Questions? <a href="mailto:${safeFrom}" style="color:${MUTED}; text-decoration:underline;">${safeFrom}</a>
             </td>
           </tr>
         </table>

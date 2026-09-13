@@ -76,4 +76,27 @@ describe("validateToolInput", () => {
     });
     expect(r.ok).toBe(false);
   });
+  // Marketing consent is separate from the transactional breakdown the visitor
+  // requested by submitting the form, so it must never gate validation. It is
+  // recorded rather than required, and it defaults to false when absent so an
+  // omitted field can never be read as an opt-in.
+  it("defaults marketingConsent to false when absent", () => {
+    const r = validateToolInput(runwayBody);
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.data.marketingConsent).toBe(false);
+  });
+
+  it("records marketingConsent when the visitor opts in", () => {
+    const r = validateToolInput({ ...runwayBody, marketingConsent: true });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.data.marketingConsent).toBe(true);
+  });
+
+  it("treats a non-boolean marketingConsent as no consent", () => {
+    for (const value of ["true", 1, {}, null]) {
+      const r = validateToolInput({ ...runwayBody, marketingConsent: value });
+      expect(r.ok).toBe(true);
+      if (r.ok) expect(r.data.marketingConsent).toBe(false);
+    }
+  });
 });

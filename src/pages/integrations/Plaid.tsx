@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { IntegrationPage, IntegrationSection } from "@/components/integrations/IntegrationPage";
 import plaidLogo from "@/assets/integrations/plaid.svg";
 
@@ -31,9 +32,9 @@ const serviceSchema = {
   serviceType: "Bank account data integration for cash flow forecasting",
   description:
     "Connect your bank account to Zensus via Plaid for real-time transaction sync and cash flow projections based on actual cleared transactions.",
-  provider: { "@id": "https://zensus.app/#organization" },
+  provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: "US",
-  url: "https://zensus.app/integrations/plaid",
+  url: `${SITE_URL}/integrations/plaid`,
   isRelatedTo: {
     "@type": "Organization",
     name: "Plaid",

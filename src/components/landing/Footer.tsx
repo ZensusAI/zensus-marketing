@@ -30,6 +30,17 @@ const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
           { label: "Payroll Calendar", href: "/tools/payroll-calendar" },
         ],
       },
+      {
+        // The comparison pages were reachable only from /llm-info, so they had
+        // no internal link equity to rank on. AI engines can only cite what
+        // ranks, and "X vs Y" is one of the most-cited query shapes.
+        label: "Compare",
+        href: "#",
+        children: [
+          { label: "Zensus vs Float", href: "/compare/zensus-vs-float" },
+          { label: "Zensus vs Pulse", href: "/compare/zensus-vs-pulse" },
+        ],
+      },
       { label: "FAQ", href: "/#faq" },
       { label: "Pricing", href: "/pricing" },
       { label: "Book a call", href: TALK_TO_US_URL, external: true },

@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
@@ -16,16 +17,16 @@ const integrationsItemList = {
   name: "Zensus integrations",
   numberOfItems: 4,
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Plaid", url: "https://zensus.app/integrations/plaid" },
-    { "@type": "ListItem", position: 2, name: "QuickBooks", url: "https://zensus.app/integrations/quickbooks" },
-    { "@type": "ListItem", position: 3, name: "HubSpot", url: "https://zensus.app/integrations/hubspot" },
-    { "@type": "ListItem", position: 4, name: "Slack", url: "https://zensus.app/integrations/slack" },
+    { "@type": "ListItem", position: 1, name: "Plaid", url: `${SITE_URL}/integrations/plaid` },
+    { "@type": "ListItem", position: 2, name: "QuickBooks", url: `${SITE_URL}/integrations/quickbooks` },
+    { "@type": "ListItem", position: 3, name: "HubSpot", url: `${SITE_URL}/integrations/hubspot` },
+    { "@type": "ListItem", position: 4, name: "Slack", url: `${SITE_URL}/integrations/slack` },
   ],
 };
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
-  { name: "Integrations", url: "https://zensus.app/integrations" },
+  { name: "Integrations", url: `${SITE_URL}/integrations` },
 ]);
 
 interface Card {
@@ -78,14 +79,14 @@ const Integrations = () => (
         content="Every number on Zensus comes from a live integration. Plaid, QuickBooks, HubSpot, Slack. No CSV uploads, no manual data entry."
       />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://zensus.app/integrations" />
+      <meta property="og:url" content={`${SITE_URL}/integrations`} />
       <meta property="og:site_name" content="Zensus" />
       <meta property="og:title" content="Zensus Integrations · QuickBooks, Plaid, HubSpot, Slack" />
       <meta
         property="og:description"
         content="Live integrations to Plaid, QuickBooks, HubSpot, and Slack. No manual data entry."
       />
-      <meta property="og:image" content="https://zensus.app/og/integrations.png" />
+      <meta property="og:image" content={`${SITE_URL}/og/integrations.png`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Integrations page social preview card" />
@@ -95,8 +96,8 @@ const Integrations = () => (
         name="twitter:description"
         content="Live integrations to Plaid, QuickBooks, HubSpot, and Slack. No manual data entry."
       />
-      <meta name="twitter:image" content="https://zensus.app/og/integrations.png" />
-      <link rel="canonical" href="https://zensus.app/integrations" />
+      <meta name="twitter:image" content={`${SITE_URL}/og/integrations.png`} />
+      <link rel="canonical" href={`${SITE_URL}/integrations`} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       <script type="application/ld+json">{JSON.stringify(integrationsItemList)}</script>
     </Helmet>

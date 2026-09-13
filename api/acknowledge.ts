@@ -6,10 +6,10 @@ import { verifyTurnstile } from "./_lib/turnstile.js";
 import { generateIntro, FALLBACK_INTRO } from "./_lib/intro.js";
 import { sanitizeIntro } from "./_lib/sanitize.js";
 import { sendAck } from "./_lib/email.js";
+import { isAllowedOrigin } from "./_lib/site.js";
 
 export const config = { maxDuration: 15 };
 
-const ALLOWED_ORIGINS = [/^https:\/\/zensus\.app$/, /^https:\/\/[^.]+\.vercel\.app$/];
 const REQUIRED_ENV = [
   "SES_FROM", "SES_REGION", "BEDROCK_REGION", "BEDROCK_MODEL_ID", "TURNSTILE_SECRET_KEY",
   "ACK_AWS_ACCESS_KEY_ID", "ACK_AWS_SECRET_ACCESS_KEY",
@@ -31,8 +31,7 @@ function log(stage: string, outcome: string, errorName?: string) {
 }
 
 function originAllowed(req: VercelRequest): boolean {
-  const origin = (req.headers.origin as string) || "";
-  return ALLOWED_ORIGINS.some((re) => re.test(origin));
+  return isAllowedOrigin(req.headers.origin as string | undefined);
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

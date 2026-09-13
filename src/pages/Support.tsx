@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { useEffect, useRef, useState } from "react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { Helmet } from "react-helmet-async";
@@ -8,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-data";
 
-const PAGE_URL = "https://zensus.app/support";
+const PAGE_URL = `${SITE_URL}/support`;
 const PAGE_DESCRIPTION =
   "Get help with Zensus. Reach the team about your account, integrations, or billing, browse common questions, or email us directly at support@zensus.app.";
 
@@ -290,14 +291,14 @@ export default function Support() {
         <meta property="og:site_name" content="Zensus" />
         <meta property="og:title" content="Zensus Support · Help With Your Account and Integrations" />
         <meta property="og:description" content={PAGE_DESCRIPTION} />
-        <meta property="og:image" content="https://zensus.app/og/support.png" />
+        <meta property="og:image" content={`${SITE_URL}/og/support.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Zensus Support social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Zensus Support · Help With Your Account and Integrations" />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
-        <meta name="twitter:image" content="https://zensus.app/og/support.png" />
+        <meta name="twitter:image" content={`${SITE_URL}/og/support.png`} />
         <link rel="canonical" href={PAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
         <script type="application/ld+json">{JSON.stringify(faqLd)}</script>

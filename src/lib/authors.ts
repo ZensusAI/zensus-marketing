@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 export interface Author {
   name: string;
   position: string;
@@ -19,7 +20,7 @@ export const authors = {
     avatar: "/authors/ajin.svg",
     bio: "Ajin writes about cash flow forecasting, financial planning, and how AI changes the way businesses run finance.",
     url: "/about",
-    personId: "https://zensus.app/about#ajin-sunny",
+    personId: `${SITE_URL}/about#ajin-sunny`,
     jobTitle: "Founder & CEO",
     sameAs: [
       "https://www.linkedin.com/in/ajinsunny/",
@@ -31,7 +32,7 @@ export const authors = {
     position: "Software Developer, Zensus",
     avatar: "/authors/ashwin.svg",
     url: "/about",
-    personId: "https://zensus.app/about#ashwin-menon",
+    personId: `${SITE_URL}/about#ashwin-menon`,
     jobTitle: "Software Developer",
     sameAs: ["https://www.linkedin.com/in/ashwinmenon502/"],
   },

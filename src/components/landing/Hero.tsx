@@ -6,7 +6,8 @@ import { TextHoverHalo } from "@/components/ui/text-hover-halo";
 
 const H1_LINE_1 = "Your cash flow,";
 const H1_LINE_2 = "mapped as far ahead as you need.";
-const H1_SENTENCE_2 = "Built for businesses with unpredictable revenue.";
+const H1_SENTENCE_2 =
+  "Cash flow forecasting for businesses with unpredictable revenue.";
 
 const Hero = () => {
   return (
@@ -29,14 +30,10 @@ const Hero = () => {
           <div className="lg:col-span-7 xl:col-span-7 text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-[1.08] mb-5 motion-safe:animate-fade-in text-foreground">
               <span className="block lg:whitespace-nowrap">
-                <TextHoverHalo as="span">
-                  {H1_LINE_1}
-                </TextHoverHalo>
+                <TextHoverHalo as="span" text={H1_LINE_1} />
               </span>
               <span className="block text-balance">
-                <TextHoverHalo as="span">
-                  {H1_LINE_2}
-                </TextHoverHalo>
+                <TextHoverHalo as="span" text={H1_LINE_2} />
               </span>
             </h1>
 
@@ -45,9 +42,11 @@ const Hero = () => {
             </p>
 
             <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Zensus gives you a live, always-current picture of your cash
-              position, so you can make payroll, hiring, and spending decisions
-              with confidence.
+              Zensus is cash flow forecasting software that connects your bank,
+              QuickBooks, and HubSpot to project the exact date your cash runs
+              out. You get a live, always-current picture of your cash position,
+              so you can make payroll, hiring, and spending decisions with
+              confidence.
             </p>
           </div>
 

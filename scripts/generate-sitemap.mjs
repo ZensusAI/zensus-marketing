@@ -9,33 +9,34 @@ import { readFile, writeFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getBlogSlugs } from "./blog-slugs.mjs";
+import { SITE_URL } from "./site.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const blogDir = join(__dirname, "..", "src", "content", "blog");
 const outPath = join(__dirname, "..", "public", "sitemap.xml");
 
 const STATIC_URLS = [
-  { loc: "https://zensus.app/", changefreq: "weekly", priority: "1.0" },
-  { loc: "https://zensus.app/pricing", changefreq: "monthly", priority: "0.8" },
-  { loc: "https://zensus.app/blog", changefreq: "weekly", priority: "0.6" },
-  { loc: "https://zensus.app/changelog", changefreq: "weekly", priority: "0.7" },
-  { loc: "https://zensus.app/security", changefreq: "monthly", priority: "0.7" },
-  { loc: "https://zensus.app/use-cases", changefreq: "monthly", priority: "0.7" },
-  { loc: "https://zensus.app/tools/runway-calculator", changefreq: "monthly", priority: "0.8" },
-  { loc: "https://zensus.app/tools/payroll-calendar", changefreq: "monthly", priority: "0.8" },
-  { loc: "https://zensus.app/compare/zensus-vs-float", changefreq: "monthly", priority: "0.7" },
-  { loc: "https://zensus.app/compare/zensus-vs-pulse", changefreq: "monthly", priority: "0.7" },
-  { loc: "https://zensus.app/llm-info", changefreq: "monthly", priority: "0.6" },
-  { loc: "https://zensus.app/about", changefreq: "monthly", priority: "0.6" },
-  { loc: "https://zensus.app/privacy", changefreq: "yearly", priority: "0.3" },
-  { loc: "https://zensus.app/terms", changefreq: "yearly", priority: "0.3" },
-  { loc: "https://zensus.app/subprocessors", changefreq: "monthly", priority: "0.4" },
-  { loc: "https://zensus.app/support", changefreq: "monthly", priority: "0.5" },
-  { loc: "https://zensus.app/integrations", changefreq: "monthly", priority: "0.8" },
-  { loc: "https://zensus.app/integrations/plaid", changefreq: "monthly", priority: "0.7" },
-  { loc: "https://zensus.app/integrations/quickbooks", changefreq: "monthly", priority: "0.7" },
-  { loc: "https://zensus.app/integrations/hubspot", changefreq: "monthly", priority: "0.7" },
-  { loc: "https://zensus.app/integrations/slack", changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/`, changefreq: "weekly", priority: "1.0" },
+  { loc: `${SITE_URL}/pricing`, changefreq: "monthly", priority: "0.8" },
+  { loc: `${SITE_URL}/blog`, changefreq: "weekly", priority: "0.6" },
+  { loc: `${SITE_URL}/changelog`, changefreq: "weekly", priority: "0.7" },
+  { loc: `${SITE_URL}/security`, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/use-cases`, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/tools/runway-calculator`, changefreq: "monthly", priority: "0.8" },
+  { loc: `${SITE_URL}/tools/payroll-calendar`, changefreq: "monthly", priority: "0.8" },
+  { loc: `${SITE_URL}/compare/zensus-vs-float`, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/compare/zensus-vs-pulse`, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/llm-info`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${SITE_URL}/about`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${SITE_URL}/privacy`, changefreq: "yearly", priority: "0.3" },
+  { loc: `${SITE_URL}/terms`, changefreq: "yearly", priority: "0.3" },
+  { loc: `${SITE_URL}/subprocessors`, changefreq: "monthly", priority: "0.4" },
+  { loc: `${SITE_URL}/support`, changefreq: "monthly", priority: "0.5" },
+  { loc: `${SITE_URL}/integrations`, changefreq: "monthly", priority: "0.8" },
+  { loc: `${SITE_URL}/integrations/plaid`, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/integrations/quickbooks`, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/integrations/hubspot`, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/integrations/slack`, changefreq: "monthly", priority: "0.7" },
 ];
 
 // Pull date fields out of a post's `export const meta = {...}` block without
@@ -60,7 +61,7 @@ async function generate() {
   const slugs = await getBlogSlugs();
   const blogUrls = await Promise.all(
     slugs.map(async (slug) => ({
-      loc: `https://zensus.app/blog/${slug}`,
+      loc: `${SITE_URL}/blog/${slug}`,
       lastmod: await getPostLastmod(slug),
       changefreq: "weekly",
       priority: "0.85",
@@ -74,7 +75,7 @@ async function generate() {
     .sort()
     .at(-1);
   const urls = [...STATIC_URLS, ...blogUrls].map((url) =>
-    url.loc === "https://zensus.app/blog" ? { ...url, lastmod: newestPost } : url,
+    url.loc === `${SITE_URL}/blog` ? { ...url, lastmod: newestPost } : url,
   );
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

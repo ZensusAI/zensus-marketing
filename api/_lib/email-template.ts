@@ -1,4 +1,5 @@
 import { escapeHtml } from "./sanitize.js";
+import { SITE_HOST, SITE_URL } from "./site.js";
 
 // Branded acknowledgment email. Built as table-based, fully inline-styled HTML
 // (the technique transactional senders like Stripe/Linear use) so it renders
@@ -6,8 +7,7 @@ import { escapeHtml } from "./sanitize.js";
 // <style> blocks are stripped by many clients, and divs/flexbox are unreliable.
 //
 // Brand palette: Sage (primary) on a Cream canvas.
-const LOGO_URL = "https://zensus.app/email-logo.png";
-const SITE_URL = "https://zensus.app";
+const LOGO_URL = `${SITE_URL}/email-logo.png`;
 const SAGE = "#22C573"; // brand primary
 const CREAM = "#FEF7E6"; // brand canvas
 const INK = "#0f172a";
@@ -69,7 +69,7 @@ export function emailHtml({ intro, from }: TemplateInput): string {
           </tr>
           <tr>
             <td align="center" style="padding:22px 32px; border-top:1px solid #f1f3f5; font-family:${FONT}; font-size:13px; color:${MUTED};">
-              Zensus &middot; <a href="${SITE_URL}" style="color:${MUTED}; text-decoration:underline;">zensus.app</a>
+              Zensus &middot; <a href="${SITE_URL}" style="color:${MUTED}; text-decoration:underline;">${SITE_HOST}</a>
             </td>
           </tr>
         </table>

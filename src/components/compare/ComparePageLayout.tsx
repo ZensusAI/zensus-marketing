@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
@@ -21,8 +22,8 @@ interface ComparePageLayoutProps {
 }
 
 export function ComparePageLayout({ config }: ComparePageLayoutProps) {
-  const pageUrl = `https://zensus.app/compare/${config.slug}`;
-  const ogImage = `https://zensus.app/og/compare-${config.slug}.png`;
+  const pageUrl = `${SITE_URL}/compare/${config.slug}`;
+  const ogImage = `${SITE_URL}/og/compare-${config.slug}.png`;
 
   const breadcrumbs = breadcrumbSchema([
     HOME_CRUMB,

@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
@@ -19,7 +20,7 @@ import {
 } from "@/lib/runway-calculator";
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
-const PAGE_URL = "https://zensus.app/tools/runway-calculator";
+const PAGE_URL = `${SITE_URL}/tools/runway-calculator`;
 const PAGE_TITLE = "Startup Runway Calculator · Zero-Cash Date and Hiring Impact";
 const PAGE_DESCRIPTION =
   "Free startup runway calculator: enter cash, revenue, and expenses to get your zero-cash date, then model what a new hire or an annual contract does to it.";
@@ -70,7 +71,7 @@ const webAppLd = {
   operatingSystem: "Web",
   isAccessibleForFree: true,
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  publisher: { "@id": "https://zensus.app/#organization" },
+  publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
 const usd = new Intl.NumberFormat("en-US", {
@@ -187,14 +188,14 @@ const RunwayCalculator = () => {
         <meta property="og:site_name" content="Zensus" />
         <meta property="og:title" content={PAGE_TITLE} />
         <meta property="og:description" content={PAGE_DESCRIPTION} />
-        <meta property="og:image" content="https://zensus.app/og/tools-runway-calculator.png" />
+        <meta property="og:image" content={`${SITE_URL}/og/tools-runway-calculator.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Zensus startup runway calculator social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={PAGE_TITLE} />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
-        <meta name="twitter:image" content="https://zensus.app/og/tools-runway-calculator.png" />
+        <meta name="twitter:image" content={`${SITE_URL}/og/tools-runway-calculator.png`} />
         <link rel="canonical" href={PAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
         <script type="application/ld+json">{JSON.stringify(webAppLd)}</script>

@@ -224,7 +224,7 @@
       </section>
 
       <footer class="footer">
-        <span class="url">zensus.app</span>
+        <span class="url" id="host">zensus.app</span>
         <span class="mark">
           <svg
             class="chart"
@@ -253,6 +253,10 @@
       const subtitle = params.get("subtitle") || "";
       const category = params.get("category") || "";
       const accent = params.get("accent") || "green";
+      // Domain is passed in from scripts/site.mjs so the card footer follows
+      // SITE_URL rather than pinning the domain into 30 committed PNGs.
+      const host = params.get("host");
+      if (host) document.getElementById("host").textContent = host;
 
       document.getElementById("title").textContent = title;
       document.getElementById("subtitle").textContent = subtitle;

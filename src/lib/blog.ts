@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import type { ComponentType } from "react";
 
 export interface BlogFaqItem {
@@ -15,6 +16,7 @@ export interface BlogPostMeta {
   category: string;
   readTime: string;
   slug: string;
+  /** Site-relative path, e.g. /og/blog/slug.png. Resolved against SITE_URL at render. */
   ogImage: string;
   /** Shorter headline for OG/Twitter cards when the page title is long. */
   ogTitle?: string;
@@ -77,5 +79,5 @@ export function formatPostDate(isoDate: string): string {
 }
 
 export function postUrl(slug: string): string {
-  return `https://zensus.app/blog/${slug}`;
+  return `${SITE_URL}/blog/${slug}`;
 }

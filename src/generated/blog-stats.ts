@@ -2,18 +2,25 @@
 // Regenerate with: node scripts/generate-blog-stats.mjs
 export const blogStats: Record<string, { wordCount: number; images: string[] }> = {
   "arr-vs-cash-for-founders": {
-    "wordCount": 1730,
+    "wordCount": 1750,
     "images": [
       "https://zensus.app/blog/arr-vs-cash-for-founders/arr-vs-cash-timing-comparison.png",
       "https://zensus.app/blog/arr-vs-cash-for-founders/from-contract-to-cash.png"
     ]
   },
   "can-quickbooks-forecast-cash-flow": {
-    "wordCount": 1971,
+    "wordCount": 1995,
     "images": [
       "https://zensus.app/blog/can-quickbooks-forecast-cash-flow/quickbooks-cash-flow-planner-data-flow.png",
       "https://zensus.app/blog/can-quickbooks-forecast-cash-flow/revenue-vs-cash-timeline.png",
       "https://zensus.app/blog/can-quickbooks-forecast-cash-flow/short-term-planning-to-strategic-forecasting.png"
+    ]
+  },
+  "cash-conversion-cycle": {
+    "wordCount": 2787,
+    "images": [
+      "https://zensus.app/blog/cash-conversion-cycle/how-cash-conversion-cycle-works.png",
+      "https://zensus.app/blog/cash-conversion-cycle/dio-dso-dpo-where-cash-gets-stuck.png"
     ]
   },
   "default-alive-vs-default-dead-for-founders": {
@@ -60,14 +67,14 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "what-happens-if-you-miss-payroll": {
-    "wordCount": 1413,
+    "wordCount": 1445,
     "images": [
       "https://zensus.app/blog/what-happens-if-you-miss-payroll/payroll-not-processed-consequences.png",
       "https://zensus.app/blog/what-happens-if-you-miss-payroll/seven-day-payroll-emergency-plan.png"
     ]
   },
   "what-is-a-13-week-cash-flow-forecast": {
-    "wordCount": 1862,
+    "wordCount": 1878,
     "images": [
       "https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast/13-week-cash-flow-forecast.webp",
       "https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast/revenue-earned-vs-cash-received.webp",
@@ -83,7 +90,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "will-i-make-payroll": {
-    "wordCount": 1484,
+    "wordCount": 1528,
     "images": [
       "https://zensus.app/blog/will-i-make-payroll/payroll-projection-method.webp",
       "https://zensus.app/blog/will-i-make-payroll/june-payroll-calendar-projection.webp",

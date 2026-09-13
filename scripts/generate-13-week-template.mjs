@@ -10,6 +10,7 @@ import { mkdir } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import xlsx from "xlsx";
+import { SITE_HOST } from "./site.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outDir = join(__dirname, "..", "public", "templates");
@@ -56,7 +57,7 @@ const xl = (r) => r + 1; // 0-based row index -> Excel row number
 label(R.title, "13-Week Cash Flow Forecast");
 label(
   R.note,
-  "From zensus.app. Enter amounts in the input rows; totals, net cash flow, closing balances, and the buffer check are formulas. Week 1 opening balance and the cash buffer floor are the only setup inputs.",
+  `From ${SITE_HOST}. Enter amounts in the input rows; totals, net cash flow, closing balances, and the buffer check are formulas. Week 1 opening balance and the cash buffer floor are the only setup inputs.`,
 );
 
 label(R.header, "Line item");

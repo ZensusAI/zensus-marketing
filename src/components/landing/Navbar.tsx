@@ -3,7 +3,7 @@ import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { Button } from "@/components/ui/button";
-import { SIGN_IN_URL } from "@/lib/constants";
+import { SIGN_IN_URL, START_TRIAL_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
 import zensusLogo from "@/assets/zensus-logo.png";
 
@@ -67,6 +67,11 @@ const NAV: NavEntry[] = [
         description: "How Zensus protects your financial data.",
       },
     ],
+  },
+  {
+    href: "/pricing",
+    label: "Pricing",
+    isRoute: true,
   },
   {
     label: "Free Tools",
@@ -224,7 +229,7 @@ function DesktopNav({ entries }: { entries: NavEntry[] }) {
       <NavigationMenu.List className="m-0 flex list-none items-center gap-8 p-0">
         {entries.map((entry) => {
           if (!isMenu(entry)) {
-            // Plain top-level links (none today) still slot into the shared
+            // Plain top-level links (Pricing) slot into the shared
             // list so future additions keep their position among the menus.
             return (
               <NavigationMenu.Item key={entry.href} className="flex">
@@ -488,7 +493,7 @@ const Navbar = () => {
                 className={`${navCtaBase} shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow ${focusRing}`}
               >
                 <a
-                  href={SIGN_IN_URL}
+                  href={START_TRIAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() =>
@@ -548,7 +553,7 @@ const Navbar = () => {
                 className={`w-full justify-center ${navCtaBase} shadow-[0_0_24px_hsl(var(--primary)/0.3)] ${focusRing}`}
               >
                 <a
-                  href={SIGN_IN_URL}
+                  href={START_TRIAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => {

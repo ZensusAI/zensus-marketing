@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
@@ -7,7 +8,7 @@ import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-da
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
-  { name: "Use Cases", url: "https://zensus.app/use-cases" },
+  { name: "Use Cases", url: `${SITE_URL}/use-cases` },
 ]);
 
 // The five segments below, as structured data. Anchor ids must match the
@@ -29,7 +30,7 @@ const segmentItemList = {
     "@type": "ListItem",
     position: index + 1,
     name: segment.name,
-    url: `https://zensus.app/use-cases#${segment.id}`,
+    url: `${SITE_URL}/use-cases#${segment.id}`,
   })),
 };
 
@@ -94,14 +95,14 @@ const UseCases = () => (
         content="Zensus is cash flow forecasting for businesses of any size: annual contracts, seasonal income, usage-based pricing, late-paying clients, and payroll on the line."
       />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://zensus.app/use-cases" />
+      <meta property="og:url" content={`${SITE_URL}/use-cases`} />
       <meta property="og:site_name" content="Zensus" />
       <meta property="og:title" content="Zensus Use Cases · Who It's For and What It Solves" />
       <meta
         property="og:description"
         content="Businesses of any size with annual contracts, seasonal revenue, usage-based pricing, and payroll on the line."
       />
-      <meta property="og:image" content="https://zensus.app/og/use-cases.png" />
+      <meta property="og:image" content={`${SITE_URL}/og/use-cases.png`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Zensus use cases social preview card" />
@@ -111,8 +112,8 @@ const UseCases = () => (
         name="twitter:description"
         content="Businesses of any size with annual contracts, seasonal revenue, usage-based pricing, and payroll on the line."
       />
-      <meta name="twitter:image" content="https://zensus.app/og/use-cases.png" />
-      <link rel="canonical" href="https://zensus.app/use-cases" />
+      <meta name="twitter:image" content={`${SITE_URL}/og/use-cases.png`} />
+      <link rel="canonical" href={`${SITE_URL}/use-cases`} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       <script type="application/ld+json">{JSON.stringify(segmentItemList)}</script>
       <script type="application/ld+json">{JSON.stringify(faqLd)}</script>
