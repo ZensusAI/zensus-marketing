@@ -17,11 +17,19 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# This job checks out the repo (only to read scripts/site.mjs) and posts to an
+# external API. It never writes anything back, so the token is scoped down to
+# the minimum rather than inheriting whatever the repo default happens to be.
+permissions:
+  contents: read
+
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: POST IndexNow (homepage + sitemap)
         env:
