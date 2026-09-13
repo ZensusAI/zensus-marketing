@@ -1,20 +1,28 @@
 /**
- * Analytics for the Zensus marketing site (Vite + React SPA, zensus.app).
+ * Analytics for the Zensus marketing site (Vite + React SPA).
  *
- * Shares the SAME PostHog project as the product app (app.zensus.app) so a
- * visitor is stitched into ONE funnel across the two domains:
+ * Shares the SAME PostHog project as the product app (app.zensus.app), but the
+ * two halves of the funnel are no longer the same person:
  *
- *   marketing  $pageview / marketing_cta_clicked
- *        │  (same anonymous distinct_id via the shared `.zensus.app` cookie)
- *        ▼
- *   app        login_viewed → auth_completed → subscribe_viewed →
- *              checkout_started → subscription_activated
+ *   marketing (this site)  $pageview / marketing_cta_clicked
+ *                          anonymous distinct_id stops here
  *
- * The stitch works because zensus.app and app.zensus.app share the registrable
- * domain `zensus.app`; posthog-js `cross_subdomain_cookie` (forced true below)
- * writes the distinct_id cookie on `.zensus.app`, which app.zensus.app reads on
- * arrival. The app already runs with `cross_subdomain_cookie` true (verified
- * live), so a single PostHog project key is all that's required to join them.
+ *   app (app.zensus.app)   login_viewed → auth_completed → subscribe_viewed →
+ *                          checkout_started → subscription_activated
+ *
+ * Identity used to carry across that boundary, because the marketing site and
+ * the app once shared one registrable domain, so the distinct_id cookie written
+ * on `.zensus.app` was readable by both. The marketing site now has its own
+ * registrable domain, and a cookie carries exactly one Domain attribute, so
+ * no configuration recovers it: a visitor who clicks through to the app arrives
+ * as a new anonymous person.
+ *
+ * That was a deliberate trade in the domain move rather than an oversight, so
+ * read the domain-move notes before trying to restore the stitch. The only real
+ * options are a link-decoration handoff or a shared identity service, and both
+ * require a change in the product repo, which the move was scoped to avoid.
+ * Events still land in one project, so the two funnels can be reported next to
+ * each other; they just cannot be joined per person.
  *
  * Loading: posthog-js (~150KB) is **lazy-loaded** via dynamic import so it never
  * ships in the eager homepage bundle. Until the chunk resolves, capture intent

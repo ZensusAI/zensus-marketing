@@ -41,11 +41,11 @@
         "@graph": [
           {
             "@type": "Person",
-            "@id": "https://zensus.app/about#ajin-sunny",
+            "@id": "__SITE_URL__/about#ajin-sunny",
             "name": "Ajin Sunny",
             "jobTitle": "Founder & CEO",
-            "url": "https://zensus.app/about",
-            "worksFor": { "@id": "https://zensus.app/#organization" },
+            "url": "__SITE_URL__/about",
+            "worksFor": { "@id": "__SITE_URL__/#organization" },
             "knowsAbout": [
               "Cash flow forecasting",
               "Cash flow planning",
@@ -59,19 +59,19 @@
           },
           {
             "@type": "Organization",
-            "@id": "https://zensus.app/#organization",
+            "@id": "__SITE_URL__/#organization",
             "name": "Zensus",
-            "alternateName": ["Zensus Cash Flow Forecasting", "zensus.app"],
-            "url": "https://zensus.app",
+            "alternateName": ["Zensus Cash Flow Forecasting", "__SITE_HOST__", "__LEGACY_SITE_HOST__"],
+            "url": "__SITE_URL__",
             "description": "Zensus is cash flow forecasting software for businesses with unpredictable revenue, a US company.",
             "foundingDate": "2025-08",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://zensus.app/logo.png",
+              "url": "__SITE_URL__/logo.png",
               "width": 192,
               "height": 192
             },
-            "founder": { "@id": "https://zensus.app/about#ajin-sunny" },
+            "founder": { "@id": "__SITE_URL__/about#ajin-sunny" },
             "sameAs": [
               "https://x.com/zensusai",
               "https://www.linkedin.com/company/zensusai",
@@ -82,26 +82,26 @@
               "@type": "ContactPoint",
               "contactType": "customer support",
               "email": "support@zensus.app",
-              "url": "https://zensus.app/support",
+              "url": "__SITE_URL__/support",
               "availableLanguage": ["English"]
             }
           },
           {
             "@type": "WebSite",
-            "@id": "https://zensus.app/#website",
-            "url": "https://zensus.app",
+            "@id": "__SITE_URL__/#website",
+            "url": "__SITE_URL__",
             "name": "Zensus",
-            "alternateName": "zensus.app",
+            "alternateName": ["__SITE_HOST__", "__LEGACY_SITE_HOST__"],
             "description": "Cash flow forecasting for businesses with unpredictable revenue",
-            "publisher": { "@id": "https://zensus.app/#organization" },
+            "publisher": { "@id": "__SITE_URL__/#organization" },
             "inLanguage": "en-US"
           },
           {
             "@type": "SoftwareApplication",
-            "@id": "https://zensus.app/#software",
+            "@id": "__SITE_URL__/#software",
             "name": "Zensus",
             "description": "Cash flow forecasting for businesses with unpredictable revenue. Connect your bank, QuickBooks, and HubSpot, see your cash flow in real time, and run multi-turn what-if scenarios on hiring, churn, and pricing.",
-            "url": "https://zensus.app",
+            "url": "__SITE_URL__",
             "applicationCategory": "BusinessApplication",
             "applicationSubCategory": "Cash Flow Forecasting Software",
             "operatingSystem": "Web",
@@ -113,9 +113,9 @@
               "Zero-cash date recalculated live",
               "Monthly-to-weekly-to-daily cash flow drill-down"
             ],
-            "screenshot": "https://zensus.app/og/home.png",
+            "screenshot": "__SITE_URL__/og/home.png",
             "dateModified": "__SITE_MODIFIED__",
-            "publisher": { "@id": "https://zensus.app/#organization" },
+            "publisher": { "@id": "__SITE_URL__/#organization" },
             "offers": {
               "@type": "Offer",
               "name": "Zensus Pro",
@@ -129,7 +129,7 @@
                 "unitCode": "MON",
                 "unitText": "month"
               },
-              "url": "https://zensus.app/pricing",
+              "url": "__SITE_URL__/pricing",
               "availability": "https://schema.org/InStock",
               "category": "subscription"
             }

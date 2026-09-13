@@ -291,7 +291,7 @@ const Security = () => (
             </div>
             <div className="mt-5 space-y-2">
               <a
-                href="https://securityheaders.com/?q=https%3A%2F%2Fzensus.app&followRedirects=on"
+                href={`https://securityheaders.com/?q=${encodeURIComponent(SITE_URL)}&followRedirects=on`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 font-mono text-xs text-primary hover:underline"

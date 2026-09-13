@@ -55,4 +55,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://zensus.app/sitemap.xml
+Sitemap: https://zensus.finance/sitemap.xml

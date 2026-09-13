@@ -16,11 +16,17 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
+import { SITE_URL } from "./constants";
+
 const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
 const read = (...parts: string[]) =>
   readFileSync(join(repoRoot, ...parts), "utf-8");
 
-const ORIGIN = "https://zensus.app";
+// Derived rather than written out, so a domain change does not turn this
+// invariant into a false failure that invites someone to "fix" it by editing
+// the expectation. If the committed sitemap is stale after a domain change,
+// this test should fail loudly and be fixed by regenerating the sitemap.
+const ORIGIN = SITE_URL;
 
 /** Static route paths declared in App.tsx, minus :params and the catch-all. */
 function appRoutes(): string[] {

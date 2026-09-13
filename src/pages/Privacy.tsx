@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/constants";
+import { APP_HOST, APP_URL, LEGACY_SITE_HOST, SITE_HOST, SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
@@ -51,8 +51,9 @@ export default function PrivacyPolicy() {
           <section>
             <p className="text-foreground/80 mb-4">
               We at Zensus Inc. (together with our affiliates, "Zensus," "we," "our," or "us") respect your privacy and are strongly committed to keeping secure any information we obtain from you or about you. This Privacy Policy describes our practices with respect to Personal Data that we collect from or about you when you use our website at{' '}
-              <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>{' '}
-              and related services (collectively, "Services").
+              <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>, the product application at{' '}
+              <a href={APP_URL} className="text-primary hover:underline">{APP_HOST}</a>,{' '}
+              and related services (collectively, "Services"). Our former web address, {LEGACY_SITE_HOST}, now redirects to {SITE_HOST}, and this Policy applies equally to visits that arrive that way.
             </p>
             <p className="text-foreground/80 mb-4">
               Zensus is a B2B SaaS platform that helps businesses manage their cash flow and runway through financial forecasting and scenario analysis tools. We are committed to transparency about how we collect, use, and protect your information.
@@ -209,7 +210,7 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Marketing-site Sales Intelligence:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>On the public marketing site at <a href={SITE_URL} className="text-primary hover:underline">zensus.app</a>, we run Apollo.io's website tracker. Apollo performs reverse-IP lookups against its business database to identify the company an anonymous visitor's IP is associated with; it does not identify the individual visitor</li>
+                  <li>On the public marketing site at <a href={SITE_URL} className="text-primary hover:underline">{SITE_HOST}</a>, we run Apollo.io's website tracker. Apollo performs reverse-IP lookups against its business database to identify the company an anonymous visitor's IP is associated with; it does not identify the individual visitor</li>
                   <li>This only runs on the marketing site, not inside the authenticated product app</li>
                 </ul>
               </div>
@@ -217,7 +218,7 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Product &amp; Marketing Analytics:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>We use PostHog (PostHog, Inc.) for analytics across our marketing site (<a href={SITE_URL} className="text-primary hover:underline">zensus.app</a>) and the product app (app.zensus.app). PostHog records page views, navigation, and funnel events, and sets a first-party analytics cookie scoped to the .zensus.app domain so a single visit is measured consistently across both sites. This data is stored in PostHog's US cloud.</li>
+                  <li>We use PostHog (PostHog, Inc.) for analytics across our marketing site (<a href={SITE_URL} className="text-primary hover:underline">{SITE_HOST}</a>) and the product app (<a href={APP_URL} className="text-primary hover:underline">{APP_HOST}</a>). PostHog records page views, navigation, and funnel events, and sets a first-party analytics cookie scoped to whichever of the two sites you are on. The marketing site and the product app are separate domains, so that cookie is not shared between them and your activity on each is measured separately rather than linked into one profile. This data is stored in PostHog's US cloud.</li>
                   <li>PostHog also captures session recordings (replays of on-page interactions) to help us debug and improve the experience; form inputs are masked by default.</li>
                   <li>This activity is pseudonymous (tied to a random identifier, not your name) until you sign in. See{' '}
                     <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PostHog's Privacy Policy</a>.</li>
@@ -227,7 +228,7 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Support-form and calculator Bot Protection:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>When you submit the contact form on our support page (<a href={`${SITE_URL}/support`} className="text-primary hover:underline">zensus.app/support</a>) or request a detailed breakdown from our free runway or payroll calculators, we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects these forms from spam and abuse and does not track you across sites. See Cloudflare's{' '}
+                  <li>When you submit the contact form on our support page (<a href={`${SITE_URL}/support`} className="text-primary hover:underline">{SITE_HOST}/support</a>) or request a detailed breakdown from our free runway or payroll calculators, we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects these forms from spam and abuse and does not track you across sites. See Cloudflare's{' '}
                     <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Turnstile Privacy Addendum</a>.</li>
                 </ul>
               </div>
@@ -252,7 +253,7 @@ export default function PrivacyPolicy() {
             <p className="text-foreground/80 mb-3">We use cookies and browser storage for:</p>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
               <li><strong className="text-foreground">Essential Cookies:</strong> Authentication session management (httpOnly, secure)</li>
-              <li><strong className="text-foreground">Analytics Cookies:</strong> PostHog sets a first-party analytics cookie on the .zensus.app domain (shared across our marketing site and app) to measure usage and funnels, as described in section 1.3</li>
+              <li><strong className="text-foreground">Analytics Cookies:</strong> PostHog sets a first-party analytics cookie scoped to the site you are on, to measure usage and funnels, as described in section 1.3. Our marketing site and product app are separate domains, so this cookie is not shared between them</li>
               <li><strong className="text-foreground">Local Storage:</strong> Runway calculator state and analytics identifiers (persisted locally for convenience)</li>
             </ul>
             <p className="text-foreground/80 mt-3">
@@ -380,7 +381,7 @@ export default function PrivacyPolicy() {
 
               <div>
                 <p className="font-semibold text-foreground">Vercel Inc.</p>
-                <p className="text-foreground/80 text-sm">Hosting for our marketing site at <a href={SITE_URL} className="text-primary hover:underline">zensus.app</a>.</p>
+                <p className="text-foreground/80 text-sm">Hosting for our marketing site at <a href={SITE_URL} className="text-primary hover:underline">{SITE_HOST}</a>.</p>
               </div>
 
               <div>
@@ -504,7 +505,7 @@ export default function PrivacyPolicy() {
               <li><strong className="text-foreground">Right to Data Portability:</strong> Request your data in a structured, machine-readable format</li>
             </ul>
             <p className="text-foreground/80 mt-3">
-              Authenticated Zensus users can export their personal data in JSON form from the product app at <a href="https://app.zensus.app" className="text-primary hover:underline">app.zensus.app</a>. We may also fulfill access and portability requests by email (see § 5.5).
+              Authenticated Zensus users can export their personal data in JSON form from the product app at <a href={APP_URL} className="text-primary hover:underline">{APP_HOST}</a>. We may also fulfill access and portability requests by email (see § 5.5).
             </p>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">5.2 Correction and Deletion</h3>

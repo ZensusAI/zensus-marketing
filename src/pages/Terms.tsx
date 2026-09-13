@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/constants";
+import { APP_HOST, APP_URL, LEGACY_SITE_HOST, SITE_HOST, SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
@@ -61,9 +61,11 @@ export default function TermsPage() {
           <section className="mb-10">
             <h2 className="text-2xl font-semibold text-foreground mb-4">1. Who We Are</h2>
             <p className="text-foreground/80 mb-4">
-              Zensus Inc. ("Zensus," "we," "us," or "our") is a Delaware C-Corporation operating the Zensus platform at{' '}
+              Zensus Inc. ("Zensus," "we," "us," or "our") is a Delaware C-Corporation operating the Zensus platform. These Terms cover our website at{' '}
               <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>{' '}
-              (the "Services"). We provide B2B SaaS tools for financial forecasting, runway calculation, and cash flow analysis.
+              together with the product application at{' '}
+              <a href={APP_URL} className="text-primary hover:underline">{APP_HOST}</a>{' '}
+              (collectively, the "Services"). Our former web address, {LEGACY_SITE_HOST}, now redirects to {SITE_HOST}; visits that arrive that way are covered by these Terms on the same basis. We provide B2B SaaS tools for financial forecasting, runway calculation, and cash flow analysis.
             </p>
 
             <div className="rounded-lg border border-yellow-500/50 bg-yellow-500/10 p-5 my-6 not-prose">
@@ -373,7 +375,7 @@ export default function TermsPage() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">7.4 Data Export</h3>
             <p className="text-foreground/80">
               Authenticated Zensus users can self-serve a JSON export of the personal data we hold from the product app at{' '}
-              <a href="https://app.zensus.app" className="text-primary hover:underline">app.zensus.app</a>.
+              <a href={APP_URL} className="text-primary hover:underline">{APP_HOST}</a>.
               You may also request an export by email at{' '}
               <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a>;
               we will respond within 30 days.

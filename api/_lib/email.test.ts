@@ -2,8 +2,11 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { composeEmail, sendAck } from "./email";
+import { SITE_URL } from "./site.js";
 
 const ses = mockClient(SESClient);
+// Mail stays on zensus.app by design: the marketing site moved domains,
+// the sending identity did not. Not a drift from SITE_URL.
 const FROM = "hello@zensus.app";
 const params = { to: "ada@example.com", name: "Ada", intro: "Thanks for asking about runway." };
 
@@ -24,7 +27,7 @@ describe("composeEmail", () => {
   it("renders a branded HTML document with logo and wordmark", () => {
     const m = composeEmail(params, FROM);
     expect(m.html).toContain("<!DOCTYPE html>");
-    expect(m.html).toContain("https://zensus.app/email-logo.png");
+    expect(m.html).toContain(`${SITE_URL}/email-logo.png`);
     expect(m.html).toContain(">Zensus<");
     expect(m.html).toContain("The Zensus team");
   });
