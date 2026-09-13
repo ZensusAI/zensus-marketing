@@ -1,0 +1,99 @@
+# CI for the marketing site.
+#
+# WHY THIS EXISTS. Until now nothing automated ran the tests or the typechecker
+# on the way to production. The Vercel build is:
+#
+#   check-em-dashes && generate-blog-stats && generate-sitemap && vite build
+#     && generate-og && prerender && indexnow-ping
+#
+# No `vitest run`, no `tsc -b`, and `vite build` strips types with esbuild
+# rather than checking them. So a broken test or a type error deployed happily,
+# and the guard tests that CLAUDE.md describes as silent when broken
+# (site-url, route-coverage, the homepage H1 count) only ran when someone
+# remembered to run them.
+#
+# WHAT THIS DOES NOT DO. It does not build. Vercel already builds every pull
+# request as a preview deployment and every push to main for production, and
+# that build is slow (Puppeteer walks 34 routes to prerender them). Repeating it
+# here would roughly double CI time to re-prove something Vercel already proves
+# and would still not be the artifact that ships. The checks below are exactly
+# the ones Vercel does not run.
+#
+# The whole job is about 20 seconds of actual checking; the cost is almost
+# entirely `npm ci`, which is why this is one job rather than four parallel ones
+# that would each pay that cost.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A second push to the same branch makes the first run irrelevant.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint, typecheck and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          # Nothing here pushes back to the remote, so the token does not need
+          # to outlive the checkout step.
+          persist-credentials: false
+
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          # Read from .nvmrc rather than pinned here, so there is one place to
+          # change it. .nvmrc says 24 because that is what the Vercel project
+          # builds with (its nodeVersion is "24.x"). Testing on a different
+          # major than production builds on is how something passes CI and then
+          # fails the deploy, so keep these two in step: if the Vercel project's
+          # Node version is changed, change .nvmrc to match.
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      # `npm ci` rather than `npm install`, so a lockfile that has drifted from
+      # package.json fails here instead of resolving to something different from
+      # what anyone has tested. See the lockfile policy in CLAUDE.md: this repo
+      # is pinned to npm and the other package managers' lockfiles are ignored.
+      - name: Install dependencies
+        run: npm ci
+
+      # Every check below runs even if an earlier one failed, so a single run
+      # reports everything that is wrong rather than only the first thing.
+      # `success() || failure()` rather than `always()` so a cancelled run stops
+      # promptly instead of grinding through the remaining steps.
+
+      - name: No em-dashes
+        if: success() || failure()
+        run: node scripts/check-em-dashes.mjs
+
+      - name: Lint
+        if: success() || failure()
+        run: npm run lint
+
+      # `tsc -b`, never `tsc --noEmit`. The root tsconfig is a solution file
+      # ("files": [] plus references), so --noEmit checks nothing and exits 0 no
+      # matter what is broken. Build mode follows the references and covers src,
+      # vite.config.ts and api.
+      - name: Typecheck
+        if: success() || failure()
+        run: npm run typecheck
+
+      # Includes the guard tests that fail silently when broken: site-url
+      # (no hardcoded origin outside the declaration sites), route-coverage
+      # (App.tsx, prerender, sitemap and generate-og agree on the route list),
+      # and Hero (the homepage H1 appears exactly once in the DOM text).
+      - name: Tests
+        if: success() || failure()
+        run: npm test

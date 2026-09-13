@@ -19,9 +19,17 @@ npm run preview    # Preview the production build locally
 
 **Typechecking requires `npm run typecheck` (`tsc -b`), not `tsc --noEmit`.** The root
 `tsconfig.json` is a solution file: `"files": []` plus project references to
-`tsconfig.app.json` and `tsconfig.node.json`. A bare `tsc --noEmit` therefore checks
-nothing and exits 0 no matter what is broken, including JSX syntax errors. Build mode
-follows the references and actually checks.
+`tsconfig.app.json` (src), `tsconfig.node.json` (vite.config.ts) and
+`tsconfig.api.json` (api). A bare `tsc --noEmit` therefore checks nothing and exits 0
+no matter what is broken, including JSX syntax errors. Build mode follows the
+references and actually checks.
+
+`tsconfig.api.json` sets `strictNullChecks: true` while the root config has it off.
+That is deliberate, not drift: the handlers validate through a discriminated union
+(`{ ok: true; data } | { ok: false; error }`) and read `v.error` in the failure
+branch, and with `strictNullChecks` off TypeScript does not narrow that union, so
+correct code reports "Property 'error' does not exist". Raising it repo-wide is a
+larger job; the file says so.
 
 Tests run on **vitest** (`npx vitest run`, or `npm run test:watch`). Config lives in
 the `test` block of `vite.config.ts`; specs are `api/**/*.test.ts` and
@@ -31,6 +39,17 @@ broken, notably `src/lib/route-coverage.test.ts` (every route in `App.tsx`,
 agree) and `src/components/landing/Hero.test.tsx` (the homepage H1 must appear
 exactly once in the DOM text), and `src/lib/site-url.test.ts` (see below).
 Run the suite before opening a PR.
+
+`.github/workflows/ci.yml` runs the em-dash check, lint, `npm run typecheck` and the
+test suite on every pull request and on every push to `main`. Its Node version comes
+from `.nvmrc`, which says **24** because that is what the Vercel project builds with
+(`nodeVersion: "24.x"`). Keep those two in step: testing on a different major than
+production builds on is how something passes CI and then fails the deploy. It
+deliberately does
+**not** build: Vercel already builds each PR as a preview and each push to `main` for
+production, and that build is slow (Puppeteer prerenders 34 routes). CI covers exactly
+what the Vercel build does not, which before this workflow existed was the tests and
+the typechecker, neither of which ran anywhere automatically.
 
 ## Single-origin invariant
 
@@ -115,7 +134,7 @@ against `SITE_URL` because Open Graph needs an absolute URL). Optional but encou
 
 ## Deployment
 
-Deployed via Vercel. `main` auto-deploys to production. Optional **Vercel Production** env var: `INDEXNOW_KEY` (32-char hex, same as `public/<key>.txt`) so IndexNow pings do not rely only on the committed key file. There are no GitHub Actions workflows in this repo, and no repository secrets.
+Deployed via Vercel. `main` auto-deploys to production. Optional **Vercel Production** env var: `INDEXNOW_KEY` (32-char hex, same as `public/<key>.txt`) so IndexNow pings do not rely only on the committed key file. The only GitHub Actions workflow is `ci.yml` (lint, typecheck, tests); it needs no secrets, and this repo has none.
 
 ## ESLint note
 

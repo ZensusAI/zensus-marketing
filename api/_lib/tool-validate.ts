@@ -21,16 +21,30 @@ export interface PayrollToolInput {
   amountPerRun: number;
 }
 
-export interface ToolEmailRequest {
-  tool: ToolId;
+interface ToolEmailRequestBase {
   email: string;
-  inputs: RunwayToolInput | PayrollToolInput;
   /** Whether the visitor opted in to marketing email, separately from the
       transactional breakdown they requested by submitting the form. Optional
       on the wire and defaults to false, so an older client that omits it is
       recorded as not opted in rather than silently opted in. */
   marketingConsent: boolean;
 }
+
+/**
+ * A validated tool email request.
+ *
+ * This is a discriminated union rather than `{ tool: ToolId; inputs: Runway |
+ * Payroll }` because those two fields are not independent: a "runway" request
+ * always carries RunwayToolInput. Declaring them separately let the type admit
+ * combinations that validateToolInput can never produce, and cost every caller
+ * its narrowing. `data.tool === "runway" ? data.inputs.cash : ...` is correct at
+ * runtime but did not typecheck, because narrowing `tool` said nothing about
+ * `inputs`. Callers in tool-lead.ts and tools/send-results.ts were written that
+ * way and simply reported errors that nothing ran.
+ */
+export type ToolEmailRequest =
+  | (ToolEmailRequestBase & { tool: "runway"; inputs: RunwayToolInput })
+  | (ToolEmailRequestBase & { tool: "payroll"; inputs: PayrollToolInput });
 
 export type ValidateToolResult =
   | { ok: true; data: ToolEmailRequest }
@@ -157,12 +171,19 @@ export function validateToolInput(body: unknown): ValidateToolResult {
   if (email === "" || email.length > LIMITS.email) return { ok: false, error: "empty_email" };
   if (!EMAIL_RE.test(email)) return { ok: false, error: "bad_email" };
 
-  const inputs =
-    b.tool === "runway" ? parseRunwayInputs(b.inputs) : parsePayrollInputs(b.inputs);
-  if (!inputs) return { ok: false, error: "invalid_inputs" };
+  // Built inside each branch rather than once outside, so the tool and the
+  // parsed inputs stay correlated. Assigning a `Runway | Payroll` value next to
+  // a separately narrowed `tool` is exactly the combination ToolEmailRequest no
+  // longer admits. Same parsing, same rejection, same shape on the wire.
+  const marketingConsent = b.marketingConsent === true;
 
-  return {
-    ok: true,
-    data: { tool: b.tool, email, inputs, marketingConsent: b.marketingConsent === true },
-  };
+  if (b.tool === "runway") {
+    const inputs = parseRunwayInputs(b.inputs);
+    if (!inputs) return { ok: false, error: "invalid_inputs" };
+    return { ok: true, data: { tool: "runway", email, inputs, marketingConsent } };
+  }
+
+  const inputs = parsePayrollInputs(b.inputs);
+  if (!inputs) return { ok: false, error: "invalid_inputs" };
+  return { ok: true, data: { tool: "payroll", email, inputs, marketingConsent } };
 }
