@@ -13,7 +13,10 @@ export async function notifyToolLead(data: ToolEmailRequest): Promise<void> {
   body.append("fi-text-name", "Tool lead");
   body.append("fi-sender-email", data.email);
   body.append("fi-text-subject", `Tool lead: ${data.tool}`);
-  body.append("fi-text-message", summary);
+  body.append(
+    "fi-text-message",
+    `${summary} Marketing opt-in: ${data.marketingConsent ? "yes" : "no"}.`,
+  );
 
   try {
     await fetch(endpoint, { method: "POST", body });

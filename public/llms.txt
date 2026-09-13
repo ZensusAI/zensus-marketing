@@ -60,4 +60,3 @@ Businesses of any size with variable revenue, complex hiring plans, annual contr
 - [HubSpot integration](https://zensus.app/integrations/hubspot)
 - [Slack integration](https://zensus.app/integrations/slack)
 - [llms-full.txt](https://zensus.app/llms-full.txt)
-- [LLM entity summary (HTML)](https://zensus.app/llm-info)

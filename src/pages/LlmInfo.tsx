@@ -125,8 +125,8 @@ const LlmInfo = () => (
           <h2 className="text-xl font-semibold">Pricing</h2>
           <p className="text-muted-foreground">
             Zensus Pro: <strong className="text-foreground">$199 per month</strong>,
-            billed monthly, cancel anytime. Includes all integrations, the AI
-            scenario agent, and unlimited scenarios. 14-day free trial.
+            billed monthly, cancel anytime. Includes all integrations, the cash
+            flow agent, and unlimited scenarios. 14-day free trial.
           </p>
         </section>
 

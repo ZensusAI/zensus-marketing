@@ -41,14 +41,21 @@ export default defineConfig(() => ({
   build: {
     rollupOptions: {
       output: {
-        // posthog-js and Supabase are only ever dynamically imported (analytics
-        // loads at runtime in lib/analytics/events.ts; Supabase loads inside the
-        // Google One Tap effect). Pin each to its own named chunk so it is a
-        // clean, lazy, on-demand bundle instead of being folded into an unrelated
-        // route chunk (rollup otherwise merged posthog into /privacy).
+        // posthog-js is only ever dynamically imported (analytics loads at
+        // runtime in lib/analytics/events.ts). Pin it to its own named chunk so
+        // it is a clean, lazy, on-demand bundle instead of being folded into an
+        // unrelated route chunk (rollup otherwise merged posthog into /privacy).
+        //
+        // Supabase is deliberately NOT listed here. Forcing it into a manual
+        // chunk made rollup hoist the shared CommonJS interop helper into that
+        // chunk, which gave the entry a *static* import edge to 223KB of
+        // Supabase SDK for the sake of a ~140-byte helper. Every visitor paid
+        // for it on every route. Left to rollup's automatic chunking, the only
+        // edge is the real dynamic import in GoogleOneTap, so the chunk stays
+        // lazy and the entry has no static chunk imports at all. Verify after
+        // touching this that the built entry contains no `from"./supabase-`.
         manualChunks: {
           posthog: ["posthog-js"],
-          supabase: ["@supabase/supabase-js", "@supabase/ssr"],
         },
       },
     },

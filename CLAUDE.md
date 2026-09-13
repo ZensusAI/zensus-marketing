@@ -16,7 +16,13 @@ npm run lint       # ESLint
 npm run preview    # Preview the production build locally
 ```
 
-No test runner is configured.
+Tests run on **vitest** (`npx vitest run`, or `npm run test:watch`). Config lives in
+the `test` block of `vite.config.ts`; specs are `api/**/*.test.ts` and
+`src/**/*.test.{ts,tsx}`. Several guard invariants that are otherwise silent when
+broken, notably `src/lib/route-coverage.test.ts` (every route in `App.tsx`,
+`scripts/prerender.mjs`, `public/sitemap.xml`, and `scripts/generate-og.mjs` must
+agree) and `src/components/landing/Hero.test.tsx` (the homepage H1 must appear
+exactly once in the DOM text). Run the suite before opening a PR.
 
 ## Lockfile policy
 

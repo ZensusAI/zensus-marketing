@@ -39,8 +39,14 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Zensus · Your cash flow, mapped as far ahead as you need</title>
-        <meta name="description" content="Get a live, always-current picture of your cash position. Zensus helps businesses with unpredictable revenue plan payroll, hiring, and spending with confidence." />
+        {/* Keyword-leading title: the category term "cash flow forecasting"
+            appears nowhere in the H1 by design (it would read like a directory
+            listing), so the <title> carries it instead. Trades a little
+            branded-search CTR for a real shot at the head term. The og:/twitter:
+            titles below deliberately keep the benefit line, since social cards
+            are a click surface rather than a ranking one. */}
+        <title>Cash Flow Forecasting for Unpredictable Revenue · Zensus</title>
+        <meta name="description" content="Zensus is cash flow forecasting software for businesses with unpredictable revenue. Connect your bank, QuickBooks, and HubSpot for a live view of your cash position and the date it runs out." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://zensus.app/" />
         <meta property="og:site_name" content="Zensus" />

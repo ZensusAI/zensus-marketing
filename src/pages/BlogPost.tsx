@@ -150,6 +150,18 @@ const BlogPost = () => {
               <time dateTime={meta.date} className="font-medium">
                 {formatPostDate(meta.date)}
               </time>
+              {/* Render the revision date only when it differs from the publish
+                  date. BlogPosting.dateModified is emitted either way, and a
+                  freshness claim in structured data with nothing corroborating
+                  it on the page is the pattern engines discount. */}
+              {meta.dateModified && meta.dateModified !== meta.date ? (
+                <span className="inline-flex items-center gap-1">
+                  Updated{" "}
+                  <time dateTime={meta.dateModified} className="font-medium">
+                    {formatPostDate(meta.dateModified)}
+                  </time>
+                </span>
+              ) : null}
               <span className="inline-flex items-center gap-1">
                 <Clock size={14} aria-hidden />
                 {meta.readTime}

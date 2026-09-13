@@ -25,6 +25,11 @@ export interface ToolEmailRequest {
   tool: ToolId;
   email: string;
   inputs: RunwayToolInput | PayrollToolInput;
+  /** Whether the visitor opted in to marketing email, separately from the
+      transactional breakdown they requested by submitting the form. Optional
+      on the wire and defaults to false, so an older client that omits it is
+      recorded as not opted in rather than silently opted in. */
+  marketingConsent: boolean;
 }
 
 export type ValidateToolResult =
@@ -156,5 +161,8 @@ export function validateToolInput(body: unknown): ValidateToolResult {
     b.tool === "runway" ? parseRunwayInputs(b.inputs) : parsePayrollInputs(b.inputs);
   if (!inputs) return { ok: false, error: "invalid_inputs" };
 
-  return { ok: true, data: { tool: b.tool, email, inputs } };
+  return {
+    ok: true,
+    data: { tool: b.tool, email, inputs, marketingConsent: b.marketingConsent === true },
+  };
 }

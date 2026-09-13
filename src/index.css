@@ -1,17 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Instrument+Serif:ital@0;1&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.font-serif-instrument {
-  font-family: "Instrument Serif", Georgia, serif;
-}
-
-.font-serif-instrument-fat {
-  font-family: "Instrument Serif", Georgia, serif;
-  -webkit-text-stroke: 0.6px currentColor;
-  letter-spacing: -0.02em;
-}
 
 
 /* Self-hosted Geist (variable, latin) replaces the render-blocking Google
@@ -304,5 +293,35 @@
   @keyframes char-reveal {
     from { opacity: 0; }
     to { opacity: 1; }
+  }
+}
+/* Hover halo for the homepage H1. The gradient layer is a pseudo-element whose
+   text comes from content: attr(data-text). Pseudo-element content is not part
+   of the DOM text, so tag-stripping extractors (OAI-SearchBot, PerplexityBot,
+   ClaudeBot, markdown converters) read the heading exactly once. This layer
+   used to be a duplicated aria-hidden span, which made the H1 extract as
+   "Your cash flow,Your cash flow,mapped as far ahead as you need.mapped as
+   far ahead as you need." on the site's most-quoted element. */
+.text-hover-halo::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--halo-opacity, 0);
+  transition: opacity 300ms ease-out;
+  background-image: radial-gradient(
+    circle 180px at var(--halo-x, 50%) var(--halo-y, 50%),
+    hsl(var(--primary)) 0%,
+    hsl(var(--foreground)) 75%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-hover-halo::after {
+    transition: none;
   }
 }
