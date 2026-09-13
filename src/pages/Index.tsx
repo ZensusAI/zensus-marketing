@@ -14,7 +14,6 @@ import PricingPreview from "@/components/landing/PricingPreview";
 import FAQ from "@/components/landing/FAQ";
 import FinalCTABand from "@/components/landing/FinalCTABand";
 import Footer from "@/components/landing/Footer";
-import { GoogleOneTap } from "@/components/landing/GoogleOneTap";
 
 const Index = () => {
   // Render the prerendered content immediately. (Previously this gated the
@@ -68,7 +67,6 @@ const Index = () => {
       <Navbar />
       {/* Google One Tap (ZEN-365): self-gates on config + existing session,
           renders only its own top-right prompt. No-op until env is configured. */}
-      <GoogleOneTap />
       <main>
         <Hero />
         <Problem />
