@@ -69,7 +69,7 @@ describe("marketing analytics helpers", () => {
     events.capturePageview("https://zensus.app/"); // entry (PostHogPageview mount)
     events.capturePageview("https://zensus.app/"); // implied-consent re-capture
     await events.initAnalytics();
-    const pageviewCalls = posthog.capture.mock.calls.filter(
+    const pageviewCalls = vi.mocked(posthog.capture).mock.calls.filter(
       (c) => c[0] === "$pageview",
     );
     expect(pageviewCalls).toHaveLength(1);
@@ -79,7 +79,7 @@ describe("marketing analytics helpers", () => {
     const { posthog, events } = await loadFresh();
     events.grantCapturing();
     await events.initAnalytics();
-    posthog.capture.mockClear();
+    vi.mocked(posthog.capture).mockClear();
     events.capturePageview("https://zensus.app/pricing");
     expect(posthog.capture).toHaveBeenCalledWith("$pageview", {
       $current_url: "https://zensus.app/pricing",
@@ -90,7 +90,7 @@ describe("marketing analytics helpers", () => {
     const { posthog, events } = await loadFresh();
     events.grantCapturing();
     await events.initAnalytics();
-    posthog.capture.mockClear();
+    vi.mocked(posthog.capture).mockClear();
     events.trackCtaClick("pricing_preview", { destination: "trial" });
     expect(posthog.capture).toHaveBeenCalledWith("marketing_cta_clicked", {
       location: "pricing_preview",
@@ -102,7 +102,7 @@ describe("marketing analytics helpers", () => {
     const { posthog, events } = await loadFresh();
     events.grantCapturing();
     await events.initAnalytics();
-    posthog.capture.mockClear();
+    vi.mocked(posthog.capture).mockClear();
     events.trackHeroTrialClick();
     expect(posthog.capture).toHaveBeenCalledWith("marketing_cta_clicked", {
       location: "hero",

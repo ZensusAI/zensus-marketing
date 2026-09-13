@@ -13,6 +13,7 @@ import { join, extname, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
+import { SITE_HOST } from "./site.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -329,6 +330,7 @@ async function generate() {
         subtitle: card.subtitle,
         category: card.category,
         accent: card.accent,
+        host: SITE_HOST,
       }).toString();
       const url = `http://localhost:${PORT}/scripts/og/template.html?${qs}`;
 

@@ -10,17 +10,18 @@
 // Key resolution (in order):
 // 1. INDEXNOW_KEY environment variable (set in Vercel for production).
 // 2. Else: single file public/<32-hex>.txt whose first line matches the stem.
-// The key must match https://zensus.app/<key>.txt (see docs/indexnow.md).
+// The key must match <SITE_URL>/<key>.txt (see docs/indexnow.md).
 
 import { readFile, readdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { SITE_HOST } from "./site.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const SITEMAP_PATH = join(__dirname, "..", "public", "sitemap.xml");
 const PUBLIC_DIR = join(__dirname, "..", "public");
 
-const HOST = "zensus.app";
+const HOST = SITE_HOST;
 const ENDPOINT = "https://api.indexnow.org/indexnow";
 
 const HEX32_TXT = /^([a-f0-9]{32})\.txt$/i;

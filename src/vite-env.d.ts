@@ -14,6 +14,7 @@ interface BlogPostMeta {
   category: string;
   readTime: string;
   slug: string;
+  /** Site-relative path, e.g. /og/blog/slug.png. Resolved against SITE_URL at render. */
   ogImage: string;
   ogTitle?: string;
   ogSubtitle?: string;

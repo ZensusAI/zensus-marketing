@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -37,15 +38,15 @@ export const IntegrationPage = ({
   sections,
   serviceSchema,
 }: IntegrationPageProps) => {
-  const pageUrl = `https://zensus.app/integrations/${slug}`;
-  const imageUrl = `https://zensus.app/og/integrations-${slug}.png`;
+  const pageUrl = `${SITE_URL}/integrations/${slug}`;
+  const imageUrl = `${SITE_URL}/og/integrations-${slug}.png`;
   const imageAlt = `${metaTitle} social preview image`;
   const breadcrumbs = breadcrumbSchema([
     HOME_CRUMB,
-    { name: "Integrations", url: "https://zensus.app/integrations" },
+    { name: "Integrations", url: `${SITE_URL}/integrations` },
     {
       name: BREADCRUMB_NAMES[slug] ?? slug,
-      url: `https://zensus.app/integrations/${slug}`,
+      url: `${SITE_URL}/integrations/${slug}`,
     },
   ]);
 

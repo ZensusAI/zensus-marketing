@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import {
   Lock,
@@ -33,7 +34,7 @@ import { cn } from "@/lib/utils";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
-  { name: "Security", url: "https://zensus.app/security" },
+  { name: "Security", url: `${SITE_URL}/security` },
 ]);
 
 // Spec-sheet stats shown directly under the hero, hairline-separated.
@@ -142,14 +143,14 @@ const Security = () => (
         content="How Zensus protects your financial data. AES-256-GCM at rest, bank-level OAuth via Plaid and Intuit, account-level isolation, US data residency, and zero AI training on your data."
       />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://zensus.app/security" />
+      <meta property="og:url" content={`${SITE_URL}/security`} />
       <meta property="og:site_name" content="Zensus" />
       <meta property="og:title" content="Security at Zensus · How We Protect Your Financial Data" />
       <meta
         property="og:description"
         content="How Zensus protects your financial data. Bank-level OAuth, encryption at rest, account-level isolation."
       />
-      <meta property="og:image" content="https://zensus.app/og/security.png" />
+      <meta property="og:image" content={`${SITE_URL}/og/security.png`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Security at Zensus social preview card" />
@@ -159,8 +160,8 @@ const Security = () => (
         name="twitter:description"
         content="How Zensus protects your financial data. Bank-level OAuth, encryption at rest, account-level isolation."
       />
-      <meta name="twitter:image" content="https://zensus.app/og/security.png" />
-      <link rel="canonical" href="https://zensus.app/security" />
+      <meta name="twitter:image" content={`${SITE_URL}/og/security.png`} />
+      <link rel="canonical" href={`${SITE_URL}/security`} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>
     <Navbar />

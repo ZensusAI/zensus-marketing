@@ -13,7 +13,7 @@ export const meta = {
   author: 'ashwin',
   tags: ['AI Agents', 'Cash Flow', 'Guides'],
   ogImage:
-    'https://zensus.app/og/blog/forecasting-ai-compute-costs-for-founders.png',
+    '/og/blog/forecasting-ai-compute-costs-for-founders.png',
   ogTitle: 'Forecasting AI Compute Costs',
   ogSubtitle:
     'AI compute is a new line item in the cash flow forecast. Here is how founders are modeling it in 2026.',
@@ -320,10 +320,10 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>Both businesses may appear similar on the surface. Their cash burn profiles are dramatically different. This is why AI compute should be modeled directly within the <a href="/blog/what-is-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">cash flow forecast</a>, including a rolling <a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">13-week view</a> if you run weekly liquidity reviews.</p>
 
 
-<p>At <a href="https://zensus.app/#features" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a>, we think about AI spend the same way finance teams think about payroll. It is not simply a technology expense. It is a recurring operating cost that affects runway, hiring plans, and fundraising timelines.</p>
+<p>At <a href="/#features" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a>, we think about AI spend the same way finance teams think about payroll. It is not simply a technology expense. It is a recurring operating cost that affects runway, hiring plans, and fundraising timelines.</p>
 
 
-<p>When founders <a href="https://zensus.app/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">run forecast scenarios</a> inside Zensus, compute costs become part of the same financial model as revenue growth, hiring, and operating expenses.</p>
+<p>When founders <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">run forecast scenarios</a> inside Zensus, compute costs become part of the same financial model as revenue growth, hiring, and operating expenses.</p>
 
 
 ## What to Plan For
@@ -362,7 +362,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 />
 
 
-<p>The purpose of forecasting is not prediction. It is preparation. The best founders understand how their business performs across all three scenarios, and can <a href="https://zensus.app/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">iterate those cases in one place</a> instead of copying three spreadsheet tabs.</p>
+<p>The purpose of forecasting is not prediction. It is preparation. The best founders understand how their business performs across all three scenarios, and can <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">iterate those cases in one place</a> instead of copying three spreadsheet tabs.</p>
 
 
 ## Architecture Determines Economics
@@ -374,7 +374,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>Two companies using the same model can have radically different cost structures. A poorly designed workflow may make unnecessary model calls, re-run retrieval steps, duplicate context processing, and increase token usage dramatically. A well-designed workflow minimizes expensive operations.</p>
 
 
-<p>This is one reason Zensus intentionally uses a cost-efficient architecture for its runway agent, the same typed, scoped approach we describe in our guide on <a href="/blog/mcp-vs-cli-for-finance-teams" className="font-medium text-primary underline-offset-4 hover:underline">MCP vs CLI for finance teams</a>. Instead of repeatedly querying large contexts, the system relies on structured financial snapshots, <a href="https://zensus.app/integrations" className="font-medium text-primary underline-offset-4 hover:underline">typed integrations</a>, scoped tools, and purpose-built workflows. The result is lower inference cost per request and more predictable scaling economics.</p>
+<p>This is one reason Zensus intentionally uses a cost-efficient architecture for its runway agent, the same typed, scoped approach we describe in our guide on <a href="/blog/mcp-vs-cli-for-finance-teams" className="font-medium text-primary underline-offset-4 hover:underline">MCP vs CLI for finance teams</a>. Instead of repeatedly querying large contexts, the system relies on structured financial snapshots, <a href="/integrations" className="font-medium text-primary underline-offset-4 hover:underline">typed integrations</a>, scoped tools, and purpose-built workflows. The result is lower inference cost per request and more predictable scaling economics.</p>
 
 
 <p>The same principle applies to every founder building AI products. The architecture of your AI features determines your future compute bill.</p>
@@ -386,7 +386,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>Most forecasting systems were designed before AI became a major operating expense. As a result, founders often track AI costs separately from the rest of the business. That creates blind spots.</p>
 
 
-<p>Zensus helps teams forecast AI compute expenses, payroll, revenue, hiring plans, infrastructure costs, and runway inside a single financial model on the <a href="https://zensus.app/#features" className="font-medium text-primary underline-offset-4 hover:underline">features page</a>. Bank, accounting, and subscription data connect via <a href="https://zensus.app/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, <a href="https://zensus.app/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and <a href="https://zensus.app/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a>; see <a href="https://zensus.app/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">how it works</a> for the connect-to-forecast flow.</p>
+<p>Zensus helps teams forecast AI compute expenses, payroll, revenue, hiring plans, infrastructure costs, and runway inside a single financial model on the <a href="/#features" className="font-medium text-primary underline-offset-4 hover:underline">features page</a>. Bank, accounting, and subscription data connect via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a>; see <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">how it works</a> for the connect-to-forecast flow.</p>
 
 
 <p className="mb-2 font-medium text-foreground">Founders can then answer questions such as:</p>
@@ -402,7 +402,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 </ul>
 
 
-<p>These are not engineering questions. They are financial planning questions, and the same model supports <a href="https://zensus.app/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">weekly drill-down</a>, <a href="https://zensus.app/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">scenario planning</a>, and <a href="https://zensus.app/#features-alerts" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when your 30-day projection crosses a threshold you set.</p>
+<p>These are not engineering questions. They are financial planning questions, and the same model supports <a href="/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">weekly drill-down</a>, <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">scenario planning</a>, and <a href="/#features-alerts" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when your 30-day projection crosses a threshold you set.</p>
 
 
 ## Final Thoughts

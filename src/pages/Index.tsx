@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
@@ -47,19 +48,19 @@ const Index = () => {
         <title>Cash Flow Forecasting for Unpredictable Revenue · Zensus</title>
         <meta name="description" content="Zensus is cash flow forecasting software for businesses with unpredictable revenue. Connect your bank, QuickBooks, and HubSpot for a live view of your cash position and the date it runs out." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://zensus.app/" />
+        <meta property="og:url" content={`${SITE_URL}/`} />
         <meta property="og:site_name" content="Zensus" />
         <meta property="og:title" content="Zensus · Your cash flow, mapped as far ahead as you need" />
         <meta property="og:description" content="Get a live, always-current picture of your cash position. Built for businesses with unpredictable revenue." />
-        <meta property="og:image" content="https://zensus.app/og/home.png" />
+        <meta property="og:image" content={`${SITE_URL}/og/home.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Zensus homepage social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Zensus · Your cash flow, mapped as far ahead as you need" />
         <meta name="twitter:description" content="Get a live, always-current picture of your cash position. Built for businesses with unpredictable revenue." />
-        <meta name="twitter:image" content="https://zensus.app/og/home.png" />
-        <link rel="canonical" href="https://zensus.app/" />
+        <meta name="twitter:image" content={`${SITE_URL}/og/home.png`} />
+        <link rel="canonical" href={`${SITE_URL}/`} />
         {/* The aurora hero image is gone (cream brand canvas replaced it), so
             its LCP preloads went with it. The aurora asset files stay in
             public/ because SignupModal still uses /hero-aurora-1200.webp. */}

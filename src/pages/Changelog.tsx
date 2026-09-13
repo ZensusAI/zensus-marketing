@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -6,7 +7,7 @@ import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
-  { name: "Changelog", url: "https://zensus.app/changelog" },
+  { name: "Changelog", url: `${SITE_URL}/changelog` },
 ]);
 
 type ChangelogCategory = "New" | "Improved" | "Fixed" | "Security";
@@ -29,10 +30,10 @@ const changelogGraph = (items: ChangelogEntry[]) => ({
       datePublished: entry.date,
       dateModified: entry.date,
       articleSection: entry.category,
-      url: `https://zensus.app/changelog#${slug}`,
-      mainEntityOfPage: "https://zensus.app/changelog",
-      author: { "@id": "https://zensus.app/#organization" },
-      publisher: { "@id": "https://zensus.app/#organization" },
+      url: `${SITE_URL}/changelog#${slug}`,
+      mainEntityOfPage: `${SITE_URL}/changelog`,
+      author: { "@id": `${SITE_URL}/#organization` },
+      publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "en-US",
       speakable: {
         "@type": "SpeakableSpecification",
@@ -169,14 +170,14 @@ const Changelog = () => (
         content="What we have shipped on Zensus, most recent first. Per-release posts on new features, improvements, fixes, and security work."
       />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://zensus.app/changelog" />
+      <meta property="og:url" content={`${SITE_URL}/changelog`} />
       <meta property="og:site_name" content="Zensus" />
       <meta property="og:title" content="Zensus Changelog · Product Updates and New Features" />
       <meta
         property="og:description"
         content="What we have shipped on Zensus, most recent first."
       />
-      <meta property="og:image" content="https://zensus.app/og/changelog.png" />
+      <meta property="og:image" content={`${SITE_URL}/og/changelog.png`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Changelog page social preview card" />
@@ -186,8 +187,8 @@ const Changelog = () => (
         name="twitter:description"
         content="What we have shipped on Zensus, most recent first."
       />
-      <meta name="twitter:image" content="https://zensus.app/og/changelog.png" />
-      <link rel="canonical" href="https://zensus.app/changelog" />
+      <meta name="twitter:image" content={`${SITE_URL}/og/changelog.png`} />
+      <link rel="canonical" href={`${SITE_URL}/changelog`} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       <script type="application/ld+json">
         {JSON.stringify(changelogGraph(entries))}

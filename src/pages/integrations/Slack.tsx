@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { IntegrationPage, IntegrationSection } from "@/components/integrations/IntegrationPage";
 import slackLogo from "@/assets/integrations/slack.svg";
 
@@ -63,9 +64,9 @@ const serviceSchema = {
   serviceType: "Cash-alert delivery to Slack workspaces",
   description:
     "Post Zensus cash-crunch alerts into Slack with interactive Block Kit messages for snooze and threshold controls. OAuth-based, revocable anytime.",
-  provider: { "@id": "https://zensus.app/#organization" },
+  provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: "US",
-  url: "https://zensus.app/integrations/slack",
+  url: `${SITE_URL}/integrations/slack`,
   isRelatedTo: {
     "@type": "Organization",
     name: "Slack",

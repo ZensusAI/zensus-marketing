@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 // Helpers for building JSON-LD structured-data blocks.
 // Keep these compact and typed so page components can drop a single
 // <script type="application/ld+json"> into their Helmet block.
@@ -20,12 +21,12 @@ export const breadcrumbSchema = (crumbs: BreadcrumbCrumb[]) => ({
 
 export const HOME_CRUMB: BreadcrumbCrumb = {
   name: "Home",
-  url: "https://zensus.app/",
+  url: `${SITE_URL}/`,
 };
 
-const ORGANIZATION_ID = "https://zensus.app/#organization";
+const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 
-const BLOG_ID = "https://zensus.app/blog#blog";
+const BLOG_ID = `${SITE_URL}/blog#blog`;
 
 /** Subset of an Author (src/lib/authors.ts) needed to emit a Person node. */
 export interface SchemaAuthor {
@@ -82,7 +83,7 @@ export const blogPostingSchema = ({
     name: author.name,
     jobTitle: author.jobTitle,
     worksFor: { "@id": ORGANIZATION_ID },
-    url: "https://zensus.app/about",
+    url: `${SITE_URL}/about`,
     sameAs: author.sameAs,
   },
   publisher: { "@id": ORGANIZATION_ID },
@@ -91,7 +92,7 @@ export const blogPostingSchema = ({
     "@type": "Blog",
     "@id": BLOG_ID,
     name: "Zensus Blog",
-    url: "https://zensus.app/blog",
+    url: `${SITE_URL}/blog`,
     publisher: { "@id": ORGANIZATION_ID },
   },
   mainEntityOfPage: {

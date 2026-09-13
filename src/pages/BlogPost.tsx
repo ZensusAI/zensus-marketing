@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { Link, useParams } from "react-router-dom";
 import { MDXProvider } from "@mdx-js/react";
 import { ArrowLeft, Clock } from "lucide-react";
@@ -50,11 +51,14 @@ const BlogPost = () => {
 
   const breadcrumbs = breadcrumbSchema([
     HOME_CRUMB,
-    { name: "Blog", url: "https://zensus.app/blog" },
+    { name: "Blog", url: `${SITE_URL}/blog` },
     { name: meta.title, url: pageUrl },
   ]);
 
   const documentTitle = meta.seoTitle ?? `${meta.title} | Zensus`;
+  // meta.ogImage is stored site-relative so posts carry no domain.
+  // Open Graph requires an absolute URL, so resolve it here.
+  const ogImageUrl = `${SITE_URL}${meta.ogImage}`;
 
   const blogPostingLd = blogPostingSchema({
     headline: meta.title,
@@ -62,7 +66,7 @@ const BlogPost = () => {
     datePublished: meta.date,
     dateModified: published,
     url: pageUrl,
-    image: meta.ogImage,
+    image: ogImageUrl,
     articleSection: meta.category,
     author,
     images: blogStats[meta.slug]?.images,
@@ -90,7 +94,7 @@ const BlogPost = () => {
           property="og:description"
           content={meta.ogSubtitle ?? meta.description}
         />
-        <meta property="og:image" content={meta.ogImage} />
+        <meta property="og:image" content={ogImageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={`${meta.title} | Zensus Blog`} />
@@ -103,7 +107,7 @@ const BlogPost = () => {
           name="twitter:description"
           content={meta.ogSubtitle ?? meta.description}
         />
-        <meta name="twitter:image" content={meta.ogImage} />
+        <meta name="twitter:image" content={ogImageUrl} />
         <link rel="canonical" href={pageUrl} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
         <script type="application/ld+json">{JSON.stringify(blogPostingLd)}</script>

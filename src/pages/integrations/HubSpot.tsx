@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { IntegrationPage, IntegrationSection } from "@/components/integrations/IntegrationPage";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
 
@@ -63,9 +64,9 @@ const serviceSchema = {
   serviceType: "CRM and subscription data integration for cash flow projection",
   description:
     "Connect HubSpot to Zensus via OAuth so deals and subscriptions feed cash flow projections that respect annual, quarterly, and multi-currency contract terms.",
-  provider: { "@id": "https://zensus.app/#organization" },
+  provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: "US",
-  url: "https://zensus.app/integrations/hubspot",
+  url: `${SITE_URL}/integrations/hubspot`,
   isRelatedTo: {
     "@type": "Organization",
     name: "HubSpot",

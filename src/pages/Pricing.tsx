@@ -12,13 +12,13 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { Button } from "@/components/ui/button";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
-import { START_TRIAL_URL, TALK_TO_US_URL } from "@/lib/constants";
+import { SITE_URL, START_TRIAL_URL, TALK_TO_US_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
-  { name: "Pricing", url: "https://zensus.app/pricing" },
+  { name: "Pricing", url: `${SITE_URL}/pricing` },
 ]);
 
 const dataFeatures = [
@@ -96,14 +96,14 @@ const Pricing = () => (
         content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."
       />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://zensus.app/pricing" />
+      <meta property="og:url" content={`${SITE_URL}/pricing`} />
       <meta property="og:site_name" content="Zensus" />
       <meta property="og:title" content="Zensus Pricing · $199/mo Cash Flow Forecasting for Businesses" />
       <meta
         property="og:description"
         content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."
       />
-      <meta property="og:image" content="https://zensus.app/og/pricing.png" />
+      <meta property="og:image" content={`${SITE_URL}/og/pricing.png`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Pricing page social preview card" />
@@ -113,8 +113,8 @@ const Pricing = () => (
         name="twitter:description"
         content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."
       />
-      <meta name="twitter:image" content="https://zensus.app/og/pricing.png" />
-      <link rel="canonical" href="https://zensus.app/pricing" />
+      <meta name="twitter:image" content={`${SITE_URL}/og/pricing.png`} />
+      <link rel="canonical" href={`${SITE_URL}/pricing`} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>
     <Navbar />

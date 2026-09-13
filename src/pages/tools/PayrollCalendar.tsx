@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
@@ -22,7 +23,7 @@ import {
 } from "@/lib/payroll-calendar";
 import { ToolEmailCapture } from "@/components/tools/ToolEmailCapture";
 
-const PAGE_URL = "https://zensus.app/tools/payroll-calendar";
+const PAGE_URL = `${SITE_URL}/tools/payroll-calendar`;
 const PAGE_TITLE = "Payroll Calendar Calculator · Pay Periods in 2026 and 2027";
 const PAGE_DESCRIPTION =
   "Free payroll calendar calculator: count pay periods in 2026 and 2027, see three-paycheck months, spot a 27-period biweekly year, and model monthly cash impact.";
@@ -75,7 +76,7 @@ const webAppLd = {
   operatingSystem: "Web",
   isAccessibleForFree: true,
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  publisher: { "@id": "https://zensus.app/#organization" },
+  publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
 const usd = new Intl.NumberFormat("en-US", {
@@ -199,14 +200,14 @@ const PayrollCalendar = () => {
         <meta property="og:site_name" content="Zensus" />
         <meta property="og:title" content={PAGE_TITLE} />
         <meta property="og:description" content={PAGE_DESCRIPTION} />
-        <meta property="og:image" content="https://zensus.app/og/tools-payroll-calendar.png" />
+        <meta property="og:image" content={`${SITE_URL}/og/tools-payroll-calendar.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Zensus payroll calendar calculator social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={PAGE_TITLE} />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
-        <meta name="twitter:image" content="https://zensus.app/og/tools-payroll-calendar.png" />
+        <meta name="twitter:image" content={`${SITE_URL}/og/tools-payroll-calendar.png`} />
         <link rel="canonical" href={PAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
         <script type="application/ld+json">{JSON.stringify(webAppLd)}</script>

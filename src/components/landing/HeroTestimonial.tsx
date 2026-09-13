@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Play, Star, Volume2, VolumeX } from "lucide-react";
@@ -24,8 +25,8 @@ const videoLd = {
   name: "Zensus customer testimonial: Jameson Pitts, CEO of Sangfroid! Studios",
   description:
     "Customer video testimonial for Zensus by Jameson Pitts, CEO of Sangfroid! Studios.",
-  thumbnailUrl: "https://zensus.app/demo/product-demo-poster.webp",
-  contentUrl: "https://zensus.app/demo/product-demo.mp4",
+  thumbnailUrl: `${SITE_URL}/demo/product-demo-poster.webp`,
+  contentUrl: `${SITE_URL}/demo/product-demo.mp4`,
   uploadDate: "2026-07-21",
   duration: "PT14S",
 };

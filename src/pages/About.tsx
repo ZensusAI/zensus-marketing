@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -6,7 +7,7 @@ import Footer from "@/components/landing/Footer";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
-const PAGE_URL = "https://zensus.app/about";
+const PAGE_URL = `${SITE_URL}/about`;
 const PERSONAL_SITE = "https://ajinsunny.com";
 const PERSONAL_LINKEDIN = "https://www.linkedin.com/in/ajinsunny/";
 
@@ -21,20 +22,20 @@ const breadcrumbs = breadcrumbSchema([
 const aboutPageLd = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
-  "@id": "https://zensus.app/about#aboutpage",
+  "@id": `${SITE_URL}/about#aboutpage`,
   url: PAGE_URL,
   name: "About Zensus",
-  about: { "@id": "https://zensus.app/#organization" },
-  mainEntity: { "@id": "https://zensus.app/#organization" },
+  about: { "@id": `${SITE_URL}/#organization` },
+  mainEntity: { "@id": `${SITE_URL}/#organization` },
 };
 
 const ashwinPersonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "@id": "https://zensus.app/about#ashwin-menon",
+  "@id": `${SITE_URL}/about#ashwin-menon`,
   name: "Ashwin Menon",
   jobTitle: "Software Developer",
-  worksFor: { "@id": "https://zensus.app/#organization" },
+  worksFor: { "@id": `${SITE_URL}/#organization` },
   url: PAGE_URL,
   sameAs: ["https://www.linkedin.com/in/ashwinmenon502/"],
 };
@@ -75,7 +76,7 @@ const About = () => (
         property="og:description"
         content="Zensus is cash flow forecasting for businesses of any size. Built because too many businesses fail from missed cash flow, not missed missions."
       />
-      <meta property="og:image" content="https://zensus.app/og/about.png" />
+      <meta property="og:image" content={`${SITE_URL}/og/about.png`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="About Zensus social preview card" />
@@ -85,7 +86,7 @@ const About = () => (
         name="twitter:description"
         content="Zensus is cash flow forecasting for businesses of any size. Built because too many businesses fail from missed cash flow, not missed missions."
       />
-      <meta name="twitter:image" content="https://zensus.app/og/about.png" />
+      <meta name="twitter:image" content={`${SITE_URL}/og/about.png`} />
       <link rel="canonical" href={PAGE_URL} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       <script type="application/ld+json">{JSON.stringify(ashwinPersonLd)}</script>

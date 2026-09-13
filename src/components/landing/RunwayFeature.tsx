@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { BarChart3, Bell, Check, MessageCircle } from "lucide-react";
 import runwayDrilldownWeekly from "@/assets/runway-drilldown-weekly.webp";
@@ -20,7 +21,7 @@ type StepDef = {
   aspect: string;
 };
 
-/** Deep-link targets from blog and docs (`https://zensus.app/#features-*`). */
+/** Deep-link targets from blog and docs (`${SITE_URL}/#features-*`). */
 export const FEATURE_STEP_IDS = [
   "features-drill-down",
   "features-scenarios",

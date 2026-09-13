@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { IntegrationPage, IntegrationSection } from "@/components/integrations/IntegrationPage";
 import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 
@@ -61,9 +62,9 @@ const serviceSchema = {
   serviceType: "Accounting data integration for cash flow forecasting",
   description:
     "Connect QuickBooks Online to Zensus via Intuit OAuth for live expenses, invoices, and AR/AP feeding a subscription-aware cash flow forecast.",
-  provider: { "@id": "https://zensus.app/#organization" },
+  provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: "US",
-  url: "https://zensus.app/integrations/quickbooks",
+  url: `${SITE_URL}/integrations/quickbooks`,
   isRelatedTo: {
     "@type": "Organization",
     name: "QuickBooks",

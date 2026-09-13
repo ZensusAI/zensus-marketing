@@ -1,10 +1,11 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
-const PAGE_URL = "https://zensus.app/subprocessors";
+const PAGE_URL = `${SITE_URL}/subprocessors`;
 const PAGE_DESCRIPTION =
   "The third-party services Zensus uses to process customer data. Updated whenever we add or remove a subprocessor.";
 
@@ -192,14 +193,14 @@ const Subprocessors = () => (
       <meta property="og:site_name" content="Zensus" />
       <meta property="og:title" content="Subprocessors · Third-Party Services Zensus Uses" />
       <meta property="og:description" content={PAGE_DESCRIPTION} />
-      <meta property="og:image" content="https://zensus.app/og/subprocessors.png" />
+      <meta property="og:image" content={`${SITE_URL}/og/subprocessors.png`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Zensus Subprocessors social preview card" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="Subprocessors · Third-Party Services Zensus Uses" />
       <meta name="twitter:description" content={PAGE_DESCRIPTION} />
-      <meta name="twitter:image" content="https://zensus.app/og/subprocessors.png" />
+      <meta name="twitter:image" content={`${SITE_URL}/og/subprocessors.png`} />
       <link rel="canonical" href={PAGE_URL} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
     </Helmet>

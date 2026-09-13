@@ -1,7 +1,8 @@
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
-const PAGE_URL = "https://zensus.app/privacy";
+const PAGE_URL = `${SITE_URL}/privacy`;
 const PAGE_DESCRIPTION =
   "How Zensus collects, uses, and protects your information. Bank credentials stay with Plaid, your data never trains an AI model, and every query is isolated by account.";
 
@@ -21,14 +22,14 @@ export default function PrivacyPolicy() {
         <meta property="og:site_name" content="Zensus" />
         <meta property="og:title" content="Privacy Policy · How Zensus Handles Your Data" />
         <meta property="og:description" content={PAGE_DESCRIPTION} />
-        <meta property="og:image" content="https://zensus.app/og/privacy.png" />
+        <meta property="og:image" content={`${SITE_URL}/og/privacy.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Privacy Policy social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Privacy Policy · How Zensus Handles Your Data" />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
-        <meta name="twitter:image" content="https://zensus.app/og/privacy.png" />
+        <meta name="twitter:image" content={`${SITE_URL}/og/privacy.png`} />
         <link rel="canonical" href={PAGE_URL} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       </Helmet>
@@ -50,7 +51,7 @@ export default function PrivacyPolicy() {
           <section>
             <p className="text-foreground/80 mb-4">
               We at Zensus Inc. (together with our affiliates, "Zensus," "we," "our," or "us") respect your privacy and are strongly committed to keeping secure any information we obtain from you or about you. This Privacy Policy describes our practices with respect to Personal Data that we collect from or about you when you use our website at{' '}
-              <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>{' '}
+              <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>{' '}
               and related services (collectively, "Services").
             </p>
             <p className="text-foreground/80 mb-4">
@@ -61,7 +62,7 @@ export default function PrivacyPolicy() {
               <strong className="text-foreground">Contact Information:</strong><br />
               Zensus Inc.<br />
               Email: <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
-              Website: <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>
+              Website: <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>
             </p>
           </section>
 
@@ -208,7 +209,7 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Marketing-site Sales Intelligence:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>On the public marketing site at <a href="https://zensus.app" className="text-primary hover:underline">zensus.app</a>, we run Apollo.io's website tracker. Apollo performs reverse-IP lookups against its business database to identify the company an anonymous visitor's IP is associated with; it does not identify the individual visitor</li>
+                  <li>On the public marketing site at <a href={SITE_URL} className="text-primary hover:underline">zensus.app</a>, we run Apollo.io's website tracker. Apollo performs reverse-IP lookups against its business database to identify the company an anonymous visitor's IP is associated with; it does not identify the individual visitor</li>
                   <li>This only runs on the marketing site, not inside the authenticated product app</li>
                 </ul>
               </div>
@@ -216,7 +217,7 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Product &amp; Marketing Analytics:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>We use PostHog (PostHog, Inc.) for analytics across our marketing site (<a href="https://zensus.app" className="text-primary hover:underline">zensus.app</a>) and the product app (app.zensus.app). PostHog records page views, navigation, and funnel events, and sets a first-party analytics cookie scoped to the .zensus.app domain so a single visit is measured consistently across both sites. This data is stored in PostHog's US cloud.</li>
+                  <li>We use PostHog (PostHog, Inc.) for analytics across our marketing site (<a href={SITE_URL} className="text-primary hover:underline">zensus.app</a>) and the product app (app.zensus.app). PostHog records page views, navigation, and funnel events, and sets a first-party analytics cookie scoped to the .zensus.app domain so a single visit is measured consistently across both sites. This data is stored in PostHog's US cloud.</li>
                   <li>PostHog also captures session recordings (replays of on-page interactions) to help us debug and improve the experience; form inputs are masked by default.</li>
                   <li>This activity is pseudonymous (tied to a random identifier, not your name) until you sign in. See{' '}
                     <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PostHog's Privacy Policy</a>.</li>
@@ -226,7 +227,7 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Support-form and calculator Bot Protection:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>When you submit the contact form on our support page (<a href="https://zensus.app/support" className="text-primary hover:underline">zensus.app/support</a>) or request a detailed breakdown from our free runway or payroll calculators, we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects these forms from spam and abuse and does not track you across sites. See Cloudflare's{' '}
+                  <li>When you submit the contact form on our support page (<a href={`${SITE_URL}/support`} className="text-primary hover:underline">zensus.app/support</a>) or request a detailed breakdown from our free runway or payroll calculators, we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects these forms from spam and abuse and does not track you across sites. See Cloudflare's{' '}
                     <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Turnstile Privacy Addendum</a>.</li>
                 </ul>
               </div>
@@ -329,7 +330,7 @@ export default function PrivacyPolicy() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">3.1 Service Providers (Subprocessors)</h3>
             <p className="text-foreground/80 mb-3">
               The principal third-party services we use to operate Zensus are listed below. For the complete and current list, including data shared and country of processing for each, see our public subprocessor page at{' '}
-              <a href="https://zensus.app/subprocessors" className="text-primary hover:underline">https://zensus.app/subprocessors</a>.
+              <a href={`${SITE_URL}/subprocessors`} className="text-primary hover:underline">{`${SITE_URL}/subprocessors`}</a>.
             </p>
 
             <div className="rounded-lg border border-border bg-muted/30 p-5 my-4 space-y-3">
@@ -379,7 +380,7 @@ export default function PrivacyPolicy() {
 
               <div>
                 <p className="font-semibold text-foreground">Vercel Inc.</p>
-                <p className="text-foreground/80 text-sm">Hosting for our marketing site at <a href="https://zensus.app" className="text-primary hover:underline">zensus.app</a>.</p>
+                <p className="text-foreground/80 text-sm">Hosting for our marketing site at <a href={SITE_URL} className="text-primary hover:underline">zensus.app</a>.</p>
               </div>
 
               <div>
@@ -390,7 +391,7 @@ export default function PrivacyPolicy() {
 
             <p className="text-foreground/80 mt-3">
               Additional subprocessors used in narrower contexts (federated identity providers, web fonts, voice transcription for the voice agent, IP geolocation, etc.) are enumerated on the{' '}
-              <a href="https://zensus.app/subprocessors" className="text-primary hover:underline">subprocessors page</a>.
+              <a href={`${SITE_URL}/subprocessors`} className="text-primary hover:underline">subprocessors page</a>.
               All service providers are contractually obligated to protect your data and use it only for the purposes we specify.
             </p>
 
@@ -672,7 +673,7 @@ export default function PrivacyPolicy() {
                 <strong className="text-foreground">Email:</strong>{' '}
                 <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
                 <strong className="text-foreground">Website:</strong>{' '}
-                <a href="https://zensus.app" className="text-primary hover:underline">https://zensus.app</a>
+                <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>
               </p>
               <p className="text-foreground/80 text-sm mt-2">
                 <strong className="text-foreground">For Privacy Requests:</strong> Use subject line "Privacy Request" or "Data Rights Request"
