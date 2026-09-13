@@ -1,185 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://zensus.app/</loc>
+    <loc>https://zensus.finance/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://zensus.app/pricing</loc>
+    <loc>https://zensus.finance/pricing</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog</loc>
+    <loc>https://zensus.finance/blog</loc>
     <lastmod>2026-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zensus.app/changelog</loc>
+    <loc>https://zensus.finance/changelog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zensus.app/security</loc>
+    <loc>https://zensus.finance/security</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zensus.app/use-cases</loc>
+    <loc>https://zensus.finance/use-cases</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zensus.app/tools/runway-calculator</loc>
+    <loc>https://zensus.finance/tools/runway-calculator</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zensus.app/tools/payroll-calendar</loc>
+    <loc>https://zensus.finance/tools/payroll-calendar</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zensus.app/compare/zensus-vs-float</loc>
+    <loc>https://zensus.finance/compare/zensus-vs-float</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zensus.app/compare/zensus-vs-pulse</loc>
+    <loc>https://zensus.finance/compare/zensus-vs-pulse</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zensus.app/llm-info</loc>
+    <loc>https://zensus.finance/llm-info</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zensus.app/about</loc>
+    <loc>https://zensus.finance/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zensus.app/privacy</loc>
+    <loc>https://zensus.finance/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://zensus.app/terms</loc>
+    <loc>https://zensus.finance/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://zensus.app/subprocessors</loc>
+    <loc>https://zensus.finance/subprocessors</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://zensus.app/support</loc>
+    <loc>https://zensus.finance/support</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://zensus.app/integrations</loc>
+    <loc>https://zensus.finance/integrations</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zensus.app/integrations/plaid</loc>
+    <loc>https://zensus.finance/integrations/plaid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zensus.app/integrations/quickbooks</loc>
+    <loc>https://zensus.finance/integrations/quickbooks</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zensus.app/integrations/hubspot</loc>
+    <loc>https://zensus.finance/integrations/hubspot</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zensus.app/integrations/slack</loc>
+    <loc>https://zensus.finance/integrations/slack</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/arr-vs-cash-for-founders</loc>
+    <loc>https://zensus.finance/blog/arr-vs-cash-for-founders</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/can-quickbooks-forecast-cash-flow</loc>
+    <loc>https://zensus.finance/blog/can-quickbooks-forecast-cash-flow</loc>
     <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/cash-conversion-cycle</loc>
+    <loc>https://zensus.finance/blog/cash-conversion-cycle</loc>
     <lastmod>2026-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/default-alive-vs-default-dead-for-founders</loc>
+    <loc>https://zensus.finance/blog/default-alive-vs-default-dead-for-founders</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/forecasting-ai-compute-costs-for-founders</loc>
+    <loc>https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders</loc>
     <lastmod>2026-06-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/hubspot-pipeline-to-cash-forecast</loc>
+    <loc>https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/mcp-vs-cli-for-finance-teams</loc>
+    <loc>https://zensus.finance/blog/mcp-vs-cli-for-finance-teams</loc>
     <lastmod>2026-06-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/runway-vs-burn-rate-for-founders</loc>
+    <loc>https://zensus.finance/blog/runway-vs-burn-rate-for-founders</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/what-happens-if-you-miss-payroll</loc>
+    <loc>https://zensus.finance/blog/what-happens-if-you-miss-payroll</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/what-is-a-13-week-cash-flow-forecast</loc>
+    <loc>https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast</loc>
     <lastmod>2026-06-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/what-is-cash-flow-forecasting</loc>
+    <loc>https://zensus.finance/blog/what-is-cash-flow-forecasting</loc>
     <lastmod>2026-06-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/will-i-make-payroll</loc>
+    <loc>https://zensus.finance/blog/will-i-make-payroll</loc>
     <lastmod>2026-06-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://zensus.app/blog/zero-cash-date-for-founders</loc>
+    <loc>https://zensus.finance/blog/zero-cash-date-for-founders</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>

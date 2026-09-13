@@ -4,7 +4,7 @@
   "redirects": [
     {
       "source": "/features",
-      "destination": "https://zensus.app/",
+      "destination": "/",
       "permanent": true
     }
   ],

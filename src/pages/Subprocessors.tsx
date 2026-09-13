@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/constants";
+import { SITE_HOST, SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
@@ -41,7 +41,7 @@ const CATEGORIES: Category[] = [
       {
         name: "Vercel",
         country: "United States",
-        purpose: "Hosting for the public marketing site at zensus.app.",
+        purpose: `Hosting for the public marketing site at ${SITE_HOST}.`,
         dataCategories:
           "HTTPS request logs, build artifacts. No customer account data.",
       },
@@ -175,7 +175,7 @@ const CATEGORIES: Category[] = [
         name: "Cloudflare (Turnstile)",
         country: "United States",
         purpose:
-          "Invisible bot and abuse protection on the marketing-site support form (zensus.app/support), so the contact and acknowledgment flow cannot be used to send spam.",
+          `Invisible bot and abuse protection on the marketing-site support form (${SITE_HOST}/support), so the contact and acknowledgment flow cannot be used to send spam.`,
         dataCategories:
           "Visitor IP, user-agent, and a verification token (transmitted to Cloudflare when the support form is submitted).",
       },

@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/constants";
+import { SITE_HOST, SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
@@ -127,7 +127,7 @@ export function ComparePageLayout({ config }: ComparePageLayoutProps) {
                 <strong className="text-foreground">Zensus:</strong>{" "}
                 {config.pricingSummary.zensus}{" "}
                 <Link to="/pricing" className={linkCls}>
-                  zensus.app/pricing
+                  {SITE_HOST}/pricing
                 </Link>
               </p>
             </div>

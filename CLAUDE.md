@@ -37,11 +37,34 @@ Run the suite before opening a PR.
 Every absolute URL the site emits derives from one value, so changing domains is a
 one-line edit. It is declared three times because three runtimes need it and none can
 import the others: `src/lib/constants.ts` (app bundle), `scripts/site.mjs` (build
-scripts), `api/_lib/site.ts` (serverless handlers). `src/lib/site-url.test.ts` asserts
-the three agree and that no bare `https://zensus.<tld>` literal exists anywhere else in
-`src/`, `api/` or `scripts/`. Do not hardcode the origin; import `SITE_URL` (or
-`SITE_HOST` for the display form, used by the OG card footer and the XLSX template).
-Blog prose links are site-relative (`/blog/x`, `/#features`) for the same reason.
+scripts), `api/_lib/site.ts` (serverless handlers). Do not hardcode the origin; import
+`SITE_URL` (or `SITE_HOST` for the display form, used by the OG card footer and the
+XLSX template). Blog prose links are site-relative (`/blog/x`, `/#features`) for the
+same reason.
+
+Three other named hosts exist and deliberately do **not** follow `SITE_URL`:
+`APP_URL` / `APP_HOST` (the product app, a separate registrable domain),
+`LEGACY_SITE_URL` / `LEGACY_SITE_HOST` (the previous origin, which now 301s here and
+is still accepted by `isAllowedOrigin`), and mail on `@zensus.app`, which did not move.
+Use the constants rather than writing any of them as a literal.
+
+**`index.html` is stamped, not templated.** It is static, so it cannot import the
+constants, and it carries the site-wide schema.org `@graph`: the `@id` values search
+and AI engines use as this site's entity identity. It holds `__SITE_URL__`,
+`__SITE_HOST__` and `__LEGACY_SITE_HOST__` placeholders that the `stamp-index-html`
+plugin in `vite.config.ts` fills at build and in dev. Never write a real origin there.
+The `Organization` and `WebSite` `alternateName` arrays intentionally list the legacy
+host alongside the current one so engines merge the old and new identity rather than
+treating them as two entities.
+
+`src/lib/site-url.test.ts` enforces all of this: the three declarations agree (for both
+the current and legacy origin), and no hardcoded host appears in `src/`, `api/`,
+`scripts/` or root `index.html`. It checks two shapes, because the first alone missed
+nine real cases during the domain move: origins carrying a scheme
+(`https://zensus.<tld>`) and the **bare host in display copy** (`zensus.app/support`,
+the visible text of a link whose `href` was already correct, one instance URL-encoded
+inside a query string). A host preceded by `.` or `@` is exempt, which is what lets the
+cookie scope, the product subdomains and mail addresses through.
 
 ## Lockfile policy
 

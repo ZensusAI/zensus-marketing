@@ -65,7 +65,7 @@ const entries: ChangelogEntry[] = [
     category: "Improved",
     title: "Support page and acknowledgment email",
     body: [
-      "Support form at zensus.app/support, no login required.",
+      "Support form at /support, no login required.",
       "Instant confirmation email sent the moment you submit.",
     ],
   },

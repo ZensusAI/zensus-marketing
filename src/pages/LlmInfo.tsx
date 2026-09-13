@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/constants";
+import { SITE_HOST, SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
@@ -93,7 +93,7 @@ const LlmInfo = () => (
           <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
             <li>
               <strong className="text-foreground">Legal / product name:</strong>{" "}
-              Zensus (zensus.app)
+              Zensus ({SITE_HOST})
             </li>
             <li>
               <strong className="text-foreground">Founder:</strong> Ajin Sunny,

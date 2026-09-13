@@ -4,6 +4,8 @@ import mdx from "@mdx-js/rollup";
 import remarkGfm from "remark-gfm";
 import path from "path";
 
+import { LEGACY_SITE_HOST, SITE_HOST, SITE_URL } from "./scripts/site.mjs";
+
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
   server: {
@@ -20,16 +22,23 @@ export default defineConfig(() => ({
     },
     react(),
     {
-      name: "stamp-site-modified",
-      // Replace the SoftwareApplication dateModified placeholder in index.html
-      // with the build date, so the freshness signal reflects the latest deploy
-      // instead of a hardcoded value that silently goes stale. Runs at build
-      // and in the dev server.
+      name: "stamp-index-html",
+      // index.html is static, so unlike the app bundle it cannot import the
+      // site constants. That made it the one file a domain change silently
+      // missed, and it is the worst file to miss: it carries the schema.org
+      // @id values that search and AI engines treat as this site's entity
+      // identity, so a stale origin here declares the site to be a different
+      // entity from the one it serves canonicals for.
+      //
+      // __SITE_MODIFIED__ is the same idea applied to freshness: a hardcoded
+      // dateModified goes stale without anyone noticing. Both run at build and
+      // in the dev server.
       transformIndexHtml(html: string) {
-        return html.replace(
-          "__SITE_MODIFIED__",
-          new Date().toISOString().slice(0, 10),
-        );
+        return html
+          .replaceAll("__SITE_URL__", SITE_URL)
+          .replaceAll("__SITE_HOST__", SITE_HOST)
+          .replaceAll("__LEGACY_SITE_HOST__", LEGACY_SITE_HOST)
+          .replace("__SITE_MODIFIED__", new Date().toISOString().slice(0, 10));
       },
     },
   ],
