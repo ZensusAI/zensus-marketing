@@ -3,6 +3,12 @@
 #
 # v1: submit homepage + sitemap only (engines crawl from there).
 # Key: repository secret INDEXNOW_KEY (same value as public/<key>.txt body).
+#
+# The host is read from scripts/site.mjs rather than written here. It used to be
+# hardcoded, so the domain cutover left this workflow untouched: it kept
+# returning HTTP 200 while telling Bing and Yandex that the *old* domain had
+# changed. IndexNow also requires keyLocation to sit on the same host as the
+# submitted URLs, and on the old domain that file now only answers via a 301.
 
 name: IndexNow
 
@@ -11,10 +17,20 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# This job checks out the repo (only to read scripts/site.mjs) and posts to an
+# external API. It never writes anything back, so the token is scoped down to
+# the minimum rather than inheriting whatever the repo default happens to be.
+permissions:
+  contents: read
+
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - name: POST IndexNow (homepage + sitemap)
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
@@ -29,11 +45,17 @@ jobs:
             echo "::error::INDEXNOW_KEY must be exactly 32 hexadecimal characters."
             exit 1
           fi
+          HOST="$(node -e "import('./scripts/site.mjs').then(m => process.stdout.write(m.SITE_HOST))")"
+          if [ -z "$HOST" ]; then
+            echo "::error::Could not read SITE_HOST from scripts/site.mjs."
+            exit 1
+          fi
+          echo "Submitting for host: ${HOST}"
           BODY="$(jq -n \
-            --arg host "zensus.app" \
+            --arg host "$HOST" \
             --arg key "$KEY" \
-            --arg kl "https://zensus.app/${KEY}.txt" \
-            --argjson urlList '["https://zensus.app/","https://zensus.app/sitemap.xml"]' \
+            --arg kl "https://${HOST}/${KEY}.txt" \
+            --argjson urlList "$(jq -n --arg h "$HOST" '["https://\($h)/","https://\($h)/sitemap.xml"]')" \
             '{host: $host, key: $key, keyLocation: $kl, urlList: $urlList}')"
           CODE="$(curl -sS -o /tmp/indexnow_resp.txt -w '%{http_code}' \
             -X POST "https://api.indexnow.org/indexnow" \
