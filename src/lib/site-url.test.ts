@@ -59,8 +59,12 @@ const ALLOWED = new Set([
   "src/generated/blog-stats.ts",
 ]);
 
-const SCAN_DIRS = ["src", "api", "scripts"];
-const SCAN_EXT = [".ts", ".tsx", ".mjs", ".mdx", ".html"];
+// .github is here because the IndexNow workflow hardcoded the origin and so
+// survived the zensus.finance cutover untouched, returning HTTP 200 while
+// telling Bing and Yandex that the old domain had changed. CI config is exactly
+// the kind of file that never gets read during a migration and never complains.
+const SCAN_DIRS = ["src", "api", "scripts", ".github"];
+const SCAN_EXT = [".ts", ".tsx", ".mjs", ".mdx", ".html", ".yml", ".yaml"];
 
 /**
  * Files at the repo root, which none of SCAN_DIRS reaches.
