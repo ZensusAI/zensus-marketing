@@ -61,7 +61,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const token = typeof bodyObj.turnstileToken === "string" ? bodyObj.turnstileToken : "";
 
   const v = validateToolInput(bodyObj);
-  if (!v.ok) {
+  // `=== false`, not `!v.ok`: Vercel typechecks this function against the root
+  // tsconfig.json, where strictNullChecks is off, and there `!v.ok` does not
+  // narrow the union, so reading v.error logs TS2339 in every production build.
+  if (v.ok === false) {
     log("validate", "rejected", v.error);
     return res.status(400).json({ error: "invalid_input" });
   }

@@ -3,7 +3,7 @@ import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { BedrockRuntimeClient, ConverseCommand } from "@aws-sdk/client-bedrock-runtime";
-import handler from "./acknowledge";
+import handler from "../acknowledge";
 
 const ses = mockClient(SESClient);
 const bedrock = mockClient(BedrockRuntimeClient);

@@ -25,15 +25,27 @@ no matter what is broken, including JSX syntax errors. Build mode follows the
 references and actually checks.
 
 `tsconfig.api.json` sets `strictNullChecks: true` while the root config has it off.
-That is deliberate, not drift: the handlers validate through a discriminated union
-(`{ ok: true; data } | { ok: false; error }`) and read `v.error` in the failure
-branch, and with `strictNullChecks` off TypeScript does not narrow that union, so
-correct code reports "Property 'error' does not exist". Raising it repo-wide is a
-larger job; the file says so.
+That is deliberate, not drift: the validators return a discriminated union
+(`{ ok: true; data } | { ok: false; error }`), and with `strictNullChecks` off
+TypeScript does not narrow it on `!v.ok`, so correct code reports "Property 'error'
+does not exist". Raising it repo-wide is a larger job; the file says so.
+
+**Vercel runs its own typecheck on functions and does not read `tsconfig.api.json`.**
+Its Node builder checks each function against the nearest `tsconfig.json` above it,
+which for `api/` is the root one (`strictNullChecks` off, node16/nodenext module
+resolution), logs any errors into the build, and deploys anyway. Handler code
+therefore has to pass under both configs: the handlers write `if (v.ok === false)`,
+which narrows under either, rather than `if (!v.ok)`, which reports TS2339 in every
+production build log. Handlers and `api/_lib` also import with explicit `.js`
+extensions, which that module resolution requires; keep it that way.
 
 Tests run on **vitest** (`npx vitest run`, or `npm run test:watch`). Config lives in
 the `test` block of `vite.config.ts`; specs are `api/**/*.test.ts` and
-`src/**/*.test.{ts,tsx}`. Several guard invariants that are otherwise silent when
+`src/**/*.test.{ts,tsx}`. **Handler tests live in `api/_tests/`, never directly in
+`api/`:** Vercel deploys every file under `api/` as a public serverless function
+unless its name or a parent directory starts with `_` or `.`, and
+`api/_tests/function-entrypoints.test.ts` fails if a test file lands in a function
+path. Several guard invariants that are otherwise silent when
 broken, notably `src/lib/route-coverage.test.ts` (every route in `App.tsx`,
 `scripts/prerender.mjs`, `public/sitemap.xml`, and `scripts/generate-og.mjs` must
 agree) and `src/components/landing/Hero.test.tsx` (the homepage H1 must appear
