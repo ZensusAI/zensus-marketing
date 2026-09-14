@@ -15,7 +15,7 @@
     <meta name="twitter:site" content="@zensusai" />
     <meta name="twitter:creator" content="@zensusai" />
 
-    <!-- Meta domain verification for the Zensus Inc. business portfolio in Meta Business Suite. It has to live in this static head: Meta's crawler does not run JavaScript, so a tag emitted through react-helmet-async would never be seen. Meta re-checks it, so removing it can quietly un-verify the domain. -->
+    <!-- Meta domain verification for the Zensus Inc. business portfolio in Meta Business Suite. Meta's instructions say verification fails if the tag is outside the head or loaded by JavaScript, so it has to be in the HTML as served. It lives in this template rather than in a page's Helmet block because it is page-agnostic, and from here it reaches every route's HTML whether or not that route was prerendered. -->
     <meta name="facebook-domain-verification" content="bvzq9nz3zmuyzvgo54ycrvapmvkv2i" />
 
     <!-- Geist is self-hosted (see the @font-face block in src/index.css). We
