@@ -15,6 +15,9 @@
     <meta name="twitter:site" content="@zensusai" />
     <meta name="twitter:creator" content="@zensusai" />
 
+    <!-- Meta domain verification for the Zensus Inc. business portfolio in Meta Business Suite. It has to live in this static head: Meta's crawler does not run JavaScript, so a tag emitted through react-helmet-async would never be seen. Meta re-checks it, so removing it can quietly un-verify the domain. -->
+    <meta name="facebook-domain-verification" content="bvzq9nz3zmuyzvgo54ycrvapmvkv2i" />
+
     <!-- Geist is self-hosted (see the @font-face block in src/index.css). We
          preload only the sans variable file (the primary text + headline font)
          so the fallback->Geist swap is near-instant; Geist Mono loads on demand
