@@ -2,22 +2,25 @@
   // The serverless handlers under api/. These ship to production as Vercel
   // functions, and until this project existed nothing in the repo typechecked
   // them: tsconfig.app.json includes only "src" and tsconfig.node.json only
-  // "vite.config.ts", so `tsc -b` walked straight past api/. Vercel's own build
-  // does typecheck them, logs the errors, and deploys anyway, so the failures
-  // were visible only to whoever read a successful build log.
+  // "vite.config.ts", so `tsc -b` walked straight past api/.
+  //
+  // Vercel does not read this file. Its Node builder typechecks each function
+  // against the nearest tsconfig.json above it, which for api/ is the root one
+  // (strictNullChecks off, node16/nodenext module resolution), logs any errors
+  // into the build, and deploys anyway. Handler code has to pass under both
+  // configs, which is why the handlers narrow with `v.ok === false`.
   //
   // strictNullChecks is ON here and off in the root config, which is
-  // deliberate. Both handlers validate input through a discriminated union
-  // (`{ ok: true; data } | { ok: false; error }`) and then read `v.error` in the
-  // failure branch. With strictNullChecks off, TypeScript does not narrow that
-  // union, so correct code reports "Property 'error' does not exist". Turning it
-  // on here fixes the narrowing rather than the code. Raising it repo-wide is a
-  // larger job and is deliberately not attempted from this file.
+  // deliberate. The validators return a discriminated union
+  // (`{ ok: true; data } | { ok: false; error }`), and with strictNullChecks off
+  // TypeScript does not narrow it on `!v.ok`. Raising it repo-wide is a larger
+  // job and is deliberately not attempted from this file.
   //
   // moduleResolution is "bundler" to match how vitest actually resolves these
-  // files. Under "nodenext" every relative import in api/ reports TS2835 and
-  // wants a .js extension, which would be a real change to source that already
-  // runs correctly under the only runtime that loads it.
+  // files. The handlers and api/_lib import with explicit .js extensions, which
+  // both modes accept; the tests import without them, which only "bundler"
+  // accepts. Tests are never functions (they live under api/_tests/ and
+  // api/_lib/), so Vercel's check never sees them.
   "compilerOptions": {
     "lib": ["ES2022"],
     "module": "ESNext",

@@ -2,8 +2,8 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { mockClient } from "aws-sdk-client-mock";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import handler from "./send-results";
-import { resetToolRateLimitForTests } from "../_lib/tool-rate-limit";
+import handler from "../../tools/send-results";
+import { resetToolRateLimitForTests } from "../../_lib/tool-rate-limit";
 
 const ses = mockClient(SESClient);
 
