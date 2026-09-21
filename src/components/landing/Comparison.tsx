@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 /**
  * Named-competitor comparison matrix (homepage).
@@ -232,6 +233,26 @@ const Comparison = () => {
           </tbody>
         </table>
       </div>
+
+      {/* The matrix names Float but never linked to the page that compares it
+          in full; both comparison pages had in-content links from two pages. */}
+      <p className="mx-auto mt-8 max-w-4xl text-center text-sm text-muted-foreground">
+        Read the full comparisons:{" "}
+        <Link
+          to="/compare/zensus-vs-float"
+          className="font-medium text-primary underline-offset-4 hover:underline"
+        >
+          Zensus vs Float
+        </Link>{" "}
+        and{" "}
+        <Link
+          to="/compare/zensus-vs-pulse"
+          className="font-medium text-primary underline-offset-4 hover:underline"
+        >
+          Zensus vs Pulse
+        </Link>
+        .
+      </p>
     </div>
   </section>
   );

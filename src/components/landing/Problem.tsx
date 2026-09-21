@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   GlyphRunway,
   GlyphFragmented,
@@ -64,6 +65,17 @@ const Problem = () => {
             );
           })}
         </div>
+
+        <p className="mt-10 text-center text-sm text-muted-foreground">
+          Annual contracts, seasonal income, late-paying clients:{" "}
+          <Link
+            to="/use-cases"
+            className="font-medium text-primary underline-offset-4 hover:underline"
+          >
+            see who uses Zensus and what it solves
+          </Link>
+          .
+        </p>
       </div>
     </section>
   );

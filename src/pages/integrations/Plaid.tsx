@@ -1,5 +1,9 @@
 import { SITE_URL } from "@/lib/constants";
-import { IntegrationPage, IntegrationSection } from "@/components/integrations/IntegrationPage";
+import {
+  IntegrationPage,
+  IntegrationRelatedLink,
+  IntegrationSection,
+} from "@/components/integrations/IntegrationPage";
 import plaidLogo from "@/assets/integrations/plaid.svg";
 
 const sections: IntegrationSection[] = [
@@ -22,6 +26,27 @@ const sections: IntegrationSection[] = [
   {
     heading: "Security specifics",
     body: <p>Plaid OAuth tokens are encrypted at rest. Zensus never stores your bank credentials. Disconnecting is one click and honored immediately.</p>,
+  },
+];
+
+const related: IntegrationRelatedLink[] = [
+  {
+    to: "/security",
+    label: "How Zensus handles your financial data",
+    description:
+      "Encryption, OAuth, account-level isolation, and US data residency.",
+  },
+  {
+    to: "/subprocessors",
+    label: "Subprocessors",
+    description:
+      "Every third-party service that touches customer data, including Plaid.",
+  },
+  {
+    to: "/blog/zero-cash-date-for-founders",
+    label: "Zero cash date",
+    description:
+      "How a live bank balance turns into the date your cash runs out, calculated weekly.",
   },
 ];
 
@@ -56,6 +81,7 @@ const PlaidIntegration = () => (
     metaDescription="Connect your bank to Zensus via Plaid. Real-time transaction sync, bank-level OAuth, no credentials stored."
     sections={sections}
     serviceSchema={serviceSchema}
+    related={related}
   />
 );
 

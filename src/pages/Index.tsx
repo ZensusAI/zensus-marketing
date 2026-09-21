@@ -13,6 +13,7 @@ import HowItWorks from "@/components/landing/HowItWorks";
 import SecurityStrip from "@/components/landing/SecurityStrip";
 import PricingPreview from "@/components/landing/PricingPreview";
 import FAQ from "@/components/landing/FAQ";
+import Resources from "@/components/landing/Resources";
 import FinalCTABand from "@/components/landing/FinalCTABand";
 import Footer from "@/components/landing/Footer";
 
@@ -78,6 +79,7 @@ const Index = () => {
         <SecurityStrip />
         <PricingPreview />
         <FAQ />
+        <Resources />
         <FinalCTABand />
       </main>
       <Footer />
