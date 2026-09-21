@@ -92,7 +92,7 @@ const UseCases = () => (
       <title>Zensus Use Cases · Who It's For and What It Solves</title>
       <meta
         name="description"
-        content="Zensus is cash flow forecasting for businesses of any size: annual contracts, seasonal income, usage-based pricing, late-paying clients, and payroll on the line."
+        content="Zensus is cash flow forecasting for businesses of any size: annual contracts, seasonal income, usage-based pricing, late payers, and payroll on the line."
       />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={`${SITE_URL}/use-cases`} />

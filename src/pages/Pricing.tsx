@@ -90,7 +90,7 @@ const pricingFaqs = [
 const Pricing = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
-      <title>Zensus Pricing · $199/mo Cash Flow Forecasting for Businesses</title>
+      <title>Zensus Pricing · $199/mo Cash Flow Forecasting Software</title>
       <meta
         name="description"
         content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."

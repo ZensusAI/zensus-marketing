@@ -24,9 +24,9 @@ import {
 import { ToolEmailCapture } from "@/components/tools/ToolEmailCapture";
 
 const PAGE_URL = `${SITE_URL}/tools/payroll-calendar`;
-const PAGE_TITLE = "Payroll Calendar Calculator · Pay Periods in 2026 and 2027";
+const PAGE_TITLE = "Payroll Calendar Calculator for 2026 and 2027";
 const PAGE_DESCRIPTION =
-  "Free payroll calendar calculator: count pay periods in 2026 and 2027, see three-paycheck months, spot a 27-period biweekly year, and model monthly cash impact.";
+  "Free payroll calendar calculator: count pay periods in 2026 and 2027, find three-paycheck months and 27-period biweekly years, and see the cash impact.";
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
