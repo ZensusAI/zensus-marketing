@@ -1,5 +1,9 @@
 import { SITE_URL } from "@/lib/constants";
-import { IntegrationPage, IntegrationSection } from "@/components/integrations/IntegrationPage";
+import {
+  IntegrationPage,
+  IntegrationRelatedLink,
+  IntegrationSection,
+} from "@/components/integrations/IntegrationPage";
 import slackLogo from "@/assets/integrations/slack.svg";
 
 const sections: IntegrationSection[] = [
@@ -57,6 +61,33 @@ const sections: IntegrationSection[] = [
   },
 ];
 
+const related: IntegrationRelatedLink[] = [
+  {
+    to: "/blog/will-i-make-payroll",
+    label: "Will I make payroll?",
+    description:
+      "How to check each payroll date against your projected cash and buffer, weeks ahead.",
+  },
+  {
+    to: "/blog/what-happens-if-you-miss-payroll",
+    label: "What happens if you miss payroll",
+    description:
+      "The consequences, and a 7-day plan, for the situation an early alert is meant to prevent.",
+  },
+  {
+    to: "/blog/zero-cash-date-for-founders",
+    label: "Zero cash date",
+    description:
+      "The date behind the alert: when projected cash reaches zero.",
+  },
+  {
+    to: "/use-cases",
+    label: "Who uses Zensus",
+    description:
+      "The kinds of lumpy cash flow where a threshold alert matters most.",
+  },
+];
+
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -88,6 +119,7 @@ const SlackIntegration = () => (
     metaDescription="Post Zensus cash-crunch alerts into Slack. Interactive Block Kit messages with snooze and threshold controls, OAuth-based, revocable anytime."
     sections={sections}
     serviceSchema={serviceSchema}
+    related={related}
   />
 );
 

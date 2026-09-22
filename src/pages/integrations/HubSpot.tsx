@@ -1,5 +1,9 @@
 import { SITE_URL } from "@/lib/constants";
-import { IntegrationPage, IntegrationSection } from "@/components/integrations/IntegrationPage";
+import {
+  IntegrationPage,
+  IntegrationRelatedLink,
+  IntegrationSection,
+} from "@/components/integrations/IntegrationPage";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
 
 const sections: IntegrationSection[] = [
@@ -57,6 +61,27 @@ const sections: IntegrationSection[] = [
   },
 ];
 
+const related: IntegrationRelatedLink[] = [
+  {
+    to: "/blog/hubspot-pipeline-to-cash-forecast",
+    label: "How to forecast cash from your sales pipeline",
+    description:
+      "Turning HubSpot deals into a cash forecast using deal probability, billing terms, and contract timing.",
+  },
+  {
+    to: "/blog/arr-vs-cash-for-founders",
+    label: "ARR vs cash",
+    description:
+      "Why an annual contract is one cash inflow on one date, not twelve equal months.",
+  },
+  {
+    to: "/use-cases",
+    label: "Who uses Zensus",
+    description:
+      "Annual contracts, seasonal income, usage-based pricing, and late-paying clients.",
+  },
+];
+
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -88,6 +113,7 @@ const HubSpotIntegration = () => (
     metaDescription="Connect HubSpot to Zensus via OAuth. Deals and subscriptions feed real-time cash flow projections that respect contract terms and currency."
     sections={sections}
     serviceSchema={serviceSchema}
+    related={related}
   />
 );
 

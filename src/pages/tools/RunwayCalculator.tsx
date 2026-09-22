@@ -411,8 +411,19 @@ const RunwayCalculator = () => {
                 >
                   default alive or default dead
                 </a>{" "}
-                question deserves a date-level answer. For the weekly
-                discipline, see our guides to{" "}
+                question deserves a date-level answer. Our guides explain{" "}
+                <Link to="/blog/runway-vs-burn-rate-for-founders" className={linkCls}>
+                  runway vs burn rate
+                </Link>
+                , how to calculate your{" "}
+                <Link to="/blog/zero-cash-date-for-founders" className={linkCls}>
+                  zero cash date
+                </Link>{" "}
+                week by week, and our{" "}
+                <Link to="/blog/default-alive-vs-default-dead-for-founders" className={linkCls}>
+                  default alive checklist for founders
+                </Link>
+                . For the weekly discipline, see our guides to{" "}
                 <Link to="/blog/what-is-cash-flow-forecasting" className={linkCls}>
                   cash flow forecasting
                 </Link>{" "}

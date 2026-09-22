@@ -87,6 +87,8 @@ const pricingFaqs = [
   },
 ];
 
+const decideLinkCls = "font-medium text-primary underline-offset-4 hover:underline";
+
 const Pricing = () => (
   <div className="min-h-screen bg-background">
     <Helmet>
@@ -288,6 +290,36 @@ const Pricing = () => (
               </div>
             ))}
           </div>
+
+          {/* This page linked out once (to the homepage). Someone reading
+              pricing is still deciding, so point them at what decides it. */}
+          <p className="max-w-2xl mx-auto mt-10 text-center text-sm leading-relaxed text-muted-foreground">
+            Still deciding? See{" "}
+            <Link to="/integrations" className={decideLinkCls}>
+              every integration included
+            </Link>
+            ,{" "}
+            <Link to="/security" className={decideLinkCls}>
+              how Zensus handles your financial data
+            </Link>
+            , and{" "}
+            <Link to="/use-cases" className={decideLinkCls}>
+              who uses Zensus
+            </Link>
+            . Comparing tools? Read{" "}
+            <Link to="/compare/zensus-vs-float" className={decideLinkCls}>
+              Zensus vs Float
+            </Link>{" "}
+            and{" "}
+            <Link to="/compare/zensus-vs-pulse" className={decideLinkCls}>
+              Zensus vs Pulse
+            </Link>
+            , or run your own numbers in the free{" "}
+            <Link to="/tools/runway-calculator" className={decideLinkCls}>
+              runway calculator
+            </Link>
+            .
+          </p>
 
           <div className="text-center mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <TalkToUsButton size="lg" />

@@ -1,5 +1,6 @@
 import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
@@ -8,6 +9,12 @@ import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 export interface IntegrationSection {
   heading: string;
   body: React.ReactNode;
+}
+
+export interface IntegrationRelatedLink {
+  to: string;
+  label: string;
+  description: string;
 }
 
 interface IntegrationPageProps {
@@ -19,6 +26,10 @@ interface IntegrationPageProps {
   metaDescription: string;
   sections: IntegrationSection[];
   serviceSchema?: Record<string, unknown>;
+  /** Guides and pages that go deeper on what this integration is used for.
+   *  These pages had no in-content links out, so they passed nothing on to
+   *  the guides written about the same tool. */
+  related?: IntegrationRelatedLink[];
 }
 
 const BREADCRUMB_NAMES: Record<string, string> = {
@@ -37,6 +48,7 @@ export const IntegrationPage = ({
   metaDescription,
   sections,
   serviceSchema,
+  related,
 }: IntegrationPageProps) => {
   const pageUrl = `${SITE_URL}/integrations/${slug}`;
   const imageUrl = `${SITE_URL}/og/integrations-${slug}.png`;
@@ -93,6 +105,25 @@ export const IntegrationPage = ({
             </div>
           </section>
         ))}
+
+        {related && related.length > 0 && (
+          <section className="mb-10 border-t border-border pt-10">
+            <h2 className="text-xl font-semibold mb-4">Related guides</h2>
+            <ul className="space-y-4">
+              {related.map((item) => (
+                <li key={item.to} className="text-muted-foreground leading-relaxed">
+                  <Link
+                    to={item.to}
+                    className="font-medium text-primary underline-offset-4 hover:underline"
+                  >
+                    {item.label}
+                  </Link>
+                  <span className="block">{item.description}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <div className="mt-12 text-center">
           <TalkToUsButton size="lg" />

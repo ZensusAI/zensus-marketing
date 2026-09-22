@@ -1,5 +1,9 @@
 import { SITE_URL } from "@/lib/constants";
-import { IntegrationPage, IntegrationSection } from "@/components/integrations/IntegrationPage";
+import {
+  IntegrationPage,
+  IntegrationRelatedLink,
+  IntegrationSection,
+} from "@/components/integrations/IntegrationPage";
 import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 
 const sections: IntegrationSection[] = [
@@ -55,6 +59,33 @@ const sections: IntegrationSection[] = [
   },
 ];
 
+const related: IntegrationRelatedLink[] = [
+  {
+    to: "/blog/can-quickbooks-forecast-cash-flow",
+    label: "Can QuickBooks forecast cash flow?",
+    description:
+      "What the built-in Cash Flow Planner does, where it stops, and when a business needs dedicated forecasting on top of QuickBooks.",
+  },
+  {
+    to: "/compare/zensus-vs-float",
+    label: "Zensus vs Float",
+    description:
+      "A side-by-side look at two forecasting tools that both read from QuickBooks.",
+  },
+  {
+    to: "/compare/zensus-vs-pulse",
+    label: "Zensus vs Pulse",
+    description:
+      "How Zensus compares with a lower-cost, hands-on cash flow tool that also syncs with QuickBooks Online.",
+  },
+  {
+    to: "/blog/cash-conversion-cycle",
+    label: "Cash conversion cycle",
+    description:
+      "How the timing of receivables and payables (DSO and DPO) decides when cash actually arrives.",
+  },
+];
+
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -86,6 +117,7 @@ const QuickBooksIntegration = () => (
     metaDescription="Connect QuickBooks to Zensus via Intuit OAuth. Live expense and AR/AP sync, AES-256-GCM encrypted tokens, credentials never stored."
     sections={sections}
     serviceSchema={serviceSchema}
+    related={related}
   />
 );
 

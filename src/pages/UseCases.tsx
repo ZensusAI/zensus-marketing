@@ -140,7 +140,16 @@ const UseCases = () => (
             </Link>{" "}
             invoices and places each contract payment on the date it actually
             lands, so your cash flow forecast reflects the March 14 renewal,
-            not a smooth twelfth of it every month. For the weekly discipline behind this,
+            not a smooth twelfth of it every month. Deals and subscriptions
+            from{" "}
+            <Link to="/integrations/hubspot" className={linkCls}>
+              HubSpot
+            </Link>{" "}
+            land on the same timeline, and our guide to{" "}
+            <Link to="/blog/arr-vs-cash-for-founders" className={linkCls}>
+              ARR vs cash
+            </Link>{" "}
+            explains why the two numbers disagree. For the weekly discipline behind this,
             see our guide to the{" "}
             <Link to="/blog/what-is-a-13-week-cash-flow-forecast" className={linkCls}>
               13-week cash flow forecast
@@ -174,8 +183,13 @@ const UseCases = () => (
             <Link to="/integrations/plaid" className={linkCls}>
               bank feed via Plaid
             </Link>{" "}
-            and dates inflows by when customers really pay. New to the
-            practice? Start with{" "}
+            and dates inflows by when customers really pay. Slow payers
+            stretch your{" "}
+            <Link to="/blog/cash-conversion-cycle" className={linkCls}>
+              cash conversion cycle
+            </Link>
+            ; that guide shows how to measure it. New to the practice? Start
+            with{" "}
             <Link to="/blog/what-is-cash-flow-forecasting" className={linkCls}>
               what cash flow forecasting is
             </Link>
@@ -188,7 +202,12 @@ const UseCases = () => (
             The lumpier your inflows, the bigger the buffer you need and the
             earlier you need warning. Zensus tracks your projected low point
             against your minimum cash buffer through the slow months, so you
-            size spending decisions on the trough, not the peak. One plan
+            size spending decisions on the trough, not the peak. The date that
+            trough hits zero is your{" "}
+            <Link to="/blog/zero-cash-date-for-founders" className={linkCls}>
+              zero cash date
+            </Link>
+            . One plan
             covers every integration; see{" "}
             <Link to="/pricing" className={linkCls}>
               pricing
@@ -205,7 +224,12 @@ const UseCases = () => (
             <a href="/#features" className={linkCls}>
               cash flow view
             </a>{" "}
-            updates as real transactions clear. Your data stays yours: how we
+            updates as real transactions clear. To try the idea with your own
+            numbers first, use the free{" "}
+            <Link to="/tools/runway-calculator" className={linkCls}>
+              runway calculator
+            </Link>
+            . Your data stays yours: how we
             handle it is documented on the{" "}
             <Link to="/security" className={linkCls}>
               security page
