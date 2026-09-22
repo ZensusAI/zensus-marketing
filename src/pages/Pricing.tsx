@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
 import { SITE_URL, START_TRIAL_URL, TALK_TO_US_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
-import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
@@ -87,6 +87,10 @@ const pricingFaqs = [
   },
 ];
 
+// The three questions above are shown on the page word for word, so they
+// can carry FAQPage markup.
+const pricingFaqLd = faqPageSchema(pricingFaqs);
+
 const decideLinkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
 const Pricing = () => (
@@ -95,7 +99,7 @@ const Pricing = () => (
       <title>Zensus Pricing · $199/mo Cash Flow Forecasting Software</title>
       <meta
         name="description"
-        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."
+        content="Zensus Pro is $199/month after a 14-day free trial, with every integration, scenario modeling, and Slack alerts. Zensus Custom is quoted for complex setups."
       />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={`${SITE_URL}/pricing`} />
@@ -103,7 +107,7 @@ const Pricing = () => (
       <meta property="og:title" content="Zensus Pricing · $199/mo Cash Flow Forecasting for Businesses" />
       <meta
         property="og:description"
-        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."
+        content="Zensus Pro is $199/month after a 14-day free trial, with every integration, scenario modeling, and Slack alerts. Zensus Custom is quoted for complex setups."
       />
       <meta property="og:image" content={`${SITE_URL}/og/pricing.png`} />
       <meta property="og:image:width" content="1200" />
@@ -113,11 +117,12 @@ const Pricing = () => (
       <meta name="twitter:title" content="Zensus Pricing · $199/mo Cash Flow Forecasting for Businesses" />
       <meta
         name="twitter:description"
-        content="Try Zensus Pro free for 14 days. Then $199/month. One plan with every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts."
+        content="Zensus Pro is $199/month after a 14-day free trial, with every integration, scenario modeling, and Slack alerts. Zensus Custom is quoted for complex setups."
       />
       <meta name="twitter:image" content={`${SITE_URL}/og/pricing.png`} />
       <link rel="canonical" href={`${SITE_URL}/pricing`} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      <script type="application/ld+json">{JSON.stringify(pricingFaqLd)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">
@@ -128,7 +133,7 @@ const Pricing = () => (
               Start free. 14 days on us.
             </h1>
             <p className="text-sm text-muted-foreground">
-              Every integration, real-time cash flow intelligence, scenario modeling, and Slack alerts. 14-day free trial, then $199 a month. Cancel anytime. Need a tailored setup instead? Talk to us.
+              Zensus Pro costs $199 a month, billed monthly, after a 14-day free trial. It includes every integration (Plaid, QuickBooks, HubSpot, and Slack), real-time cash flow intelligence, scenario modeling, and Slack alerts. Your card is collected at signup and not charged until the trial ends; cancel before then and you pay nothing. Need a tailored setup instead? Talk to us about Zensus Custom.
             </p>
           </div>
 

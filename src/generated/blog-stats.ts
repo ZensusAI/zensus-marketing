@@ -9,7 +9,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "can-quickbooks-forecast-cash-flow": {
-    "wordCount": 1995,
+    "wordCount": 2285,
     "images": [
       "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/quickbooks-cash-flow-planner-data-flow.png",
       "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/revenue-vs-cash-timeline.png",
@@ -41,7 +41,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "hubspot-pipeline-to-cash-forecast": {
-    "wordCount": 1753,
+    "wordCount": 1754,
     "images": [
       "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/from-deal-value-to-cash-forecast.png",
       "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/pipeline-versus-cash-timeline-comparison.png",
@@ -99,7 +99,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "zero-cash-date-for-founders": {
-    "wordCount": 1622,
+    "wordCount": 1759,
     "images": [
       "https://zensus.finance/blog/zero-cash-date-for-founders/runway-vs-zero-cash-date.png",
       "https://zensus.finance/blog/zero-cash-date-for-founders/how-to-calculate-zero-cash-date.png",

@@ -8,7 +8,7 @@ import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const PAGE_URL = `${SITE_URL}/about`;
-const PERSONAL_SITE = "https://ajinsunny.com";
+const PERSONAL_GITHUB = "https://github.com/ajinsunny";
 const PERSONAL_LINKEDIN = "https://www.linkedin.com/in/ajinsunny/";
 
 const breadcrumbs = breadcrumbSchema([
@@ -42,7 +42,7 @@ const ashwinPersonLd = {
 
 const personalLinks = [
   { label: "LinkedIn", href: PERSONAL_LINKEDIN, external: true },
-  { label: "ajinsunny.com", href: PERSONAL_SITE, external: true },
+  { label: "GitHub", href: PERSONAL_GITHUB, external: true },
 ];
 
 const principles = [
@@ -55,8 +55,8 @@ const principles = [
     body: "Bank and accounting credentials live with Plaid and Intuit, never with us. Your data never trains an AI model. Every query is isolated by account.",
   },
   {
-    title: 'No contracts, no "contact sales."',
-    body: "One plan at a public price. Sign up, connect your data, cancel the same day if it is not a fit.",
+    title: "A public price. No contract.",
+    body: "Zensus Pro is $199 a month, billed monthly. Sign up, connect your data, and cancel the same day if it is not a fit. Teams that need a tailored setup can talk to us about Zensus Custom.",
   },
 ];
 

@@ -56,6 +56,10 @@ Most businesses make million-dollar decisions (hiring, fundraising timing, contr
 - Billed monthly, cancel anytime
 - Less than a single hour with a fractional CFO
 - Includes all integrations, cash flow agent, and unlimited scenarios
+- 14-day free trial; card collected at signup, not charged until the trial ends
+
+**Zensus Custom: quoted**
+- For teams that need a tailored forecast setup, custom integrations, dedicated onboarding, priority support, and team training
 
 ## FAQ
 
@@ -167,8 +171,8 @@ https://zensus.finance/blog/can-quickbooks-forecast-cash-flow
 
 What QuickBooks Cash Flow Planner does and does not do for founders. Key facts from the guide:
 
-- QuickBooks Cash Flow Planner forecasts expected cash inflows and outflows over roughly 30 to 90 days using bank activity, unpaid invoices, unpaid bills, and manual planner entries.
-- It is designed for short-term operational liquidity, not runway modeling, hiring scenarios, or board-level planning.
+- QuickBooks Cash Flow Planner projects cash from connected bank activity, QuickBooks data such as future invoices, bills, and expenses, and planner items you add. Intuit publishes no single fixed horizon: its Cash Flow Planner FAQ says the 24-month chart view shows 14 months ahead, and the 12-month and 6-month views show 2 months.
+- It projects from what is already in the books, so hires, fundraising, and pipeline deals appear only if entered by hand; it is built for operational liquidity, not runway modeling, hiring scenarios, or board-level planning.
 - Unpaid invoices due in the future can be included in forecasts, but collection timing assumptions may not match reality.
 - Cash Flow Planner is not available when QuickBooks Multicurrency is enabled.
 - Venture-backed startups often keep QuickBooks for accounting and add a dedicated forecasting layer for runway, scenarios, and subscription-aware collections timing.
@@ -180,7 +184,7 @@ https://zensus.finance/blog/zero-cash-date-for-founders
 How to calculate zero cash date with weekly forecasts instead of monthly runway averages. Key facts from the guide:
 
 - Zero cash date is the calendar day projected cash reaches zero; runway is a smoothed month count and can overstate survival time.
-- Monthly burn of $50k on $300k cash implies six months, but a 15-week model with lumpy payroll can exhaust cash around month 4.5.
+- Monthly burn of $50k on $300k cash implies six months, but a weekly model with $30k biweekly payroll, a $36k annual prepayment in week 1, and a $100k renewal due in week 22 runs out of cash in week 20, about four and a half months in.
 - Weekly forecasting captures payroll clustering, collection delays, vendor spikes, and tax timing.
 - A rolling 13-week cash flow forecast is the standard operational horizon for zero cash date planning.
 - Zensus calculates zero-cash date from Plaid, QuickBooks, and HubSpot data with weekly drill-down and Slack alerts.

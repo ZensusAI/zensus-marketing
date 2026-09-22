@@ -38,7 +38,7 @@ const FAQS = [
   {
     question: "Who is Zensus for?",
     answer:
-      "Zensus is for businesses of any size with lumpy cash flow: annual and quarterly contracts, seasonal swings, usage-based pricing, late-paying clients, and payroll that has to clear. It connects QuickBooks, bank accounts via Plaid, and HubSpot, and costs $199 per month on a single plan.",
+      "Zensus is for businesses of any size with lumpy cash flow: annual and quarterly contracts, seasonal swings, usage-based pricing, late-paying clients, and payroll that has to clear. It connects QuickBooks, bank accounts via Plaid, and HubSpot, and Zensus Pro costs $199 per month.",
   },
   {
     question: "Does Zensus work for agencies with late-paying clients?",
@@ -207,7 +207,7 @@ const UseCases = () => (
             <Link to="/blog/zero-cash-date-for-founders" className={linkCls}>
               zero cash date
             </Link>
-            . One plan
+            . Zensus Pro
             covers every integration; see{" "}
             <Link to="/pricing" className={linkCls}>
               pricing
