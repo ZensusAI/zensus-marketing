@@ -11,6 +11,7 @@ import {
   HOME_CRUMB,
 } from "@/lib/structured-data";
 import {
+  COMPARE_LINKS,
   COMPARE_METHODOLOGY,
   type ComparePageConfig,
 } from "@/lib/compare-pages";
@@ -236,6 +237,23 @@ export function ComparePageLayout({ config }: ComparePageLayoutProps) {
                 </div>
               ))}
             </dl>
+          </section>
+
+          {/* Each comparison page linked only to /integrations and /pricing, so
+              a reader comparing tools had no path to the next comparison. */}
+          <section className="mt-12" aria-labelledby="more-heading">
+            <h2 id="more-heading" className="text-xl font-semibold tracking-tight">
+              More comparisons
+            </h2>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+              {COMPARE_LINKS.filter((l) => l.to !== `/compare/${config.slug}`).map((l) => (
+                <li key={l.to}>
+                  <Link to={l.to} className={linkCls}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </section>
 
           <div className="mt-12 flex flex-wrap items-center gap-4">

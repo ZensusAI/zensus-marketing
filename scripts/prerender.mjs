@@ -44,6 +44,7 @@ const STATIC_ROUTES = [
   "/tools/payroll-calendar",
   "/compare/zensus-vs-float",
   "/compare/zensus-vs-pulse",
+  "/compare/float-alternatives",
   "/llm-info",
 ];
 

@@ -51,6 +51,7 @@ Businesses of any size with variable revenue, complex hiring plans, annual contr
 - [Free payroll calendar calculator](https://zensus.finance/tools/payroll-calendar)
 - [Zensus vs Float](https://zensus.finance/compare/zensus-vs-float)
 - [Zensus vs Pulse](https://zensus.finance/compare/zensus-vs-pulse)
+- [Float alternatives](https://zensus.finance/compare/float-alternatives)
 - [LLM entity summary](https://zensus.finance/llm-info)
 - [Free 13-week cash flow template (XLSX)](https://zensus.finance/templates/13-week-cash-flow-template.xlsx)
 - [Changelog](https://zensus.finance/changelog)

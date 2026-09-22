@@ -262,13 +262,20 @@ const Comparison = () => {
           className="font-medium text-primary underline-offset-4 hover:underline"
         >
           Zensus vs Float
-        </Link>{" "}
-        and{" "}
+        </Link>
+        ,{" "}
         <Link
           to="/compare/zensus-vs-pulse"
           className="font-medium text-primary underline-offset-4 hover:underline"
         >
           Zensus vs Pulse
+        </Link>
+        , and{" "}
+        <Link
+          to="/compare/float-alternatives"
+          className="font-medium text-primary underline-offset-4 hover:underline"
+        >
+          Float alternatives
         </Link>
         .
       </p>

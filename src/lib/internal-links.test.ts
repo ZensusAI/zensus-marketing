@@ -114,6 +114,7 @@ describe("internal links", () => {
     for (const path of [
       "/compare/zensus-vs-float",
       "/compare/zensus-vs-pulse",
+      "/compare/float-alternatives",
       "/use-cases",
       "/tools/runway-calculator",
       "/tools/payroll-calendar",
