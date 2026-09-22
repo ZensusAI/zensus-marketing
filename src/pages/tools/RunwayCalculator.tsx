@@ -448,7 +448,7 @@ const RunwayCalculator = () => {
               <p>
                 Zensus answers the same questions with your live financials:
                 it connects your bank, QuickBooks, and HubSpot and keeps your
-                zero-cash date current as real transactions clear. One plan,{" "}
+                zero-cash date current as real transactions clear. Zensus Pro is{" "}
                 <Link to="/pricing" className={linkCls}>
                   $199 per month
                 </Link>

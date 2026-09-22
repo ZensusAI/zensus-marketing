@@ -4,7 +4,7 @@ export const meta = {
   description:
     'How to calculate your zero cash date with weekly cash flow forecasts, why monthly runway hides timing risk, and a worked example where six months becomes 4.5.',
   date: '2026-06-29',
-  dateModified: '2026-06-29',
+  dateModified: '2026-09-21',
   category: 'Guide',
   readTime: '12 min read',
   slug: 'zero-cash-date-for-founders',
@@ -19,7 +19,7 @@ export const meta = {
     {
       question: 'What is a zero cash date?',
       answer:
-        'A zero cash date is the exact day a company projected cash balance reaches zero based on expected inflows and outflows. It answers when you run out of money if nothing changes.',
+        "A zero cash date is the exact day a company's projected cash balance reaches zero based on expected inflows and outflows. It answers when you run out of money if nothing changes.",
     },
     {
       question: 'What is a cash out date for a startup?',
@@ -221,7 +221,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <ul>
   <li>current cash: $300,000</li>
-  <li>average monthly burn: $50,000</li>
+  <li>average monthly burn over the next six months: $50,000</li>
   <li>runway: $300,000 ÷ $50,000 = 6 months</li>
 </ul>
 
@@ -232,35 +232,43 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p className="mb-2 font-medium text-foreground">Cash timing in this example:</p>
 
 <ul>
-  <li>payroll every two weeks</li>
-  <li>vendor payments monthly</li>
-  <li>software contracts monthly</li>
-  <li>customer payments irregular and often delayed</li>
+  <li>payroll of $30,000 every two weeks</li>
+  <li>rent, software, and contractors of about $4,000 a week</li>
+  <li>an annual software and insurance prepayment of $36,000 in week 1</li>
+  <li>customer collections of about $5,000 a week</li>
+  <li>a $100,000 annual contract renewal due in week 22</li>
 </ul>
 
 ### Weekly Forecast
 
 | Week | Opening Cash | Cash In | Cash Out | Ending Cash |
 | --- | ---: | ---: | ---: | ---: |
-| 1 | $300,000 | $5,000 | $25,000 | $280,000 |
-| 2 | $280,000 | $5,000 | $15,000 | $270,000 |
-| 3 | $270,000 | $5,000 | $35,000 | $240,000 |
-| 4 | $240,000 | $5,000 | $20,000 | $225,000 |
-| 5 | $225,000 | $5,000 | $35,000 | $195,000 |
-| 6 | $195,000 | $5,000 | $20,000 | $180,000 |
-| 7 | $180,000 | $5,000 | $35,000 | $150,000 |
-| 8 | $150,000 | $5,000 | $20,000 | $135,000 |
-| 9 | $135,000 | $5,000 | $35,000 | $105,000 |
-| 10 | $105,000 | $5,000 | $20,000 | $90,000 |
-| 11 | $90,000 | $5,000 | $35,000 | $60,000 |
-| 12 | $60,000 | $5,000 | $20,000 | $45,000 |
-| 13 | $45,000 | $5,000 | $35,000 | $15,000 |
-| 14 | $15,000 | $5,000 | $20,000 | $0 |
-| 15 | $0 | $5,000 | $35,000 | -$30,000 |
+| 1 | $300,000 | $5,000 | $40,000 | $265,000 |
+| 2 | $265,000 | $5,000 | $34,000 | $236,000 |
+| 3 | $236,000 | $5,000 | $4,000 | $237,000 |
+| 4 | $237,000 | $5,000 | $34,000 | $208,000 |
+| 5 | $208,000 | $5,000 | $4,000 | $209,000 |
+| 6 | $209,000 | $5,000 | $34,000 | $180,000 |
+| 7 | $180,000 | $5,000 | $4,000 | $181,000 |
+| 8 | $181,000 | $5,000 | $34,000 | $152,000 |
+| 9 | $152,000 | $5,000 | $4,000 | $153,000 |
+| 10 | $153,000 | $5,000 | $34,000 | $124,000 |
+| 11 | $124,000 | $5,000 | $4,000 | $125,000 |
+| 12 | $125,000 | $5,000 | $34,000 | $96,000 |
+| 13 | $96,000 | $5,000 | $4,000 | $97,000 |
+| 14 | $97,000 | $5,000 | $34,000 | $68,000 |
+| 15 | $68,000 | $5,000 | $4,000 | $69,000 |
+| 16 | $69,000 | $5,000 | $34,000 | $40,000 |
+| 17 | $40,000 | $5,000 | $4,000 | $41,000 |
+| 18 | $41,000 | $5,000 | $34,000 | $12,000 |
+| 19 | $12,000 | $5,000 | $4,000 | $13,000 |
+| 20 | $13,000 | $5,000 | $34,000 | -$16,000 |
+| 21 | -$16,000 | $5,000 | $4,000 | -$15,000 |
+| 22 | -$15,000 | $105,000 | $34,000 | $56,000 |
 
 ### What Happened?
 
-<p>The monthly average suggested <strong>6 months</strong> of runway. The weekly forecast showed cash exhausted during <strong>month 4.5</strong>.</p>
+<p>The monthly average suggested <strong>6 months</strong> of runway, and over six months the average burn really is $50,000. The weekly forecast shows that the week 20 payroll cannot be met: cash runs out about <strong>four and a half months</strong> in, two weeks before the $100,000 renewal arrives.</p>
 
 <p>Same company. Same starting balance. Completely different outcome. The difference comes from timing. This is why <strong>zero cash date vs runway</strong> matters: one is a calendar deadline, the other is a smoothed average.</p>
 

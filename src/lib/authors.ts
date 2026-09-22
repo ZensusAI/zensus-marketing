@@ -24,7 +24,7 @@ export const authors = {
     jobTitle: "Founder & CEO",
     sameAs: [
       "https://www.linkedin.com/in/ajinsunny/",
-      "https://ajinsunny.com",
+      "https://github.com/ajinsunny",
     ],
   },
   ashwin: {

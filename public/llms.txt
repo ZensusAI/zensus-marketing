@@ -25,6 +25,8 @@ Businesses of any size with variable revenue, complex hiring plans, annual contr
 ## Pricing
 
 - Zensus Pro: $199/month, billed monthly, cancel anytime
+- 14-day free trial; card collected at signup, not charged until the trial ends
+- Zensus Custom: quoted plan for teams that need a tailored forecast setup, custom integrations, dedicated onboarding, priority support, and team training
 
 ## Links
 

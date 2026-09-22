@@ -385,7 +385,7 @@ const PayrollCalendar = () => {
               </p>
               <p>
                 Zensus connects your bank, QuickBooks, and HubSpot and keeps payroll and every other
-                outflow on the dates they actually hit. One plan,{" "}
+                outflow on the dates they actually hit. Zensus Pro is{" "}
                 <Link to="/pricing" className={linkCls}>
                   $199 per month
                 </Link>
