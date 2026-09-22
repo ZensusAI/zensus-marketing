@@ -12,15 +12,20 @@ import { Link } from "react-router-dom";
  *   mean "not found on their public pages" carry the asterisk footnote
  *   instead of asserting absence as fact.
  * - The caption dates the comparison. Re-verify vendor pages quarterly
- *   (next review: September 2026) or when a competitor ships changes.
- * Per-cell source notes live in docs/comparison-substantiation-2026-06-07.md
+ *   (last review: 21 September 2026; next review: December 2026) or when a
+ *   competitor ships changes.
+ * - A cross never asserts more than the evidence supports. "*" means the
+ *   capability was not found on the vendor's public pages. The double dagger
+ *   means the vendor's own page says it does not offer it, which is a
+ *   stronger and separately sourced claim.
+ * Per-cell source notes live in docs/comparison-substantiation-2026-09-21.md
  * (vendor pricing and feature pages for floatapp.com, cashflowfrog.com,
- * forecastr.co). Update that file with every change to ROWS.
+ * forecastr.com). Update that file with every change to ROWS.
  */
 
 type Cell =
   | { mark: "yes"; note?: string }
-  | { mark: "no"; footnote?: boolean }
+  | { mark: "no"; footnote?: boolean; symbol?: string }
   | { mark: "yes-footnote"; symbol: string };
 
 interface Row {
@@ -34,7 +39,7 @@ const ROWS: Row[] = [
   {
     label: "Live bank feed (Plaid)",
     cells: [
-      { mark: "no", footnote: true },
+      { mark: "no", symbol: "‡" },
       { mark: "yes" },
       { mark: "no", footnote: true },
       { mark: "yes" },
@@ -48,8 +53,8 @@ const ROWS: Row[] = [
     label: "CRM-aware forecasting",
     cells: [
       { mark: "no", footnote: true },
-      { mark: "no", footnote: true },
-      { mark: "no", footnote: true },
+      { mark: "no", symbol: "‡" },
+      { mark: "yes-footnote", symbol: "§" },
       { mark: "yes", note: "HubSpot" },
     ],
   },
@@ -58,7 +63,7 @@ const ROWS: Row[] = [
     cells: [
       { mark: "no", footnote: true },
       { mark: "yes-footnote", symbol: "†" },
-      { mark: "no", footnote: true },
+      { mark: "yes-footnote", symbol: "§" },
       { mark: "yes" },
     ],
   },
@@ -126,7 +131,9 @@ function CellMark({ cell, landed, delayMs, instant }: CellMarkProps) {
   return (
     <span className={`inline-flex items-start text-muted-foreground/50 ${reveal}`} style={style}>
       <X size={16} strokeWidth={2} aria-label="No" />
-      {cell.footnote && <span className="text-[11px]">*</span>}
+      {(cell.symbol || cell.footnote) && (
+        <span className="text-[11px]">{cell.symbol ?? "*"}</span>
+      )}
     </span>
   );
 }
@@ -172,12 +179,24 @@ const Comparison = () => {
       <div ref={tableRef} className="mx-auto max-w-4xl overflow-x-auto">
         <table className="w-full min-w-[640px] border-collapse text-sm">
           <caption className="caption-bottom pt-5 text-left text-xs leading-relaxed text-muted-foreground">
-            * Not found on the vendor's public pages as of June 2026.{" "}
+            * Not found on the vendor's public pages as of September 2026.{" "}
             <span className="block sm:inline">
-              {"†"} Via an external AI connector (ChatGPT or Claude), not built in.
+              {"†"} Through an external AI assistant (Claude, ChatGPT, Copilot,
+              or Gemini), not built in.
             </span>{" "}
             <span className="block pt-1">
-              Based on publicly available vendor pages, June 2026. Float, Cash Flow
+              {"‡"} Stated on the vendor's own pages: Float does not connect
+              directly to banks (bank data arrives through the accounting
+              platform), and Cash Flow Frog has no CRM connection (deals can
+              arrive through Zapier).
+            </span>
+            <span className="block pt-1">
+              {"§"} Forecastr lists CRM integrations on its $10,000/year Growth
+              plan, and a built-in AI chatbot whose scope its public pages do
+              not describe.
+            </span>
+            <span className="block pt-1">
+              Based on publicly available vendor pages, September 2026. Float, Cash Flow
               Frog, and Forecastr are trademarks of their respective owners; Zensus
               is not affiliated with or endorsed by them.
             </span>
