@@ -30,6 +30,7 @@ const RunwayCalculator = lazy(() => import("./pages/tools/RunwayCalculator"));
 const PayrollCalendar = lazy(() => import("./pages/tools/PayrollCalendar"));
 const ZensusVsFloat = lazy(() => import("./pages/compare/ZensusVsFloat"));
 const ZensusVsPulse = lazy(() => import("./pages/compare/ZensusVsPulse"));
+const FloatAlternatives = lazy(() => import("./pages/compare/FloatAlternatives"));
 const LlmInfo = lazy(() => import("./pages/LlmInfo"));
 const PlaidIntegration = lazy(() => import("./pages/integrations/Plaid"));
 const QuickBooksIntegration = lazy(
@@ -116,6 +117,10 @@ const App = () => (
             <Route
               path="/compare/zensus-vs-pulse"
               element={<ZensusVsPulse />}
+            />
+            <Route
+              path="/compare/float-alternatives"
+              element={<FloatAlternatives />}
             />
             <Route path="/llm-info" element={<LlmInfo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

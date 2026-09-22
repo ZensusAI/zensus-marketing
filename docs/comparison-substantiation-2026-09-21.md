@@ -1,9 +1,9 @@
 # Comparison substantiation, September 21, 2026
 
 Evidence file for every named-competitor claim on the site: the homepage
-matrix in `src/components/landing/Comparison.tsx` and the two pages driven by
-`src/lib/compare-pages.ts` (`/compare/zensus-vs-float`,
-`/compare/zensus-vs-pulse`). It supersedes
+matrix in `src/components/landing/Comparison.tsx` and the three pages driven
+by `src/lib/compare-pages.ts` (`/compare/zensus-vs-float`,
+`/compare/zensus-vs-pulse`, `/compare/float-alternatives`). It supersedes
 `comparison-substantiation-2026-06-07.md`, which is kept as the record of what
 was true in June. Re-verify quarterly (next review: December 2026) or when a
 competitor ships changes.
@@ -163,6 +163,92 @@ its scope is not described), Slack threshold alerts = no (asterisk).
 In June both of those Forecastr cells were crosses. Leaving them as crosses
 would now understate a competitor, which is the failure this file exists to
 prevent.
+
+## Float alternatives page (`/compare/float-alternatives`)
+
+Added 2026-09-21, driven by `FLOAT_ALTERNATIVES` in
+`src/lib/compare-pages.ts`. Float, Pulse and Cash Flow Frog facts on that
+page come from the sections above, with these additions and limits:
+
+- The page lists tools by starting price, lowest first, with Float as a
+  reference row. Zensus is listed last because it is the most expensive, and
+  the page says that Float Essentials ($130/mo) costs less than Zensus Pro
+  ($199/mo).
+- Cash Flow Frog's price is quoted only as "from $33/mo billed yearly, set by
+  revenue", which matches the vendor's own meta description ("revenue-based
+  plans from $33/month") and the rendered Yearly tab. The monthly prices read
+  from the pricing script are not quoted anywhere on the site.
+- Cash Flow Frog's trial: "14-day free trial, no credit card required"
+  (https://cashflowfrog.com/ai/) and "30-day money-back guarantee"
+  (https://cashflowfrog.com/pricing/).
+- Cash Flow Frog's target: "small and mid-sized businesses and for the
+  accountants and bookkeepers who advise them" (https://cashflowfrog.com/ai/).
+- Pulse's audience: "specifically designed for small businesses"
+  (https://pulseapp.com/pricing).
+- Pulse scenarios: "Toggle entries and accounts on and off to game out
+  different scenarios" (https://pulseapp.com/pricing).
+- "Not found" in the table means not found on the vendor's public pages, as
+  with the asterisk in the homepage matrix.
+- Cash Flow Frog's "14-day free trial" wording is on https://cashflowfrog.com/ai/;
+  the pricing page itself says only "No credit card required" and "30-day
+  money-back guarantee". The $33 is labelled "Early bird 40%" on the Yearly
+  tab and carries `"billingDuration":"P1Y"` in the page's JSON-LD, so the site
+  calls it an early-bird rate billed yearly.
+- The page makes no comparative claim about Slack alerts: Helm and Futrli
+  were not checked for them, so the Slack line names only what Zensus does.
+
+### Futrli (futrli.com)
+
+- Price: "Single For 1-5 licenses Perfect for sole traders. Your quote $40
+  per month / excl. VAT". Next plans: Starter $250 ("For 6-18 licenses"),
+  Professional $350, Practice $550. Source: https://www.futrli.com/pricing
+- Currency: the default block shows a bare "$". The page's JSON-LD gives
+  `"price": "40", "priceCurrency": "USD"` (its `priceValidUntil` of
+  2025-12-31 is stale). The page swaps in regional blocks by visitor location
+  (GBP, CAD, AUD, NZD, EUR, ZAR), each labelled, so the unlabelled $ block is
+  taken as USD. Source-only; re-check from a US connection at the next review.
+- Trial: "Start My 14-Day Free Trial"; "No credit card up front."; FAQ: "No,
+  you just need to provide your full name and an email address."
+- All plans: "Unlimited users", "Daily cash flow forecasting", "Budgets and
+  scenario modelling", "3-way forecasting".
+- Integrations (site navigation): Sage, Xero, QuickBooks Online, Excel.
+- Audience: separate "For Businesses" and "For Accountants" tabs.
+- Ownership: the footer reads "© Sage Group plc 2025", but no page states
+  the relationship, so the site does not describe Futrli's owner.
+- Bank feed, CRM, alerts: not found on the pages read.
+
+### Helm (takethehelm.app)
+
+- Price: "*Per Business Connected/Month. First connection costs $50/month."
+  Source: https://takethehelm.app/pricing/
+- Currency: not stated anywhere (no label, no `priceCurrency`, no switcher).
+  The page is `lang="en-CA"` and the terms of service name "Slick, Iterative
+  Design Corp., which is doing business as Helm", governed by the laws of
+  Alberta and Canada (https://takethehelm.app/terms-of-service/). The site
+  therefore writes "currency not stated" and never "USD".
+- The price counter's source animates from 50 to 32
+  (`data-from-value="50" data-to-value="32"`), which likely means $32 for each
+  further connection. Not quoted; only the rendered $50 sentence is used.
+- Trial: "Start a free 14-day trial ... Cancel or pause your subscription
+  anytime." Whether a card is needed is not stated.
+- Inclusions: "Fully Automated and Customizable 12-Month Cash Flow
+  Forecasts", "Unlimited Scenario Planning", "Unlimited Users".
+- Integrations: "Integrates with QBO, Xero, and Sage"; "Helm syncs with Xero,
+  QuickBooks Online, and Sage Accounting"
+  (https://takethehelm.app/for-businesses/).
+- Audience: "manage cash for your business, a few handpicked clients (or
+  hundreds)"; "Loved by Small Businesses and their advisors".
+- Bank feed, CRM, alerts: not found on the pages read.
+
+### Considered and left out
+
+- Fathom: its served HTML shows "$59/ month" next to a "Prices shown in $AUD"
+  label, while its pricing script shows US visitors a USD Starter price of 59.
+  More to the point, Fathom presents itself as "Reporting Forecasting and
+  Consolidation Software", reporting first, so it is not a like-for-like
+  Float alternative. Revisit if the page is broadened.
+- Dryrun: no public pricing. Forecastr: analyst-led at $5,000 a year and up,
+  a different category.
 
 ## Not verified in this review
 

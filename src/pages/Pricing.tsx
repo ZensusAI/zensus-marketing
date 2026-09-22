@@ -309,12 +309,16 @@ const Pricing = () => (
             . Comparing tools? Read{" "}
             <Link to="/compare/zensus-vs-float" className={decideLinkCls}>
               Zensus vs Float
-            </Link>{" "}
-            and{" "}
+            </Link>
+            ,{" "}
             <Link to="/compare/zensus-vs-pulse" className={decideLinkCls}>
               Zensus vs Pulse
             </Link>
-            , or run your own numbers in the free{" "}
+            , and the{" "}
+            <Link to="/compare/float-alternatives" className={decideLinkCls}>
+              Float alternatives
+            </Link>{" "}
+            side by side, or run your own numbers in the free{" "}
             <Link to="/tools/runway-calculator" className={decideLinkCls}>
               runway calculator
             </Link>

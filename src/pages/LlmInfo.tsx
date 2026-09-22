@@ -258,6 +258,11 @@ const LlmInfo = () => (
                 Zensus vs Pulse
               </Link>
             </li>
+            <li>
+              <Link to="/compare/float-alternatives" className={linkCls}>
+                Float alternatives
+              </Link>
+            </li>
           </ul>
         </section>
 

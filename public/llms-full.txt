@@ -231,6 +231,11 @@ https://zensus.finance/compare/zensus-vs-pulse
 
 Honest comparison for Pulse app alternatives, based on vendor pages as of September 2026. Pulse: $29/mo Basics, $59/mo Small Business Plan (adds QuickBooks Online sync), $89/mo Premium (currency conversion), manual scenario toggles, 30-day trial with a card required at signup. Zensus: $199/mo automated forecast from bank and CRM data with subscription-aware timing.
 
+### Float alternatives
+https://zensus.finance/compare/float-alternatives
+
+Five Float alternatives compared from each vendor's own pages as of September 2026, listed by starting price. Pulse: $29/mo, QuickBooks Online sync from $59/mo, 30-day trial that charges the card at the end. Cash Flow Frog: from $33/mo billed yearly (early-bird rate, set by revenue), seven accounting platforms including Xero and QuickBooks Desktop, direct bank feed via Plaid, no CRM connection, 14-day trial with no card. Futrli: $40/mo excl. VAT for 1 to 5 licenses, daily and 3-way forecasting, Xero, QuickBooks Online, Sage, 14-day trial with no card. Helm: $50/mo for the first connected business (currency not stated), Xero, QuickBooks Online, Sage Accounting, 12-month forecasts, unlimited scenarios. Zensus: $199/mo, Plaid bank feed, QuickBooks, HubSpot subscription sync, Slack alerts, no Xero. Float stays the better fit for Xero users who need multi-entity consolidation, and Float Essentials ($130/mo) costs less than Zensus.
+
 ## LLM entity page
 
 https://zensus.finance/llm-info
@@ -268,4 +273,5 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - Slack integration: https://zensus.finance/integrations/slack
 - Zensus vs Float: https://zensus.finance/compare/zensus-vs-float
 - Zensus vs Pulse: https://zensus.finance/compare/zensus-vs-pulse
+- Float alternatives: https://zensus.finance/compare/float-alternatives
 - LLM entity summary: https://zensus.finance/llm-info

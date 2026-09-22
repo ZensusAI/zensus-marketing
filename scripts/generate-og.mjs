@@ -97,6 +97,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "compare-float-alternatives",
+    category: "Compare",
+    title: "Float alternatives",
+    subtitle:
+      "Cash flow forecasting tools compared on price, trial, bank feed, and CRM, from vendor pages.",
+    accent: "green",
+  },
+  {
     slug: "llm-info",
     category: "AI",
     title: "Zensus entity summary",

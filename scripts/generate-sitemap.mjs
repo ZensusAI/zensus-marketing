@@ -26,6 +26,7 @@ const STATIC_URLS = [
   { loc: `${SITE_URL}/tools/payroll-calendar`, changefreq: "monthly", priority: "0.8" },
   { loc: `${SITE_URL}/compare/zensus-vs-float`, changefreq: "monthly", priority: "0.7" },
   { loc: `${SITE_URL}/compare/zensus-vs-pulse`, changefreq: "monthly", priority: "0.7" },
+  { loc: `${SITE_URL}/compare/float-alternatives`, changefreq: "monthly", priority: "0.7" },
   { loc: `${SITE_URL}/llm-info`, changefreq: "monthly", priority: "0.6" },
   { loc: `${SITE_URL}/about`, changefreq: "monthly", priority: "0.6" },
   { loc: `${SITE_URL}/privacy`, changefreq: "yearly", priority: "0.3" },

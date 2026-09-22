@@ -39,6 +39,7 @@ const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
         children: [
           { label: "Zensus vs Float", href: "/compare/zensus-vs-float" },
           { label: "Zensus vs Pulse", href: "/compare/zensus-vs-pulse" },
+          { label: "Float alternatives", href: "/compare/float-alternatives" },
         ],
       },
       { label: "FAQ", href: "/#faq" },
