@@ -8,7 +8,7 @@ import Footer from "@/components/landing/Footer";
 const PAGE_URL = `${SITE_URL}/llm-info`;
 const PAGE_TITLE = "Zensus entity summary for AI systems";
 const PAGE_DESCRIPTION =
-  "Machine-readable summary of Zensus: cash flow forecasting software, founder, location, pricing, integrations, guides, and free tools.";
+  "Machine-readable summary of Zensus: cash flow forecasting software, founder, pricing, integrations, guides, comparisons, and free tools.";
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 

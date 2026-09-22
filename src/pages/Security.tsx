@@ -140,7 +140,7 @@ const Security = () => (
       <title>Security at Zensus · How We Protect Your Financial Data</title>
       <meta
         name="description"
-        content="How Zensus protects your financial data. AES-256-GCM at rest, bank-level OAuth via Plaid and Intuit, account-level isolation, US data residency, and zero AI training on your data."
+        content="How Zensus protects your financial data: AES-256-GCM encryption, OAuth via Plaid and Intuit, account-level isolation, US data residency, no AI training."
       />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={`${SITE_URL}/security`} />

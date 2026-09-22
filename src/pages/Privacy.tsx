@@ -4,7 +4,7 @@ import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const PAGE_URL = `${SITE_URL}/privacy`;
 const PAGE_DESCRIPTION =
-  "How Zensus collects, uses, and protects your information. Bank credentials stay with Plaid, your data never trains an AI model, and every query is isolated by account.";
+  "How Zensus collects, uses, and protects your information. Bank credentials stay with Plaid, your data never trains an AI model, and accounts are isolated.";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,

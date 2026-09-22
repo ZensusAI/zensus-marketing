@@ -21,7 +21,7 @@ import {
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
 const PAGE_URL = `${SITE_URL}/tools/runway-calculator`;
-const PAGE_TITLE = "Startup Runway Calculator · Zero-Cash Date and Hiring Impact";
+const PAGE_TITLE = "Startup Runway Calculator: Find Your Zero-Cash Date";
 const PAGE_DESCRIPTION =
   "Free startup runway calculator: enter cash, revenue, and expenses to get your zero-cash date, then model what a new hire or an annual contract does to it.";
 

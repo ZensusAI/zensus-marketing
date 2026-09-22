@@ -47,7 +47,7 @@ const Index = () => {
             titles below deliberately keep the benefit line, since social cards
             are a click surface rather than a ranking one. */}
         <title>Cash Flow Forecasting for Unpredictable Revenue · Zensus</title>
-        <meta name="description" content="Zensus is cash flow forecasting software for businesses with unpredictable revenue. Connect your bank, QuickBooks, and HubSpot for a live view of your cash position and the date it runs out." />
+        <meta name="description" content="Zensus is cash flow forecasting software for businesses with unpredictable revenue. Connect your bank, QuickBooks and HubSpot to see the date cash runs out." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${SITE_URL}/`} />
         <meta property="og:site_name" content="Zensus" />
