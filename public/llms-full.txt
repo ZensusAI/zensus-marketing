@@ -224,12 +224,12 @@ Free tool: count pay periods in 2026 and 2027, highlight three-paycheck months, 
 ### Zensus vs Float
 https://zensus.finance/compare/zensus-vs-float
 
-Honest comparison for founders evaluating Float alternatives. Float: revenue-tiered pricing from $31/mo USD, Xero/QBO/FreeAgent, 13-week and 36-month forecasts, multi-company dashboard. Zensus: flat $199/mo, Plaid plus QuickBooks plus HubSpot, plain-English scenarios, Slack alerts.
+Honest comparison for founders evaluating Float alternatives, based on vendor pages as of September 2026. Float: Essentials $130/mo billed monthly ($105/mo annually), Growth $265/mo, Scale $389/mo; Xero and QuickBooks Online; no direct bank connection (bank data arrives through the accounting platform); 13-week rolling view and up to 36-month forecasts on Growth and Scale; unlimited users; multi-entity consolidation on Scale; 14-day trial, no credit card. Zensus: flat $199/mo, Plaid plus QuickBooks plus HubSpot, plain-English scenarios, Slack alerts; 14-day trial with a card collected at signup and not charged until the trial ends.
 
 ### Zensus vs Pulse
 https://zensus.finance/compare/zensus-vs-pulse
 
-Honest comparison for Pulse app alternatives. Pulse: $29/mo Basics, $89/mo Premium, QuickBooks Online sync, manual scenario toggles. Zensus: $199/mo automated forecast from bank and CRM data with subscription-aware timing.
+Honest comparison for Pulse app alternatives, based on vendor pages as of September 2026. Pulse: $29/mo Basics, $59/mo Small Business Plan (adds QuickBooks Online sync), $89/mo Premium (currency conversion), manual scenario toggles, 30-day trial with a card required at signup. Zensus: $199/mo automated forecast from bank and CRM data with subscription-aware timing.
 
 ## LLM entity page
 

@@ -28,7 +28,7 @@ export interface ComparePageConfig {
   faqs: FaqItem[];
 }
 
-const METHODOLOGY_DATE = "June 2026";
+const METHODOLOGY_DATE = "September 2026";
 
 export const COMPARE_METHODOLOGY = `Based on publicly available vendor pages, ${METHODOLOGY_DATE}.`;
 
@@ -44,17 +44,17 @@ export const FLOAT_COMPARE: ComparePageConfig = {
   ogSubtitle:
     "Honest comparison of Zensus and Float on pricing, integrations, scenarios, and who each tool fits best.",
   lead:
-    "Float and Zensus both help businesses forecast cash flow, but they solve different problems for different teams. Float is a mature accounting-connected forecasting platform with revenue-tiered pricing. Zensus is built for variable revenue, live bank data, and subscription-aware projections with a flat price.",
+    "Float and Zensus both help businesses forecast cash flow, but they solve different problems for different teams. Float is a mature accounting-connected forecasting platform built for finance teams, with plans tied to company revenue. Zensus is built for variable revenue, live bank data, and subscription-aware projections with a flat price.",
   competitorBestFor:
-    "Float is a strong fit if you already run on Xero or QuickBooks, want an established cash flow forecasting product with 13-week and up to 36-month views, and prefer revenue-tiered pricing that can start below $199 per month. Float also supports multiple companies from one dashboard, which accountants and fractional CFOs often need.",
+    "Float is a strong fit if you already run on Xero or QuickBooks Online and want an established forecasting product for a finance team: a 13-week rolling view, monthly forecasts out to 36 months on the Growth and Scale plans, unlimited users, and up to 8 scenarios. Its Essentials plan is $130 per month billed monthly ($105 billed annually), below Zensus's $199. The Scale plan consolidates up to 5 entities, which multi-entity finance teams need.",
   zensusBestFor:
     "Zensus is a stronger fit if your cash picture depends on when money actually hits the bank, not just accounting recognition. That includes annual and quarterly contracts synced from HubSpot, live Plaid bank feeds, plain-English scenario questions, and Slack alerts when a 30-day projection crosses a cash floor you set.",
   competitorStrengths: [
-    "Lower entry price on Float's public USD pricing page (from $31/mo billed monthly, scaling with company revenue)",
-    "Up to 36-month forecasts plus 13-week rolling views on Float's features page",
-    "Unlimited users on all Float plans per Float pricing",
-    "Multi-company dashboard for accountants and agencies",
-    "Mature scenario toggles (up to 8 scenarios) with cash-threshold early warnings",
+    "Lower entry price: Float Essentials is $130/mo billed monthly, or $105/mo billed annually, on Float's public USD pricing page",
+    "13-week rolling view on every plan, and forecasts out to 36 months on Growth and Scale (12 months on Essentials)",
+    "Unlimited users and up to 8 scenarios on every plan, including a dedicated new-hire modelling tool",
+    "Multi-entity consolidation on the Scale plan (up to 5 entities, more at extra cost)",
+    "14-day free trial with no credit card required",
   ],
   zensusStrengths: [
     "Live bank feed via Plaid, not only accounting data",
@@ -65,29 +65,29 @@ export const FLOAT_COMPARE: ComparePageConfig = {
   ],
   pricingSummary: {
     competitor:
-      "Float prices by company revenue on its public pricing page. In USD, monthly billing starts from $31/mo for the lowest revenue band and rises through tiers (for example $105/mo and $154/mo at higher bands as of June 2026). Annual billing starts from $25/mo equivalent. All plans include Float's full feature set. 14-day free trial, no credit card required.",
+      "Float publishes three plans on its USD pricing page, tied to company revenue. Essentials, for companies below £2m in revenue, is $130/mo billed monthly or $105/mo billed annually. Growth, for companies above that, is $265/mo or $215/mo. Scale, for multi-entity teams, is $389/mo or $315/mo and covers up to 5 entities. Essentials forecasts 12 months ahead; Growth and Scale forecast 36. 14-day free trial, no credit card required. Prices as of September 2026.",
     zensus:
-      "Zensus Pro is $199 per month, billed monthly, cancel anytime. One public plan includes Plaid, QuickBooks, HubSpot, Slack, the scenario agent, and unlimited scenarios. 14-day free trial.",
+      "Zensus Pro is $199 per month, billed monthly, cancel anytime. One public plan includes Plaid, QuickBooks, HubSpot, Slack, the scenario agent, and unlimited scenarios. 14-day free trial; your card is collected at signup and is not charged until the trial ends.",
   },
   tableRows: [
     {
       label: "Starting price (USD)",
-      competitor: "From $31/mo (revenue-tiered)",
+      competitor: "$130/mo billed monthly, $105/mo billed annually (Essentials)",
       zensus: "$199/mo flat",
     },
     {
       label: "Free trial",
       competitor: "14 days, no credit card",
-      zensus: "14 days",
+      zensus: "14 days; card collected at signup, not charged until the trial ends",
     },
     {
       label: "Primary data sources",
-      competitor: "Xero, QuickBooks, FreeAgent (accounting)",
+      competitor: "Xero, QuickBooks Online (accounting)",
       zensus: "Plaid bank, QuickBooks, HubSpot",
     },
     {
       label: "Live bank feed (Plaid)",
-      competitor: "Not on Float public pages",
+      competitor: "No direct bank connection; bank data arrives through Xero or QuickBooks, synced every 24 hours (Float product page)",
       zensus: "Yes",
     },
     {
@@ -97,22 +97,22 @@ export const FLOAT_COMPARE: ComparePageConfig = {
     },
     {
       label: "Forecast views",
-      competitor: "Daily, weekly, monthly; 13-week and up to 36 months",
+      competitor: "13-week rolling (weekly) and monthly; up to 36 months on Growth and Scale",
       zensus: "Monthly, weekly, daily drill-down",
     },
     {
       label: "Scenario planning",
-      competitor: "Form-based toggles (up to 8 scenarios)",
+      competitor: "Line toggles and what-if scenarios, including new hires (up to 8 scenarios)",
       zensus: "Plain-English agent scenarios",
     },
     {
       label: "Cash threshold alerts",
-      competitor: "Early warnings on cash runway date",
+      competitor: "Risk visibility in the forecast; threshold alerts not found on Float public pages",
       zensus: "Slack alerts on 30-day projection",
     },
     {
       label: "Multi-company management",
-      competitor: "Yes (company dashboard)",
+      competitor: "Scale plan: up to 5 entities, with consolidation",
       zensus: "One company per Zensus account",
     },
     {
@@ -125,17 +125,17 @@ export const FLOAT_COMPARE: ComparePageConfig = {
     {
       question: "Is Zensus or Float better for cash flow forecasting?",
       answer:
-        "Float is stronger if you want a proven accounting-connected forecast with multi-company support and revenue-tiered pricing. Zensus is stronger if you need live bank data, HubSpot subscription timing, plain-English scenarios, and Slack alerts in one flat-priced plan.",
+        "Float is stronger if you want a proven accounting-connected forecast for a finance team, with unlimited users and multi-entity consolidation. Zensus is stronger if you need live bank data, HubSpot subscription timing, plain-English scenarios, and Slack alerts in one flat-priced plan.",
     },
     {
       question: "How does Float pricing compare to Zensus?",
       answer:
-        "Float's public USD pricing starts from $31 per month billed monthly and increases with company revenue. Zensus is $199 per month flat with every integration included. Float can cost less at early revenue bands; Zensus stays predictable as you scale.",
+        "Float's public USD pricing starts at $130 per month billed monthly, or $105 per month billed annually, for Essentials, its plan for companies below £2m in revenue. Growth is $265 per month and Scale is $389 per month. Zensus is $199 per month flat with every integration included. Float Essentials costs less than Zensus; Zensus costs less than Float Growth and Scale.",
     },
     {
       question: "Does Float connect to Plaid or HubSpot?",
       answer:
-        "Float's public feature and pricing pages describe connections to Xero, QuickBooks, and FreeAgent. Plaid bank feeds and HubSpot CRM sync were not found on Float's public pages as of June 2026.",
+        "Float's public pages describe connections to Xero and QuickBooks Online, and say Float does not connect directly to your bank: bank data arrives through the accounting platform. HubSpot CRM sync was not found on Float's public pages as of September 2026.",
     },
     {
       question: "What are good Float alternatives?",
@@ -145,7 +145,7 @@ export const FLOAT_COMPARE: ComparePageConfig = {
     {
       question: "Can I try both before deciding?",
       answer:
-        "Yes. Float offers a 14-day free trial with no credit card. Zensus offers a 14-day trial on the same terms.",
+        "Yes. Float offers a 14-day free trial with no credit card required. Zensus offers a 14-day free trial; your card is collected at signup and is not charged if you cancel before the trial ends.",
     },
   ],
 };
@@ -162,17 +162,17 @@ export const PULSE_COMPARE: ComparePageConfig = {
   ogSubtitle:
     "Honest comparison of Zensus and Pulse on price, data sources, automation, and founder use cases.",
   lead:
-    "Pulse and Zensus both help business owners answer whether they can afford a hire or survive a slow month. Pulse is a focused, lower-cost cash flow workbook with QuickBooks Online sync. Zensus automates projections from bank, accounting, and CRM data with an AI scenario agent.",
+    "Pulse and Zensus both help business owners answer whether they can afford a hire or survive a slow month. Pulse is a focused, lower-cost cash flow workbook with QuickBooks Online sync. Zensus automates projections from bank, accounting, and CRM data with a plain-English scenario agent.",
   competitorBestFor:
-    "Pulse is a strong fit if you want a simple, affordable cash flow tool ($29/mo Basics on Pulse's pricing page), prefer to model income and expenses yourself, and mainly need QuickBooks Online sync plus scenario toggles without a higher automation layer.",
+    "Pulse is a strong fit if you want a simple, affordable cash flow tool (Basics is $29/mo on Pulse's pricing page; the $59/mo Small Business Plan adds QuickBooks Online sync), prefer to model income and expenses yourself, and want scenario toggles without a higher automation layer.",
   zensusBestFor:
     "Zensus is a stronger fit if you want projections that update from connected data, subscription contracts that land in lumps, live bank balances via Plaid, and plain-English what-if questions without rebuilding spreadsheets.",
   competitorStrengths: [
     "Lower price: Pulse Basics at $29/mo on Pulse's public pricing page",
-    "Premium tier at $89/mo for unlimited financial accounts and currency conversion",
+    "Small Business Plan at $59/mo adds QuickBooks Online sync, multiple financial accounts, and invited users; Premium at $89/mo adds unlimited accounts and currency conversion",
     "30-day free trial on new accounts",
     "Simple scenario toggles to test income and expense changes quickly",
-    "Multi-currency support on Premium",
+    "Works with any currency, with currency conversion on Premium",
   ],
   zensusStrengths: [
     "Live Plaid bank feed plus QuickBooks plus HubSpot in one forecast",
@@ -183,9 +183,9 @@ export const PULSE_COMPARE: ComparePageConfig = {
   ],
   pricingSummary: {
     competitor:
-      "Pulse Basics is $29 per month for core cash flow views, recurring entries, and reports. Pulse Premium (Extra Features) is $89 per month and adds unlimited financial accounts, currency conversion, and document attachments. New accounts get a 30-day free trial per Pulse pricing.",
+      "Pulse Basics is $29 per month for core cash flow views. The Small Business Plan is $59 per month and adds QuickBooks Online sync, multiple financial accounts, and invited users. Premium (Extra Features) is $89 per month and adds unlimited financial accounts and currency conversion. New accounts get a 30-day free trial; Pulse charges the card used at signup when the trial ends. Prices as of September 2026.",
     zensus:
-      "Zensus Pro is $199 per month, billed monthly, cancel anytime. Includes Plaid, QuickBooks, HubSpot, Slack, the scenario agent, and unlimited scenarios. 14-day free trial.",
+      "Zensus Pro is $199 per month, billed monthly, cancel anytime. Includes Plaid, QuickBooks, HubSpot, Slack, the scenario agent, and unlimited scenarios. 14-day free trial; your card is collected at signup and is not charged until the trial ends.",
   },
   tableRows: [
     {
@@ -194,18 +194,18 @@ export const PULSE_COMPARE: ComparePageConfig = {
       zensus: "$199/mo flat",
     },
     {
-      label: "Premium tier",
-      competitor: "$89/mo (unlimited accounts, multi-currency)",
-      zensus: "N/A (one plan)",
+      label: "Higher tiers",
+      competitor: "$59/mo (adds QuickBooks Online sync); $89/mo (unlimited accounts, currency conversion)",
+      zensus: "One public plan; Custom is quoted",
     },
     {
       label: "Free trial",
-      competitor: "30 days (new accounts)",
-      zensus: "14 days",
+      competitor: "30 days; card required at signup",
+      zensus: "14 days; card collected at signup, not charged until the trial ends",
     },
     {
       label: "QuickBooks Online sync",
-      competitor: "Yes (Pulse homepage)",
+      competitor: "Yes, from the $59/mo Small Business Plan (Pulse pricing page)",
       zensus: "Yes",
     },
     {
@@ -235,7 +235,7 @@ export const PULSE_COMPARE: ComparePageConfig = {
     },
     {
       label: "Multi-currency",
-      competitor: "Yes (Premium)",
+      competitor: "Any currency; conversion on Premium",
       zensus: "USD-focused forecasting",
     },
   ],
@@ -243,12 +243,12 @@ export const PULSE_COMPARE: ComparePageConfig = {
     {
       question: "Is Zensus or Pulse better for cash flow?",
       answer:
-        "Pulse is better if you want a low-cost, hands-on cash flow workbook with QuickBooks sync. Zensus is better if you want automated projections from bank and CRM data, subscription-aware timing, and an AI agent for scenarios.",
+        "Pulse is better if you want a low-cost, hands-on cash flow workbook with QuickBooks sync. Zensus is better if you want automated projections from bank and CRM data, subscription-aware timing, and a plain-English scenario agent.",
     },
     {
       question: "How much does Pulse cost compared to Zensus?",
       answer:
-        "Pulse Basics is $29 per month and Premium is $89 per month on Pulse's public pricing page. Zensus is $199 per month flat with all integrations included.",
+        "On Pulse's public pricing page, Basics is $29 per month, the Small Business Plan with QuickBooks Online sync is $59 per month, and Premium is $89 per month. Zensus is $199 per month flat with all integrations included.",
     },
     {
       question: "What are good Pulse app alternatives?",
@@ -258,7 +258,7 @@ export const PULSE_COMPARE: ComparePageConfig = {
     {
       question: "Does Pulse connect to Plaid or HubSpot?",
       answer:
-        "Pulse's public site describes QuickBooks Online sync. Plaid bank feeds and HubSpot were not found on Pulse's public pages as of June 2026.",
+        "Pulse's public site describes QuickBooks Online sync. Plaid bank feeds and HubSpot were not found on Pulse's public pages as of September 2026.",
     },
     {
       question: "Which tool is better for agencies and service businesses?",
