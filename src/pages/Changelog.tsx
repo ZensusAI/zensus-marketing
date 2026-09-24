@@ -52,6 +52,53 @@ interface ChangelogEntry {
 
 const entries: ChangelogEntry[] = [
   {
+    date: "2026-09-23",
+    category: "Improved",
+    title: "More accurate cash forecast",
+    body: [
+      "Payments stay open until they clear, and bank transactions match the right forecast row.",
+      "Open invoices no longer stack on forecast revenue; refunds are not counted as sales.",
+      "Irregular vendors and manual expenses forecast more realistically.",
+    ],
+  },
+  {
+    date: "2026-09-20",
+    category: "Improved",
+    title: "Clearer bank sync status",
+    body: [
+      "The dashboard notices when a bank was asked for its balance and did not answer.",
+      "Syncs finish faster when a bank is slow to return a live balance.",
+      "Sync last updated reflects the sync's time, not the page-load time.",
+    ],
+  },
+  {
+    date: "2026-09-08",
+    category: "New",
+    title: "Zero-cash date on the runway chart",
+    body: [
+      "The chart shows your zero-cash date.",
+      "The header names that date alongside the other runway metrics.",
+    ],
+  },
+  {
+    date: "2026-08-10",
+    category: "New",
+    title: "Connect more than one bank",
+    body: [
+      "Link multiple bank connections under one account.",
+      "Runway cash and sync status reflect each connected bank.",
+    ],
+  },
+  {
+    date: "2026-07-31",
+    category: "New",
+    title: "13-week cash view",
+    body: [
+      "Switch between Monthly and 13-Week on the runway projection.",
+      "Includes a 13-week chart, reconciling table, and CSV export.",
+    ],
+  },
+  {
     date: "2026-05-31",
     category: "New",
     title: "Sign in with Google from the homepage",
