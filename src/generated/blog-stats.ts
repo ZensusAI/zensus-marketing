@@ -4,32 +4,32 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
   "arr-vs-cash-for-founders": {
     "wordCount": 1750,
     "images": [
-      "https://zensus.finance/blog/arr-vs-cash-for-founders/arr-vs-cash-timing-comparison.png",
-      "https://zensus.finance/blog/arr-vs-cash-for-founders/from-contract-to-cash.png"
+      "https://zensus.finance/blog/arr-vs-cash-for-founders/arr-vs-cash-timing-comparison.webp",
+      "https://zensus.finance/blog/arr-vs-cash-for-founders/from-contract-to-cash.webp"
     ]
   },
   "can-quickbooks-forecast-cash-flow": {
     "wordCount": 2285,
     "images": [
-      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/quickbooks-cash-flow-planner-data-flow.png",
-      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/revenue-vs-cash-timeline.png",
-      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/short-term-planning-to-strategic-forecasting.png"
+      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/quickbooks-cash-flow-planner-data-flow.webp",
+      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/revenue-vs-cash-timeline.webp",
+      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/short-term-planning-to-strategic-forecasting.webp"
     ]
   },
   "cash-conversion-cycle": {
     "wordCount": 2787,
     "images": [
-      "https://zensus.finance/blog/cash-conversion-cycle/how-cash-conversion-cycle-works.png",
-      "https://zensus.finance/blog/cash-conversion-cycle/dio-dso-dpo-where-cash-gets-stuck.png"
+      "https://zensus.finance/blog/cash-conversion-cycle/how-cash-conversion-cycle-works.webp",
+      "https://zensus.finance/blog/cash-conversion-cycle/dio-dso-dpo-where-cash-gets-stuck.webp"
     ]
   },
   "default-alive-vs-default-dead-for-founders": {
     "wordCount": 1731,
     "images": [
-      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-vs-default-dead.png",
-      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/investor-screening-gates.png",
-      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-score.png",
-      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-dead-to-default-alive.png"
+      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-vs-default-dead.webp",
+      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/investor-screening-gates.webp",
+      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-score.webp",
+      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-dead-to-default-alive.webp"
     ]
   },
   "forecasting-ai-compute-costs-for-founders": {
@@ -43,9 +43,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
   "hubspot-pipeline-to-cash-forecast": {
     "wordCount": 1754,
     "images": [
-      "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/from-deal-value-to-cash-forecast.png",
-      "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/pipeline-versus-cash-timeline-comparison.png",
-      "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/revenue-vs-cash-forecast-dashboard.png"
+      "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/from-deal-value-to-cash-forecast.webp",
+      "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/pipeline-versus-cash-timeline-comparison.webp",
+      "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/revenue-vs-cash-forecast-dashboard.webp"
     ]
   },
   "mcp-vs-cli-for-finance-teams": {
@@ -61,16 +61,16 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
   "runway-vs-burn-rate-for-founders": {
     "wordCount": 1156,
     "images": [
-      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/cash-reserve-burn-runway.png",
-      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/gross-burn-net-burn-runway.png",
-      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/burn-multiple-formula.png"
+      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/cash-reserve-burn-runway.webp",
+      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/gross-burn-net-burn-runway.webp",
+      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/burn-multiple-formula.webp"
     ]
   },
   "what-happens-if-you-miss-payroll": {
     "wordCount": 1445,
     "images": [
-      "https://zensus.finance/blog/what-happens-if-you-miss-payroll/payroll-not-processed-consequences.png",
-      "https://zensus.finance/blog/what-happens-if-you-miss-payroll/seven-day-payroll-emergency-plan.png"
+      "https://zensus.finance/blog/what-happens-if-you-miss-payroll/payroll-not-processed-consequences.webp",
+      "https://zensus.finance/blog/what-happens-if-you-miss-payroll/seven-day-payroll-emergency-plan.webp"
     ]
   },
   "what-is-a-13-week-cash-flow-forecast": {
@@ -101,9 +101,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
   "zero-cash-date-for-founders": {
     "wordCount": 1759,
     "images": [
-      "https://zensus.finance/blog/zero-cash-date-for-founders/runway-vs-zero-cash-date.png",
-      "https://zensus.finance/blog/zero-cash-date-for-founders/how-to-calculate-zero-cash-date.png",
-      "https://zensus.finance/blog/zero-cash-date-for-founders/weekly-forecasting-finds-risk-earlier.png"
+      "https://zensus.finance/blog/zero-cash-date-for-founders/runway-vs-zero-cash-date.webp",
+      "https://zensus.finance/blog/zero-cash-date-for-founders/how-to-calculate-zero-cash-date.webp",
+      "https://zensus.finance/blog/zero-cash-date-for-founders/weekly-forecasting-finds-risk-earlier.webp"
     ]
   }
 };

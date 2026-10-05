@@ -49,6 +49,7 @@ export function ReadMoreSection({
                     alt={post.title}
                     className="aspect-video w-full rounded-lg object-cover transition-opacity group-hover:opacity-90"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
               ) : (

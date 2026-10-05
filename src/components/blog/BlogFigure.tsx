@@ -2,10 +2,10 @@ interface BlogFigureProps {
   src: string;
   alt: string;
   caption?: string;
-  /** Intrinsic pixel dimensions. Always pass both: they let the browser
-      reserve the layout box before the image loads, preventing CLS. */
-  width?: number;
-  height?: number;
+  /** Intrinsic pixel dimensions. They let the browser reserve the layout box
+      before the image loads, preventing CLS. */
+  width: number;
+  height: number;
 }
 
 /** Inline figures for blog MDX; rounded clip via overflow-hidden wrapper. */
