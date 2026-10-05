@@ -9,11 +9,13 @@ import {
   breadcrumbSchema,
   faqPageSchema,
   HOME_CRUMB,
+  webPageSchema,
 } from "@/lib/structured-data";
 import {
   COMPARE_LINKS,
   COMPARE_METHODOLOGY,
   FLOAT_ALTERNATIVES as page,
+  METHODOLOGY_REVIEWED,
 } from "@/lib/compare-pages";
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
@@ -27,6 +29,14 @@ const breadcrumbs = breadcrumbSchema([
 ]);
 
 const faqLd = faqPageSchema(page.faqs);
+
+const webPageLd = webPageSchema({
+  url: pageUrl,
+  name: page.pageTitle,
+  description: page.metaDescription,
+  image: ogImage,
+  lastReviewed: METHODOLOGY_REVIEWED,
+});
 
 // The tools reviewed, in the order the page lists them. Float itself is the
 // subject, not an entry, so it is left out of the list.
@@ -67,6 +77,7 @@ const FloatAlternatives = () => (
       <meta name="twitter:image" content={ogImage} />
       <link rel="canonical" href={pageUrl} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      <script type="application/ld+json">{JSON.stringify(webPageLd)}</script>
       <script type="application/ld+json">{JSON.stringify(itemListLd)}</script>
       <script type="application/ld+json">{JSON.stringify(faqLd)}</script>
     </Helmet>

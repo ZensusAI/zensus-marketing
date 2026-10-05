@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository purpose
 
-Marketing site for Zensus (`zensus.app`). The **product app** lives at a separate domain (`app.zensus.app`) and is not in this repo. This repo serves the public landing, pricing, blog, changelog, security, integrations (hub + per-provider sub-pages for Plaid, QuickBooks, HubSpot, and Slack), `/privacy`, `/terms`, and `/subprocessors` pages. One legacy route is permanently redirected at the edge via `vercel.json`, not by a React component: `/features` goes to the homepage. Everything else is a real React route served from this repo. Old pre-migration app paths on the apex (`/runway`, `/forecast`, `/talk`) intentionally return 404; do not add redirects for them, and expect Search Console to list them under "Not found (404)" until Google drops them. Keep any edge redirect single-hop to a 200 page and never redirect to a URL with a `#fragment`; Google Search Console reports fragment targets as "Redirect error".
+Marketing site for Zensus (`zensus.finance`; it moved from `zensus.app` on 2026-09-13, and the old apex and `www` redirect here). The **product app** lives at a separate domain (`app.zensus.app`) and is not in this repo. This repo serves the public landing, pricing, blog, changelog, security, integrations (hub + per-provider sub-pages for Plaid, QuickBooks, HubSpot, and Slack), `/privacy`, `/terms`, and `/subprocessors` pages. One legacy route is permanently redirected at the edge via `vercel.json`, not by a React component: `/features` goes to the homepage. Everything else is a real React route served from this repo. Old pre-migration app paths on the apex (`/runway`, `/forecast`, `/talk`) intentionally return 404; do not add redirects for them, and expect Search Console to list them under "Not found (404)" until Google drops them. Keep any edge redirect single-hop to a 200 page and never redirect to a URL with a `#fragment`; Google Search Console reports fragment targets as "Redirect error".
 
 ## Commands
 
@@ -59,7 +59,7 @@ from `.nvmrc`, which says **24** because that is what the Vercel project builds 
 production builds on is how something passes CI and then fails the deploy. It
 deliberately does
 **not** build: Vercel already builds each PR as a preview and each push to `main` for
-production, and that build is slow (Puppeteer prerenders 34 routes). CI covers exactly
+production, and that build is slow (Puppeteer prerenders every route). CI covers exactly
 what the Vercel build does not, which before this workflow existed was the tests and
 the typechecker, neither of which ran anywhere automatically.
 

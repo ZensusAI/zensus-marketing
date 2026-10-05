@@ -32,6 +32,10 @@ const Hero = () => {
               <span className="block lg:whitespace-nowrap">
                 <TextHoverHalo as="span" text={H1_LINE_1} />
               </span>
+              {/* Both lines are block spans, so this space draws nothing. It is
+                  there for anything that reads the H1 as text: without it the
+                  headline came out as "Your cash flow,mapped as far ahead". */}
+              {" "}
               <span className="block text-balance">
                 <TextHoverHalo as="span" text={H1_LINE_2} />
               </span>

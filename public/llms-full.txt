@@ -118,6 +118,17 @@ A step-by-step method for founders to know weeks in advance whether payroll clea
 - Employer payroll taxes follow IRS deposit schedules, so the cash leaves the account on a predictable calendar.
 - Zensus projects payroll coverage continuously and sends Slack alerts when a 30-day projection crosses your cash floor.
 
+### What Happens If You Miss Payroll?
+https://zensus.finance/blog/what-happens-if-you-miss-payroll
+
+What a missed payroll sets off, and a seven-day plan for a founder who may not make the next one. The guide is not legal advice. Key facts from the guide:
+
+- Payroll is a legal obligation, not another vendor payment: the work has already been done. Wage-payment rules depend on the state, the employee's classification, the pay frequency, and how long the delay lasts.
+- A missed payroll can lead to state wage penalties, late payroll tax deposits with their own penalties and interest, resignations, and lost investor confidence.
+- The employer stays responsible for federal withholding, Social Security, Medicare, and state payroll taxes when cash is short.
+- The seven-day plan: confirm the exact shortfall, stop non-essential spending, speed up collections, tell employees early, look at bridge financing, build a 13-week cash plan, then set a payroll cash floor with alerts.
+- Most payroll shortfalls show up weeks ahead in a weekly forecast, as falling cash, late receivables, or rising burn.
+
 ### Forecasting AI Compute Costs for Founders (2026)
 https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders
 
@@ -140,6 +151,18 @@ The difference between runway, burn rate, net burn, gross burn, and burn multipl
 - Burn multiple (net burn ÷ net new ARR) has become a primary capital-efficiency metric; below 2x is the common investor threshold David Sacks popularized.
 - 2026 runway guidance has shifted to 18–24 months post-fundraise, up from 12–15 months in 2021.
 - Rolling cash flow forecasts tied to live bank, accounting, and subscription data produce more accurate runway than static spreadsheets.
+
+### Default Alive vs Default Dead for Founders
+https://zensus.finance/blog/default-alive-vs-default-dead-for-founders
+
+How to tell whether a startup reaches profitability before its cash runs out, using four numbers. Key facts from the guide:
+
+- Paul Graham introduced the framework in his October 2015 essay "Default Alive or Default Dead".
+- A startup is default alive if its current growth and margin trends lead to profitability before cash reaches zero, without raising more money. It does not have to be profitable today.
+- A startup is default dead if those trends run out of cash first. It then needs funding, bridge capital, lower burn, or faster revenue.
+- The guide turns the framework into four numbers: burn multiple, runway, gross margin, and whether revenue is growing faster than burn.
+- Burn multiple is net burn divided by net new ARR. $200,000 of net burn against $120,000 of net new ARR is a burn multiple of 1.67x.
+- A company can be growing and still be default dead, if expenses grow faster than revenue.
 
 ### ARR vs Cash for Founders
 https://zensus.finance/blog/arr-vs-cash-for-founders

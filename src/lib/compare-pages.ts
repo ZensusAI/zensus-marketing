@@ -30,6 +30,13 @@ export interface ComparePageConfig {
 
 const METHODOLOGY_DATE = "September 2026";
 
+/**
+ * The day the vendor pages were last read, for the comparison pages' WebPage
+ * markup. It is the date on docs/comparison-substantiation-2026-09-21.md.
+ * Change it together with METHODOLOGY_DATE at each re-verification.
+ */
+export const METHODOLOGY_REVIEWED = "2026-09-21";
+
 export const COMPARE_METHODOLOGY = `Based on publicly available vendor pages, ${METHODOLOGY_DATE}.`;
 
 export const FLOAT_COMPARE: ComparePageConfig = {

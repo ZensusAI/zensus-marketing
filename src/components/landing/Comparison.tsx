@@ -100,6 +100,21 @@ interface CellMarkProps {
   instant: boolean;
 }
 
+/**
+ * What a cell says in words. The icons used to carry this in an aria-label
+ * only, so anything that read the table as text (a search or AI crawler, a
+ * copy and paste) got five rows of empty cells. The wording follows the same
+ * guardrail as the symbols: a cross with "*" is "Not found", never "No",
+ * because all it records is that the vendor's public pages did not mention
+ * the capability. A plain "No" is kept for the cells the vendor's own page
+ * confirms.
+ */
+function cellText(cell: Cell): string {
+  if (cell.mark === "yes") return "Yes";
+  if (cell.mark === "yes-footnote") return "Yes, with a caveat";
+  return cell.symbol ? "No" : "Not found";
+}
+
 function CellMark({ cell, landed, delayMs, instant }: CellMarkProps) {
   // Marks scale-pop in once the table scrolls into view, cascading down the
   // rows. Reduced motion renders them in place.
@@ -113,7 +128,8 @@ function CellMark({ cell, landed, delayMs, instant }: CellMarkProps) {
   if (cell.mark === "yes") {
     return (
       <span className={`inline-flex flex-col items-center gap-0.5 ${reveal}`} style={style}>
-        <Check size={18} strokeWidth={2.5} className="text-primary" aria-label="Yes" />
+        <Check size={18} strokeWidth={2.5} className="text-primary" aria-hidden />
+        <span className="sr-only">{cell.note ? `${cellText(cell)}: ` : cellText(cell)}</span>
         {cell.note && (
           <span className="text-[11px] leading-tight text-muted-foreground">{cell.note}</span>
         )}
@@ -123,14 +139,16 @@ function CellMark({ cell, landed, delayMs, instant }: CellMarkProps) {
   if (cell.mark === "yes-footnote") {
     return (
       <span className={`inline-flex items-start ${reveal}`} style={style}>
-        <Check size={18} strokeWidth={2.5} className="text-primary" aria-label="Yes, with caveat" />
+        <Check size={18} strokeWidth={2.5} className="text-primary" aria-hidden />
+        <span className="sr-only">{cellText(cell)} </span>
         <span className="text-[11px] text-muted-foreground">{cell.symbol}</span>
       </span>
     );
   }
   return (
     <span className={`inline-flex items-start text-muted-foreground/50 ${reveal}`} style={style}>
-      <X size={16} strokeWidth={2} aria-label="No" />
+      <X size={16} strokeWidth={2} aria-hidden />
+      <span className="sr-only">{cellText(cell)} </span>
       {(cell.symbol || cell.footnote) && (
         <span className="text-[11px]">{cell.symbol ?? "*"}</span>
       )}
@@ -203,7 +221,9 @@ const Comparison = () => {
           </caption>
           <thead>
             <tr>
-              <th scope="col" className="w-[30%] pb-3" aria-label="Capability" />
+              <th scope="col" className="w-[30%] pb-3">
+                <span className="sr-only">Capability</span>
+              </th>
               {COLUMNS.map((name) => (
                 <th
                   key={name}
