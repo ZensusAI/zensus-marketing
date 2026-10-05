@@ -25,12 +25,11 @@ Most businesses make million-dollar decisions (hiring, fundraising timing, contr
 ### Cash Flow Agent / Scenario Planning
 - Ask natural-language questions: "Can I afford to hire two engineers?", "What if we lose our largest annual contract?", "What happens with 5% monthly churn?"
 - Multi-turn conversations with persistent chat history
-- Built-in voice assistant for hands-free interaction
 
 ### Subscription-Intelligent Projections
 - Syncs HubSpot subscriptions including annual and quarterly contracts
 - Projects revenue based on when cash actually hits the bank, not flat monthly estimates
-- Handles variable revenue, seasonal patterns, and usage-based pricing
+- Detects recurring income and expenses, including payroll, from your transaction history
 
 ### Integrations
 - **QuickBooks**: One-click OAuth connection for accounting data
