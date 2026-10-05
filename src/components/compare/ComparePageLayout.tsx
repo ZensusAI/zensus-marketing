@@ -40,7 +40,7 @@ export function ComparePageLayout({ config }: ComparePageLayoutProps) {
     name: config.pageTitle,
     description: config.metaDescription,
     image: ogImage,
-    lastReviewed: METHODOLOGY_REVIEWED,
+    lastReviewed: config.reviewed ?? METHODOLOGY_REVIEWED,
   });
 
   return (
