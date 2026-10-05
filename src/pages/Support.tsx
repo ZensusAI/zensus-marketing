@@ -35,7 +35,7 @@ const FAQS = [
   {
     question: "How do I get started with Zensus?",
     answer:
-      "Create an account at app.zensus.app, then connect your bank through Plaid or your books through QuickBooks (or upload a spreadsheet). Zensus builds your cash flow forecast automatically from there.",
+      "Create an account at app.zensus.app, then connect your bank through Plaid or your books through QuickBooks. Zensus builds your cash flow forecast automatically from there.",
   },
   {
     question: "Is my financial data secure?",
@@ -45,7 +45,7 @@ const FAQS = [
   {
     question: "Which tools does Zensus connect to?",
     answer:
-      "Plaid for live bank data, QuickBooks for accounting, HubSpot for pipeline, and Slack for alerts. You can see how each one works on the Integrations page.",
+      "Plaid for live bank data, QuickBooks for accounting, HubSpot for invoices and subscriptions, and Slack for alerts. You can see how each one works on the Integrations page.",
   },
   {
     question: "How much does Zensus cost?",

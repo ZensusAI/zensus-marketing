@@ -43,7 +43,7 @@ const FAQS = [
   {
     question: "Does Zensus work for agencies with late-paying clients?",
     answer:
-      "Yes. Zensus reads actual payment behavior from your bank feed via Plaid and dates inflows by when clients really pay. If a client pays net-45 on net-30 terms, the forecast uses the 45-day reality instead of the invoice due date.",
+      "Yes, with one limit. Zensus places each open QuickBooks invoice on its due date, and once an invoice is overdue it moves it forward instead of counting it as cash you already have. It does not learn each client's payment habits, so a client who always pays 15 days late is forecast on the due date until that invoice is overdue.",
   },
   {
     question: "Can Zensus model annual and quarterly contracts?",
@@ -53,7 +53,7 @@ const FAQS = [
   {
     question: "How does Zensus help me decide whether I can afford a hire?",
     answer:
-      "Ask the scenario agent in plain language. It recalculates your zero-cash date with the new salary included, using your live financial data, and the projection keeps updating as real transactions clear.",
+      "Ask the cash flow agent in plain language. It recalculates your zero-cash date with the new salary included, using your live financial data, and the projection keeps updating as real transactions clear.",
   },
   {
     question: "How do payroll alerts work?",
@@ -140,7 +140,7 @@ const UseCases = () => (
             </Link>{" "}
             invoices and places each contract payment on the date it actually
             lands, so your cash flow forecast reflects the March 14 renewal,
-            not a smooth twelfth of it every month. Deals and subscriptions
+            not a smooth twelfth of it every month. Invoices and subscriptions
             from{" "}
             <Link to="/integrations/hubspot" className={linkCls}>
               HubSpot
@@ -177,13 +177,14 @@ const UseCases = () => (
 
         <UseCase id="agencies" title="Agencies and client services with late payers">
           <p>
-            When a client always pays net-45 on net-30 terms, a forecast built
-            on due dates lies to you. Zensus reads actual payment behavior from
-            your{" "}
+            When a client pays late, a forecast that counts the invoice as
+            collected lies to you. Zensus places each open QuickBooks invoice
+            on its due date and, once it is overdue, moves it forward instead
+            of treating it as cash you have. Your{" "}
             <Link to="/integrations/plaid" className={linkCls}>
               bank feed via Plaid
             </Link>{" "}
-            and dates inflows by when customers really pay. Slow payers
+            shows which invoices have actually been paid. Slow payers
             stretch your{" "}
             <Link to="/blog/cash-conversion-cycle" className={linkCls}>
               cash conversion cycle
@@ -219,7 +220,7 @@ const UseCases = () => (
         <UseCase id="hiring-scenarios" title="Hiring and cash flow scenario planning">
           <p>
             Before you sign an offer letter, ask Zensus what the hire does to
-            your zero-cash date. The scenario agent answers in plain language,
+            your zero-cash date. The cash flow agent answers in plain language,
             using your live financial data, and the{" "}
             <a href="/#features" className={linkCls}>
               cash flow view

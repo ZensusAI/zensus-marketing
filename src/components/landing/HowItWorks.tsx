@@ -78,7 +78,7 @@ const STEPS = [
   },
   {
     title: "Watch the projection move",
-    description: "A 90-day projection that redraws itself the moment an invoice posts or payroll clears.",
+    description: "A 90-day projection that redraws itself as invoices post and payroll clears.",
   },
   {
     title: "Set your alert threshold",

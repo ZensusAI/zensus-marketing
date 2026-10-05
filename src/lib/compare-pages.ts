@@ -66,7 +66,7 @@ export const FLOAT_COMPARE: ComparePageConfig = {
   zensusStrengths: [
     "Live bank feed via Plaid, not only accounting data",
     "HubSpot subscription sync for annual and quarterly contract timing",
-    "Built-in plain-English scenario agent (no external AI connector)",
+    "Built-in plain-English cash flow agent (no external AI connector)",
     "Slack threshold alerts on your 30-day cash projection",
     "Flat $199/mo self-serve pricing with a 14-day trial",
   ],
@@ -74,7 +74,7 @@ export const FLOAT_COMPARE: ComparePageConfig = {
     competitor:
       "Float publishes three plans on its USD pricing page, tied to company revenue. Essentials, for companies below £2m in revenue, is $130/mo billed monthly or $105/mo billed annually. Growth, for companies above that, is $265/mo or $215/mo. Scale, for multi-entity teams, is $389/mo or $315/mo and covers up to 5 entities. Essentials forecasts 12 months ahead; Growth and Scale forecast 36. 14-day free trial, no credit card required. Prices as of September 2026.",
     zensus:
-      "Zensus Pro is $199 per month, billed monthly, cancel anytime. One public plan includes Plaid, QuickBooks, HubSpot, Slack, the scenario agent, and unlimited scenarios. 14-day free trial; your card is collected at signup and is not charged until the trial ends.",
+      "Zensus Pro is $199 per month, billed monthly, cancel anytime. One public plan includes Plaid, QuickBooks, HubSpot, Slack, the cash flow agent, and unlimited scenarios. 14-day free trial; your card is collected at signup and is not charged until the trial ends.",
   },
   tableRows: [
     {
@@ -169,7 +169,7 @@ export const PULSE_COMPARE: ComparePageConfig = {
   ogSubtitle:
     "Honest comparison of Zensus and Pulse on price, data sources, automation, and founder use cases.",
   lead:
-    "Pulse and Zensus both help business owners answer whether they can afford a hire or survive a slow month. Pulse is a focused, lower-cost cash flow workbook with QuickBooks Online sync. Zensus automates projections from bank, accounting, and CRM data with a plain-English scenario agent.",
+    "Pulse and Zensus both help business owners answer whether they can afford a hire or survive a slow month. Pulse is a focused, lower-cost cash flow workbook with QuickBooks Online sync. Zensus automates projections from bank, accounting, and CRM data with a plain-English cash flow agent.",
   competitorBestFor:
     "Pulse is a strong fit if you want a simple, affordable cash flow tool (Basics is $29/mo on Pulse's pricing page; the $59/mo Small Business Plan adds QuickBooks Online sync), prefer to model income and expenses yourself, and want scenario toggles without a higher automation layer.",
   zensusBestFor:
@@ -184,7 +184,7 @@ export const PULSE_COMPARE: ComparePageConfig = {
   zensusStrengths: [
     "Live Plaid bank feed plus QuickBooks plus HubSpot in one forecast",
     "Automatic projection refresh as transactions and subscriptions change",
-    "Plain-English scenario agent instead of manual entry only",
+    "Plain-English cash flow agent instead of manual entry only",
     "Slack alerts when cash projection crosses your floor",
     "Built for annual and quarterly contract timing, not flat monthly spreads",
   ],
@@ -192,7 +192,7 @@ export const PULSE_COMPARE: ComparePageConfig = {
     competitor:
       "Pulse Basics is $29 per month for core cash flow views. The Small Business Plan is $59 per month and adds QuickBooks Online sync, multiple financial accounts, and invited users. Premium (Extra Features) is $89 per month and adds unlimited financial accounts and currency conversion. New accounts get a 30-day free trial; Pulse charges the card used at signup when the trial ends. Prices as of September 2026.",
     zensus:
-      "Zensus Pro is $199 per month, billed monthly, cancel anytime. Includes Plaid, QuickBooks, HubSpot, Slack, the scenario agent, and unlimited scenarios. 14-day free trial; your card is collected at signup and is not charged until the trial ends.",
+      "Zensus Pro is $199 per month, billed monthly, cancel anytime. Includes Plaid, QuickBooks, HubSpot, Slack, the cash flow agent, and unlimited scenarios. 14-day free trial; your card is collected at signup and is not charged until the trial ends.",
   },
   tableRows: [
     {
@@ -243,14 +243,14 @@ export const PULSE_COMPARE: ComparePageConfig = {
     {
       label: "Multi-currency",
       competitor: "Any currency; conversion on Premium",
-      zensus: "USD-focused forecasting",
+      zensus: "One currency per forecast; no conversion",
     },
   ],
   faqs: [
     {
       question: "Is Zensus or Pulse better for cash flow?",
       answer:
-        "Pulse is better if you want a low-cost, hands-on cash flow workbook with QuickBooks sync. Zensus is better if you want automated projections from bank and CRM data, subscription-aware timing, and a plain-English scenario agent.",
+        "Pulse is better if you want a low-cost, hands-on cash flow workbook with QuickBooks sync. Zensus is better if you want automated projections from bank and CRM data, subscription-aware timing, and a plain-English cash flow agent.",
     },
     {
       question: "How much does Pulse cost compared to Zensus?",
@@ -333,7 +333,7 @@ export const FLOAT_ALTERNATIVES: AlternativesPageConfig = {
     "Two accounting platforms. \"Currently, Float integrates with Xero and QuickBooks Online.\"",
     "Plans tied to revenue. Essentials ($130/mo, or $105/mo billed annually) is for companies below £2m in revenue; above that, Growth is $265/mo, or $215/mo billed annually.",
     "Forecast length by plan. Essentials forecasts 12 months ahead; 36-month forecasts need Growth or Scale.",
-    "No CRM connection on Float's public pages, so HubSpot deals and subscriptions are not a listed data source.",
+    "No CRM connection on Float's public pages, so HubSpot invoices and subscriptions are not a listed data source.",
     "Built for finance teams. Float describes itself as \"cash visibility for scaling finance teams\", with typical US customers at $5M to $10M in revenue.",
   ],
   stayIntro:

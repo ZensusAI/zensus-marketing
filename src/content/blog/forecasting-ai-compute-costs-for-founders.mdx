@@ -4,7 +4,7 @@ export const meta = {
   description:
     'How to model AI inference and agent costs as a line item in your cash flow forecast: the inference cost paradox, margins, and scenario planning.',
   date: '2026-06-09',
-  dateModified: '2026-06-10',
+  dateModified: '2026-10-05',
   category: 'Guide',
   readTime: '12 min read',
   slug: 'forecasting-ai-compute-costs-for-founders',
@@ -374,7 +374,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>Two companies using the same model can have radically different cost structures. A poorly designed workflow may make unnecessary model calls, re-run retrieval steps, duplicate context processing, and increase token usage dramatically. A well-designed workflow minimizes expensive operations.</p>
 
 
-<p>This is one reason Zensus intentionally uses a cost-efficient architecture for its runway agent, the same typed, scoped approach we describe in our guide on <a href="/blog/mcp-vs-cli-for-finance-teams" className="font-medium text-primary underline-offset-4 hover:underline">MCP vs CLI for finance teams</a>. Instead of repeatedly querying large contexts, the system relies on structured financial snapshots, <a href="/integrations" className="font-medium text-primary underline-offset-4 hover:underline">typed integrations</a>, scoped tools, and purpose-built workflows. The result is lower inference cost per request and more predictable scaling economics.</p>
+<p>This is one reason Zensus intentionally uses a cost-efficient architecture for its cash flow agent, the same typed, scoped approach we describe in our guide on <a href="/blog/mcp-vs-cli-for-finance-teams" className="font-medium text-primary underline-offset-4 hover:underline">MCP vs CLI for finance teams</a>. Instead of repeatedly querying large contexts, the system relies on structured financial snapshots, <a href="/integrations" className="font-medium text-primary underline-offset-4 hover:underline">typed integrations</a>, scoped tools, and purpose-built workflows. The result is lower inference cost per request and more predictable scaling economics.</p>
 
 
 <p>The same principle applies to every founder building AI products. The architecture of your AI features determines your future compute bill.</p>

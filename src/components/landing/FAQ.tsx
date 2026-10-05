@@ -37,7 +37,7 @@ const faqGroups = [
       },
       {
         question: "How often does my data update?",
-        answer: "Your data syncs in real time via webhooks. The moment a transaction clears in Plaid, an invoice changes in QuickBooks, or a subscription updates in HubSpot, your cash flow forecast recalculates. You can also trigger a manual sync from any source at any time.",
+        answer: "Bank transactions from Plaid and invoices and subscriptions from HubSpot arrive by webhook when they change. QuickBooks syncs once a day. Every source also refreshes when you open Zensus if its data is more than an hour old, and you can trigger a manual sync at any time. Your cash flow forecast recalculates after each sync.",
       },
     ],
   },
