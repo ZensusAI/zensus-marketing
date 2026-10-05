@@ -40,19 +40,19 @@ const CARDS: Card[] = [
   {
     slug: "plaid",
     name: "Plaid",
-    blurb: "Live bank transactions and balances through bank-level OAuth. Real-time sync, no CSVs.",
+    blurb: "Bank transactions and balances through Plaid, read-only. Synced by webhook, no CSVs.",
     logo: plaidLogo,
   },
   {
     slug: "quickbooks",
     name: "QuickBooks",
-    blurb: "Expenses, invoices, and AR/AP straight from your books. Real-time sync via Intuit OAuth.",
+    blurb: "Invoices, bills, and AR/AP straight from your books. Synced daily via Intuit OAuth.",
     logo: quickbooksLogo,
   },
   {
     slug: "hubspot",
     name: "HubSpot",
-    blurb: "Deals and subscriptions feed your cash flow forecast. Annual and quarterly contracts hit on real dates.",
+    blurb: "Invoices and subscriptions feed your cash flow forecast. Annual and quarterly contracts hit on real dates.",
     logo: hubspotLogo,
   },
   {
