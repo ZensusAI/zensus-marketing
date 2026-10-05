@@ -225,6 +225,42 @@ How to convert HubSpot pipeline data into a realistic cash flow forecast. Key fa
 - HubSpot revenue forecasting predicts bookings; cash forecasting predicts bank balance movement and runway.
 - Zensus connects HubSpot via OAuth with Plaid bank data and QuickBooks accounting for subscription-aware cash timing, scenarios, and Slack alerts.
 
+### 27 Pay Periods in 2026 or 2027?
+https://zensus.finance/blog/27-pay-periods-2026-2027
+
+Which year has 27 biweekly pay dates, why sources disagree, and what the extra payroll run costs. Key facts from the guide:
+
+- A biweekly payroll has 27 pay dates in a calendar year only when a payday lands on January 1 (or on January 1 or 2 in a leap year). For one schedule that happens about once every 11 years.
+- January 1 and December 31, 2027 are both Fridays, so a biweekly schedule with a payday on Friday, January 1, 2027 has 27 pay dates on the 2027 calendar.
+- January 1, 2027 is a Federal Reserve holiday and ACH payments do not settle on federal holidays. If that payday is paid early, on Thursday, December 31, 2026, the 27th pay date moves into 2026 and 2027 has 26.
+- The federal payroll calendar published by the General Services Administration shows this: 27 pay dates in 2026, ending December 31, and 26 in 2027.
+- The 27th run adds 1/26, about 3.8 percent, to payroll cash for the year. At $40,000 a run, the year costs $1,080,000 instead of $1,040,000.
+- An annual salary divided by 27 instead of 26 lowers every paycheck. The federal exemption test in 29 CFR 541.600 is per pay period ($684 a week, $1,368 biweekly), so a $36,000 salary clears it at 26 paychecks ($1,384.62) and not at 27 ($1,333.33).
+- Annual limits such as the 401(k) deferral limit ($24,500 in 2026, per the IRS) do not grow with an extra payday.
+
+### Cash Flow Forecasting for Agencies
+https://zensus.finance/blog/cash-flow-forecasting-for-agencies
+
+How agencies forecast cash when clients pay late and payroll does not. Key facts from the guide:
+
+- Payroll is about half of an agency's costs: in the Census Bureau's Service Annual Survey, advertising, public relations and related services firms reported $99.2 billion of expenses in 2022, of which gross payroll was $47.8 billion (48 percent, or 54 percent with benefits).
+- Advertisers' payment terms for agency fees were 58.1 days in 2019, up from 45.7 days in 2013 (Association of National Advertisers).
+- In the US, late payments affect an average of 22 percent of B2B receivables (Atradius, 2026).
+- Four timing gaps drive agency cash problems: payment terms, late payment, pass-through costs paid on a client's behalf, and payroll dates.
+- Worked example: a 12-person agency with $60,000 in the bank and a $40,000 floor collects $374,000 and spends $346,000 in a quarter. Forecast on invoice due dates, its balance never falls below $50,000. On the dates clients actually pay, it falls to $38,000 and $32,000 in weeks 5 and 6. Both versions end at $88,000.
+- Zensus places open QuickBooks invoices on their due dates and moves overdue ones forward. It does not learn each client's payment habits.
+
+### How to Build a 13-Week Cash Flow Forecast in Excel
+https://zensus.finance/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel
+
+An eight-step build of a 13-week cash flow forecast in Excel, matching the free Zensus template cell for cell. Key facts from the guide:
+
+- The sheet is one column of labels, 13 weekly columns (B to N), and 24 rows: opening balance, three cash-in rows, six cash-out rows, totals, net cash flow, closing balance, a cash floor, and a check.
+- Six formulas do the calculating: total cash in =SUM(B8:B10), total cash out =SUM(B13:B18), net cash flow =B11-B19, closing balance =B6+B20, next opening balance =B21, and the check =IF(B21<$B$23,"BELOW FLOOR","OK").
+- Enter each amount in the week the cash moves: receipts when the customer pays, payroll on its pay dates, annual and quarterly items in their own week.
+- Worked example: a company opens with $100,000 and a $25,000 floor, collects $252,000 and spends $309,500 over 13 weeks, and ends at $42,500. Weeks 7 and 11 still close below the floor, at $23,500 and $15,500. Moving one $9,000 payment a week later and one $48,000 receipt a week earlier clears both.
+- Update weekly: replace the week that ended with actuals, reconcile to the bank, and add a new week 13.
+
 ### MCP vs CLI for Finance Teams
 https://zensus.finance/blog/mcp-vs-cli-for-finance-teams
 
@@ -259,10 +295,21 @@ https://zensus.finance/compare/zensus-vs-pulse
 
 Honest comparison for Pulse app alternatives, based on vendor pages as of September 2026. Pulse: $29/mo Basics, $59/mo Small Business Plan (adds QuickBooks Online sync), $89/mo Premium (currency conversion), manual scenario toggles, 30-day trial with a card required at signup. Zensus: $199/mo automated forecast from bank and CRM data with subscription-aware timing.
 
+### Zensus vs Cash Flow Frog
+https://zensus.finance/compare/zensus-vs-cash-flow-frog
+
+Comparison based on each vendor's own pages, read on 5 October 2026. Cash Flow Frog: one Pro Plan priced by annual revenue, $69/mo up to $1M, $89/mo to $5M, $129/mo to $10M, $179/mo to $20M and $249/mo above $20M on monthly billing, with lower yearly rates; 14-day trial with no credit card; seven accounting systems (QuickBooks Online, QuickBooks Desktop, Xero, Sage Intacct, Odoo, Zoho Books, FreshBooks), Plaid for US and Canadian banks, Excel or CSV import; forecasts up to 36 months; unlimited entities and native multi-currency; no CRM connection per its own pages, with deals pushed in through Zapier; plain-English scenarios through an external assistant (Claude, ChatGPT, Copilot, Gemini). Zensus: $199/mo flat at any revenue, QuickBooks Online only, direct HubSpot connection for invoices and subscriptions (not deals), a built-in plain-English cash flow agent, Slack alerts on a 30-day projection, one currency per forecast. Cash Flow Frog is cheaper at every revenue tier below $20M.
+
 ### Float alternatives
 https://zensus.finance/compare/float-alternatives
 
 Five Float alternatives compared from each vendor's own pages as of September 2026, listed by starting price. Pulse: $29/mo, QuickBooks Online sync from $59/mo, 30-day trial that charges the card at the end. Cash Flow Frog: from $33/mo billed yearly (early-bird rate, set by revenue), seven accounting platforms including Xero and QuickBooks Desktop, direct bank feed via Plaid, no CRM connection, 14-day trial with no card. Futrli: $40/mo excl. VAT for 1 to 5 licenses, daily and 3-way forecasting, Xero, QuickBooks Online, Sage, 14-day trial with no card. Helm: $50/mo for the first connected business (currency not stated), Xero, QuickBooks Online, Sage Accounting, 12-month forecasts, unlimited scenarios. Zensus: $199/mo, Plaid bank feed, QuickBooks, HubSpot subscription sync, Slack alerts, no Xero. Float stays the better fit for Xero users who need multi-entity consolidation, and Float Essentials ($130/mo) costs less than Zensus.
+
+## Cash flow forecasting for QuickBooks users
+
+https://zensus.finance/quickbooks-cash-flow-forecasting
+
+Product page for businesses on QuickBooks Online. What QuickBooks' own cash flow planner does, in Intuit's words (read October 2026): it projects from QuickBooks data and connected bank accounts; its 24-month view shows 14 months into the future; it is not available when Multicurrency is on. What Zensus adds: QuickBooks invoices and bills placed on their due dates (overdue ones moved forward) and synced daily, a direct bank feed through Plaid, HubSpot subscriptions on their billing dates, monthly, weekly, daily and 13-week views, plain-English scenarios, and Slack alerts. Zensus forecasts in one currency and does not convert. $199/mo, 14-day free trial.
 
 ## LLM entity page
 
@@ -301,5 +348,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - Slack integration: https://zensus.finance/integrations/slack
 - Zensus vs Float: https://zensus.finance/compare/zensus-vs-float
 - Zensus vs Pulse: https://zensus.finance/compare/zensus-vs-pulse
+- Zensus vs Cash Flow Frog: https://zensus.finance/compare/zensus-vs-cash-flow-frog
 - Float alternatives: https://zensus.finance/compare/float-alternatives
+- Cash flow forecasting for QuickBooks users: https://zensus.finance/quickbooks-cash-flow-forecasting
 - LLM entity summary: https://zensus.finance/llm-info

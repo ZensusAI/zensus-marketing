@@ -22,6 +22,7 @@ const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
     links: [
       { label: "Features", href: "/#features" },
       { label: "Use Cases", href: "/use-cases" },
+      { label: "For QuickBooks Users", href: "/quickbooks-cash-flow-forecasting" },
       {
         label: "Tools",
         href: "#",
@@ -39,6 +40,7 @@ const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
         children: [
           { label: "Zensus vs Float", href: "/compare/zensus-vs-float" },
           { label: "Zensus vs Pulse", href: "/compare/zensus-vs-pulse" },
+          { label: "Zensus vs Cash Flow Frog", href: "/compare/zensus-vs-cash-flow-frog" },
           { label: "Float alternatives", href: "/compare/float-alternatives" },
         ],
       },

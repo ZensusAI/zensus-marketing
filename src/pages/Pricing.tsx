@@ -319,6 +319,10 @@ const Pricing = () => (
             <Link to="/compare/zensus-vs-pulse" className={decideLinkCls}>
               Zensus vs Pulse
             </Link>
+            ,{" "}
+            <Link to="/compare/zensus-vs-cash-flow-frog" className={decideLinkCls}>
+              Zensus vs Cash Flow Frog
+            </Link>
             , and the{" "}
             <Link to="/compare/float-alternatives" className={decideLinkCls}>
               Float alternatives

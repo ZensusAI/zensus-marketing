@@ -194,6 +194,10 @@ const UseCases = () => (
             <Link to="/blog/what-is-cash-flow-forecasting" className={linkCls}>
               what cash flow forecasting is
             </Link>
+            . For the full method and a worked example, read{" "}
+            <Link to="/blog/cash-flow-forecasting-for-agencies" className={linkCls}>
+              cash flow forecasting for agencies
+            </Link>
             .
           </p>
         </UseCase>

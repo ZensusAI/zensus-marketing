@@ -290,6 +290,13 @@ const Comparison = () => {
         >
           Zensus vs Pulse
         </Link>
+        ,{" "}
+        <Link
+          to="/compare/zensus-vs-cash-flow-frog"
+          className="font-medium text-primary underline-offset-4 hover:underline"
+        >
+          Zensus vs Cash Flow Frog
+        </Link>
         , and{" "}
         <Link
           to="/compare/float-alternatives"

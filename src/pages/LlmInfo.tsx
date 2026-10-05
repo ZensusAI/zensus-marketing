@@ -180,6 +180,14 @@ const LlmInfo = () => (
               </Link>
             </li>
             <li>
+              <Link
+                to="/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel"
+                className={linkCls}
+              >
+                How to build a 13-week cash flow forecast in Excel
+              </Link>
+            </li>
+            <li>
               <Link to="/blog/will-i-make-payroll" className={linkCls}>
                 Will I make payroll?
               </Link>
@@ -213,6 +221,16 @@ const LlmInfo = () => (
             <li>
               <Link to="/blog/cash-conversion-cycle" className={linkCls}>
                 Cash conversion cycle
+              </Link>
+            </li>
+            <li>
+              <Link to="/blog/cash-flow-forecasting-for-agencies" className={linkCls}>
+                Cash flow forecasting for agencies
+              </Link>
+            </li>
+            <li>
+              <Link to="/blog/27-pay-periods-2026-2027" className={linkCls}>
+                27 pay periods in 2026 or 2027?
               </Link>
             </li>
             <li>
@@ -290,8 +308,18 @@ const LlmInfo = () => (
               </Link>
             </li>
             <li>
+              <Link to="/compare/zensus-vs-cash-flow-frog" className={linkCls}>
+                Zensus vs Cash Flow Frog
+              </Link>
+            </li>
+            <li>
               <Link to="/compare/float-alternatives" className={linkCls}>
                 Float alternatives
+              </Link>
+            </li>
+            <li>
+              <Link to="/quickbooks-cash-flow-forecasting" className={linkCls}>
+                Cash flow forecasting for QuickBooks users
               </Link>
             </li>
           </ul>

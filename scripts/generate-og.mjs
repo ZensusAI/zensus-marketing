@@ -97,6 +97,22 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "compare-zensus-vs-cash-flow-frog",
+    category: "Compare",
+    title: "Zensus vs Cash Flow Frog",
+    subtitle:
+      "Price by revenue tier, accounting and HubSpot connections, scenarios, and alerts.",
+    accent: "green",
+  },
+  {
+    slug: "quickbooks-cash-flow-forecasting",
+    category: "For QuickBooks",
+    title: "Cash flow forecasting for QuickBooks users",
+    subtitle:
+      "A live bank feed, HubSpot subscriptions, a 13-week view, scenarios, and Slack alerts on top of your books.",
+    accent: "green",
+  },
+  {
     slug: "compare-float-alternatives",
     category: "Compare",
     title: "Float alternatives",

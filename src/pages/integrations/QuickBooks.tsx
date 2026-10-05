@@ -155,6 +155,12 @@ const related: IntegrationRelatedLink[] = [
     description:
       "How the timing of receivables and payables (DSO and DPO) decides when cash actually arrives.",
   },
+  {
+    to: "/quickbooks-cash-flow-forecasting",
+    label: "Cash flow forecasting for QuickBooks users",
+    description:
+      "What the built-in planner covers, where it stops, and what Zensus adds on top of your books.",
+  },
 ];
 
 const serviceSchema = {

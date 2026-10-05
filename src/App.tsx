@@ -31,6 +31,12 @@ const PayrollCalendar = lazy(() => import("./pages/tools/PayrollCalendar"));
 const ZensusVsFloat = lazy(() => import("./pages/compare/ZensusVsFloat"));
 const ZensusVsPulse = lazy(() => import("./pages/compare/ZensusVsPulse"));
 const FloatAlternatives = lazy(() => import("./pages/compare/FloatAlternatives"));
+const ZensusVsCashFlowFrog = lazy(
+  () => import("./pages/compare/ZensusVsCashFlowFrog"),
+);
+const QuickBooksForecasting = lazy(
+  () => import("./pages/QuickBooksForecasting"),
+);
 const LlmInfo = lazy(() => import("./pages/LlmInfo"));
 const PlaidIntegration = lazy(() => import("./pages/integrations/Plaid"));
 const QuickBooksIntegration = lazy(
@@ -121,6 +127,14 @@ const App = () => (
             <Route
               path="/compare/float-alternatives"
               element={<FloatAlternatives />}
+            />
+            <Route
+              path="/compare/zensus-vs-cash-flow-frog"
+              element={<ZensusVsCashFlowFrog />}
+            />
+            <Route
+              path="/quickbooks-cash-flow-forecasting"
+              element={<QuickBooksForecasting />}
             />
             <Route path="/llm-info" element={<LlmInfo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -1,0 +1,295 @@
+export const meta = {
+  title: 'How to Build a 13-Week Cash Flow Forecast in Excel (With a Free Template)',
+  seoTitle: '13-Week Cash Flow Forecast in Excel: Step by Step | Zensus',
+  description:
+    'Build a 13-week cash flow forecast in Excel in eight steps: the layout, the six formulas, a worked example, and a free template with the formulas in place.',
+  date: '2026-10-05',
+  dateModified: '2026-10-05',
+  category: 'Guide',
+  readTime: '11 min read',
+  slug: 'how-to-build-a-13-week-cash-flow-forecast-in-excel',
+  author: 'ajin',
+  tags: ['Cash Flow', '13-Week Forecast', 'Guides'],
+  thumbnail:
+    '/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel/13-week-cash-flow-forecast-excel-example.webp',
+  ogImage: '/og/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel.png',
+  ogTitle: '13-Week Cash Flow Forecast in Excel',
+  ogSubtitle:
+    'The layout, the six formulas, and a worked example where the quarter ends fine but two weeks do not.',
+  faqs: [
+    {
+      question: 'How do I build a 13-week cash flow forecast in Excel?',
+      answer:
+        'Put 13 weekly columns across the top and three blocks down the side: cash in, cash out, and balances. Enter an opening balance for week 1, add up cash in and cash out for each week, subtract to get net cash flow, and add that to the opening balance to get the closing balance. Then set each week\'s opening balance equal to the previous week\'s closing balance.',
+    },
+    {
+      question: 'What formulas does a 13-week cash flow forecast need?',
+      answer:
+        'Six. Total cash in is a SUM of the inflow rows. Total cash out is a SUM of the outflow rows. Net cash flow is total cash in minus total cash out. Closing balance is opening balance plus net cash flow. Each later opening balance equals the previous closing balance. An IF formula flags any week that closes below your cash floor.',
+    },
+    {
+      question: 'Should I enter invoices or payments in a cash flow forecast?',
+      answer:
+        'Payments. Enter each receipt in the week you expect the cash to arrive and each cost in the week it leaves the bank account. An invoice sent in week 2 on 30-day terms belongs in week 6 or later, not week 2.',
+    },
+    {
+      question: 'How often should I update a 13-week cash flow forecast?',
+      answer:
+        'Once a week. Replace the week that just ended with what actually happened, set the new opening balance to your real bank balance, and add a new week 13 so the forecast always looks 13 weeks ahead.',
+    },
+    {
+      question: 'Is there a free 13-week cash flow forecast template for Excel?',
+      answer:
+        'Yes. Zensus publishes a free XLSX template with the layout and formulas described in this guide. It opens in Excel, Google Sheets, and Numbers, and needs no email.',
+    },
+  ],
+};
+
+import { BlogCallout } from '@/components/blog/BlogCallout';
+import { BlogFigure } from '@/components/blog/BlogFigure';
+
+<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">
+  A 13-week cash flow forecast in Excel is one sheet with 13 weekly columns, a block of cash in, a block of cash out, and a closing balance that carries from each week into the next.
+</p>
+
+<p>This guide builds that sheet from an empty workbook in eight steps. Six formulas do the calculating, and a seventh fills in the dates. If you would rather start from the finished file, the free template below has the same layout, cell for cell.</p>
+
+<div className="not-prose my-8 rounded-2xl border border-primary/40 bg-primary/5 p-6">
+  <p className="mb-1 font-semibold text-foreground">Download the free 13-week template</p>
+  <p className="mb-3 text-sm text-muted-foreground">The sheet this guide builds, with the formulas already in place. Works in Excel, Google Sheets, and Numbers. No email required.</p>
+  <a href="/templates/13-week-cash-flow-template.xlsx" download className="font-medium text-primary underline-offset-4 hover:underline">Download the XLSX template</a>
+</div>
+
+<p>New to the model itself? Start with <a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">what a 13-week cash flow forecast is</a> and why 13 weeks is the standard horizon, then come back here to build one.</p>
+
+## What Does the Finished Sheet Look Like?
+
+<p><strong>The finished sheet has one column of labels, 13 columns of weeks, and 24 rows.</strong></p>
+
+<p className="mb-2 font-medium text-foreground">The rows, in order:</p>
+
+<ul>
+  <li>row 4: the headers, Week 1 to Week 13</li>
+  <li>row 5: the date each week begins</li>
+  <li>row 6: opening balance</li>
+  <li>rows 8 to 10: cash in (customer collections, annual and quarterly contract payments, other inflows)</li>
+  <li>row 11: total cash in</li>
+  <li>rows 13 to 18: cash out (payroll and contractors, payroll taxes and benefits, rent and utilities, software and subscriptions, marketing, other outflows)</li>
+  <li>row 19: total cash out</li>
+  <li>row 20: net cash flow</li>
+  <li>row 21: closing balance</li>
+  <li>row 23: your cash floor</li>
+  <li>row 24: a check that flags any week below the floor</li>
+</ul>
+
+<p>Column A holds the labels. Columns B to N hold weeks 1 to 13. Every cell reference in this guide uses that layout, and so does the template.</p>
+
+## Step 1: Lay Out 13 Weekly Columns
+
+<p>Type <strong>Line item</strong> in A4, then <strong>Week 1</strong> to <strong>Week 13</strong> across B4 to N4.</p>
+
+<p>In B5, enter the Monday your forecast starts. In C5, enter this formula and copy it across to N5:</p>
+
+<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">=B5+7</code></p>
+
+<p>Excel stores dates as numbers, so adding 7 gives the same weekday one week later. Every column now has a real date, which matters in step 8.</p>
+
+## Step 2: Enter the Opening Balance
+
+<p>In B6, type the cash in your bank accounts today. Use the real balance, not the balance in your accounting system.</p>
+
+<p>This is the only opening balance you type. Weeks 2 to 13 will be formulas.</p>
+
+## Step 3: Add the Cash-In Rows
+
+<p className="mb-2 font-medium text-foreground">Label rows 8 to 10 in column A:</p>
+
+<ul>
+  <li>A8: Customer collections</li>
+  <li>A9: Annual and quarterly contract payments</li>
+  <li>A10: Other inflows</li>
+</ul>
+
+<p>Keep large contract payments on their own row. A $48,000 annual renewal that lands in one week should be easy to see, not buried in a weekly average.</p>
+
+<p>In B11, total the three rows:</p>
+
+<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">=SUM(B8:B10)</code></p>
+
+<p>Microsoft's documentation describes the function simply: <a href="https://support.microsoft.com/en-us/office/sum-function-043e1c7d-7726-4e80-8f32-07b23e057f89" className="font-medium text-primary underline-offset-4 hover:underline">"The SUM function adds values."</a> Using a range (B8:B10) instead of adding three cells means a row inserted inside the block is picked up without editing the formula.</p>
+
+## Step 4: Add the Cash-Out Rows
+
+<p className="mb-2 font-medium text-foreground">Label rows 13 to 18 in column A:</p>
+
+<ul>
+  <li>A13: Payroll and contractors</li>
+  <li>A14: Payroll taxes and benefits</li>
+  <li>A15: Rent and utilities</li>
+  <li>A16: Software and subscriptions</li>
+  <li>A17: Marketing</li>
+  <li>A18: Other outflows</li>
+</ul>
+
+<p>In B19, total them:</p>
+
+<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">=SUM(B13:B18)</code></p>
+
+<p>Change the labels to match your business. The structure matters more than the names: every dollar that leaves the bank belongs in exactly one row.</p>
+
+## Step 5: Calculate Net Cash Flow and the Closing Balance
+
+<p>In B20, subtract cash out from cash in:</p>
+
+<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">=B11-B19</code></p>
+
+<p>In B21, add the result to the opening balance:</p>
+
+<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">=B6+B20</code></p>
+
+<p>B21 is the number the whole sheet exists to produce: the cash you expect to have at the end of week 1.</p>
+
+## Step 6: Chain Each Week to the One Before It
+
+<p>In C6, set week 2's opening balance to week 1's closing balance:</p>
+
+<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">=B21</code></p>
+
+<p>Copy C6 across to N6. Then copy the formulas in B11, B19, B20, and B21 across to column N.</p>
+
+<p>This chain is what makes the sheet a forecast and not a list. Move one payment from week 4 to week 6 and every closing balance from week 4 onward changes with it.</p>
+
+## Step 7: Add a Cash Floor and a Check
+
+<p>A closing balance above zero is not the same as a safe one. Pick a floor: the lowest balance you are willing to hold. Type it in B23.</p>
+
+<p>In B24, enter:</p>
+
+<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">{'=IF(B21<$B$23,"BELOW FLOOR","OK")'}</code></p>
+
+<p>Copy B24 across to N24. Each week now reads OK or BELOW FLOOR.</p>
+
+<p>Two details make this work. Microsoft describes <a href="https://support.microsoft.com/en-us/office/if-function-69aed7c9-4e8a-4755-a9bc-aa8bbff73be2" className="font-medium text-primary underline-offset-4 hover:underline">IF</a> as a function that "allows you to make logical comparisons between a value and what you expect", which is exactly the test here. And the dollar signs in $B$23 make the reference absolute. Without them, copying the formula to column C would compare week 2 against C23, which is empty. <a href="https://support.microsoft.com/en-us/office/switch-between-relative-absolute-and-mixed-references-dfec08cd-ae65-4f56-839e-5f0d8d0baca9" className="font-medium text-primary underline-offset-4 hover:underline">Microsoft's guide to cell references</a> explains the difference.</p>
+
+## Step 8: Enter Amounts in the Week the Cash Moves
+
+<p><strong>The formulas are the easy part. The forecast is only as good as the weeks you put the numbers in.</strong></p>
+
+<p className="mb-2 font-medium text-foreground">Four rules cover most of it:</p>
+
+<ul>
+  <li>Enter a receipt in the week the customer will pay, not the week you send the invoice.</li>
+  <li>Enter payroll on its real pay dates. In <a href="https://www.bls.gov/ces/publications/length-pay-period.htm" className="font-medium text-primary underline-offset-4 hover:underline">Bureau of Labor Statistics data</a> for February 2023, biweekly was the most common pay period, used by an estimated 43.0 percent of US private establishments. A biweekly payroll hits every other column, not a smooth amount in each.</li>
+  <li>Enter annual and quarterly items in their own week: insurance, software renewals, and tax. For estimated tax, the <a href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" className="font-medium text-primary underline-offset-4 hover:underline">IRS divides the year into four payment periods</a>, each with its own due date.</li>
+  <li>Leave a cell at zero when nothing moves that week. Do not spread a monthly bill across four columns.</li>
+</ul>
+
+<p>To place pay dates correctly, including months with three paydays, use the free <a href="/tools/payroll-calendar" className="font-medium text-primary underline-offset-4 hover:underline">payroll calendar calculator</a>.</p>
+
+## Worked Example: A Quarter That Ends Fine and Two Weeks That Do Not
+
+<p>Here is the sheet filled in for a company that opens the quarter with $100,000 and sets a cash floor of $25,000.</p>
+
+<p className="mb-2 font-medium text-foreground">The inputs:</p>
+
+<ul>
+  <li>customer collections of $12,000 a week, plus one $18,000 invoice paid in week 4</li>
+  <li>a $30,000 quarterly contract payment in week 8 and a $48,000 annual renewal in week 12</li>
+  <li>payroll of $28,000 and payroll taxes and benefits of $6,000 every two weeks, starting in week 1</li>
+  <li>rent and utilities of $6,000 in weeks 1, 5, 9, and 13</li>
+  <li>software of $2,000 in weeks 2, 6, and 10, plus a $9,000 annual renewal in week 7</li>
+  <li>marketing of $1,500 and other outflows of $1,000 every week</li>
+</ul>
+
+<BlogFigure
+  src="/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel/13-week-cash-flow-forecast-excel-example.webp"
+  width={1600}
+  height={900}
+  alt="13-week cash flow forecast spreadsheet with opening balance, cash in, cash out, net cash flow, and closing balance for weeks 1 to 13, with weeks 7 and 11 flagged below a $25,000 cash floor"
+  caption="The finished sheet. The quarter ends at $42,500, but weeks 7 and 11 close below the $25,000 floor."
+/>
+
+| Week | Net cash flow | Closing balance | Check |
+| ---: | ---: | ---: | --- |
+| 1 | -$30,500 | $69,500 | OK |
+| 2 | $7,500 | $77,000 | OK |
+| 3 | -$24,500 | $52,500 | OK |
+| 4 | $27,500 | $80,000 | OK |
+| 5 | -$30,500 | $49,500 | OK |
+| 6 | $7,500 | $57,000 | OK |
+| 7 | -$33,500 | $23,500 | Below floor |
+| 8 | $39,500 | $63,000 | OK |
+| 9 | -$30,500 | $32,500 | OK |
+| 10 | $7,500 | $40,000 | OK |
+| 11 | -$24,500 | $15,500 | Below floor |
+| 12 | $57,500 | $73,000 | OK |
+| 13 | -$30,500 | $42,500 | OK |
+
+### What the Sheet Shows
+
+<p>Over the quarter the company collects $252,000 and spends $309,500. It ends with $42,500, comfortably above its floor. A monthly summary would stop there.</p>
+
+<p>The weekly view does not. Week 7 closes at $23,500, because a payroll run and a $9,000 software renewal land in the same week, one week before the quarterly contract pays. Week 11 closes at $15,500, one week before the annual renewal arrives.</p>
+
+<p>Neither week runs out of cash. Both break the rule the company set for itself, and it can see that 6 and 10 weeks ahead.</p>
+
+### What to Do About It
+
+<p className="mb-2 font-medium text-foreground">Two changes clear both weeks:</p>
+
+<ul>
+  <li>Pay the $9,000 software renewal in week 8 instead of week 7. Week 7 then closes at $32,500.</li>
+  <li>Ask the annual customer to pay in week 11 instead of week 12. Week 11 then closes at $63,500.</li>
+</ul>
+
+<p>The quarter still ends at $42,500. Nothing was cut and nothing was earned. Only the timing moved, which is the whole point of forecasting by week. For the same idea applied to the date cash reaches zero, see <a href="/blog/zero-cash-date-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">zero cash date</a>.</p>
+
+## How Do You Keep the Forecast Rolling?
+
+<p><strong>Update the sheet once a week, on the same day.</strong></p>
+
+<p className="mb-2 font-medium text-foreground">The weekly routine:</p>
+
+<ol>
+  <li>Replace last week's forecast amounts with what actually cleared the bank.</li>
+  <li>Check the closing balance against your real bank balance. If they differ, find the missing item before you go on.</li>
+  <li>Move the week that ended out of the sheet, shift the remaining weeks left, and add a new week 13.</li>
+  <li>Type your real bank balance as the new week 1 opening balance.</li>
+  <li>Review any payment that has slipped, and move it to the week you now expect it.</li>
+  <li>Read the check row. Act on the first week marked BELOW FLOOR.</li>
+</ol>
+
+<p>The second item is the one people skip. A forecast that is never compared with the bank drifts, and a drifting forecast is worse than none because it is trusted.</p>
+
+## What Are the Common Mistakes?
+
+<p className="mb-2 font-medium text-foreground">Five mistakes account for most broken 13-week forecasts:</p>
+
+<ul>
+  <li>Entering revenue when it is invoiced or recognized, not when it is paid. <a href="/blog/arr-vs-cash-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">ARR vs cash</a> explains why the two disagree.</li>
+  <li>Averaging payroll across weeks. See <a href="/blog/will-i-make-payroll" className="font-medium text-primary underline-offset-4 hover:underline">will I make payroll</a> for the pay-date method.</li>
+  <li>Typing a number over a formula. Once a closing balance is typed in, the chain is broken and every later week is wrong without showing it.</li>
+  <li>Leaving out annual and quarterly payments because they are not in this month's bills.</li>
+  <li>Building the sheet once and not updating it.</li>
+</ul>
+
+## When Does a Spreadsheet Stop Being Enough?
+
+<p>A spreadsheet is the right place to start. It costs nothing, and building it by hand teaches you where your cash actually goes.</p>
+
+<p className="mb-2 font-medium text-foreground">It starts to strain when:</p>
+
+<ul>
+  <li>updating it from bank and accounting exports takes more than an hour a week</li>
+  <li>more than one person edits it</li>
+  <li>you want to test a hire, a lost customer, or a price change without copying the file</li>
+  <li>you only find out a week is below the floor when you next open the sheet</li>
+</ul>
+
+<p>That is the work <a href="/#features" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a> takes over. It reads bank transactions through <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, invoices and bills from <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and invoices and subscriptions from <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a>, and keeps a 13-week view current without exports. You can <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">ask what-if questions in plain English</a>, and a <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alert</a> fires when the 30-day projection drops below the cash floor you set. Plans are on the <a href="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">pricing page</a>.</p>
+
+<p>If you are not there yet, the template and the free <a href="/tools/runway-calculator" className="font-medium text-primary underline-offset-4 hover:underline">runway calculator</a> will take you a long way.</p>
+
+<BlogCallout title="Start With the Template">
+Download the <a href="/templates/13-week-cash-flow-template.xlsx" download>free 13-week cash flow template</a> and fill in week 1 today. When the weekly update starts to cost more than it tells you, <a href="https://calendly.com/hello-zensus/introcall">talk to us</a> or look at <a href="/pricing">pricing</a>.
+</BlogCallout>
