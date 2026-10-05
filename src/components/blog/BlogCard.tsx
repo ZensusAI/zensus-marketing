@@ -12,6 +12,10 @@ interface BlogCardProps {
   thumbnail?: string;
   showRightBorder?: boolean;
   featured?: boolean;
+  /** Thumbnail is visible without scrolling: load it eagerly instead of lazily. */
+  aboveFold?: boolean;
+  /** The one thumbnail expected to be the largest paint on the page. */
+  priority?: boolean;
 }
 
 export function BlogCard({
@@ -24,6 +28,8 @@ export function BlogCard({
   thumbnail,
   showRightBorder = true,
   featured = false,
+  aboveFold = false,
+  priority = false,
 }: BlogCardProps) {
   return (
     <Link
@@ -46,7 +52,9 @@ export function BlogCard({
             src={thumbnail}
             alt={title}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
+            loading={aboveFold || priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : undefined}
+            decoding="async"
           />
         </div>
       ) : (

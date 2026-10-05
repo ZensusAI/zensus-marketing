@@ -164,6 +164,11 @@ const Blog = () => {
                     (index + 1) % 3 !== 0 && index !== filteredPosts.length - 1
                   }
                   featured={false}
+                  // The first row is on screen at load on every breakpoint
+                  // (one card on a phone, three on a desktop). A lazy image
+                  // there was the page's largest paint and loaded last.
+                  aboveFold={index < 3}
+                  priority={index === 0}
                 />
               ))}
             </div>
