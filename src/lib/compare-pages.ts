@@ -29,6 +29,10 @@ export interface ComparePageConfig {
   /** Caption under the table, when this page's vendor facts were read on a
    *  different date from COMPARE_METHODOLOGY. */
   methodology?: string;
+  /** ISO date for the WebPage markup's lastReviewed, when it differs from
+   *  METHODOLOGY_REVIEWED. Keep it in step with `methodology`: the caption a
+   *  reader sees and the date an engine reads must be the same day. */
+  reviewed?: string;
 }
 
 const METHODOLOGY_DATE = "September 2026";
@@ -418,6 +422,7 @@ export const CASH_FLOW_FROG_COMPARE: ComparePageConfig = {
   ],
   methodology:
     "Based on each vendor's own public pages, read on 5 October 2026.",
+  reviewed: "2026-10-05",
 };
 
 /** One row of the Float alternatives page. Every competitor fact is sourced in
