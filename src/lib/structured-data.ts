@@ -123,6 +123,42 @@ export const faqPageSchema = (items: FaqItem[]) => ({
   })),
 });
 
+export interface WebPageSchemaInput {
+  url: string;
+  name: string;
+  description: string;
+  image: string;
+  /** ISO date the page's facts were last checked against their sources. */
+  lastReviewed?: string;
+}
+
+/**
+ * WebPage JSON-LD for a page about the product. The site-wide @graph in
+ * index.html declares the Organization, WebSite and SoftwareApplication on
+ * every route; this ties one page to them, so an engine reading the page knows
+ * which site it belongs to and that its subject is Zensus.
+ */
+export const webPageSchema = ({
+  url,
+  name,
+  description,
+  image,
+  lastReviewed,
+}: WebPageSchemaInput) => ({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${url}#webpage`,
+  url,
+  name,
+  description,
+  inLanguage: "en-US",
+  isPartOf: { "@id": `${SITE_URL}/#website` },
+  about: { "@id": `${SITE_URL}/#software` },
+  publisher: { "@id": ORGANIZATION_ID },
+  primaryImageOfPage: image,
+  ...(lastReviewed ? { lastReviewed } : {}),
+});
+
 export interface BlogIndexPost {
   name: string;
   url: string;

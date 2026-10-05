@@ -1,6 +1,6 @@
 # zensus-marketing
 
-Public marketing site for Zensus — served at [zensus.app](https://zensus.app).
+Public marketing site for Zensus, served at [zensus.finance](https://zensus.finance). The site moved there from zensus.app on 13 September 2026; the old domain redirects.
 
 This repo is a standalone project, separate from the Zensus monorepo ([ZensusAI/zensus](https://github.com/ZensusAI/zensus)).
 
@@ -22,7 +22,7 @@ The dev server runs on `http://localhost:8080`. The marketing site is fully stat
 
 ## Deployment
 
-Vercel project: `zensus-marketing` (Hobby tier). `main` branch auto-deploys to production at [zensus.app](https://zensus.app). PRs get preview deploys at `zensus-marketing-git-<branch>-<team>.vercel.app`.
+Vercel project: `zensus-marketing` (Hobby tier). `main` branch auto-deploys to production at [zensus.finance](https://zensus.finance). PRs get preview deploys at `zensus-marketing-git-<branch>-<team>.vercel.app`.
 
 ## Scripts
 
@@ -59,7 +59,8 @@ Bing/Yandex URL notification, submitted at the end of the Vercel production buil
 
 ## Links
 
-- Production: [zensus.app](https://zensus.app) · [www.zensus.app](https://www.zensus.app)
+- Production: [zensus.finance](https://zensus.finance). `www.zensus.finance`, `zensus.app` and `www.zensus.app` all redirect to it.
+- Product app (separate repo): [app.zensus.app](https://app.zensus.app)
 - Zensus monorepo: [ZensusAI/zensus](https://github.com/ZensusAI/zensus)
 
 ## License

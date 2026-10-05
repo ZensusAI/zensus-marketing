@@ -9,10 +9,12 @@ import {
   breadcrumbSchema,
   faqPageSchema,
   HOME_CRUMB,
+  webPageSchema,
 } from "@/lib/structured-data";
 import {
   COMPARE_LINKS,
   COMPARE_METHODOLOGY,
+  METHODOLOGY_REVIEWED,
   type ComparePageConfig,
 } from "@/lib/compare-pages";
 
@@ -32,6 +34,14 @@ export function ComparePageLayout({ config }: ComparePageLayoutProps) {
   ]);
 
   const faqLd = faqPageSchema(config.faqs);
+
+  const webPageLd = webPageSchema({
+    url: pageUrl,
+    name: config.pageTitle,
+    description: config.metaDescription,
+    image: ogImage,
+    lastReviewed: METHODOLOGY_REVIEWED,
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -56,6 +66,7 @@ export function ComparePageLayout({ config }: ComparePageLayoutProps) {
         <meta name="twitter:image" content={ogImage} />
         <link rel="canonical" href={pageUrl} />
         <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+        <script type="application/ld+json">{JSON.stringify(webPageLd)}</script>
         <script type="application/ld+json">{JSON.stringify(faqLd)}</script>
       </Helmet>
 

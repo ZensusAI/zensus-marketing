@@ -32,6 +32,8 @@ describe("homepage hero", () => {
   // headline as "Your cash flow,Your cash flow,mapped as far ahead as you
   // need.mapped as far ahead as you need." The gradient layer is now a CSS
   // pseudo-element, whose content is not DOM text. Guard the regression.
+  // The two lines are also separated by a space, so the same extractors read
+  // one sentence instead of "flow,mapped".
   it("renders each H1 line exactly once in the DOM text", () => {
     const markup = renderToStaticMarkup(
       <HelmetProvider>
@@ -42,7 +44,7 @@ describe("homepage hero", () => {
     const h1 = markup.match(/<h1[\s\S]*?<\/h1>/)?.[0] ?? "";
     const text = h1.replace(/<[^>]*>/g, "");
 
-    expect(text).toBe("Your cash flow,mapped as far ahead as you need.");
+    expect(text).toBe("Your cash flow, mapped as far ahead as you need.");
     expect(text.match(/Your cash flow,/g)).toHaveLength(1);
     expect(text.match(/mapped as far ahead as you need\./g)).toHaveLength(1);
   });

@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import Navbar from "@/components/landing/Navbar";
+import Footer from "@/components/landing/Footer";
 import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const PAGE_URL = `${SITE_URL}/support`;
@@ -304,8 +306,12 @@ export default function Support() {
         <script type="application/ld+json">{JSON.stringify(faqLd)}</script>
       </Helmet>
 
+      {/* This page used to render with no navigation and no footer, so a
+          visitor who landed here from search had no way on to the rest of
+          the site, and the page passed no links to it either. */}
+      <Navbar />
       <main className="min-h-screen bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:py-24">
           <header className="mb-12">
             <h1 className="text-3xl sm:text-4xl font-semibold text-foreground mb-4">
               Support
@@ -516,6 +522,7 @@ export default function Support() {
           </section>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

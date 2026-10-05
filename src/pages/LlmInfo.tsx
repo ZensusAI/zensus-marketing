@@ -164,7 +164,7 @@ const LlmInfo = () => (
         </section>
 
         <section className="mt-10 space-y-3 text-sm leading-relaxed text-foreground">
-          <h2 className="text-xl font-semibold">Key guides</h2>
+          <h2 className="text-xl font-semibold">Guides</h2>
           <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
             <li>
               <Link to="/blog/what-is-cash-flow-forecasting" className={linkCls}>
@@ -185,8 +185,24 @@ const LlmInfo = () => (
               </Link>
             </li>
             <li>
+              <Link
+                to="/blog/what-happens-if-you-miss-payroll"
+                className={linkCls}
+              >
+                What happens if you miss payroll?
+              </Link>
+            </li>
+            <li>
               <Link to="/blog/runway-vs-burn-rate-for-founders" className={linkCls}>
                 Runway vs burn rate for founders
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/blog/default-alive-vs-default-dead-for-founders"
+                className={linkCls}
+              >
+                Default alive vs default dead for founders
               </Link>
             </li>
             <li>
@@ -218,6 +234,19 @@ const LlmInfo = () => (
                 className={linkCls}
               >
                 HubSpot pipeline to cash forecast
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/blog/forecasting-ai-compute-costs-for-founders"
+                className={linkCls}
+              >
+                Forecasting AI compute costs for founders
+              </Link>
+            </li>
+            <li>
+              <Link to="/blog/mcp-vs-cli-for-finance-teams" className={linkCls}>
+                MCP vs CLI for finance teams
               </Link>
             </li>
           </ul>
