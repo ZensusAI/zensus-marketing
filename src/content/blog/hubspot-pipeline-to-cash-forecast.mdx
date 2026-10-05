@@ -4,7 +4,7 @@ export const meta = {
   description:
     'How to convert HubSpot pipeline data into a realistic cash flow forecast using deal probability, billing terms, contract timing, and payment behavior.',
   date: '2026-07-02',
-  dateModified: '2026-07-02',
+  dateModified: '2026-10-05',
   category: 'Guide',
   readTime: '13 min read',
   slug: 'hubspot-pipeline-to-cash-forecast',
@@ -30,12 +30,12 @@ export const meta = {
     {
       question: 'Does HubSpot provide cash flow forecasting?',
       answer:
-        'HubSpot primarily focuses on revenue and pipeline forecasting. Most teams need additional cash forecasting logic to estimate actual cash arrival timing beyond booked revenue.',
+        'HubSpot\'s forecast tool forecasts revenue: by default it uses deal stages and each deal\'s likelihood to close. Most teams need additional cash forecasting logic to estimate when that revenue actually arrives as cash.',
     },
     {
       question: 'Why does a Commit deal not immediately become cash?',
       answer:
-        'A closed deal still requires contract activation, invoicing, payment terms, and customer payment before money reaches the bank account.',
+        'In HubSpot, Commit is a forecast category for deals with a high likelihood of closing, so a Commit deal has not closed yet. After it closes it still needs a contract start, an invoice, payment terms to run, and the customer to pay before money reaches the bank account.',
     },
     {
       question: 'Why is cash forecasting more important than pipeline forecasting?',
@@ -52,7 +52,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   A sales pipeline is not cash.
 </p>
 
-<p>A deal marked Commit in HubSpot may not generate cash for 30, 60, or even 90 days. Close dates, contract start dates, billing structures, payment terms, and customer payment behavior all affect when money actually reaches your bank account.</p>
+<p>HubSpot <a href="https://knowledge.hubspot.com/forecast/set-up-the-forecast-tool" className="font-medium text-primary underline-offset-4 hover:underline">defines Commit</a> as "deals that have a high likelihood of closing and have been committed to the forecast". That describes closing, not cash. A deal marked Commit in HubSpot may not generate cash for 30, 60, or even 90 days. Close dates, contract start dates, billing structures, payment terms, and customer payment behavior all affect when money actually reaches your bank account.</p>
 
 <p>This is why founders often see a healthy pipeline but still struggle with cash flow.</p>
 
@@ -133,25 +133,27 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 ## What Data From HubSpot Should Be Used in a Cash Forecast?
 
-<p>A useful <strong>HubSpot pipeline cash forecast</strong> starts with deal value, stage, close probability, expected close date, contract start date, and billing structure.</p>
+<p>A useful HubSpot pipeline cash forecast starts with six inputs. Four are standard <a href="https://knowledge.hubspot.com/properties/hubspots-default-deal-properties" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot deal properties</a>: amount, deal stage, deal probability, and close date. Two usually are not on the deal itself: contract start date and billing structure. HubSpot keeps <a href="https://knowledge.hubspot.com/properties/hubspots-default-line-item-properties" className="font-medium text-primary underline-offset-4 hover:underline">billing frequency and billing start date on line items</a>, so look there, or record them as your own deal properties.</p>
 
-### Deal Value and Stage
+### Deal Value and Forecast Category
 
-<p>Example: <strong>$100,000</strong> deal in <strong>Commit</strong> stage.</p>
+<p>Example: a <strong>$100,000</strong> deal in the <strong>Commit</strong> forecast category.</p>
 
 ### Close Probability
 
-<p>Every company should calibrate probabilities using historical conversion rates.</p>
+<p>HubSpot sets deal probability from the deal stage, using the win probability configured for each stage. Its <a href="https://knowledge.hubspot.com/object-settings/set-up-and-customize-pipelines" className="font-medium text-primary underline-offset-4 hover:underline">default sales pipeline</a> runs from Appointment scheduled (20%) to Contract sent (90%). Forecast categories are separate: Pipeline, Best case, and Commit carry no percentage in HubSpot, so if you forecast by category you assign your own.</p>
 
-| Stage | Probability |
+<p>Every company should calibrate probabilities using historical conversion rates. The examples in this guide assume:</p>
+
+| Forecast category | Assumed probability |
 | --- | ---: |
 | Commit | 80% |
-| Best Case | 50% |
-| Pipeline | 20% |
+| Best case | 50% |
+| Pipeline | 25% |
 
 ### Expected Close Date and Contract Start
 
-<p>Example close: <strong>August 15</strong>. Contract start: <strong>September 1</strong>. The start date often matters more than the close date for <strong>CRM to cash forecast</strong> timing.</p>
+<p>Example close: <strong>August 1</strong>. Contract start: <strong>September 1</strong>. The start date often matters more than the close date for cash timing.</p>
 
 ### Billing Structure
 
@@ -175,8 +177,8 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 | Field | Value |
 | --- | --- |
 | Deal value | $100,000 |
-| Stage | Commit |
-| Probability | 80% |
+| Forecast category | Commit |
+| Assumed probability | 80% |
 | Expected close | August 1 |
 | Contract start | September 1 |
 | Billing terms | Annual prepaid |
@@ -214,7 +216,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   width={1024}
   height={576}
   alt="Timeline showing a $100K HubSpot Commit deal at day 0, contract start at day 30, invoice due at day 60, and cash received at day 75."
-  caption="A Commit-stage deal can still leave a long cash gap between CRM progress and bank deposits."
+  caption="A deal in the Commit category can still leave a long cash gap between CRM progress and bank deposits."
 />
 
 ## How Does Billing Structure Affect Cash Flow Forecasting?
@@ -257,7 +259,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 ## How Should You Weight Pipeline Deals in a Cash Forecast?
 
-<p><strong>Weighted pipeline equals deal value multiplied by close probability.</strong></p>
+<p><strong>Weighted pipeline equals deal value multiplied by close probability.</strong> HubSpot calculates the same figure as the <a href="https://knowledge.hubspot.com/properties/hubspots-default-deal-properties" className="font-medium text-primary underline-offset-4 hover:underline">Weighted amount</a> property: "the Amount multiplied by the Deal probability".</p>
 
 <p>Formula: <strong>Weighted Value = Deal Value × Probability</strong></p>
 
@@ -275,12 +277,12 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 ### Pipeline Snapshot
 
-| Deal | Stage | Value |
+| Deal | Forecast category | Value |
 | --- | --- | ---: |
 | Acme Corp | Commit | $100,000 |
 | BrightOps | Commit | $60,000 |
-| Northwind | Best Case | $80,000 |
-| Vertex AI | Best Case | $40,000 |
+| Northwind | Best case | $80,000 |
+| Vertex AI | Best case | $40,000 |
 
 ### Weighted Pipeline
 
@@ -362,9 +364,9 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>Most founders discover this problem only after cash becomes tight.</p>
 
-<p>Platforms like Zensus help teams connect HubSpot pipeline and subscription data with cash forecasting assumptions: close probability, contract timing, billing schedules, collection timing, and runway projections.</p>
+<p>Zensus covers the part of this that comes after a deal is won. It reads the invoices and subscriptions in HubSpot. Each subscription is placed in the forecast on its next payment dates, at its own billing frequency, and unpaid invoices count toward the money you are owed. It does not read open deals or deal probability. Weighting the open pipeline stays your judgment, and you can test it as a scenario.</p>
 
-<p>At <a href="/#features" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a>, founders connect bank data via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, accounting via <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and CRM revenue via <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a>. See <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">how it works</a> for the connect-to-forecast flow.</p>
+<p>At <a href="/#features" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a>, founders connect bank data via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, accounting via <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and invoices and subscriptions via <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a>. See <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">how it works</a> for the connect-to-forecast flow.</p>
 
 <p>Zensus projects when annual and quarterly contracts hit the bank, not flat monthly spreads. Founders can <a href="/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">drill from monthly to weekly to daily</a> cash flow, <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">run scenarios in plain English</a> (for example, what if our largest Commit deal slips 30 days?), and get <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when a 30-day projection crosses a cash floor they set.</p>
 
@@ -397,5 +399,5 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>Whether you use spreadsheets, a 13-week forecast, or a dedicated platform like Zensus, connecting HubSpot pipeline data to actual cash timing creates a much clearer picture of the future.</p>
 
 <BlogCallout title="Connect HubSpot Pipeline to Cash Timing">
-Zensus syncs HubSpot subscriptions and projects when deals and contracts hit the bank, with scenarios and Slack alerts on your cash floor. <a href="https://calendly.com/hello-zensus/introcall">Talk to us</a> or explore <a href="/pricing">pricing</a>.
+Zensus syncs HubSpot invoices and subscriptions and projects when each contract hits the bank, with scenarios and Slack alerts on your cash floor. <a href="https://calendly.com/hello-zensus/introcall">Talk to us</a> or explore <a href="/pricing">pricing</a>.
 </BlogCallout>

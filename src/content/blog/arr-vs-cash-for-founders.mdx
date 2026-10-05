@@ -4,7 +4,7 @@ export const meta = {
   description:
     'ARR vs cash flow explained: why ARR does not equal cash, how annual contracts and deferred revenue change cash timing, and how SaaS founders forecast it.',
   date: '2026-06-19',
-  dateModified: '2026-06-19',
+  dateModified: '2026-10-05',
   category: 'Guide',
   readTime: '11 min read',
   slug: 'arr-vs-cash-for-founders',
@@ -29,7 +29,7 @@ export const meta = {
     {
       question: 'What is deferred revenue?',
       answer:
-        'Deferred revenue is cash collected before the associated revenue has been recognized. It represents obligations to deliver future service, not spendable profit.',
+        'Deferred revenue is payment received, or invoiced and due, before the associated revenue has been recognized. It represents an obligation to deliver future service, not spendable profit.',
     },
     {
       question: 'Why can two companies with the same ARR have different runway?',
@@ -161,7 +161,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 ### What Happens to Revenue?
 
-<p>This is where <strong>revenue recognition vs cash</strong> diverges. Accounting rules generally require revenue to be recognized over the service period.</p>
+<p>This is where revenue recognition and cash diverge. Under the US revenue standard, <a href="https://storage.fasb.org/ASU%202014-09_Section%20A.pdf" className="font-medium text-primary underline-offset-4 hover:underline">ASC 606</a>, revenue is recognized over time when the customer "simultaneously receives and consumes the benefits provided by the entity's performance as the entity performs". A subscription works that way, so its revenue is recognized across the service period.</p>
 
 <p>That means <strong>$10,000 revenue per month</strong> for the next 12 months.</p>
 
@@ -206,17 +206,19 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>When the customer prepays, cash increases immediately. But the company has not yet delivered 12 months of service.</p>
 
-<p>The portion not yet earned becomes <strong>deferred revenue</strong>.</p>
+<p>The portion not yet earned becomes <strong>deferred revenue</strong>, which is a liability. The SEC's <a href="https://www.sec.gov/about/reports-publications/investorpubsbegfinstmtguide" className="font-medium text-primary underline-offset-4 hover:underline">guide to financial statements</a> says: "Liabilities also include obligations to provide goods or services to customers in the future."</p>
 
 <p className="mb-2 font-medium text-foreground">Deferred revenue represents:</p>
 
 <blockquote className="my-6 border-l-4 border-primary/30 pl-4 not-italic text-muted-foreground">
-  <p>Cash collected today for services that will be delivered later.</p>
+  <p>Payment received, or due, today for services that will be delivered later.</p>
 </blockquote>
 
 <p>This is one reason SaaS founders often see healthy bank balances even when recognized revenue appears modest. The reverse can also happen: revenue may look healthy while cash remains constrained.</p>
 
-<p>Understanding <strong>deferred revenue cash flow</strong> and <strong>deferred revenue examples SaaS</strong> is critical for forecasting cash flow accurately. Accounting systems like <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a> track deferred revenue on the balance sheet; your forecast should still model when cash actually hits the bank.</p>
+<p>Deferred revenue is not always cash already in the bank. ASC 606 has the company record it "when the payment is made or the payment is due (whichever is earlier)" (<a href="https://storage.fasb.org/ASU%202014-09_Section%20A.pdf" className="font-medium text-primary underline-offset-4 hover:underline">paragraph 606-10-45-2</a>), so it can sit against an invoice the customer has not paid yet.</p>
+
+<p>That is why deferred revenue matters for forecasting. Accounting systems like <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a> track it on the balance sheet: QuickBooks' own help <a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/revenue-recognition/revenue-considered-earned/L0ojD88eN_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">says</a> unearned revenue must be recorded "as deferred revenue (a liability) until the goods or services have been provided". Your forecast still has to model when cash actually hits the bank.</p>
 
 ## Why Is My ARR Growing but Cash Flat?
 
@@ -270,7 +272,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   <li>same ARR, very different cash position</li>
 </ul>
 
-<p>If revenue growth slows unexpectedly, Company B may encounter runway pressure far sooner. This is why investors often care about billing mix in addition to ARR.</p>
+<p>If revenue growth slows unexpectedly, Company B may encounter runway pressure far sooner. This is why investors look at billings as well as ARR. Andreessen Horowitz's <a href="https://a16z.com/16-startup-metrics/" className="font-medium text-primary underline-offset-4 hover:underline">16 Startup Metrics</a> calls billings "a much better forward-looking indicator of the health of a SaaS company than simply looking at revenue".</p>
 
 <p>Two companies can have identical recurring revenue and completely different financial risk profiles. Model yours with the free <a href="/tools/runway-calculator" className="font-medium text-primary underline-offset-4 hover:underline">startup runway calculator</a>, or read our guide on <a href="/blog/runway-vs-burn-rate-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">runway vs burn rate</a> for the full vocabulary. When slow collections are the issue, the <a href="/blog/cash-conversion-cycle" className="font-medium text-primary underline-offset-4 hover:underline">cash conversion cycle</a> shows how DSO, inventory days, and payables timing trap cash.</p>
 
@@ -300,7 +302,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 ## How Much Runway Can Annual Billing Add?
 
-<p>Consider a company spending <strong>$100,000 per month</strong> with net burn of <strong>$100,000 per month</strong>.</p>
+<p>Consider a company with net burn of <strong>$100,000 per month</strong>: each month it spends $100,000 more than it collects.</p>
 
 <p>Now imagine the company converts several large customers from monthly billing to annual prepaid contracts.</p>
 
@@ -312,7 +314,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   <li>more months of runway</li>
 </ul>
 
-<p>The ARR may not change at all. The bank balance changes dramatically. This is <strong>how annual contracts affect cash flow</strong> and why <strong>annual prepaid contracts and runway</strong> are linked strategically.</p>
+<p>The ARR may not change at all. The bank balance changes dramatically. This is how annual contracts change cash flow without changing ARR, and why annual prepayment and runway are linked.</p>
 
 <p>Annual prepayments are often used by SaaS companies preparing for uncertain fundraising environments. For investor context on whether growth reaches profitability before cash runs out, see <a href="/blog/default-alive-vs-default-dead-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">default alive vs default dead</a>.</p>
 
@@ -320,7 +322,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>Founders frequently ask: <strong>why revenue does not match bank balance</strong>?</p>
 
-<p>Because <strong>revenue recognition SaaS</strong> follows accounting rules. Cash collection follows customer payment behavior.</p>
+<p>Because revenue recognition follows accounting rules. Cash collection follows customer payment behavior.</p>
 
 <p>Revenue can be earned before cash is collected. Cash can be collected before revenue is earned. The two timelines rarely align perfectly.</p>
 
@@ -369,7 +371,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>At Zensus, founders connect bank data via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, accounting via <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and subscription revenue via <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a> into one financial model. See <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">how it works</a> for the connect-to-forecast flow.</p>
 
-<p>Instead of spreading annual contracts flat across twelve months, Zensus projects when cash actually hits the bank. Founders can <a href="/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">drill from monthly to weekly to daily</a> cash flow, <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">run scenarios in plain English</a> (for example, what if we lose our largest annual contract?), and get <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when a 30-day projection crosses a cash floor they set. For open pipeline deals and Commit-stage timing, see <a href="/blog/hubspot-pipeline-to-cash-forecast" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot pipeline to cash forecast</a>.</p>
+<p>Instead of spreading annual contracts flat across twelve months, Zensus projects when cash actually hits the bank. Founders can <a href="/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">drill from monthly to weekly to daily</a> cash flow, <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">run scenarios in plain English</a> (for example, what if we lose our largest annual contract?), and get <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when a 30-day projection crosses a cash floor they set. For open pipeline deals and when they turn into cash, see <a href="/blog/hubspot-pipeline-to-cash-forecast" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot pipeline to cash forecast</a>.</p>
 
 <p>The goal is not simply tracking ARR. The goal is understanding when cash actually hits the bank. Plans are on the <a href="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">pricing page</a>.</p>
 
