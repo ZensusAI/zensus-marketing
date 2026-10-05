@@ -84,9 +84,12 @@ constants, and it carries the site-wide schema.org `@graph`: the `@id` values se
 and AI engines use as this site's entity identity. It holds `__SITE_URL__`,
 `__SITE_HOST__` and `__LEGACY_SITE_HOST__` placeholders that the `stamp-index-html`
 plugin in `vite.config.ts` fills at build and in dev. Never write a real origin there.
-The `Organization` and `WebSite` `alternateName` arrays intentionally list the legacy
-host alongside the current one so engines merge the old and new identity rather than
-treating them as two entities.
+The `Organization` `alternateName` array intentionally lists the legacy host alongside
+the current one so engines merge the old and new identity rather than treating them as
+two entities. The `WebSite` array lists the current host only, and must stay that way:
+Google reads a lowercase domain in `WebSite.alternateName` as a site name it may show
+in results, and while the legacy host was listed there it kept labelling
+`zensus.finance` pages with the old domain. `src/lib/site-url.test.ts` checks both.
 
 `src/lib/site-url.test.ts` enforces all of this: the three declarations agree (for both
 the current and legacy origin), and no hardcoded host appears in `src/`, `api/`,

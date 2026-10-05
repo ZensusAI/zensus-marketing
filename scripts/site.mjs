@@ -7,8 +7,9 @@ export const SITE_URL = "https://zensus.finance";
 export const SITE_HOST = SITE_URL.replace(/^https?:\/\//, "");
 
 // The previous public origin, which now redirects to SITE_URL. index.html keeps
-// it as a schema.org alternateName so search and AI engines can merge the old
-// and new identity rather than treating them as two entities. Mirrors
+// it as an alternateName of the Organization (not of the WebSite, where Google
+// would treat it as a site name to show in results) so search and AI engines
+// can merge the old and new identity rather than treating them as two. Mirrors
 // LEGACY_SITE_URL in src/lib/constants.ts and api/_lib/site.ts.
 export const LEGACY_SITE_URL = "https://zensus.app";
 export const LEGACY_SITE_HOST = LEGACY_SITE_URL.replace(/^https?:\/\//, "");
