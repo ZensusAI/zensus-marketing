@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
-import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+import {
+  breadcrumbSchema,
+  faqPageSchema,
+  HOME_CRUMB,
+  type FaqItem,
+} from "@/lib/structured-data";
 
 export interface IntegrationSection {
   heading: string;
@@ -30,6 +35,11 @@ interface IntegrationPageProps {
    *  These pages had no in-content links out, so they passed nothing on to
    *  the guides written about the same tool. */
   related?: IntegrationRelatedLink[];
+  /** Questions answered on the page and emitted as FAQPage JSON-LD. Every
+   *  answer has to be true of the product as it ships: these pages state what
+   *  an integration reads, how often it syncs and what disconnecting does, and
+   *  each of those was checked against the app's code in October 2026. */
+  faqs?: FaqItem[];
 }
 
 const BREADCRUMB_NAMES: Record<string, string> = {
@@ -49,6 +59,7 @@ export const IntegrationPage = ({
   sections,
   serviceSchema,
   related,
+  faqs,
 }: IntegrationPageProps) => {
   const pageUrl = `${SITE_URL}/integrations/${slug}`;
   const imageUrl = `${SITE_URL}/og/integrations-${slug}.png`;
@@ -85,6 +96,9 @@ export const IntegrationPage = ({
       {serviceSchema && (
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
       )}
+      {faqs && faqs.length > 0 && (
+        <script type="application/ld+json">{JSON.stringify(faqPageSchema(faqs))}</script>
+      )}
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">
@@ -105,6 +119,20 @@ export const IntegrationPage = ({
             </div>
           </section>
         ))}
+
+        {faqs && faqs.length > 0 && (
+          <section className="mb-10 border-t border-border pt-10">
+            <h2 className="text-xl font-semibold mb-6">Common questions</h2>
+            <dl className="space-y-6">
+              {faqs.map((faq) => (
+                <div key={faq.question}>
+                  <dt className="font-medium text-foreground mb-1">{faq.question}</dt>
+                  <dd className="text-muted-foreground leading-relaxed">{faq.answer}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
 
         {related && related.length > 0 && (
           <section className="mb-10 border-t border-border pt-10">
