@@ -285,7 +285,7 @@ Five Float alternatives compared from each vendor's own pages as of September 20
 
 https://zensus.finance/quickbooks-cash-flow-forecasting
 
-Product page for businesses on QuickBooks Online. What QuickBooks' own cash flow planner does, in Intuit's words (read October 2026): it projects from QuickBooks data and connected bank accounts; its 24-month view shows 14 months into the future; it is not available when Multicurrency is on. What Zensus adds: QuickBooks invoices and bills placed on their due dates and synced daily, a direct bank feed through Plaid, HubSpot subscriptions on their billing dates, monthly, weekly, daily and 13-week views, plain-English scenarios, and Slack alerts. Zensus forecasts in one currency and does not convert. $199/mo, 14-day free trial.
+Product page for businesses on QuickBooks Online. What QuickBooks' own cash flow planner does, in Intuit's words (read October 2026): it projects from QuickBooks data and connected bank accounts; its 24-month view shows 14 months into the future; it is not available when Multicurrency is on. What Zensus adds: QuickBooks invoices and bills placed on their due dates (overdue ones moved forward) and synced daily, a direct bank feed through Plaid, HubSpot subscriptions on their billing dates, monthly, weekly, daily and 13-week views, plain-English scenarios, and Slack alerts. Zensus forecasts in one currency and does not convert. $199/mo, 14-day free trial.
 
 ## LLM entity page
 

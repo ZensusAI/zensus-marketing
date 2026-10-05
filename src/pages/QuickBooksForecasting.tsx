@@ -295,7 +295,8 @@ const QuickBooksForecasting = () => (
                 QuickBooks Online
               </Link>
               . Open invoices become cash you expect to receive and open
-              bills become cash you expect to pay, each on its due date.
+              bills become cash you expect to pay, each on its due date. One
+              that is already overdue is moved forward to today or later.
             </li>
             <li>
               <strong className="text-foreground">The bank, directly.</strong>{" "}
