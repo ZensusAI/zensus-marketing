@@ -133,6 +133,25 @@ describe("site origin", () => {
     expect(LEGACY_SITE_HOST).toBe(LEGACY_SITE_URL.replace(/^https:\/\//, ""));
   });
 
+  // The legacy host belongs on the Organization, where it tells engines the old
+  // and new domains are one entity. It must not sit on the WebSite: Google
+  // treats a lowercase domain in WebSite.alternateName as a site name it may
+  // show, and for three weeks after the move it labelled results on the new
+  // domain with the old one.
+  it("names the legacy host on the Organization but not on the WebSite", () => {
+    const block = read("index.html").match(
+      /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+    );
+    const graph: { "@type": string; alternateName?: string[] }[] = JSON.parse(
+      block![1],
+    )["@graph"];
+    const names = (type: string) =>
+      graph.find((node) => node["@type"] === type)?.alternateName ?? [];
+
+    expect(names("WebSite")).toEqual(["__SITE_HOST__"]);
+    expect(names("Organization")).toContain("__LEGACY_SITE_HOST__");
+  });
+
   it("derives SITE_HOST from SITE_URL", () => {
     expect(SITE_URL).toMatch(/^https:\/\//);
     expect(SITE_URL).not.toMatch(/\/$/);
