@@ -66,3 +66,35 @@ describe("buildPayrollCalendar", () => {
     expect(normalMonth.cashOutflow).toBe(42000);
   });
 });
+
+// The FAQ on /tools/payroll-calendar states these as facts about 2027. They
+// are arithmetic, so hold the copy to the calendar here.
+describe("2027 pay dates quoted in the payroll calendar FAQ", () => {
+  const year = (firstPayDate: string, frequency: "weekly" | "biweekly", y: number) =>
+    buildPayrollCalendar({ firstPayDate: d(firstPayDate), frequency, amountPerRun: 0 }).years.find(
+      (summary) => summary.year === y,
+    )!;
+
+  it("a biweekly schedule that pays on Friday, January 1, 2027 has 27 pay dates", () => {
+    const y2027 = year("2027-01-01", "biweekly", 2027);
+
+    expect(y2027.totalPeriods).toBe(27);
+    expect(y2027.is27PeriodYear).toBe(true);
+    expect(y2027.threePaycheckMonths).toEqual(["January", "July", "December"]);
+    // The same schedule in 2026: 26, starting Friday, January 2.
+    expect(year("2027-01-01", "biweekly", 2026).totalPeriods).toBe(26);
+  });
+
+  it("the alternate Fridays have 26, with three paydays in April and October", () => {
+    const y2027 = year("2027-01-08", "biweekly", 2027);
+
+    expect(y2027.totalPeriods).toBe(26);
+    expect(y2027.threePaycheckMonths).toEqual(["April", "October"]);
+  });
+
+  it("weekly payrolls have 53 pay dates on Fridays in 2027 and on Thursdays in 2026", () => {
+    expect(year("2027-01-01", "weekly", 2027).totalPeriods).toBe(53);
+    expect(year("2026-01-01", "weekly", 2026).totalPeriods).toBe(53);
+    expect(year("2027-01-01", "weekly", 2026).totalPeriods).toBe(52);
+  });
+});

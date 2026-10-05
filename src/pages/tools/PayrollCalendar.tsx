@@ -24,9 +24,9 @@ import {
 import { ToolEmailCapture } from "@/components/tools/ToolEmailCapture";
 
 const PAGE_URL = `${SITE_URL}/tools/payroll-calendar`;
-const PAGE_TITLE = "Payroll Calendar Calculator for 2026 and 2027";
+const PAGE_TITLE = "Payroll Calendar Calculator for 2027 (and 2026)";
 const PAGE_DESCRIPTION =
-  "Free payroll calendar calculator: count pay periods in 2026 and 2027, find three-paycheck months and 27-period biweekly years, and see the cash impact.";
+  "Free payroll calendar calculator: count pay periods in 2027 and 2026, find three-paycheck months and 27-period biweekly years, and see the cash impact.";
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
@@ -35,11 +35,29 @@ const breadcrumbs = breadcrumbSchema([
   { name: "Payroll Calendar", url: PAGE_URL },
 ]);
 
+// The date facts below are arithmetic, checked against the calendar: January 1
+// and December 31 fall on a Thursday in 2026 and on a Friday in 2027, and a
+// biweekly schedule has 27 pay dates in a year only when it pays on both.
 const FAQS = [
+  {
+    question: "How many pay periods are in 2027?",
+    answer:
+      "It depends on pay frequency and on which dates you pay. Biweekly schedules have 26 pay periods in most years, but 27 in 2027 when one of the paydays is Friday, January 1, 2027. Weekly schedules have 52, or 53 if payday is a Friday. Semimonthly has 24. Monthly has 12. Enter your first pay date above to see your count.",
+  },
+  {
+    question: "Does 2027 have 27 pay periods?",
+    answer:
+      "For some biweekly schedules, yes. January 1 and December 31, 2027 both fall on a Friday, so a biweekly schedule with a payday on January 1, 2027 has 27 pay dates inside the year. Biweekly schedules that pay on the alternate Fridays, or on another weekday, have 26. If you run the January 1 payroll a day early because New Year's Day is a bank holiday, that pay date lands on Thursday, December 31, 2026, and the 27th pay date moves into 2026 instead.",
+  },
+  {
+    question: "Which months have three paychecks in 2027?",
+    answer:
+      "It depends on which dates you pay. A biweekly schedule with a payday on Friday, January 1, 2027 has three paydays in January, July, and December 2027. A biweekly schedule that pays on Friday, January 8, 2027 has three in April and October. The calculator above marks the three-paycheck months for your own schedule.",
+  },
   {
     question: "How many pay periods are in 2026?",
     answer:
-      "It depends on pay frequency and your first pay date. Biweekly schedules usually have 26 pay periods in a year, but 2026 can have 27 when your first payday falls on or near January 1. Weekly schedules have 52 or 53. Semimonthly has 24. Monthly has 12. Enter your first pay date above to see your count.",
+      "It depends on pay frequency and on which dates you pay. Biweekly schedules have 26 pay periods in most years, but 27 in 2026 when one of the paydays is Thursday, January 1, 2026. Weekly schedules have 52, or 53 if payday is a Thursday. Semimonthly has 24. Monthly has 12. Enter your first pay date above to see your count.",
   },
   {
     question: "Which months have three paychecks in 2026?",
@@ -223,7 +241,7 @@ const PayrollCalendar = () => {
             Payroll calendar calculator
           </h1>
           <p className="text-lg text-muted-foreground mb-10">
-            How many pay periods in 2026? Which months have three paychecks? Enter your first pay
+            How many pay periods in 2027? Which months have three paychecks? Enter your first pay
             date and frequency to see pay periods in 2026 and 2027, spot a 27-period biweekly year,
             and model monthly payroll cash impact.
           </p>
@@ -278,7 +296,7 @@ const PayrollCalendar = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             <div className="rounded-2xl border border-border bg-card/50 p-5">
               <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1">
                 Pay periods in 2026
@@ -291,42 +309,58 @@ const PayrollCalendar = () => {
               </p>
               <p className="text-2xl font-bold tracking-tight">{y2027.totalPeriods}</p>
             </div>
-            <div className="rounded-2xl border border-primary/40 bg-primary/5 p-5">
-              <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1">
-                Three-paycheck months (2026)
-              </p>
-              <p className="text-2xl font-bold tracking-tight">
-                {frequency === "biweekly" || frequency === "weekly"
-                  ? y2026.threePaycheckMonths.length
-                  : "N/A"}
-              </p>
-              {y2026.threePaycheckMonths.length > 0 ? (
-                <p className="text-xs text-muted-foreground mt-1">
-                  {y2026.threePaycheckMonths.join(", ")}
+            {[y2026, y2027].map((y) => (
+              <div key={y.year} className="rounded-2xl border border-primary/40 bg-primary/5 p-5">
+                <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-1">
+                  Three-paycheck months ({y.year})
                 </p>
-              ) : null}
-            </div>
+                <p className="text-2xl font-bold tracking-tight">
+                  {frequency === "biweekly" || frequency === "weekly"
+                    ? y.threePaycheckMonths.length
+                    : "N/A"}
+                </p>
+                {y.threePaycheckMonths.length > 0 ? (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {y.threePaycheckMonths.join(", ")}
+                  </p>
+                ) : null}
+              </div>
+            ))}
           </div>
 
-          {y2026.is27PeriodYear ? (
-            <div className="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-5 mb-8 text-sm leading-relaxed">
-              <p className="font-medium text-foreground mb-1">27 pay periods in 2026</p>
-              <p className="text-muted-foreground">
-                Your biweekly schedule lands 27 pay dates inside calendar year 2026. That is rare
-                (the next similar year for many schedules is around 2037). Budgeting payroll as
-                annual cost divided by 12 will understate cash outflows this year. See{" "}
-                <a
-                  href={PAYROLL_27_PERIOD_SOURCE.href}
-                  className={linkCls}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {PAYROLL_27_PERIOD_SOURCE.label}
-                </a>{" "}
-                for provider documentation.
-              </p>
-            </div>
-          ) : null}
+          {/* The notice used to exist for 2026 only, so a schedule whose 27th
+              pay date falls in 2027 (the default one on this page) showed 27
+              in the card above and no explanation. */}
+          {[y2026, y2027]
+            .filter((y) => y.is27PeriodYear)
+            .map((y) => (
+              <div
+                key={y.year}
+                className="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-5 mb-8 text-sm leading-relaxed"
+              >
+                <p className="font-medium text-foreground mb-1">27 pay periods in {y.year}</p>
+                <p className="text-muted-foreground">
+                  Your biweekly schedule lands 27 pay dates inside calendar year {y.year}. For any
+                  one schedule that happens about once every 11 years. Budgeting payroll as annual
+                  cost divided by 12 will understate cash outflows in {y.year}.
+                  {y.year === 2026 ? (
+                    <>
+                      {" "}
+                      See{" "}
+                      <a
+                        href={PAYROLL_27_PERIOD_SOURCE.href}
+                        className={linkCls}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {PAYROLL_27_PERIOD_SOURCE.label}
+                      </a>{" "}
+                      for provider documentation.
+                    </>
+                  ) : null}
+                </p>
+              </div>
+            ))}
 
           <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-foreground">2026 calendar</h2>
           <YearTable year={y2026} amountPerRun={amountPerRun} />

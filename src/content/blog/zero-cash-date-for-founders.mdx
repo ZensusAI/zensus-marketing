@@ -1,10 +1,10 @@
 export const meta = {
   title: 'Zero Cash Date: How to Calculate It Weekly, Not Monthly',
-  seoTitle: 'How to Calculate Your Zero Cash Date (2026) | Zensus',
+  seoTitle: 'Zero Cash Date: What It Is and How to Calculate It | Zensus',
   description:
     'How to calculate your zero cash date with weekly cash flow forecasts, why monthly runway hides timing risk, and a worked example where six months becomes 4.5.',
   date: '2026-06-29',
-  dateModified: '2026-09-21',
+  dateModified: '2026-10-05',
   category: 'Guide',
   readTime: '12 min read',
   slug: 'zero-cash-date-for-founders',
@@ -30,6 +30,11 @@ export const meta = {
       question: 'How do you calculate zero cash date?',
       answer:
         'Start with current cash, forecast weekly cash inflows and outflows, then identify the week where projected cash reaches zero. Weekly granularity captures payroll, vendor, and collection timing that monthly averages hide.',
+    },
+    {
+      question: 'What is the formula for zero cash date?',
+      answer:
+        'There is no one-line formula. For each week, closing cash equals opening cash plus cash in minus cash out, and that closing balance becomes the next week\'s opening balance. The zero cash date falls in the first week where closing cash drops below zero.',
     },
     {
       question: 'Is runway the same as zero cash date?',
@@ -93,6 +98,14 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p><strong>Runway estimates how long cash will last. Zero cash date identifies exactly when cash reaches zero.</strong></p>
 
+| | Runway | Zero cash date |
+| --- | --- | --- |
+| What it is | A length of time | A calendar date |
+| Unit | Months | A day, such as November 3 |
+| Built from | Cash on hand divided by average monthly net burn | A week-by-week forecast of cash in and cash out |
+| What it misses | When within a month the cash moves | Nothing about timing, but it is only as current as the forecast |
+| Best used for | A quick headline number | Planning payroll, spending, and fundraising against a deadline |
+
 <p>Runway is typically calculated as:</p>
 
 <p><strong>Runway = Cash on Hand ÷ Monthly Net Burn</strong></p>
@@ -147,6 +160,12 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 ## How Do You Calculate a Zero Cash Date?
 
 <p><strong>A zero cash date is calculated by forecasting cash inflows and outflows over time until the projected balance reaches zero.</strong></p>
+
+<p className="mb-2 font-medium text-foreground">The calculation for each week:</p>
+
+<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">Closing cash = Opening cash + Cash in - Cash out</code></p>
+
+<p>Each week's closing cash is the next week's opening cash. The zero cash date falls in the first week where closing cash drops below zero.</p>
 
 <BlogFigure
   src="/blog/zero-cash-date-for-founders/how-to-calculate-zero-cash-date.webp"
