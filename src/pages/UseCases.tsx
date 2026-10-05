@@ -53,7 +53,7 @@ const FAQS = [
   {
     question: "How does Zensus help me decide whether I can afford a hire?",
     answer:
-      "Ask the scenario agent in plain language. It recalculates your zero-cash date with the new salary included, using your live financial data, and the projection keeps updating as real transactions clear.",
+      "Ask the cash flow agent in plain language. It recalculates your zero-cash date with the new salary included, using your live financial data, and the projection keeps updating as real transactions clear.",
   },
   {
     question: "How do payroll alerts work?",
@@ -219,7 +219,7 @@ const UseCases = () => (
         <UseCase id="hiring-scenarios" title="Hiring and cash flow scenario planning">
           <p>
             Before you sign an offer letter, ask Zensus what the hire does to
-            your zero-cash date. The scenario agent answers in plain language,
+            your zero-cash date. The cash flow agent answers in plain language,
             using your live financial data, and the{" "}
             <a href="/#features" className={linkCls}>
               cash flow view

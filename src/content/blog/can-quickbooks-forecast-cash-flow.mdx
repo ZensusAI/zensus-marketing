@@ -4,7 +4,7 @@ export const meta = {
   description:
     'What QuickBooks Cash Flow Planner actually does, where it works well, where it stops, and when a growing business needs dedicated cash flow forecasting.',
   date: '2026-06-23',
-  dateModified: '2026-09-21',
+  dateModified: '2026-10-05',
   category: 'Guide',
   readTime: '12 min read',
   slug: 'can-quickbooks-forecast-cash-flow',
@@ -242,17 +242,18 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <ul>
   <li>contract value: $120,000 annually</li>
-  <li>invoice issued: $120,000</li>
-  <li>payment terms: Net 60</li>
+  <li>invoice issued: $120,000 on January 2</li>
+  <li>payment terms: Net 60, so payment is due in early March</li>
 </ul>
 
 <p>The forecast may assume collection based on the invoice due date. But reality may look different. For why ARR and bank balance diverge on prepaid contracts, see <a href="/blog/arr-vs-cash-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">ARR vs cash for founders</a>.</p>
 
 | Month | Forecast Assumption | Actual Cash |
 | --- | --- | --- |
-| January | Expected payment | $0 |
-| February | Expected payment | $0 |
-| March | Customer pays late | $120,000 |
+| January | Invoice issued, nothing due | $0 |
+| February | Nothing due | $0 |
+| March | $120,000 expected on the due date | $0 |
+| April | Nothing expected | $120,000 (paid a month late) |
 
 <BlogFigure
   src="/blog/can-quickbooks-forecast-cash-flow/revenue-vs-cash-timeline.png"

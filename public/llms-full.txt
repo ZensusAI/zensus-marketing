@@ -18,7 +18,8 @@ Most businesses make million-dollar decisions (hiring, fundraising timing, contr
 
 ### Real-Time Cash Flow
 - Calculates your exact zero-cash date based on connected financial data
-- Updates automatically whenever data is more than an hour stale
+- Bank data from Plaid and invoices and subscriptions from HubSpot update by webhook; QuickBooks syncs once a day
+- Every source also refreshes when you open the app if its data is more than an hour old
 - Manual sync available at any time
 
 ### Cash Flow Agent / Scenario Planning
@@ -91,7 +92,7 @@ Cash flow forecasting predicts how much cash a business will have on hand at fut
 - Direct forecasting projects actual cash receipts and payments; it is the accurate method for horizons up to about 13 weeks.
 - Indirect forecasting derives cash from projected income statements and balance sheets; it suits longer strategic horizons.
 - A rolling forecast continuously extends the planning window (for example, always showing the next 13 weeks) by adding a new period as each week closes.
-- The most common failure mode is forecasting revenue recognition instead of cash timing: a $24,000 annual contract is $24,000 of cash on day one, not $2,000 a month.
+- Short-term forecasts (daily, weekly, monthly) manage operating liquidity; long-term forecasts extend multiple years and support strategic planning and fundraising.
 - Zensus automates the repetitive parts of the workflow: data sync from Plaid, QuickBooks, and HubSpot, expense categorization, and projection updates.
 
 ### What Is a 13-Week Cash Flow Forecast?
@@ -101,6 +102,7 @@ The 13-week cash flow forecast is the standard short-term liquidity model: one f
 
 - 13 weeks is long enough to capture payroll cycles, receivables, payables, and quarterly billing events, but short enough for direct forecasting to stay accurate.
 - A company can report $1M ARR with strong growth and still hit cash pressure; ARR is not cash timing.
+- Revenue recognition is not cash timing either: a $24,000 annual contract may be recognized at $2,000 a month while the cash arrives as one $24,000 payment upfront.
 - Annual prepaid contracts can extend runway by several months without changing price or customer count.
 - Carta's State of Seed data shows the median time from seed to Series A now runs over two years, which is why 2026 runway guidance is 18 to 24 months after funding.
 - Investors look for a burn multiple below 2x for venture-stage SaaS (David Sacks's threshold).
@@ -125,7 +127,7 @@ How to model AI inference and agent costs as a first-class line item in a cash f
 
 - Goldman Sachs Research projects AI token consumption will multiply roughly 24 times by 2030, to about 120 quadrillion tokens a month.
 - The inference cost paradox: per-token prices keep falling, yet total spend rises because usage grows faster than costs fall.
-- Andreessen Horowitz observed that many AI-native products run 50% to 60% gross margins, versus 80% to 90% for traditional SaaS.
+- Andreessen Horowitz observed in 2020 that AI companies often run gross margins in the 50% to 60% range, well below the 60% to 80% or more it gave as the benchmark for comparable SaaS businesses.
 - A practical operator benchmark: keep inference spend below 10% of revenue for chat-heavy products. Zensus uses the same threshold in its own planning.
 - Forecast AI compute under three scenarios (base, upside, downside) because usage-driven costs scale with adoption, not headcount.
 
@@ -209,7 +211,7 @@ A practical comparison of Model Context Protocol (MCP) servers and CLI access fo
 - MCP gives agents typed, scoped, auditable access to financial systems; CLI access is broader but harder to constrain and audit.
 - QuickBooks and Xero now ship MCP servers, which moves agent access from custom integration work to a supported vendor surface.
 - For finance teams, the compliance tradeoff favors MCP: least-privilege scopes, structured tool definitions, and audit logs.
-- Zensus's runway agent uses typed integrations and scoped tools (the same architecture the guide recommends) to keep inference costs low and behavior predictable.
+- Zensus's cash flow agent uses typed integrations and scoped tools (the same architecture the guide recommends) to keep inference costs low and behavior predictable.
 
 ## Free Tools
 

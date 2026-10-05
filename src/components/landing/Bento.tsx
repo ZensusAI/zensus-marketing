@@ -25,8 +25,8 @@ const FACTS = [
     tail: "OAuth to Plaid, QuickBooks, and HubSpot. No spreadsheets, no CSV uploads.",
   },
   {
-    lead: "Real-time webhook sync.",
-    tail: "The moment a transaction clears, your forecast moves.",
+    lead: "Automatic sync.",
+    tail: "Bank and HubSpot changes arrive by webhook. QuickBooks syncs daily.",
   },
   {
     lead: "Zero-cash date.",
