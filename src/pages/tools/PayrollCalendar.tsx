@@ -361,6 +361,14 @@ const PayrollCalendar = () => {
                 </li>
               </ul>
               <p>
+                A payday that lands on January 1 is often paid a day early, which moves it into
+                the year before.{" "}
+                <Link to="/blog/27-pay-periods-2026-2027" className={linkCls}>
+                  27 pay periods in 2026 or 2027
+                </Link>{" "}
+                explains how that one payday decides which year has the extra run.
+              </p>
+              <p>
                 For the weekly discipline of knowing whether payroll clears, see{" "}
                 <Link to="/blog/will-i-make-payroll" className={linkCls}>
                   Will I Make Payroll?

@@ -45,6 +45,8 @@ const STATIC_ROUTES = [
   "/compare/zensus-vs-float",
   "/compare/zensus-vs-pulse",
   "/compare/float-alternatives",
+  "/compare/zensus-vs-cash-flow-frog",
+  "/quickbooks-cash-flow-forecasting",
   "/llm-info",
 ];
 

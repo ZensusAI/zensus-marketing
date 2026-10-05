@@ -144,7 +144,7 @@ export function ComparePageLayout({ config }: ComparePageLayoutProps) {
             <div className="mt-6 overflow-x-auto">
               <table className="w-full min-w-[520px] border-collapse text-sm">
                 <caption className="caption-bottom pt-4 text-left text-xs leading-relaxed text-muted-foreground">
-                  {COMPARE_METHODOLOGY}{" "}
+                  {config.methodology ?? COMPARE_METHODOLOGY}{" "}
                   {config.competitorName} is a trademark of its respective owner;
                   Zensus is not affiliated with or endorsed by{" "}
                   {config.competitorName}.

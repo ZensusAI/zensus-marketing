@@ -26,6 +26,9 @@ export interface ComparePageConfig {
   };
   tableRows: CompareTableRow[];
   faqs: FaqItem[];
+  /** Caption under the table, when this page's vendor facts were read on a
+   *  different date from COMPARE_METHODOLOGY. */
+  methodology?: string;
 }
 
 const METHODOLOGY_DATE = "September 2026";
@@ -266,6 +269,148 @@ export const PULSE_COMPARE: ComparePageConfig = {
         "Pulse markets to agencies and service businesses that want simple cash flow habits. Zensus targets businesses with variable revenue, annual contracts, and payroll timing risk who need live data and alerts.",
     },
   ],
+};
+
+/**
+ * Zensus vs Cash Flow Frog. Every Cash Flow Frog fact was read from
+ * cashflowfrog.com on 5 October 2026 and is quoted, with its URL, in
+ * docs/comparison-substantiation-2026-10-05-cash-flow-frog.md. The monthly
+ * prices were read in a browser with the Monthly tab selected: the pricing
+ * page opens on Yearly, so a plain fetch shows yearly prices only.
+ *
+ * Cash Flow Frog is cheaper than Zensus at four of its five revenue tiers and
+ * connects to more accounting systems. The page has to say so plainly.
+ */
+export const CASH_FLOW_FROG_COMPARE: ComparePageConfig = {
+  slug: "zensus-vs-cash-flow-frog",
+  competitorName: "Cash Flow Frog",
+  competitorSite: "https://cashflowfrog.com",
+  competitorPricingUrl: "https://cashflowfrog.com/pricing/",
+  pageTitle: "Zensus vs Cash Flow Frog",
+  metaTitle: "Zensus vs Cash Flow Frog: Pricing and Features (2026)",
+  metaDescription:
+    "Zensus vs Cash Flow Frog, compared from each vendor's own pages: price by revenue tier, free trial, accounting and HubSpot connections, scenarios, and alerts.",
+  ogSubtitle:
+    "Price by revenue tier, accounting and HubSpot connections, scenarios, and alerts, from each vendor's own pages.",
+  lead:
+    "Cash Flow Frog and Zensus both forecast cash from connected accounting and bank data. Cash Flow Frog costs less at most company sizes, connects to more accounting systems, and consolidates multiple entities and currencies. Zensus connects to HubSpot directly, has a plain-English cash flow agent built in, and sends Slack alerts, at one flat price.",
+  competitorBestFor:
+    "Cash Flow Frog is a strong fit if price matters most, if your books are in Xero, Sage Intacct, Odoo, Zoho Books, FreshBooks, or QuickBooks Desktop, if you need several entities or currencies in one view, or if you are an accountant managing forecasts for clients. Its Pro Plan starts at $69 a month for companies with up to $1M in revenue.",
+  zensusBestFor:
+    "Zensus is a stronger fit if you run on QuickBooks Online and bill through HubSpot, want subscriptions placed on their real billing dates without a Zapier step, want to ask what-if questions inside the product, and want a Slack alert when your projection drops below a cash floor you set.",
+  competitorStrengths: [
+    "Lower price at most sizes: $69/mo up to $1M in revenue, $89/mo to $5M, $129/mo to $10M, and $179/mo to $20M on monthly billing, with lower yearly rates",
+    "Seven accounting systems: QuickBooks Online, QuickBooks Desktop, Xero, Sage Intacct, Odoo, Zoho Books, and FreshBooks, plus Excel or CSV import",
+    "14-day free trial with no credit card, and a 30-day money-back guarantee",
+    "Unlimited entities consolidated into one cash view, with native multi-currency",
+    "Up to 10 users on every tier, and a separate plan for accountants priced by number of client companies",
+    "A connector that lets Claude, ChatGPT, Copilot, or Gemini read and change the forecast, included in the plan",
+    "ISO 27001 certification, stated on its own pages",
+  ],
+  zensusStrengths: [
+    "Direct HubSpot connection for invoices and subscriptions, with no Zapier step",
+    "Subscriptions placed on their own billing dates, so an annual contract is one payment, not twelve",
+    "A plain-English cash flow agent built into the product, with nothing external to connect",
+    "Slack alerts when your 30-day projection crosses your cash floor",
+    "One flat price at any revenue: $199/mo",
+  ],
+  pricingSummary: {
+    competitor:
+      "Cash Flow Frog has one Pro Plan, priced by your annual revenue. On monthly billing it is $69 a month up to $1M in revenue, $89 from $1M to $5M, $129 from $5M to $10M, $179 from $10M to $20M, and $249 above $20M. Yearly billing lists at $55 a month for the first tier, and the page also showed an \"Early bird\" yearly rate of $33 a month when it was read. Every tier lists forecasting up to 36 months, scenario planning, and up to 10 users. The trial is 14 days with no credit card. Prices in USD, as of 5 October 2026.",
+    zensus:
+      "Zensus Pro is $199 per month, billed monthly, cancel anytime, at any revenue. It includes Plaid, QuickBooks, HubSpot, Slack, the cash flow agent, and unlimited scenarios. 14-day free trial; your card is collected at signup and is not charged until the trial ends.",
+  },
+  tableRows: [
+    {
+      label: "Price, up to $1M revenue (USD)",
+      competitor: "$69/mo on monthly billing; $55/mo billed yearly, with a $33/mo \"Early bird\" yearly rate shown",
+      zensus: "$199/mo",
+    },
+    {
+      label: "Price, above $20M revenue (USD)",
+      competitor: "$249/mo on monthly billing; $199/mo billed yearly, with a $119/mo \"Early bird\" yearly rate shown",
+      zensus: "$199/mo",
+    },
+    {
+      label: "Free trial",
+      competitor: "14 days; no credit card",
+      zensus: "14 days; card collected at signup, not charged until the trial ends",
+    },
+    {
+      label: "Accounting systems",
+      competitor: "QuickBooks Online, QuickBooks Desktop, Xero, Sage Intacct, Odoo, Zoho Books, FreshBooks",
+      zensus: "QuickBooks Online",
+    },
+    {
+      label: "Bank feed",
+      competitor: "Plaid, for banks in the US and Canada",
+      zensus: "Plaid",
+    },
+    {
+      label: "HubSpot",
+      competitor: "No CRM connection, per its own pages; deals can be pushed in through Zapier",
+      zensus: "Direct connection: invoices and subscriptions (not deals)",
+    },
+    {
+      label: "Spreadsheet import",
+      competitor: "Excel or CSV import",
+      zensus: "No",
+    },
+    {
+      label: "Forecast horizon and views",
+      competitor: "Up to 36 months; daily, weekly, monthly, quarterly",
+      zensus: "36 months by default; monthly, weekly, daily, and a 13-week view",
+    },
+    {
+      label: "Scenarios",
+      competitor: "Built by hand from a copy of the base forecast; plain-English scenarios through an external assistant",
+      zensus: "Plain-English cash flow agent, built in",
+    },
+    {
+      label: "Multi-currency",
+      competitor: "Native, with consolidated conversion across entities",
+      zensus: "One currency per forecast; no conversion",
+    },
+    {
+      label: "Cash alerts",
+      competitor: "Threshold alerts not found on Cash Flow Frog's public pages; scheduled report delivery is offered",
+      zensus: "Slack alert when the 30-day projection crosses your cash floor",
+    },
+  ],
+  faqs: [
+    {
+      question: "Is Zensus or Cash Flow Frog better for cash flow forecasting?",
+      answer:
+        "Cash Flow Frog is the better fit if price is the deciding factor, if your books are in Xero, Sage Intacct, Odoo, Zoho Books, FreshBooks, or QuickBooks Desktop, or if you need several entities or currencies in one view. Zensus is the better fit if you run on QuickBooks Online and HubSpot and want subscriptions on their real billing dates, plain-English scenarios inside the product, and Slack alerts.",
+    },
+    {
+      question: "How much does Cash Flow Frog cost compared to Zensus?",
+      answer:
+        "Cash Flow Frog prices by annual revenue. On monthly billing its Pro Plan is $69 a month up to $1M in revenue, $89 to $5M, $129 to $10M, $179 to $20M, and $249 above $20M, with lower rates on yearly billing. Zensus Pro is $199 a month at any revenue. Cash Flow Frog is cheaper at every tier below $20M. Prices as of 5 October 2026.",
+    },
+    {
+      question: "Does Cash Flow Frog connect to HubSpot?",
+      answer:
+        "Cash Flow Frog's own pages say it has no CRM connection, and describe pushing expected deal closings from HubSpot or Salesforce into a forecast through Zapier. Zensus connects to HubSpot directly and reads invoices and subscriptions. It does not read deals.",
+    },
+    {
+      question: "Can I ask Cash Flow Frog or Zensus a what-if question in plain English?",
+      answer:
+        "With Cash Flow Frog you connect an external assistant: it publishes a connector for Claude, ChatGPT, Copilot, and Gemini that can read and change the forecast, included in its plan. Inside the product, a scenario is built by hand from a copy of the base forecast. Zensus has a plain-English cash flow agent built in.",
+    },
+    {
+      question: "Does Cash Flow Frog or Zensus send cash alerts?",
+      answer:
+        "Threshold, Slack, or email cash alerts were not found on Cash Flow Frog's public pages as of 5 October 2026; it offers scheduled report delivery. Zensus posts a Slack alert when your 30-day projection drops below the cash floor you set.",
+    },
+    {
+      question: "Which one works with Xero?",
+      answer:
+        "Cash Flow Frog. It lists Xero among seven accounting systems it connects to. Zensus connects to QuickBooks Online only.",
+    },
+  ],
+  methodology:
+    "Based on each vendor's own public pages, read on 5 October 2026.",
 };
 
 /** One row of the Float alternatives page. Every competitor fact is sourced in
@@ -554,12 +699,14 @@ export const FLOAT_ALTERNATIVES: AlternativesPageConfig = {
 export const COMPARE_LINKS: { to: string; label: string }[] = [
   { to: "/compare/zensus-vs-float", label: "Zensus vs Float" },
   { to: "/compare/zensus-vs-pulse", label: "Zensus vs Pulse" },
+  { to: "/compare/zensus-vs-cash-flow-frog", label: "Zensus vs Cash Flow Frog" },
   { to: "/compare/float-alternatives", label: "Float alternatives" },
 ];
 
 export const COMPARE_PAGES: Record<string, ComparePageConfig> = {
   "zensus-vs-float": FLOAT_COMPARE,
   "zensus-vs-pulse": PULSE_COMPARE,
+  "zensus-vs-cash-flow-frog": CASH_FLOW_FROG_COMPARE,
 };
 
 export const COMPARE_SLUGS = Object.keys(COMPARE_PAGES);
