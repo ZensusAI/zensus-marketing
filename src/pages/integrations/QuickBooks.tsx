@@ -82,7 +82,10 @@ const sections: IntegrationSection[] = [
         <Link to="/privacy" className={linkCls}>
           Privacy Policy
         </Link>{" "}
-        describes, and you can ask for it to be deleted at any time.
+        describes, and you can ask for it to be deleted at any time. If you
+        later connect a different QuickBooks company, the first company's
+        synced data is removed, so two companies are never mixed in one
+        forecast.
       </p>
     ),
   },
@@ -118,7 +121,7 @@ const faqs = [
   {
     question: "What happens to my data if I disconnect QuickBooks?",
     answer:
-      "Zensus revokes its access with Intuit immediately, deletes the stored tokens, and stops syncing. Accounting data that was already synced is kept while your Zensus account is active, and you can ask for it to be deleted at any time.",
+      "Zensus revokes its access with Intuit immediately, deletes the stored tokens, and stops syncing. Accounting data that was already synced is kept while your Zensus account is active, and you can ask for it to be deleted at any time. If you later connect a different QuickBooks company, the first company's synced data is removed.",
   },
   {
     question: "Does Zensus see my Intuit password?",
