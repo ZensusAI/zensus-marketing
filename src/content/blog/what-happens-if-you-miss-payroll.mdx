@@ -4,7 +4,7 @@ export const meta = {
   description:
     "What happens if a company misses payroll: state wage penalties, payroll tax problems, and a 7-day plan for founders who cannot make the next payroll.",
   date: "2026-06-16",
-  dateModified: "2026-06-16",
+  dateModified: "2026-10-05",
   category: "Guide",
   readTime: "12 min read",
   slug: "what-happens-if-you-miss-payroll",
@@ -24,7 +24,7 @@ export const meta = {
     {
       question: "Is it illegal to miss payroll?",
       answer:
-        "In most jurisdictions, employers must pay employees according to established pay schedules. Whether an employer missed payroll becomes a wage-payment violation depends on state and local law, classification, and delay length.",
+        "In most US states, yes. State law sets how often employees must be paid, and federal law requires minimum wage and overtime to be paid on the regular payday. Whether a late payroll becomes a wage-payment violation, and what it costs, depends on the state, the employee's classification, and how long the delay lasts.",
     },
     {
       question: "What should I do if I cannot make payroll?",
@@ -34,7 +34,7 @@ export const meta = {
     {
       question: "Can founders be personally liable for unpaid wages?",
       answer:
-        "Some jurisdictions can impose personal liability under specific circumstances. Founders should get local legal counsel quickly when facing a payroll compliance issue.",
+        "For unpaid payroll taxes, yes. The IRS can assess the Trust Fund Recovery Penalty personally against anyone responsible for paying over withheld taxes who willfully fails to, and the penalty equals the unpaid trust fund tax. For unpaid wages it depends on the state. California, for example, allows an owner, director, officer, or managing agent to be held liable for certain wage violations. Get local legal counsel quickly.",
     },
     {
       question: "How can startups avoid missing payroll?",
@@ -57,7 +57,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>The better outcome is never reaching this page. <a href="/blog/will-i-make-payroll" className="font-medium text-primary underline-offset-4 hover:underline">Projecting cash to each payroll date</a> surfaces a shortfall two cycles out, while collecting a receivable or deferring a vendor is still an option.</p>
 
-<p>When founders search <strong>what happens if you miss payroll</strong> or <strong>what happens if a company misses payroll</strong>, most results are written for employees or HR teams. This guide is written for founders navigating a <strong>payroll emergency</strong>, a <strong>payroll funding shortage</strong>, or a <strong>payroll cash crunch</strong>.</p>
+<p>Most guides to a missed payroll are written for employees or HR teams. This one is for the founder who has to decide what to do before payday.</p>
 
 <p className="mb-2 font-medium text-foreground">We will cover:</p>
 
@@ -89,7 +89,9 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 ## Is It Illegal to Miss Payroll?
 
-<p>In most jurisdictions, employers are required to pay employees according to established pay schedules. Federal and state wage laws generally require timely payment of wages earned.</p>
+<p>In most US states, yes. State law sets how often employees must be paid. The Department of Labor's <a href="https://www.dol.gov/agencies/whd/state/payday" className="font-medium text-primary underline-offset-4 hover:underline">state payday requirements table</a> lists the required pay frequency state by state, as of January 2023. Its footnotes name Alabama and Florida as having no regulation or none specified.</p>
+
+<p>Federal law is narrower than most founders assume. The Department of Labor's <a href="https://www.dol.gov/agencies/whd/compliance-assistance/handy-reference-guide-flsa" className="font-medium text-primary underline-offset-4 hover:underline">guide to the Fair Labor Standards Act</a> says: "Wages required by the FLSA are due on the regular payday for the pay period covered." The wages the Act requires are minimum wage and overtime. For usual or promised pay above that, the same guide says the FLSA provides no collection procedure and points to state law.</p>
 
 <p>Missing payroll can create wage-payment violations depending on state law, employee classification, payroll frequency, and length of delay. Founders should assume payroll deadlines are obligations, not suggestions.</p>
 
@@ -105,13 +107,15 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 ### 1. State Wage Penalties
 
-<p>Many states impose payroll late payment penalties when wages are not paid on time. Potential consequences include daily penalties, waiting-time penalties, wage claims, and labor agency investigations.</p>
+<p>Many states impose penalties when wages are not paid on time. California is one example. Under <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=210." className="font-medium text-primary underline-offset-4 hover:underline">Labor Code section 210</a>, a first late payment carries a penalty of $100 for each failure to pay an employee. Each later violation, or any willful one, carries $200 for each failure plus 25 percent of the amount withheld.</p>
+
+<p>Waiting-time penalties are a different rule, and they apply to final pay. California's Labor Commissioner <a href="https://www.dir.ca.gov/dlse/faq_waitingtimepenalty.htm" className="font-medium text-primary underline-offset-4 hover:underline">explains</a> that Labor Code section 203 penalizes a willful failure to pay the wages due when employment ends: the employee's daily rate of pay for each day those wages stay unpaid, up to 30 days. Wage claims and labor agency investigations can follow either kind of violation.</p>
 
 <p>The longer payroll remains unpaid, the more exposure increases in most jurisdictions.</p>
 
 ### 2. Payroll Tax Problems
 
-<p>A <strong>startup missed payroll</strong> event often creates a second problem: <strong>missed payroll taxes</strong> and payroll deposit penalties.</p>
+<p>A cash shortfall at payroll often creates a second problem: payroll taxes. The risk is highest when a company pays net wages and delays the tax deposit to stretch cash.</p>
 
 <p className="mb-2 font-medium text-foreground">Employers remain responsible for:</p>
 
@@ -122,7 +126,11 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   <li>state payroll taxes</li>
 </ul>
 
-<p>Late deposits can trigger separate penalties and interest. A payroll funding emergency can become a tax compliance emergency quickly.</p>
+<p>Late deposits carry their own penalties. The IRS <a href="https://www.irs.gov/payments/failure-to-deposit-penalty" className="font-medium text-primary underline-offset-4 hover:underline">failure to deposit penalty</a> is 2% of the unpaid deposit when it is 1 to 5 days late, 5% at 6 to 15 days, and 10% after that. It rises to 15% if the amount is still unpaid more than 10 days after a first IRS notice. Interest is charged on the penalties.</p>
+
+<p>The larger exposure is personal. Income tax, Social Security, and Medicare withheld from employees' pay are held in trust for the government. When they are not paid over, the IRS can assess the <a href="https://www.irs.gov/businesses/small-businesses-self-employed/employment-taxes-and-the-trust-fund-recovery-penalty-tfrp" className="font-medium text-primary underline-offset-4 hover:underline">Trust Fund Recovery Penalty</a> against any person who is responsible for paying them and willfully fails to. The IRS states: "The amount of the penalty is equal to the unpaid balance of the trust fund tax." The same page says: "Using available funds to pay other creditors when the business is unable to pay the employment taxes is an indication of willfulness."</p>
+
+<p>A payroll funding emergency can become a tax compliance emergency quickly.</p>
 
 ### 3. Employee Trust Damage
 
@@ -190,7 +198,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 ## Day 1: Stop Non-Essential Spending
 
-<p>Immediately review outgoing cash and pause discretionary spend. Payroll obligations come first.</p>
+<p>Immediately review outgoing cash and pause discretionary spend. Payroll obligations come first, and the payroll tax deposit is one of them.</p>
 
 <p className="mb-2 font-medium text-foreground">Look for:</p>
 
