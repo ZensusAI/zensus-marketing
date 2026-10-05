@@ -140,7 +140,7 @@ const UseCases = () => (
             </Link>{" "}
             invoices and places each contract payment on the date it actually
             lands, so your cash flow forecast reflects the March 14 renewal,
-            not a smooth twelfth of it every month. Deals and subscriptions
+            not a smooth twelfth of it every month. Invoices and subscriptions
             from{" "}
             <Link to="/integrations/hubspot" className={linkCls}>
               HubSpot
