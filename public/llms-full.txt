@@ -278,10 +278,10 @@ https://zensus.finance/tools/runway-calculator
 
 Free interactive calculator: enter cash, monthly revenue, and monthly expenses to get your runway in months and your projected zero-cash date. Models hiring impact at 1.3x loaded salary cost and the timing of annual contract payments. No signup required.
 
-### Payroll Calendar Calculator
+### 2027 Payroll Calendar and Pay Period Calculator
 https://zensus.finance/tools/payroll-calendar
 
-Free tool: count pay periods in 2026 and 2027, highlight three-paycheck months, flag 27-period biweekly years, and show monthly payroll cash impact.
+Free tool: every 2026 and 2027 pay date for weekly, biweekly, semimonthly and monthly schedules, with period start and end dates, paydays moved off weekends and Federal Reserve holidays to the previous banking day, 26 or 27 pay periods, three-paycheck months, monthly payroll cash impact, and CSV and ICS downloads. The page also lists the 2027 pay dates for the common schedules in plain text and the 2026 and 2027 Federal Reserve holidays.
 
 ## Comparisons
 

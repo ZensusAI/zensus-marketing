@@ -75,9 +75,9 @@ const CARDS = [
   {
     slug: "tools-payroll-calendar",
     category: "Free Tool",
-    title: "Payroll calendar calculator",
+    title: "2027 payroll calendar",
     subtitle:
-      "Pay periods in 2026 and 2027, three-paycheck months, and monthly cash impact.",
+      "Every pay date by frequency, moved off bank holidays, with 26 or 27 pay periods and three-paycheck months.",
     accent: "green",
   },
   {
