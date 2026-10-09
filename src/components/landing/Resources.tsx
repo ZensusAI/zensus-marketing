@@ -57,6 +57,11 @@ const GUIDES: ResourceLink[] = [
     description: "What Cash Flow Planner does, and where it stops.",
   },
   {
+    to: "/quickbooks-cash-flow-forecasting",
+    label: "QuickBooks cash flow forecasting software",
+    description: "Cash Flow Planner and Zensus side by side, for QuickBooks Online.",
+  },
+  {
     to: "/blog/hubspot-pipeline-to-cash-forecast",
     label: "Forecast cash from your sales pipeline",
     description: "From HubSpot deals to the day the money lands.",

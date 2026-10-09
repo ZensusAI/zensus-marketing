@@ -107,9 +107,9 @@ const CARDS = [
   {
     slug: "quickbooks-cash-flow-forecasting",
     category: "For QuickBooks",
-    title: "Cash flow forecasting for QuickBooks users",
+    title: "QuickBooks cash flow forecasting",
     subtitle:
-      "A live bank feed, HubSpot subscriptions, a 13-week view, scenarios, and Slack alerts on top of your books.",
+      "Zensus reads QuickBooks Online, adds your bank feed and HubSpot, and projects cash by week with scenarios and Slack alerts.",
     accent: "green",
   },
   {

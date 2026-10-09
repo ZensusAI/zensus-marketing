@@ -15,7 +15,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "can-quickbooks-forecast-cash-flow": {
-    "wordCount": 2327,
+    "wordCount": 2653,
     "images": [
       "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/quickbooks-cash-flow-planner-data-flow.webp",
       "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/revenue-vs-cash-timeline.webp",
@@ -117,7 +117,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "zero-cash-date-for-founders": {
-    "wordCount": 2035,
+    "wordCount": 2056,
     "images": [
       "https://zensus.finance/blog/zero-cash-date-for-founders/runway-vs-zero-cash-date.webp",
       "https://zensus.finance/blog/zero-cash-date-for-founders/how-to-calculate-zero-cash-date.webp",
