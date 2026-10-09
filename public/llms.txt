@@ -51,7 +51,7 @@ Businesses of any size with variable revenue, complex hiring plans, annual contr
 - [Default Alive vs Default Dead for Founders](https://zensus.finance/blog/default-alive-vs-default-dead-for-founders)
 - [MCP vs CLI for Finance Teams](https://zensus.finance/blog/mcp-vs-cli-for-finance-teams)
 - [Free startup runway calculator](https://zensus.finance/tools/runway-calculator)
-- [Free payroll calendar calculator](https://zensus.finance/tools/payroll-calendar)
+- [Free 2027 payroll calendar and pay period calculator](https://zensus.finance/tools/payroll-calendar)
 - [Zensus vs Float](https://zensus.finance/compare/zensus-vs-float)
 - [Zensus vs Pulse](https://zensus.finance/compare/zensus-vs-pulse)
 - [Zensus vs Cash Flow Frog](https://zensus.finance/compare/zensus-vs-cash-flow-frog)

@@ -25,8 +25,8 @@ const TOOLS: ResourceLink[] = [
   },
   {
     to: "/tools/payroll-calendar",
-    label: "Payroll calendar calculator",
-    description: "Pay periods for 2026 and 2027, including three-paycheck months.",
+    label: "2027 payroll calendar",
+    description: "Every pay date by frequency, period start and end, 26 or 27 pay periods.",
   },
   {
     to: "/blog/what-is-a-13-week-cash-flow-forecast",
