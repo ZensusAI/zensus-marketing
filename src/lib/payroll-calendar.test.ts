@@ -333,6 +333,8 @@ describe("exports", () => {
     const ics = payrollCalendarIcs(result, new Date(Date.UTC(2026, 9, 9, 12, 0, 0)));
     expect(ics.startsWith("BEGIN:VCALENDAR\r\n")).toBe(true);
     expect(ics.match(/BEGIN:VEVENT/g)).toHaveLength(52);
+    // The stamp is UTC whatever the machine's zone is.
+    expect(ics).toContain("DTSTAMP:20261009T120000Z");
     expect(ics).toContain("DTSTART;VALUE=DATE:20270108");
     expect(ics).toContain("DTEND;VALUE=DATE:20270109");
     expect(ics).toContain("UID:payday-20261224@zensus.finance");

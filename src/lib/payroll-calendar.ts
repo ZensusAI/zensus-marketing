@@ -550,7 +550,9 @@ export function payrollCalendarCsv(result: PayrollCalendarResult): string {
 }
 
 export function payrollCalendarIcs(result: PayrollCalendarResult, stamp: Date = new Date()): string {
-  const dtstamp = format(stamp, "yyyyMMdd'T'HHmmss'Z'");
+  // DTSTAMP must be UTC. date-fns formats in local time, so build it from the
+  // ISO string instead: 2026-10-09T12:00:00.000Z becomes 20261009T120000Z.
+  const dtstamp = stamp.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
