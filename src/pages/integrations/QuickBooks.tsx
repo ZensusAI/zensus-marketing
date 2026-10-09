@@ -157,7 +157,7 @@ const related: IntegrationRelatedLink[] = [
   },
   {
     to: "/quickbooks-cash-flow-forecasting",
-    label: "Cash flow forecasting for QuickBooks users",
+    label: "QuickBooks cash flow forecasting software",
     description:
       "What the built-in planner covers, where it stops, and what Zensus adds on top of your books.",
   },

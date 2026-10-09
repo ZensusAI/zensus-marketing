@@ -319,7 +319,7 @@ const LlmInfo = () => (
             </li>
             <li>
               <Link to="/quickbooks-cash-flow-forecasting" className={linkCls}>
-                Cash flow forecasting for QuickBooks users
+                QuickBooks cash flow forecasting software
               </Link>
             </li>
           </ul>

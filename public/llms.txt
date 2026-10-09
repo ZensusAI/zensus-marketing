@@ -56,7 +56,7 @@ Businesses of any size with variable revenue, complex hiring plans, annual contr
 - [Zensus vs Pulse](https://zensus.finance/compare/zensus-vs-pulse)
 - [Zensus vs Cash Flow Frog](https://zensus.finance/compare/zensus-vs-cash-flow-frog)
 - [Float alternatives](https://zensus.finance/compare/float-alternatives)
-- [Cash flow forecasting for QuickBooks users](https://zensus.finance/quickbooks-cash-flow-forecasting)
+- [QuickBooks cash flow forecasting software](https://zensus.finance/quickbooks-cash-flow-forecasting)
 - [LLM entity summary](https://zensus.finance/llm-info)
 - [Free 13-week cash flow template (XLSX)](https://zensus.finance/templates/13-week-cash-flow-template.xlsx)
 - [Changelog](https://zensus.finance/changelog)

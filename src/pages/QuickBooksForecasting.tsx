@@ -24,9 +24,9 @@ import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-da
 
 const PAGE_PATH = "/quickbooks-cash-flow-forecasting";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const PAGE_TITLE = "Cash Flow Forecasting for QuickBooks Users | Zensus";
+const PAGE_TITLE = "QuickBooks Cash Flow Forecasting Software | Zensus";
 const PAGE_DESCRIPTION =
-  "Cash flow forecasting software for QuickBooks Online. Zensus adds a live bank feed, HubSpot subscriptions, a 13-week view, scenarios, and Slack alerts.";
+  "QuickBooks cash flow forecasting software. Zensus reads QuickBooks Online, adds your bank feed and HubSpot, and projects cash weekly, with scenarios.";
 const OG_IMAGE = `${SITE_URL}/og/quickbooks-cash-flow-forecasting.png`;
 const INTUIT_REVIEWED = "October 2026";
 
@@ -39,13 +39,17 @@ const INTUIT = {
     "https://quickbooks.intuit.com/learn-support/en-us/help-article/budget-forecast-reports/use-cash-flow-planner-quickbooks-online/L2l59mIqe_US_en_US",
   cashFlowChart:
     "https://quickbooks.intuit.com/learn-support/en-us/help-article/banking-reports/quickbooks-calculates-cash-flow/L28q0Ucu6_US_en_US",
+  desktopProjector:
+    "https://quickbooks.intuit.com/learn-support/en-us/help-article/accounts-payable/set-cash-flow-projector-quickbooks-desktop/L0BSJYlHq_US_en_US",
+  desktopHub:
+    "https://quickbooks.intuit.com/learn-support/en-us/help-article/cash-flow/cash-flow-hub-quickbooks-desktop/L0yzfiruI_US_en_US",
 };
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
-  { name: "Cash flow forecasting for QuickBooks users", url: PAGE_URL },
+  { name: "QuickBooks cash flow forecasting software", url: PAGE_URL },
 ]);
 
 const webPageLd = {
@@ -53,7 +57,7 @@ const webPageLd = {
   "@type": "WebPage",
   "@id": `${PAGE_URL}#webpage`,
   url: PAGE_URL,
-  name: "Cash flow forecasting for QuickBooks users",
+  name: "QuickBooks cash flow forecasting software",
   description: PAGE_DESCRIPTION,
   inLanguage: "en-US",
   isPartOf: { "@id": `${SITE_URL}/#website` },
@@ -161,7 +165,7 @@ const QuickBooksForecasting = () => (
       <meta property="og:image:height" content="630" />
       <meta
         property="og:image:alt"
-        content="Cash flow forecasting for QuickBooks users social preview card"
+        content="QuickBooks cash flow forecasting software social preview card"
       />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={PAGE_TITLE} />
@@ -179,17 +183,18 @@ const QuickBooksForecasting = () => (
           For QuickBooks Online
         </p>
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-          Cash flow forecasting for QuickBooks users
+          QuickBooks cash flow forecasting, beyond Cash Flow Planner
         </h1>
         <p className="text-lg text-muted-foreground mb-4">
-          Zensus is cash flow forecasting software that connects to QuickBooks
-          Online. It reads your open invoices and bills, adds your live bank
-          balance and your HubSpot subscriptions, and shows when your cash is
-          projected to run out.
+          Zensus is QuickBooks cash flow forecasting software. It connects to
+          QuickBooks Online, reads your open invoices and bills, adds your live
+          bank balance and your HubSpot subscriptions, and shows when your cash
+          is projected to run out.
         </p>
         <p className="text-lg text-muted-foreground mb-10">
-          QuickBooks stays your accounting system. Zensus is the forecast on
-          top of it.
+          QuickBooks stays your accounting system. Zensus is the cash flow
+          projection on top of it, week by week, with scenarios you can test
+          without touching your books.
         </p>
 
         <div className="mb-14 flex flex-wrap items-center gap-4">
@@ -233,6 +238,19 @@ const QuickBooksForecasting = () => (
               scenarios."
             </li>
           </ul>
+          <p>
+            The planner is a QuickBooks Online feature. On QuickBooks Desktop,
+            Intuit says the{" "}
+            <a href={INTUIT.desktopProjector} className={linkCls}>
+              Cash Flow Projector
+            </a>{" "}
+            "was discontinued in QuickBooks Desktop 2022", and the{" "}
+            <a href={INTUIT.desktopHub} className={linkCls}>
+              Cash Flow Hub
+            </a>{" "}
+            reports past cash: its chart "uses the reconciled transactions
+            recorded in QuickBooks and not online balances".
+          </p>
           <p>
             If your cash moves evenly, you bill in one currency, and you plan
             a few months ahead, start there. Our guide,{" "}
