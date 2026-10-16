@@ -4,6 +4,7 @@ import dashboard1 from "@/assets/dashboard-1.webp";
 import dashboard13week from "@/assets/dashboard-13week.webp";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { DotField } from "./Backdrop";
 
 const FRAMES = [
   { src: dashboard1, alt: "Zensus cash flow dashboard with projection chart" },
@@ -26,6 +27,11 @@ function usePrefersReducedMotion(): boolean {
   return reduced;
 }
 
+// The product, directly under the hero and its proof strip: a wide browser
+// frame straddling the cream canvas and a full-bleed forest band, the way the
+// category's product bands sit (Drivetrain, Abacum, Float). This section used
+// to come after the pain section, so the first screenshot of the product was
+// 1,850px down the page.
 const HeroShowcase = () => {
   const reducedMotion = usePrefersReducedMotion();
   const [index, setIndex] = useState(0);
@@ -43,28 +49,31 @@ const HeroShowcase = () => {
 
   return (
     <section
-      className="bg-background pb-16 pt-0 md:pb-24"
+      className="relative overflow-x-clip bg-background pt-8 pb-16 md:pt-10 md:pb-24"
       aria-label="Product preview"
     >
       <div className="section-container">
-        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">
-            Rolling cash forecast
-          </p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
-            See the next 13 weeks before they hit your bank.
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Zensus combines your bank, QuickBooks, and HubSpot data into a
-            weekly forecast that reflects when cash actually moves.
-          </p>
-        </div>
+        <div className="relative mx-auto max-w-6xl">
+          {/* Forest band. Anchored to this wrapper (frame plus caption), not
+              the section, so its top edge always lands inside the frame and
+              never across text, whatever the viewport width. It runs to the
+              section's bottom edge, so the next section starts clean on
+              cream. The frame goes first and the words after it: the category
+              puts the product straight under the buttons (Float, Drivetrain),
+              and a heading above the frame pushed it below the first screen. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-[12%] -bottom-16 w-screen -translate-x-1/2 bg-[linear-gradient(135deg,hsl(var(--forest))_0%,hsl(var(--sage-dark))_60%,hsl(var(--forest))_100%)] md:-bottom-24"
+          >
+            {/* Dots on forest: the data points behind the product (see
+                Backdrop.tsx for the cream-lines, forest-dots rule). */}
+            <DotField />
+          </div>
 
-        <div className="mx-auto max-w-5xl">
           <div
             className={cn(
-              "overflow-hidden rounded-2xl border border-border bg-card shadow-xl",
-              "ring-1 ring-black/5 dark:ring-white/10",
+              "relative overflow-hidden rounded-2xl border border-[hsl(var(--forest-border))] bg-card",
+              "shadow-2xl shadow-[hsl(var(--forest)/0.45)] ring-1 ring-black/10",
             )}
           >
             {/* Browser-style window chrome (decorative; not a live browser).
@@ -104,7 +113,7 @@ const HeroShowcase = () => {
                   height={1000}
                   decoding="async"
                   loading={i === 0 ? "eager" : "lazy"}
-                  fetchPriority="low"
+                  fetchPriority={i === 0 ? "high" : "low"}
                   className={cn(
                     "absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-500 ease-out",
                     i === index ? "opacity-100 z-[1]" : "opacity-0 z-0",
@@ -132,6 +141,20 @@ const HeroShowcase = () => {
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Caption on the forest band, under the frame. */}
+          <div className="relative mx-auto mt-8 max-w-2xl text-center md:mt-10">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[hsl(var(--sage-light))]">
+              Rolling cash forecast
+            </p>
+            <h2 className="mt-3 text-section text-[hsl(var(--forest-foreground))]">
+              See the next 13 weeks before they hit your bank.
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-[hsl(var(--forest-muted))] sm:text-lg">
+              Zensus combines your bank, QuickBooks, and HubSpot data into a
+              weekly forecast that reflects when cash actually moves.
+            </p>
           </div>
         </div>
       </div>
