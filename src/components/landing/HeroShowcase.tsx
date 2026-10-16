@@ -4,6 +4,7 @@ import dashboard1 from "@/assets/dashboard-1.webp";
 import dashboard13week from "@/assets/dashboard-13week.webp";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { DotField } from "./Backdrop";
 
 const FRAMES = [
   { src: dashboard1, alt: "Zensus cash flow dashboard with projection chart" },
@@ -63,7 +64,11 @@ const HeroShowcase = () => {
           <div
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-[12%] -bottom-16 w-screen -translate-x-1/2 bg-[linear-gradient(135deg,hsl(var(--forest))_0%,hsl(var(--sage-dark))_60%,hsl(var(--forest))_100%)] md:-bottom-24"
-          />
+          >
+            {/* Dots on forest: the data points behind the product (see
+                Backdrop.tsx for the cream-lines, forest-dots rule). */}
+            <DotField />
+          </div>
 
           <div
             className={cn(
@@ -143,7 +148,7 @@ const HeroShowcase = () => {
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[hsl(var(--sage-light))]">
               Rolling cash forecast
             </p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-[hsl(var(--forest-foreground))] sm:text-3xl">
+            <h2 className="mt-3 text-section text-[hsl(var(--forest-foreground))]">
               See the next 13 weeks before they hit your bank.
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-[hsl(var(--forest-muted))] sm:text-lg">

@@ -473,12 +473,15 @@ const Navbar = () => {
             </span>
           </Link>
 
-          <div className="hidden md:block justify-self-center">
+          {/* The full menu needs about 900px: at the md breakpoint (768px)
+              it overlapped the logo, wrapped "Free Tools" onto two lines and
+              clipped the trial button. Tablets get the drawer. */}
+          <div className="hidden lg:block justify-self-center">
             <DesktopNav entries={NAV} />
           </div>
 
           <div className="flex items-center gap-3 justify-self-end">
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-3">
               <Button asChild variant="ghost" size="sm" className={`rounded-full ${focusRing}`}>
                 <a
                   href={SIGN_IN_URL}
@@ -510,7 +513,7 @@ const Navbar = () => {
             </div>
 
             <button
-              className={`md:hidden p-2 text-foreground rounded ${focusRing}`}
+              className={`lg:hidden p-2 text-foreground rounded ${focusRing}`}
               onClick={() => setIsOpen((v) => !v)}
               aria-label={isOpen ? "Close menu" : "Open menu"}
               aria-expanded={isOpen}
@@ -523,7 +526,7 @@ const Navbar = () => {
         {/* Mobile panel. We keep it mounted and animate max-height + opacity so
             the open/close is smooth, not a hard swap. */}
         <div
-          className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+          className={`lg:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
             isOpen ? "max-h-[44rem] opacity-100" : "max-h-0 opacity-0"
           }`}
           aria-hidden={!isOpen}

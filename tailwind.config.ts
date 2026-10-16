@@ -21,6 +21,31 @@ export default {
         serif: ["Instrument Serif", "Playfair Display", "Georgia", "serif"],
         mono: ["Geist Mono", "ui-monospace", "SFMono-Regular", "monospace"],
       },
+      // Fluid sizes for the homepage hero and section headings. They scale
+      // with the viewport instead of stepping at breakpoints, so a 768px
+      // tablet and a 1920px monitor each get a size that fits, not the
+      // nearest breakpoint's. Measured 16 Oct 2026: the stepped scale gave a
+      // 1920px screen the same 60px H1 as a 1024px one, and a 768px tablet a
+      // 48px H1 that wrapped to three lines.
+      //   hero:        36px at 390, 41px at 768, 49px at 1024, 57px at 1280,
+      //                62px from 1440 up. The cap keeps the long second line
+      //                of the H1 on one line inside the 1024px hero column
+      //                (at 64px it wrapped to three lines on a 1920px screen).
+      //   hero-sub:    16px on phones, 18px at 1024, 20px from 1280 up.
+      //   hero-kicker: 14px on phones, 16px from 1024 up.
+      //   section:     24px on phones, 34px at 1440, 36px from 1600 up.
+      fontSize: {
+        hero: [
+          "clamp(2.25rem, 1rem + 3.2vw, 3.875rem)",
+          { lineHeight: "1.05", letterSpacing: "-0.02em", fontWeight: "700" },
+        ],
+        "hero-sub": ["clamp(1rem, 0.85rem + 0.5vw, 1.25rem)", { lineHeight: "1.55" }],
+        "hero-kicker": ["clamp(0.875rem, 0.8rem + 0.3vw, 1rem)", { lineHeight: "1.5" }],
+        section: [
+          "clamp(1.5rem, 1.15rem + 1.1vw, 2.25rem)",
+          { lineHeight: "1.15", letterSpacing: "-0.01em", fontWeight: "700" },
+        ],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
