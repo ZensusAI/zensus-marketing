@@ -62,16 +62,19 @@ const NAV: NavEntry[] = [
         label: "Use Cases",
         description: "Who Zensus is for and the problems it solves.",
       },
-      {
-        href: "/security",
-        label: "Security",
-        description: "How Zensus protects your financial data.",
-      },
     ],
   },
   {
     href: "/pricing",
     label: "Pricing",
+    isRoute: true,
+  },
+  // Security is a top-level item, not a Product child: for a tool that
+  // connects to a bank and the books, it is a buying question in its own
+  // right, and a visitor should not have to open a menu to find it.
+  {
+    href: "/security",
+    label: "Security",
     isRoute: true,
   },
   {
@@ -230,7 +233,7 @@ function DesktopNav({ entries }: { entries: NavEntry[] }) {
       aria-label="Main"
       className="relative"
     >
-      <NavigationMenu.List className="m-0 flex list-none items-center gap-8 p-0">
+      <NavigationMenu.List className="m-0 flex list-none items-center gap-5 p-0 xl:gap-8">
         {entries.map((entry) => {
           if (!isMenu(entry)) {
             // Plain top-level links (Pricing) slot into the shared
@@ -453,7 +456,13 @@ const Navbar = () => {
       <div className="section-container">
         {/* Three-column grid so the center nav is mathematically centered on
             the full width, regardless of the left and right group widths. */}
-        <div className="grid grid-cols-[1fr_auto_1fr] h-16 items-center group-data-[scrolled=true]/nav:h-14 transition-[height] duration-300">
+        {/* Three tracks: logo, menu, actions. From xl the outer tracks are
+            equal (1fr) so the menu sits on the page's centre line. At lg the
+            outer tracks shrink to their content (auto) and the menu centres
+            in what is left: equal outer tracks forced each side to the width
+            of the actions group, and with six menu items that overflowed a
+            1024px screen and ran "Company" into the logo. */}
+        <div className="grid grid-cols-[1fr_auto_1fr] lg:grid-cols-[auto_1fr_auto] xl:grid-cols-[1fr_auto_1fr] h-16 items-center group-data-[scrolled=true]/nav:h-14 transition-[height] duration-300">
           <Link
             to="/"
             className={`group/logo flex items-center gap-[9px] rounded justify-self-start ${focusRing}`}
@@ -480,7 +489,9 @@ const Navbar = () => {
             <DesktopNav entries={NAV} />
           </div>
 
-          <div className="flex items-center gap-3 justify-self-end">
+          {/* Pinned to the third track: below lg the menu track is empty and
+              without this the drawer button sat in the middle of the bar. */}
+          <div className="col-start-3 flex items-center gap-3 justify-self-end">
             <div className="hidden lg:flex items-center gap-3">
               <Button asChild variant="ghost" size="sm" className={`rounded-full ${focusRing}`}>
                 <a
