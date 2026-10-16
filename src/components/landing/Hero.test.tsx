@@ -52,7 +52,7 @@ describe("homepage hero", () => {
   // Category pattern (Drivetrain, Float, Jirav and others, surveyed 16 Oct
   // 2026): audience line, headline, subhead, then the buttons directly under
   // the copy. The customer video is no longer in the hero; beside the
-  // headline it put the first "Start free trial" 851px down a 1,042px hero
+  // headline it put the first trial button 851px down a 1,042px hero
   // on a 390px phone, below the first screen.
   it("stacks tagline, headline and trial button in that order, with no video", () => {
     const markup = renderToStaticMarkup(
@@ -65,7 +65,8 @@ describe("homepage hero", () => {
       "Cash flow forecasting for businesses with unpredictable revenue.",
     );
     const h1 = markup.indexOf("<h1");
-    const trial = markup.indexOf("Start free trial");
+    // The button reads "Start" (the trial terms sit in the line under it).
+    const trial = markup.indexOf(">Start<");
 
     expect(tagline).toBeGreaterThan(-1);
     expect(tagline).toBeLessThan(h1);
