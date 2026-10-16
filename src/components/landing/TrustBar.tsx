@@ -24,7 +24,7 @@ const CHIPS = [
 // cream as the canvas, so the strip read as two floating hairlines instead of
 // a section.
 export const TrustBar = () => (
-  <section className="border-y border-border bg-secondary/50 py-10">
+  <section className="border-y border-border bg-secondary/50 py-6 md:py-8">
     <div className="section-container flex flex-col items-center gap-6">
       <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
         {/* Each mark links to its integration page. The homepage is where

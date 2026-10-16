@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import HeroShowcase from "@/components/landing/HeroShowcase";
+import CustomerStory from "@/components/landing/CustomerStory";
 import { TrustBar } from "@/components/landing/TrustBar";
 import Problem from "@/components/landing/Problem";
 import RunwayFeature from "@/components/landing/RunwayFeature";
@@ -68,10 +69,13 @@ const Index = () => {
       </Helmet>
       <Navbar />
       <main>
+        {/* Category order (surveyed 16 Oct 2026): pitch and buttons, proof
+            strip, the product, a customer, then the pain and the detail. */}
         <Hero />
-        <Problem />
-        <HeroShowcase />
         <TrustBar />
+        <HeroShowcase />
+        <CustomerStory />
+        <Problem />
         <RunwayFeature />
         <Bento />
         <Comparison />
