@@ -45,7 +45,7 @@ export const TrustBar = () => (
           </Link>
         ))}
       </div>
-      <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-xs text-muted-foreground">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-2 font-mono text-xs text-muted-foreground sm:flex sm:flex-wrap sm:justify-center sm:gap-x-5">
         {CHIPS.map((chip) => (
           <span key={chip} className="inline-flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-primary" />

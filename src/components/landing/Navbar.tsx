@@ -3,8 +3,9 @@ import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { Button } from "@/components/ui/button";
-import { SIGN_IN_URL, START_TRIAL_URL } from "@/lib/constants";
+import { SIGN_IN_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
+import { SignupModal } from "./SignupModal";
 import zensusLogo from "@/assets/zensus-logo.png";
 
 interface NavLinkItem {
@@ -140,8 +141,11 @@ function useScrolled(threshold = 8) {
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
-// Primary CTA styling shared by the desktop and mobile "Get Started" buttons
-// so the label, colors, and hover state cannot drift between the two.
+// Primary CTA styling shared by the desktop and mobile "Start free trial"
+// buttons so the label, colors, and hover state cannot drift between the two.
+// Both open the same sign-up dialog as the hero button: the page used to
+// offer the one action as "Get Started" here (a direct link to the app) and
+// "Start free trial" below (the dialog), two names and two routes.
 const navCtaBase =
   "rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90";
 
@@ -487,23 +491,22 @@ const Navbar = () => {
                   Sign in
                 </a>
               </Button>
-              <Button
-                asChild
-                size="sm"
-                className={`${navCtaBase} shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow ${focusRing}`}
-              >
-                <a
-                  href={START_TRIAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <SignupModal>
+                <Button
+                  type="button"
+                  size="sm"
+                  className={`${navCtaBase} shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow ${focusRing}`}
                   onClick={() =>
-                    trackCtaClick("navbar_desktop", { destination: "get_started" })
+                    trackCtaClick("navbar_desktop", {
+                      destination: "trial",
+                      action: "open_signup_modal",
+                    })
                   }
                 >
-                  Get Started
+                  Start free trial
                   <ArrowRight size={16} className="ml-2" />
-                </a>
-              </Button>
+                </Button>
+              </SignupModal>
             </div>
 
             <button
@@ -547,24 +550,23 @@ const Navbar = () => {
                   Sign in
                 </a>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                className={`w-full justify-center ${navCtaBase} shadow-[0_0_24px_hsl(var(--primary)/0.3)] ${focusRing}`}
-              >
-                <a
-                  href={START_TRIAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <SignupModal>
+                <Button
+                  type="button"
+                  size="lg"
+                  className={`w-full justify-center ${navCtaBase} shadow-[0_0_24px_hsl(var(--primary)/0.3)] ${focusRing}`}
                   onClick={() => {
-                    trackCtaClick("navbar_mobile", { destination: "get_started" });
+                    trackCtaClick("navbar_mobile", {
+                      destination: "trial",
+                      action: "open_signup_modal",
+                    });
                     close();
                   }}
                 >
-                  Get Started
+                  Start free trial
                   <ArrowRight size={16} className="ml-2" />
-                </a>
-              </Button>
+                </Button>
+              </SignupModal>
             </div>
           </div>
         </div>

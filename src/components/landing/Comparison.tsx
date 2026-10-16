@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
  * - Every cell is sourced from the vendor's own public pages; crosses that
  *   mean "not found on their public pages" carry the asterisk footnote
  *   instead of asserting absence as fact.
- * - The caption dates the comparison. Re-verify vendor pages quarterly
+ * - The notes under the table date the comparison. Re-verify vendor pages quarterly
  *   (last review: 21 September 2026; next review: December 2026) or when a
  *   competitor ships changes.
  * - A cross never asserts more than the evidence supports. "*" means the
@@ -193,31 +193,17 @@ const Comparison = () => {
         </p>
       </div>
 
-      {/* Horizontal scroll on small screens; the matrix needs its width. */}
+      {/* Horizontal scroll on small screens; the matrix needs its width. The
+          footnotes live outside the scroller (below) so they wrap on a phone.
+          As a table caption they scrolled with the 640px table and were cut
+          off at the right edge of a 390px screen. */}
       <div ref={tableRef} className="mx-auto max-w-4xl overflow-x-auto">
-        <table className="w-full min-w-[640px] border-collapse text-sm">
-          <caption className="caption-bottom pt-5 text-left text-xs leading-relaxed text-muted-foreground">
-            * Not found on the vendor's public pages as of September 2026.{" "}
-            <span className="block sm:inline">
-              {"†"} Through an external AI assistant (Claude, ChatGPT, Copilot,
-              or Gemini), not built in.
-            </span>{" "}
-            <span className="block pt-1">
-              {"‡"} Stated on the vendor's own pages: Float does not connect
-              directly to banks (bank data arrives through the accounting
-              platform), and Cash Flow Frog has no CRM connection (deals can
-              arrive through Zapier).
-            </span>
-            <span className="block pt-1">
-              {"§"} Forecastr lists CRM integrations on its $10,000/year Growth
-              plan, and a built-in AI chatbot whose scope its public pages do
-              not describe.
-            </span>
-            <span className="block pt-1">
-              Based on publicly available vendor pages, September 2026. Float, Cash Flow
-              Frog, and Forecastr are trademarks of their respective owners; Zensus
-              is not affiliated with or endorsed by them.
-            </span>
+        <table
+          className="w-full min-w-[640px] border-collapse text-sm"
+          aria-describedby="compare-notes"
+        >
+          <caption className="sr-only">
+            Capability comparison: Float, Cash Flow Frog, Forecastr, and Zensus
           </caption>
           <thead>
             <tr>
@@ -271,6 +257,33 @@ const Comparison = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div
+        id="compare-notes"
+        className="mx-auto mt-5 max-w-4xl text-left text-xs leading-relaxed text-muted-foreground"
+      >
+        <p>
+          * Not found on the vendor's public pages as of September 2026.{" "}
+          {"†"} Through an external AI assistant (Claude, ChatGPT, Copilot, or
+          Gemini), not built in.
+        </p>
+        <p className="pt-1">
+          {"‡"} Stated on the vendor's own pages: Float does not connect
+          directly to banks (bank data arrives through the accounting
+          platform), and Cash Flow Frog has no CRM connection (deals can
+          arrive through Zapier).
+        </p>
+        <p className="pt-1">
+          {"§"} Forecastr lists CRM integrations on its $10,000/year Growth
+          plan, and a built-in AI chatbot whose scope its public pages do not
+          describe.
+        </p>
+        <p className="pt-1">
+          Based on publicly available vendor pages, September 2026. Float, Cash
+          Flow Frog, and Forecastr are trademarks of their respective owners;
+          Zensus is not affiliated with or endorsed by them.
+        </p>
       </div>
 
       {/* The matrix names Float but never linked to the page that compares it

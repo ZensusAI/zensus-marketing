@@ -17,8 +17,6 @@ type StepDef = {
   bullets: string[];
   icon: typeof BarChart3;
   images: string[];
-  /** width / height ratio of the source screenshots so they fit without crop */
-  aspect: string;
 };
 
 /** Deep-link targets from blog and docs (`${SITE_URL}/#features-*`). */
@@ -42,7 +40,6 @@ const STEPS: StepDef[] = [
     ],
     icon: BarChart3,
     images: [runwayDrilldownWeekly, runwayDrilldownDaily],
-    aspect: "16 / 10",
   },
   {
     eyebrow: "Scenarios",
@@ -57,7 +54,6 @@ const STEPS: StepDef[] = [
     ],
     icon: MessageCircle,
     images: [runwayWhatifOverview, runwayWhatifMonthly, runwayWhatifWeekly],
-    aspect: "2 / 1",
   },
   {
     eyebrow: "Alerts",
@@ -72,7 +68,6 @@ const STEPS: StepDef[] = [
     ],
     icon: Bell,
     images: [runwayAlertsA, runwayAlertsB],
-    aspect: "4 / 3",
   },
 ];
 
@@ -86,7 +81,16 @@ function useActiveStep(refs: RefObject<HTMLElement | null>[]) {
       if (!el) return;
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setActive(i);
+          if (entry.isIntersecting) {
+            setActive(i);
+          } else if (i === 0 && entry.boundingClientRect.top > 0) {
+            // The first step is still below the band, so the reader is above
+            // the section (scrolled back up, or came in on a deep link and
+            // went up). Without this the canvas kept whichever step was
+            // active last, and the drill-down copy sat beside the alerts
+            // screenshot.
+            setActive(0);
+          }
         },
         { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
       );
@@ -188,11 +192,11 @@ function ProductCanvas({
           </div>
         </div>
 
-        {/* Canvas surface: aspect resizes per active step to match the source screenshots */}
-        <div
-          className="relative bg-[hsl(var(--forest-raised)/0.4)] transition-[aspect-ratio] duration-500 ease-out"
-          style={{ aspectRatio: STEPS[activeIndex]?.aspect ?? "16 / 10" }}
-        >
+        {/* One fixed frame for every step. The screenshots have different
+            ratios and sit letterboxed inside it (object-contain). The frame
+            used to resize itself per step, which made the sticky column
+            jump while the reader scrolled. */}
+        <div className="relative aspect-[16/10] bg-[hsl(var(--forest-raised)/0.4)]">
           {/* Grid texture (cream lines on forest) */}
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.04]"
@@ -299,7 +303,9 @@ const RunwayFeature = () => {
         </div>
 
         {/* Pinned-scroll body */}
-        <div className="mt-20 grid gap-12 pb-32 lg:mt-28 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20">
+        {/* pb used to be 32 on top of the next section's own top padding,
+            which left a 256px blank band under the last step. */}
+        <div className="mt-20 grid gap-12 pb-10 lg:mt-28 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20 lg:pb-16">
           {/* Text column */}
           <div className="relative">
             {/* Step rail (desktop only) */}
@@ -321,7 +327,7 @@ const RunwayFeature = () => {
                   key={i}
                   id={FEATURE_STEP_IDS[i]}
                   ref={stepRefs[i]}
-                  className="relative scroll-mt-28 flex flex-col justify-start pb-24 lg:min-h-[90vh] lg:justify-center lg:pb-0 lg:pl-14"
+                  className="relative scroll-mt-28 flex flex-col justify-start pb-20 lg:min-h-[72vh] lg:justify-center lg:pb-0 lg:pl-14"
                 >
                   {/* Rail dot */}
                   <span
@@ -333,9 +339,10 @@ const RunwayFeature = () => {
                     aria-hidden
                   />
 
-                  {/* Oversized step number */}
+                  {/* Oversized step number (desktop only: on a phone it sat
+                      on top of the eyebrow row) */}
                   <span
-                    className="pointer-events-none absolute -top-6 right-0 font-display text-[7rem] font-bold leading-none text-primary/[0.06] lg:-top-10 lg:right-auto lg:left-12 lg:text-[10rem]"
+                    className="pointer-events-none absolute -top-10 left-12 hidden font-display text-[10rem] font-bold leading-none text-primary/[0.06] lg:block"
                     aria-hidden
                   >
                     0{i + 1}

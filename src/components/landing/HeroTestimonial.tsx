@@ -32,7 +32,7 @@ const videoLd = {
   // invalid datetime and warns that the timezone is missing, and without one
   // it falls back to Googlebot's own timezone.
   uploadDate: "2026-07-21T00:00:00+00:00",
-  duration: "PT14S",
+  duration: "PT9S",
 };
 
 import { cn } from "@/lib/utils";

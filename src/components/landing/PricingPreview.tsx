@@ -1,8 +1,5 @@
-import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { START_TRIAL_URL } from "@/lib/constants";
-import { trackCtaClick } from "@/lib/analytics/events";
+import { TryItNowButton } from "./TryItNowButton";
 
 const PricingPreview = () => (
   <section className="section-padding bg-background">
@@ -16,20 +13,11 @@ const PricingPreview = () => (
           modeling, and Slack alerts, all included in Zensus Pro: $199/mo
           after your trial. Less than a single hour with a fractional CFO.
         </p>
+        {/* Same label and same sign-up path as the hero. This button used to
+            read "Start 14-day free trial" and skip the sign-up dialog, so the
+            page offered one action under three names and two routes. */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button asChild size="lg" className="rounded-full">
-            <a
-              href={START_TRIAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() =>
-                trackCtaClick("pricing_preview", { destination: "trial" })
-              }
-            >
-              Start 14-day free trial
-              <ArrowRight size={18} className="ml-2" />
-            </a>
-          </Button>
+          <TryItNowButton size="lg" source="pricing_preview" />
           <Link
             to="/pricing"
             className="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
