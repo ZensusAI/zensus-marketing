@@ -48,4 +48,24 @@ describe("homepage hero", () => {
     expect(text.match(/Your cash flow,/g)).toHaveLength(1);
     expect(text.match(/mapped as far ahead as you need\./g)).toHaveLength(1);
   });
+
+  // The buttons belong to the copy column, directly under the pitch. They
+  // used to render after the testimonial video, centred under both columns,
+  // which on a 390px phone put the first "Start free trial" below the first
+  // screen (851px down a 1,042px hero). Keep the trial button ahead of the
+  // video in source order, since a single column renders in that order.
+  it("puts the trial button before the testimonial video", () => {
+    const markup = renderToStaticMarkup(
+      <HelmetProvider>
+        <Hero />
+      </HelmetProvider>,
+    );
+
+    const trial = markup.indexOf("Start free trial");
+    const video = markup.indexOf("<video");
+
+    expect(trial).toBeGreaterThan(-1);
+    expect(video).toBeGreaterThan(-1);
+    expect(trial).toBeLessThan(video);
+  });
 });

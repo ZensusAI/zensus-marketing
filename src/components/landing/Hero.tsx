@@ -13,7 +13,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative flex items-center pt-24 pb-4 md:pt-24 md:pb-6 lg:pt-32 lg:pb-8 overflow-hidden bg-background"
+      className="relative flex items-center pt-24 pb-10 md:pt-24 md:pb-12 lg:pt-32 lg:pb-16 overflow-hidden bg-background"
     >
       {/* Cream brand canvas (tokens come from :root.theme-cream, toggled
           per route by ThemeScope in App.tsx). A faint sage bloom keeps the
@@ -24,9 +24,12 @@ const Hero = () => {
       />
 
       <div className="section-container relative z-10 max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-12 xl:px-16">
-        {/* Top 2-Column Desktop Grid (Taglines & Description on Left, Video Testimonial on Right) */}
+        {/* Two columns on desktop: the pitch and its buttons on the left,
+            the customer video on the right. The buttons live in the copy
+            column on purpose. They used to sit centred under both columns,
+            which put them a full screen below the headline on a phone and
+            sent the eye headline, video, button on a desktop. */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-24 items-center">
-          {/* Left Column: Tagline & Description */}
           <div className="lg:col-span-7 xl:col-span-7 text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-[1.08] mb-5 motion-safe:animate-fade-in text-foreground">
               <span className="block lg:whitespace-nowrap">
@@ -41,36 +44,39 @@ const Hero = () => {
               </span>
             </h1>
 
-            <p className="text-lg sm:text-xl lg:text-2xl font-medium tracking-tight text-foreground/90 mb-6 leading-snug">
+            <p className="text-lg sm:text-xl lg:text-2xl font-medium tracking-tight text-foreground/90 mb-5 leading-snug">
               {H1_SENTENCE_2}
             </p>
 
+            {/* One entity-defining sentence. The sentence that used to follow
+                it ("a live, always-current picture...") restated the subhead
+                and pushed the buttons down another three lines. */}
             <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
               Zensus is cash flow forecasting software that connects your bank,
               QuickBooks, and HubSpot to project the exact date your cash runs
-              out. You get a live, always-current picture of your cash position,
-              so you can make payroll, hiring, and spending decisions with
-              confidence.
+              out.
             </p>
+
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
+              <TryItNowButton size="lg" trackHeroConversion />
+              <TalkToUsButton
+                size="lg"
+                variant="ghost"
+                className="border border-border bg-card text-foreground hover:border-primary/60"
+              />
+            </div>
+            <p className="mt-3 text-sm text-muted-foreground">
+              14-day free trial, cancel anytime. No charge until it ends.
+            </p>
+
+            <div className="mt-6 flex justify-center lg:justify-start">
+              <ScenarioPrompt />
+            </div>
           </div>
 
-          {/* Right Column: Customer Testimonial Video */}
           <div className="lg:col-span-5 xl:col-span-5 w-full">
             <HeroTestimonial className="mt-0 w-full max-w-none" />
           </div>
-        </div>
-
-        {/* Centered CTAs & Terminal Input Field below the grid */}
-        <div className="mt-10 sm:mt-12 flex flex-col items-center justify-center text-center gap-4 max-w-3xl mx-auto">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
-            <TryItNowButton size="lg" trackHeroConversion />
-            <TalkToUsButton
-              size="lg"
-              variant="ghost"
-              className="border border-border bg-card text-foreground hover:border-primary/60"
-            />
-          </div>
-          <ScenarioPrompt />
         </div>
       </div>
     </section>
