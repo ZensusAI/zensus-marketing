@@ -52,7 +52,7 @@ export const TryItNowButton = ({
             size === "lg" ? "h-12 px-8" : "h-10 px-6",
           )}
         >
-          Start free trial
+          Start
           <ArrowRight
             size={16}
             className="ml-2 transition-transform group-hover:translate-x-1"

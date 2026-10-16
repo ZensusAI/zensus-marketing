@@ -144,8 +144,8 @@ function useScrolled(threshold = 8) {
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
-// Primary CTA styling shared by the desktop and mobile "Start free trial"
-// buttons so the label, colors, and hover state cannot drift between the two.
+// Primary CTA styling shared by the desktop and mobile "Start" buttons so
+// the label, colors, and hover state cannot drift between the two.
 // Both open the same sign-up dialog as the hero button: the page used to
 // offer the one action as "Get Started" here (a direct link to the app) and
 // "Start free trial" below (the dialog), two names and two routes.
@@ -517,7 +517,7 @@ const Navbar = () => {
                     })
                   }
                 >
-                  Start free trial
+                  Start
                   <ArrowRight size={16} className="ml-2" />
                 </Button>
               </SignupModal>
@@ -577,7 +577,7 @@ const Navbar = () => {
                     close();
                   }}
                 >
-                  Start free trial
+                  Start
                   <ArrowRight size={16} className="ml-2" />
                 </Button>
               </SignupModal>
