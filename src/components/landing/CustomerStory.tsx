@@ -14,10 +14,7 @@ const CustomerStory = () => (
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">
           Customer story
         </p>
-        <h2
-          id="customer-story-heading"
-          className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl"
-        >
+        <h2 id="customer-story-heading" className="mt-3 text-section">
           Hear it from a customer.
         </h2>
       </div>
