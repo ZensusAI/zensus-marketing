@@ -49,23 +49,27 @@ describe("homepage hero", () => {
     expect(text.match(/mapped as far ahead as you need\./g)).toHaveLength(1);
   });
 
-  // The buttons belong to the copy column, directly under the pitch. They
-  // used to render after the testimonial video, centred under both columns,
-  // which on a 390px phone put the first "Start free trial" below the first
-  // screen (851px down a 1,042px hero). Keep the trial button ahead of the
-  // video in source order, since a single column renders in that order.
-  it("puts the trial button before the testimonial video", () => {
+  // Category pattern (Drivetrain, Float, Jirav and others, surveyed 16 Oct
+  // 2026): audience line, headline, subhead, then the buttons directly under
+  // the copy. The customer video is no longer in the hero; beside the
+  // headline it put the first "Start free trial" 851px down a 1,042px hero
+  // on a 390px phone, below the first screen.
+  it("stacks tagline, headline and trial button in that order, with no video", () => {
     const markup = renderToStaticMarkup(
       <HelmetProvider>
         <Hero />
       </HelmetProvider>,
     );
 
+    const tagline = markup.indexOf(
+      "Cash flow forecasting for businesses with unpredictable revenue.",
+    );
+    const h1 = markup.indexOf("<h1");
     const trial = markup.indexOf("Start free trial");
-    const video = markup.indexOf("<video");
 
-    expect(trial).toBeGreaterThan(-1);
-    expect(video).toBeGreaterThan(-1);
-    expect(trial).toBeLessThan(video);
+    expect(tagline).toBeGreaterThan(-1);
+    expect(tagline).toBeLessThan(h1);
+    expect(h1).toBeLessThan(trial);
+    expect(markup).not.toContain("<video");
   });
 });
