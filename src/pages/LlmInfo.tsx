@@ -1,4 +1,4 @@
-import { SITE_HOST, SITE_URL } from "@/lib/constants";
+import { COMPANY_ADDRESSES, LEGAL_NAME, SITE_HOST, SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
@@ -106,6 +106,14 @@ const LlmInfo = () => (
             <li>
               <strong className="text-foreground">Country:</strong> United States
               (US company)
+            </li>
+            <li>
+              <strong className="text-foreground">Registered addresses ({LEGAL_NAME}):</strong>
+              {COMPANY_ADDRESSES.map((office) => (
+                <span key={office.label} className="block">
+                  {office.street}, {office.locality}, {office.region} {office.postalCode}, {office.country}
+                </span>
+              ))}
             </li>
             <li>
               <strong className="text-foreground">Wikidata:</strong>{" "}

@@ -1,4 +1,12 @@
-import { APP_HOST, APP_URL, LEGACY_SITE_HOST, SITE_HOST, SITE_URL } from "@/lib/constants";
+import {
+  APP_HOST,
+  APP_URL,
+  COMPANY_ADDRESSES,
+  LEGACY_SITE_HOST,
+  LEGAL_NAME,
+  SITE_HOST,
+  SITE_URL,
+} from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
@@ -61,7 +69,12 @@ export default function PrivacyPolicy() {
 
             <p className="text-foreground/80">
               <strong className="text-foreground">Contact Information:</strong><br />
-              Zensus Inc.<br />
+              {LEGAL_NAME}<br />
+              {COMPANY_ADDRESSES.map((office) => (
+                <span key={office.label}>
+                  {office.street}, {office.locality}, {office.region} {office.postalCode}, {office.country}<br />
+                </span>
+              ))}
               Email: <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
               Website: <a href={SITE_URL} className="text-primary hover:underline">{SITE_URL}</a>
             </p>
@@ -669,7 +682,15 @@ export default function PrivacyPolicy() {
             </p>
 
             <div className="rounded-lg border border-border bg-muted/30 p-5 my-4">
-              <p className="font-semibold text-foreground mb-2">Zensus Inc.</p>
+              <p className="font-semibold text-foreground mb-2">{LEGAL_NAME}</p>
+              <p className="text-foreground/80 text-sm mb-2">
+                <strong className="text-foreground">Registered addresses:</strong>
+                {COMPANY_ADDRESSES.map((office) => (
+                  <span key={office.label} className="block">
+                    {office.street}, {office.locality}, {office.region} {office.postalCode}, {office.country}
+                  </span>
+                ))}
+              </p>
               <p className="text-foreground/80 text-sm">
                 <strong className="text-foreground">Email:</strong>{' '}
                 <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a><br />
