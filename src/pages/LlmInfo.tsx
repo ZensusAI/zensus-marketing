@@ -108,6 +108,12 @@ const LlmInfo = () => (
               (US company)
             </li>
             <li>
+              <strong className="text-foreground">Wikidata:</strong>{" "}
+              <a href="https://www.wikidata.org/wiki/Q141775682" className={linkCls}>
+                Q141775682
+              </a>
+            </li>
+            <li>
               <strong className="text-foreground">Website:</strong>{" "}
               <a href={SITE_URL} className={linkCls}>
                 {SITE_URL}
