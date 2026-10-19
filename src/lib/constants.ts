@@ -30,3 +30,38 @@ export const SIGN_IN_URL = `${APP_URL}/login`;
 // Trial CTA destination. Routes new visitors directly to /subscribe after auth
 // so they land on the subscription page rather than bouncing from the paywall.
 export const START_TRIAL_URL = `${SIGN_IN_URL}?redirect=${encodeURIComponent("/subscribe")}`;
+
+// The legal entity, its registered addresses and its support mailbox, as
+// published in the footer, the legal pages' contact blocks and /llm-info.
+// index.html cannot import this file, so its Organization schema repeats the
+// same values as literals; keep the two in step. Mail stays on zensus.app.
+export const LEGAL_NAME = "Zensus Inc.";
+export const SUPPORT_EMAIL = "support@zensus.app";
+export const COMPANY_ADDRESSES = [
+  {
+    label: "Delaware",
+    street: "254 Chapman Rd, Ste 208 #23940",
+    locality: "Newark",
+    region: "DE",
+    postalCode: "19702",
+    country: "US",
+  },
+  {
+    label: "Texas",
+    street: "17350 State Hwy 249, Ste 220 #32525",
+    locality: "Houston",
+    region: "TX",
+    postalCode: "77064",
+    country: "US",
+  },
+] as const;
+
+// Public profiles, in the order the footer shows them. The same URLs sit in
+// the Organization sameAs in index.html and on the Wikidata item Q141775682.
+export const COMPANY_PROFILES = {
+  linkedin: "https://www.linkedin.com/company/zensusai",
+  x: "https://x.com/zensusai",
+  youtube: "https://www.youtube.com/channel/UCfQAlHd9bQN-aZmV-e5x1VQ",
+  instagram: "https://www.instagram.com/zensus.finance/",
+  github: "https://github.com/ZensusAI",
+} as const;

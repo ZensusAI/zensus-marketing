@@ -8,7 +8,7 @@ Zensus is a financial planning tool that gives businesses of any size real-time 
 
 ## Company location
 
-Zensus is a US company (Zensus, Inc.).
+Zensus is a US company. Legal name: Zensus Inc., a Delaware C-corporation. Registered addresses: 254 Chapman Rd, Ste 208 #23940, Newark, DE 19702, US; and 17350 State Hwy 249, Ste 220 #32525, Houston, TX 77064, US. Support: support@zensus.app.
 
 ## Identifiers
 
