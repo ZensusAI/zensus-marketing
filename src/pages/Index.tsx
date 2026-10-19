@@ -41,13 +41,15 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        {/* Keyword-leading title: the category term "cash flow forecasting"
-            appears nowhere in the H1 by design (it would read like a directory
-            listing), so the <title> carries it instead. Trades a little
-            branded-search CTR for a real shot at the head term. The og:/twitter:
-            titles below deliberately keep the benefit line, since social cards
-            are a click surface rather than a ranking one. */}
-        <title>Cash Flow Forecasting for Unpredictable Revenue · Zensus</title>
+        {/* The category term "cash flow forecasting" appears nowhere in the H1 by
+            design (it would read like a directory listing), so the <title>
+            carries it. The brand leads: with the keyword first, Google replaced
+            this title with the H1 in results (seen 2026-10-19). Leading with the
+            brand is the fix tried; check the result in Search Console before
+            changing it again. The og:/twitter: titles
+            below keep the benefit line, since social cards are a click surface
+            rather than a ranking one. */}
+        <title>Zensus · Cash flow forecasting for unpredictable revenue</title>
         <meta name="description" content="Zensus is cash flow forecasting software for businesses with unpredictable revenue. Connect your bank, QuickBooks and HubSpot to see the date cash runs out." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${SITE_URL}/`} />
