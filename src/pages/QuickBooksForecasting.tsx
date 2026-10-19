@@ -21,12 +21,16 @@ import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-da
 //    These were checked against the app's code in October 2026: QuickBooks
 //    syncs once a day, the forecast uses one currency and converts nothing,
 //    and HubSpot means invoices and subscriptions, not deals.
+//
+// The exact Intuit sentences quoted below, with the "Updated" stamp each page
+// carried when it was read, are recorded in
+// docs/quickbooks-intuit-substantiation-2026-10-19.md.
 
 const PAGE_PATH = "/quickbooks-cash-flow-forecasting";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
-const PAGE_TITLE = "QuickBooks Cash Flow Forecasting Software | Zensus";
+const PAGE_TITLE = "QuickBooks Online Cash Flow Forecasting Software | Zensus";
 const PAGE_DESCRIPTION =
-  "QuickBooks cash flow forecasting software. Zensus reads QuickBooks Online, adds your bank feed and HubSpot, and projects cash weekly, with scenarios.";
+  "QuickBooks Online cash flow forecasting software. Zensus reads QuickBooks Online, adds your bank feed and HubSpot, and projects cash weekly, with scenarios.";
 const OG_IMAGE = `${SITE_URL}/og/quickbooks-cash-flow-forecasting.png`;
 const INTUIT_REVIEWED = "October 2026";
 
@@ -43,13 +47,17 @@ const INTUIT = {
     "https://quickbooks.intuit.com/learn-support/en-us/help-article/accounts-payable/set-cash-flow-projector-quickbooks-desktop/L0BSJYlHq_US_en_US",
   desktopHub:
     "https://quickbooks.intuit.com/learn-support/en-us/help-article/cash-flow/cash-flow-hub-quickbooks-desktop/L0yzfiruI_US_en_US",
+  advancedForecasts:
+    "https://quickbooks.intuit.com/learn-support/en-us/help-article/budget-forecast-reports/create-manage-forecasts-quickbooks-online/L7SlFsgsy_US_en_US",
+  intelligence:
+    "https://quickbooks.intuit.com/learn-support/en-us/help-article/tasks/forecast-financial-performance-intuit-intelligence/L7o5sk5t2_US_en_US",
 };
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
-  { name: "QuickBooks cash flow forecasting software", url: PAGE_URL },
+  { name: "QuickBooks Online cash flow forecasting software", url: PAGE_URL },
 ]);
 
 const webPageLd = {
@@ -57,7 +65,7 @@ const webPageLd = {
   "@type": "WebPage",
   "@id": `${PAGE_URL}#webpage`,
   url: PAGE_URL,
-  name: "QuickBooks cash flow forecasting software",
+  name: "QuickBooks Online cash flow forecasting software",
   description: PAGE_DESCRIPTION,
   inLanguage: "en-US",
   isPartOf: { "@id": `${SITE_URL}/#website` },
@@ -69,7 +77,17 @@ const FAQS = [
   {
     question: "Does QuickBooks have cash flow forecasting built in?",
     answer:
-      "Yes. QuickBooks Online includes a cash flow planner. Intuit says it bases its projection on your QuickBooks data, such as future invoices, bills, and expenses, and on historical data from the bank accounts connected to QuickBooks Online.",
+      "Yes. QuickBooks Online includes a cash flow planner. Intuit says it bases its projection on your QuickBooks data, such as future invoices, bills, and expenses, and on historical data from the bank accounts connected to QuickBooks Online. Intuit Intelligence forecasting also projects income, expenses, and cash flow for the next 12 months once your books hold at least two years of transaction history.",
+  },
+  {
+    question: "Is there a forecasting tool that connects to QuickBooks Online?",
+    answer:
+      "Yes. Intuit's own options are the Cash Flow Planner, Forecasts in QuickBooks Online Advanced, and Intuit Intelligence forecasting. Third-party tools connect through Intuit's API with OAuth, and Zensus is one of them. It reads invoices, bills, payments, and purchases from QuickBooks Online, syncs once a day, and combines them with your bank feed and HubSpot subscriptions in one weekly cash flow projection.",
+  },
+  {
+    question: "Does QuickBooks do sales or demand forecasting?",
+    answer:
+      "Intuit describes its forecasts as projections of income, cost of sales, and expenses (Forecasts in QuickBooks Online Advanced) or of income, expenses, and cash flow (Intuit Intelligence). Neither is described as a demand, sales pipeline, or purchase cycle forecast. Zensus does not forecast demand either. It forecasts cash: when invoices, bills, payroll, and subscriptions will move money in and out of the bank.",
   },
   {
     question: "How far ahead does the QuickBooks cash flow planner forecast?",
@@ -135,6 +153,37 @@ const ROWS: { label: string; planner: React.ReactNode; zensus: string }[] = [
   },
 ];
 
+// Example projection with round numbers. Opening balance $84,000; biweekly
+// payroll of $31,000 lands in weeks 1 and 3; one annual HubSpot renewal in
+// week 3; one invoice due in week 2 is still open, so it is placed 14 days
+// after its due date, in week 4. Closing = opening + cash in - cash out.
+const PROJECTION = [
+  {
+    week: "Week 1",
+    cashIn: "$22,000: two invoices due",
+    cashOut: "$40,500: bills $9,500, payroll $31,000",
+    closing: "$65,500",
+  },
+  {
+    week: "Week 2",
+    cashIn: "$8,000: one invoice due",
+    cashOut: "$6,200: bills",
+    closing: "$67,300",
+  },
+  {
+    week: "Week 3",
+    cashIn: "$41,000: one invoice $5,000, annual HubSpot renewal $36,000",
+    cashOut: "$43,400: bills $12,400 including quarterly rent, payroll $31,000",
+    closing: "$64,900",
+  },
+  {
+    week: "Week 4",
+    cashIn: "$14,000: an invoice due in week 2, still open, moved forward",
+    cashOut: "$7,800: bills",
+    closing: "$71,100",
+  },
+];
+
 const Section = ({
   id,
   title,
@@ -183,13 +232,13 @@ const QuickBooksForecasting = () => (
           For QuickBooks Online
         </p>
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-          QuickBooks cash flow forecasting, beyond Cash Flow Planner
+          QuickBooks Online cash flow forecasting, beyond Cash Flow Planner
         </h1>
         <p className="text-lg text-muted-foreground mb-4">
-          Zensus is QuickBooks cash flow forecasting software. It connects to
-          QuickBooks Online, reads your open invoices and bills, adds your live
-          bank balance and your HubSpot subscriptions, and shows when your cash
-          is projected to run out.
+          Zensus is QuickBooks Online cash flow forecasting software. It
+          connects to QuickBooks Online, reads your open invoices and bills,
+          adds your live bank balance and your HubSpot subscriptions, and shows
+          when your cash is projected to run out.
         </p>
         <p className="text-lg text-muted-foreground mb-10">
           QuickBooks stays your accounting system. Zensus is the cash flow
@@ -304,6 +353,51 @@ const QuickBooksForecasting = () => (
           </ul>
         </Section>
 
+        <Section id="intuit-forecasts" title="Forecasting in QuickBooks Online beyond the planner">
+          <p>
+            Intuit describes two further forecasting features. Both are quoted
+            here from Intuit's own help pages, read in {INTUIT_REVIEWED}, so
+            you can judge whether they cover what you need before paying for
+            anything else.
+          </p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              <strong className="text-foreground">Forecasts in QuickBooks Online Advanced.</strong>{" "}
+              <a href={INTUIT.advancedForecasts} className={linkCls}>
+                Intuit says
+              </a>
+              : "In QuickBooks Online Advanced, you can create forecasts to
+              help you project your growth, spot trends, and create budgets."
+              The forecast is built "based on your profit and loss statement",
+              covers "your income, cost of sales, and expenses", runs "for the
+              rest of the fiscal year, up to the end of next year, or up to
+              three years", and "Currently, we only support Accrual based
+              accounting." It is a profit and loss forecast, not a bank
+              balance.
+            </li>
+            <li>
+              <strong className="text-foreground">Intuit Intelligence forecasting.</strong>{" "}
+              Intuit's{" "}
+              <a href={INTUIT.intelligence} className={linkCls}>
+                help page
+              </a>{" "}
+              says it "reviews your past business activity to project your
+              performance and cash flow for the next 12 months", that you "can
+              then chat with it to test business scenarios, like hiring a new
+              employee", and that it needs "At least 2 years of transaction
+              history in your books."
+            </li>
+          </ul>
+          <p>
+            If your books are on the accrual basis, you have two years of
+            history, and a monthly view twelve months out is enough, those
+            features may be all you need. Zensus is built for the cases they
+            leave out: a balance that has to be watched week by week, contracts
+            billed from a CRM that are not yet in the books, and a company
+            younger than two years.
+          </p>
+        </Section>
+
         <Section id="what-zensus-adds" title="What Zensus adds for a business on QuickBooks">
           <ul className="list-disc space-y-2 pl-5">
             <li>
@@ -355,6 +449,78 @@ const QuickBooksForecasting = () => (
                 Slack alert
               </Link>{" "}
               fires when your 30-day projection drops below it.
+            </li>
+          </ul>
+        </Section>
+
+        <Section id="weekly-projection" title="What a weekly cash flow projection from QuickBooks Online looks like">
+          <p>
+            An example with round numbers. The business has $84,000 in the
+            bank, runs payroll every two weeks, and bills one customer annually
+            through HubSpot.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px] border-collapse text-sm">
+              <caption className="caption-bottom pt-4 text-left text-xs leading-relaxed text-muted-foreground">
+                Example figures, not a customer's data. Closing balance is the
+                opening balance plus cash in, minus cash out. Week 1 opens at
+                $84,000.
+              </caption>
+              <thead>
+                <tr className="border-b border-border">
+                  <th scope="col" className="w-[14%] py-3 pr-4 text-left font-semibold text-foreground">
+                    Week
+                  </th>
+                  <th scope="col" className="w-[34%] py-3 pr-4 text-left font-semibold text-foreground">
+                    Cash in
+                  </th>
+                  <th scope="col" className="w-[34%] py-3 pr-4 text-left font-semibold text-foreground">
+                    Cash out
+                  </th>
+                  <th scope="col" className="py-3 text-left font-semibold text-foreground">
+                    Closing balance
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {PROJECTION.map((row) => (
+                  <tr key={row.week} className="border-b border-border align-top">
+                    <th scope="row" className="py-3 pr-4 text-left font-medium text-foreground">
+                      {row.week}
+                    </th>
+                    <td className="py-3 pr-4 text-muted-foreground">{row.cashIn}</td>
+                    <td className="py-3 pr-4 text-muted-foreground">{row.cashOut}</td>
+                    <td className="py-3 tabular-nums text-foreground">{row.closing}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="font-medium text-foreground">Where each number comes from:</p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              The $84,000 opening balance is the bank balance read through
+              Plaid, not the cash account in the ledger.
+            </li>
+            <li>
+              Each cash-in amount is an open QuickBooks Online invoice placed on
+              its due date. The $14,000 in week 4 was due in week 2 and is
+              still open, so Zensus places it 14 days after its due date
+              instead of counting it in the week it was supposed to arrive.
+            </li>
+            <li>
+              The $36,000 in week 3 is one annual HubSpot subscription placed
+              on its next payment date, not spread across twelve months.
+            </li>
+            <li>
+              Each cash-out amount is the open QuickBooks bills due that week
+              plus the biweekly payroll, which Zensus detects from recurring
+              debits in the bank history.
+            </li>
+            <li>
+              Week 3 is the low point at $64,900, after payroll and the
+              quarter's rent. A Slack alert fires if the 30-day projection
+              drops below the floor you set.
             </li>
           </ul>
         </Section>

@@ -73,8 +73,15 @@ const titles: Snippet[] = [
     /<title>([^<{]+)<\/title>/g,
     new RegExp(`metaTitle\\s*[=:]\\s*${STR}`, "g"),
   ]),
-  // The tool pages render `{PAGE_TITLE} | Zensus`.
-  ...collect(pages, [new RegExp(`const PAGE_TITLE\\s*=\\s*${STR}`, "g")], BRAND_SUFFIX),
+  // The tool pages render `{PAGE_TITLE} | Zensus`, so the suffix is added to
+  // what they declare. Pages that render `{PAGE_TITLE}` bare (QuickBooks,
+  // llm-info) carry the suffix inside the constant already, or do not use it.
+  ...pages.flatMap((file) => {
+    const suffix = readFileSync(file, "utf-8").includes("{PAGE_TITLE} | Zensus")
+      ? BRAND_SUFFIX
+      : "";
+    return collect([file], [new RegExp(`const PAGE_TITLE\\s*=\\s*${STR}`, "g")], suffix);
+  }),
 ];
 
 describe("search snippets", () => {

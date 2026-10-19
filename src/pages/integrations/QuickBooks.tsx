@@ -37,7 +37,12 @@ const sections: IntegrationSection[] = [
         Open invoices, the ones with a balance still owed, become cash you
         expect to receive. Open bills become cash you expect to pay. That puts
         commitments in your forecast before they reach the bank, alongside the
-        history from your books.
+        history from your books. How that compares with the planner built into
+        QuickBooks Online is on the{" "}
+        <Link to="/quickbooks-cash-flow-forecasting" className={linkCls}>
+          QuickBooks Online cash flow forecasting software
+        </Link>{" "}
+        page.
       </p>
     ),
   },
@@ -157,7 +162,7 @@ const related: IntegrationRelatedLink[] = [
   },
   {
     to: "/quickbooks-cash-flow-forecasting",
-    label: "QuickBooks cash flow forecasting software",
+    label: "QuickBooks Online cash flow forecasting software",
     description:
       "What the built-in planner covers, where it stops, and what Zensus adds on top of your books.",
   },
