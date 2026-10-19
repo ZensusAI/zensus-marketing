@@ -42,6 +42,7 @@ const STATIC_ROUTES = [
   "/use-cases",
   "/tools/runway-calculator",
   "/tools/payroll-calendar",
+  "/tools/13-week-cash-flow-template",
   "/compare/zensus-vs-float",
   "/compare/zensus-vs-pulse",
   "/compare/float-alternatives",

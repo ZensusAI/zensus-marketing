@@ -56,12 +56,45 @@ const req = (over: any = {}) => ({
   ...over,
 });
 
+const thirteenWeekBody = {
+  tool: "thirteen-week",
+  email: "ada@example.com",
+  inputs: {
+    openingBalance: 120000,
+    cashFloor: 50000,
+    weeklyCollections: 14000,
+    payrollPerRun: 32000,
+    payFrequency: "biweekly",
+    nextPayrollWeek: 1,
+    monthlyFixedCosts: 14000,
+    weeklyOtherOutflows: 3000,
+    oneOffEnabled: true,
+    oneOffAmount: 45000,
+    oneOffWeek: 6,
+    startDate: "2026-11-02",
+  },
+  turnstileToken: "tok",
+};
+
 describe("tools/send-results handler", () => {
   it("200 + sends on the happy path", async () => {
     const r = res();
     await handler(req() as any, r as any);
     expect(r.status).toHaveBeenCalledWith(200);
     expect(ses.commandCalls(SendEmailCommand).length).toBe(1);
+  });
+
+  it("sends the 13-week forecast email with the template link", async () => {
+    const r = res();
+    await handler(req({ body: thirteenWeekBody }) as any, r as any);
+    expect(r.status).toHaveBeenCalledWith(200);
+    const calls = ses.commandCalls(SendEmailCommand);
+    expect(calls.length).toBe(1);
+    const message = calls[0].args[0].input.Message!;
+    expect(message.Subject!.Data).toBe("Your 13-week cash flow forecast from Zensus");
+    expect(message.Body!.Text!.Data).toContain("/templates/13-week-cash-flow-template.xlsx");
+    expect(message.Body!.Text!.Data).toContain("Week 13 (");
+    expect(message.Body!.Html!.Data).toContain("Week by week");
   });
 
   it("405 on non-POST", async () => {

@@ -431,6 +431,10 @@ const RunwayCalculator = () => {
                 <Link to="/blog/what-is-a-13-week-cash-flow-forecast" className={linkCls}>
                   13-week cash flow forecast
                 </Link>
+                , start from the free{" "}
+                <Link to="/tools/13-week-cash-flow-template" className={linkCls}>
+                  13-week cash flow template
+                </Link>
                 , or check whether{" "}
                 <Link to="/blog/will-i-make-payroll" className={linkCls}>
                   you will make payroll

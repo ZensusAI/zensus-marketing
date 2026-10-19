@@ -1,4 +1,4 @@
-export type ToolId = "runway" | "payroll";
+export type ToolId = "runway" | "payroll" | "thirteen-week";
 
 export type PayFrequency = "weekly" | "biweekly" | "semimonthly" | "monthly";
 
@@ -19,6 +19,23 @@ export interface PayrollToolInput {
   firstPayDate: string;
   frequency: PayFrequency;
   amountPerRun: number;
+}
+
+/** Mirrors ThirteenWeekInput in src/lib/thirteen-week.ts plus the week 1 date. */
+export interface ThirteenWeekToolInput {
+  openingBalance: number;
+  cashFloor: number;
+  weeklyCollections: number;
+  payrollPerRun: number;
+  payFrequency: PayFrequency;
+  nextPayrollWeek: number;
+  monthlyFixedCosts: number;
+  weeklyOtherOutflows: number;
+  oneOffEnabled: boolean;
+  oneOffAmount: number;
+  oneOffWeek: number;
+  /** Client-local date (YYYY-MM-DD) that week 1 starts on. */
+  startDate: string;
 }
 
 interface ToolEmailRequestBase {
@@ -44,7 +61,8 @@ interface ToolEmailRequestBase {
  */
 export type ToolEmailRequest =
   | (ToolEmailRequestBase & { tool: "runway"; inputs: RunwayToolInput })
-  | (ToolEmailRequestBase & { tool: "payroll"; inputs: PayrollToolInput });
+  | (ToolEmailRequestBase & { tool: "payroll"; inputs: PayrollToolInput })
+  | (ToolEmailRequestBase & { tool: "thirteen-week"; inputs: ThirteenWeekToolInput });
 
 export type ValidateToolResult =
   | { ok: true; data: ToolEmailRequest }
@@ -68,7 +86,18 @@ const LIMITS = {
   contractAmount: 1_000_000_000,
   contractMonth: 12,
   amountPerRun: 1_000_000_000,
+  balance: 1_000_000_000,
+  nextPayrollWeek: 4,
+  oneOffWeek: 13,
 } as const;
+
+/** True when `value` is a real calendar date written as YYYY-MM-DD. */
+function isCalendarDate(value: unknown): value is string {
+  if (typeof value !== "string" || !DATE_RE.test(value)) return false;
+  const [y, m, d] = value.split("-").map(Number);
+  const parsed = new Date(y, m - 1, d);
+  return parsed.getFullYear() === y && parsed.getMonth() === m - 1 && parsed.getDate() === d;
+}
 
 function num(v: unknown, max: number): number | null {
   if (typeof v !== "number" || !Number.isFinite(v) || v < 0 || v > max) return null;
@@ -152,6 +181,54 @@ function parsePayrollInputs(raw: unknown): PayrollToolInput | null {
   };
 }
 
+function parseThirteenWeekInputs(raw: unknown): ThirteenWeekToolInput | null {
+  if (typeof raw !== "object" || raw === null) return null;
+  const b = raw as Record<string, unknown>;
+  const openingBalance = num(b.openingBalance, LIMITS.balance);
+  const cashFloor = num(b.cashFloor, LIMITS.balance);
+  const weeklyCollections = num(b.weeklyCollections, LIMITS.monthly);
+  const payrollPerRun = num(b.payrollPerRun, LIMITS.monthly);
+  const nextPayrollWeek = num(b.nextPayrollWeek, LIMITS.nextPayrollWeek);
+  const monthlyFixedCosts = num(b.monthlyFixedCosts, LIMITS.monthly);
+  const weeklyOtherOutflows = num(b.weeklyOtherOutflows, LIMITS.monthly);
+  const oneOffAmount = num(b.oneOffAmount, LIMITS.contractAmount);
+  const oneOffWeek = num(b.oneOffWeek, LIMITS.oneOffWeek);
+  if (
+    openingBalance === null ||
+    cashFloor === null ||
+    weeklyCollections === null ||
+    payrollPerRun === null ||
+    nextPayrollWeek === null ||
+    monthlyFixedCosts === null ||
+    weeklyOtherOutflows === null ||
+    oneOffAmount === null ||
+    oneOffWeek === null
+  ) {
+    return null;
+  }
+  if (typeof b.payFrequency !== "string" || !PAY_FREQUENCIES.has(b.payFrequency as PayFrequency)) {
+    return null;
+  }
+  if (typeof b.oneOffEnabled !== "boolean") return null;
+  if (nextPayrollWeek < 1 || oneOffWeek < 1) return null;
+  if (!isCalendarDate(b.startDate)) return null;
+
+  return {
+    openingBalance,
+    cashFloor,
+    weeklyCollections,
+    payrollPerRun,
+    payFrequency: b.payFrequency as PayFrequency,
+    nextPayrollWeek: Math.floor(nextPayrollWeek),
+    monthlyFixedCosts,
+    weeklyOtherOutflows,
+    oneOffEnabled: b.oneOffEnabled,
+    oneOffAmount,
+    oneOffWeek: Math.floor(oneOffWeek),
+    startDate: b.startDate,
+  };
+}
+
 export function validateToolInput(body: unknown): ValidateToolResult {
   if (typeof body !== "object" || body === null) {
     return { ok: false, error: "invalid_body" };
@@ -162,7 +239,7 @@ export function validateToolInput(body: unknown): ValidateToolResult {
     return { ok: false, error: "honeypot" };
   }
 
-  if (b.tool !== "runway" && b.tool !== "payroll") {
+  if (b.tool !== "runway" && b.tool !== "payroll" && b.tool !== "thirteen-week") {
     return { ok: false, error: "invalid_tool" };
   }
 
@@ -181,6 +258,12 @@ export function validateToolInput(body: unknown): ValidateToolResult {
     const inputs = parseRunwayInputs(b.inputs);
     if (!inputs) return { ok: false, error: "invalid_inputs" };
     return { ok: true, data: { tool: "runway", email, inputs, marketingConsent } };
+  }
+
+  if (b.tool === "thirteen-week") {
+    const inputs = parseThirteenWeekInputs(b.inputs);
+    if (!inputs) return { ok: false, error: "invalid_inputs" };
+    return { ok: true, data: { tool: "thirteen-week", email, inputs, marketingConsent } };
   }
 
   const inputs = parsePayrollInputs(b.inputs);

@@ -106,7 +106,7 @@ The 13-week cash flow forecast is the standard short-term liquidity model: one f
 - Carta's State of Seed data shows the median time from seed to Series A now runs over two years, which is why 2026 runway guidance is 18 to 24 months after funding.
 - Investors look for a burn multiple below 2x for venture-stage SaaS (David Sacks's threshold).
 - Best practice is three scenarios per forecast: base case, upside, and downside; the spread between them matters more than any single number.
-- A free downloadable 13-week template (XLSX with chained weekly balances and a cash buffer check) is available at https://zensus.finance/templates/13-week-cash-flow-template.xlsx
+- A free downloadable 13-week template (XLSX with chained weekly balances and a cash buffer check) is available at https://zensus.finance/templates/13-week-cash-flow-template.xlsx, and a browser builder that fills in a first 13 weeks is at https://zensus.finance/tools/13-week-cash-flow-template
 
 ### Will I Make Payroll?
 https://zensus.finance/blog/will-i-make-payroll
@@ -283,6 +283,11 @@ https://zensus.finance/tools/payroll-calendar
 
 Free tool: every 2026 and 2027 pay date for weekly, biweekly, semimonthly and monthly schedules, with period start and end dates, paydays moved off weekends and Federal Reserve holidays to the previous banking day, 26 or 27 pay periods, three-paycheck months, monthly payroll cash impact, and CSV and ICS downloads. The page also lists the 2027 pay dates for the common schedules in plain text and the 2026 and 2027 Federal Reserve holidays.
 
+### 13-Week Cash Flow Forecast Template and Builder
+https://zensus.finance/tools/13-week-cash-flow-template
+
+Free tool: the 13-week cash flow forecast template (XLSX, formulas in place, no email) plus a browser builder for a first 13-week forecast. Inputs: opening balance, cash buffer floor, week 1 start date, customer collections per week, payroll per run and pay frequency (placed on pay dates: weekly, biweekly, semimonthly on the 15th and month end, or monthly at month end), monthly bills (placed in the week that holds the 1st), other weekly spend, and a one-off inflow in a chosen week. Outputs: the lowest balance and its week, the first week that closes below the floor, the week 13 closing balance, a 13-row table, a CSV download in the template's layout, and an optional emailed copy.
+
 ## Comparisons
 
 ### Zensus vs Float
@@ -320,7 +325,7 @@ HTML entity summary for AI crawlers: founder, founded 2025-08, US company, $199/
 ### 13-Week Cash Flow Template
 https://zensus.finance/templates/13-week-cash-flow-template.xlsx
 
-Free XLSX template: 13 weekly columns with inflow and outflow line items, chained opening and closing balances, net cash flow, and a cash buffer floor check. Works in Excel, Google Sheets, and Numbers. No email required.
+Free XLSX template: 13 weekly columns with inflow and outflow line items, chained opening and closing balances, net cash flow, and a cash buffer floor check. Works in Excel, Google Sheets, and Numbers. No email required. The template page with the browser builder is https://zensus.finance/tools/13-week-cash-flow-template.
 
 ## Links
 

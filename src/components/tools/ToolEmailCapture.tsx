@@ -26,14 +26,35 @@ function formatTimeRemaining(resetTime: number): string {
   return minutes === 1 ? "1 minute" : `${minutes} minutes`;
 }
 
+export interface ToolEmailCaptureCopy {
+  /** The line above the form. */
+  prompt: string;
+  /** The submit button. */
+  button: string;
+  /** The heading of the success state. */
+  successTitle: string;
+  /** The success sentence; the address is appended, then "Check spam...". */
+  successLead: string;
+}
+
+const DEFAULT_COPY: ToolEmailCaptureCopy = {
+  prompt: "Want this emailed to you with a detailed breakdown?",
+  button: "Email my breakdown",
+  successTitle: "Breakdown sent",
+  successLead: "Detailed results are on their way to",
+};
+
 export interface ToolEmailCaptureProps {
   tool: ToolLeadId;
   inputs: Record<string, unknown>;
+  /** Overrides for tools whose output is not a "breakdown". */
+  copy?: Partial<ToolEmailCaptureCopy>;
 }
 
 type SubmitStatus = "idle" | "loading" | "success" | "error";
 
-export function ToolEmailCapture({ tool, inputs }: ToolEmailCaptureProps) {
+export function ToolEmailCapture({ tool, inputs, copy }: ToolEmailCaptureProps) {
+  const text = { ...DEFAULT_COPY, ...copy };
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -196,10 +217,10 @@ export function ToolEmailCapture({ tool, inputs }: ToolEmailCaptureProps) {
   if (status === "success") {
     return (
       <div className="rounded-2xl border border-primary/30 bg-primary/5 p-6 mb-12">
-        <p className="font-medium text-foreground mb-1">Breakdown sent</p>
+        <p className="font-medium text-foreground mb-1">{text.successTitle}</p>
         <p className="text-sm text-muted-foreground">
-          Detailed results are on their way to {email.trim()}. Check spam if it
-          does not arrive within a minute.
+          {text.successLead} {email.trim()}. Check spam if it does not arrive
+          within a minute.
         </p>
       </div>
     );
@@ -207,9 +228,7 @@ export function ToolEmailCapture({ tool, inputs }: ToolEmailCaptureProps) {
 
   return (
     <div className="rounded-2xl border border-border bg-card/50 p-6 mb-12">
-      <p className="text-base font-medium text-foreground mb-1">
-        Want this emailed to you with a detailed breakdown?
-      </p>
+      <p className="text-base font-medium text-foreground mb-1">{text.prompt}</p>
       <p className="text-sm text-muted-foreground mb-5">Drop your email. Optional.</p>
 
       {isRateLimited && rateLimitReset ? (
@@ -272,7 +291,7 @@ export function ToolEmailCapture({ tool, inputs }: ToolEmailCaptureProps) {
 
         <div>
           <Button type="submit" disabled={status === "loading" || isRateLimited}>
-            {status === "loading" ? "Sending…" : "Email my breakdown"}
+            {status === "loading" ? "Sending…" : text.button}
           </Button>
           {status === "error" && errorMessage ? (
             <p className="mt-2 text-sm text-destructive">{errorMessage}</p>

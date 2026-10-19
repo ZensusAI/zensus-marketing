@@ -90,6 +90,11 @@ const NAV: NavEntry[] = [
         label: "Payroll Calendar",
         description: "Map pay dates and three-paycheck months for 2026 and 2027.",
       },
+      {
+        href: "/tools/13-week-cash-flow-template",
+        label: "13-Week Cash Flow Template",
+        description: "Free Excel template, plus a builder to see your 13 weeks first.",
+      },
     ],
   },
   {

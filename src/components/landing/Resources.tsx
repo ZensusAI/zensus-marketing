@@ -29,9 +29,9 @@ const TOOLS: ResourceLink[] = [
     description: "Every pay date by frequency, period start and end, 26 or 27 pay periods.",
   },
   {
-    to: "/blog/what-is-a-13-week-cash-flow-forecast",
+    to: "/tools/13-week-cash-flow-template",
     label: "13-week cash flow forecast template",
-    description: "The guide, with a free Excel template to start from.",
+    description: "Free Excel template, and a builder to see your 13 weeks first.",
   },
 ];
 

@@ -4,7 +4,7 @@ import {
   type EventName,
 } from "@/lib/analytics/events";
 
-export type ToolLeadId = "runway" | "payroll";
+export type ToolLeadId = "runway" | "payroll" | "thirteen-week";
 
 function trackToolEvent(
   event: EventName,
@@ -32,4 +32,9 @@ export function trackToolEmailSucceeded(tool: ToolLeadId): void {
 
 export function trackToolEmailFailed(tool: ToolLeadId, errorCode: string): void {
   trackToolEvent(EVENTS.TOOL_EMAIL_FAILED, tool, { error_code: errorCode });
+}
+
+/** A file left the tool page: `format` is what was downloaded (xlsx, csv, ics). */
+export function trackToolDownload(tool: ToolLeadId, format: string): void {
+  trackToolEvent(EVENTS.TOOL_DOWNLOADED, tool, { format });
 }

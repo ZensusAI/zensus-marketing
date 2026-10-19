@@ -24,6 +24,7 @@ const STATIC_URLS = [
   { loc: `${SITE_URL}/use-cases`, changefreq: "monthly", priority: "0.7" },
   { loc: `${SITE_URL}/tools/runway-calculator`, changefreq: "monthly", priority: "0.8" },
   { loc: `${SITE_URL}/tools/payroll-calendar`, changefreq: "monthly", priority: "0.8" },
+  { loc: `${SITE_URL}/tools/13-week-cash-flow-template`, changefreq: "monthly", priority: "0.8" },
   { loc: `${SITE_URL}/compare/zensus-vs-float`, changefreq: "monthly", priority: "0.7" },
   { loc: `${SITE_URL}/compare/zensus-vs-pulse`, changefreq: "monthly", priority: "0.7" },
   { loc: `${SITE_URL}/compare/float-alternatives`, changefreq: "monthly", priority: "0.7" },

@@ -81,6 +81,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "tools-13-week-cash-flow-template",
+    category: "Free Tool",
+    title: "13-week cash flow forecast template",
+    subtitle:
+      "Free Excel template with the formulas in place, plus a builder that shows your 13 weeks and the first week under your floor.",
+    accent: "green",
+  },
+  {
     slug: "compare-zensus-vs-float",
     category: "Compare",
     title: "Zensus vs Float",
