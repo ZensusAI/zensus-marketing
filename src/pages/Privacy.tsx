@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
             Privacy Policy
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: May 18, 2026
+            Last Updated: October 19, 2026
           </p>
         </header>
 
