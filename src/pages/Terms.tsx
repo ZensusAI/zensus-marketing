@@ -49,7 +49,7 @@ export default function TermsPage() {
             Terms of Service
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: May 18, 2026
+            Last Updated: October 19, 2026
           </p>
         </header>
 
@@ -136,7 +136,7 @@ export default function TermsPage() {
               <li>Using the runway calculator to project cash runway</li>
               <li>Generating financial forecasts and projections</li>
               <li>Running AI-powered scenario analysis</li>
-              <li>Connecting QuickBooks for automated data sync (optional)</li>
+              <li>Connecting QuickBooks, a bank account (through Plaid), HubSpot or Slack (all optional)</li>
               <li>Exporting reports and financial projections</li>
             </ul>
 
@@ -211,7 +211,23 @@ export default function TermsPage() {
               </li>
             </ul>
 
-            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.5 Data Privacy</h3>
+            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.5 HubSpot Integration</h3>
+            <p className="text-foreground/80 mb-3">If you connect HubSpot to your Zensus account:</p>
+            <ul className="list-disc pl-6 space-y-1 text-foreground/80">
+              <li>You authorize us to access and sync contacts, companies, line items, invoices, and subscriptions from your HubSpot account</li>
+              <li>We use this data to project recurring billing into your forecast</li>
+              <li>You can disconnect HubSpot at any time through your account settings</li>
+            </ul>
+
+            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.6 Slack Integration</h3>
+            <p className="text-foreground/80 mb-3">If you connect Slack to your Zensus account:</p>
+            <ul className="list-disc pl-6 space-y-1 text-foreground/80">
+              <li>You authorize us to post cash-flow alerts to the channels you select in your Slack workspace</li>
+              <li>Alert messages contain aggregated cash-flow signals, not transaction-level data</li>
+              <li>You can disconnect Slack at any time through your account settings or by removing the Zensus app from your workspace</li>
+            </ul>
+
+            <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.7 Data Privacy</h3>
             <p className="text-foreground/80">
               We take the security of your financial data seriously. Our collection, use, and protection of your data is governed by our Privacy Policy at{' '}
               <a href={`${SITE_URL}/privacy`} className="text-primary hover:underline">{`${SITE_URL}/privacy`}</a>.
@@ -265,7 +281,7 @@ export default function TermsPage() {
               <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm mb-4">
                 <li>AI-powered financial forecasting</li>
                 <li>Runway calculator with scenario analysis</li>
-                <li>QuickBooks integration</li>
+                <li>Integrations with Plaid, QuickBooks, HubSpot and Slack</li>
                 <li>Runway snapshots and historical tracking</li>
                 <li>Priority support</li>
               </ul>
@@ -469,7 +485,7 @@ export default function TermsPage() {
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">9.4 Third-Party Services</h3>
             <p className="text-foreground/80">
-              We integrate with third-party services (QuickBooks, Stripe, AWS). We do not warrant or assume responsibility for any third-party services. Your use of third-party services is governed by their terms.
+              We integrate with third-party services (Plaid, QuickBooks, HubSpot, Slack, Stripe, AWS). We do not warrant or assume responsibility for any third-party services. Your use of third-party services is governed by their terms.
             </p>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">9.5 Startup Disclosure</h3>
@@ -521,7 +537,7 @@ export default function TermsPage() {
             <p className="text-foreground/80 mb-3">We are not liable for issues from:</p>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
               <li>Stripe payment processing</li>
-              <li>QuickBooks data sync</li>
+              <li>Data sync from Plaid, QuickBooks, HubSpot or Slack</li>
               <li>AWS/cloud infrastructure</li>
               <li>Internet connectivity</li>
             </ul>
