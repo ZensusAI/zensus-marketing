@@ -29,6 +29,7 @@ const FOOTER_COLUMNS: { title: string; links: FooterLink[] }[] = [
         children: [
           { label: "Runway Calculator", href: "/tools/runway-calculator" },
           { label: "Payroll Calendar", href: "/tools/payroll-calendar" },
+          { label: "13-Week Cash Flow Template", href: "/tools/13-week-cash-flow-template" },
         ],
       },
       {

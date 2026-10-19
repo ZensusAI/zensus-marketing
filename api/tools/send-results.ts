@@ -1,9 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { SESClient } from "@aws-sdk/client-ses";
 import { verifyTurnstile } from "../_lib/turnstile.js";
-import { validateToolInput } from "../_lib/tool-validate.js";
+import { validateToolInput, type ToolEmailRequest } from "../_lib/tool-validate.js";
 import { composeRunwayToolEmail } from "../_lib/tool-email-runway.js";
 import { composePayrollToolEmail } from "../_lib/tool-email-payroll.js";
+import { composeThirteenWeekToolEmail } from "../_lib/tool-email-thirteen-week.js";
 import { sendToolEmail } from "../_lib/tool-email.js";
 import { notifyToolLead } from "../_lib/tool-lead.js";
 import { checkToolRateLimit } from "../_lib/tool-rate-limit.js";
@@ -34,6 +35,14 @@ function log(stage: string, outcome: string, errorName?: string) {
 
 function originAllowed(req: VercelRequest): boolean {
   return isAllowedOrigin(req.headers.origin as string | undefined);
+}
+
+// Narrowed on `tool`, which the discriminated union supports under both
+// tsconfigs (unlike `!v.ok`, see below).
+function composeToolEmail(data: ToolEmailRequest, from: string) {
+  if (data.tool === "runway") return composeRunwayToolEmail(data.inputs, from);
+  if (data.tool === "thirteen-week") return composeThirteenWeekToolEmail(data.inputs, from);
+  return composePayrollToolEmail(data.inputs, from);
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -100,10 +109,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const from = process.env.SES_FROM as string;
-  const composed =
-    v.data.tool === "runway"
-      ? composeRunwayToolEmail(v.data.inputs, from)
-      : composePayrollToolEmail(v.data.inputs, from);
+  const composed = composeToolEmail(v.data, from);
 
   try {
     const sesClient = new SESClient({

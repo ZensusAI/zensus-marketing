@@ -284,6 +284,11 @@ const LlmInfo = () => (
               </Link>
             </li>
             <li>
+              <Link to="/tools/13-week-cash-flow-template" className={linkCls}>
+                13-week cash flow forecast template and builder
+              </Link>
+            </li>
+            <li>
               <a
                 href={`${SITE_URL}/templates/13-week-cash-flow-template.xlsx`}
                 className={linkCls}

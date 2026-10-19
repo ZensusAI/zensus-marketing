@@ -27,7 +27,53 @@ const payrollBody = {
   },
 };
 
+const thirteenWeekBody = {
+  tool: "thirteen-week",
+  email: "founder@example.com",
+  inputs: {
+    openingBalance: 120000,
+    cashFloor: 50000,
+    weeklyCollections: 14000,
+    payrollPerRun: 32000,
+    payFrequency: "biweekly",
+    nextPayrollWeek: 1,
+    monthlyFixedCosts: 14000,
+    weeklyOtherOutflows: 3000,
+    oneOffEnabled: true,
+    oneOffAmount: 45000,
+    oneOffWeek: 6,
+    startDate: "2026-11-02",
+  },
+};
+
 describe("validateToolInput", () => {
+  it("accepts 13-week template payloads", () => {
+    const r = validateToolInput(thirteenWeekBody);
+    expect(r.ok).toBe(true);
+    if (r.ok && r.data.tool === "thirteen-week") {
+      expect(r.data.inputs.payFrequency).toBe("biweekly");
+      expect(r.data.inputs.startDate).toBe("2026-11-02");
+    }
+  });
+
+  it("rejects 13-week payloads with a week outside the grid", () => {
+    for (const bad of [
+      { oneOffWeek: 14 },
+      { oneOffWeek: 0 },
+      { nextPayrollWeek: 5 },
+      { payFrequency: "fortnightly" },
+      { startDate: "2026-02-30" },
+      { startDate: undefined },
+      { oneOffEnabled: "yes" },
+    ]) {
+      const r = validateToolInput({
+        ...thirteenWeekBody,
+        inputs: { ...thirteenWeekBody.inputs, ...bad },
+      });
+      expect(r.ok).toBe(false);
+    }
+  });
+
   it("accepts runway payloads", () => {
     const r = validateToolInput(runwayBody);
     expect(r.ok).toBe(true);

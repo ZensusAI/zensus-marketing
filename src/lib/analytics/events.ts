@@ -68,6 +68,8 @@ export const EVENTS = {
   TOOL_EMAIL_SUCCEEDED: "marketing_tool_email_succeeded",
   /** Tool breakdown email send failed. */
   TOOL_EMAIL_FAILED: "marketing_tool_email_failed",
+  /** Visitor downloaded a file from a tool page (template, CSV, ICS). */
+  TOOL_DOWNLOADED: "marketing_tool_downloaded",
 } as const;
 
 export type EventName = (typeof EVENTS)[keyof typeof EVENTS];
