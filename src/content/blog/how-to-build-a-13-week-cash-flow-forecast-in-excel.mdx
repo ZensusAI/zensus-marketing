@@ -85,6 +85,19 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>Column A holds the labels. Columns B to N hold weeks 1 to 13. Every cell reference in this guide uses that layout, and so does the template.</p>
 
+<p className="mb-2 font-medium text-foreground">The eight steps, in the order you build them:</p>
+
+<ol>
+  <li>Lay out 13 weekly columns, each with a real date.</li>
+  <li>Enter the opening balance from the bank, not from the ledger.</li>
+  <li>Add the cash-in rows and total them.</li>
+  <li>Add the cash-out rows and total them.</li>
+  <li>Calculate net cash flow and the closing balance.</li>
+  <li>Chain each week's opening balance to the previous week's closing balance.</li>
+  <li>Add a cash floor and a check that flags any week below it.</li>
+  <li>Enter every amount in the week the cash actually moves.</li>
+</ol>
+
 ## Step 1: Lay Out 13 Weekly Columns
 
 <p>Type <strong>Line item</strong> in A4, then <strong>Week 1</strong> to <strong>Week 13</strong> across B4 to N4.</p>

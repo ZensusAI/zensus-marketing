@@ -243,16 +243,16 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>A common mistake is treating the forecast as a one-time exercise. The most effective teams use a <strong>rolling 13-week cash flow forecast</strong>.</p>
 
 
-<p className="mb-2 font-medium text-foreground">Every week:</p>
+<p className="mb-2 font-medium text-foreground">Every week, in this order:</p>
 
 
-<ul>
+<ol>
 
-  <li>actual cash results replace forecasts</li>
-  <li>the oldest week drops off</li>
-  <li>a new future week gets added</li>
+  <li>Replace last week's forecast figures with the actual cash results from the bank.</li>
+  <li>Drop the week that just ended from the front of the grid.</li>
+  <li>Add a new week 13 at the far end, so the forecast always reaches 13 weeks ahead.</li>
 
-</ul>
+</ol>
 
 
 <p>The model always maintains visibility across the next 13 weeks. To build it yourself, cell by cell, follow <a href="/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel" className="font-medium text-primary underline-offset-4 hover:underline">how to build a 13-week cash flow forecast in Excel</a>.</p>

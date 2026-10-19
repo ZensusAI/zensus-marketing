@@ -58,8 +58,8 @@ const GUIDES: ResourceLink[] = [
   },
   {
     to: "/quickbooks-cash-flow-forecasting",
-    label: "QuickBooks cash flow forecasting software",
-    description: "Cash Flow Planner and Zensus side by side, for QuickBooks Online.",
+    label: "QuickBooks Online cash flow forecasting software",
+    description: "Cash Flow Planner, Intuit's forecasts, and Zensus side by side.",
   },
   {
     to: "/blog/hubspot-pipeline-to-cash-forecast",
