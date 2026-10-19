@@ -185,6 +185,8 @@ describe("site origin", () => {
   // A host preceded by "." or "@" is left alone. Those are the cookie scope
   // (".zensus.app"), the product hosts (app./api.zensus.app) and mail
   // addresses, none of which follow SITE_URL and all of which stay put.
+  // So is the Instagram username, which happens to spell the host
+  // ("instagram.com/zensus.finance" in the Organization sameAs).
   it("does not hardcode the host in display copy either", () => {
     const offenders: string[] = [];
 
@@ -193,6 +195,8 @@ describe("site origin", () => {
       if (ALLOWED.has(rel) || rel.includes(".test.")) continue;
       const source = readFileSync(join(repoRoot, file), "utf-8");
       for (const match of source.matchAll(/(?<![.@])zensus\.[a-z]{2,}/g)) {
+        const before = source.slice(Math.max(0, (match.index ?? 0) - 14), match.index);
+        if (before.endsWith("instagram.com/")) continue;
         offenders.push(`${rel}: ${match[0]}`);
       }
     }
