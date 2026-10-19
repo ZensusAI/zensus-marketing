@@ -294,7 +294,7 @@ const LlmInfo = () => (
             </li>
             <li>
               <Link to="/tools/payroll-calendar" className={linkCls}>
-                2027 payroll calendar and pay period calculator
+                2027 and 2026 payroll calendar and pay period calculator
               </Link>
             </li>
             <li>

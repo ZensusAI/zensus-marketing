@@ -35,9 +35,13 @@ import {
 import { ToolEmailCapture } from "@/components/tools/ToolEmailCapture";
 
 const PAGE_URL = `${SITE_URL}/tools/payroll-calendar`;
-const PAGE_TITLE = "2027 Payroll Calendar and Pay Period Calculator";
+// The title names both years on purpose. Before #127 it read "(and 2026)" and the
+// page held position 7 to 9 for about 230 impressions a day; the day #127 dropped
+// 2026 from the title, those impressions fell by 95% (Search Console, 2026-10-19).
+// Titles are capped at 60 characters with " | Zensus" appended.
+const PAGE_TITLE = "2027 and 2026 Payroll Calendar and Pay Periods";
 const PAGE_DESCRIPTION =
-  "Every 2027 pay date for biweekly, weekly, semimonthly and monthly payroll, moved off bank holidays: 26 or 27 pay periods, three-paycheck months, CSV and ICS.";
+  "Every 2027 and 2026 pay date for biweekly, weekly, semimonthly and monthly payroll, moved off bank holidays: 26 or 27 pay periods, CSV and ICS.";
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
@@ -356,7 +360,7 @@ const PayrollCalendar = () => {
             Free tool
           </p>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-            2027 payroll calendar and pay period calculator
+            2027 and 2026 payroll calendar and pay period calculator
           </h1>
           <p className="text-lg text-muted-foreground mb-8">
             Every pay date in 2027 and 2026 for your schedule. Enter any payday and your pay

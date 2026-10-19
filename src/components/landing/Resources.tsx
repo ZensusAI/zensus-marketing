@@ -25,7 +25,7 @@ const TOOLS: ResourceLink[] = [
   },
   {
     to: "/tools/payroll-calendar",
-    label: "2027 payroll calendar",
+    label: "2027 and 2026 payroll calendar",
     description: "Every pay date by frequency, period start and end, 26 or 27 pay periods.",
   },
   {
