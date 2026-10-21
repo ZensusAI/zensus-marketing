@@ -80,7 +80,7 @@ const Index = () => {
             keeps the OAuth and AES-256-GCM claims in text. */}
         {/* 02-hero: redesigned. */}
         <Hero />
-        {/* TODO(03-proof-strip) */}
+        {/* 03-proof-strip: redesigned. */}
         <TrustBar />
         {/* TODO(04-product-showcase), pinned */}
         <HeroShowcase />
