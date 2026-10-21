@@ -173,6 +173,11 @@ function FooterLinkItem({ link }: { link: FooterLink }) {
   );
 }
 
+// The card sits in the link grid's sixth cell, beside Company. It is a forest
+// panel on the cream footer (the site's dark surface, as in the final CTA), so
+// it reads as its own object rather than another column, and the assistants'
+// marks sit full colour on white discs: the colour and the disc say "button".
+// Hover or focus lifts the disc, rings it, and names the assistant above.
 function AskAiCard() {
   const [active, setActive] = useState(-1);
   const open = active >= 0;
@@ -182,22 +187,19 @@ function AskAiCard() {
       onBlur={(ev) => {
         if (!ev.currentTarget.contains(ev.relatedTarget as Node | null)) setActive(-1);
       }}
-      className="col-span-full min-w-0 self-start rounded-[14px] border border-border bg-card p-4 shadow-[0_14px_30px_-24px_rgba(26,42,40,.4)] min-[760px]:col-span-2 min-[760px]:p-5"
+      className="col-span-full min-w-0 self-start rounded-2xl bg-forest p-4 text-forest-foreground min-[760px]:p-3.5 min-[1280px]:p-4 shadow-[0_22px_44px_-26px_rgba(15,28,22,.7)] min-[760px]:col-span-1"
     >
-      <p className="text-sm font-semibold text-foreground">Ask AI about Zensus</p>
-      <p aria-live="polite" className="mt-1 text-[13px] leading-[1.45] text-muted-foreground">
+      <p className="text-sm font-semibold text-forest-foreground">Ask AI about Zensus</p>
+      <p aria-live="polite" className="mt-1 min-h-[2.9em] text-pretty text-[12.5px] leading-[1.45] text-forest-muted-strong">
         {open
           ? `Ask ${AI_ENGINES[active].label ?? AI_ENGINES[active].name} about Zensus ↗`
           : "What Zensus does, and how to reach us."}
       </p>
-      <ul className="mt-3.5 flex flex-wrap items-center gap-2.5">
+      <ul className="mt-3 flex flex-wrap items-center gap-2 min-[760px]:gap-1 min-[1280px]:gap-2">
         {AI_ENGINES.map((ai, i) => {
           const on = active === i;
           return (
-            <li
-              key={ai.name}
-              className="relative"
-            >
+            <li key={ai.name}>
               <a
                 href={ai.base + encodeURIComponent(AI_PROMPT)}
                 target="_blank"
@@ -207,20 +209,12 @@ function AskAiCard() {
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
                 className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-full border bg-white transition-[transform,border-color] duration-200 motion-reduce:transition-none",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card",
-                  on ? "-translate-y-[3px] border-foreground" : "border-border",
+                  "flex h-9 w-9 items-center justify-center rounded-full bg-white min-[760px]:h-[30px] min-[760px]:w-[30px] min-[1280px]:h-9 min-[1280px]:w-9 shadow-[0_2px_6px_rgba(0,0,0,.35)] transition-[transform,box-shadow] duration-200 ease-ui motion-reduce:transition-none",
+                  "focus-visible:outline-none",
+                  on && "-translate-y-0.5 shadow-[0_0_0_2px_hsl(var(--sage-light)),0_6px_14px_rgba(0,0,0,.4)] motion-reduce:translate-y-0",
                 )}
               >
-                <img
-                  src={ai.logo}
-                  alt=""
-                  width={20}
-                  height={20}
-                  loading="lazy"
-                  decoding="async"
-                  className={cn("h-5 w-5 object-contain transition-[filter] duration-200", !on && "[filter:grayscale(1)_opacity(.8)]")}
-                />
+                <img src={ai.logo} alt="" width={20} height={20} loading="lazy" decoding="async" className="h-5 w-5 object-contain min-[760px]:h-[17px] min-[760px]:w-[17px] min-[1280px]:h-5 min-[1280px]:w-5" />
               </a>
             </li>
           );
@@ -322,7 +316,7 @@ const Footer = () => {
 
           <nav
             aria-label="Footer"
-            className="grid min-w-0 grid-cols-2 gap-x-6 gap-y-8 border-t border-border pt-8 min-[760px]:grid-cols-3 min-[760px]:gap-x-7 min-[760px]:gap-y-10 min-[1024px]:border-t-0 min-[1024px]:pt-1.5"
+            className="grid min-w-0 grid-cols-2 gap-x-6 gap-y-8 border-t border-border pt-8 min-[760px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.35fr)] min-[760px]:gap-x-6 min-[760px]:gap-y-10 min-[1024px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.5fr)] min-[1024px]:border-t-0 min-[1024px]:pt-1.5"
           >
             {FOOTER_COLUMNS.map((column) => (
               <div key={column.title} className="min-w-0">
