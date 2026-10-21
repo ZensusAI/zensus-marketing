@@ -123,6 +123,11 @@ export default {
           from: { transform: "translate3d(-2%, 0.5%, 0)" },
           to: { transform: "translate3d(2%, -0.5%, 0)" },
         },
+        // Product showcase zoom marker (handoff 04-product-showcase "ssPing").
+        "ring-ping": {
+          "0%": { boxShadow: "0 0 0 0 rgba(72,216,138,.7)" },
+          "100%": { boxShadow: "0 0 0 14px rgba(72,216,138,0)" },
+        },
         "nav-in": {
           from: { opacity: "0", transform: "translateY(4px)" },
           to: { opacity: "1", transform: "none" },
@@ -167,6 +172,7 @@ export default {
       animation: {
         "nav-in": "nav-in 0.2s ease-out",
         "mesh-drift": "mesh-drift 40s ease-in-out infinite alternate",
+        "ring-ping": "ring-ping 1.4s ease-out infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.6s ease-out forwards",

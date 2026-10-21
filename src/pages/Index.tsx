@@ -82,7 +82,7 @@ const Index = () => {
         <Hero />
         {/* 03-proof-strip: redesigned. */}
         <TrustBar />
-        {/* TODO(04-product-showcase), pinned */}
+        {/* 04-product-showcase: redesigned (pinned). */}
         <HeroShowcase />
         {/* TODO(05-customer-story) */}
         <CustomerStory />

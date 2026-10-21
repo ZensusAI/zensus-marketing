@@ -348,3 +348,26 @@
     height: auto;
   }
 }
+
+/* Product showcase (HeroShowcase.tsx) under reduced motion: the finished end
+   state, before and after hydration. Scroll-driven inline styles are ignored,
+   the rail is full and every step's description is open. .showcase-reveal is
+   content that fades in (forced visible and flat); .showcase-still only stops
+   moving and keeps its own opacity (the dots, the faint waves and the
+   screenshots, of which only the first is shown). */
+@media (prefers-reduced-motion: reduce) {
+  .showcase-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .showcase-still {
+    transform: none !important;
+  }
+  .showcase-rail {
+    height: 100% !important;
+  }
+  .showcase-step-body {
+    grid-template-rows: 1fr !important;
+    opacity: 1 !important;
+  }
+}

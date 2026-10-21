@@ -1,6 +1,6 @@
 import { useRef, type CSSProperties, type ReactNode } from "react";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
-import { useScrollProgress } from "@/hooks/use-scroll-progress";
+import { useScrollProgress, type ScrollProgress } from "@/hooks/use-scroll-progress";
 import { cn } from "@/lib/utils";
 
 interface PinnedSectionProps {
@@ -10,7 +10,7 @@ interface PinnedSectionProps {
   id?: string;
   className?: string;
   stageClassName?: string;
-  onProgress?: (progress: number) => void;
+  onProgress?: (values: ScrollProgress) => void;
   "aria-labelledby"?: string;
 }
 
@@ -18,7 +18,7 @@ interface PinnedSectionProps {
  * A pinned, scroll-scrubbed section. The pin is plain CSS `position: sticky`
  * inside a tall track, which iOS Safari handles without the address-bar jumps
  * of JS pinning. Progress arrives as the CSS variable `--p` (0 to 1) on the
- * track, plus the optional `onProgress` callback.
+ * track (and the entry value as `--e`), plus the optional `onProgress` callback.
  *
  * Reduced motion: the `.pin-track` CSS rule collapses the track and sets
  * `--p: 1` before hydration, and the listener never attaches, so the section
