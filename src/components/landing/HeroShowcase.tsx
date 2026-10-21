@@ -28,7 +28,7 @@ const SHOTS = [
 // fx/fy: zoom origin in % of the frame; z: zoom scale; img: which screenshot.
 const STEPS = [
   { img: 0, title: "All sources synced", body: "Bank, QuickBooks, and HubSpot stay current, with subscriptions and MRR read from your CRM.", fx: 10, fy: 6, z: 2.0 },
-  { img: 0, title: "Zero-cash date", body: "The exact day you would run out, recalculated every time cash moves.", fx: 21, fy: 15, z: 2.0 },
+  { img: 0, title: "Zero-cash date", body: "The month you would run out, recalculated every time cash moves.", fx: 21, fy: 15, z: 2.0 },
   { img: 1, title: "13 weeks, week by week", body: "Inflows and outflows for each of the next 13 weeks, with your cash line on top.", fx: 36, fy: 40, z: 1.4 },
   { img: 0, title: "Ask in plain English", body: "Ask what happens if revenue dips 50%. The forecast redraws with your scenario on top.", fx: 82, fy: 40, z: 1.7 },
 ] as const;
