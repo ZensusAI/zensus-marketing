@@ -371,3 +371,19 @@
     opacity: 1 !important;
   }
 }
+
+/* Customer story (CustomerStory.tsx) under reduced motion: everything in its
+   final place before and after hydration. .story-reveal content shows flat,
+   the video window is fully open, and nothing is zoomed. */
+@media (prefers-reduced-motion: reduce) {
+  .story-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .story-clip {
+    clip-path: none !important;
+  }
+  .story-still {
+    transform: none !important;
+  }
+}

@@ -84,7 +84,7 @@ const Index = () => {
         <TrustBar />
         {/* 04-product-showcase: redesigned (pinned). */}
         <HeroShowcase />
-        {/* TODO(05-customer-story) */}
+        {/* 05-customer-story: redesigned. */}
         <CustomerStory />
         {/* TODO(06-problem) */}
         <Problem />
