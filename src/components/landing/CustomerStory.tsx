@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Play, Volume2, VolumeX } from "lucide-react";
+import { Pause, Play, Volume2, VolumeX } from "lucide-react";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
 import { SITE_URL } from "@/lib/constants";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
@@ -14,13 +14,17 @@ import { cn } from "@/lib/utils";
  * testimonial from Jameson Pitts beside a forest card on the feature he
  * mentions. Not pinned; scrubbed as the section scrolls in: the heading words
  * roll up, the video opens through a rounded clip-path window while settling
- * from a slight zoom, then the card slides in and its chips stagger in. "Tap
- * for sound" appears once the reveal completes. Values follow the handoff's
+ * from a slight zoom, then the card slides in and its chips stagger in. The
+ * play and sound buttons appear once the reveal completes. Values follow the handoff's
  * renderVals(). The G2 quote is not repeated here (it is in the proof strip).
  *
  * The video is muted autoplay while at least half of it is on screen, and it
- * loads only then (preload="none"). Reduced motion: everything in its final
- * place (index.css, .story-*), and a click-to-play poster instead of autoplay.
+ * loads only then (preload="none"). A pause button sits beside the sound
+ * button (WCAG 2.2.2: looping motion needs a way to stop it), and a pause by
+ * the viewer sticks until they press play. Both buttons are hidden (not just
+ * transparent) until the reveal completes, so keyboard focus never lands on
+ * an invisible control. Reduced motion: everything in its final place
+ * (index.css, .story-*), and a click-to-play poster instead of autoplay.
  */
 
 // Self-hosted, with burned-in captions so muted playback stays legible. Kept in
@@ -70,12 +74,15 @@ const CustomerStory = () => {
   const shadow = useRef<HTMLDivElement>(null);
   const clip = useRef<HTMLDivElement>(null);
   const zoom = useRef<HTMLDivElement>(null);
-  const sound = useRef<HTMLButtonElement>(null);
+  const sound = useRef<HTMLDivElement>(null);
   const card = useRef<HTMLDivElement>(null);
   const chips = useRef<(HTMLSpanElement | null)[]>([]);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
   const [started, setStarted] = useState(false);
+  const [paused, setPaused] = useState(true);
+  // Set when the viewer pauses, so scrolling back into view does not resume.
+  const userPaused = useRef(false);
 
   const onProgress = useCallback(({ entry: e }: ScrollProgress) => {
     const narrow = window.matchMedia(NARROW_QUERY).matches;
@@ -98,6 +105,7 @@ const CustomerStory = () => {
       const s = clamp01((k - 0.85) / 0.15);
       sound.current.style.opacity = s.toFixed(3);
       sound.current.style.pointerEvents = s > 0.5 ? "auto" : "none";
+      sound.current.style.visibility = s > 0 ? "visible" : "hidden";
     }
 
     const k2 = easeOut((e - 0.55) / 0.35);
@@ -119,9 +127,11 @@ const CustomerStory = () => {
     const video = videoRef.current;
     if (reduced || !video || typeof IntersectionObserver === "undefined") return;
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) video.play().catch(() => {});
-        else if (!video.paused) video.pause();
+      (entries) => {
+        const entry = entries[entries.length - 1];
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          if (!userPaused.current) video.play().catch(() => {});
+        } else if (!video.paused) video.pause();
       },
       { threshold: [0, 0.5] },
     );
@@ -133,7 +143,22 @@ const CustomerStory = () => {
     const video = videoRef.current;
     if (!video) return;
     video.muted = !video.muted;
-    if (video.paused) video.play().catch(() => {});
+    if (video.paused) {
+      userPaused.current = false;
+      video.play().catch(() => {});
+    }
+  };
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      userPaused.current = false;
+      video.play().catch(() => {});
+    } else {
+      userPaused.current = true;
+      video.pause();
+    }
   };
 
   // Reduced motion: an explicit click starts playback, with sound.
@@ -199,7 +224,11 @@ const CustomerStory = () => {
                   preload="none"
                   aria-label={VIDEO_LABEL}
                   onVolumeChange={(ev) => setMuted(ev.currentTarget.muted)}
-                  onPlaying={() => setStarted(true)}
+                  onPlaying={() => {
+                    setStarted(true);
+                    setPaused(false);
+                  }}
+                  onPause={() => setPaused(true)}
                   className="absolute inset-0 h-full w-full bg-black object-cover"
                 />
               </div>
@@ -217,16 +246,26 @@ const CustomerStory = () => {
                   </button>
                 )
               ) : (
-                <button
-                  ref={sound}
-                  type="button"
-                  onClick={toggleSound}
-                  aria-label={muted ? "Turn on sound" : "Mute sound"}
-                  className="story-sound absolute right-3 top-3 z-[2] inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-black/75 px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                >
-                  {muted ? <VolumeX aria-hidden size={14} /> : <Volume2 aria-hidden size={14} />}
-                  {muted ? "Tap for sound" : "Sound on"}
-                </button>
+                <div ref={sound} className="story-sound invisible absolute right-3 top-3 z-[2] flex gap-1.5 opacity-0 transition-opacity duration-300">
+                  <button
+                    type="button"
+                    onClick={togglePlay}
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-black/75 px-3 py-1.5 text-xs font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  >
+                    {paused ? <Play aria-hidden size={14} /> : <Pause aria-hidden size={14} />}
+                    {paused ? "Play" : "Pause"}
+                  </button>
+                  {/* The visible text is the accessible name (WCAG 2.5.3). */}
+                  <button
+                    type="button"
+                    onClick={toggleSound}
+                    aria-pressed={!muted}
+                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-black/75 px-3 py-1.5 text-xs font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  >
+                    {muted ? <VolumeX aria-hidden size={14} /> : <Volume2 aria-hidden size={14} />}
+                    Sound
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -246,7 +285,7 @@ const CustomerStory = () => {
                   <li
                     key={chip}
                     ref={(el) => (chips.current[i] = el)}
-                    className="story-reveal whitespace-nowrap rounded-full border border-forest-border px-[9px] py-[5px] font-mono text-[11px] text-forest-muted-strong"
+                    className="story-reveal whitespace-nowrap rounded-md border border-forest-border px-[9px] py-[5px] font-mono text-[11px] text-forest-muted-strong"
                   >
                     {chip}
                   </li>

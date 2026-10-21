@@ -124,9 +124,11 @@ export default {
           to: { transform: "translate3d(2%, -0.5%, 0)" },
         },
         // Product showcase zoom marker (handoff 04-product-showcase "ssPing").
+        // Transform and opacity only, so the pulse stays on the compositor
+        // (it was a box-shadow, repainted every frame).
         "ring-ping": {
-          "0%": { boxShadow: "0 0 0 0 rgba(72,216,138,.7)" },
-          "100%": { boxShadow: "0 0 0 14px rgba(72,216,138,0)" },
+          "0%": { transform: "scale(1)", opacity: "0.7" },
+          "100%": { transform: "scale(2.3)", opacity: "0" },
         },
         "nav-in": {
           from: { opacity: "0", transform: "translateY(4px)" },

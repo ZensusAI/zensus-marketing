@@ -9,13 +9,15 @@ import { cn } from "@/lib/utils";
  * narrow the list; with a query, one or two remaining results open on their
  * own. Every question and answer stays in the HTML whether it is collapsed
  * or filtered out (filtered items are only hidden), and the FAQPage JSON-LD
- * below is the page's only FAQPage block. Nothing here is scroll-driven, so
- * reduced motion only drops the expand transitions.
+ * below is the page's only FAQPage block. Each heading holds only its
+ * question (the category tag and the + sit beside it), so extracted headings
+ * match the JSON-LD names. Nothing here is scroll-driven, so reduced motion
+ * only drops the expand transitions.
  */
 
 const faqGroups = [
   {
-    category: "Getting Started",
+    category: "Getting started",
     items: [
       {
         question: "Do I need QuickBooks to use Zensus?",
@@ -27,7 +29,7 @@ const faqGroups = [
       },
       {
         question: "How long does setup take?",
-        answer: "Under 2 minutes. Connect your bank or QuickBooks with one click, and your cash flow forecast is calculated instantly. No manual data entry.",
+        answer: "A few minutes. Connect your bank or QuickBooks with one click, and your cash flow forecast is calculated instantly. No manual data entry.",
       },
     ],
   },
@@ -40,7 +42,7 @@ const faqGroups = [
       },
       {
         question: "Can I get notified when I'm running low on cash?",
-        answer: "Yes. Zensus watches your 30-day projection and fires a Slack alert the moment it drops below a threshold you set. It re-alerts on material change (if the breach moves earlier or your minimum balance drops 10%) and you can snooze or adjust your threshold directly from Slack.",
+        answer: "Yes. Zensus watches your 30-day projection and sends a Slack alert when a sync shows it dropping below a threshold you set. Alerts are checked after every sync and once a day. It re-alerts on material change (if the breach moves a week earlier or your projected low drops by 10%, at least $1,000), and you can snooze or adjust your threshold directly from Slack.",
       },
       {
         question: "How often does my data update?",
@@ -49,7 +51,7 @@ const faqGroups = [
     ],
   },
   {
-    category: "Trust & Security",
+    category: "Trust and security",
     items: [
       {
         question: "Is my financial data secure?",
@@ -122,6 +124,13 @@ const FAQ = () => {
   const [open, setOpen] = useState<string | null>("1-1");
   const [query, setQuery] = useState("");
   const [cat, setCat] = useState("All");
+  // Results a search opened on its own (one or two left) that the visitor
+  // has since closed. Cleared whenever the query changes.
+  const [dismissed, setDismissed] = useState<Set<string>>(new Set());
+  const onQuery = (q: string) => {
+    setQuery(q);
+    setDismissed(new Set());
+  };
 
   const ql = query.trim();
   const matches = (q: (typeof ALL)[number]) =>
@@ -139,7 +148,7 @@ const FAQ = () => {
           <h2 id="faq-heading" className="text-[30px] font-bold leading-[1.08] tracking-[-0.025em] text-foreground min-[760px]:text-[46px]">
             Frequently asked questions
           </h2>
-          <p className="mt-4 text-base leading-[1.55] text-muted-foreground min-[760px]:text-lg">Everything you need to know about Zensus</p>
+          <p className="mt-4 text-base leading-[1.55] text-muted-foreground min-[760px]:text-lg">Everything you need to know about Zensus.</p>
         </div>
 
         <div className="relative mt-9">
@@ -147,16 +156,16 @@ const FAQ = () => {
           <input
             type="search"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => onQuery(e.target.value)}
             aria-label="Search questions"
             aria-controls={`${uid}-list`}
             placeholder="Search questions, e.g. Slack, HubSpot, pricing"
-            className="h-14 w-full rounded-2xl border border-border bg-card pl-[50px] pr-12 text-base text-foreground shadow-[0_18px_40px_-30px_rgba(26,42,40,.45)] outline-none transition-colors placeholder:text-muted-foreground focus:border-primary [&::-webkit-search-cancel-button]:appearance-none"
+            className="h-14 w-full rounded-2xl border border-border bg-card pl-[50px] pr-12 text-base text-foreground shadow-[0_18px_40px_-30px_rgba(26,42,40,.45)] outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background [&::-webkit-search-cancel-button]:appearance-none"
           />
           {query && (
             <button
               type="button"
-              onClick={() => setQuery("")}
+              onClick={() => onQuery("")}
               aria-label="Clear search"
               className="absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full bg-[#F1E6CB] text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
@@ -193,7 +202,16 @@ const FAQ = () => {
         <ul id={`${uid}-list`} className="flex flex-col gap-2.5">
           {ALL.map((q) => {
             const shown = matches(q);
-            const on = open === q.key || (!!ql && count <= 2);
+            const auto = !!ql && count <= 2 && !dismissed.has(q.key);
+            const on = open === q.key || auto;
+            const toggle = () => {
+              if (on) {
+                if (open === q.key) setOpen(null);
+                if (auto) setDismissed((d) => new Set(d).add(q.key));
+              } else {
+                setOpen(q.key);
+              }
+            };
             const panel = `${uid}-a-${q.key}`;
             return (
               <li
@@ -204,28 +222,29 @@ const FAQ = () => {
                   on ? "border-primary shadow-[0_18px_40px_-30px_rgba(26,42,40,.45)]" : "border-border",
                 )}
               >
-                <h3>
-                  <button
-                    type="button"
-                    onClick={() => setOpen(open === q.key ? null : q.key)}
-                    aria-expanded={on}
-                    aria-controls={panel}
-                    className="flex w-full items-center justify-between gap-4 py-[18px] text-left text-base font-medium leading-[1.4] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    <span>{highlight(q.question, ql, "text-inherit")}</span>
-                    <span className="flex shrink-0 items-center gap-2.5">
-                      {cat === "All" && (
-                        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground max-[759px]:hidden">{q.category}</span>
-                      )}
-                      <span
-                        aria-hidden
-                        className={cn("text-lg leading-none text-sage-dark transition-transform duration-[250ms] motion-reduce:transition-none", on && "rotate-45")}
-                      >
-                        +
-                      </span>
+                {/* The button's ::before stretches over the whole row, so the
+                    tag and the + beside the heading still toggle it. */}
+                <div className="relative flex items-center gap-4">
+                  <h3 className="min-w-0 flex-1">
+                    <button
+                      type="button"
+                      onClick={toggle}
+                      aria-expanded={on}
+                      aria-controls={panel}
+                      className="w-full rounded-sm py-[18px] text-left text-base font-medium leading-[1.4] text-foreground before:absolute before:inset-0 before:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      {highlight(q.question, ql, "text-inherit")}
+                    </button>
+                  </h3>
+                  <span aria-hidden className="pointer-events-none flex shrink-0 items-center gap-2.5">
+                    {cat === "All" && (
+                      <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground max-[759px]:hidden">{q.category}</span>
+                    )}
+                    <span className={cn("text-lg leading-none text-sage-dark transition-transform duration-[250ms] motion-reduce:transition-none", on && "rotate-45")}>
+                      +
                     </span>
-                  </button>
-                </h3>
+                  </span>
+                </div>
                 <div
                   id={panel}
                   className={cn(

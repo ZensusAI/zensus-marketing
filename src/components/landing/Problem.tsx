@@ -6,7 +6,7 @@ import { clamp01 } from "@/lib/motion";
 
 /*
  * Problem section from handoff 06-problem (locked 13b): a stat-led problem
- * for founders, fractional CFOs and finance leaders. Not pinned. Everything
+ * for owners, fractional CFOs and finance leaders. Not pinned. Everything
  * starts as a faint blurred ghost and sharpens as it enters: the headline
  * words focus in sequence and a green underline draws under "week six.", and
  * each column's stat rolls like an odometer to its value. Values follow the
@@ -30,7 +30,7 @@ const CARDS = [
     n: 39,
     title: "When does the cash run out?",
     body: "A balance is a number. The question is a date, and it moves every time a customer pays late.",
-    statLine: "of small business owners say one late payment made it hard to cover payroll or bills.",
+    statLine: "of small business owners say one late payment made it hard to cover payroll or bills in the past year.",
     src: "QuickBooks Late Payments Report 2026",
     url: QB,
   },
@@ -66,11 +66,13 @@ const UNDERLINED_FROM = 9; // "week six."
 
 const easeOut = (t: number) => 1 - Math.pow(1 - clamp01(t), 3);
 const st = (k: number, s: number, d: number) => easeOut((k - s) / d);
-// Faint blurred ghost to sharp: opacity from a floor, blur down to 0.
+// Faint blurred ghost to sharp: opacity from a floor, blur down to 0. Once
+// sharp, the filter is removed entirely (a leftover blur(0px) still costs a
+// filter layer on every frame).
 const ghost = (el: HTMLElement | null, k: number, floor: number, blur: number) => {
   if (!el) return;
   el.style.opacity = (floor + (1 - floor) * k).toFixed(3);
-  el.style.filter = `blur(${((1 - k) * blur).toFixed(2)}px)`;
+  el.style.filter = k >= 0.999 ? "" : `blur(${((1 - k) * blur).toFixed(2)}px)`;
 };
 
 type CardRefs = {
@@ -95,13 +97,17 @@ const Problem = () => {
   const cards = useRef<CardRefs[]>(CARDS.map(() => ({ col: null, rule: null, stat: null, line: null, divider: null, title: null, body: null, src: null })));
 
   // Each piece is driven by its own position in the viewport, as in the
-  // handoff (head and each column enter on their own schedule).
+  // handoff (head and each column enter on their own schedule). Every rect is
+  // read before any style is written, so the frame forces one layout, not one
+  // per card.
   const onFrame = useCallback(() => {
     const vh = window.innerHeight;
     const per = window.innerWidth < 760 ? 1 : window.innerWidth < 1100 ? 2 : 4;
     const rel = (el: Element | null) => (el ? el.getBoundingClientRect().top : vh);
+    const headTop = rel(head.current);
+    const colTops = cards.current.map((c) => rel(c.col));
 
-    const hk = clamp01((vh - rel(head.current) - vh * 0.08) / (vh * 0.45));
+    const hk = clamp01((vh - headTop - vh * 0.08) / (vh * 0.45));
     if (kicker.current) {
       const k = st(hk, 0, 0.3);
       kicker.current.style.opacity = k.toFixed(3);
@@ -117,7 +123,7 @@ const Problem = () => {
 
     let lastK = 0;
     cards.current.forEach((c, i) => {
-      const raw = clamp01((vh - rel(c.col) - vh * 0.06) / (vh * 0.5));
+      const raw = clamp01((vh - colTops[i] - vh * 0.06) / (vh * 0.5));
       const lag = per > 1 ? (i % per) * 0.12 : 0;
       const k = clamp01((raw - lag) / (1 - lag * 1.2));
       if (i === CARDS.length - 1) lastK = k;
@@ -227,7 +233,8 @@ const Problem = () => {
                   href={card.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="problem-reveal mt-auto pt-1.5 font-mono text-[11px] tracking-[0.04em] text-muted-foreground hover:text-primary hover:underline"
+                  // !opacity: a keyboard focus is never left on a faded link.
+                  className="problem-reveal mt-auto w-fit rounded-sm pt-1.5 font-mono text-[11px] tracking-[0.04em] text-muted-foreground hover:text-primary hover:underline focus-visible:!opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   {card.src}{"\u00a0"}↗
                 </a>
@@ -236,7 +243,7 @@ const Problem = () => {
           })}
         </div>
 
-        <p ref={foot} className="problem-reveal mt-9 text-sm text-muted-foreground">
+        <p ref={foot} className="problem-reveal mt-9 text-sm text-muted-foreground focus-within:!opacity-100">
           Annual contracts, seasonal income, late-paying clients:{" "}
           <Link to="/use-cases" className="font-medium text-primary underline-offset-4 hover:underline">
             see who uses Zensus and what it solves

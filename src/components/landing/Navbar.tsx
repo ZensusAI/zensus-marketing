@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { SIGN_IN_URL } from "@/lib/constants";
+import { APP_HOST, SIGN_IN_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 import { SignupModal } from "./SignupModal";
@@ -25,9 +25,15 @@ import runwayAlerts from "@/assets/runway-alerts-a.webp";
  * are in the prerendered HTML for search and AI crawlers, and the panel
  * screenshots, which are lazy, only load once a panel opens.
  *
- * The handoff's small mono uppercase labels ("Ask Zensus", "Built on", the
+ * The handoff's small mono uppercase labels ("Ask Zensus", "Works with", the
  * Resources column titles) are plain sentence-case labels here, per the
- * redesign's global rules.
+ * redesign's global rules, and link labels are sentence case to match the
+ * footer.
+ *
+ * The mobile sheet behaves as a modal: the rest of the page is inert while it
+ * is open, it closes if the window grows past the 1024px breakpoint (it is
+ * hidden there, and its scroll lock would otherwise stay on), and focus goes
+ * back to the menu button when it closes.
  */
 
 interface PanelLink {
@@ -53,7 +59,7 @@ const QUESTIONS: Question[] = [
     q: "When does my cash run out?",
     feature: "Zero-cash date and 13-week rolling forecast",
     href: "/#features",
-    url: "app.zensus.app",
+    url: APP_HOST,
     img: dashboard13Week,
     width: 1984,
     height: 1468,
@@ -64,7 +70,7 @@ const QUESTIONS: Question[] = [
     q: "When does this contract actually pay?",
     feature: "Drill down to any week or day",
     href: "/integrations/hubspot",
-    url: "app.zensus.app/runway",
+    url: `${APP_HOST}/runway`,
     img: runwayDrilldown,
     width: 1506,
     height: 906,
@@ -72,10 +78,10 @@ const QUESTIONS: Question[] = [
     desc: "Click any month to see weekly cash flow, then drill into daily details. Subscription-aware projections show when annual and quarterly contracts hit your bank.",
   },
   {
-    q: "Can I afford two engineers in Q3?",
+    q: "Can I afford two engineers next quarter?",
     feature: "Plain-English scenarios",
     href: "/use-cases",
-    url: "app.zensus.app/runway",
+    url: `${APP_HOST}/runway`,
     img: runwayWhatIf,
     width: 2264,
     height: 1138,
@@ -91,7 +97,7 @@ const QUESTIONS: Question[] = [
     q: "How many months does this round buy us?",
     feature: "Funding scenarios",
     href: "/tools/runway-calculator",
-    url: "app.zensus.app/runway",
+    url: `${APP_HOST}/runway`,
     img: runwayWhatIf,
     width: 2264,
     height: 1138,
@@ -102,7 +108,7 @@ const QUESTIONS: Question[] = [
     q: "Will I know before it gets tight?",
     feature: "Slack threshold alerts",
     href: "/integrations/slack",
-    url: "app.zensus.app/alerts",
+    url: `${APP_HOST}/settings`,
     img: runwayAlerts,
     width: 982,
     height: 554,
@@ -128,23 +134,23 @@ const LEARN: PanelLink[] = [
   { href: "/blog", label: "Blog", description: "Guides, product updates, and announcements." },
   { href: "/changelog", label: "Changelog", description: "Ship notes and what's new in Zensus." },
   { href: "/#faq", label: "FAQ", description: "Quick answers about pricing, data, and setup." },
-  { href: "/about", label: "About Us", description: "The company and the founder behind Zensus." },
+  { href: "/about", label: "About", description: "The company and the founder behind Zensus." },
 ];
 
 const TOOLS: PanelLink[] = [
   {
     href: "/tools/runway-calculator",
-    label: "Runway Calculator",
+    label: "Runway calculator",
     description: "Model cash runway, zero-cash date, and hiring impact.",
   },
   {
     href: "/tools/payroll-calendar",
-    label: "Payroll Calendar",
+    label: "Payroll calendar",
     description: "Map pay dates and three-paycheck months for 2026 and 2027.",
   },
   {
     href: "/tools/13-week-cash-flow-template",
-    label: "13-Week Cash Flow Template",
+    label: "13-week cash flow template",
     description: "Free Excel template, plus a builder to see your 13 weeks first.",
   },
 ];
@@ -173,7 +179,7 @@ const LEARN_SHORT = [
   { href: "/changelog", label: "Changelog" },
   { href: "/#faq", label: "FAQ" },
   { href: "/compare/float-alternatives", label: "Compare" },
-  { href: "/about", label: "About Us" },
+  { href: "/about", label: "About" },
 ];
 
 type MenuKey = "product" | "resources";
@@ -313,7 +319,7 @@ function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
               <span className="h-2 w-2 rounded-full bg-forest-border" />
             </span>
             <span className="flex-1 text-center font-mono text-[10.5px] text-forest-muted">{current.url}</span>
-            <span className="font-mono text-[9.5px] uppercase tracking-[0.1em] text-sage-light">Live</span>
+            <span className="text-[11px] font-medium text-sage-light">Live</span>
           </div>
           <div className="relative aspect-[16/8.2]">
             {QUESTIONS.map((row, i) => (
@@ -347,7 +353,7 @@ function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
           ))}
         </div>
         <div className="flex items-center gap-3.5 text-xs text-muted-foreground">
-          <span>Built on</span>
+          <span>Works with</span>
           {INTEGRATIONS.map((g) => (
             <img key={g.name} src={g.logo} alt={g.name} height={18} className={cn("h-[18px] w-auto", g.className)} />
           ))}
@@ -436,7 +442,15 @@ function DesktopNav({ open, setOpen }: { open: MenuKey | null; setOpen: (k: Menu
             )}
           />
         </button>
-        <div id={`nav-panel-${key}`} className={cn(panelShell, !on && "hidden")}>
+        {/* A click on the panel's text or screenshots must not take focus
+            away from the trigger (that blur would close the panel). */}
+        <div
+          id={`nav-panel-${key}`}
+          onMouseDown={(e) => {
+            if (!(e.target as HTMLElement).closest("a, button, input, select, textarea")) e.preventDefault();
+          }}
+          className={cn(panelShell, !on && "hidden")}
+        >
           {panel}
         </div>
       </li>
@@ -571,7 +585,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               key={l.label}
               href={l.href}
               onClick={onClose}
-              className={cn("rounded-full border border-border px-3.5 py-[9px] text-sm font-medium text-foreground", focusRing)}
+              className={cn("rounded-lg border border-border px-3.5 py-[9px] text-sm font-medium text-foreground", focusRing)}
             >
               {l.label}
             </NavAnchor>
@@ -604,6 +618,7 @@ const Navbar = () => {
   const [open, setOpen] = useState<MenuKey | null>(null);
   const [drawer, setDrawer] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const { pathname, hash } = useLocation();
 
   // Close everything on navigation.
@@ -635,14 +650,30 @@ const Navbar = () => {
     };
   }, [open, drawer]);
 
-  // The mobile sheet is full screen; stop the page scrolling behind it.
+  // The mobile sheet is full screen and modal: stop the page scrolling
+  // behind it, make the rest of the page inert (so Tab stays in the sheet),
+  // close it if the window grows to the desktop layout, and send focus back
+  // to the menu button when it closes.
   useEffect(() => {
     if (!drawer) return;
     const root = document.documentElement;
     const prev = root.style.overflow;
     root.style.overflow = "hidden";
+    const nav = navRef.current;
+    const button = menuButton.current;
+    const siblings = nav?.parentElement ? Array.from(nav.parentElement.children).filter((el) => el !== nav) : [];
+    siblings.forEach((el) => el.setAttribute("inert", ""));
+    const wide = window.matchMedia("(min-width: 1024px)");
+    const onWide = () => wide.matches && setDrawer(false);
+    wide.addEventListener("change", onWide);
     return () => {
       root.style.overflow = prev;
+      siblings.forEach((el) => el.removeAttribute("inert"));
+      wide.removeEventListener("change", onWide);
+      const active = document.activeElement;
+      if (!active || active === document.body || document.getElementById("nav-mobile-drawer")?.contains(active)) {
+        button?.focus();
+      }
     };
   }, [drawer]);
 
@@ -652,8 +683,10 @@ const Navbar = () => {
       aria-label="Main"
       onMouseLeave={() => setOpen(null)}
       className={cn(
-        "fixed left-0 right-0 top-0 z-50 border-b border-border pt-[env(safe-area-inset-top)] backdrop-blur-[24px] transition-[background-color] duration-200",
-        open || drawer ? "bg-card" : "bg-background/[0.82]",
+        // 95% cream: at 82% the dark sections showed through as a muddy grey.
+        // A smaller blur radius is also cheaper to recompute on every scroll.
+        "fixed left-0 right-0 top-0 z-50 border-b border-border pt-[env(safe-area-inset-top)] backdrop-blur-[16px] transition-[background-color] duration-200",
+        open || drawer ? "bg-card" : "bg-background/[0.95]",
       )}
     >
       <div className="mx-auto grid h-16 max-w-[1280px] grid-cols-[1fr_auto] items-center pl-5 pr-3 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
@@ -678,6 +711,7 @@ const Navbar = () => {
             />
           </div>
           <button
+            ref={menuButton}
             type="button"
             aria-label={drawer ? "Close menu" : "Open menu"}
             aria-expanded={drawer}

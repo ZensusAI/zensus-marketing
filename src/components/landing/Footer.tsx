@@ -200,7 +200,7 @@ function AskAiCard() {
           return (
             <li
               key={ai.name}
-              className={cn("relative transition-[margin] duration-300 ease-ui motion-reduce:transition-none", i > 0 && (open ? "ml-0.5" : "-ml-[9px]"))}
+              className={cn("relative transition-[margin] duration-300 ease-ui motion-reduce:transition-none", i > 0 && (open ? "ml-0.5" : "-ml-1.5"))}
               style={{ zIndex: on ? 10 : 5 - i }}
             >
               <a
@@ -306,7 +306,7 @@ const Footer = () => {
                 <p key={office.label} className="mt-1.5">
                   <span className="max-[759px]:block">{office.street}</span>
                   <span className="max-[759px]:hidden">, </span>
-                  <span className="max-[759px]:block">
+                  <span className="whitespace-nowrap max-[759px]:block">
                     {office.locality}, {office.region} {office.postalCode}
                   </span>
                 </p>

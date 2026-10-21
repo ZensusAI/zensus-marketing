@@ -61,7 +61,7 @@ const Hero = () => (
 
         <p className="mx-auto mt-6 max-w-[672px] text-pretty text-[17px] leading-[1.55] text-muted-foreground min-[820px]:text-[19px]">
           Zensus is cash flow forecasting software that connects your bank, QuickBooks, and HubSpot to project the
-          exact date your cash runs out.
+          month your cash runs out.
         </p>
 
         <div className="mt-9 flex flex-wrap justify-center gap-3">

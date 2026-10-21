@@ -32,7 +32,8 @@ const Index = () => {
       const id = window.location.hash.replace("#", "");
       const el = document.getElementById(id);
       if (el) {
-        setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 50);
+        const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        setTimeout(() => el.scrollIntoView({ behavior: smooth ? "smooth" : "auto" }), 50);
       }
     }
   }, []);
@@ -76,11 +77,11 @@ const Index = () => {
       {/* 01-navbar: redesigned (shared by every route). */}
       <Navbar />
       <main>
-        {/* Homepage redesign order (handoff 00-overview). Each TODO names the
-            handoff folder that replaces the current component. SecurityStrip
-            and PricingPreview left the homepage; their content lives on
-            /security and /pricing, both in the navbar, and the proof strip
-            keeps the OAuth and AES-256-GCM claims in text. */}
+        {/* Homepage redesign order (handoff 00-overview). SecurityStrip and
+            PricingPreview left the homepage; their content lives on /security
+            and /pricing. The proof strip keeps the encryption claims as
+            visible text, and the final CTA band carries the price with an
+            in-content /pricing link. */}
         {/* 02-hero: redesigned. */}
         <Hero />
         {/* 03-proof-strip: redesigned. */}

@@ -90,7 +90,9 @@ const ResourceList = ({ title, items }: { title: string; items: ResourceLink[] }
 
 const Resources = () => (
   <section id="resources" className="section-padding scroll-mt-28 bg-background">
-    <div className="section-container">
+    {/* The redesigned sections' gutter (20px, 32px from 760px), not the
+        shared section-container's 16px. */}
+    <div className="mx-auto max-w-7xl px-5 min-[760px]:px-8">
       <div className="mx-auto mb-12 max-w-3xl text-center">
         <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
           Guides and free tools.

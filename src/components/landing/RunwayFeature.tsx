@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
 import { clamp01, easeInOutCubic as ease, lerp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -15,15 +15,21 @@ import { PinnedSection } from "./PinnedSection";
  *   3. Alerts: the red dashed cash floor draws, the breach point pulses, and
  *      a Slack alert slides in.
  * Step tabs fill in sync and the copy crossfades. All three steps' copy stays
- * in the HTML; the chart is decorative (aria-hidden). Values and timings are
- * the handoff's renderVals(); chart numbers, dates and the Slack text are the
- * handoff's placeholders, to be replaced before launch.
+ * in the HTML and in the accessibility tree (inactive steps are only faded
+ * out, never aria-hidden, so screen readers and crawlers get every step); the
+ * chart is decorative (aria-hidden). Values and timings are the handoff's
+ * renderVals().
  *
- * Reduced motion: the end state (weekly bars, both lines, floor, breach dot,
- * Slack alert) and all three steps' copy stacked.
+ * Reduced motion or a short viewport: the end state (weekly bars, both lines,
+ * floor, breach dot, Slack alert) and all three steps' copy stacked.
  *
- * Copy correction: the scenario chat has no "pays late" scenario type, so the
- * what-if is churn plus hiring (both supported), not a 30-day late payment.
+ * Copy corrections, to match the app:
+ *   - The scenario chat has no "pays late" scenario type, so the what-if is
+ *     churn plus hiring (both supported), not a 30-day late payment.
+ *   - Scenarios are not sold as an "agent": the step says plain English.
+ *   - Alerts are checked after each sync and daily, and re-alert at a week
+ *     earlier or a drop of 10% (at least $1,000) in the projected low.
+ *   - The Slack example gives the breach relative to now, so it never dates.
  */
 
 const STEPS = [
@@ -41,10 +47,10 @@ const STEPS = [
   },
   {
     eyebrow: "Scenarios",
-    headline: "Run scenarios with",
-    highlight: "your cash flow agent",
+    headline: "Run scenarios in",
+    highlight: "plain English",
     description:
-      "Ask it in plain English: what if our biggest customer churns and we hire two engineers? Your agent recalculates your cash flow in real time.",
+      "Ask what if our biggest customer churns and we hire two engineers. Zensus recalculates your cash flow in real time.",
     bullets: [
       "Stack multiple assumptions (hiring, churn, pricing) in a single conversation",
       "Watch your cash flow update live as each scenario layer is applied",
@@ -56,10 +62,10 @@ const STEPS = [
     headline: "Get alerted",
     highlight: "before cash runs out",
     description:
-      "Set your cash floor. Zensus watches your 30-day projection and pings Slack the moment it crosses the line. If the breach moves earlier or your minimum balance drops 10%, you get re-alerted.",
+      "Set your cash floor. Zensus watches your 30-day projection and pings Slack when a sync shows it crossing the line. If the breach moves a week earlier or your projected low drops by 10% (at least $1,000), you get re-alerted.",
     bullets: [
       "Threshold-based Slack alerts from your projection, not your balance",
-      "Re-alerts on material change (a week earlier or a 10% dip in minimum balance)",
+      "Re-alerts on material change (a week earlier, or a 10% drop in projected low)",
       "Snooze or adjust your threshold from Slack in one click",
     ],
   },
@@ -73,7 +79,7 @@ const HI = 560;
 const FLOOR = 360;
 const ALERT_W = 7;
 const pct = (v: number) => ((v - LO) / (HI - LO)) * 100;
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+const MONTHS = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
 const LEVELS = ["Monthly", "Weekly", "Daily"];
 const WEEK7 = [40, 46, 38, 100, 44, 22, 18];
 const PIN_VIEWPORTS = 4.2;
@@ -108,7 +114,7 @@ function partialPath(vals: number[], from: number, k: number, w: number, h: numb
 }
 
 const RunwayFeature = () => {
-  const reduced = usePrefersReducedMotion();
+  const reduced = useStaticPins();
   const [act, setAct] = useState(0);
   const [level, setLevel] = useState(0);
   const [highlight, setHighlight] = useState(false);
@@ -127,6 +133,10 @@ const RunwayFeature = () => {
   const caret = useRef<HTMLSpanElement>(null);
   const slack = useRef<HTMLDivElement>(null);
   const legend = useRef<HTMLSpanElement>(null);
+  // The chart's size, kept by a ResizeObserver so the scroll handler never
+  // reads layout after writing the bars (a forced layout every frame).
+  const size = useRef({ w: 600, h: 270 });
+  const lastP = useRef(0);
 
   const apply = useCallback((p: number) => {
     const k1 = ease((p - 0.05) / 0.17);
@@ -151,8 +161,8 @@ const RunwayFeature = () => {
     const fillVals = [clamp01(p / 0.34), clamp01((p - 0.34) / 0.33), clamp01((p - 0.67) / 0.33)];
     fills.current.forEach((el, i) => el && (el.style.width = `${(fillVals[i] * 100).toFixed(1)}%`));
 
-    const w = chart.current?.clientWidth ?? 600;
-    const h = chart.current?.clientHeight ?? 270;
+    lastP.current = p;
+    const { w, h } = size.current;
     basePath.current?.setAttribute("d", partialPath(BASE, 0, k2a, w, h));
     scenPath.current?.setAttribute("d", partialPath(SCEN, 4, k2b, w, h));
     if (legend.current) legend.current.style.opacity = k2b > 0 ? "1" : "0.5";
@@ -185,6 +195,17 @@ const RunwayFeature = () => {
 
   const onProgress = useCallback(({ progress }: ScrollProgress) => apply(progress), [apply]);
 
+  useEffect(() => {
+    const el = chart.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => {
+      size.current = { w: el.clientWidth, h: el.clientHeight };
+      apply(lastP.current);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [apply]);
+
   // Reduced motion: draw the end state once (the scroll listener never runs).
   useEffect(() => {
     if (!reduced) return;
@@ -204,7 +225,7 @@ const RunwayFeature = () => {
       stageClassName="overflow-hidden"
     >
       <div className="h-full px-5 pb-5 pt-[calc(4rem+28px)] min-[760px]:px-8 min-[760px]:pb-10 min-[760px]:pt-[calc(4rem+52px)]">
-        <div className="mx-auto flex h-full max-w-6xl flex-col gap-4 min-[760px]:gap-8">
+        <div className="mx-auto flex h-full max-w-6xl flex-col gap-4 min-[760px]:gap-8 min-[1024px]:justify-center">
           <div className="grid items-end gap-x-10 gap-y-3 min-[1024px]:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
             <div>
               <p className="text-sm font-semibold text-primary">The cash flow product</p>
@@ -215,7 +236,8 @@ const RunwayFeature = () => {
                 From the macro view <span className="text-primary">to the day it hits.</span>
               </h2>
             </div>
-            <p className="text-pretty text-sm leading-[1.55] text-muted-foreground min-[760px]:text-base">
+            {/* Hidden on pinned phones so the stage fits; still in the HTML. */}
+            <p className={cn("text-pretty text-sm leading-[1.55] text-muted-foreground min-[760px]:text-base", !reduced && "max-[759px]:hidden")}>
               Three moves, one cash flow view. Project, ask, get pinged. So you never find out about a cash crunch from a bank
               balance.
             </p>
@@ -223,7 +245,7 @@ const RunwayFeature = () => {
 
           <div
             className={cn(
-              "grid min-h-0 flex-1 gap-5 min-[1024px]:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] min-[1024px]:gap-14",
+              "grid min-h-0 flex-1 min-[1024px]:flex-none gap-5 min-[1024px]:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] min-[1024px]:gap-14",
               // Unpinned with all three steps stacked, the copy column is tall:
               // keep the chart at the top beside it instead of floating mid-way.
               reduced ? "items-start" : "items-center",
@@ -249,7 +271,6 @@ const RunwayFeature = () => {
                   return (
                     <div
                       key={s.eyebrow}
-                      aria-hidden={!on}
                       className={cn(
                         "transition-[opacity,transform] duration-[450ms] ease-out",
                         !reduced && "[grid-area:1/1]",
@@ -260,7 +281,8 @@ const RunwayFeature = () => {
                         {s.headline} <span className="text-primary">{s.highlight}</span>
                       </h3>
                       <p className="mt-3.5 text-pretty text-sm leading-[1.6] text-muted-foreground min-[760px]:text-[15.5px]">{s.description}</p>
-                      <ul className="mt-5 hidden flex-col gap-2.5 border-t border-border pt-4 min-[760px]:flex">
+                      {/* Pinned, the bullets fit only beside the chart (1024px and up). */}
+                      <ul className={cn("mt-5 hidden flex-col gap-2.5 border-t border-border pt-4", reduced ? "min-[760px]:flex" : "min-[1024px]:flex")}>
                         {s.bullets.map((b) => (
                           <li key={b} className="flex items-start gap-3 text-[14.5px] leading-[1.5] text-foreground">
                             <span aria-hidden className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
@@ -296,7 +318,7 @@ const RunwayFeature = () => {
                 </div>
               </div>
 
-              <div ref={chart} className="relative mt-3.5 h-[200px] min-[760px]:mt-5 min-[760px]:h-[230px] min-[1024px]:h-[270px]">
+              <div ref={chart} className="relative mt-3.5 h-[170px] [contain:layout] min-[760px]:mt-5 min-[760px]:h-[230px] min-[1024px]:h-[270px]">
                 <div className="absolute inset-x-0 top-0 border-t border-[#1E3329]" />
                 <div className="absolute inset-x-0 top-[33%] border-t border-[#1E3329]" />
                 <div className="absolute inset-x-0 top-[66%] border-t border-[#1E3329]" />
@@ -340,7 +362,7 @@ const RunwayFeature = () => {
                   className="absolute w-[150px] origin-bottom rounded-xl bg-card px-3 py-2.5 text-foreground opacity-0 shadow-[0_18px_30px_-16px_rgba(0,0,0,.6)] min-[760px]:w-[180px]"
                   style={{ left: `${Math.min(82, Math.max(30, (9.5 / 24) * 100))}%`, bottom: `calc(${pct(BASE[HIGHLIGHT_BAR])}% + 14px)` }}
                 >
-                  <div className="font-mono text-[10px] text-muted-foreground">Week of Mar 9 · daily</div>
+                  <div className="font-mono text-[10px] text-muted-foreground">Week of Jan 11 · daily</div>
                   <div className="relative mt-2 h-12 border-b border-border">
                     {WEEK7.map((hgt, i) => (
                       <div
@@ -381,7 +403,7 @@ const RunwayFeature = () => {
                     <span className="whitespace-nowrap font-mono text-[10px] text-muted-foreground">#finance · now</span>
                   </div>
                   <p className="mt-2 text-[11.5px] leading-[1.45] min-[760px]:text-[12.5px]">
-                    Projected balance drops below your cash floor the week of Feb 23.
+                    Projected balance drops below your cash floor in 4 weeks.
                   </p>
                   <div className="mt-2.5 hidden gap-1.5 min-[760px]:flex">
                     <span className="rounded-md border border-border px-2.5 py-1 text-[11px] font-semibold">Snooze</span>

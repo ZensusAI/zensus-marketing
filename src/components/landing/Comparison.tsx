@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
 import { clamp01, easeInOutCubic as ease } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -101,8 +101,17 @@ const Cross = ({ size, className }: { size: number; className?: string }) => (
 
 const PIN_VIEWPORTS = 4.2;
 
+// Keeps hyphenated words ("plain-English") from breaking at the hyphen
+// without changing the text.
+const keepHyphens = (label: string) =>
+  label.split(/(\S+-\S+)/).map((part, i) => (i % 2 ? <span key={i} className="whitespace-nowrap">{part}</span> : part));
+
+// Darker than the brand greens so the marks pass 3:1 on cream (WCAG 1.4.11).
+const TICK = "text-[#178A4F]";
+const CROSS = "text-[#6F807A]";
+
 const Comparison = () => {
-  const reduced = usePrefersReducedMotion();
+  const reduced = useStaticPins();
   const [scrollP, setP] = useState(0);
   const onProgress = useCallback(({ progress }: ScrollProgress) => setP(progress), []);
 
@@ -129,7 +138,7 @@ const Comparison = () => {
       >
         <p className="text-sm font-semibold text-primary">{`Capability 0${i + 1} of 05`}</p>
         <h3 id={`compare-cap-${i}`} className="mt-2.5 text-balance text-[22px] font-bold leading-[1.15] tracking-[-0.02em] text-foreground min-[760px]:text-[30px]">
-          {row.label}
+          {keepHyphens(row.label)}
         </h3>
         <ul className="mt-4 flex flex-col gap-1.5 min-[760px]:mt-[22px]">
           {ORDER.map((j) => {
@@ -151,14 +160,12 @@ const Comparison = () => {
                     z ? "text-forest-foreground" : c.mark === "no" ? "text-muted-foreground" : "text-foreground",
                   )}
                 >
-                  {c.mark === "no" ? (
-                    <Cross size={16} className="text-[#9AA9A4]" />
-                  ) : (
-                    <Tick size={18} className={z ? "text-sage-light" : "text-[#22A862]"} />
-                  )}
-                  {cellText(c)}
-                  {c.mark === "yes" && c.note ? ` · ${c.note}` : ""}
-                  {sym && <sup className="text-[11px]">{sym}</sup>}
+                  {c.mark === "no" ? <Cross size={16} className={CROSS} /> : <Tick size={18} className={z ? "text-sage-light" : TICK} />}
+                  <span>
+                    {cellText(c)}
+                    {c.mark === "yes" && c.note ? ` · ${c.note}` : ""}
+                    {sym && <sup className="ml-px text-[11px]">{sym}</sup>}
+                  </span>
                 </span>
               </li>
             );
@@ -166,11 +173,14 @@ const Comparison = () => {
         </ul>
         {syms.length > 0 && (
           <div className="mt-4 flex flex-col gap-1 border-t border-rule-soft pt-3">
-            {/* Phones point to the notes below the deck; wider screens show
-                the notes that apply to this card. */}
-            <p className="text-pretty text-xs leading-[1.5] text-muted-foreground min-[760px]:hidden">{`See notes ${syms.join(" ")} below.`}</p>
+            {/* Narrow pinned cards point to the notes below the deck (the full
+                notes do not fit the card); wider screens show the notes that
+                apply to this card. */}
+            <p className={cn("text-pretty text-xs leading-[1.5] text-muted-foreground", reduced ? "min-[760px]:hidden" : "min-[1024px]:hidden")}>
+              {`See notes ${syms.join(" ")} below.`}
+            </p>
             {syms.map((s) => (
-              <p key={s} className="hidden text-pretty text-xs leading-[1.5] text-muted-foreground min-[760px]:block">
+              <p key={s} className={cn("hidden text-pretty text-xs leading-[1.5] text-muted-foreground", reduced ? "min-[760px]:block" : "min-[1024px]:block")}>
                 {NOTES[s]}
               </p>
             ))}
@@ -208,9 +218,13 @@ const Comparison = () => {
               </div>
 
               {/* Scorecard: the whole comparison as a real table, in words.
-                  Hidden below 760px (the deck carries the same answers), still
-                  in the HTML for crawlers. */}
-              <table className="hidden w-full border-collapse min-[760px]:table" aria-describedby="compare-notes">
+                  Visually hidden where it does not fit beside the deck (below
+                  1024px pinned, 760px static), but kept for screen readers and
+                  crawlers. */}
+              <table
+                className={cn("w-full border-collapse", reduced ? "max-[759px]:sr-only" : "max-[1023px]:sr-only")}
+                aria-describedby="compare-notes"
+              >
                 <caption className="sr-only">Capability comparison: Zensus, Float, Cash Flow Frog, and Forecastr</caption>
                 <thead>
                   <tr>
@@ -245,7 +259,7 @@ const Comparison = () => {
                               aria-hidden
                               className={cn("h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-300", on ? "bg-primary" : done ? "bg-foreground" : "bg-border")}
                             />
-                            {row.label}
+                            <span>{keepHyphens(row.label)}</span>
                           </span>
                         </th>
                         {ORDER.map((j, q) => {
@@ -261,11 +275,7 @@ const Comparison = () => {
                                   transitionDelay: done && !reduced ? `${120 + q * 60}ms` : "0ms",
                                 }}
                               >
-                                {c.mark === "no" ? (
-                                  <Cross size={13} className="text-[#9AA9A4]" />
-                                ) : (
-                                  <Tick size={15} className={j === 3 ? "text-sage-dark" : "text-[#22A862]"} />
-                                )}
+                                {c.mark === "no" ? <Cross size={13} className={CROSS} /> : <Tick size={15} className={j === 3 ? "text-sage-dark" : TICK} />}
                                 <span className="sr-only">
                                   {c.mark === "yes" && c.note ? `${cellText(c)}: ${c.note}` : sym ? `${cellText(c)} ` : cellText(c)}
                                 </span>
@@ -280,8 +290,8 @@ const Comparison = () => {
                 </tbody>
               </table>
 
-              {/* Phones: the scorecard becomes a five-step rail. */}
-              <div aria-hidden className={cn("grid grid-cols-5 gap-1.5 min-[760px]:hidden", reduced && "hidden")}>
+              {/* Below 1024px pinned, the scorecard becomes a five-step rail. */}
+              <div aria-hidden className={cn("grid grid-cols-5 gap-1.5 min-[1024px]:hidden", reduced && "hidden")}>
                 {ROWS.map((row, i) => (
                   <div key={row.label} className="h-0.5 overflow-hidden rounded-sm bg-border">
                     <div className="h-full bg-primary" style={{ width: `${(clamp01(pos - i + 0.7) * 100).toFixed(1)}%` }} />
@@ -294,16 +304,17 @@ const Comparison = () => {
               // Reduced motion: no stacking, every card in the flow.
               <div className="flex min-w-0 flex-col gap-4">{ROWS.map((row, i) => <div key={row.label}>{card(row, i)}</div>)}</div>
             ) : (
-              <div className="relative h-[380px] min-w-0 self-start min-[760px]:h-[532px] min-[760px]:self-end min-[1024px]:self-center">
+              <div className="relative h-[380px] min-w-0 self-start min-[760px]:h-[440px] min-[760px]:self-end min-[1024px]:h-[532px] min-[1024px]:self-center">
                 {ROWS.map((row, i) => {
                   let depth = 0;
                   for (let j = i + 1; j < ROWS.length; j++) depth += enter[j];
                   const en = enter[i];
                   return (
+                    // Cards under the top one are only faded, never aria-hidden:
+                    // screen readers and crawlers get all five.
                     <div
                       key={row.label}
-                      aria-hidden={en < 0.5 || depth > 0.5}
-                      className="absolute inset-x-0 bottom-0 h-[350px] origin-top will-change-transform min-[760px]:h-[490px]"
+                      className="absolute inset-x-0 bottom-0 h-[350px] origin-top will-change-transform min-[760px]:h-[400px] min-[1024px]:h-[490px]"
                       style={{
                         zIndex: i + 1,
                         opacity: en > 0.001 ? clamp01(1 - Math.max(0, depth - 2.2)) : 0,

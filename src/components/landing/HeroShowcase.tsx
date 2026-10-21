@@ -1,7 +1,12 @@
 import { useCallback, useRef, useState, type CSSProperties } from "react";
 import dashboard1 from "@/assets/dashboard-1.webp";
+import dashboard1At900 from "@/assets/dashboard-1-900.webp";
+import dashboard1At1400 from "@/assets/dashboard-1-1400.webp";
 import dashboard13week from "@/assets/dashboard-13week.webp";
-import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import dashboard13weekAt900 from "@/assets/dashboard-13week-900.webp";
+import dashboard13weekAt1400 from "@/assets/dashboard-13week-1400.webp";
+import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
+import { APP_HOST } from "@/lib/constants";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
 import { clamp01 } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -15,14 +20,28 @@ import { HERO_MESH } from "./hero-mesh";
  * the camera zooms to four details in turn while the step list highlights the
  * active step and its rail fills. All four step descriptions stay in the HTML.
  * Values (pin 3.4 viewports, easing, zoom origins and scales) are the
- * handoff's renderVals(). Reduced motion: flat frame, no zoom, every step
- * open, enforced in CSS (index.css, .showcase-reveal / -still / -rail /
- * -step-body) so it holds before hydration.
+ * handoff's renderVals(). Reduced motion (or a viewport too short to pin):
+ * flat frame, no zoom, every step open, enforced in CSS (index.css,
+ * .showcase-reveal / -still / -rail / -step-body) so it holds before
+ * hydration.
  */
 
+// The full-size files stay in the srcset because the zoom goes up to 2x.
 const SHOTS = [
-  { src: dashboard1, alt: "Zensus cash flow dashboard with projection chart", width: 2758, height: 1426 },
-  { src: dashboard13week, alt: "Zensus 13-week cash flow view and budget breakdown", width: 1984, height: 1468 },
+  {
+    src: dashboard1,
+    srcSet: `${dashboard1At900} 900w, ${dashboard1At1400} 1400w, ${dashboard1} 2758w`,
+    alt: "Zensus cash flow dashboard with projection chart",
+    width: 2758,
+    height: 1426,
+  },
+  {
+    src: dashboard13week,
+    srcSet: `${dashboard13weekAt900} 900w, ${dashboard13weekAt1400} 1400w, ${dashboard13week} 1984w`,
+    alt: "Zensus 13-week cash flow view and budget breakdown",
+    width: 1984,
+    height: 1468,
+  },
 ] as const;
 
 // fx/fy: zoom origin in % of the frame; z: zoom scale; img: which screenshot.
@@ -47,7 +66,7 @@ const meshStyle = {
 } as CSSProperties;
 
 const HeroShowcase = () => {
-  const reduced = usePrefersReducedMotion();
+  const reduced = useStaticPins();
   const [active, setActive] = useState(-1);
   const reveal = useRef<(HTMLElement | null)[]>([]);
   const frame = useRef<HTMLDivElement>(null);
@@ -154,13 +173,13 @@ const HeroShowcase = () => {
                     className="w-full rounded py-1.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light min-[820px]:py-2.5"
                   >
                     <span className="flex items-baseline gap-2.5">
-                      <span className={cn("font-mono text-[11px] transition-colors duration-300", on ? "text-sage-light" : "text-forest-muted")}>
+                      <span className={cn("font-mono text-[11px] transition-colors duration-300", on ? "text-sage-light" : "text-forest-muted-strong")}>
                         {`0${i + 1}`}
                       </span>
                       <span
                         className={cn(
                           "text-[15px] font-semibold transition-colors duration-300 min-[820px]:text-[17px]",
-                          on || reduced ? "text-forest-foreground" : i < active ? "text-forest-muted-strong" : "text-forest-muted",
+                          on || reduced ? "text-forest-foreground" : "text-forest-muted-strong",
                         )}
                       >
                         {step.title}
@@ -173,7 +192,7 @@ const HeroShowcase = () => {
                       )}
                     >
                       <span className="overflow-hidden">
-                        <span className="ml-7 block pt-1.5 text-sm leading-[1.55] text-forest-muted">{step.body}</span>
+                        <span className="ml-7 block pt-1.5 text-sm leading-[1.55] text-forest-muted-strong">{step.body}</span>
                       </span>
                     </span>
                   </button>
@@ -203,9 +222,9 @@ const HeroShowcase = () => {
                   <span className="h-2.5 w-2.5 rounded-full bg-forest-border" />
                 </span>
                 <span className="ml-2.5 rounded-md border border-forest-border/80 bg-[rgba(25,41,31,.8)] px-3.5 py-[3px] font-mono text-[11px] text-forest-muted">
-                  app.zensus.app
+                  {APP_HOST}
                 </span>
-                <span className="ml-auto text-[10px] font-medium uppercase tracking-[0.1em] text-sage-light min-[820px]:mr-[140px]">Live</span>
+                <span className="ml-auto text-[11px] font-medium text-sage-light min-[820px]:mr-[140px]">Live</span>
               </div>
               <div className="relative aspect-[16/10] overflow-hidden bg-forest">
                 {SHOTS.map((shot, i) => {
@@ -215,11 +234,13 @@ const HeroShowcase = () => {
                     <img
                       key={shot.src}
                       src={shot.src}
+                      srcSet={shot.srcSet}
+                      sizes="(min-width: 820px) 64vw, 100vw"
                       alt={shot.alt}
                       width={shot.width}
                       height={shot.height}
                       decoding="async"
-                      loading={i === 0 ? "eager" : "lazy"}
+                      loading="lazy"
                       style={{
                         transform: zoomed ? `scale(${current.z})` : "scale(1)",
                         transformOrigin: zoomed ? `${current.fx}% ${current.fy}%` : "50% 0%",
@@ -235,7 +256,7 @@ const HeroShowcase = () => {
                   <span
                     aria-hidden
                     style={{ left: `${current.fx}%`, top: `${current.fy}%` }}
-                    className="absolute -ml-[11px] -mt-[11px] h-[22px] w-[22px] animate-ring-ping rounded-full border-2 border-sage-light bg-[rgba(72,216,138,.18)]"
+                    className="absolute -ml-[11px] -mt-[11px] h-[22px] w-[22px] rounded-full border-2 border-sage-light bg-[rgba(72,216,138,.18)] before:absolute before:-inset-0.5 before:animate-ring-ping before:rounded-full before:bg-sage-light/50 motion-reduce:before:animate-none"
                   />
                 )}
               </div>

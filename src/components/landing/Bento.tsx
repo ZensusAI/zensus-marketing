@@ -4,7 +4,7 @@ import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
 import slackLogo from "@/assets/integrations/slack.svg";
 import zensusLogo from "@/assets/zensus-logo.png";
-import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
 import { clamp01, easeInOutCubic as ease, lerp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -20,19 +20,25 @@ import { PinnedSection } from "./PinnedSection";
  *      and keeps recalculating, and the shimmer runs out to it and to Slack.
  *   4. Raw bank descriptors flip to clean vendor names ("Normalized").
  * The fact rails fill one per beat; on phones only the active fact shows, but
- * all four stay in the HTML. Geometry, easing and timings are the handoff's
- * renderVals(). Transaction names, amounts and dates are its placeholders.
- * Reduced motion: the end state, still (no shimmer, no ticking).
+ * all four stay in the HTML and in the accessibility tree. Geometry, easing
+ * and timings are the handoff's renderVals(). Transaction names, amounts and
+ * dates are its placeholders.
+ * Reduced motion or a short viewport: the end state, still (no shimmer, no
+ * ticking), with all four facts shown at every width.
+ * The ambient motion (shimmer, hub pulse, ticking readouts) runs for at most
+ * CLOCK_MS each time the diagram comes into view, then settles (WCAG 2.2.2).
  *
  * Corrections: the app shows the zero-cash date as a month and year, so the
  * fact says "The month you run out" and the chip cycles months, not days.
+ * Setup time is "a few minutes" (the app's own tour says about five), and
+ * normalization is about vendor names, not accounting reconciliation.
  */
 
 const FACTS = [
-  { lead: "Connect in 60 seconds.", tail: "OAuth to Plaid, QuickBooks, and HubSpot. No spreadsheets, no CSV uploads." },
+  { lead: "Connect in a few minutes.", tail: "OAuth to Plaid, QuickBooks, and HubSpot. No spreadsheets, no CSV uploads." },
   { lead: "Automatic sync.", tail: "Bank and HubSpot changes arrive by webhook. QuickBooks syncs daily." },
   { lead: "Zero-cash date.", tail: "The month you run out, recalculated live." },
-  { lead: "Vendor normalization.", tail: "Stripe payouts, ACH transfers, and card purchases all reconcile cleanly." },
+  { lead: "Vendor normalization.", tail: "Stripe payouts, ACH transfers, and card purchases all show up under clean vendor names." },
 ];
 
 const SOURCES = [
@@ -51,6 +57,7 @@ const ROWS = [
 
 const DATES = ["Mar 2027", "Apr 2027", "Mar 2027"];
 const PIN_VIEWPORTS = 4;
+const CLOCK_MS = 10000;
 
 type Pt = [number, number];
 type Bez = [Pt, Pt, Pt, Pt];
@@ -117,7 +124,8 @@ const GEO = {
 };
 
 function useNarrow() {
-  const [narrow, setNarrow] = useState(false);
+  // Read the width up front so phones do not lay out the desktop geometry first.
+  const [narrow, setNarrow] = useState(() => typeof window !== "undefined" && !!window.matchMedia && window.matchMedia("(max-width: 759px)").matches);
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 759px)");
     const sync = () => setNarrow(mq.matches);
@@ -129,7 +137,7 @@ function useNarrow() {
 }
 
 const Bento = () => {
-  const reduced = usePrefersReducedMotion();
+  const reduced = useStaticPins();
   const narrow = useNarrow();
   const [scrollP, setP] = useState(0);
   const [clock, setNow] = useState(0);
@@ -137,30 +145,45 @@ const Bento = () => {
 
   const onProgress = useCallback(({ progress }: ScrollProgress) => setP(progress), []);
 
-  // The shimmer, hub pulse and ticking readouts run on a clock, but only while
-  // the diagram is on screen and never under reduced motion.
+  const P = reduced ? 1 : scrollP;
+  const kFlow = ease((P - 0.26) / 0.06);
+  const flowing = !reduced && kFlow > 0;
+  const [settled, setSettled] = useState(false);
+
+  // The shimmer, hub pulse and ticking readouts run on a clock, but only once
+  // the shimmer has started, only while the diagram is on screen, and for at
+  // most CLOCK_MS per visit; never under reduced motion.
   useEffect(() => {
     const el = diagramRef.current;
-    if (reduced || !el || typeof IntersectionObserver === "undefined") return;
+    if (!flowing || !el || typeof IntersectionObserver === "undefined") return;
     let raf = 0;
     let t0 = 0;
     const tick = (t: number) => {
       if (!t0) t0 = t;
+      if (t - t0 > CLOCK_MS) {
+        setSettled(true);
+        return;
+      }
       setNow(t - t0);
       raf = requestAnimationFrame(tick);
     };
-    const io = new IntersectionObserver(([entry]) => {
+    const io = new IntersectionObserver((entries) => {
+      const entry = entries[entries.length - 1];
       cancelAnimationFrame(raf);
-      if (entry.isIntersecting) raf = requestAnimationFrame(tick);
+      if (entry.isIntersecting) {
+        t0 = 0;
+        setSettled(false);
+        raf = requestAnimationFrame(tick);
+      }
     });
     io.observe(el);
     return () => {
       io.disconnect();
       cancelAnimationFrame(raf);
     };
-  }, [reduced]);
+  }, [flowing]);
 
-  const P = reduced ? 1 : scrollP;
+  const still = reduced || settled;
   const now = reduced ? 0 : clock;
   const G = narrow ? GEO.m : GEO.d;
   const { W, H } = G;
@@ -169,7 +192,6 @@ const Bento = () => {
 
   const kc = [0, 1, 2].map((i) => ease((P - 0.02 - i * 0.04) / 0.07));
   const kb = [0, 1, 2].map((i) => ease((P - 0.08 - i * 0.03) / 0.12));
-  const kFlow = ease((P - 0.26) / 0.06);
   const ko = ease((P - 0.52) / 0.1);
   const kO = [0, 1].map((i) => ease((P - 0.5 - i * 0.06) / 0.08));
   const kZ = ease((P - 0.6) / 0.06);
@@ -183,7 +205,7 @@ const Bento = () => {
   });
 
   const shims: { d: string; da: string; off: number; da2: string; off2: number; op: number; gop: number }[] = [];
-  if (!reduced && kFlow > 0) {
+  if (!still && kFlow > 0) {
     const add = (B: Bez, sp: number, o: number, k: number) => {
       const L = blen(B);
       const seg = Math.max(26, L * 0.28);
@@ -214,7 +236,7 @@ const Bento = () => {
 
   const zOn = kZ > 0.5;
   const [hx, hy] = pc(G.hub[0], G.hub[1]);
-  const ring = kFlow * (3 + 3 * (0.5 + 0.5 * Math.sin(now / 300)));
+  const ring = kFlow * (still ? 4.5 : 3 + 3 * (0.5 + 0.5 * Math.sin(now / 300)));
   const secs = 1 + (Math.floor(now / 1000) % 5);
   const factFill = [0, 1, 2, 3].map((i) => clamp01(P * 4 - i));
   const activeFact = Math.min(3, Math.floor(P * 4));
@@ -241,11 +263,6 @@ const Bento = () => {
               style={{ aspectRatio: `${W} / ${H}`, maxHeight: "100%" }}
             >
               <svg aria-hidden viewBox={`0 0 ${W} ${H}`} width="100%" height="100%" className="absolute inset-0 overflow-visible">
-                <defs>
-                  <filter id="sync-shim-glow" x="-20%" y="-50%" width="140%" height="200%">
-                    <feGaussianBlur stdDeviation="2.2" />
-                  </filter>
-                </defs>
                 {beams.map((b, i) => (
                   <path
                     key={i}
@@ -261,7 +278,8 @@ const Bento = () => {
                 ))}
                 {shims.map((s, i) => (
                   <g key={i}>
-                    <path d={s.d} fill="none" stroke="#22C573" strokeOpacity={s.gop} strokeWidth={6} strokeLinecap="round" strokeDasharray={s.da} strokeDashoffset={s.off} filter="url(#sync-shim-glow)" />
+                    {/* The glow is a wide, faint stroke rather than an SVG blur filter, which repainted on the CPU every frame. */}
+                    <path d={s.d} fill="none" stroke="#22C573" strokeOpacity={s.gop * 0.5} strokeWidth={6} strokeLinecap="round" strokeDasharray={s.da} strokeDashoffset={s.off} />
                     <path d={s.d} fill="none" stroke="#7CF0B0" strokeOpacity={s.op} strokeWidth={2.25} strokeLinecap="round" strokeDasharray={s.da} strokeDashoffset={s.off} />
                     <path d={s.d} fill="none" stroke="#FFFDF7" strokeOpacity={s.op} strokeWidth={1.25} strokeLinecap="round" strokeDasharray={s.da2} strokeDashoffset={s.off2} />
                   </g>
@@ -272,7 +290,7 @@ const Bento = () => {
                 {labels.map((l) => (
                   <span
                     key={l.t + l.y}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-border bg-background px-[7px] py-0.5 font-mono text-[10px] text-sage-dark"
+                    className="absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-md border border-border bg-background px-[7px] py-0.5 font-mono text-[10px] text-sage-dark"
                     style={{ left: `${l.x}%`, top: `${l.y}%`, opacity: kFlow }}
                   >
                     {l.t}
@@ -318,7 +336,7 @@ const Bento = () => {
                     Zero-cash date
                   </span>
                   <span className="whitespace-nowrap text-[13px] font-semibold tracking-[-0.01em] min-[760px]:text-sm">
-                    {zOn ? DATES[Math.floor(now / 2600) % DATES.length] : "Calculating…"}
+                    {zOn ? DATES[still ? 0 : Math.floor(now / 2600) % DATES.length] : "Calculating…"}
                   </span>
                 </div>
 
@@ -345,10 +363,10 @@ const Bento = () => {
                   }}
                 >
                   <div className="flex items-center justify-between gap-2 font-mono text-[10px]">
-                    <span className="uppercase tracking-[0.12em] text-muted-foreground">{P > 0.78 ? "Normalized" : "Incoming"}</span>
+                    <span className="text-muted-foreground">{P > 0.78 ? "Normalized" : "Incoming"}</span>
                     <span className="flex items-center gap-[5px] whitespace-nowrap text-sage-dark">
-                      <span className="h-1.5 w-1.5 rounded-full bg-primary" style={{ opacity: reduced ? 1 : 0.5 + 0.5 * Math.sin(now / 250) }} />
-                      Synced {secs}s ago
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary" style={{ opacity: still ? 1 : 0.5 + 0.5 * Math.sin(now / 250) }} />
+                      Synced {still ? 1 : secs}s ago
                     </span>
                   </div>
                   <div className="mt-1 flex flex-col">
@@ -387,16 +405,17 @@ const Bento = () => {
             </div>
           </div>
 
-          {/* The four facts: rails fill one per beat. Phones show only the
-              active fact; all four stay in the HTML. */}
+          {/* The four facts: rails fill one per beat. Pinned phones show only
+              the active fact (the rail copy below); all four stay in the HTML
+              and the accessibility tree. Static, all four show everywhere. */}
           <div className="mx-auto w-full max-w-[1040px]">
-            <ol className="grid grid-cols-4 gap-2.5 min-[760px]:gap-7">
+            <ol className={cn("grid gap-2.5 min-[760px]:grid-cols-4 min-[760px]:gap-7", reduced ? "grid-cols-1 gap-4" : "grid-cols-4")}>
               {FACTS.map((f, i) => (
                 <li key={f.lead} className="flex min-w-0 flex-col gap-2.5">
                   <div aria-hidden className="h-0.5 overflow-hidden rounded-sm bg-border">
                     <div className="h-full bg-foreground" style={{ width: `${(factFill[i] * 100).toFixed(1)}%` }} />
                   </div>
-                  <p className="hidden text-pretty text-sm leading-[1.55] min-[760px]:block">
+                  <p className={cn("text-pretty text-sm leading-[1.55]", reduced ? "block" : "hidden min-[760px]:block")}>
                     <span className="mr-1.5 font-mono text-[11px] text-sage-dark">({i + 1})</span>
                     <b className={cn("font-semibold transition-colors duration-300", reduced || i === activeFact ? "text-foreground" : "text-muted-foreground")}>{f.lead}</b>{" "}
                     <span className="text-muted-foreground">{f.tail}</span>
@@ -404,7 +423,7 @@ const Bento = () => {
                 </li>
               ))}
             </ol>
-            <div aria-hidden className="mt-3 grid min-[760px]:hidden">
+            <div className={cn("mt-3 grid min-[760px]:hidden", reduced && "hidden")}>
               {FACTS.map((f, i) => (
                 <p
                   key={f.lead}
