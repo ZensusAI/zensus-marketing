@@ -117,6 +117,11 @@ export default {
         ui: "cubic-bezier(.2,.8,.2,1)",
       },
       keyframes: {
+        // Navbar panels and the mobile sheet (handoff 01-navbar "nvIn").
+        "nav-in": {
+          from: { opacity: "0", transform: "translateY(4px)" },
+          to: { opacity: "1", transform: "none" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -155,6 +160,7 @@ export default {
         },
       },
       animation: {
+        "nav-in": "nav-in 0.2s ease-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.6s ease-out forwards",

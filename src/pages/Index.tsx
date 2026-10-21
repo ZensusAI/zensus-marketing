@@ -67,7 +67,7 @@ const Index = () => {
             its LCP preloads went with it. The aurora asset files stay in
             public/ because SignupModal still uses /hero-aurora-1200.webp. */}
       </Helmet>
-      {/* TODO(01-navbar): replace with the redesigned navbar. */}
+      {/* 01-navbar: redesigned (shared by every route). */}
       <Navbar />
       <main>
         {/* Homepage redesign order (handoff 00-overview). Each TODO names the

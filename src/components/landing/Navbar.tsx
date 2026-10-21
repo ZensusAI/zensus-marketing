@@ -1,595 +1,678 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "react-router-dom";
 import { SIGN_IN_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
+import { cn } from "@/lib/utils";
 import { SignupModal } from "./SignupModal";
 import zensusLogo from "@/assets/zensus-logo.png";
+import plaidLogo from "@/assets/integrations/plaid.svg";
+import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
+import hubspotLogo from "@/assets/integrations/hubspot.svg";
+import slackLogo from "@/assets/integrations/slack.svg";
+import dashboard13Week from "@/assets/dashboard-13week.webp";
+import runwayDrilldown from "@/assets/runway-drilldown-weekly.webp";
+import runwayWhatIf from "@/assets/runway-whatif-overview.webp";
+import runwayAlerts from "@/assets/runway-alerts-a.webp";
 
-interface NavLinkItem {
-  href: string;
-  label: string;
-  isRoute: boolean;
-}
+/*
+ * Site navbar, redesigned from handoff 01-navbar (locked variant: mega menu
+ * with the "Ask Zensus" Product panel). Shared by every route, so it is styled
+ * with theme tokens: on the cream homepage the tokens resolve to the handoff's
+ * exact colours, and the dark routes get the same layout in their own palette.
+ *
+ * Every panel is always in the DOM (display: none while closed), so the links
+ * are in the prerendered HTML for search and AI crawlers, and the panel
+ * screenshots, which are lazy, only load once a panel opens.
+ *
+ * The handoff's small mono uppercase labels ("Ask Zensus", "Built on", the
+ * Resources column titles) are plain sentence-case labels here, per the
+ * redesign's global rules.
+ */
 
-interface NavChild {
+interface PanelLink {
   href: string;
   label: string;
   description: string;
-  // Hash-anchor children (e.g. /#features) render as plain <a> tags so the
-  // browser handles the jump natively; router children render as <Link>.
-  isRoute?: boolean;
 }
 
-interface NavMenu {
-  label: string;
-  children: NavChild[];
+interface Question {
+  q: string;
+  feature: string;
+  href: string;
+  url: string;
+  img: string;
+  width: number;
+  height: number;
+  alt: string;
+  desc: string;
 }
 
-type NavEntry = NavLinkItem | NavMenu;
-
-const isMenu = (entry: NavEntry): entry is NavMenu => "children" in entry;
-
-const NAV: NavEntry[] = [
+const QUESTIONS: Question[] = [
   {
-    label: "Company",
-    children: [
-      {
-        href: "/about",
-        label: "About Us",
-        description: "The company and the founder behind Zensus.",
-      },
-    ],
+    q: "When does my cash run out?",
+    feature: "Zero-cash date and 13-week rolling forecast",
+    href: "/#features",
+    url: "app.zensus.app",
+    img: dashboard13Week,
+    width: 1984,
+    height: 1468,
+    alt: "Zensus 13-week rolling cash flow forecast with the zero-cash date",
+    desc: "Zensus combines your bank, QuickBooks, and HubSpot data into a weekly forecast and recalculates your zero-cash date every time cash moves.",
   },
   {
-    label: "Product",
-    children: [
-      {
-        href: "/#features",
-        label: "Features",
-        description: "Cash flow, alerts, and scenario planning in one view.",
-        isRoute: false,
-      },
-      {
-        href: "/integrations",
-        label: "Integrations",
-        description: "Plaid, QuickBooks, HubSpot, and Slack.",
-      },
-      {
-        href: "/use-cases",
-        label: "Use Cases",
-        description: "Who Zensus is for and the problems it solves.",
-      },
-    ],
+    q: "When does this contract actually pay?",
+    feature: "Drill down to any week or day",
+    href: "/integrations/hubspot",
+    url: "app.zensus.app/runway",
+    img: runwayDrilldown,
+    width: 1506,
+    height: 906,
+    alt: "Zensus weekly cash flow drill-down showing when subscription contracts pay",
+    desc: "Click any month to see weekly cash flow, then drill into daily details. Subscription-aware projections show when annual and quarterly contracts hit your bank.",
   },
   {
-    href: "/pricing",
-    label: "Pricing",
-    isRoute: true,
-  },
-  // Security is a top-level item, not a Product child: for a tool that
-  // connects to a bank and the books, it is a buying question in its own
-  // right, and a visitor should not have to open a menu to find it.
-  {
-    href: "/security",
-    label: "Security",
-    isRoute: true,
+    q: "Can I afford two engineers in Q3?",
+    feature: "Plain-English scenarios",
+    href: "/use-cases",
+    url: "app.zensus.app/runway",
+    img: runwayWhatIf,
+    width: 2264,
+    height: 1138,
+    alt: "Zensus what-if scenario comparing cash runway before and after two hires",
+    desc: "Stack hiring, churn, and pricing assumptions in one conversation and compare before-and-after projections. Revert any change instantly.",
   },
   {
-    label: "Free Tools",
-    children: [
-      {
-        href: "/tools/runway-calculator",
-        label: "Runway Calculator",
-        description: "Model cash runway, zero-cash date, and hiring impact.",
-      },
-      {
-        href: "/tools/payroll-calendar",
-        label: "Payroll Calendar",
-        description: "Map pay dates and three-paycheck months for 2026 and 2027.",
-      },
-      {
-        href: "/tools/13-week-cash-flow-template",
-        label: "13-Week Cash Flow Template",
-        description: "Free Excel template, plus a builder to see your 13 weeks first.",
-      },
-    ],
-  },
-  {
-    label: "Resources",
-    children: [
-      {
-        href: "/blog",
-        label: "Blog",
-        description: "Guides, product updates, and announcements.",
-      },
-      {
-        href: "/changelog",
-        label: "Changelog",
-        description: "Ship notes and what's new in Zensus.",
-      },
-      {
-        href: "/#faq",
-        label: "FAQ",
-        description: "Quick answers about pricing, data, and setup.",
-        isRoute: false,
-      },
-    ],
+    q: "Will I know before it gets tight?",
+    feature: "Slack threshold alerts",
+    href: "/integrations/slack",
+    url: "app.zensus.app/alerts",
+    img: runwayAlerts,
+    width: 982,
+    height: 554,
+    alt: "Zensus cash floor alert settings for Slack",
+    desc: "Set your cash floor. Zensus watches your 30-day projection and pings Slack when it crosses the line, then re-alerts on material change.",
   },
 ];
 
-// Flip a boolean when the user has scrolled past a small threshold. We use
-// requestAnimationFrame to coalesce scroll events so the listener can't pile up.
-function useScrolled(threshold = 8) {
-  const [scrolled, setScrolled] = useState(false);
+const PRODUCT_FOOTER: { href: string; label: string; accent?: boolean }[] = [
+  { href: "/#features", label: "All features →", accent: true },
+  { href: "/use-cases", label: "Use cases" },
+  { href: "/quickbooks-cash-flow-forecasting", label: "For QuickBooks Online" },
+];
 
-  useEffect(() => {
-    let raf = 0;
-    const update = () => {
-      setScrolled(window.scrollY > threshold);
-      raf = 0;
-    };
-    const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [threshold]);
+const INTEGRATIONS = [
+  { name: "Plaid", logo: plaidLogo, href: "/integrations/plaid", className: "logo-on-light" },
+  { name: "QuickBooks", logo: quickbooksLogo, href: "/integrations/quickbooks" },
+  { name: "HubSpot", logo: hubspotLogo, href: "/integrations/hubspot" },
+  { name: "Slack", logo: slackLogo, href: "/integrations/slack" },
+];
 
-  return scrolled;
-}
+const LEARN: PanelLink[] = [
+  { href: "/blog", label: "Blog", description: "Guides, product updates, and announcements." },
+  { href: "/changelog", label: "Changelog", description: "Ship notes and what's new in Zensus." },
+  { href: "/#faq", label: "FAQ", description: "Quick answers about pricing, data, and setup." },
+  { href: "/about", label: "About Us", description: "The company and the founder behind Zensus." },
+];
+
+const TOOLS: PanelLink[] = [
+  {
+    href: "/tools/runway-calculator",
+    label: "Runway Calculator",
+    description: "Model cash runway, zero-cash date, and hiring impact.",
+  },
+  {
+    href: "/tools/payroll-calendar",
+    label: "Payroll Calendar",
+    description: "Map pay dates and three-paycheck months for 2026 and 2027.",
+  },
+  {
+    href: "/tools/13-week-cash-flow-template",
+    label: "13-Week Cash Flow Template",
+    description: "Free Excel template, plus a builder to see your 13 weeks first.",
+  },
+];
+
+const COMPARE: PanelLink[] = [
+  { href: "/compare/zensus-vs-float", label: "Zensus vs Float", description: "Bank feeds, CRM data, and alerts compared." },
+  { href: "/compare/zensus-vs-pulse", label: "Zensus vs Pulse", description: "Spreadsheet-style planning or a live forecast." },
+  {
+    href: "/compare/zensus-vs-cash-flow-frog",
+    label: "Zensus vs Cash Flow Frog",
+    description: "Side by side on integrations and scenarios.",
+  },
+  { href: "/compare/float-alternatives", label: "Float alternatives", description: "The tools businesses shortlist instead." },
+];
+
+const RESOURCE_COLUMNS = [
+  { title: "Learn", links: LEARN },
+  { title: "Free tools", links: TOOLS },
+  { title: "Compare", links: COMPARE },
+];
+
+// Mobile "Learn" chips. "Compare" has no index page; it opens the broadest
+// comparison, the Float alternatives roundup.
+const LEARN_SHORT = [
+  { href: "/blog", label: "Blog" },
+  { href: "/changelog", label: "Changelog" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/compare/float-alternatives", label: "Compare" },
+  { href: "/about", label: "About Us" },
+];
+
+type MenuKey = "product" | "resources";
 
 const focusRing =
-  "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
-// Primary CTA styling shared by the desktop and mobile "Start" buttons so
-// the label, colors, and hover state cannot drift between the two.
-// Both open the same sign-up dialog as the hero button: the page used to
-// offer the one action as "Get Started" here (a direct link to the app) and
-// "Start free trial" below (the dialog), two names and two routes.
-const navCtaBase =
-  "rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90";
-
-const desktopLinkBase =
-  "relative text-[15px] font-semibold text-foreground rounded transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-[width] after:duration-200 hover:after:w-full";
-
-function DesktopLink({ link }: { link: NavLinkItem }) {
-  if (!link.isRoute) {
-    return (
-      <a
-        href={link.href}
-        className={`${desktopLinkBase} ${focusRing}`}
-      >
-        {link.label}
-      </a>
-    );
-  }
-  return (
-    <NavLink
-      to={link.href}
-      className={`${desktopLinkBase} ${focusRing}`}
-    >
-      {({ isActive }) => (
-        <span className="flex items-center gap-1.5">
-          {link.label}
-          {isActive && (
-            <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
-          )}
-        </span>
-      )}
-    </NavLink>
+// Hash links (/#features, /#faq) are plain anchors so the browser does the
+// jump; everything else is a router link.
+const NavAnchor = ({
+  href,
+  className,
+  children,
+  onClick,
+  ariaLabel,
+  onMouseEnter,
+  onFocus,
+}: {
+  href: string;
+  className?: string;
+  children: ReactNode;
+  onClick?: () => void;
+  ariaLabel?: string;
+  onMouseEnter?: () => void;
+  onFocus?: () => void;
+}) =>
+  href.includes("#") ? (
+    <a href={href} className={className} onClick={onClick} aria-label={ariaLabel} onMouseEnter={onMouseEnter} onFocus={onFocus}>
+      {children}
+    </a>
+  ) : (
+    <Link to={href} className={className} onClick={onClick} aria-label={ariaLabel} onMouseEnter={onMouseEnter} onFocus={onFocus}>
+      {children}
+    </Link>
   );
-}
 
-// Desktop dropdowns, built on a single Radix NavigationMenu root with a shared
-// Viewport (the Stripe-style "morphing dropdown"). One panel stays open while
-// the pointer slides between triggers: it glides horizontally under the active
-// trigger and morphs its height to fit the next menu, instead of closing and
-// reopening. Hover intent, keyboard nav, and Escape come for free. We style
-// the shared Viewport ourselves (no shadcn wrapper) and `forceMount` both the
-// Viewport and every Content so all dropdown links stay in the static
-// prerendered HTML; Googlebot and AI crawlers see the same anchors whether or
-// not a menu is open.
-function DesktopNav({ entries }: { entries: NavEntry[] }) {
-  const { pathname } = useLocation();
-  const rootRef = useRef<HTMLElement>(null);
-  // Horizontal center of the active trigger, relative to the nav root. The
-  // shared viewport translates to sit centered under it; transitioning that
-  // transform is what makes the panel glide between menus. null until the
-  // first open so the first panel appears in place instead of flying in
-  // from the nav's left edge.
-  const [center, setCenter] = useState<number | null>(null);
-  // The transform transition is enabled one commit AFTER the first center is
-  // measured: adding the class alone animates nothing, so the first open
-  // jumps into position and every later move glides.
-  const [glide, setGlide] = useState(false);
-  useEffect(() => {
-    if (center !== null) setGlide(true);
-  }, [center]);
-  // Radix does not stamp data-state on force-mounted Content inside a shared
-  // Viewport, so we mirror the open menu ourselves to toggle which panel is
-  // visible.
-  const [value, setValue] = useState("");
+const PanelLabel = ({ children, className }: { children: ReactNode; className?: string }) => (
+  <p className={cn("text-[13px] font-semibold text-muted-foreground", className)}>{children}</p>
+);
 
-  const handleValueChange = (next: string) => {
-    setValue(next);
-    if (!next || !rootRef.current) return;
-    const trigger = rootRef.current.querySelector<HTMLElement>(
-      `[data-nav-trigger="${CSS.escape(next)}"]`,
-    );
-    if (!trigger) return;
-    const rootBox = rootRef.current.getBoundingClientRect();
-    const box = trigger.getBoundingClientRect();
-    setCenter(box.left - rootBox.left + box.width / 2);
-  };
+const SignInLink = ({ source, className }: { source: string; className: string }) => (
+  <a
+    href={SIGN_IN_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={className}
+    onClick={() => trackCtaClick(source, { destination: "signin" })}
+  >
+    Sign in
+  </a>
+);
+
+const TrialButton = ({ source, className, arrow = true }: { source: string; className: string; arrow?: boolean }) => (
+  <SignupModal>
+    <button
+      type="button"
+      className={className}
+      onClick={() => trackCtaClick(source, { destination: "trial", action: "open_signup_modal" })}
+    >
+      Start free trial
+      {arrow && <ArrowRight size={16} aria-hidden />}
+    </button>
+  </SignupModal>
+);
+
+function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
+  const [active, setActive] = useState(0);
+  const current = QUESTIONS[active];
 
   return (
-    <NavigationMenu.Root
-      ref={rootRef}
-      delayDuration={100}
-      onValueChange={handleValueChange}
-      aria-label="Main"
-      className="relative"
-    >
-      <NavigationMenu.List className="m-0 flex list-none items-center gap-5 p-0 xl:gap-8">
-        {entries.map((entry) => {
-          if (!isMenu(entry)) {
-            // Plain top-level links (Pricing) slot into the shared
-            // list so future additions keep their position among the menus.
+    <div className="mx-auto grid max-w-[1280px] grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-10 px-8 pb-6 pt-7">
+      <div className="flex flex-col">
+        <PanelLabel className="mb-2.5">Ask Zensus</PanelLabel>
+        <ul>
+          {QUESTIONS.map((row, i) => {
+            const on = i === active;
             return (
-              <NavigationMenu.Item key={entry.href} className="flex">
-                <DesktopLink link={entry} />
-              </NavigationMenu.Item>
-            );
-          }
-          const menu = entry;
-          const groupActive = menu.children.some((c) => c.href === pathname);
-          return (
-            <NavigationMenu.Item key={menu.label} value={menu.label}>
-              <NavigationMenu.Trigger
-                data-nav-trigger={menu.label}
-                className={`group/res flex items-center gap-1.5 ${desktopLinkBase} ${focusRing} data-[state=open]:after:w-full`}
-              >
-                <span className="flex items-center gap-1.5">
-                  {menu.label}
-                  {groupActive && (
-                    <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
+              <li key={row.q}>
+                <NavAnchor
+                  href={row.href}
+                  onClick={onNavigate}
+                  onMouseEnter={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  className={cn(
+                    "-mx-3.5 flex items-center gap-3.5 rounded-xl p-3.5 transition-colors duration-200 motion-reduce:transition-none",
+                    on ? "bg-secondary" : "bg-transparent",
+                    focusRing,
                   )}
-                </span>
-                <ChevronDown
-                  aria-hidden
-                  className="h-3.5 w-3.5 transition-transform duration-200 group-data-[state=open]/res:rotate-180"
-                />
-              </NavigationMenu.Trigger>
-
-              {/* Rendered into the shared Viewport below. Stacked absolutely;
-                  the inactive panels crossfade out while the viewport glides
-                  and resizes, which reads as one continuous panel. visibility
-                  (not just opacity) gates the hidden panels: it removes their
-                  links from the tab order and from hit-testing, and because
-                  visibility participates in the transition its flip to hidden
-                  waits for the fade-out to finish. Pointer events inherit
-                  from the Viewport (auto only while open). */}
-              <NavigationMenu.Content
-                forceMount
-                className={`absolute left-0 top-0 w-72 p-2 transition-[opacity,visibility] duration-200 motion-reduce:transition-none ${
-                  value === menu.label
-                    ? "visible opacity-100"
-                    : "invisible opacity-0"
-                }`}
-              >
-                {menu.children.map((child) => {
-                  const active = child.href === pathname;
-                  const className = `block rounded-lg px-3 py-2.5 transition-colors ${focusRing} ${
-                    active ? "bg-primary/5" : "hover:bg-muted/50"
-                  }`;
-                  const body = (
-                    <>
-                      <span className="flex items-center gap-1.5 text-[15px] font-semibold text-foreground">
-                        {child.label}
-                        {active && (
-                          <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
-                        )}
-                      </span>
-                      <span className="mt-0.5 block text-[13px] leading-snug text-muted-foreground">
-                        {child.description}
-                      </span>
-                    </>
-                  );
-                  return (
-                    <NavigationMenu.Link asChild key={child.href}>
-                      {child.isRoute === false ? (
-                        <a href={child.href} className={className}>
-                          {body}
-                        </a>
-                      ) : (
-                        <Link to={child.href} className={className}>
-                          {body}
-                        </Link>
-                      )}
-                    </NavigationMenu.Link>
-                  );
-                })}
-              </NavigationMenu.Content>
-            </NavigationMenu.Item>
-          );
-        })}
-      </NavigationMenu.List>
-
-      {/* The wrapper owns the horizontal glide (transform transition toward
-          the active trigger); the Viewport owns the size morph via Radix's
-          measured CSS variables and the open/close fade. The wrapper only
-          accepts pointer events while a menu is open: open, its pt-3 strip
-          bridges the hover gap between trigger and panel; closed, the whole
-          subtree is inert so the invisible panel can never block clicks on
-          page content beneath it. */}
-      <div
-        className={`absolute left-0 top-full pt-3 ${
-          glide ? "transition-transform duration-300 ease-out motion-reduce:transition-none" : ""
-        } ${value ? "pointer-events-auto" : "pointer-events-none"}`}
-        style={{ transform: `translateX(calc(${center ?? 0}px - 50%))` }}
-      >
-        <NavigationMenu.Viewport
-          forceMount
-          className={[
-            "relative overflow-hidden rounded-xl border border-border bg-background/95 shadow-2xl backdrop-blur-xl",
-            "h-[var(--radix-navigation-menu-viewport-height)] w-[var(--radix-navigation-menu-viewport-width)]",
-            "transition-[height,opacity,transform] duration-300 ease-out motion-reduce:transition-none",
-            "translate-y-1 opacity-0 pointer-events-none",
-            "data-[state=open]:translate-y-0 data-[state=open]:opacity-100 data-[state=open]:pointer-events-auto",
-          ].join(" ")}
-        />
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "font-mono text-[15px] font-semibold transition-colors duration-200",
+                      on ? "text-sage-deep" : "text-muted-foreground/50",
+                    )}
+                  >
+                    &gt;
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-mono text-[14.5px] text-foreground">{row.q}</span>
+                    <span className="mt-[3px] block text-[13px] text-muted-foreground">{row.feature}</span>
+                  </span>
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "text-base text-primary transition-all duration-[250ms] motion-reduce:transition-none",
+                      on ? "translate-x-0 opacity-100" : "-translate-x-1.5 opacity-0",
+                    )}
+                  >
+                    →
+                  </span>
+                </NavAnchor>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="mt-auto flex flex-wrap gap-x-5 gap-y-1.5 border-t border-border pt-4 text-[13.5px] font-semibold">
+          {PRODUCT_FOOTER.map((l) => (
+            <NavAnchor
+              key={l.href}
+              href={l.href}
+              onClick={onNavigate}
+              className={cn("rounded", l.accent ? "text-primary" : "text-foreground", "hover:underline", focusRing)}
+            >
+              {l.label}
+            </NavAnchor>
+          ))}
+        </div>
       </div>
-    </NavigationMenu.Root>
-  );
-}
 
-const mobileLinkBase =
-  "px-2 py-3 text-[17px] font-semibold text-foreground rounded-lg transition-colors";
-
-function MobileLink({ link, onClose }: { link: NavLinkItem; onClose: () => void }) {
-  if (!link.isRoute) {
-    return (
-      <a
-        href={link.href}
-        onClick={onClose}
-        className={`${mobileLinkBase} ${focusRing} hover:bg-muted/40`}
-      >
-        {link.label}
-      </a>
-    );
-  }
-  return (
-    <NavLink
-      to={link.href}
-      onClick={onClose}
-      className={({ isActive }) =>
-        `${mobileLinkBase} ${focusRing} ${
-          isActive ? "bg-primary/5" : "hover:bg-muted/40"
-        }`
-      }
-    >
-      {link.label}
-    </NavLink>
-  );
-}
-
-// Mobile "Resources" group: a tap-to-toggle row that reveals indented children.
-// Plain state toggle keeps it consistent with the hand-rolled mobile panel.
-function MobileMenuGroup({ menu, onClose }: { menu: NavMenu; onClose: () => void }) {
-  const { pathname } = useLocation();
-  const [open, setOpen] = useState(() => menu.children.some((c) => c.href === pathname));
-
-  return (
-    <div>
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className={`${mobileLinkBase} ${focusRing} flex w-full items-center justify-between hover:bg-muted/40`}
-      >
-        {menu.label}
-        <ChevronDown
-          aria-hidden
-          className={`h-4 w-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-      <div
-        className={`overflow-hidden pl-3 transition-[max-height,opacity] duration-300 ease-out ${
-          open ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="flex flex-col gap-1 border-l border-border/60 pl-3 py-1">
-          {menu.children.map((child) =>
-            child.isRoute === false ? (
-              <a
-                key={child.href}
-                href={child.href}
-                onClick={onClose}
-                className={`px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} text-muted-foreground hover:bg-muted/40 hover:text-foreground`}
-              >
-                {child.label}
-              </a>
-            ) : (
-              <NavLink
-                key={child.href}
-                to={child.href}
-                onClick={onClose}
-                className={({ isActive }) =>
-                  `px-2 py-2.5 text-[15px] font-medium rounded-lg transition-colors ${focusRing} ${
-                    isActive ? "bg-primary/5 text-foreground" : "text-muted-foreground hover:bg-muted/40 hover:text-foreground"
-                  }`
-                }
-              >
-                {child.label}
-              </NavLink>
-            ),
-          )}
+      <div className="flex flex-col gap-3.5">
+        <div className="overflow-hidden rounded-[14px] border border-forest-border bg-[#19291F] shadow-[0_24px_48px_-28px_rgba(15,28,22,.6)]">
+          <div className="flex items-center gap-2.5 border-b border-forest-border/60 bg-forest px-3 py-[9px]">
+            <span aria-hidden className="flex gap-[5px]">
+              <span className="h-2 w-2 rounded-full bg-forest-border" />
+              <span className="h-2 w-2 rounded-full bg-forest-border" />
+              <span className="h-2 w-2 rounded-full bg-forest-border" />
+            </span>
+            <span className="flex-1 text-center font-mono text-[10.5px] text-forest-muted">{current.url}</span>
+            <span className="font-mono text-[9.5px] uppercase tracking-[0.1em] text-sage-light">Live</span>
+          </div>
+          <div className="relative aspect-[16/8.2]">
+            {QUESTIONS.map((row, i) => (
+              <img
+                key={row.img}
+                src={row.img}
+                alt={i === active ? row.alt : ""}
+                aria-hidden={i !== active}
+                width={row.width}
+                height={row.height}
+                loading="lazy"
+                decoding="async"
+                className={cn(
+                  "absolute inset-0 h-full w-full object-cover object-left-top transition-[opacity,transform] duration-[450ms] motion-reduce:transition-none",
+                  i === active ? "scale-100 opacity-100" : "scale-[1.03] opacity-0",
+                )}
+              />
+            ))}
+          </div>
+        </div>
+        {/* All four descriptions stay in the HTML; only the active one shows. */}
+        <div className="grid min-h-[42px] text-[13.5px] leading-[1.55] text-muted-foreground">
+          {QUESTIONS.map((row, i) => (
+            <p
+              key={row.q}
+              aria-hidden={i !== active}
+              className={cn("col-start-1 row-start-1 m-0", i === active ? "visible" : "invisible")}
+            >
+              {row.desc}
+            </p>
+          ))}
+        </div>
+        <div className="flex items-center gap-3.5 text-xs text-muted-foreground">
+          <span>Built on</span>
+          {INTEGRATIONS.map((g) => (
+            <img key={g.name} src={g.logo} alt={g.name} width={18} height={18} className={cn("h-[18px] w-[18px] object-contain", g.className)} />
+          ))}
+          <Link to="/integrations" onClick={onNavigate} className={cn("ml-auto rounded font-semibold text-primary hover:underline", focusRing)}>
+            Integrations →
+          </Link>
         </div>
       </div>
     </div>
   );
 }
 
+const ResourcesPanel = ({ onNavigate }: { onNavigate: () => void }) => (
+  <div className="mx-auto grid max-w-[1280px] grid-cols-3 gap-10 p-8">
+    {RESOURCE_COLUMNS.map((col) => (
+      <div key={col.title}>
+        <PanelLabel className="mb-3">{col.title}</PanelLabel>
+        <ul>
+          {col.links.map((l) => (
+            <li key={l.href}>
+              <NavAnchor
+                href={l.href}
+                onClick={onNavigate}
+                className={cn("-mx-3 block rounded-[10px] px-3 py-[9px] transition-colors hover:bg-secondary", focusRing)}
+              >
+                <span className="block text-[15px] font-semibold text-foreground">{l.label}</span>
+                <span className="mt-0.5 block text-[13px] leading-[1.4] text-muted-foreground">{l.description}</span>
+              </NavAnchor>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+);
+
+const panelShell =
+  "absolute inset-x-0 top-full z-20 border-b border-border bg-card shadow-[0_30px_60px_-30px_rgba(26,42,40,.35)] animate-nav-in motion-reduce:animate-none";
+
+function DesktopNav({ open, setOpen }: { open: MenuKey | null; setOpen: (k: MenuKey | null) => void }) {
+  const close = useCallback(() => setOpen(null), [setOpen]);
+  // Hover and focus open a panel a moment before the click that caused them;
+  // without this the click would toggle the panel straight back shut.
+  const openedAt = useRef(0);
+  const openFrom = (key: MenuKey) => {
+    if (open !== key) openedAt.current = Date.now();
+    setOpen(key);
+  };
+
+  const trigger = (key: MenuKey, label: string, panel: ReactNode) => {
+    const on = open === key;
+    return (
+      <li
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+            if (open === key) close();
+          }
+        }}
+      >
+        <button
+          type="button"
+          aria-expanded={on}
+          aria-controls={`nav-panel-${key}`}
+          onPointerEnter={(e) => e.pointerType === "mouse" && openFrom(key)}
+          onFocus={() => openFrom(key)}
+          onClick={() => {
+            if (on && Date.now() - openedAt.current < 400) return;
+            setOpen(on ? null : key);
+          }}
+          className={cn(
+            "relative flex h-16 items-center gap-1.5 text-[15px] font-semibold text-foreground",
+            "focus-visible:outline-none focus-visible:after:absolute focus-visible:after:inset-x-[-6px] focus-visible:after:inset-y-4 focus-visible:after:rounded focus-visible:after:ring-2 focus-visible:after:ring-ring",
+          )}
+        >
+          {label}
+          <ChevronDown
+            size={14}
+            aria-hidden
+            className={cn("transition-transform duration-200 motion-reduce:transition-none", on && "rotate-180")}
+          />
+          <span
+            aria-hidden
+            className={cn(
+              "absolute -bottom-px left-0 z-30 h-0.5 bg-primary transition-[width] duration-200 motion-reduce:transition-none",
+              on ? "w-full" : "w-0",
+            )}
+          />
+        </button>
+        <div id={`nav-panel-${key}`} className={cn(panelShell, !on && "hidden")}>
+          {panel}
+        </div>
+      </li>
+    );
+  };
+
+  const plainLink = (href: string, label: string) => (
+    <li>
+      <Link
+        to={href}
+        onPointerEnter={(e) => e.pointerType === "mouse" && close()}
+        onFocus={close}
+        className={cn("flex h-16 items-center text-[15px] font-semibold text-foreground", focusRing)}
+      >
+        {label}
+      </Link>
+    </li>
+  );
+
+  return (
+    <ul className="flex items-center gap-9">
+      {trigger("product", "Product", <ProductPanel onNavigate={close} />)}
+      {plainLink("/pricing", "Pricing")}
+      {plainLink("/security", "Security")}
+      {trigger("resources", "Resources", <ResourcesPanel onNavigate={close} />)}
+    </ul>
+  );
+}
+
+function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [active, setActive] = useState(0);
+  const rowBorder = "border-b border-border/70";
+
+  return (
+    <div
+      id="nav-mobile-drawer"
+      className={cn(
+        // Absolute, not fixed: the nav's backdrop-filter makes it the
+        // containing block for fixed children.
+        "absolute inset-x-0 top-full z-40 flex h-[calc(100dvh-4rem-env(safe-area-inset-top))] flex-col bg-card animate-nav-in motion-reduce:animate-none lg:hidden",
+        !open && "hidden",
+      )}
+    >
+      <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-5 pt-3">
+        <PanelLabel className="mb-1.5 mt-2">Ask Zensus</PanelLabel>
+        <ul>
+          {QUESTIONS.map((row, i) => {
+            const on = i === active;
+            return (
+              <li key={row.q} className={rowBorder}>
+                <button
+                  type="button"
+                  aria-expanded={on}
+                  onClick={() => setActive(on ? -1 : i)}
+                  className={cn("flex w-full gap-2.5 py-3 text-left", focusRing)}
+                >
+                  <span aria-hidden className={cn("font-mono font-semibold", on ? "text-sage-deep" : "text-muted-foreground/50")}>
+                    &gt;
+                  </span>
+                  <span className="flex-1">
+                    <span className="block font-mono text-sm text-foreground">{row.q}</span>
+                    <span className="mt-0.5 block text-[12.5px] text-muted-foreground">{row.feature}</span>
+                  </span>
+                </button>
+                {on && (
+                  <NavAnchor
+                    href={row.href}
+                    onClick={onClose}
+                    ariaLabel={row.q}
+                    className={cn("mb-3 block overflow-hidden rounded-[10px] border border-forest-border animate-nav-in motion-reduce:animate-none", focusRing)}
+                  >
+                    <img src={row.img} alt={row.alt} width={row.width} height={row.height} loading="lazy" decoding="async" className="block w-full" />
+                  </NavAnchor>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="mt-3.5 flex gap-2">
+          {INTEGRATIONS.map((g) => (
+            <Link
+              key={g.name}
+              to={g.href}
+              onClick={onClose}
+              aria-label={`${g.name} integration`}
+              className={cn("flex h-11 flex-1 items-center justify-center rounded-xl border border-border bg-background", focusRing)}
+            >
+              <img src={g.logo} alt="" width={20} height={20} className={cn("h-5 w-5 object-contain", g.className)} />
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-5 grid grid-cols-2 gap-2">
+          {[
+            { href: "/pricing", label: "Pricing" },
+            { href: "/security", label: "Security" },
+          ].map((l) => (
+            <Link
+              key={l.href}
+              to={l.href}
+              onClick={onClose}
+              className={cn("rounded-xl border border-border p-3.5 text-base font-semibold text-foreground", focusRing)}
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
+
+        <PanelLabel className="mb-1.5 mt-[22px]">Free tools</PanelLabel>
+        <ul>
+          {TOOLS.map((t) => (
+            <li key={t.href} className={rowBorder}>
+              <Link
+                to={t.href}
+                onClick={onClose}
+                className={cn("flex justify-between py-[11px] text-base font-semibold text-foreground", focusRing)}
+              >
+                {t.label}
+                <span aria-hidden className="font-normal text-muted-foreground">
+                  ›
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <PanelLabel className="mb-1.5 mt-[22px]">Learn</PanelLabel>
+        <div className="flex flex-wrap gap-2">
+          {LEARN_SHORT.map((l) => (
+            <NavAnchor
+              key={l.label}
+              href={l.href}
+              onClick={onClose}
+              className={cn("rounded-full border border-border px-3.5 py-[9px] text-sm font-medium text-foreground", focusRing)}
+            >
+              {l.label}
+            </NavAnchor>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-[1fr_1.6fr] gap-2 border-t border-border bg-background px-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-3.5">
+        <SignInLink
+          source="navbar_mobile"
+          className={cn(
+            "flex h-12 items-center justify-center rounded-full border border-border bg-card text-[15px] font-semibold text-foreground",
+            focusRing,
+          )}
+        />
+        <TrialButton
+          source="navbar_mobile"
+          arrow={false}
+          className={cn(
+            "flex h-12 items-center justify-center rounded-full bg-primary text-[15px] font-semibold text-primary-foreground",
+            focusRing,
+          )}
+        />
+      </div>
+    </div>
+  );
+}
+
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const scrolled = useScrolled();
-  const close = () => setIsOpen(false);
+  const [open, setOpen] = useState<MenuKey | null>(null);
+  const [drawer, setDrawer] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  const { pathname, hash } = useLocation();
+
+  // Close everything on navigation.
+  useEffect(() => {
+    setOpen(null);
+    setDrawer(false);
+  }, [pathname, hash]);
+
+  // Esc closes and returns focus to the trigger; a click outside closes.
+  useEffect(() => {
+    if (!open && !drawer) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      const trigger = open && navRef.current?.querySelector<HTMLButtonElement>(`[aria-controls="nav-panel-${open}"]`);
+      setOpen(null);
+      setDrawer(false);
+      trigger?.focus();
+    };
+    const onPointer = (e: PointerEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setOpen(null);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+    };
+  }, [open, drawer]);
+
+  // The mobile sheet is full screen; stop the page scrolling behind it.
+  useEffect(() => {
+    if (!drawer) return;
+    const root = document.documentElement;
+    const prev = root.style.overflow;
+    root.style.overflow = "hidden";
+    return () => {
+      root.style.overflow = prev;
+    };
+  }, [drawer]);
 
   return (
     <nav
-      data-scrolled={scrolled || isOpen}
-      className={[
-        "group/nav fixed top-0 left-0 right-0 z-50",
-        "pt-[env(safe-area-inset-top)]",
-        "bg-background/20 backdrop-blur-lg",
-        "data-[scrolled=true]:bg-background/60 data-[scrolled=true]:backdrop-blur-2xl",
-        "transition-[background-color,backdrop-filter] duration-300",
-        // Soft hairline that fades in when scrolled, in place of a hard border.
-        "after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:right-0",
-        "after:h-px after:bg-gradient-to-r after:from-transparent after:via-border after:to-transparent",
-        "after:opacity-0 data-[scrolled=true]:after:opacity-100 after:transition-opacity after:duration-300",
-      ].join(" ")}
+      ref={navRef}
+      aria-label="Main"
+      onMouseLeave={() => setOpen(null)}
+      className={cn(
+        "fixed left-0 right-0 top-0 z-50 border-b border-border pt-[env(safe-area-inset-top)] backdrop-blur-[24px] transition-[background-color] duration-200",
+        open || drawer ? "bg-card" : "bg-background/[0.82]",
+      )}
     >
-      <div className="section-container">
-        {/* Three-column grid so the center nav is mathematically centered on
-            the full width, regardless of the left and right group widths. */}
-        {/* Three tracks: logo, menu, actions. From xl the outer tracks are
-            equal (1fr) so the menu sits on the page's centre line. At lg the
-            outer tracks shrink to their content (auto) and the menu centres
-            in what is left: equal outer tracks forced each side to the width
-            of the actions group, and with six menu items that overflowed a
-            1024px screen and ran "Company" into the logo. */}
-        <div className="grid grid-cols-[1fr_auto_1fr] lg:grid-cols-[auto_1fr_auto] xl:grid-cols-[1fr_auto_1fr] h-16 items-center group-data-[scrolled=true]/nav:h-14 transition-[height] duration-300">
-          <Link
-            to="/"
-            className={`group/logo flex items-center gap-[9px] rounded justify-self-start ${focusRing}`}
-            aria-label="Zensus home"
-          >
-            <img
-              src={zensusLogo}
-              alt=""
-              className="h-8 w-8 rounded-lg transition-transform duration-200 motion-safe:group-hover/logo:scale-105"
-              width={32}
-              height={32}
-            />
-            {/* 22px / -0.02em matches the OG-card lockup ratio (44px tile,
-                28px name) so the brand lockup is one drawing everywhere. */}
-            <span className="text-[22px] font-semibold tracking-[-0.02em] text-foreground">
-              Zensus
-            </span>
-          </Link>
+      <div className="mx-auto grid h-16 max-w-[1280px] grid-cols-[1fr_auto] items-center pl-5 pr-3 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
+        <Link to="/" aria-label="Zensus home" className={cn("flex items-center gap-[9px] justify-self-start rounded", focusRing)}>
+          <img src={zensusLogo} alt="" width={32} height={32} className="h-8 w-8 rounded-lg" />
+          <span className="text-[22px] font-semibold tracking-[-0.02em] text-foreground">Zensus</span>
+        </Link>
 
-          {/* The full menu needs about 900px: at the md breakpoint (768px)
-              it overlapped the logo, wrapped "Free Tools" onto two lines and
-              clipped the trial button. Tablets get the drawer. */}
-          <div className="hidden lg:block justify-self-center">
-            <DesktopNav entries={NAV} />
-          </div>
-
-          {/* Pinned to the third track: below lg the menu track is empty and
-              without this the drawer button sat in the middle of the bar. */}
-          <div className="col-start-3 flex items-center gap-3 justify-self-end">
-            <div className="hidden lg:flex items-center gap-3">
-              <Button asChild variant="ghost" size="sm" className={`rounded-full ${focusRing}`}>
-                <a
-                  href={SIGN_IN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    trackCtaClick("navbar_desktop", { destination: "signin" })
-                  }
-                >
-                  Sign in
-                </a>
-              </Button>
-              <SignupModal>
-                <Button
-                  type="button"
-                  size="sm"
-                  className={`${navCtaBase} shadow-[0_0_20px_hsl(var(--primary)/0.25)] hover:shadow-[0_0_28px_hsl(var(--primary)/0.4)] transition-shadow ${focusRing}`}
-                  onClick={() =>
-                    trackCtaClick("navbar_desktop", {
-                      destination: "trial",
-                      action: "open_signup_modal",
-                    })
-                  }
-                >
-                  Start
-                  <ArrowRight size={16} className="ml-2" />
-                </Button>
-              </SignupModal>
-            </div>
-
-            <button
-              className={`lg:hidden p-2 text-foreground rounded ${focusRing}`}
-              onClick={() => setIsOpen((v) => !v)}
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isOpen}
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+        <div className="hidden lg:block">
+          <DesktopNav open={open} setOpen={setOpen} />
         </div>
 
-        {/* Mobile panel. We keep it mounted and animate max-height + opacity so
-            the open/close is smooth, not a hard swap. */}
-        <div
-          className={`lg:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
-            isOpen ? "max-h-[44rem] opacity-100" : "max-h-0 opacity-0"
-          }`}
-          aria-hidden={!isOpen}
-        >
-          <div className="flex flex-col gap-1 py-4">
-            {NAV.map((entry) =>
-              isMenu(entry) ? (
-                <MobileMenuGroup key={entry.label} menu={entry} onClose={close} />
-              ) : (
-                <MobileLink key={entry.href} link={entry} onClose={close} />
-              ),
-            )}
-            <div className="mt-3 flex flex-col gap-2">
-              <Button asChild variant="ghost" className={`justify-start ${focusRing}`}>
-                <a
-                  href={SIGN_IN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    trackCtaClick("navbar_mobile", { destination: "signin" });
-                    close();
-                  }}
-                >
-                  Sign in
-                </a>
-              </Button>
-              <SignupModal>
-                <Button
-                  type="button"
-                  size="lg"
-                  className={`w-full justify-center ${navCtaBase} shadow-[0_0_24px_hsl(var(--primary)/0.3)] ${focusRing}`}
-                  onClick={() => {
-                    trackCtaClick("navbar_mobile", {
-                      destination: "trial",
-                      action: "open_signup_modal",
-                    });
-                    close();
-                  }}
-                >
-                  Start
-                  <ArrowRight size={16} className="ml-2" />
-                </Button>
-              </SignupModal>
-            </div>
+        <div className="flex items-center gap-3 justify-self-end">
+          <div className="hidden items-center gap-3 lg:flex">
+            <SignInLink source="navbar_desktop" className={cn("rounded px-3 py-2 text-sm font-medium text-foreground", focusRing)} />
+            <TrialButton
+              source="navbar_desktop"
+              className={cn(
+                "inline-flex h-10 items-center gap-2 rounded-full bg-primary px-[18px] text-sm font-semibold text-primary-foreground transition-colors hover:bg-[hsl(150_70%_41%)]",
+                focusRing,
+              )}
+            />
           </div>
+          <button
+            type="button"
+            aria-label={drawer ? "Close menu" : "Open menu"}
+            aria-expanded={drawer}
+            aria-controls="nav-mobile-drawer"
+            onClick={() => setDrawer((d) => !d)}
+            className={cn("flex h-11 w-11 items-center justify-center rounded text-foreground lg:hidden", focusRing)}
+          >
+            {drawer ? <X size={24} aria-hidden /> : <Menu size={24} aria-hidden />}
+          </button>
         </div>
       </div>
+
+      <MobileDrawer open={drawer} onClose={() => setDrawer(false)} />
     </nav>
   );
 };
