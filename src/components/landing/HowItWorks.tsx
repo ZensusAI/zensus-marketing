@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
@@ -34,11 +35,47 @@ import { PinnedSection } from "./PinnedSection";
  * is read and write, so "read-only" is not claimed); setup is "a few minutes".
  */
 
-const STEPS = [
-  { title: "Connect your data", desc: "OAuth to Plaid, QuickBooks, or HubSpot. All three if you want. No uploads." },
-  { title: "Watch the projection move", desc: "A 13-week projection that redraws itself as invoices post and payroll clears." },
-  { title: "Set your alert threshold", desc: "Slack pings you when your 30-day projection crosses the line." },
+// `link` turns one phrase of the description into a link to the page that
+// goes deeper on it.
+const STEPS: { title: string; desc: string; link?: { text: string; to: string } }[] = [
+  {
+    title: "Connect your data",
+    desc: "OAuth to Plaid, QuickBooks, or HubSpot. All three if you want. No uploads.",
+    link: { text: "Plaid, QuickBooks, or HubSpot", to: "/integrations" },
+  },
+  {
+    title: "Watch the projection move",
+    desc: "A 13-week projection that redraws itself as invoices post and payroll clears.",
+    link: { text: "13-week projection", to: "/blog/what-is-a-13-week-cash-flow-forecast" },
+  },
+  {
+    title: "Set your alert threshold",
+    desc: "Slack pings you when your 30-day projection crosses the line.",
+    link: { text: "Slack", to: "/integrations/slack" },
+  },
 ];
+
+// A step description with its linked phrase. Off-screen copies (faded or
+// collapsed) keep the link out of the tab order.
+const Desc = ({ step, focusable }: { step: (typeof STEPS)[number]; focusable: boolean }) => {
+  const l = step.link;
+  const at = l ? step.desc.indexOf(l.text) : -1;
+  if (!l || at < 0) return <>{step.desc}</>;
+  return (
+    <>
+      {step.desc.slice(0, at)}
+      <Link
+        to={l.to}
+        tabIndex={focusable ? undefined : -1}
+        onClick={(e) => e.stopPropagation()}
+        className="rounded-sm font-medium text-sage-dark underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        {l.text}
+      </Link>
+      {step.desc.slice(at + l.text.length)}
+    </>
+  );
+};
 
 const PROVIDERS = [
   { name: "Plaid", logo: plaidLogo, className: "logo-on-light object-cover object-left" },
@@ -305,7 +342,9 @@ const HowItWorks = () => {
                   </div>
                   <span className="mt-4 block font-mono text-[11px] text-sage-dark">({i + 1})</span>
                   <h3 className="mt-1 text-[19px] font-semibold leading-[1.3] tracking-[-0.01em] text-foreground">{st.title}</h3>
-                  <p className="mt-1 text-pretty text-[15px] leading-[1.6] text-muted-foreground">{st.desc}</p>
+                  <p className="mt-1 text-pretty text-[15px] leading-[1.6] text-muted-foreground">
+                    <Desc step={st} focusable />
+                  </p>
                 </li>
               ))}
             </ol>
@@ -344,7 +383,9 @@ const HowItWorks = () => {
                         </h3>
                         <span className={cn("grid transition-[grid-template-rows] duration-[450ms] ease-out", on ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
                           <span className="overflow-hidden">
-                            <span className="mt-2 block text-pretty text-[15px] leading-[1.6] text-muted-foreground">{st.desc}</span>
+                            <span className="mt-2 block text-pretty text-[15px] leading-[1.6] text-muted-foreground">
+                              <Desc step={st} focusable={on} />
+                            </span>
                           </span>
                         </span>
                       </div>
@@ -369,7 +410,9 @@ const HowItWorks = () => {
                     <div key={st.title} className="transition-opacity duration-[350ms] [grid-area:1/1]" style={{ opacity: i === act ? 1 : 0 }}>
                       <span className="font-mono text-[11px] text-sage-dark">({i + 1})</span>
                       <p className="mt-1 text-lg font-semibold text-foreground">{titleOf(i)}</p>
-                      <p className="mt-1.5 text-sm leading-[1.55] text-muted-foreground">{st.desc}</p>
+                      <p className="mt-1.5 text-sm leading-[1.55] text-muted-foreground">
+                        <Desc step={st} focusable={i === act} />
+                      </p>
                     </div>
                   ))}
                 </div>

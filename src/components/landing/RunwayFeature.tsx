@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
 import { clamp01, easeInOutCubic as ease, lerp } from "@/lib/motion";
@@ -44,6 +45,7 @@ const STEPS = [
       "Subscription-aware projections for annual and quarterly contracts",
       "See when revenue actually hits your bank, not flat monthly estimates",
     ],
+    link: { to: "/blog/arr-vs-cash-for-founders", label: "Why annual contracts and cash disagree" },
   },
   {
     eyebrow: "Scenarios",
@@ -56,6 +58,7 @@ const STEPS = [
       "Watch your cash flow update live as each scenario layer is applied",
       "Compare before-and-after projections and revert any change instantly",
     ],
+    link: { to: "/use-cases#hiring-scenarios", label: "Hiring scenarios in practice" },
   },
   {
     eyebrow: "Alerts",
@@ -68,6 +71,7 @@ const STEPS = [
       "Re-alerts on material change (a week earlier, or a 10% drop in projected low)",
       "Snooze or adjust your threshold from Slack in one click",
     ],
+    link: { to: "/integrations/slack", label: "How Slack alerts work" },
   },
 ];
 
@@ -91,7 +95,7 @@ const HIGHLIGHT_BAR = 9;
  * step's beat in the pin (see PinnedSection `anchors`), or on the step itself
  * when the section is static. blog-anchors.test.ts guards them.
  */
-export const FEATURE_STEP_ANCHORS = [
+const FEATURE_STEP_ANCHORS = [
   { id: "features-drill-down", at: 0.25 },
   { id: "features-scenarios", at: 0.58 },
   { id: "features-alerts", at: 0.92 },
@@ -295,6 +299,14 @@ const RunwayFeature = () => {
                         {s.headline} <span className="text-primary">{s.highlight}</span>
                       </h3>
                       <p className="mt-3.5 text-pretty text-sm leading-[1.6] text-muted-foreground min-[760px]:text-[15.5px]">{s.description}</p>
+                      {/* Out of the tab order while its step is faded out. */}
+                      <Link
+                        to={s.link.to}
+                        tabIndex={on ? undefined : -1}
+                        className="mt-2.5 inline-block rounded-sm text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      >
+                        {s.link.label} →
+                      </Link>
                       {/* Pinned, the bullets fit only beside the chart (1024px and up). */}
                       <ul className={cn("mt-5 hidden flex-col gap-2.5 border-t border-border pt-4", reduced ? "min-[760px]:flex" : "min-[1024px]:flex")}>
                         {s.bullets.map((b) => (

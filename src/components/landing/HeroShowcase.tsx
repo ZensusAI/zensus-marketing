@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState, type CSSProperties } from "react";
+import { Link } from "react-router-dom";
 import dashboard1 from "@/assets/dashboard-1.webp";
 import dashboard1At900 from "@/assets/dashboard-1-900.webp";
 import dashboard1At1400 from "@/assets/dashboard-1-1400.webp";
@@ -201,6 +202,18 @@ const HeroShowcase = () => {
             })}
             </ol>
           </div>
+          {/* The guides behind the two ideas the steps lead with. */}
+          <p ref={(el) => (reveal.current[3] = el)} className="showcase-reveal mt-4 hidden text-sm text-forest-muted-strong min-[820px]:block">
+            Go deeper:{" "}
+            <Link to="/blog/zero-cash-date-for-founders" className="rounded font-medium text-sage-light hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light">
+              the zero-cash date
+            </Link>{" "}
+            and{" "}
+            <Link to="/blog/what-is-a-13-week-cash-flow-forecast" className="rounded font-medium text-sage-light hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light">
+              the 13-week forecast
+            </Link>
+            .
+          </p>
         </div>
 
         <div

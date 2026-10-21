@@ -1,5 +1,6 @@
 import { type ReactNode, useId, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +14,12 @@ import { cn } from "@/lib/utils";
  * question (the category tag and the + sit beside it), so extracted headings
  * match the JSON-LD names. Nothing here is scroll-driven, so reduced motion
  * only drops the expand transitions.
+ *
+ * `links` turn phrases of an answer into links to the page that covers them
+ * in full. The answer text itself (and so the JSON-LD) is unchanged.
  */
+
+type FaqLink = { text: string; to: string };
 
 const faqGroups = [
   {
@@ -22,10 +28,16 @@ const faqGroups = [
       {
         question: "Do I need QuickBooks to use Zensus?",
         answer: "No. You can connect your bank account directly via Plaid, connect QuickBooks, sync your HubSpot subscriptions, or use any combination. No single integration is required to get started.",
+        links: [
+          { text: "Plaid", to: "/integrations/plaid" },
+          { text: "connect QuickBooks", to: "/integrations/quickbooks" },
+          { text: "HubSpot subscriptions", to: "/integrations/hubspot" },
+        ],
       },
       {
         question: "Can I connect my HubSpot account?",
         answer: "Yes. Zensus syncs your HubSpot subscriptions (including annual and quarterly contracts) so your cash flow projections reflect when revenue actually hits your bank, not just flat monthly estimates.",
+        links: [{ text: "HubSpot subscriptions", to: "/integrations/hubspot" }],
       },
       {
         question: "How long does setup take?",
@@ -39,14 +51,20 @@ const faqGroups = [
       {
         question: "What kind of questions can I ask?",
         answer: "Anything about your finances. Examples: \"When will I run out of cash?\", \"Can I afford to hire two engineers?\", \"What if we lose our largest annual contract?\", \"What happens with 5% monthly churn?\", \"What if we switch a client from monthly to annual billing?\"",
+        links: [{ text: "\"Can I afford to hire two engineers?\"", to: "/#features-scenarios" }],
       },
       {
         question: "Can I get notified when I'm running low on cash?",
         answer: "Yes. Zensus watches your 30-day projection and sends a Slack alert when a sync shows it dropping below a threshold you set. Alerts are checked after every sync and once a day. It re-alerts on material change (if the breach moves a week earlier or your projected low drops by 10%, at least $1,000), and you can snooze or adjust your threshold directly from Slack.",
+        links: [{ text: "Slack alert", to: "/integrations/slack" }],
       },
       {
         question: "How often does my data update?",
         answer: "Bank transactions from Plaid and invoices and subscriptions from HubSpot arrive by webhook when they change. QuickBooks syncs once a day. Every source also refreshes when you open Zensus if its data is more than an hour old, and you can trigger a manual sync at any time. Your cash flow forecast recalculates after each sync.",
+        links: [
+          { text: "Plaid", to: "/integrations/plaid" },
+          { text: "QuickBooks syncs once a day", to: "/integrations/quickbooks" },
+        ],
       },
     ],
   },
@@ -56,10 +74,12 @@ const faqGroups = [
       {
         question: "Is my financial data secure?",
         answer: "Yes. All integration tokens are encrypted at rest with AES-256-GCM. Your bank and QuickBooks credentials are never stored on our servers; we rely on OAuth managed by Plaid and Intuit. Every query is isolated by account at the database level, and data sits on encrypted AWS infrastructure.",
+        links: [{ text: "encrypted at rest with AES-256-GCM", to: "/security" }],
       },
       {
         question: "Who can see my data?",
         answer: "Only you. Your financial data is never shared, sold, or used to train AI models. Each account is completely isolated.",
+        links: [{ text: "Each account is completely isolated.", to: "/security" }],
       },
     ],
   },
@@ -69,6 +89,10 @@ const faqGroups = [
       {
         question: "How does pricing work?",
         answer: "Zensus Pro is $199 a month, billed monthly, cancel anytime. It includes every integration (Plaid, QuickBooks, HubSpot, Slack), real-time cash flow, scenario modeling, and alerts. Every new account starts with a 14-day free trial. Your card is collected up front but not charged until the trial ends. Cancel anytime before then at no cost. Annual billing is not available yet. Teams that need a tailored setup, custom integrations, or dedicated onboarding can talk to us about Zensus Custom.",
+        links: [
+          { text: "Zensus Pro is $199 a month", to: "/pricing" },
+          { text: "talk to us about Zensus Custom", to: "/pricing" },
+        ],
       },
     ],
   },
@@ -90,7 +114,7 @@ const faqJsonLd = {
 };
 
 const ALL = faqGroups.flatMap((g, gi) =>
-  g.items.map((q, qi) => ({ ...q, category: g.category, key: `${gi}-${qi}` })),
+  g.items.map((q, qi) => ({ ...q, links: ("links" in q ? q.links : []) as FaqLink[], category: g.category, key: `${gi}-${qi}` })),
 );
 const CATEGORIES = ["All", ...faqGroups.map((g) => g.category)];
 
@@ -115,6 +139,34 @@ const highlight = (text: string, q: string, markClass: string) => {
     );
     i = j + q.length;
   }
+  return out;
+};
+
+// Splits an answer at its linked phrases (first occurrence of each), then
+// highlights search matches inside every piece, links included.
+const answerWithLinks = (text: string, links: FaqLink[], q: string, focusable: boolean) => {
+  const spans = links
+    .map((l) => ({ ...l, at: text.indexOf(l.text) }))
+    .filter((l) => l.at >= 0)
+    .sort((a, b) => a.at - b.at);
+  const out: ReactNode[] = [];
+  let i = 0;
+  spans.forEach((l, n) => {
+    if (l.at < i) return;
+    if (l.at > i) out.push(<span key={`t${n}`}>{highlight(text.slice(i, l.at), q, "text-foreground")}</span>);
+    out.push(
+      <Link
+        key={`l${n}`}
+        to={l.to}
+        tabIndex={focusable ? undefined : -1}
+        className="rounded-sm font-medium text-sage-dark underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        {highlight(l.text, q, "text-foreground")}
+      </Link>,
+    );
+    i = l.at + l.text.length;
+  });
+  if (i < text.length) out.push(<span key="end">{highlight(text.slice(i), q, "text-foreground")}</span>);
   return out;
 };
 
@@ -254,7 +306,7 @@ const FAQ = () => {
                 >
                   <div className="overflow-hidden">
                     <p className="text-pretty pb-[18px] text-[15px] leading-[1.65] text-muted-foreground">
-                      {highlight(q.answer, ql, "text-foreground")}
+                      {answerWithLinks(q.answer, q.links, ql, on)}
                     </p>
                   </div>
                 </div>

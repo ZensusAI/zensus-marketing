@@ -33,6 +33,7 @@ const CARDS = [
     statLine: "of small business owners say one late payment made it hard to cover payroll or bills in the past year.",
     src: "QuickBooks Late Payments Report 2026",
     url: QB,
+    guide: { to: "/blog/zero-cash-date-for-founders", label: "Find your zero-cash date" },
   },
   {
     n: 61,
@@ -41,6 +42,10 @@ const CARDS = [
     statLine: "of FP&A professionals say lack of data reliability is their main hurdle.",
     src: "AFP FP&A Benchmarking Survey 2025",
     url: AFP,
+    guide: {
+      to: "/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel#when-does-a-spreadsheet-stop-being-enough",
+      label: "When a spreadsheet stops being enough",
+    },
   },
   {
     n: 96,
@@ -50,6 +55,7 @@ const CARDS = [
     statLine: "of FP&A professionals still use spreadsheets for planning.",
     src: "AFP Benchmarks for Financial Professionals 2025",
     url: AFP,
+    guide: { to: "/tools/runway-calculator", label: "Test a hire in the runway calculator" },
   },
   {
     n: 52,
@@ -58,6 +64,7 @@ const CARDS = [
     statLine: "of finance leaders say revenue forecasts miss actuals by more than 6%.",
     src: "Vena FP&A Impact Report 2026",
     url: VENA,
+    guide: { to: "/blog/arr-vs-cash-for-founders", label: "Why ARR and cash disagree" },
   },
 ];
 
@@ -83,7 +90,7 @@ type CardRefs = {
   divider: HTMLDivElement | null;
   title: HTMLHeadingElement | null;
   body: HTMLParagraphElement | null;
-  src: HTMLAnchorElement | null;
+  src: HTMLDivElement | null;
 };
 
 const Problem = () => {
@@ -228,16 +235,24 @@ const Problem = () => {
                 <p ref={(el) => (r.body = el)} className="problem-ghost text-pretty text-[15px] leading-[1.55] text-muted-foreground">
                   {card.body}
                 </p>
-                <a
-                  ref={(el) => (r.src = el)}
-                  href={card.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  // !opacity: a keyboard focus is never left on a faded link.
-                  className="problem-reveal mt-auto w-fit rounded-sm pt-1.5 font-mono text-[11px] tracking-[0.04em] text-muted-foreground hover:text-primary hover:underline focus-visible:!opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                >
-                  {card.src}{"\u00a0"}↗
-                </a>
+                {/* The guide that goes deeper, then the stat's source.
+                    !opacity: a keyboard focus is never left on a faded link. */}
+                <div ref={(el) => (r.src = el)} className="problem-reveal mt-auto flex flex-col gap-2 pt-1.5 focus-within:!opacity-100">
+                  <Link
+                    to={card.guide.to}
+                    className="w-fit rounded-sm text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    {card.guide.label} →
+                  </Link>
+                  <a
+                    href={card.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-fit rounded-sm font-mono text-[11px] tracking-[0.04em] text-muted-foreground hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    {card.src}{"\u00a0"}↗
+                  </a>
+                </div>
               </div>
             );
           })}
