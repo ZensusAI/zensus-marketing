@@ -57,9 +57,10 @@ export const COMPANY_ADDRESSES = [
 ] as const;
 
 // Public profiles. The same URLs sit in the Organization sameAs in index.html
-// and on the Wikidata item Q141775682. The footer shows every one except
-// GitHub (dropped from the footer in the redesign, handoff 13-footer); it
-// stays here and in sameAs because it is still the company's profile.
+// and on the Wikidata item Q141775682. The footer shows LinkedIn, X and
+// Instagram: GitHub was dropped in the redesign (handoff 13-footer) and
+// YouTube at the user's request (21 Oct 2026). Both stay here and in sameAs
+// because they are still the company's profiles.
 export const COMPANY_PROFILES = {
   linkedin: "https://www.linkedin.com/company/zensusai",
   x: "https://x.com/zensusai",
