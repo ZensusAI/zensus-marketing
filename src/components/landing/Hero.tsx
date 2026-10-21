@@ -1,90 +1,68 @@
+import type { CSSProperties } from "react";
 import { TryItNowButton } from "./TryItNowButton";
 import { TalkToUsButton } from "./TalkToUsButton";
-import { CornerMark, LedgerGrid, PlottedCells } from "./Backdrop";
-import { TextHoverHalo } from "@/components/ui/text-hover-halo";
+import { CornerMark } from "./Backdrop";
+import { HERO_MESH } from "./hero-mesh";
 
 const H1_LINE_1 = "Your cash flow,";
 const H1_LINE_2 = "mapped as far ahead as you need.";
-const H1_SENTENCE_2 =
-  "Cash flow forecasting for businesses with unpredictable revenue.";
+const KICKER = "Cash flow forecasting for businesses with unpredictable revenue.";
 
-/** Ruled-cell size for the hero's ledger grid, in px. */
-const CELL = 56;
+// Mesh-wave overlay (handoff 02-hero, locked 5a): cover over cream at 0.95,
+// masked so it fades toward the copy. See hero-mesh.ts for the file sizes.
+const WAVES_MASK =
+  "radial-gradient(ellipse 58% 52% at 50% 44%, rgba(0,0,0,.22) 0%, rgba(0,0,0,.3) 40%, black 90%)";
+const wavesStyle = {
+  "--mesh-narrow": `url(${HERO_MESH.narrow})`,
+  "--mesh-wide": `url(${HERO_MESH.wide})`,
+  WebkitMaskImage: WAVES_MASK,
+  maskImage: WAVES_MASK,
+} as CSSProperties;
 
-// Filled cells in the margins, outside the ruled column (the column is
-// 1152px wide, so columns 11 and beyond sit past its rules at any width
-// where the fills are shown). Dotted cells are the figures nobody pastes
-// by hand any more; the sage cell is the one number that matters.
-const PLOTTED = [
-  { col: -13, row: 2 },
-  { col: -12, row: 5, tone: "sage" as const },
-  { col: -11, row: 7 },
-  { col: 11, row: 3 },
-  { col: 12, row: 6 },
-  { col: 14, row: 4, tone: "sage" as const },
-];
-
-// Centred hero in the shape the category uses (Drivetrain, Float, Jirav,
-// HiBob Mosaic and Vareto all do this; surveyed 16 Oct 2026): one short
-// audience line, the headline, one subhead, the buttons directly under it,
-// then a proof strip (TrustBar) and the product itself (HeroShowcase) right
-// below. The copy sits in a ruled column on ledger paper (see Backdrop.tsx):
-// a centred grid that clears behind the words and shows toward the margins,
-// column rules with registration marks at the corners, a few plotted cells
-// outside the rules, and a soft sage bloom behind the headline. Type is
-// fluid (text-hero and friends in tailwind.config.ts) so each viewport gets
-// a size that fits rather than the nearest breakpoint's.
+// Centred hero from handoff 02-hero (variant a, waves texture): audience line,
+// two-line headline, subhead, the two buttons and the trial terms, inside a
+// ruled column with registration marks at its top corners. No ledger grid,
+// no plotted cells and no console card, per the handoff. The responsive
+// switch is the handoff's own: 820px.
 const Hero = () => (
   <section id="hero" className="relative overflow-hidden bg-background">
-    <LedgerGrid cell={CELL} />
-    <PlottedCells cell={CELL} cells={PLOTTED} className="hidden lg:block" />
     <div
-      className="absolute inset-0 pointer-events-none [background:radial-gradient(52rem_22rem_at_50%_38%,hsl(var(--primary)/0.14),transparent_70%)]"
       aria-hidden
+      style={wavesStyle}
+      className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-95 [background-image:var(--mesh-narrow)] min-[820px]:[background-image:var(--mesh-wide)]"
+    />
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 [background:radial-gradient(52rem_22rem_at_50%_38%,rgba(34,197,115,.14),transparent_70%)]"
     />
 
-    <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-      {/* The ruled column. It runs from the top of the page (behind the
-          fixed navbar) to the trust strip, whose top rule crosses it. */}
-      <div className="relative px-2 pt-[6.75rem] pb-10 text-center sm:px-8 md:border-x md:border-border md:pt-[7rem] md:pb-11 lg:px-10 lg:pt-[7.5rem] lg:pb-12">
-        <CornerMark className="-left-[6px] top-[4rem] hidden md:block" />
-        <CornerMark className="-right-[6px] top-[4rem] hidden md:block" />
-        <CornerMark className="-left-[6px] -bottom-[6px] hidden md:block" />
-        <CornerMark className="-right-[6px] -bottom-[6px] hidden md:block" />
+    <div className="relative mx-auto max-w-6xl px-4 min-[820px]:px-6">
+      {/* The ruled column runs from the top of the page, behind the fixed
+          64px navbar, down to the proof strip. */}
+      <div className="relative border-x border-transparent px-1 pb-14 pt-[6.5rem] text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pt-32">
+        <CornerMark className="-left-[6px] top-[4.5rem] hidden min-[820px]:block" />
+        <CornerMark className="-right-[6px] top-[4.5rem] hidden min-[820px]:block" />
 
-        <p className="text-hero-kicker font-medium text-muted-foreground">
-          {H1_SENTENCE_2}
-        </p>
+        <p className="text-sm font-medium text-muted-foreground min-[820px]:text-base">{KICKER}</p>
 
-        <h1 className="mx-auto mt-4 text-hero text-foreground motion-safe:animate-fade-in">
-          <span className="block">
-            <TextHoverHalo as="span" text={H1_LINE_1} />
-          </span>
+        <h1 className="mx-auto mt-4 text-[40px] font-bold leading-[1.05] tracking-[-0.02em] text-foreground min-[820px]:text-[54px] min-[1201px]:text-[62px]">
+          <span className="block">{H1_LINE_1}</span>
           {/* Both lines are block spans, so this space draws nothing. It is
               there for anything that reads the H1 as text: without it the
-              headline came out as "Your cash flow,mapped as far ahead". */}
-          {" "}
-          <span className="block text-balance">
-            <TextHoverHalo as="span" text={H1_LINE_2} />
-          </span>
+              headline came out as "Your cash flow,mapped as far ahead". */}{" "}
+          <span className="block text-balance">{H1_LINE_2}</span>
         </h1>
 
-        <p className="mx-auto mt-5 max-w-2xl text-hero-sub text-muted-foreground md:mt-6">
-          Zensus is cash flow forecasting software that connects your bank,
-          QuickBooks, and HubSpot to project the exact date your cash runs out.
+        <p className="mx-auto mt-6 max-w-[672px] text-pretty text-[17px] leading-[1.55] text-muted-foreground min-[820px]:text-[19px]">
+          Zensus is cash flow forecasting software that connects your bank, QuickBooks, and HubSpot to project the
+          exact date your cash runs out.
         </p>
 
-        <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row md:mt-8">
-          <TryItNowButton size="lg" trackHeroConversion />
-          <TalkToUsButton
-            size="lg"
-            variant="ghost"
-            className="border border-border bg-card text-foreground hover:border-primary/60"
-          />
+        <div className="mt-9 flex flex-wrap justify-center gap-3">
+          <TryItNowButton variant="solid" trackHeroConversion />
+          <TalkToUsButton variant="outline" />
         </div>
-        <p className="mt-3 text-sm text-muted-foreground">
-          14-day free trial, cancel anytime. No charge until it ends.
-        </p>
+        <p className="mt-3 text-sm text-muted-foreground">14-day free trial, cancel anytime. No charge until it ends.</p>
       </div>
     </div>
   </section>

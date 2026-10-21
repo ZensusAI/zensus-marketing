@@ -15,13 +15,28 @@ interface TryItNowButtonProps {
    * the hero's existing event name intact.
    */
   source?: string;
+  /**
+   * "shine" (default) keeps the animated border used across the site.
+   * "solid" is the homepage redesign's primary button (handoff 00-overview):
+   * 52px, 30px padding, 16px/600, a cream halo instead of the shine.
+   */
+  variant?: "shine" | "solid";
 }
+
+// Redesign primary button. The halo is the handoff's shadow exactly; the hover
+// lift is 1px, off under reduced motion.
+const SOLID =
+  "group inline-flex h-[52px] items-center gap-2 rounded-full bg-primary px-[30px] text-base font-semibold text-primary-foreground " +
+  "shadow-[0_0_0_1px_#EBD9A6,0_0_18px_rgba(235,217,166,.6),0_4px_6px_-1px_rgba(0,0,0,.1)] " +
+  "transition-[transform,background-color] duration-300 ease-ui hover:-translate-y-px hover:bg-[hsl(150_70%_41%)] active:translate-y-0 motion-reduce:transform-none " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 export const TryItNowButton = ({
   className,
   size = "md",
   trackHeroConversion = false,
   source,
+  variant = "shine",
 }: TryItNowButtonProps) => {
   const onClick = trackHeroConversion
     ? trackHeroTrialClick
@@ -32,6 +47,17 @@ export const TryItNowButton = ({
             action: "open_signup_modal",
           })
       : undefined;
+
+  if (variant === "solid") {
+    return (
+      <SignupModal>
+        <button type="button" onClick={onClick} className={cn(SOLID, className)}>
+          Start
+          <ArrowRight size={16} aria-hidden className="transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none" />
+        </button>
+      </SignupModal>
+    );
+  }
 
   return (
     <ShineBorder

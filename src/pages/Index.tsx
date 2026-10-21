@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
+import { HERO_MESH } from "@/components/landing/hero-mesh";
 import HeroShowcase from "@/components/landing/HeroShowcase";
 import CustomerStory from "@/components/landing/CustomerStory";
 import { TrustBar } from "@/components/landing/TrustBar";
@@ -63,9 +64,11 @@ const Index = () => {
         <meta name="twitter:description" content="Get a live, always-current picture of your cash position. Built for businesses with unpredictable revenue." />
         <meta name="twitter:image" content={`${SITE_URL}/og/home.png`} />
         <link rel="canonical" href={`${SITE_URL}/`} />
-        {/* The aurora hero image is gone (cream brand canvas replaced it), so
-            its LCP preloads went with it. The aurora asset files stay in
-            public/ because SignupModal still uses /hero-aurora-1200.webp. */}
+        {/* The hero's mesh-wave background is the largest thing in the first
+            screen, so it is likely the LCP element: preload exactly the file
+            the CSS will pick at each width. */}
+        <link rel="preload" as="image" type="image/webp" href={HERO_MESH.narrow} media={`(max-width: ${HERO_MESH.switchPx - 1}px)`} fetchPriority="high" />
+        <link rel="preload" as="image" type="image/webp" href={HERO_MESH.wide} media={`(min-width: ${HERO_MESH.switchPx}px)`} fetchPriority="high" />
       </Helmet>
       {/* 01-navbar: redesigned (shared by every route). */}
       <Navbar />
@@ -75,7 +78,7 @@ const Index = () => {
             and PricingPreview left the homepage; their content lives on
             /security and /pricing, both in the navbar, and the proof strip
             keeps the OAuth and AES-256-GCM claims in text. */}
-        {/* TODO(02-hero) */}
+        {/* 02-hero: redesigned. */}
         <Hero />
         {/* TODO(03-proof-strip) */}
         <TrustBar />
