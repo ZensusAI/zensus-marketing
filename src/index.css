@@ -387,3 +387,38 @@
     transform: none !important;
   }
 }
+
+/* Problem section (Problem.tsx). Odometer reels: each reel is a column of the
+   digits 0-9 drawn as generated content (not DOM text, so crawlers read only
+   the real figure in the sr-only span), moved up by --d digits as --roll goes
+   0 to 1. Reduced motion: the final state before and after hydration. */
+.problem-reel {
+  transform: translateY(calc(var(--roll, 0) * var(--d, 0) * -1em));
+}
+.problem-reel::before {
+  content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9";
+  display: block;
+  white-space: pre;
+  line-height: 1em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .problem-stat {
+    --roll: 1 !important;
+  }
+  .problem-ghost,
+  .problem-reveal {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .problem-scale {
+    transform: none !important;
+  }
+  .problem-underline {
+    background-size: 100% 0.12em !important;
+  }
+}
+/* The visible % sign is generated too, so the stat's text is exactly "39%". */
+.problem-pct::before {
+  content: "%";
+}
