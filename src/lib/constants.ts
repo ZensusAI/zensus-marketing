@@ -56,8 +56,10 @@ export const COMPANY_ADDRESSES = [
   },
 ] as const;
 
-// Public profiles, in the order the footer shows them. The same URLs sit in
-// the Organization sameAs in index.html and on the Wikidata item Q141775682.
+// Public profiles. The same URLs sit in the Organization sameAs in index.html
+// and on the Wikidata item Q141775682. The footer shows every one except
+// GitHub (dropped from the footer in the redesign, handoff 13-footer); it
+// stays here and in sameAs because it is still the company's profile.
 export const COMPANY_PROFILES = {
   linkedin: "https://www.linkedin.com/company/zensusai",
   x: "https://x.com/zensusai",

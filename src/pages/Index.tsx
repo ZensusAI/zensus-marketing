@@ -105,10 +105,10 @@ const Index = () => {
             25 Oct 2026 Search Console export. Remove it only once a
             redesigned section carries these links. */}
         <Resources />
-        {/* TODO(12-final-cta) */}
+        {/* 12-final-cta: redesigned (rounded bottom onto the footer). */}
         <FinalCTABand />
       </main>
-      {/* TODO(13-footer) */}
+      {/* 13-footer: redesigned (sitewide). */}
       <Footer />
     </div>
   );
