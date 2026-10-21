@@ -113,6 +113,8 @@ export default {
       },
       transitionTimingFunction: {
         "in-out-cubic": "cubic-bezier(0.65, 0, 0.35, 1)",
+        // Homepage redesign UI transitions (handoff 00-overview).
+        ui: "cubic-bezier(.2,.8,.2,1)",
       },
       keyframes: {
         "accordion-down": {

@@ -323,3 +323,28 @@
     transition: none;
   }
 }
+
+/* Pinned, scroll-scrubbed sections (PinnedSection.tsx). The track is as tall
+   as the pin length; the stage sticks to the top for its whole height. --p is
+   the scroll progress (0 to 1) written by useScrollProgress. Under reduced
+   motion the track collapses and --p is 1, so the section shows its finished
+   end state, including before hydration. */
+.pin-track {
+  --p: 0;
+  height: var(--pin-h, auto);
+}
+.pin-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pin-track {
+    --p: 1;
+    height: auto;
+  }
+  .pin-stage {
+    position: static;
+    height: auto;
+  }
+}
