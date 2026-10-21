@@ -94,7 +94,7 @@ const Index = () => {
         <Bento />
         {/* 09-comparison: redesigned (pinned). */}
         <Comparison />
-        {/* TODO(10-how-it-works), pinned */}
+        {/* 10-how-it-works: redesigned (pinned). */}
         <HowItWorks />
         {/* TODO(11-faq): keep the FAQPage JSON-LD. */}
         <FAQ />
