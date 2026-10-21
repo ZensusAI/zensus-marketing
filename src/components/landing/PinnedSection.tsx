@@ -12,6 +12,12 @@ interface PinnedSectionProps {
   stageClassName?: string;
   onProgress?: (values: ScrollProgress) => void;
   "aria-labelledby"?: string;
+  /**
+   * Deep-link targets inside the pin: each id lands the scroll at progress
+   * `at` (0 to 1) through the track, so a link to it opens on that beat.
+   * Only rendered while pinned; static sections put the ids on their content.
+   */
+  anchors?: readonly { id: string; at: number }[];
 }
 
 /**
@@ -34,6 +40,7 @@ export const PinnedSection = ({
   stageClassName,
   onProgress,
   "aria-labelledby": labelledBy,
+  anchors,
 }: PinnedSectionProps) => {
   const ref = useRef<HTMLElement>(null);
   const reduced = useStaticPins();
@@ -47,6 +54,16 @@ export const PinnedSection = ({
       className={cn("pin-track relative", className)}
       style={{ "--pin-h": `${viewports * 100}vh` } as CSSProperties}
     >
+      {!reduced &&
+        anchors?.map((a) => (
+          <span
+            key={a.id}
+            id={a.id}
+            aria-hidden
+            className="pointer-events-none absolute left-0 h-px w-px"
+            style={{ top: `calc(${a.at} * (var(--pin-h) - 100svh))` }}
+          />
+        ))}
       <div className={cn("pin-stage", stageClassName)}>{children}</div>
     </section>
   );

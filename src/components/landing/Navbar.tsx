@@ -58,7 +58,8 @@ const QUESTIONS: Question[] = [
   {
     q: "When does my cash run out?",
     feature: "Zero-cash date and 13-week rolling forecast",
-    href: "/#features",
+    // The showcase is where the zero-cash date and the 13-week view live.
+    href: "/#product",
     url: APP_HOST,
     img: dashboard13Week,
     width: 1984,
@@ -69,7 +70,9 @@ const QUESTIONS: Question[] = [
   {
     q: "When does this contract actually pay?",
     feature: "Drill down to any week or day",
-    href: "/integrations/hubspot",
+    // The contract-timing use case answers it for QuickBooks and HubSpot
+    // users alike; the HubSpot page would only help HubSpot users.
+    href: "/use-cases#saas-contracts",
     url: `${APP_HOST}/runway`,
     img: runwayDrilldown,
     width: 1506,
@@ -80,7 +83,8 @@ const QUESTIONS: Question[] = [
   {
     q: "Can I afford two engineers next quarter?",
     feature: "Plain-English scenarios",
-    href: "/use-cases",
+    // The scenarios step's own example is "we hire two engineers".
+    href: "/#features-scenarios",
     url: `${APP_HOST}/runway`,
     img: runwayWhatIf,
     width: 2264,
@@ -95,7 +99,9 @@ const QUESTIONS: Question[] = [
   // on the company's side of the table.
   {
     q: "How many months does this round buy us?",
-    feature: "Funding scenarios",
+    // The calculator has no funding input: the reader enters the cash after
+    // the raise, so the caption says what it does rather than "scenarios".
+    feature: "Runway after a raise",
     href: "/tools/runway-calculator",
     url: `${APP_HOST}/runway`,
     img: runwayWhatIf,
@@ -172,13 +178,13 @@ const RESOURCE_COLUMNS = [
   { title: "Compare", links: COMPARE },
 ];
 
-// Mobile "Learn" chips. "Compare" has no index page; it opens the broadest
-// comparison, the Float alternatives roundup.
+// Mobile "Learn" chips. "Compare" has no index page; it opens the homepage
+// scorecard, which links to all four comparison pages.
 const LEARN_SHORT = [
   { href: "/blog", label: "Blog" },
   { href: "/changelog", label: "Changelog" },
   { href: "/#faq", label: "FAQ" },
-  { href: "/compare/float-alternatives", label: "Compare" },
+  { href: "/#compare", label: "Compare" },
   { href: "/about", label: "About" },
 ];
 

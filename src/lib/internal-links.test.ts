@@ -101,6 +101,28 @@ describe("internal links", () => {
     expect(dead).toEqual([]);
   });
 
+  // Links to a homepage section ("/#features-scenarios") land on the top of
+  // the page when the id is gone, with no error anywhere. The redesign dropped
+  // three such ids that 14 posts used. Every "/#id" target must be an id the
+  // homepage sections declare: a literal id="..." or an anchors entry
+  // ({ id: "..." }) handed to PinnedSection.
+  it("points every homepage section link at an id that exists", () => {
+    const landing = readdirSync(join(repoRoot, "src", "components", "landing"))
+      .filter((f) => f.endsWith(".tsx") && !f.endsWith(".test.tsx"))
+      .map((f) => read("src", "components", "landing", f))
+      .join("\n");
+    const ids = new Set([
+      ...[...landing.matchAll(/\bid="([\w-]+)"/g)].map((m) => m[1]),
+      ...[...landing.matchAll(/\bid:\s*"([\w-]+)"/g)].map((m) => m[1]),
+    ]);
+    const hashTargets = targets.filter((t) => t.path === "/" && t.target.includes("#"));
+    expect(hashTargets.length, "the blog links homepage sections").toBeGreaterThan(10);
+    const dead = hashTargets
+      .filter((t) => !ids.has(t.target.split("#")[1]))
+      .map((t) => `${t.file}: ${t.target}`);
+    expect(dead).toEqual([]);
+  });
+
   // The pages below had no in-content links before September 2026 (the
   // comparison pages had two). They are the pages a buyer reads last, so the
   // homepage keeps pointing at them from its own content, not only the footer.

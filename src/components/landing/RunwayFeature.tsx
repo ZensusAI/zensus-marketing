@@ -85,6 +85,18 @@ const WEEK7 = [40, 46, 38, 100, 44, 22, 18];
 const PIN_VIEWPORTS = 4.2;
 const HIGHLIGHT_BAR = 9;
 
+/**
+ * Deep-link targets from the blog (`/#features-drill-down` and so on). They
+ * existed before the redesign and 14 posts link to them; each lands on its
+ * step's beat in the pin (see PinnedSection `anchors`), or on the step itself
+ * when the section is static. blog-anchors.test.ts guards them.
+ */
+export const FEATURE_STEP_ANCHORS = [
+  { id: "features-drill-down", at: 0.25 },
+  { id: "features-scenarios", at: 0.58 },
+  { id: "features-alerts", at: 0.92 },
+] as const;
+
 const stepAt = (p: number) => (p < 0.34 ? 0 : p < 0.67 ? 1 : 2);
 const levelAt = (p: number) => {
   const k1 = ease((p - 0.05) / 0.17);
@@ -223,6 +235,7 @@ const RunwayFeature = () => {
       aria-labelledby="runway-heading"
       className="bg-background"
       stageClassName="overflow-hidden"
+      anchors={FEATURE_STEP_ANCHORS}
     >
       <div className="h-full px-5 pb-5 pt-[calc(4rem+28px)] min-[760px]:px-8 min-[760px]:pb-10 min-[760px]:pt-[calc(4rem+52px)]">
         <div className="mx-auto flex h-full max-w-6xl flex-col gap-4 min-[760px]:gap-8 min-[1024px]:justify-center">
@@ -271,6 +284,7 @@ const RunwayFeature = () => {
                   return (
                     <div
                       key={s.eyebrow}
+                      id={reduced ? FEATURE_STEP_ANCHORS[i].id : undefined}
                       className={cn(
                         "transition-[opacity,transform] duration-[450ms] ease-out",
                         !reduced && "[grid-area:1/1]",
