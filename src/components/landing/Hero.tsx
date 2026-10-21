@@ -40,8 +40,12 @@ const Hero = () => (
 
     <div className="relative mx-auto max-w-6xl px-4 min-[820px]:px-6">
       {/* The ruled column runs from the top of the page, behind the fixed
-          64px navbar, down to the proof strip. */}
-      <div className="relative border-x border-transparent px-1 pb-14 pt-[6.5rem] text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pt-32">
+          64px navbar, down to the proof strip. The bottom padding is the
+          handoff's 56px plus the proof strip's 56px wave band: the band is
+          drawn here rather than as its own layer, because a separate layer
+          repainted the waves at a different crop and left a visible seam
+          (seen at 1920px). */}
+      <div className="relative border-x border-transparent px-1 pb-28 pt-[6.5rem] text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pt-32">
         <CornerMark className="-left-[6px] top-[4.5rem] hidden min-[820px]:block" />
         <CornerMark className="-right-[6px] top-[4.5rem] hidden min-[820px]:block" />
 
@@ -64,7 +68,7 @@ const Hero = () => (
           <TryItNowButton variant="solid" trackHeroConversion />
           <TalkToUsButton variant="outline" />
         </div>
-        <p className="mt-3 text-sm text-muted-foreground">14-day free trial, cancel anytime. No charge until it ends.</p>
+        <p className="mt-3 text-balance text-sm text-muted-foreground">14-day free trial, cancel anytime. No charge until it ends.</p>
       </div>
     </div>
   </section>

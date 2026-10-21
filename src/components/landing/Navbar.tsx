@@ -349,7 +349,7 @@ function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
         <div className="flex items-center gap-3.5 text-xs text-muted-foreground">
           <span>Built on</span>
           {INTEGRATIONS.map((g) => (
-            <img key={g.name} src={g.logo} alt={g.name} width={18} height={18} className={cn("h-[18px] w-[18px] object-contain", g.className)} />
+            <img key={g.name} src={g.logo} alt={g.name} height={18} className={cn("h-[18px] w-auto", g.className)} />
           ))}
           <Link to="/integrations" onClick={onNavigate} className={cn("ml-auto rounded font-semibold text-primary hover:underline", focusRing)}>
             Integrations →
@@ -525,7 +525,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               aria-label={`${g.name} integration`}
               className={cn("flex h-11 flex-1 items-center justify-center rounded-xl border border-border bg-background", focusRing)}
             >
-              <img src={g.logo} alt="" width={20} height={20} className={cn("h-5 w-5 object-contain", g.className)} />
+              <img src={g.logo} alt="" height={20} className={cn("h-5 w-auto", g.className)} />
             </Link>
           ))}
         </div>

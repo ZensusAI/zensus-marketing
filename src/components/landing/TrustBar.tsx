@@ -1,11 +1,9 @@
-import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { Check, ShieldCheck } from "lucide-react";
 import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
 import slackLogo from "@/assets/integrations/slack.svg";
-import { HERO_MESH } from "./hero-mesh";
 
 const G2_REVIEW_URL = "https://www.g2.com/products/zensus/reviews";
 // From the customer's video captions, not his G2 review (which leans on
@@ -27,35 +25,20 @@ const FACTS = ["Bank-level OAuth", "AES-256-GCM at rest", "Account-level isolati
 const STAR =
   "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z";
 
-const bandStyle = {
-  "--mesh-narrow": `url(${HERO_MESH.narrow})`,
-  "--mesh-wide": `url(${HERO_MESH.wide})`,
-} as CSSProperties;
-
 const focusRing =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 /*
- * Proof strip from handoff 03-proof-strip (locked 6c): a 56px band that
- * carries the hero's waves and ruled column down, then three cells on a
- * ruled Cream Warm band: the G2 rating with the customer quote, the four
+ * Proof strip from handoff 03-proof-strip (locked 6c). The handoff's 56px
+ * band that carries the hero's waves and ruled column down is part of the
+ * hero (Hero.tsx bottom padding), so the waves never seam. Then three cells
+ * on a ruled Cream Warm band: the G2 rating with the customer quote, the four
  * integrations (each links to its page), and "Bank-level security" (links to
  * /security; hover or focus shows the four security facts). The facts are
  * always in the HTML, only hidden visually, so crawlers read them. Cells stack
  * below the handoff's 820px switch.
  */
 export const TrustBar = () => (
-  <>
-    <div
-      aria-hidden
-      style={bandStyle}
-      className="relative h-14 bg-cover bg-bottom bg-no-repeat opacity-90 [background-image:var(--mesh-narrow)] min-[820px]:[background-image:var(--mesh-wide)]"
-    >
-      <div className="mx-auto h-full max-w-6xl px-6">
-        <div className="h-full border-x border-transparent min-[820px]:border-border" />
-      </div>
-    </div>
-
     <section aria-label="Customer rating, integrations and security" className="relative z-10 border-y border-border bg-secondary/50">
       <div className="mx-auto grid max-w-[1280px] px-5 min-[820px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.95fr)] min-[820px]:px-8">
         {/* Rating and quote */}
@@ -73,13 +56,14 @@ export const TrustBar = () => (
           <p className="m-0 text-[13.5px] leading-[1.45] text-muted-foreground">
             <span className="italic text-foreground">{`"${QUOTE}"`}</span>
             <br />
-            Jameson Pitts, CEO of Sangfroid! Studios ·{" "}
+            <span className="whitespace-nowrap">Jameson Pitts,</span>{" "}
+            <span className="whitespace-nowrap">CEO of Sangfroid! Studios</span> ·{" "}
             <a
               href={G2_REVIEW_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Zensus 5.0 star rating on G2, verified review (opens in a new tab)"
-              className={`hover:text-primary hover:underline ${focusRing}`}
+              className={`whitespace-nowrap hover:text-primary hover:underline ${focusRing}`}
             >
               5.0 on G2
             </a>
@@ -108,7 +92,7 @@ export const TrustBar = () => (
               <span className="block text-[15px] font-semibold text-foreground">Bank-level security</span>
               <span className="mt-0.5 block text-[13px] text-muted-foreground">
                 Credentials never stored ·{" "}
-                <Link to="/security" className={`text-primary hover:underline ${focusRing}`}>
+                <Link to="/security" className={`whitespace-nowrap text-primary hover:underline ${focusRing}`}>
                   How we protect your data
                 </Link>
               </span>
@@ -132,5 +116,4 @@ export const TrustBar = () => (
         </div>
       </div>
     </section>
-  </>
 );
