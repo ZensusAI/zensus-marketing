@@ -96,7 +96,7 @@ const Index = () => {
         <Comparison />
         {/* 10-how-it-works: redesigned (pinned). */}
         <HowItWorks />
-        {/* TODO(11-faq): keep the FAQPage JSON-LD. */}
+        {/* 11-faq: redesigned (search-first; keeps the FAQPage JSON-LD). */}
         <FAQ />
         {/* Kept on purpose, against the handoff's removal list: this is the
             only in-content homepage link to the free tools and key guides
