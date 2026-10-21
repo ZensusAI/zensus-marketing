@@ -11,8 +11,6 @@ import RunwayFeature from "@/components/landing/RunwayFeature";
 import Bento from "@/components/landing/Bento";
 import Comparison from "@/components/landing/Comparison";
 import HowItWorks from "@/components/landing/HowItWorks";
-import SecurityStrip from "@/components/landing/SecurityStrip";
-import PricingPreview from "@/components/landing/PricingPreview";
 import FAQ from "@/components/landing/FAQ";
 import Resources from "@/components/landing/Resources";
 import FinalCTABand from "@/components/landing/FinalCTABand";
@@ -69,25 +67,45 @@ const Index = () => {
             its LCP preloads went with it. The aurora asset files stay in
             public/ because SignupModal still uses /hero-aurora-1200.webp. */}
       </Helmet>
+      {/* TODO(01-navbar): replace with the redesigned navbar. */}
       <Navbar />
       <main>
-        {/* Category order (surveyed 16 Oct 2026): pitch and buttons, proof
-            strip, the product, a customer, then the pain and the detail. */}
+        {/* Homepage redesign order (handoff 00-overview). Each TODO names the
+            handoff folder that replaces the current component. SecurityStrip
+            and PricingPreview left the homepage; their content lives on
+            /security and /pricing, both in the navbar, and the proof strip
+            keeps the OAuth and AES-256-GCM claims in text. */}
+        {/* TODO(02-hero) */}
         <Hero />
+        {/* TODO(03-proof-strip) */}
         <TrustBar />
+        {/* TODO(04-product-showcase), pinned */}
         <HeroShowcase />
+        {/* TODO(05-customer-story) */}
         <CustomerStory />
+        {/* TODO(06-problem) */}
         <Problem />
+        {/* TODO(07-runway-feature), pinned */}
         <RunwayFeature />
+        {/* TODO(08-sync), pinned */}
         <Bento />
+        {/* TODO(09-comparison), pinned */}
         <Comparison />
+        {/* TODO(10-how-it-works), pinned */}
         <HowItWorks />
-        <SecurityStrip />
-        <PricingPreview />
+        {/* TODO(11-faq): keep the FAQPage JSON-LD. */}
         <FAQ />
+        {/* Kept on purpose, against the handoff's removal list: this is the
+            only in-content homepage link to the free tools and key guides
+            (internal-links.test.ts). The payroll calendar holds about two
+            thirds of search impressions and is mid-measurement until the
+            25 Oct 2026 Search Console export. Remove it only once a
+            redesigned section carries these links. */}
         <Resources />
+        {/* TODO(12-final-cta) */}
         <FinalCTABand />
       </main>
+      {/* TODO(13-footer) */}
       <Footer />
     </div>
   );
