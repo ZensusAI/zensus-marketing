@@ -37,18 +37,19 @@ describe("homepage comparison matrix", () => {
   it("words an unconfirmed cross as not found, and a confirmed one as no", () => {
     const [bankFeed] = rows();
 
+    // Columns follow the redesign: Zensus, Float, Cash Flow Frog, Forecastr.
     expect(bankFeed).toEqual([
       "Live bank feed (Plaid)",
+      "Yes",
       "No ‡",
       "Yes",
       "Not found *",
-      "Yes",
     ]);
   });
 
   it("keeps the note beside a tick readable", () => {
     const crm = rows()[2];
 
-    expect(crm[4]).toBe("Yes: HubSpot");
+    expect(crm[1]).toBe("Yes: HubSpot");
   });
 });

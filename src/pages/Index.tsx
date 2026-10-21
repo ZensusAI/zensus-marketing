@@ -92,7 +92,7 @@ const Index = () => {
         <RunwayFeature />
         {/* 08-sync: redesigned (pinned). */}
         <Bento />
-        {/* TODO(09-comparison), pinned */}
+        {/* 09-comparison: redesigned (pinned). */}
         <Comparison />
         {/* TODO(10-how-it-works), pinned */}
         <HowItWorks />
