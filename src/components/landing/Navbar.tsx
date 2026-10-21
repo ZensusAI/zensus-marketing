@@ -233,7 +233,7 @@ const TrialButton = ({ source, className, arrow = true }: { source: string; clas
       className={className}
       onClick={() => trackCtaClick(source, { destination: "trial", action: "open_signup_modal" })}
     >
-      Start free trial
+      Start
       {arrow && <ArrowRight size={16} aria-hidden />}
     </button>
   </SignupModal>
