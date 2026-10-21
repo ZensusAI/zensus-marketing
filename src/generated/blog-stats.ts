@@ -15,7 +15,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "can-quickbooks-forecast-cash-flow": {
-    "wordCount": 2653,
+    "wordCount": 2674,
     "images": [
       "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/quickbooks-cash-flow-planner-data-flow.webp",
       "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/revenue-vs-cash-timeline.webp",
@@ -53,7 +53,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "how-to-build-a-13-week-cash-flow-forecast-in-excel": {
-    "wordCount": 1862,
+    "wordCount": 1980,
     "images": [
       "https://zensus.finance/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel/13-week-cash-flow-forecast-excel-example.webp"
     ]
@@ -92,7 +92,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "what-is-a-13-week-cash-flow-forecast": {
-    "wordCount": 2132,
+    "wordCount": 2196,
     "images": [
       "https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast/13-week-cash-flow-forecast.webp",
       "https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast/revenue-earned-vs-cash-received.webp",
