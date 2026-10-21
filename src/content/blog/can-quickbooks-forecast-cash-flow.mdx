@@ -39,7 +39,7 @@ export const meta = {
     {
       question: 'When should I move beyond QuickBooks Cash Flow Planner?',
       answer:
-        'Most companies add dedicated forecasting when they need scenario modeling, runway management, fundraising planning, pipeline-based revenue, or multi-currency visibility beyond what accounting data alone can represent.',
+        'Most companies add dedicated forecasting when they need scenario modeling, runway management, hiring and fundraising planning, or a forecast that combines bank, accounting, and billing data beyond what accounting data alone can represent.',
     },
   ],
 };
@@ -446,7 +446,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 | Hiring models | Manual planner items only | Yes |
 | Fundraising planning | Manual planner items only | Yes |
 | Board reporting | Limited | Yes |
-| Multi-currency forecasting | Planner unavailable when Multicurrency is on | Often supported |
+| Multi-currency forecasting | Planner unavailable when Multicurrency is on | Varies by tool (Zensus does not convert currencies) |
 
 <p>Based on current Intuit documentation, QuickBooks is strongest as an operational forecasting tool rather than a strategic planning platform.</p>
 
@@ -456,14 +456,14 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>Zensus is not a replacement for QuickBooks. It is a planning layer that reads accounting data and models what happens next. The short version, with a week-by-week example, is on our <a href="/quickbooks-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks Online cash flow forecasting software</a> page.</p>
 
-<p>At <a href="/#features" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a>, founders connect bank accounts via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, accounting via <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and subscription revenue via <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a> into a single financial model. See <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">how it works</a> for the connect-to-forecast flow.</p>
+<p>At <a href="/#product" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a>, founders connect bank accounts via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, accounting via <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and subscription revenue via <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a> into a single financial model. See <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">how it works</a> for the connect-to-forecast flow.</p>
 
-<p className="mb-2 font-medium text-foreground">Where Cash Flow Planner works from what is already in your books, Zensus adds bank, CRM, and scenario inputs to answer:</p>
+<p className="mb-2 font-medium text-foreground">Where Cash Flow Planner works from what is already in your books, Zensus adds bank, HubSpot invoice and subscription, and scenario inputs to answer:</p>
 
 <ul>
   <li>when will cash run out?</li>
   <li>can we afford the next hire?</li>
-  <li>what if a large customer pays late?</li>
+  <li>what if we lose our largest customer?</li>
   <li>how does an annual contract change runway?</li>
   <li>will we make payroll next month?</li>
 </ul>
