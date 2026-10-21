@@ -38,7 +38,10 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    // overflow-x-clip, not hidden: the showcase screenshot bleeds off the right
+    // edge by design between 820 and 1280px, and clip trims it without making
+    // a scroll container, so the pinned sections' sticky stages keep working.
+    <div className="min-h-screen overflow-x-clip bg-background">
       <Helmet>
         {/* The category term "cash flow forecasting" appears nowhere in the H1 by
             design (it would read like a directory listing), so the <title>

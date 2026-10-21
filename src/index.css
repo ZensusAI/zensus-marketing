@@ -206,17 +206,6 @@
   background-image: linear-gradient(90deg, hsl(var(--sage-dark)), hsl(var(--sage-deep)));
 }
 
-/* Glyph frames (Problem and Bento icons): Cream Warm tiles so the frame
-   reads against the cream-bright cards it sits on (matching backgrounds made
-   the frames invisible), with a cream-deep hairline and a faint sage halo. */
-:root.theme-cream .glyph-frame {
-  border: 1px solid hsl(42 56% 82% / 0.9);
-  background:
-    linear-gradient(hsl(172 24% 13% / 0.04) 1px, transparent 1px) 0 0 / 8px 8px,
-    radial-gradient(circle at 50% 50%, hsl(150 71% 45% / 0.1), transparent 70%),
-    hsl(43 69% 90%);
-}
-
 @layer base {
   * {
     @apply border-border;
@@ -256,21 +245,6 @@
 
   .section-padding {
     @apply py-16 md:py-24 lg:py-32;
-  }
-
-  .glyph-frame {
-    width: 52px;
-    height: 52px;
-    border-radius: 10px;
-    border: 1px solid rgba(247, 245, 242, 0.08);
-    background:
-      linear-gradient(rgba(247, 245, 242, 0.05) 1px, transparent 1px) 0 0 / 8px 8px,
-      radial-gradient(circle at 50% 50%, rgba(33, 197, 92, 0.1), rgba(10, 10, 11, 0) 70%),
-      #0e1013;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
   }
 }
 
