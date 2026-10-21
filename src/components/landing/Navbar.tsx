@@ -618,9 +618,11 @@ const Navbar = () => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
       const trigger = open && navRef.current?.querySelector<HTMLButtonElement>(`[aria-controls="nav-panel-${open}"]`);
+      // Focus first: the trigger's focus handler opens its panel, and the
+      // close below has to be the last update to win.
+      trigger?.focus();
       setOpen(null);
       setDrawer(false);
-      trigger?.focus();
     };
     const onPointer = (e: PointerEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node)) setOpen(null);
