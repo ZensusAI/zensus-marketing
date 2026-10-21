@@ -80,6 +80,31 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Homepage redesign tokens (handoff 00-overview). Cream, card, rule,
+        // ink, muted text and primary already exist above as background,
+        // card, border, foreground, muted-foreground and primary.
+        rule: {
+          DEFAULT: "hsl(var(--border))",
+          soft: "hsl(var(--rule-soft))",
+        },
+        faint: "hsl(var(--ink-faint))",
+        sage: {
+          light: "hsl(var(--sage-light))",
+          deep: "hsl(var(--sage-deep))",
+          dark: "hsl(var(--sage-dark))",
+        },
+        forest: {
+          DEFAULT: "hsl(var(--forest))",
+          raised: "hsl(var(--forest-raised))",
+          border: "hsl(var(--forest-border))",
+          "border-soft": "hsl(var(--forest-border-soft))",
+          foreground: "hsl(var(--forest-foreground))",
+          "muted-strong": "hsl(var(--forest-muted-strong))",
+          muted: "hsl(var(--forest-muted))",
+          "muted-faint": "hsl(var(--forest-muted-faint))",
+        },
+        scenario: "hsl(var(--scenario))",
+        alert: "hsl(var(--alert))",
       },
       borderRadius: {
         lg: "var(--radius)",

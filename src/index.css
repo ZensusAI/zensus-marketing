@@ -73,13 +73,25 @@
        Sage scale from the brand book. Defined at :root so components that
        reference them (Footer, showcase chrome) work on every route. */
     --forest: 152 30% 8%;          /* Forest #0F1C16 */
-    --forest-raised: 155 24% 13%;
-    --forest-border: 153 18% 22%;
-    --forest-foreground: 43 92% 95%;
-    --forest-muted: 152 10% 62%;
-    --sage-light: 147 65% 56%;     /* #48D88A */
+    --forest-raised: 152 28% 12%;  /* #16271F (homepage redesign handoff) */
+    --forest-border: 147 18% 22%;  /* #2E4237 */
+    --forest-border-soft: 150 23% 17%; /* #22362C */
+    --forest-foreground: 43 92% 95%;   /* Cream #FEF7E6 on forest */
+    --forest-muted-strong: 148 14% 81%; /* #C9D6CF */
+    --forest-muted: 152 10% 62%;   /* #94A89F */
+    --forest-muted-faint: 153 9% 54%;   /* #7F958B */
+    --sage-light: 147 65% 56%;     /* #48D88A, bright green on dark */
     --sage-deep: 154 88% 32%;      /* #0A9A5C */
-    --sage-dark: 154 74% 21%;      /* #0E5C3A */
+    --sage-dark: 154 74% 21%;      /* #0E5C3A, deep green text */
+
+    /* Homepage redesign handoff (00-overview). Theme-independent constants;
+       the cream canvas, card, rule, ink, muted text and primary green are the
+       existing theme-cream tokens (--background, --card, --border,
+       --foreground, --muted-foreground, --primary). */
+    --rule-soft: 42 52% 87%;       /* #EFE5CD, soft rule */
+    --ink-faint: 161 7% 57%;       /* #8A9A95, faint text */
+    --scenario: 38 85% 62%;        /* #F0B44C, scenario amber */
+    --alert: 11 73% 63%;           /* #E5735A, alert / cash-floor red */
   }
 
   .dark {
