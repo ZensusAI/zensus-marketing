@@ -115,7 +115,7 @@ const About = () => (
             <div className="space-y-4 text-base text-foreground leading-relaxed">
               <p>
                 Zensus connects your bank (via Plaid), QuickBooks, HubSpot,
-                and Slack, then gives you a real-time cash flow forecast that
+                and Slack, then gives you a cash flow forecast, updated with every sync, that
                 respects how your business actually earns and spends money.
                 Annual contracts hit on their real billing dates. Subscription
                 revenue flows in with contract cadence. Same-day internal
@@ -123,8 +123,8 @@ const About = () => (
               </p>
               <p>
                 You ask questions in plain English and watch projections
-                update live. Set a cash floor and Slack pings you the moment
-                your 30-day projection crosses it.
+                update. Set a cash floor and Slack pings you when a sync shows
+                your 30-day projection crossing it.
               </p>
             </div>
           </section>
@@ -141,9 +141,9 @@ const About = () => (
                 financial strategy. It's anxiety with a spreadsheet.
               </p>
               <p>
-                Zensus exists because too many startups fail from the same
-                root cause: founders so focused on their mission that cash
-                flow becomes an afterthought until it is already too late.
+                Zensus exists because too many businesses fail from the same
+                root cause: owners so focused on the work that cash flow
+                becomes an afterthought until it is already too late.
                 Visibility closes that gap. Early warning turns a crisis into
                 a decision.
               </p>

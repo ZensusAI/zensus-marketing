@@ -182,7 +182,7 @@ const entries: ChangelogEntry[] = [
   {
     date: "2026-04-03",
     category: "Improved",
-    title: "Subscription-aware projections for HubSpot deals",
+    title: "Subscription-aware projections for HubSpot subscriptions",
     body: [
       "Annual and quarterly contracts flow into projections on their real billing dates, not smeared as MRR.",
       "Runway forecast respects contract cadence.",
@@ -191,10 +191,10 @@ const entries: ChangelogEntry[] = [
   {
     date: "2026-04-01",
     category: "Improved",
-    title: "Real-time webhook sync across Plaid, QuickBooks, HubSpot",
+    title: "Webhook sync for Plaid and HubSpot",
     body: [
-      "Plaid, QuickBooks, and HubSpot sync on change, not a schedule.",
-      "Runway recalculates the moment a transaction clears or an invoice changes.",
+      "Plaid and HubSpot changes arrive by webhook; QuickBooks syncs once a day.",
+      "Runway recalculates after each sync, as transactions clear and invoices change.",
     ],
   },
 ];

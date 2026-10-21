@@ -174,7 +174,7 @@ export const PULSE_COMPARE: ComparePageConfig = {
   metaDescription:
     "Compare Zensus and Pulse for cash flow management: pricing, QuickBooks sync, scenarios, automation, and who each tool fits best.",
   ogSubtitle:
-    "Honest comparison of Zensus and Pulse on price, data sources, automation, and founder use cases.",
+    "Honest comparison of Zensus and Pulse on price, data sources, automation, and the businesses each fits.",
   lead:
     "Pulse and Zensus both help business owners answer whether they can afford a hire or survive a slow month. Pulse is a focused, lower-cost cash flow workbook with QuickBooks Online sync. Zensus automates projections from bank, accounting, and CRM data with a plain-English cash flow agent.",
   competitorBestFor:
@@ -267,7 +267,7 @@ export const PULSE_COMPARE: ComparePageConfig = {
     {
       question: "What are good Pulse app alternatives?",
       answer:
-        "Founders comparing Pulse often look at Float, Cash Flow Frog, spreadsheet templates, and automation-first tools like Zensus when they outgrow manual entry.",
+        "Teams comparing Pulse often look at Float, Cash Flow Frog, spreadsheet templates, and automation-first tools like Zensus when they outgrow manual entry.",
     },
     {
       question: "Does Pulse connect to Plaid or HubSpot?",

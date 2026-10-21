@@ -73,13 +73,25 @@
        Sage scale from the brand book. Defined at :root so components that
        reference them (Footer, showcase chrome) work on every route. */
     --forest: 152 30% 8%;          /* Forest #0F1C16 */
-    --forest-raised: 155 24% 13%;
-    --forest-border: 153 18% 22%;
-    --forest-foreground: 43 92% 95%;
-    --forest-muted: 152 10% 62%;
-    --sage-light: 147 65% 56%;     /* #48D88A */
+    --forest-raised: 152 28% 12%;  /* #16271F (homepage redesign handoff) */
+    --forest-border: 147 18% 22%;  /* #2E4237 */
+    --forest-border-soft: 150 23% 17%; /* #22362C */
+    --forest-foreground: 43 92% 95%;   /* Cream #FEF7E6 on forest */
+    --forest-muted-strong: 148 14% 81%; /* #C9D6CF */
+    --forest-muted: 152 10% 62%;   /* #94A89F */
+    --forest-muted-faint: 153 9% 54%;   /* #7F958B */
+    --sage-light: 147 65% 56%;     /* #48D88A, bright green on dark */
     --sage-deep: 154 88% 32%;      /* #0A9A5C */
-    --sage-dark: 154 74% 21%;      /* #0E5C3A */
+    --sage-dark: 154 74% 21%;      /* #0E5C3A, deep green text */
+
+    /* Homepage redesign handoff (00-overview). Theme-independent constants;
+       the cream canvas, card, rule, ink, muted text and primary green are the
+       existing theme-cream tokens (--background, --card, --border,
+       --foreground, --muted-foreground, --primary). */
+    --rule-soft: 42 52% 87%;       /* #EFE5CD, soft rule */
+    --ink-faint: 161 7% 57%;       /* #8A9A95, faint text */
+    --scenario: 38 85% 62%;        /* #F0B44C, scenario amber */
+    --alert: 11 73% 63%;           /* #E5735A, alert / cash-floor red */
   }
 
   .dark {
@@ -194,17 +206,6 @@
   background-image: linear-gradient(90deg, hsl(var(--sage-dark)), hsl(var(--sage-deep)));
 }
 
-/* Glyph frames (Problem and Bento icons): Cream Warm tiles so the frame
-   reads against the cream-bright cards it sits on (matching backgrounds made
-   the frames invisible), with a cream-deep hairline and a faint sage halo. */
-:root.theme-cream .glyph-frame {
-  border: 1px solid hsl(42 56% 82% / 0.9);
-  background:
-    linear-gradient(hsl(172 24% 13% / 0.04) 1px, transparent 1px) 0 0 / 8px 8px,
-    radial-gradient(circle at 50% 50%, hsl(150 71% 45% / 0.1), transparent 70%),
-    hsl(43 69% 90%);
-}
-
 @layer base {
   * {
     @apply border-border;
@@ -214,8 +215,10 @@
     @apply bg-background text-foreground antialiased;
   }
 
-  html {
-    scroll-behavior: smooth;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 }
 
@@ -244,21 +247,6 @@
 
   .section-padding {
     @apply py-16 md:py-24 lg:py-32;
-  }
-
-  .glyph-frame {
-    width: 52px;
-    height: 52px;
-    border-radius: 10px;
-    border: 1px solid rgba(247, 245, 242, 0.08);
-    background:
-      linear-gradient(rgba(247, 245, 242, 0.05) 1px, transparent 1px) 0 0 / 8px 8px,
-      radial-gradient(circle at 50% 50%, rgba(33, 197, 92, 0.1), rgba(10, 10, 11, 0) 70%),
-      #0e1013;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
   }
 }
 
@@ -310,4 +298,105 @@
   .text-hover-halo::after {
     transition: none;
   }
+}
+
+/* Pinned, scroll-scrubbed sections (PinnedSection.tsx). The track is as tall
+   as the pin length; the stage sticks to the top for its whole height. --p is
+   the scroll progress (0 to 1) written by useScrollProgress. Under reduced
+   motion, or on a viewport too short to hold a pinned stage, the track
+   collapses and --p is 1, so the section shows its finished end state,
+   including before hydration. The media query matches STATIC_PINS_QUERY in
+   use-prefers-reduced-motion.ts; keep them in step. */
+.pin-track {
+  --p: 0;
+  height: var(--pin-h, auto);
+}
+.pin-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+@media (prefers-reduced-motion: reduce), (max-height: 719px) {
+  .pin-track {
+    --p: 1;
+    height: auto;
+  }
+  .pin-stage {
+    position: static;
+    height: auto;
+  }
+}
+
+/* Product showcase (HeroShowcase.tsx) under reduced motion: the finished end
+   state, before and after hydration. Scroll-driven inline styles are ignored,
+   the rail is full and every step's description is open. .showcase-reveal is
+   content that fades in (forced visible and flat); .showcase-still only stops
+   moving and keeps its own opacity (the dots, the faint waves and the
+   screenshots, of which only the first is shown). Same query as the pins. */
+@media (prefers-reduced-motion: reduce), (max-height: 719px) {
+  .showcase-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .showcase-still {
+    transform: none !important;
+  }
+  .showcase-rail {
+    height: 100% !important;
+  }
+  .showcase-step-body {
+    grid-template-rows: 1fr !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Customer story (CustomerStory.tsx) under reduced motion: everything in its
+   final place before and after hydration. .story-reveal content shows flat,
+   the video window is fully open, and nothing is zoomed. */
+@media (prefers-reduced-motion: reduce) {
+  .story-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .story-clip {
+    clip-path: none !important;
+  }
+  .story-still {
+    transform: none !important;
+  }
+}
+
+/* Problem section (Problem.tsx). Odometer reels: each reel is a column of the
+   digits 0-9 drawn as generated content (not DOM text, so crawlers read only
+   the real figure in the sr-only span), moved up by --d digits as --roll goes
+   0 to 1. Reduced motion: the final state before and after hydration. */
+.problem-reel {
+  transform: translateY(calc(var(--roll, 0) * var(--d, 0) * -1em));
+}
+.problem-reel::before {
+  content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9";
+  display: block;
+  white-space: pre;
+  line-height: 1em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .problem-stat {
+    --roll: 1 !important;
+  }
+  .problem-ghost,
+  .problem-reveal {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .problem-scale {
+    transform: none !important;
+  }
+  .problem-underline {
+    background-size: 100% 0.12em !important;
+  }
+}
+/* The visible % sign is generated too, so the stat's text is exactly "39%". */
+.problem-pct::before {
+  content: "%";
 }

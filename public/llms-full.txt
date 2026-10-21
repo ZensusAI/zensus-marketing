@@ -78,7 +78,7 @@ No. You can connect your bank account directly via Plaid, connect QuickBooks, sy
 Yes. Zensus syncs your HubSpot subscriptions, including annual and quarterly contracts, so your cash flow projections reflect when revenue actually hits your bank.
 
 **How long does setup take?**
-Under 2 minutes. Connect your bank or QuickBooks with one click, and your cash flow forecast is calculated instantly.
+A few minutes. Connect your bank or QuickBooks with one click, and your cash flow forecast is calculated instantly.
 
 **What kind of questions can I ask?**
 Anything about your finances: "When will I run out of cash?", "Can I afford to hire two engineers?", "What if we lose our largest annual contract?", "What happens with 5% monthly churn?"

@@ -1,32 +1,39 @@
-import { SITE_URL } from "@/lib/constants";
-import { useEffect, useRef, useState, type RefObject } from "react";
-import { BarChart3, Bell, Check, MessageCircle } from "lucide-react";
-import runwayDrilldownWeekly from "@/assets/runway-drilldown-weekly.webp";
-import runwayDrilldownDaily from "@/assets/runway-drilldown-daily.webp";
-import runwayWhatifOverview from "@/assets/runway-whatif-overview.webp";
-import runwayWhatifMonthly from "@/assets/runway-whatif-monthly.webp";
-import runwayWhatifWeekly from "@/assets/runway-whatif-weekly.webp";
-import runwayAlertsA from "@/assets/runway-alerts-a.webp";
-import runwayAlertsB from "@/assets/runway-alerts-b.webp";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
+import type { ScrollProgress } from "@/hooks/use-scroll-progress";
+import { clamp01, easeInOutCubic as ease, lerp } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+import { PinnedSection } from "./PinnedSection";
 
-type StepDef = {
-  eyebrow: string;
-  headline: string;
-  highlight: string;
-  description: string;
-  bullets: string[];
-  icon: typeof BarChart3;
-  images: string[];
-};
+/*
+ * Runway feature from handoff 07-runway-feature (locked 15a): a pinned, coded
+ * cash flow chart that redraws through three steps over 4.2 viewports.
+ *   1. Drill-down: monthly bars split into weekly bars; a daily inset pops
+ *      over the week when the annual contract lands.
+ *   2. Scenarios: bars dim, the projected balance draws, a "You asked"
+ *      bubble types the what-if, and a dashed amber scenario line bends away.
+ *   3. Alerts: the red dashed cash floor draws, the breach point pulses, and
+ *      a Slack alert slides in.
+ * Step tabs fill in sync and the copy crossfades. All three steps' copy stays
+ * in the HTML and in the accessibility tree (inactive steps are only faded
+ * out, never aria-hidden, so screen readers and crawlers get every step); the
+ * chart is decorative (aria-hidden). Values and timings are the handoff's
+ * renderVals().
+ *
+ * Reduced motion or a short viewport: the end state (weekly bars, both lines,
+ * floor, breach dot, Slack alert) and all three steps' copy stacked.
+ *
+ * Copy corrections, to match the app:
+ *   - The scenario chat has no "pays late" scenario type, so the what-if is
+ *     churn plus hiring (both supported), not a 30-day late payment.
+ *   - Scenarios are not sold as an "agent": the step says plain English.
+ *   - Alerts are checked after each sync and daily, and re-alert at a week
+ *     earlier or a drop of 10% (at least $1,000) in the projected low.
+ *   - The Slack example gives the breach relative to now, so it never dates.
+ */
 
-/** Deep-link targets from blog and docs (`${SITE_URL}/#features-*`). */
-export const FEATURE_STEP_IDS = [
-  "features-drill-down",
-  "features-scenarios",
-  "features-alerts",
-] as const;
-
-const STEPS: StepDef[] = [
+const STEPS = [
   {
     eyebrow: "Drill-down",
     headline: "Drill down to",
@@ -38,387 +45,421 @@ const STEPS: StepDef[] = [
       "Subscription-aware projections for annual and quarterly contracts",
       "See when revenue actually hits your bank, not flat monthly estimates",
     ],
-    icon: BarChart3,
-    images: [runwayDrilldownWeekly, runwayDrilldownDaily],
+    link: { to: "/blog/arr-vs-cash-for-founders", label: "Why annual contracts and cash disagree" },
   },
   {
     eyebrow: "Scenarios",
-    headline: "Run scenarios with",
-    highlight: "your cash flow agent",
+    headline: "Run scenarios in",
+    highlight: "plain English",
     description:
-      "Ask it in plain English: what if our biggest customer pays 30 days late and we hire two engineers? Your agent recalculates your cash flow in real time.",
+      "Ask what if our biggest customer churns and we hire two engineers. Zensus recalculates your cash flow in real time.",
     bullets: [
       "Stack multiple assumptions (hiring, churn, pricing) in a single conversation",
       "Watch your cash flow update live as each scenario layer is applied",
       "Compare before-and-after projections and revert any change instantly",
     ],
-    icon: MessageCircle,
-    images: [runwayWhatifOverview, runwayWhatifMonthly, runwayWhatifWeekly],
+    link: { to: "/use-cases#hiring-scenarios", label: "Hiring scenarios in practice" },
   },
   {
     eyebrow: "Alerts",
     headline: "Get alerted",
     highlight: "before cash runs out",
     description:
-      "Set your cash floor. Zensus watches your 30-day projection and pings Slack the moment it crosses the line. If the breach moves earlier or your minimum balance drops 10%, you get re-alerted.",
+      "Set your cash floor. Zensus watches your 30-day projection and pings Slack when a sync shows it crossing the line. If the breach moves a week earlier or your projected low drops by 10% (at least $1,000), you get re-alerted.",
     bullets: [
       "Threshold-based Slack alerts from your projection, not your balance",
-      "Re-alerts on material change (a week earlier or a 10% dip in minimum balance)",
+      "Re-alerts on material change (a week earlier, or a 10% drop in projected low)",
       "Snooze or adjust your threshold from Slack in one click",
     ],
-    icon: Bell,
-    images: [runwayAlertsA, runwayAlertsB],
+    link: { to: "/integrations/slack", label: "How Slack alerts work" },
   },
 ];
 
-function useActiveStep(refs: RefObject<HTMLElement | null>[]) {
-  const [active, setActive] = useState(0);
+const QUESTION = "What if our biggest customer churns and we hire two engineers?";
+const BASE = [412, 418, 405, 421, 436, 428, 441, 452, 447, 463, 471, 458, 476, 489, 482, 497, 505, 494, 512, 521, 515, 528, 536, 531];
+const SCEN = BASE.map((v, i) => v - (i >= 5 && i < 10 ? 80 : 0) - (i >= 6 ? 9 * (i - 5) : 0));
+const LO = 250;
+const HI = 560;
+const FLOOR = 360;
+const ALERT_W = 7;
+const pct = (v: number) => ((v - LO) / (HI - LO)) * 100;
+const MONTHS = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"];
+const LEVELS = ["Monthly", "Weekly", "Daily"];
+const WEEK7 = [40, 46, 38, 100, 44, 22, 18];
+const PIN_VIEWPORTS = 4.2;
+const HIGHLIGHT_BAR = 9;
 
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    refs.forEach((ref, i) => {
-      const el = ref.current;
-      if (!el) return;
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActive(i);
-          } else if (i === 0 && entry.boundingClientRect.top > 0) {
-            // The first step is still below the band, so the reader is above
-            // the section (scrolled back up, or came in on a deep link and
-            // went up). Without this the canvas kept whichever step was
-            // active last, and the drill-down copy sat beside the alerts
-            // screenshot.
-            setActive(0);
-          }
-        },
-        { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
-      );
-      observer.observe(el);
-      observers.push(observer);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-  }, [refs]);
+/**
+ * Deep-link targets from the blog (`/#features-drill-down` and so on). They
+ * existed before the redesign and 14 posts link to them; each lands on its
+ * step's beat in the pin (see PinnedSection `anchors`), or on the step itself
+ * when the section is static. blog-anchors.test.ts guards them.
+ */
+const FEATURE_STEP_ANCHORS = [
+  { id: "features-drill-down", at: 0.25 },
+  { id: "features-scenarios", at: 0.58 },
+  { id: "features-alerts", at: 0.92 },
+] as const;
 
-  return active;
-}
+const stepAt = (p: number) => (p < 0.34 ? 0 : p < 0.67 ? 1 : 2);
+const levelAt = (p: number) => {
+  const k1 = ease((p - 0.05) / 0.17);
+  const kI = ease((p - 0.22) / 0.07) * (1 - ease((p - 0.33) / 0.04));
+  return kI > 0.5 ? 2 : k1 > 0.5 ? 1 : 0;
+};
 
-function useSubStateCycle(active: boolean, count: number, intervalMs = 2400) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (!active || count <= 1) {
-      setIndex(0);
-      return;
-    }
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % count);
-    }, intervalMs);
-    return () => window.clearInterval(id);
-  }, [active, count, intervalMs]);
-
-  return index;
-}
-
-function useScrollProgress(ref: RefObject<HTMLElement | null>) {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    let raf = 0;
-    const update = () => {
-      const el = ref.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      if (total <= 0) {
-        setProgress(rect.top < 0 ? 1 : 0);
-        return;
-      }
-      const scrolled = Math.max(0, -rect.top);
-      setProgress(Math.max(0, Math.min(1, scrolled / total)));
-    };
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", update);
-      cancelAnimationFrame(raf);
-    };
-  }, [ref]);
-
-  return progress;
-}
-
-function ProductCanvas({
-  activeIndex,
-  subStates,
-}: {
-  activeIndex: number;
-  subStates: number[];
-}) {
-  const flatImages = STEPS.flatMap((step, stepIdx) =>
-    step.images.map((src, subIdx) => ({ stepIdx, subIdx, src }))
-  );
-
-  return (
-    <div className="relative">
-      {/* Soft glow under the frame */}
-      <div className="pointer-events-none absolute -inset-x-12 -bottom-12 h-40 bg-gradient-to-t from-primary/10 via-primary/5 to-transparent blur-3xl" />
-
-      {/* Browser chrome card. Forest surface per the brand book ("Forest
-          holds the data"): the dark product screenshots live inside a Forest
-          frame so they read as one window on the cream canvas. */}
-      <div className="relative overflow-hidden rounded-2xl border border-[hsl(var(--forest-border))] bg-[hsl(var(--forest))] shadow-2xl shadow-[hsl(var(--forest)/0.3)] ring-1 ring-black/5">
-        {/* Top bar */}
-        <div className="flex items-center gap-3 border-b border-[hsl(var(--forest-border)/0.6)] bg-[hsl(var(--forest-raised)/0.5)] px-4 py-3">
-          <div className="flex gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
-          </div>
-          <div className="flex flex-1 justify-center">
-            <div className="rounded-md border border-[hsl(var(--forest-border)/0.6)] bg-[hsl(var(--forest-raised)/0.5)] px-3 py-1 font-mono text-[11px] text-[hsl(var(--forest-muted))]">
-              app.zensus.app/runway
-            </div>
-          </div>
-          <div className="hidden font-mono text-[10px] uppercase tracking-wider text-[hsl(var(--sage-light))] sm:block">
-            Live
-          </div>
-        </div>
-
-        {/* One fixed frame for every step. The screenshots have different
-            ratios and sit letterboxed inside it (object-contain). The frame
-            used to resize itself per step, which made the sticky column
-            jump while the reader scrolled. */}
-        <div className="relative aspect-[16/10] bg-[hsl(var(--forest-raised)/0.4)]">
-          {/* Grid texture (cream lines on forest) */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "linear-gradient(hsl(var(--forest-foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--forest-foreground)) 1px, transparent 1px)",
-              backgroundSize: "24px 24px",
-            }}
-          />
-
-          {/* Screenshot stack: one img per (step, sub-state) pair */}
-          {flatImages.map(({ stepIdx, subIdx, src }, i) => {
-            const stepActive = activeIndex === stepIdx;
-            const isActive = stepActive && subStates[stepIdx] === subIdx;
-            return (
-              <img
-                key={`${stepIdx}-${subIdx}`}
-                src={src}
-                alt={`${STEPS[stepIdx].headline} ${STEPS[stepIdx].highlight}. Zensus cash flow.`}
-                loading={i === 0 ? "eager" : "lazy"}
-                width={1600}
-                height={1000}
-                className={`absolute inset-0 h-full w-full object-contain transition-all duration-700 ease-out ${
-                  isActive
-                    ? "scale-100 opacity-100"
-                    : stepActive
-                    ? "scale-[1.02] opacity-0"
-                    : activeIndex > stepIdx
-                    ? "scale-[1.04] opacity-0"
-                    : "scale-[0.98] opacity-0"
-                }`}
-              />
-            );
-          })}
-
-          {/* Vignette */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-transparent" />
-        </div>
-      </div>
-    </div>
-  );
+// A polyline over the 24 weekly points, drawn up to fraction k of its length.
+function partialPath(vals: number[], from: number, k: number, w: number, h: number) {
+  if (k <= 0) return "";
+  const xy = (i: number, v: number) => [((i + 0.5) / 24) * w, h - (pct(v) / 100) * h];
+  const n = 23 - from;
+  const upto = from + n * k;
+  const last = Math.floor(upto);
+  let d = "";
+  for (let i = from; i <= last; i++) {
+    const [x, y] = xy(i, vals[i]);
+    d += `${i === from ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`;
+  }
+  if (last < 23) {
+    const f = upto - last;
+    const [x1, y1] = xy(last, vals[last]);
+    const [x2, y2] = xy(last + 1, vals[last + 1]);
+    d += `L${lerp(x1, x2, f).toFixed(1)} ${lerp(y1, y2, f).toFixed(1)}`;
+  }
+  return d;
 }
 
 const RunwayFeature = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const stepRefs = [
-    useRef<HTMLDivElement>(null),
-    useRef<HTMLDivElement>(null),
-    useRef<HTMLDivElement>(null),
-  ];
+  const reduced = useStaticPins();
+  const [act, setAct] = useState(0);
+  const [level, setLevel] = useState(0);
+  const [highlight, setHighlight] = useState(false);
 
-  const activeIndex = useActiveStep(stepRefs);
-  const progress = useScrollProgress(sectionRef);
+  const chart = useRef<HTMLDivElement>(null);
+  const bars = useRef<(HTMLDivElement | null)[]>([]);
+  const fills = useRef<(HTMLDivElement | null)[]>([]);
+  const basePath = useRef<SVGPathElement>(null);
+  const scenPath = useRef<SVGPathElement>(null);
+  const floor = useRef<HTMLDivElement>(null);
+  const floorLabel = useRef<HTMLSpanElement>(null);
+  const dot = useRef<HTMLDivElement>(null);
+  const inset = useRef<HTMLDivElement>(null);
+  const bubble = useRef<HTMLDivElement>(null);
+  const typed = useRef<HTMLSpanElement>(null);
+  const caret = useRef<HTMLSpanElement>(null);
+  const slack = useRef<HTMLDivElement>(null);
+  const legend = useRef<HTMLSpanElement>(null);
+  // The chart's size, kept by a ResizeObserver so the scroll handler never
+  // reads layout after writing the bars (a forced layout every frame).
+  const size = useRef({ w: 600, h: 270 });
+  const lastP = useRef(0);
 
-  const sub0 = useSubStateCycle(activeIndex === 0, STEPS[0].images.length);
-  const sub1 = useSubStateCycle(activeIndex === 1, STEPS[1].images.length);
-  const sub2 = useSubStateCycle(activeIndex === 2, STEPS[2].images.length);
-  const subStates = [sub0, sub1, sub2];
+  const apply = useCallback((p: number) => {
+    const k1 = ease((p - 0.05) / 0.17);
+    const kI = ease((p - 0.22) / 0.07) * (1 - ease((p - 0.33) / 0.04));
+    const k2a = ease((p - 0.37) / 0.1);
+    const k2b = ease((p - 0.49) / 0.13);
+    const kB = ease((p - 0.38) / 0.05) * (1 - ease((p - 0.66) / 0.04));
+    const typ = clamp01((p - 0.4) / 0.09);
+    const k3a = ease((p - 0.69) / 0.08);
+    const kD = ease((p - 0.77) / 0.05);
+    const kS = ease((p - 0.81) / 0.08);
+
+    bars.current.forEach((el, i) => {
+      if (!el) return;
+      const m = Math.floor(i / 4);
+      const mv = BASE[m * 4 + 3];
+      el.style.left = `${(lerp(m / 6 + 0.15 / 6, i / 24 + 0.12 / 24, k1) * 100).toFixed(3)}%`;
+      el.style.width = `${(lerp(0.7 / 6, 0.76 / 24, k1) * 100).toFixed(3)}%`;
+      el.style.height = `${pct(lerp(mv, BASE[i], k1)).toFixed(2)}%`;
+      el.style.opacity = (1 - k2a * 0.62).toFixed(3);
+    });
+    const fillVals = [clamp01(p / 0.34), clamp01((p - 0.34) / 0.33), clamp01((p - 0.67) / 0.33)];
+    fills.current.forEach((el, i) => el && (el.style.width = `${(fillVals[i] * 100).toFixed(1)}%`));
+
+    lastP.current = p;
+    const { w, h } = size.current;
+    basePath.current?.setAttribute("d", partialPath(BASE, 0, k2a, w, h));
+    scenPath.current?.setAttribute("d", partialPath(SCEN, 4, k2b, w, h));
+    if (legend.current) legend.current.style.opacity = k2b > 0 ? "1" : "0.5";
+
+    if (floor.current) floor.current.style.width = `${(k3a * 100).toFixed(1)}%`;
+    if (floorLabel.current) floorLabel.current.style.opacity = k3a.toFixed(2);
+    if (dot.current) dot.current.style.transform = `scale(${kD.toFixed(3)})`;
+    if (inset.current) {
+      inset.current.style.opacity = kI.toFixed(3);
+      inset.current.style.transform = `translateX(-50%) translateY(${((1 - kI) * 10).toFixed(1)}px) scale(${lerp(0.85, 1, kI).toFixed(3)})`;
+    }
+    if (bubble.current) {
+      bubble.current.style.opacity = kB.toFixed(3);
+      bubble.current.style.transform = `translateY(${((1 - kB) * 10).toFixed(1)}px)`;
+    }
+    if (typed.current) typed.current.textContent = QUESTION.slice(0, Math.round(QUESTION.length * typ));
+    if (caret.current) caret.current.style.opacity = typ > 0 && typ < 1 ? "1" : "0";
+    if (slack.current) {
+      slack.current.style.opacity = kS.toFixed(3);
+      slack.current.style.transform = `translateY(${((1 - kS) * -14).toFixed(1)}px)`;
+    }
+
+    const a = stepAt(p);
+    setAct((prev) => (prev === a ? prev : a));
+    const l = levelAt(p);
+    setLevel((prev) => (prev === l ? prev : l));
+    const hl = kI > 0.3;
+    setHighlight((prev) => (prev === hl ? prev : hl));
+  }, []);
+
+  const onProgress = useCallback(({ progress }: ScrollProgress) => apply(progress), [apply]);
+
+  useEffect(() => {
+    const el = chart.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => {
+      size.current = { w: el.clientWidth, h: el.clientHeight };
+      apply(lastP.current);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [apply]);
+
+  // Reduced motion: draw the end state once (the scroll listener never runs).
+  useEffect(() => {
+    if (!reduced) return;
+    apply(1);
+    const redraw = () => apply(1);
+    window.addEventListener("resize", redraw);
+    return () => window.removeEventListener("resize", redraw);
+  }, [reduced, apply]);
 
   return (
-    <section
+    <PinnedSection
       id="features"
-      ref={sectionRef}
-      className="relative overflow-x-clip bg-background"
+      viewports={PIN_VIEWPORTS}
+      onProgress={onProgress}
+      aria-labelledby="runway-heading"
+      className="bg-background"
+      stageClassName="overflow-hidden"
+      anchors={FEATURE_STEP_ANCHORS}
     >
-      {/* Ambient grid */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-          maskImage:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
-        }}
-      />
-
-      {/* Atmospheric glow */}
-      <div
-        className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[800px] -translate-x-1/2 rounded-full opacity-30 blur-3xl"
-        style={{
-          background:
-            "radial-gradient(closest-side, hsl(var(--primary) / 0.18), transparent 70%)",
-        }}
-      />
-
-      <div className="section-container relative">
-        {/* Header */}
-        <div className="mx-auto max-w-3xl pt-24 text-center md:pt-32">
-          {/* Unboxed eyebrow (dot + mono caps, same idiom as the trust bar
-              chips). The old pill badge read as a generic template element. */}
-          <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-            <span className="h-1 w-1 rounded-full bg-primary" />
-            The cash flow product
-          </span>
-          <h2 className="mt-6 font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            From the macro view{" "}
-            <span className="text-gradient">to the day it hits.</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
-            Three moves, one cash flow view. Project, ask, get pinged. So you never find out about a
-            cash crunch from a bank balance.
-          </p>
-        </div>
-
-        {/* Pinned-scroll body */}
-        {/* pb used to be 32 on top of the next section's own top padding,
-            which left a 256px blank band under the last step. */}
-        <div className="mt-20 grid gap-12 pb-10 lg:mt-28 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20 lg:pb-16">
-          {/* Text column */}
-          <div className="relative">
-            {/* Step rail (desktop only) */}
-            <div
-              className="absolute left-3 top-2 bottom-2 hidden w-px bg-border lg:block"
-              aria-hidden
-            />
-            <div
-              className="absolute left-3 top-2 hidden w-px bg-gradient-to-b from-primary via-primary to-primary/0 transition-[height] duration-200 ease-out lg:block"
-              style={{ height: `calc(${progress * 100}% - 16px)` }}
-              aria-hidden
-            />
-
-            {STEPS.map((step, i) => {
-              const isActive = activeIndex === i;
-              const Icon = step.icon;
-              return (
-                <div
-                  key={i}
-                  id={FEATURE_STEP_IDS[i]}
-                  ref={stepRefs[i]}
-                  className="relative scroll-mt-28 flex flex-col justify-start pb-20 lg:min-h-[72vh] lg:justify-center lg:pb-0 lg:pl-14"
-                >
-                  {/* Rail dot */}
-                  <span
-                    className={`absolute left-[5px] top-1 hidden h-[10px] w-[10px] rounded-full ring-4 ring-background transition-all duration-500 lg:block ${
-                      isActive
-                        ? "bg-primary shadow-[0_0_18px_hsl(var(--primary))]"
-                        : "bg-border"
-                    }`}
-                    aria-hidden
-                  />
-
-                  {/* Oversized step number (desktop only: on a phone it sat
-                      on top of the eyebrow row) */}
-                  <span
-                    className="pointer-events-none absolute -top-10 left-12 hidden font-display text-[10rem] font-bold leading-none text-primary/[0.06] lg:block"
-                    aria-hidden
-                  >
-                    0{i + 1}
-                  </span>
-
-                  {/* Eyebrow */}
-                  <div className="relative mb-5 flex items-center gap-3">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">
-                      {`[ 0${i + 1} ]`}
-                    </span>
-                    <span className="h-px flex-1 max-w-[24px] bg-border" />
-                    <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-                      <Icon className="h-3.5 w-3.5 text-primary" />
-                      {step.eyebrow}
-                    </div>
-                  </div>
-
-                  {/* Headline */}
-                  <h3 className="relative font-display text-3xl font-bold tracking-tight sm:text-4xl">
-                    {step.headline}{" "}
-                    <span className="text-gradient">{step.highlight}</span>
-                  </h3>
-
-                  {/* Description */}
-                  <p className="relative mt-5 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
-                    {step.description}
-                  </p>
-
-                  {/* Bullets */}
-                  <ul className="relative mt-7 space-y-3">
-                    {step.bullets.map((bullet, j) => (
-                      <li key={j} className="flex items-start gap-3">
-                        <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 ring-1 ring-primary/30">
-                          <Check className="h-3 w-3 text-primary" strokeWidth={2.5} />
-                        </span>
-                        <span className="text-foreground/90">{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Mobile inline canvas: pin its step active so its callouts render */}
-                  <div className="mt-10 lg:hidden">
-                    <ProductCanvas
-                      activeIndex={i}
-                      subStates={subStates.map((s, j) => (j === i ? s : 0))}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+      <div className="h-full px-5 pb-5 pt-[calc(4rem+28px)] min-[760px]:px-8 min-[760px]:pb-10 min-[760px]:pt-[calc(4rem+52px)]">
+        <div className="mx-auto flex h-full max-w-6xl flex-col gap-4 min-[760px]:gap-8 min-[1024px]:justify-center">
+          <div className="grid items-end gap-x-10 gap-y-3 min-[1024px]:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+            <div>
+              <p className="text-sm font-semibold text-primary">The cash flow product</p>
+              <h2
+                id="runway-heading"
+                className="mt-3 text-balance text-[28px] font-bold leading-[1.08] tracking-[-0.025em] text-foreground min-[760px]:text-[42px]"
+              >
+                From the macro view <span className="text-primary">to the day it hits.</span>
+              </h2>
+            </div>
+            {/* Hidden on pinned phones so the stage fits; still in the HTML. */}
+            <p className={cn("text-pretty text-sm leading-[1.55] text-muted-foreground min-[760px]:text-base", !reduced && "max-[759px]:hidden")}>
+              Three moves, one cash flow view. Project, ask, get pinged. So you never find out about a cash crunch from a bank
+              balance.
+            </p>
           </div>
 
-          {/* Sticky canvas (desktop) */}
-          <div className="relative hidden lg:block">
-            <div className="sticky top-[14vh]">
-              <ProductCanvas activeIndex={activeIndex} subStates={subStates} />
+          <div
+            className={cn(
+              "grid min-h-0 flex-1 min-[1024px]:flex-none gap-5 min-[1024px]:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] min-[1024px]:gap-14",
+              // Unpinned with all three steps stacked, the copy column is tall:
+              // keep the chart at the top beside it instead of floating mid-way.
+              reduced ? "items-start" : "items-center",
+            )}
+          >
+            {/* Copy: step tabs, then the active step (all three in the HTML). */}
+            <div className="order-2 min-w-0 min-[1024px]:order-1">
+              <div className={cn("grid grid-cols-3 gap-3", reduced && "hidden")}>
+                {STEPS.map((s, i) => (
+                  <div key={s.eyebrow} className="flex flex-col gap-2">
+                    <div className="h-0.5 overflow-hidden rounded-sm bg-border">
+                      <div ref={(el) => (fills.current[i] = el)} className="h-full w-0 bg-foreground" />
+                    </div>
+                    <span className={cn("text-[13px] font-semibold transition-colors duration-300", i === act ? "text-primary" : "text-muted-foreground")}>
+                      <span className="font-mono text-[11px]">{`0${i + 1}`}</span> {s.eyebrow}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className={cn("mt-3.5 grid min-[760px]:mt-7", reduced && "mt-0 gap-10 min-[760px]:mt-0")}>
+                {STEPS.map((s, i) => {
+                  const on = reduced || i === act;
+                  return (
+                    <div
+                      key={s.eyebrow}
+                      id={reduced ? FEATURE_STEP_ANCHORS[i].id : undefined}
+                      className={cn(
+                        "transition-[opacity,transform] duration-[450ms] ease-out",
+                        !reduced && "[grid-area:1/1]",
+                        on ? "translate-y-0 opacity-100" : i < act ? "pointer-events-none -translate-y-3 opacity-0" : "pointer-events-none translate-y-3 opacity-0",
+                      )}
+                    >
+                      <h3 className="text-balance text-[22px] font-bold leading-[1.15] tracking-[-0.02em] text-foreground min-[760px]:text-[28px]">
+                        {s.headline} <span className="text-primary">{s.highlight}</span>
+                      </h3>
+                      <p className="mt-3.5 text-pretty text-sm leading-[1.6] text-muted-foreground min-[760px]:text-[15.5px]">{s.description}</p>
+                      {/* Out of the tab order while its step is faded out. */}
+                      <Link
+                        to={s.link.to}
+                        tabIndex={on ? undefined : -1}
+                        className="mt-2.5 inline-block rounded-sm text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      >
+                        {s.link.label} →
+                      </Link>
+                      {/* Pinned, the bullets fit only beside the chart (1024px and up). */}
+                      <ul className={cn("mt-5 hidden flex-col gap-2.5 border-t border-border pt-4", reduced ? "min-[760px]:flex" : "min-[1024px]:flex")}>
+                        {s.bullets.map((b) => (
+                          <li key={b} className="flex items-start gap-3 text-[14.5px] leading-[1.5] text-foreground">
+                            <span aria-hidden className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                            {b}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
-              {/* Step indicator under canvas */}
-              <div className="mt-6 flex items-center justify-center gap-2">
-                {STEPS.map((_, i) => (
-                  <span
+            {/* Chart card (decorative). */}
+            <div
+              aria-hidden
+              className="order-1 min-w-0 rounded-[18px] border border-forest-border bg-forest p-3.5 text-forest-foreground shadow-[0_30px_60px_-30px_rgba(15,28,22,.55)] min-[760px]:p-5 min-[1024px]:order-2"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="text-sm font-semibold">Cash flow</span>
+                <div className="flex gap-0.5 rounded-full border border-forest-border bg-forest-raised p-[3px]">
+                  {LEVELS.map((t, i) => (
+                    <span
+                      key={t}
+                      className={cn(
+                        "rounded-full px-2.5 py-1 font-mono text-[10.5px] transition-colors duration-300",
+                        i === level ? "bg-primary text-primary-foreground" : "text-forest-muted",
+                      )}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div ref={chart} className="relative mt-3.5 h-[170px] [contain:layout] min-[760px]:mt-5 min-[760px]:h-[230px] min-[1024px]:h-[270px]">
+                <div className="absolute inset-x-0 top-0 border-t border-[#1E3329]" />
+                <div className="absolute inset-x-0 top-[33%] border-t border-[#1E3329]" />
+                <div className="absolute inset-x-0 top-[66%] border-t border-[#1E3329]" />
+                <div className="absolute inset-x-0 bottom-0 border-t border-forest-border" />
+                {BASE.map((_, i) => (
+                  <div
                     key={i}
-                    className={`h-1 rounded-full transition-all duration-500 ${
-                      activeIndex === i
-                        ? "w-8 bg-primary"
-                        : "w-4 bg-border"
-                    }`}
-                    aria-hidden
+                    ref={(el) => (bars.current[i] = el)}
+                    className={cn("absolute bottom-0 rounded-t-[3px]", i === HIGHLIGHT_BAR && highlight ? "bg-sage-light" : "bg-[#2C5A43]")}
                   />
                 ))}
+                <svg width="100%" height="100%" className="absolute inset-0 overflow-visible">
+                  <path ref={basePath} fill="none" stroke="#48D88A" strokeWidth={2.25} strokeLinejoin="round" strokeLinecap="round" />
+                  <path
+                    ref={scenPath}
+                    fill="none"
+                    stroke="#F0B44C"
+                    strokeWidth={2.25}
+                    strokeDasharray="6 5"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div ref={floor} className="absolute left-0 w-0 border-t-[1.5px] border-dashed border-alert" style={{ top: `${100 - pct(FLOOR)}%` }} />
+                <span
+                  ref={floorLabel}
+                  className="absolute left-1 translate-y-1 font-mono text-[10px] text-alert opacity-0"
+                  style={{ top: `${100 - pct(FLOOR)}%` }}
+                >
+                  Cash floor
+                </span>
+                <div
+                  ref={dot}
+                  className="absolute -ml-[7px] -mt-[7px] h-3.5 w-3.5 scale-0 rounded-full bg-alert shadow-[0_0_0_6px_rgba(229,115,90,.22)]"
+                  style={{ left: `${((ALERT_W + 0.5) / 24) * 100}%`, top: `${100 - pct(SCEN[ALERT_W])}%` }}
+                />
+
+                {/* Drill-down inset: the week the annual contract lands. */}
+                <div
+                  ref={inset}
+                  className="absolute w-[150px] origin-bottom rounded-xl bg-card px-3 py-2.5 text-foreground opacity-0 shadow-[0_18px_30px_-16px_rgba(0,0,0,.6)] min-[760px]:w-[180px]"
+                  style={{ left: `${Math.min(82, Math.max(30, (9.5 / 24) * 100))}%`, bottom: `calc(${pct(BASE[HIGHLIGHT_BAR])}% + 14px)` }}
+                >
+                  <div className="font-mono text-[10px] text-muted-foreground">Week of Jan 11 · daily</div>
+                  <div className="relative mt-2 h-12 border-b border-border">
+                    {WEEK7.map((hgt, i) => (
+                      <div
+                        key={i}
+                        className={cn("absolute bottom-0 w-[10%] rounded-t-sm", i === 3 ? "bg-primary" : "bg-[#D9CFB4]")}
+                        style={{ left: `${i * 14.5 + 2.75}%`, height: `${hgt}%` }}
+                      />
+                    ))}
+                  </div>
+                  <div className="relative mt-1 h-3 font-mono text-[9px] text-muted-foreground">
+                    {"MTWTFSS".split("").map((t, i) => (
+                      <span key={i} className="absolute w-[10%] text-center" style={{ left: `${i * 14.5 + 2.75}%` }}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-1.5 text-[11.5px] font-semibold text-sage-dark">Thu · annual contract lands</div>
+                </div>
+
+                {/* Scenario question, typed. */}
+                <div
+                  ref={bubble}
+                  className="absolute left-2.5 top-2.5 max-w-[86%] rounded-[14px_14px_14px_4px] bg-card px-[13px] py-2.5 text-xs leading-[1.45] text-foreground opacity-0 shadow-[0_18px_30px_-16px_rgba(0,0,0,.6)] min-[760px]:max-w-[62%] min-[760px]:text-[13px]"
+                >
+                  <span className="mb-1 block text-[11px] font-semibold text-sage-dark">You asked</span>
+                  <span ref={typed} />
+                  <span ref={caret} className="ml-px inline-block h-[1em] w-px bg-foreground align-[-2px] opacity-0" />
+                </div>
+
+                {/* Slack alert. */}
+                <div
+                  ref={slack}
+                  className="absolute left-2.5 top-2.5 w-[190px] rounded-xl bg-white px-3.5 py-3 text-foreground opacity-0 shadow-[0_20px_40px_-16px_rgba(0,0,0,.65)] min-[760px]:w-[270px]"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-md bg-sage-dark text-[11px] font-bold text-forest-foreground">Z</span>
+                    <span className="text-[12.5px] font-bold">Zensus</span>
+                    <span className="whitespace-nowrap font-mono text-[10px] text-muted-foreground">#finance · now</span>
+                  </div>
+                  <p className="mt-2 text-[11.5px] leading-[1.45] min-[760px]:text-[12.5px]">
+                    Projected balance drops below your cash floor in 4 weeks.
+                  </p>
+                  <div className="mt-2.5 hidden gap-1.5 min-[760px]:flex">
+                    <span className="rounded-md border border-border px-2.5 py-1 text-[11px] font-semibold">Snooze</span>
+                    <span className="rounded-md border border-border px-2.5 py-1 text-[11px] font-semibold">Adjust threshold</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-2 grid grid-cols-6 font-mono text-[10px] text-forest-muted-faint">
+                {MONTHS.map((m) => (
+                  <span key={m} className="text-center">
+                    {m}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-2.5 flex gap-4 font-mono text-[10px] text-forest-muted">
+                <span className="flex items-center gap-1.5">
+                  <span className="h-0.5 w-3.5 bg-sage-light" />
+                  Projected balance
+                </span>
+                <span ref={legend} className="flex items-center gap-1.5 opacity-50">
+                  <span className="w-3.5 border-t-2 border-dashed border-scenario" />
+                  Scenario
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </PinnedSection>
   );
 };
 

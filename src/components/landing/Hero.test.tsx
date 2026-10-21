@@ -21,7 +21,7 @@ describe("homepage hero", () => {
       "Cash flow forecasting for businesses with unpredictable revenue.",
     );
     expect(markup).toContain(
-      "Zensus is cash flow forecasting software that connects your bank, QuickBooks, and HubSpot to project the exact date your cash runs out.",
+      "Zensus is cash flow forecasting software that connects your bank, QuickBooks, and HubSpot to project the month your cash runs out.",
     );
     expect(markup).not.toContain("13-week cash flow forecasting software");
     expect(markup).not.toContain("March 14");

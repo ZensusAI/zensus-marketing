@@ -1,164 +1,283 @@
-import { useCallback, useEffect, useState } from "react";
-import { Pause, Play } from "lucide-react";
+import { useCallback, useRef, useState, type CSSProperties } from "react";
+import { Link } from "react-router-dom";
 import dashboard1 from "@/assets/dashboard-1.webp";
+import dashboard1At900 from "@/assets/dashboard-1-900.webp";
+import dashboard1At1400 from "@/assets/dashboard-1-1400.webp";
 import dashboard13week from "@/assets/dashboard-13week.webp";
+import dashboard13weekAt900 from "@/assets/dashboard-13week-900.webp";
+import dashboard13weekAt1400 from "@/assets/dashboard-13week-1400.webp";
+import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
+import { APP_HOST } from "@/lib/constants";
+import type { ScrollProgress } from "@/hooks/use-scroll-progress";
+import { clamp01 } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { DotField } from "./Backdrop";
+import { PinnedSection } from "./PinnedSection";
+import { HERO_MESH } from "./hero-mesh";
 
-const FRAMES = [
-  { src: dashboard1, alt: "Zensus cash flow dashboard with projection chart" },
-  { src: dashboard13week, alt: "Zensus 13-week cash flow view and budget breakdown" },
+/*
+ * Product showcase from handoff 04-product-showcase (locked 8a): a pinned
+ * camera tour on a forest band. As the band scrolls in, the copy rises and
+ * the product frame swings in from a 3D tilt and locks flat; through the pin
+ * the camera zooms to four details in turn while the step list highlights the
+ * active step and its rail fills. All four step descriptions stay in the HTML.
+ * Values (pin 3.4 viewports, easing, zoom origins and scales) are the
+ * handoff's renderVals(). Reduced motion (or a viewport too short to pin):
+ * flat frame, no zoom, every step open, enforced in CSS (index.css,
+ * .showcase-reveal / -still / -rail / -step-body) so it holds before
+ * hydration.
+ */
+
+// The full-size files stay in the srcset because the zoom goes up to 2x.
+const SHOTS = [
+  {
+    src: dashboard1,
+    srcSet: `${dashboard1At900} 900w, ${dashboard1At1400} 1400w, ${dashboard1} 2758w`,
+    alt: "Zensus cash flow dashboard with projection chart",
+    width: 2758,
+    height: 1426,
+  },
+  {
+    src: dashboard13week,
+    srcSet: `${dashboard13weekAt900} 900w, ${dashboard13weekAt1400} 1400w, ${dashboard13week} 1984w`,
+    alt: "Zensus 13-week cash flow view and budget breakdown",
+    width: 1984,
+    height: 1468,
+  },
 ] as const;
 
-/** Time each frame stays fully visible before crossfading (6 seconds). */
-const FRAME_MS = 6000;
+// fx/fy: zoom origin in % of the frame; z: zoom scale; img: which screenshot.
+const STEPS = [
+  { img: 0, title: "All sources synced", body: "Bank, QuickBooks, and HubSpot stay current, with subscriptions and MRR read from your CRM.", fx: 10, fy: 6, z: 2.0 },
+  { img: 0, title: "Zero-cash date", body: "The month you would run out, recalculated every time cash moves.", fx: 21, fy: 15, z: 2.0 },
+  { img: 1, title: "13 weeks, week by week", body: "Inflows and outflows for each of the next 13 weeks, with your cash line on top.", fx: 36, fy: 40, z: 1.4 },
+  { img: 0, title: "Ask in plain English", body: "Ask what happens if revenue dips 50%. The forecast redraws with your scenario on top.", fx: 82, fy: 40, z: 1.7 },
+] as const;
 
-function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduced(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-  return reduced;
-}
+const PIN_VIEWPORTS = 3.4;
+const NARROW_QUERY = "(max-width: 819px)";
 
-// The product, directly under the hero and its proof strip: a wide browser
-// frame straddling the cream canvas and a full-bleed forest band, the way the
-// category's product bands sit (Drivetrain, Abacum, Float). This section used
-// to come after the pain section, so the first screenshot of the product was
-// 1,850px down the page.
+// The handoff's entry easing is ease-out cubic, not the in-out used elsewhere.
+const easeOut = (t: number) => 1 - Math.pow(1 - clamp01(t), 3);
+
+const stepAt = (p: number) => (p < 0.08 ? -1 : Math.min(3, Math.floor(((p - 0.08) / 0.92) * 4)));
+
+const meshStyle = {
+  "--mesh-narrow": `url(${HERO_MESH.narrow})`,
+  "--mesh-wide": `url(${HERO_MESH.wide})`,
+} as CSSProperties;
+
 const HeroShowcase = () => {
-  const reducedMotion = usePrefersReducedMotion();
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const reduced = useStaticPins();
+  const [active, setActive] = useState(-1);
+  const reveal = useRef<(HTMLElement | null)[]>([]);
+  const frame = useRef<HTMLDivElement>(null);
+  const rail = useRef<HTMLDivElement>(null);
+  const dots = useRef<HTMLDivElement>(null);
+  const mesh = useRef<HTMLDivElement>(null);
 
-  const advance = useCallback(() => {
-    setIndex((i) => (i + 1) % FRAMES.length);
+  const onProgress = useCallback(({ progress: p, entry: e, overall: q }: ScrollProgress) => {
+    const narrow = window.matchMedia(NARROW_QUERY).matches;
+    reveal.current.forEach((el, i) => {
+      if (!el) return;
+      const t = easeOut((e - 0.3 - i * 0.08) / 0.4);
+      el.style.opacity = t.toFixed(3);
+      el.style.transform = `translateY(${((1 - t) * 24).toFixed(1)}px)`;
+    });
+    if (frame.current) {
+      const t = 1 - easeOut(e);
+      frame.current.style.transform = narrow
+        ? `rotateX(${(18 * t).toFixed(2)}deg) translateY(${(60 * t).toFixed(1)}px) scale(${(0.94 + 0.06 * (1 - t)).toFixed(3)})`
+        : `rotateY(${(-26 * t).toFixed(2)}deg) rotateX(${(10 * t).toFixed(2)}deg) translateX(${(160 * t).toFixed(1)}px) scale(${(0.9 + 0.1 * (1 - t)).toFixed(3)})`;
+    }
+    if (rail.current) rail.current.style.height = `${(p * 100).toFixed(1)}%`;
+    if (dots.current) dots.current.style.transform = `translateY(${(-q * 140).toFixed(1)}px)`;
+    if (mesh.current) mesh.current.style.transform = `translateY(${(-q * 320).toFixed(1)}px) scale(1.1)`;
+    const si = stepAt(p);
+    setActive((prev) => (prev === si ? prev : si));
   }, []);
 
-  useEffect(() => {
-    if (reducedMotion || paused) return;
-    const id = window.setInterval(advance, FRAME_MS);
-    return () => window.clearInterval(id);
-  }, [reducedMotion, paused, advance]);
+  // Clicking a step scrolls to the middle of its stretch of the pin.
+  const goTo = (i: number) => {
+    const track = document.getElementById("product");
+    if (!track) return;
+    const top = track.getBoundingClientRect().top + window.scrollY;
+    const frac = 0.08 + ((i + 0.5) / 4) * 0.92;
+    window.scrollTo({ top: top + frac * (track.offsetHeight - window.innerHeight), behavior: "smooth" });
+  };
+
+  const current = !reduced && active >= 0 ? STEPS[active] : null;
 
   return (
-    <section
-      className="relative overflow-x-clip bg-background pt-8 pb-16 md:pt-10 md:pb-24"
-      aria-label="Product preview"
+    <PinnedSection
+      id="product"
+      viewports={PIN_VIEWPORTS}
+      onProgress={onProgress}
+      aria-labelledby="showcase-heading"
+      className="bg-[linear-gradient(135deg,#0F1C16_0%,#0E5C3A_60%,#0F1C16_100%)]"
+      stageClassName="overflow-hidden"
     >
-      <div className="section-container">
-        <div className="relative mx-auto max-w-6xl">
-          {/* Forest band. Anchored to this wrapper (frame plus caption), not
-              the section, so its top edge always lands inside the frame and
-              never across text, whatever the viewport width. It runs to the
-              section's bottom edge, so the next section starts clean on
-              cream. The frame goes first and the words after it: the category
-              puts the product straight under the buttons (Float, Drivetrain),
-              and a heading above the frame pushed it below the first screen. */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 top-[12%] -bottom-16 w-screen -translate-x-1/2 bg-[linear-gradient(135deg,hsl(var(--forest))_0%,hsl(var(--sage-dark))_60%,hsl(var(--forest))_100%)] md:-bottom-24"
-          >
-            {/* Dots on forest: the data points behind the product (see
-                Backdrop.tsx for the cream-lines, forest-dots rule). */}
-            <DotField />
-          </div>
+      {/* Dots on forest, drifting up slower than the page. */}
+      <div
+        ref={dots}
+        aria-hidden
+        className="showcase-still pointer-events-none absolute inset-x-0 -inset-y-[20%] bg-[radial-gradient(rgba(254,247,230,.16)_1px,transparent_1.6px)] bg-[length:20px_20px] bg-[position:50%_0] [mask-image:radial-gradient(ellipse_85%_85%_at_50%_50%,black_35%,transparent_100%)]"
+      />
+      {/* The hero's mesh waves, screened faintly over the band. */}
+      <div
+        ref={mesh}
+        aria-hidden
+        style={meshStyle}
+        className="showcase-still pointer-events-none absolute inset-x-0 top-[-10%] h-[120%] bg-cover bg-center bg-no-repeat opacity-[0.14] mix-blend-screen [background-image:var(--mesh-narrow)] min-[820px]:[background-image:var(--mesh-wide)]"
+      />
 
-          <div
-            className={cn(
-              "relative overflow-hidden rounded-2xl border border-[hsl(var(--forest-border))] bg-card",
-              "shadow-2xl shadow-[hsl(var(--forest)/0.45)] ring-1 ring-black/10",
-            )}
+      <div
+        className={cn(
+          "relative mx-auto grid h-full max-w-[1280px] grid-rows-[auto_minmax(0,1fr)] items-center gap-4 pb-7 pl-5 pt-[calc(4rem+28px)]",
+          "min-[820px]:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] min-[820px]:grid-rows-1 min-[820px]:gap-14 min-[820px]:pb-12 min-[820px]:pl-10 min-[820px]:pt-[calc(4rem+48px)]",
+        )}
+      >
+        <div className="flex flex-col self-start pr-5 min-[820px]:self-center min-[820px]:pr-0">
+          <p ref={(el) => (reveal.current[0] = el)} className="showcase-reveal text-sm font-semibold text-sage-light">
+            Rolling cash forecast
+          </p>
+          <h2
+            id="showcase-heading"
+            ref={(el) => (reveal.current[1] = el)}
+            className="showcase-reveal mt-2 text-balance text-[26px] font-bold leading-[1.1] tracking-[-0.02em] text-forest-foreground min-[820px]:mt-3.5 min-[820px]:text-[40px]"
           >
-            {/* Browser-style window chrome (decorative; not a live browser).
-                Forest surface per the brand book: the data window sits in a
-                Forest frame on the cream canvas. */}
-            <div
-              className="flex items-center gap-3 border-b border-[hsl(var(--forest-border)/0.6)] bg-[hsl(var(--forest))] px-3 py-2.5 sm:px-4 sm:py-3"
-              aria-hidden
-            >
-              <div className="flex shrink-0 gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
-                <span className="h-2.5 w-2.5 rounded-full bg-[hsl(var(--forest-border))]" />
-              </div>
-              <div className="flex min-w-0 flex-1 justify-center">
-                <div className="truncate rounded-md border border-[hsl(var(--forest-border)/0.8)] bg-[hsl(var(--forest-raised)/0.8)] px-3 py-1 text-center font-mono text-[11px] text-[hsl(var(--forest-muted))] sm:text-xs sm:px-4">
-                  app.zensus.app
-                </div>
-              </div>
-              <span className="shrink-0 text-[10px] font-medium uppercase tracking-widest text-[hsl(var(--sage-light))]">
-                Live
-              </span>
+            See the next 13 weeks before they hit your bank.
+          </h2>
+          {/* Hidden on phones to fit the pin, as in the handoff; still in the HTML. */}
+          <p
+            ref={(el) => (reveal.current[2] = el)}
+            className="showcase-reveal mt-4 hidden text-[17px] leading-[1.6] text-forest-muted min-[820px]:block"
+          >
+            Zensus combines your bank, QuickBooks, and HubSpot data into a weekly forecast that reflects when cash actually
+            moves.
+          </p>
+
+          <div className="relative mt-3.5 pl-[22px] min-[820px]:mt-[26px]">
+            <div aria-hidden className="absolute bottom-1.5 left-0 top-1.5 w-0.5 rounded-sm bg-forest-border">
+              <div ref={rail} className="showcase-rail h-0 w-full rounded-sm bg-sage-light" />
             </div>
-
-            <div
-              className="relative aspect-[16/10] w-full overflow-hidden bg-muted"
-              role="group"
-              aria-roledescription="carousel"
-              aria-label="Cash flow dashboard screenshots"
-            >
-              {FRAMES.map((frame, i) => (
-                <img
-                  key={frame.src}
-                  src={frame.src}
-                  alt={frame.alt}
-                  width={1600}
-                  height={1000}
-                  decoding="async"
-                  loading={i === 0 ? "eager" : "lazy"}
-                  fetchPriority={i === 0 ? "high" : "low"}
-                  className={cn(
-                    "absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-500 ease-out",
-                    i === index ? "opacity-100 z-[1]" : "opacity-0 z-0",
-                  )}
-                />
-              ))}
-
-              {!reducedMotion && (
-                <div className="absolute bottom-2 right-2 z-[2]">
-                  <Button
+            <ol>
+            {STEPS.map((step, i) => {
+              const on = i === active;
+              const open = reduced || on;
+              return (
+                <li key={step.title}>
+                  <button
                     type="button"
-                    variant="secondary"
-                    size="icon"
-                    className="h-9 w-9 rounded-full border border-border bg-background/90 shadow-sm backdrop-blur-sm"
-                    onClick={() => setPaused((p) => !p)}
-                    aria-pressed={paused}
-                    aria-label={paused ? "Resume slideshow" : "Pause slideshow"}
+                    onClick={() => goTo(i)}
+                    disabled={reduced}
+                    aria-current={on ? "step" : undefined}
+                    className="w-full rounded py-1.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light min-[820px]:py-2.5"
                   >
-                    {paused ? (
-                      <Play className="h-4 w-4" aria-hidden />
-                    ) : (
-                      <Pause className="h-4 w-4" aria-hidden />
-                    )}
-                  </Button>
-                </div>
-              )}
-            </div>
+                    <span className="flex items-baseline gap-2.5">
+                      <span className={cn("font-mono text-[11px] transition-colors duration-300", on ? "text-sage-light" : "text-forest-muted-strong")}>
+                        {`0${i + 1}`}
+                      </span>
+                      <span
+                        className={cn(
+                          "text-[15px] font-semibold transition-colors duration-300 min-[820px]:text-[17px]",
+                          on || reduced ? "text-forest-foreground" : "text-forest-muted-strong",
+                        )}
+                      >
+                        {step.title}
+                      </span>
+                    </span>
+                    <span
+                      className={cn(
+                        "showcase-step-body grid transition-[grid-template-rows,opacity] duration-[400ms] ease-out",
+                        open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+                      )}
+                    >
+                      <span className="overflow-hidden">
+                        <span className="ml-7 block pt-1.5 text-sm leading-[1.55] text-forest-muted-strong">{step.body}</span>
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+            </ol>
           </div>
+          {/* The guides behind the two ideas the steps lead with. */}
+          <p ref={(el) => (reveal.current[3] = el)} className="showcase-reveal mt-4 hidden text-sm text-forest-muted-strong min-[820px]:block">
+            Go deeper:{" "}
+            <Link to="/blog/zero-cash-date-for-founders" className="rounded font-medium text-sage-light hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light">
+              the zero-cash date
+            </Link>{" "}
+            and{" "}
+            <Link to="/blog/what-is-a-13-week-cash-flow-forecast" className="rounded font-medium text-sage-light hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light">
+              the 13-week forecast
+            </Link>
+            .
+          </p>
+        </div>
 
-          {/* Caption on the forest band, under the frame. */}
-          <div className="relative mx-auto mt-8 max-w-2xl text-center md:mt-10">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[hsl(var(--sage-light))]">
-              Rolling cash forecast
-            </p>
-            <h2 className="mt-3 text-section text-[hsl(var(--forest-foreground))]">
-              See the next 13 weeks before they hit your bank.
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-[hsl(var(--forest-muted))] sm:text-lg">
-              Zensus combines your bank, QuickBooks, and HubSpot data into a
-              weekly forecast that reflects when cash actually moves.
-            </p>
+        <div
+          className={cn(
+            "relative mr-5 flex h-full items-center [perspective-origin:50%_30%] [perspective:1600px]",
+            // Bleed off the right edge at every width, not only inside 1280px.
+            "min-[820px]:mr-[calc(-140px-max(0px,(100vw-1280px)/2))] min-[820px]:[perspective-origin:0%_50%]",
+          )}
+        >
+          <div
+            ref={frame}
+            className="showcase-reveal relative w-full origin-[50%_100%] [transform-style:preserve-3d] will-change-transform min-[820px]:origin-[0%_50%]"
+          >
+            <div className="overflow-hidden rounded-[14px] border border-forest-border bg-forest shadow-[0_50px_90px_-40px_rgba(0,0,0,.75)] min-[820px]:rounded-l-2xl min-[820px]:rounded-r-none min-[820px]:border-r-0">
+              <div aria-hidden className="flex items-center gap-3 border-b border-forest-border/60 bg-forest px-4 py-[11px]">
+                <span className="flex gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-forest-border" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-forest-border" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-forest-border" />
+                </span>
+                <span className="ml-2.5 rounded-md border border-forest-border/80 bg-[rgba(25,41,31,.8)] px-3.5 py-[3px] font-mono text-[11px] text-forest-muted">
+                  {APP_HOST}
+                </span>
+                <span className="ml-auto text-[11px] font-medium text-sage-light min-[820px]:mr-[140px]">Live</span>
+              </div>
+              <div className="relative aspect-[16/10] overflow-hidden bg-forest">
+                {SHOTS.map((shot, i) => {
+                  const shown = (current ? current.img : 0) === i;
+                  const zoomed = current && current.img === i;
+                  return (
+                    <img
+                      key={shot.src}
+                      src={shot.src}
+                      srcSet={shot.srcSet}
+                      sizes="(min-width: 820px) 64vw, 100vw"
+                      alt={shot.alt}
+                      width={shot.width}
+                      height={shot.height}
+                      decoding="async"
+                      loading="lazy"
+                      style={{
+                        transform: zoomed ? `scale(${current.z})` : "scale(1)",
+                        transformOrigin: zoomed ? `${current.fx}% ${current.fy}%` : "50% 0%",
+                      }}
+                      className={cn(
+                        "showcase-still absolute inset-0 h-full w-full object-cover object-left-top transition-[opacity,transform] duration-[600ms,900ms] [transition-timing-function:ease,cubic-bezier(.22,1,.36,1)]",
+                        shown ? "opacity-100" : "opacity-0",
+                      )}
+                    />
+                  );
+                })}
+                {current && (
+                  <span
+                    aria-hidden
+                    style={{ left: `${current.fx}%`, top: `${current.fy}%` }}
+                    className="absolute -ml-[11px] -mt-[11px] h-[22px] w-[22px] rounded-full border-2 border-sage-light bg-[rgba(72,216,138,.18)] before:absolute before:-inset-0.5 before:animate-ring-ping before:rounded-full before:bg-sage-light/50 motion-reduce:before:animate-none"
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </PinnedSection>
   );
 };
 

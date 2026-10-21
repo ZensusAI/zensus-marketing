@@ -101,16 +101,44 @@ describe("internal links", () => {
     expect(dead).toEqual([]);
   });
 
+  // Links to a homepage section ("/#features-scenarios") land on the top of
+  // the page when the id is gone, with no error anywhere. The redesign dropped
+  // three such ids that 14 posts used. Every "/#id" target must be an id the
+  // homepage sections declare: a literal id="..." or an anchors entry
+  // ({ id: "..." }) handed to PinnedSection.
+  it("points every homepage section link at an id that exists", () => {
+    const landing = readdirSync(join(repoRoot, "src", "components", "landing"))
+      .filter((f) => f.endsWith(".tsx") && !f.endsWith(".test.tsx"))
+      .map((f) => read("src", "components", "landing", f))
+      .join("\n");
+    const ids = new Set([
+      ...[...landing.matchAll(/\bid="([\w-]+)"/g)].map((m) => m[1]),
+      ...[...landing.matchAll(/\bid:\s*"([\w-]+)"/g)].map((m) => m[1]),
+    ]);
+    const hashTargets = targets.filter((t) => t.path === "/" && t.target.includes("#"));
+    expect(hashTargets.length, "the blog links homepage sections").toBeGreaterThan(10);
+    const dead = hashTargets
+      .filter((t) => !ids.has(t.target.split("#")[1]))
+      .map((t) => `${t.file}: ${t.target}`);
+    expect(dead).toEqual([]);
+  });
+
   // The pages below had no in-content links before September 2026 (the
   // comparison pages had two). They are the pages a buyer reads last, so the
   // homepage keeps pointing at them from its own content, not only the footer.
+  // The homepage content is whatever Index.tsx actually renders from
+  // src/components/landing, minus the sitewide Navbar and Footer. Deriving it
+  // (instead of listing files) means a section removed from the homepage stops
+  // counting, so the redesign cannot pass this check with a link that no
+  // longer reaches the page.
   it("keeps the homepage linking to the pages that close a decision", () => {
-    const home = [
-      read("src", "components", "landing", "Comparison.tsx"),
-      read("src", "components", "landing", "Problem.tsx"),
-      read("src", "components", "landing", "Resources.tsx"),
-      read("src", "components", "landing", "TrustBar.tsx"),
-    ].join("\n");
+    const index = read("src", "pages", "Index.tsx");
+    const sitewide = new Set(["Navbar", "Footer"]);
+    const rendered = [...index.matchAll(/import\s+(?:(\w+)|\{\s*(\w+)\s*\})\s+from\s+"@\/components\/landing\/(\w+)"/g)]
+      .map((m) => ({ name: m[1] ?? m[2], file: m[3] }))
+      .filter(({ name, file }) => !sitewide.has(file) && new RegExp(`<${name}[\\s/>]`).test(index));
+    expect(rendered.length, "Index.tsx should render landing sections").toBeGreaterThan(5);
+    const home = rendered.map(({ file }) => read("src", "components", "landing", `${file}.tsx`)).join("\n");
     for (const path of [
       "/compare/zensus-vs-float",
       "/compare/zensus-vs-pulse",

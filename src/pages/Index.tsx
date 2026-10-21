@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
+import { HERO_MESH } from "@/components/landing/hero-mesh";
 import HeroShowcase from "@/components/landing/HeroShowcase";
 import CustomerStory from "@/components/landing/CustomerStory";
 import { TrustBar } from "@/components/landing/TrustBar";
@@ -11,8 +12,6 @@ import RunwayFeature from "@/components/landing/RunwayFeature";
 import Bento from "@/components/landing/Bento";
 import Comparison from "@/components/landing/Comparison";
 import HowItWorks from "@/components/landing/HowItWorks";
-import SecurityStrip from "@/components/landing/SecurityStrip";
-import PricingPreview from "@/components/landing/PricingPreview";
 import FAQ from "@/components/landing/FAQ";
 import Resources from "@/components/landing/Resources";
 import FinalCTABand from "@/components/landing/FinalCTABand";
@@ -33,13 +32,17 @@ const Index = () => {
       const id = window.location.hash.replace("#", "");
       const el = document.getElementById(id);
       if (el) {
-        setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 50);
+        const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        setTimeout(() => el.scrollIntoView({ behavior: smooth ? "smooth" : "auto" }), 50);
       }
     }
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    // overflow-x-clip, not hidden: the showcase screenshot bleeds off the right
+    // edge by design between 820 and 1280px, and clip trims it without making
+    // a scroll container, so the pinned sections' sticky stages keep working.
+    <div className="min-h-screen overflow-x-clip bg-background">
       <Helmet>
         {/* The category term "cash flow forecasting" appears nowhere in the H1 by
             design (it would read like a directory listing), so the <title>
@@ -65,29 +68,51 @@ const Index = () => {
         <meta name="twitter:description" content="Get a live, always-current picture of your cash position. Built for businesses with unpredictable revenue." />
         <meta name="twitter:image" content={`${SITE_URL}/og/home.png`} />
         <link rel="canonical" href={`${SITE_URL}/`} />
-        {/* The aurora hero image is gone (cream brand canvas replaced it), so
-            its LCP preloads went with it. The aurora asset files stay in
-            public/ because SignupModal still uses /hero-aurora-1200.webp. */}
+        {/* The hero's mesh-wave background is the largest thing in the first
+            screen, so it is likely the LCP element: preload exactly the file
+            the CSS will pick at each width. */}
+        <link rel="preload" as="image" type="image/webp" href={HERO_MESH.narrow} media={`(max-width: ${HERO_MESH.switchPx - 1}px)`} fetchPriority="high" />
+        <link rel="preload" as="image" type="image/webp" href={HERO_MESH.wide} media={`(min-width: ${HERO_MESH.switchPx}px)`} fetchPriority="high" />
       </Helmet>
+      {/* 01-navbar: redesigned (shared by every route). */}
       <Navbar />
       <main>
-        {/* Category order (surveyed 16 Oct 2026): pitch and buttons, proof
-            strip, the product, a customer, then the pain and the detail. */}
+        {/* Homepage redesign order (handoff 00-overview). SecurityStrip and
+            PricingPreview left the homepage; their content lives on /security
+            and /pricing. The proof strip keeps the encryption claims as
+            visible text, and the final CTA band carries the price with an
+            in-content /pricing link. */}
+        {/* 02-hero: redesigned. */}
         <Hero />
+        {/* 03-proof-strip: redesigned. */}
         <TrustBar />
+        {/* 04-product-showcase: redesigned (pinned). */}
         <HeroShowcase />
+        {/* 05-customer-story: redesigned. */}
         <CustomerStory />
+        {/* 06-problem: redesigned. */}
         <Problem />
+        {/* 07-runway-feature: redesigned (pinned). */}
         <RunwayFeature />
+        {/* 08-sync: redesigned (pinned). */}
         <Bento />
+        {/* 09-comparison: redesigned (pinned). */}
         <Comparison />
+        {/* 10-how-it-works: redesigned (pinned). */}
         <HowItWorks />
-        <SecurityStrip />
-        <PricingPreview />
+        {/* 11-faq: redesigned (search-first; keeps the FAQPage JSON-LD). */}
         <FAQ />
+        {/* Kept on purpose, against the handoff's removal list: this is the
+            only in-content homepage link to the free tools and key guides
+            (internal-links.test.ts). The payroll calendar holds about two
+            thirds of search impressions and is mid-measurement until the
+            25 Oct 2026 Search Console export. Remove it only once a
+            redesigned section carries these links. */}
         <Resources />
+        {/* 12-final-cta: redesigned (rounded bottom onto the footer). */}
         <FinalCTABand />
       </main>
+      {/* 13-footer: redesigned (sitewide). */}
       <Footer />
     </div>
   );

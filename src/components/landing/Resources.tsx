@@ -35,6 +35,10 @@ const TOOLS: ResourceLink[] = [
   },
 ];
 
+// Matched to the homepage's own topics: the definition, the 13-week view the
+// showcase leads with, the zero-cash date, runway after a raise, payroll, late
+// payers, QuickBooks, and HubSpot timing. The QuickBooks Online product page is
+// in the navbar and footer, so it is not repeated here.
 const GUIDES: ResourceLink[] = [
   {
     to: "/blog/what-is-cash-flow-forecasting",
@@ -42,9 +46,9 @@ const GUIDES: ResourceLink[] = [
     description: "The methods, and where forecasts usually go wrong.",
   },
   {
-    to: "/blog/will-i-make-payroll",
-    label: "Will I make payroll?",
-    description: "How to know weeks in advance, one pay date at a time.",
+    to: "/blog/what-is-a-13-week-cash-flow-forecast",
+    label: "What is a 13-week cash flow forecast?",
+    description: "The rolling weekly model, with a free template.",
   },
   {
     to: "/blog/zero-cash-date-for-founders",
@@ -52,19 +56,29 @@ const GUIDES: ResourceLink[] = [
     description: "Why a weekly forecast finds it and a monthly average hides it.",
   },
   {
+    to: "/blog/runway-vs-burn-rate-for-founders",
+    label: "Runway vs burn rate",
+    description: "How many months you have, and how much runway to raise for.",
+  },
+  {
+    to: "/blog/will-i-make-payroll",
+    label: "Will I make payroll?",
+    description: "How to know weeks in advance, one pay date at a time.",
+  },
+  {
+    to: "/blog/cash-flow-forecasting-for-agencies",
+    label: "Cash flow forecasting for agencies",
+    description: "Clients pay late, payroll never does: forecast the gap weekly.",
+  },
+  {
     to: "/blog/can-quickbooks-forecast-cash-flow",
     label: "Can QuickBooks forecast cash flow?",
     description: "What Cash Flow Planner does, and where it stops.",
   },
   {
-    to: "/quickbooks-cash-flow-forecasting",
-    label: "QuickBooks Online cash flow forecasting software",
-    description: "Cash Flow Planner, Intuit's forecasts, and Zensus side by side.",
-  },
-  {
     to: "/blog/hubspot-pipeline-to-cash-forecast",
     label: "Forecast cash from your sales pipeline",
-    description: "From HubSpot deals to the day the money lands.",
+    description: "Why pipeline is not cash yet, and how to time when it lands.",
   },
 ];
 
@@ -90,7 +104,9 @@ const ResourceList = ({ title, items }: { title: string; items: ResourceLink[] }
 
 const Resources = () => (
   <section id="resources" className="section-padding scroll-mt-28 bg-background">
-    <div className="section-container">
+    {/* The redesigned sections' gutter (20px, 32px from 760px), not the
+        shared section-container's 16px. */}
+    <div className="mx-auto max-w-7xl px-5 min-[760px]:px-8">
       <div className="mx-auto mb-12 max-w-3xl text-center">
         <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
           Guides and free tools.

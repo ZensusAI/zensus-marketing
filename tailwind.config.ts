@@ -80,6 +80,31 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Homepage redesign tokens (handoff 00-overview). Cream, card, rule,
+        // ink, muted text and primary already exist above as background,
+        // card, border, foreground, muted-foreground and primary.
+        rule: {
+          DEFAULT: "hsl(var(--border))",
+          soft: "hsl(var(--rule-soft))",
+        },
+        faint: "hsl(var(--ink-faint))",
+        sage: {
+          light: "hsl(var(--sage-light))",
+          deep: "hsl(var(--sage-deep))",
+          dark: "hsl(var(--sage-dark))",
+        },
+        forest: {
+          DEFAULT: "hsl(var(--forest))",
+          raised: "hsl(var(--forest-raised))",
+          border: "hsl(var(--forest-border))",
+          "border-soft": "hsl(var(--forest-border-soft))",
+          foreground: "hsl(var(--forest-foreground))",
+          "muted-strong": "hsl(var(--forest-muted-strong))",
+          muted: "hsl(var(--forest-muted))",
+          "muted-faint": "hsl(var(--forest-muted-faint))",
+        },
+        scenario: "hsl(var(--scenario))",
+        alert: "hsl(var(--alert))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -88,8 +113,27 @@ export default {
       },
       transitionTimingFunction: {
         "in-out-cubic": "cubic-bezier(0.65, 0, 0.35, 1)",
+        // Homepage redesign UI transitions (handoff 00-overview).
+        ui: "cubic-bezier(.2,.8,.2,1)",
       },
       keyframes: {
+        // Navbar panels and the mobile sheet (handoff 01-navbar "nvIn").
+        // Hero mesh waves: a very slow sideways drift (handoff 02-hero).
+        "mesh-drift": {
+          from: { transform: "translate3d(-2%, 0.5%, 0)" },
+          to: { transform: "translate3d(2%, -0.5%, 0)" },
+        },
+        // Product showcase zoom marker (handoff 04-product-showcase "ssPing").
+        // Transform and opacity only, so the pulse stays on the compositor
+        // (it was a box-shadow, repainted every frame).
+        "ring-ping": {
+          "0%": { transform: "scale(1)", opacity: "0.7" },
+          "100%": { transform: "scale(2.3)", opacity: "0" },
+        },
+        "nav-in": {
+          from: { opacity: "0", transform: "translateY(4px)" },
+          to: { opacity: "1", transform: "none" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -128,6 +172,9 @@ export default {
         },
       },
       animation: {
+        "nav-in": "nav-in 0.2s ease-out",
+        "mesh-drift": "mesh-drift 40s ease-in-out infinite alternate",
+        "ring-ping": "ring-ping 1.4s ease-out infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.6s ease-out forwards",
