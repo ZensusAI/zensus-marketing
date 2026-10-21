@@ -117,7 +117,7 @@ const faqs = [
   {
     question: "Does Zensus read my HubSpot deals or pipeline?",
     answer:
-      "No. Zensus reads HubSpot invoices and subscriptions. It does not sync deals, deal stages, or deal probability. To see what an open deal would do to your cash, describe it to the cash flow agent as a scenario.",
+      "No. Zensus reads HubSpot invoices and subscriptions. It does not sync deals, deal stages, or deal probability. To see what an open deal would do to your cash, add its revenue as a plain-English scenario.",
   },
   {
     question: "How does Zensus treat annual and quarterly contracts?",

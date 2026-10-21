@@ -53,12 +53,12 @@ const FAQS = [
   {
     question: "How does Zensus help me decide whether I can afford a hire?",
     answer:
-      "Ask the cash flow agent in plain language. It recalculates your zero-cash date with the new salary included, using your live financial data, and the projection keeps updating as real transactions clear.",
+      "Ask Zensus in plain English. It recalculates your zero-cash date with the new salary included, using your synced financial data, and the projection keeps updating as real transactions clear.",
   },
   {
     question: "How do payroll alerts work?",
     answer:
-      "You set a cash floor. Zensus projects your balance to every upcoming payroll date and sends a Slack alert the moment your 30-day projection is on track to cross that floor, with re-alerts on material changes.",
+      "You set a cash floor. Zensus projects your balance to every upcoming payroll date and sends a Slack alert when a sync shows your 30-day projection on track to cross that floor, with re-alerts on material changes.",
   },
 ];
 
@@ -166,7 +166,7 @@ const UseCases = () => (
             <Link to="/integrations/slack" className={linkCls}>
               Slack alert
             </Link>{" "}
-            the moment your projection is on track to cross the cash floor you
+            when a sync shows your projection on track to cross the cash floor you
             set. Our step-by-step guide,{" "}
             <Link to="/blog/will-i-make-payroll" className={linkCls}>
               Will I Make Payroll?
@@ -224,9 +224,9 @@ const UseCases = () => (
         <UseCase id="hiring-scenarios" title="Hiring and cash flow scenario planning">
           <p>
             Before you sign an offer letter, ask Zensus what the hire does to
-            your zero-cash date. The cash flow agent answers in plain language,
-            using your live financial data, and the{" "}
-            <a href="/#features" className={linkCls}>
+            your zero-cash date. Zensus answers in plain English, using your
+            synced financial data, and the{" "}
+            <a href="/#features-scenarios" className={linkCls}>
               cash flow view
             </a>{" "}
             updates as real transactions clear. To try the idea with your own

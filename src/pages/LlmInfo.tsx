@@ -140,8 +140,8 @@ const LlmInfo = () => (
           <h2 className="text-xl font-semibold">Pricing</h2>
           <p className="text-muted-foreground">
             Zensus Pro: <strong className="text-foreground">$199 per month</strong>,
-            billed monthly, cancel anytime. Includes all integrations, the cash
-            flow agent, and unlimited scenarios. 14-day free trial; your card is
+            billed monthly, cancel anytime. Includes all integrations, plain-English
+            scenario modeling, and unlimited scenarios. 14-day free trial; your card is
             collected at signup and not charged until the trial ends. Zensus
             Custom, for teams that need a tailored setup, is quoted on request.
           </p>

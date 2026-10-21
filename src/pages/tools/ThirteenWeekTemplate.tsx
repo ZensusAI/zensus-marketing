@@ -71,7 +71,7 @@ const FAQS = [
   {
     question: "How is this different from the runway calculator?",
     answer:
-      "The runway calculator works from monthly averages and projects the month your cash runs out over up to four years. The 13-week forecast on this page works week by week: payroll lands on pay dates, monthly bills land in the week that holds the first of the month, and a one-off payment lands in the week you name. A monthly average can show a healthy quarter while a single week inside it dips below your floor. This forecast shows that week.",
+      "The runway calculator works from monthly averages and projects the date your cash runs out over up to four years. The 13-week forecast on this page works week by week: payroll lands on pay dates, monthly bills land in the week that holds the first of the month, and a one-off payment lands in the week you name. A monthly average can show a healthy quarter while a single week inside it dips below your floor. This forecast shows that week.",
   },
   {
     question: "How often should I update a 13-week cash flow forecast?",
@@ -713,13 +713,13 @@ const ThirteenWeekTemplate = () => {
               <p>
                 The template is the right tool until the weekly update means exporting from the
                 bank, re-keying invoices, and remembering which payment moved. Zensus keeps the
-                same 13 weeks current from your live financials: it reads bank transactions
+                same 13 weeks current from your connected accounts: it reads bank transactions
                 through Plaid, open invoices and bills from{" "}
                 <Link to="/quickbooks-cash-flow-forecasting" className={linkCls}>
                   QuickBooks Online
                 </Link>
-                , and invoices from HubSpot, and flags the week your balance drops below the
-                floor before it happens. Zensus Pro is{" "}
+                , and invoices and subscriptions from HubSpot, and sends a Slack alert when a sync
+                shows your 30-day projection crossing the floor. Zensus Pro is{" "}
                 <Link to="/pricing" className={linkCls}>
                   $199 per month
                 </Link>
