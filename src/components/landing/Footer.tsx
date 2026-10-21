@@ -182,22 +182,21 @@ function AskAiCard() {
       onBlur={(ev) => {
         if (!ev.currentTarget.contains(ev.relatedTarget as Node | null)) setActive(-1);
       }}
-      className="col-span-full min-w-0 self-start rounded-[14px] border border-border bg-card p-4 shadow-[0_14px_30px_-24px_rgba(26,42,40,.4)] min-[760px]:col-span-1"
+      className="col-span-full min-w-0 self-start rounded-[14px] border border-border bg-card p-4 shadow-[0_14px_30px_-24px_rgba(26,42,40,.4)] min-[760px]:col-span-2 min-[760px]:p-5"
     >
       <p className="text-sm font-semibold text-foreground">Ask AI about Zensus</p>
-      <p aria-live="polite" className="mt-1 text-[12.5px] leading-[1.45] text-muted-foreground min-[760px]:min-h-9">
+      <p aria-live="polite" className="mt-1 text-[13px] leading-[1.45] text-muted-foreground">
         {open
           ? `Ask ${AI_ENGINES[active].label ?? AI_ENGINES[active].name} about Zensus ↗`
           : "What Zensus does, and how to reach us."}
       </p>
-      <ul className="mt-3 flex items-center">
+      <ul className="mt-3.5 flex flex-wrap items-center gap-2.5">
         {AI_ENGINES.map((ai, i) => {
           const on = active === i;
           return (
             <li
               key={ai.name}
-              className={cn("relative transition-[margin] duration-300 ease-ui motion-reduce:transition-none", i > 0 && (open ? "ml-0.5" : "-ml-1.5"))}
-              style={{ zIndex: on ? 10 : 5 - i }}
+              className="relative"
             >
               <a
                 href={ai.base + encodeURIComponent(AI_PROMPT)}
@@ -208,7 +207,7 @@ function AskAiCard() {
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
                 className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-full border bg-white shadow-[0_0_0_3px_hsl(var(--card))] transition-[transform,border-color] duration-200 motion-reduce:transition-none",
+                  "flex h-10 w-10 items-center justify-center rounded-full border bg-white transition-[transform,border-color] duration-200 motion-reduce:transition-none",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card",
                   on ? "-translate-y-[3px] border-foreground" : "border-border",
                 )}
@@ -216,11 +215,11 @@ function AskAiCard() {
                 <img
                   src={ai.logo}
                   alt=""
-                  width={15}
-                  height={15}
+                  width={20}
+                  height={20}
                   loading="lazy"
                   decoding="async"
-                  className={cn("h-[15px] w-[15px] object-contain transition-[filter] duration-200", !on && "[filter:grayscale(1)_opacity(.8)]")}
+                  className={cn("h-5 w-5 object-contain transition-[filter] duration-200", !on && "[filter:grayscale(1)_opacity(.8)]")}
                 />
               </a>
             </li>
