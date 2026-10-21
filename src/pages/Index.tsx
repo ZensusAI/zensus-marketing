@@ -88,7 +88,7 @@ const Index = () => {
         <CustomerStory />
         {/* 06-problem: redesigned. */}
         <Problem />
-        {/* TODO(07-runway-feature), pinned */}
+        {/* 07-runway-feature: redesigned (pinned). */}
         <RunwayFeature />
         {/* TODO(08-sync), pinned */}
         <Bento />
