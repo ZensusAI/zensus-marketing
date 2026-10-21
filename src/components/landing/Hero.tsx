@@ -26,11 +26,13 @@ const wavesStyle = {
 // switch is the handoff's own: 820px.
 const Hero = () => (
   <section id="hero" className="relative overflow-hidden bg-background">
-    <div
-      aria-hidden
-      style={wavesStyle}
-      className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-95 [background-image:var(--mesh-narrow)] min-[820px]:[background-image:var(--mesh-wide)]"
-    />
+    {/* The mask and opacity sit on the outer layer so the fade toward the
+        copy stays put; only the inner layer drifts, 6% oversized so its
+        edges never show. Transform only, so it runs on the compositor; off
+        under reduced motion. */}
+    <div aria-hidden style={wavesStyle} className="pointer-events-none absolute inset-0 overflow-hidden opacity-95">
+      <div className="absolute -inset-x-[3%] -inset-y-[3%] bg-cover bg-center bg-no-repeat [background-image:var(--mesh-narrow)] motion-safe:animate-mesh-drift min-[820px]:[background-image:var(--mesh-wide)]" />
+    </div>
     <div
       aria-hidden
       className="pointer-events-none absolute inset-0 [background:radial-gradient(52rem_22rem_at_50%_38%,rgba(34,197,115,.14),transparent_70%)]"

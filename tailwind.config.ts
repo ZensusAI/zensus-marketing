@@ -118,6 +118,11 @@ export default {
       },
       keyframes: {
         // Navbar panels and the mobile sheet (handoff 01-navbar "nvIn").
+        // Hero mesh waves: a very slow sideways drift (handoff 02-hero).
+        "mesh-drift": {
+          from: { transform: "translate3d(-2%, 0.5%, 0)" },
+          to: { transform: "translate3d(2%, -0.5%, 0)" },
+        },
         "nav-in": {
           from: { opacity: "0", transform: "translateY(4px)" },
           to: { opacity: "1", transform: "none" },
@@ -161,6 +166,7 @@ export default {
       },
       animation: {
         "nav-in": "nav-in 0.2s ease-out",
+        "mesh-drift": "mesh-drift 40s ease-in-out infinite alternate",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.6s ease-out forwards",
