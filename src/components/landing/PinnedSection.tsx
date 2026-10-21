@@ -1,5 +1,5 @@
 import { useRef, type CSSProperties, type ReactNode } from "react";
-import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import { useScrollProgress, type ScrollProgress } from "@/hooks/use-scroll-progress";
 import { cn } from "@/lib/utils";
 
@@ -20,10 +20,11 @@ interface PinnedSectionProps {
  * of JS pinning. Progress arrives as the CSS variable `--p` (0 to 1) on the
  * track (and the entry value as `--e`), plus the optional `onProgress` callback.
  *
- * Reduced motion: the `.pin-track` CSS rule collapses the track and sets
- * `--p: 1` before hydration, and the listener never attaches, so the section
- * renders its finished end state. Ancestors must not set `overflow: hidden`,
- * which disables sticky.
+ * Reduced motion or a short viewport (useStaticPins): the `.pin-track` CSS
+ * rule collapses the track and sets `--p: 1` before hydration, and the
+ * listener never attaches, so the section renders its finished end state.
+ * Ancestors must not set `overflow: hidden`, which disables sticky
+ * (`overflow: clip` is fine).
  */
 export const PinnedSection = ({
   viewports,
@@ -35,7 +36,7 @@ export const PinnedSection = ({
   "aria-labelledby": labelledBy,
 }: PinnedSectionProps) => {
   const ref = useRef<HTMLElement>(null);
-  const reduced = usePrefersReducedMotion();
+  const reduced = useStaticPins();
   useScrollProgress(ref, { disabled: reduced, onProgress: reduced ? undefined : onProgress });
 
   return (

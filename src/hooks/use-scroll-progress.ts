@@ -51,13 +51,20 @@ export function useScrollProgress(ref: RefObject<HTMLElement | null>, { disabled
     const schedule = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
+    // A width-only resize or a rotation can leave all three values unchanged
+    // (the track height is in vh), yet sections that size drawings in pixels
+    // must redraw, so a resize always calls back.
+    const onResize = () => {
+      last = "";
+      schedule();
+    };
 
     update();
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
+      window.removeEventListener("resize", onResize);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [ref, disabled, onProgress]);

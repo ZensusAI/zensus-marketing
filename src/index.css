@@ -215,8 +215,10 @@
     @apply bg-background text-foreground antialiased;
   }
 
-  html {
-    scroll-behavior: smooth;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 }
 
@@ -301,8 +303,10 @@
 /* Pinned, scroll-scrubbed sections (PinnedSection.tsx). The track is as tall
    as the pin length; the stage sticks to the top for its whole height. --p is
    the scroll progress (0 to 1) written by useScrollProgress. Under reduced
-   motion the track collapses and --p is 1, so the section shows its finished
-   end state, including before hydration. */
+   motion, or on a viewport too short to hold a pinned stage, the track
+   collapses and --p is 1, so the section shows its finished end state,
+   including before hydration. The media query matches STATIC_PINS_QUERY in
+   use-prefers-reduced-motion.ts; keep them in step. */
 .pin-track {
   --p: 0;
   height: var(--pin-h, auto);
@@ -312,7 +316,7 @@
   top: 0;
   height: 100svh;
 }
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce), (max-height: 719px) {
   .pin-track {
     --p: 1;
     height: auto;
@@ -328,8 +332,8 @@
    the rail is full and every step's description is open. .showcase-reveal is
    content that fades in (forced visible and flat); .showcase-still only stops
    moving and keeps its own opacity (the dots, the faint waves and the
-   screenshots, of which only the first is shown). */
-@media (prefers-reduced-motion: reduce) {
+   screenshots, of which only the first is shown). Same query as the pins. */
+@media (prefers-reduced-motion: reduce), (max-height: 719px) {
   .showcase-reveal {
     opacity: 1 !important;
     transform: none !important;

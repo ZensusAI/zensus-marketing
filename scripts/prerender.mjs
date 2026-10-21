@@ -129,9 +129,22 @@ async function prerender() {
         window.__PRERENDER__ = true;
       });
       // Disable animations so the captured state is stable and deterministic.
-      await page.emulateMediaFeatures([
-        { name: "prefers-reduced-motion", value: "reduce" },
-      ]);
+      // Except on the homepage: its pinned sections render a different, static
+      // layout under reduced motion, and most visitors (and Googlebot) do not
+      // ask for it. Capturing that layout made the first paint the stacked
+      // version, which then swapped to the pinned one and shifted. Its own
+      // motion is scroll-driven, so at scroll 0 the capture is still
+      // deterministic, and every word stays in the DOM either way.
+      // The homepage also needs a desktop-sized viewport: Puppeteer's default
+      // is 800x600, and a viewport under 720px tall renders the pins static
+      // too (STATIC_PINS_QUERY in use-prefers-reduced-motion.ts).
+      if (route === "/") {
+        await page.setViewport({ width: 1440, height: 900 });
+      } else {
+        await page.emulateMediaFeatures([
+          { name: "prefers-reduced-motion", value: "reduce" },
+        ]);
+      }
       await page.goto(url, { waitUntil: "networkidle0", timeout: 30000 });
       // Give React hydration and Helmet an extra beat to settle.
       await new Promise((r) => setTimeout(r, 500));
