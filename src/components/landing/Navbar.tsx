@@ -82,6 +82,22 @@ const QUESTIONS: Question[] = [
     alt: "Zensus what-if scenario comparing cash runway before and after two hires",
     desc: "Stack hiring, churn, and pricing assumptions in one conversation and compare before-and-after projections. Revert any change instantly.",
   },
+  // Added at the user's request (21 Oct 2026), not in the 01-navbar handoff:
+  // the question investors put to a company. The scenario chat models a raise
+  // as a one-off inflow (the chart labels it "raised") and stacks it with
+  // other changes. There is no portfolio or fund-level view, so the copy stays
+  // on the company's side of the table.
+  {
+    q: "How many months does this round buy us?",
+    feature: "Funding scenarios",
+    href: "/tools/runway-calculator",
+    url: "app.zensus.app/runway",
+    img: runwayWhatIf,
+    width: 2264,
+    height: 1138,
+    alt: "Zensus scenario showing how a funding round moves the zero-cash date",
+    desc: "Add a raise as a one-off inflow and see how far it moves your zero-cash date. Stack it with a hiring plan to see what the round really buys.",
+  },
   {
     q: "Will I know before it gets tight?",
     feature: "Slack threshold alerts",
@@ -302,7 +318,7 @@ function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
           <div className="relative aspect-[16/8.2]">
             {QUESTIONS.map((row, i) => (
               <img
-                key={row.img}
+                key={row.q}
                 src={row.img}
                 alt={i === active ? row.alt : ""}
                 aria-hidden={i !== active}
