@@ -8,6 +8,9 @@ import slackLogo from "@/assets/integrations/slack.svg";
 import { HERO_MESH } from "./hero-mesh";
 
 const G2_REVIEW_URL = "https://www.g2.com/products/zensus/reviews";
+// From the customer's video captions, not his G2 review (which leans on
+// "AI-powered", off the site's positioning). So the attribution credits G2
+// with the rating ("5.0 on G2"), not the quote. Chosen with the user, 21 Oct.
 const QUOTE = "One of my favorite features of Zensus is the HubSpot integration.";
 
 const LOGOS: { src: string; alt: string; to: string; className?: string }[] = [
@@ -78,7 +81,7 @@ export const TrustBar = () => (
               aria-label="Zensus 5.0 star rating on G2, verified review (opens in a new tab)"
               className={`hover:text-primary hover:underline ${focusRing}`}
             >
-              G2
+              5.0 on G2
             </a>
           </p>
         </div>
