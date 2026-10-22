@@ -13,6 +13,17 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // usually take well under a second.
 const LEAD_BUDGET_MS = 3000;
 
+// A short horizontal shake, the "no" gesture, for an empty or invalid address.
+// Web Animations rather than a CSS class, so it replays on every attempt
+// without remounting the field (which would drop focus). Skipped under
+// reduced motion, where the red ring and the message carry it alone.
+const SHAKE: Keyframe[] = [0, -8, 7, -5, 4, -2, 0].map((x) => ({ transform: `translateX(${x}px)` }));
+
+function shake(el: HTMLElement | null) {
+  if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  el.animate(SHAKE, { duration: 420, easing: "ease-out" });
+}
+
 function within<T>(promise: Promise<T>, ms: number): Promise<T | undefined> {
   return Promise.race([promise, new Promise<undefined>((r) => setTimeout(() => r(undefined), ms))]);
 }
@@ -31,6 +42,8 @@ export function HeroSignup() {
   const [armed, setArmed] = useState(false);
   const [sending, setSending] = useState(false);
   const turnstileRef = useRef<TurnstileInstance>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const saveLead = async (address: string) => {
     if (!TURNSTILE_SITE_KEY) return;
@@ -54,6 +67,8 @@ export function HeroSignup() {
     const address = email.trim();
     if (!EMAIL_RE.test(address)) {
       setError(address ? "Enter a valid email address, like you@company.com." : "Enter your email to start the trial.");
+      shake(formRef.current);
+      inputRef.current?.focus();
       return;
     }
     setError("");
@@ -66,20 +81,29 @@ export function HeroSignup() {
 
   const errorId = `${id}-error`;
   return (
-    <div className="mx-auto mt-9 w-full max-w-[520px]">
+    // 460px wide: about two thirds of the 672px subhead above it, so the
+    // field reads as part of the copy column rather than a second band. 52px
+    // tall, the height of the buttons it replaced. Under 480px the one pill
+    // splits in two: the field becomes its own pill and the button a second
+    // one under it, both the full column width, so neither is squeezed.
+    <div className="mx-auto mt-8 w-full max-w-[460px]">
       <form
+        ref={formRef}
         onSubmit={onSubmit}
         noValidate
         className={cn(
-          "flex flex-col gap-2 rounded-[30px] border bg-card p-1.5 shadow-[0_0_0_1px_#EBD9A6,0_0_18px_rgba(235,217,166,.45),0_4px_6px_-1px_rgba(0,0,0,.06)] transition-colors",
-          "focus-within:border-primary/60 min-[480px]:flex-row min-[480px]:items-center min-[480px]:rounded-full",
-          error ? "border-destructive/60" : "border-border",
+          "flex flex-col gap-2 transition-[border-color,box-shadow] duration-200",
+          "min-[480px]:flex-row min-[480px]:items-center min-[480px]:gap-1 min-[480px]:rounded-full min-[480px]:border min-[480px]:bg-card min-[480px]:p-1",
+          error
+            ? "min-[480px]:border-destructive/70 min-[480px]:shadow-[0_0_0_3px_hsl(var(--destructive)/.12)]"
+            : "min-[480px]:border-[#E4D3A1] min-[480px]:shadow-[0_0_14px_rgba(235,217,166,.4),0_2px_4px_-1px_rgba(0,0,0,.05)] min-[480px]:focus-within:border-primary/60 min-[480px]:focus-within:shadow-[0_0_0_3px_hsl(var(--primary)/.14)]",
         )}
       >
         <label htmlFor={`${id}-email`} className="sr-only">
           Email address
         </label>
         <input
+          ref={inputRef}
           id={`${id}-email`}
           type="email"
           name="email"
@@ -98,7 +122,13 @@ export function HeroSignup() {
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
           disabled={sending}
-          className="h-12 min-w-0 flex-1 rounded-full bg-transparent px-5 text-base text-foreground placeholder:text-muted-foreground focus:outline-none disabled:opacity-70"
+          className={cn(
+            "h-12 min-w-0 flex-none rounded-full border bg-card px-5 text-base text-foreground transition-[border-color,box-shadow] duration-200 placeholder:text-muted-foreground focus:outline-none disabled:opacity-70",
+            "min-[480px]:h-11 min-[480px]:flex-1 min-[480px]:border-0 min-[480px]:bg-transparent min-[480px]:px-4 min-[480px]:shadow-none min-[480px]:focus:shadow-none",
+            error
+              ? "border-destructive/70 shadow-[0_0_0_3px_hsl(var(--destructive)/.12)]"
+              : "border-[#E4D3A1] shadow-[0_0_14px_rgba(235,217,166,.4)] focus:border-primary/60 focus:shadow-[0_0_0_3px_hsl(var(--primary)/.14)]",
+          )}
         />
         {/* At rest the button reads "See"; hover or keyboard focus opens it to
             "See when my cash runs out ->". The rest of the label is always in
@@ -109,7 +139,7 @@ export function HeroSignup() {
         <button
           type="submit"
           disabled={sending}
-          className="group inline-flex h-12 shrink-0 items-center justify-center rounded-full bg-primary px-7 text-base font-semibold text-primary-foreground transition-colors duration-300 ease-ui hover:bg-[hsl(150_70%_41%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card disabled:cursor-wait disabled:opacity-80"
+          className="group inline-flex h-12 shrink-0 min-[480px]:h-11 items-center justify-center rounded-full bg-primary px-6 text-[15px] font-semibold text-primary-foreground transition-colors duration-300 ease-ui hover:bg-[hsl(150_70%_41%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card disabled:cursor-wait disabled:opacity-80"
         >
           {sending ? (
             "Opening Zensus..."
@@ -143,7 +173,7 @@ export function HeroSignup() {
         <Turnstile ref={turnstileRef} siteKey={TURNSTILE_SITE_KEY} options={{ size: "invisible" }} />
       ) : null}
 
-      <p className="mt-3 text-balance text-sm text-muted-foreground">
+      <p className="mt-3 text-balance text-[13px] text-muted-foreground min-[480px]:text-sm">
         {/* Two block spans so each sentence keeps its own line on desktop;
             the space keeps them two sentences for text extractors. */}
         <span className="block">14-day free trial, cancel anytime. No charge until it ends.</span>{" "}
