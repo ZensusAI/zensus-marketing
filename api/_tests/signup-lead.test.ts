@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import handler from "../signup-lead";
-import { resetToolRateLimitForTests } from "../_lib/tool-rate-limit";
+import { checkToolRateLimit, resetToolRateLimitForTests } from "../_lib/tool-rate-limit";
 
 function res() {
   const r: any = {};
@@ -86,6 +86,13 @@ describe("signup-lead handler", () => {
     const r = res();
     await handler(req() as any, r as any);
     expect(r.status).toHaveBeenCalledWith(429);
+  });
+
+  it("keeps its limit apart from the calculators'", async () => {
+    for (let i = 0; i < 3; i++) checkToolRateLimit("203.0.113.9", "owner@example.com");
+    const r = res();
+    await handler(req() as any, r as any);
+    expect(r.status).toHaveBeenCalledWith(200);
   });
 
   it("reports 502 when Apollo refuses, and 500 without a key", async () => {

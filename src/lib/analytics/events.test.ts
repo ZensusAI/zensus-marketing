@@ -98,16 +98,16 @@ describe("marketing analytics helpers", () => {
     });
   });
 
-  it("records the hero trial modal open as a distinct CTA conversion", async () => {
+  it("records the hero email signup as a distinct CTA conversion", async () => {
     const { posthog, events } = await loadFresh();
     events.grantCapturing();
     await events.initAnalytics();
     vi.mocked(posthog.capture).mockClear();
-    events.trackHeroTrialClick();
+    events.trackHeroEmailSubmit();
     expect(posthog.capture).toHaveBeenCalledWith("marketing_cta_clicked", {
       location: "hero",
       destination: "trial",
-      action: "open_signup_modal",
+      action: "email_submit",
     });
   });
 

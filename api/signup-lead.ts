@@ -13,7 +13,8 @@ export const config = { maxDuration: 10 };
 // lost follow-up, never a lost signup.
 const REQUIRED_ENV = ["TURNSTILE_SECRET_KEY", "APOLLO_API_KEY"];
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Matches the hero field and the app login, which both use this rule.
+const EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const SOURCES = new Set<SignupSource>(["hero"]);
 
 function log(stage: string, outcome: string, errorName?: string) {
@@ -63,8 +64,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(503).json({ error: "turnstile_unavailable" });
   }
 
-  // Shares the calculators' hourly limits (10 per IP, 3 per address).
-  const rate = checkToolRateLimit(clientIp ?? "unknown", email);
+  // The calculators' hourly limits (10 per IP, 3 per address), in a namespace
+  // of their own: a visitor who emailed themselves three calculator results
+  // must still be recorded when they sign up.
+  const rate = checkToolRateLimit(`signup:${clientIp ?? "unknown"}`, `signup:${email}`);
   if (!rate.allowed) {
     log("rate_limit", "rejected", rate.reason);
     return res.status(429).json({ error: "rate_limit" });

@@ -39,17 +39,16 @@ const Hero = () => (
 
     <div className="relative mx-auto max-w-6xl px-4 min-[820px]:px-6">
       {/* The ruled column runs from the top of the page, behind the fixed
-          64px navbar, down to the proof strip. The bottom padding is the
-          handoff's 56px plus the proof strip's 56px wave band: the band is
-          drawn here rather than as its own layer, because a separate layer
-          repainted the waves at a different crop and left a visible seam
-          (seen at 1920px). From 820px the copy is set about 15% smaller than
-          the handoff (21 Oct 2026) and the padding grows to keep the hero
-          its former height, so the content sits smaller inside the same
-          frame. The block is centred in the visible band, from the navbar's
-          bottom edge to the proof strip: 13.5rem on top is the 64px navbar
-          plus 9.5rem, the same 152px as the bottom. */}
-      <div className="relative border-x border-transparent px-1 pb-28 pt-[6.5rem] text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pb-[9.5rem] min-[820px]:pt-[13.5rem]">
+          64px navbar, down to the proof strip. The waves above the proof
+          strip are drawn in this padding rather than as their own layer,
+          because a separate layer repainted them at a different crop and
+          left a visible seam (seen at 1920px). From 820px the copy is set
+          about 15% smaller than the handoff (21 Oct 2026) inside a frame of
+          the former height. The block is centred in the visible band, from
+          the navbar's bottom edge to the proof strip: the top padding is the
+          64px navbar plus the bottom padding (13.5rem = 64px + 9.5rem from
+          820px; 8.75rem = 64px + 4.75rem below it). */}
+      <div className="relative border-x border-transparent px-1 pb-[4.75rem] pt-[8.75rem] text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pb-[9.5rem] min-[820px]:pt-[13.5rem]">
         <CornerMark className="-left-[6px] top-[4.5rem] hidden min-[820px]:block" />
         <CornerMark className="-right-[6px] top-[4.5rem] hidden min-[820px]:block" />
 

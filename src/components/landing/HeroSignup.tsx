@@ -1,12 +1,14 @@
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { trialUrlFor } from "@/lib/constants";
-import { trackCtaClick } from "@/lib/analytics/events";
+import { trackHeroEmailSubmit } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// The app login's own rule (apps/landing/app/login/page.tsx), so an address
+// this field accepts is one the login page will send to rather than flag.
+const EMAIL_RE = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 // The lead post gets this long before the visitor is sent on regardless. It
 // covers the invisible Turnstile check plus the Apollo write, which together
@@ -47,6 +49,17 @@ export function HeroSignup() {
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Back from the login page can restore this page from the back/forward
+  // cache exactly as it was left, field disabled and button on "Opening
+  // Zensus...". Re-enable it so the visitor can try again.
+  useEffect(() => {
+    const onShow = (event: PageTransitionEvent) => {
+      if (event.persisted) setSending(false);
+    };
+    window.addEventListener("pageshow", onShow);
+    return () => window.removeEventListener("pageshow", onShow);
+  }, []);
+
   const saveLead = async (address: string) => {
     if (!TURNSTILE_SITE_KEY) return;
     try {
@@ -68,7 +81,7 @@ export function HeroSignup() {
     event.preventDefault();
     const address = email.trim();
     if (!EMAIL_RE.test(address)) {
-      setError(address ? "Enter a valid email address, like you@company.com." : "Enter your email to start the trial.");
+      setError(address ? "Enter a valid email address, like you@company.com." : "Enter your email to see when your cash runs out.");
       shake(formRef.current);
       inputRef.current?.focus();
       return;
@@ -76,7 +89,7 @@ export function HeroSignup() {
     setError("");
     setSending(true);
     setArmed(true);
-    trackCtaClick("hero", { destination: "trial", action: "email_submit" });
+    trackHeroEmailSubmit();
     await within(saveLead(address), LEAD_BUDGET_MS + 500);
     window.location.assign(trialUrlFor(address));
   };

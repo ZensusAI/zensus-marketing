@@ -1,12 +1,8 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import Hero from "./Hero";
 import { trialUrlFor } from "@/lib/constants";
-
-vi.mock("./SignupModal", () => ({
-  SignupModal: ({ children }: { children: React.ReactNode }) => children,
-}));
 
 describe("homepage hero", () => {
   it("leads with cash visibility instead of the 13-week mechanic", () => {
