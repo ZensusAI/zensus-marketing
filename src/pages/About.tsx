@@ -203,22 +203,15 @@ const About = () => (
       </section>
 
       {/* The team, straight after the story so the people behind it come
-          next. Same two-column frame as the story above it: heading on
-          the left, the four people as an even 2 by 2 grid on the right. Each
-          card carries the person's anchor (see TEAM). */}
+          next: the title centred above an even 2 by 2 grid, held to 640px
+          so the photos stay portrait sized (about 300px) rather than filling
+          the page. Each card carries the person's anchor (see TEAM). */}
       <section aria-labelledby="team-heading" className="border-t border-border">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 min-[820px]:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] min-[820px]:gap-16 min-[820px]:px-16 min-[820px]:py-24">
-          {/* The heading stays in view beside the grid while it scrolls. */}
-          <div className="min-[820px]:sticky min-[820px]:top-28 min-[820px]:self-start">
-            <p className={eyebrow}>The team</p>
-            <h2 id="team-heading" className="mt-3 text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[32px]">
-              The people building Zensus
-            </h2>
-          </div>
-          {/* Photos sit desaturated so four different backdrops read as one
-              set, and come to full colour on hover or focus (always colour
-              on touch screens, which have no hover). */}
-          <ul className="grid grid-cols-2 gap-x-4 gap-y-8 min-[820px]:gap-x-8 min-[820px]:gap-y-12">
+        <div className="mx-auto max-w-6xl px-5 py-16 min-[820px]:px-16 min-[820px]:py-24">
+          <h2 id="team-heading" className="text-center text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[32px]">
+            Our Team
+          </h2>
+          <ul className="mx-auto mt-10 grid max-w-[640px] grid-cols-2 gap-x-4 gap-y-8 min-[820px]:mt-12 min-[820px]:gap-x-8 min-[820px]:gap-y-12">
             {TEAM.map((m) => (
               <li key={m.id} id={m.id} className="group scroll-mt-24">
                 <div className="aspect-square overflow-hidden rounded-2xl border border-border bg-forest">
@@ -230,7 +223,7 @@ const About = () => (
                       height={512}
                       loading="lazy"
                       decoding="async"
-                      className="h-full w-full object-cover grayscale-[.85] transition-[filter,transform] duration-500 ease-ui group-hover:scale-[1.02] group-hover:grayscale-0 group-focus-within:grayscale-0 motion-reduce:transition-none motion-reduce:group-hover:scale-100 [@media(hover:none)]:grayscale-0"
+                      className="h-full w-full object-cover transition-transform duration-500 ease-ui group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                     />
                   ) : (
                     <div
