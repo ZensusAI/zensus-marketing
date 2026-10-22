@@ -56,10 +56,16 @@ const TEAM: TeamMember[] = [
 
 // What we believe: standalone statements, each a quotable line with one
 // sentence of reasons. Not numbered, because they are not a sequence.
+// The origin story, told through what it cost (22 Oct 2026). Facts only:
+// Capital Factory, founders running out of money, investor numbers rounded
+// up, and Ajin's own years in the US as a first-generation immigrant on his
+// own. Four paragraphs, so the scroll spotlight (StoryParagraphs) rests on
+// each beat in turn.
 const STORY = [
-  "Zensus started at Capital Factory, Austin's startup hub. At one networking event after another, our founder, Ajin Sunny, met founders building things that mattered, and watched too many of them run out of money before the work was done.",
-  "The pattern repeated. Teams were so focused on the mission that cash became an afterthought. When money got tight, the numbers in the investor update got rounder and more hopeful, because nobody had time to build an honest forecast. Survival came to depend on a story instead of a plan.",
-  "Ajin knew that feeling from the inside. He is a first-generation immigrant who studied and worked in the United States for more than 12 years on his own, and clear visibility into his own cash was never something he had. Zensus is the tool he wanted then: one that shows where the money is going before it is gone.",
+  "Zensus began in the rooms at Capital Factory, Austin's startup hub. Event after event, our founder, Ajin Sunny, met people building things that mattered. Most of them did not run out of ideas, or nerve, or customers. They ran out of money, and too often they did not see it coming.",
+  "It was hard to watch. Founders gave everything to the mission, and cash became the thing they would deal with later. When later came, the numbers in the investor update grew rounder and more hopeful, because there was no time to build an honest forecast and too much at stake to admit the gap. Good companies ended up surviving on a story instead of a plan.",
+  "Ajin knew that feeling from the inside. He is a first-generation immigrant who spent more than 12 years studying and working in the United States on his own. There was no one to show him where his money was going or how long it would last. Every month was a careful guess, made alone.",
+  "Zensus is what he needed then, and what he watched so many founders go without: an honest view of where the money is going, early enough to change course before it is gone.",
 ];
 
 const BELIEFS = [
