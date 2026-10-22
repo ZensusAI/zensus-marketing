@@ -149,7 +149,7 @@ const CARDS = [
     category: "About",
     title: "About Zensus",
     subtitle:
-      "Cash flow forecasting for founders with variable revenue. Built because too many startups fail from missed cash flow, not missed missions.",
+      "No business should run out of cash by surprise. Started at Capital Factory in Austin; meet the team behind Zensus.",
     accent: "green",
   },
   {

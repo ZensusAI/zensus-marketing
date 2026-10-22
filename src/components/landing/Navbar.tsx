@@ -140,7 +140,6 @@ const LEARN: PanelLink[] = [
   { href: "/blog", label: "Blog", description: "Guides, product updates, and announcements." },
   { href: "/changelog", label: "Changelog", description: "Ship notes and what's new in Zensus." },
   { href: "/#faq", label: "FAQ", description: "Quick answers about pricing, data, and setup." },
-  { href: "/about", label: "About", description: "The company and the founder behind Zensus." },
 ];
 
 const TOOLS: PanelLink[] = [
@@ -185,7 +184,6 @@ const LEARN_SHORT = [
   { href: "/changelog", label: "Changelog" },
   { href: "/#faq", label: "FAQ" },
   { href: "/#compare", label: "Compare" },
-  { href: "/about", label: "About" },
 ];
 
 type MenuKey = "product" | "resources";
@@ -463,14 +461,28 @@ function DesktopNav({ open, setOpen }: { open: MenuKey | null; setOpen: (k: Menu
     );
   };
 
-  const plainLink = (href: string, label: string) => (
+  // `glow` (About only, 22 Oct 2026): a soft green halo behind the label
+  // that breathes slowly to draw the eye, and brightens on hover or focus.
+  // Static under reduced motion. The halo is decoration; the label is the
+  // same plain link as its neighbours.
+  const plainLink = (href: string, label: string, glow = false) => (
     <li>
       <Link
         to={href}
         onPointerEnter={(e) => e.pointerType === "mouse" && close()}
         onFocus={close}
-        className={cn("flex h-16 items-center text-[15px] font-semibold text-foreground", focusRing)}
+        className={cn(
+          "flex h-16 items-center text-[15px] font-semibold text-foreground",
+          glow && "group relative isolate transition-colors duration-300 hover:text-sage-deep",
+          focusRing,
+        )}
       >
+        {glow && (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-8 w-[4.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/.38),transparent)] opacity-60 blur-[6px] transition-opacity duration-300 motion-safe:animate-nav-glow group-hover:opacity-100 group-hover:[animation-play-state:paused] group-focus-visible:opacity-100"
+          />
+        )}
         {label}
       </Link>
     </li>
@@ -482,6 +494,7 @@ function DesktopNav({ open, setOpen }: { open: MenuKey | null; setOpen: (k: Menu
       {plainLink("/pricing", "Pricing")}
       {plainLink("/security", "Security")}
       {trigger("resources", "Resources", <ResourcesPanel onNavigate={close} />)}
+      {plainLink("/about", "About", true)}
     </ul>
   );
 }
@@ -550,10 +563,11 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
           ))}
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-2">
+        <div className="mt-5 grid grid-cols-3 gap-2">
           {[
             { href: "/pricing", label: "Pricing" },
             { href: "/security", label: "Security" },
+            { href: "/about", label: "About" },
           ].map((l) => (
             <Link
               key={l.href}
