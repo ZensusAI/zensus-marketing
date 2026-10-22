@@ -461,10 +461,12 @@ function DesktopNav({ open, setOpen }: { open: MenuKey | null; setOpen: (k: Menu
     );
   };
 
-  // `glow` (About only, 22 Oct 2026): a soft green halo behind the label
-  // that breathes slowly to draw the eye, and brightens on hover or focus.
-  // Static under reduced motion. The halo is decoration; the label is the
-  // same plain link as its neighbours.
+  // `glow` (About only, 22 Oct 2026): a green halo behind the label that
+  // breathes to draw the eye and invite the click, with the label itself in
+  // the deep sage (the brighter primary green on the dark routes, where the
+  // deep sage reads dim). Hover or focus holds the halo at full strength. Static
+  // under reduced motion. The halo is decoration; the label is the same
+  // plain link as its neighbours.
   const plainLink = (href: string, label: string, glow = false) => (
     <li>
       <Link
@@ -473,14 +475,14 @@ function DesktopNav({ open, setOpen }: { open: MenuKey | null; setOpen: (k: Menu
         onFocus={close}
         className={cn(
           "flex h-16 items-center text-[15px] font-semibold text-foreground",
-          glow && "group relative isolate transition-colors duration-300 hover:text-sage-deep",
+          glow && "group relative isolate text-sage-deep [:root:not(.theme-cream)_&]:text-primary transition-colors duration-300 [text-shadow:0_0_12px_hsl(var(--primary)/.35)]",
           focusRing,
         )}
       >
         {glow && (
           <span
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-8 w-[4.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/.38),transparent)] opacity-60 blur-[6px] transition-opacity duration-300 motion-safe:animate-nav-glow group-hover:opacity-100 group-hover:[animation-play-state:paused] group-focus-visible:opacity-100"
+            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-10 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/.62),hsl(var(--primary)/.18)_60%,transparent)] opacity-80 blur-[7px] transition-opacity duration-300 motion-safe:animate-nav-glow group-hover:opacity-100 group-hover:[animation-play-state:paused] group-focus-visible:opacity-100"
           />
         )}
         {label}
