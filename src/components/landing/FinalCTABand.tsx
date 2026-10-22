@@ -30,7 +30,10 @@ const WORDS = "Stop rebuilding that spreadsheet every Monday.".split(" ");
 const MAGNET_PX = 140;
 const MAGNET_PULL = 0.18;
 
-const FinalCTABand = () => {
+// `compact` (the About page, 22 Oct 2026): the same band at the same size,
+// with its copy and buttons about 15% smaller from 760px, matching that
+// page's scale. The homepage and other pages keep the full size.
+const FinalCTABand = ({ compact = false }: { compact?: boolean }) => {
   const reduced = usePrefersReducedMotion();
   const secRef = useRef<HTMLElement>(null);
   const spotRef = useRef<HTMLDivElement>(null);
@@ -153,7 +156,10 @@ const FinalCTABand = () => {
       <div className="relative mx-auto max-w-[720px] text-center">
         <h2
           id="final-cta-heading"
-          className="text-balance text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-foreground min-[760px]:text-[54px]"
+          className={cn(
+            "text-balance text-[32px] font-bold leading-[1.1] tracking-[-0.025em] text-forest-foreground min-[760px]:text-[54px]",
+            compact && "min-[760px]:text-[46px]",
+          )}
         >
           {WORDS.map((w, i) => {
             const k = ease((p - 0.3 - i * 0.035) / 0.22);
@@ -173,28 +179,37 @@ const FinalCTABand = () => {
           })}
         </h2>
         <p
-          className="mx-auto mt-3.5 max-w-[560px] text-pretty text-base leading-[1.55] text-forest-muted-strong min-[760px]:mt-[18px] min-[760px]:text-lg"
+          className={cn(
+            "mx-auto mt-3.5 max-w-[560px] text-pretty text-base leading-[1.55] text-forest-muted-strong min-[760px]:mt-[18px] min-[760px]:text-lg",
+            compact && "min-[760px]:mt-4 min-[760px]:max-w-[480px] min-[760px]:text-[15.5px]",
+          )}
           style={still ? undefined : { opacity: ks, transform: `translateY(${((1 - ks) * 12).toFixed(1)}px)` }}
         >
           Connect your data in a few minutes. If you would rather see it first, we will walk you through it on a call.
         </p>
         <div style={still ? undefined : { opacity: kb, transform: `translateY(${((1 - kb) * 12).toFixed(1)}px)` }}>
-          <div className="mt-8 flex flex-col flex-wrap items-center justify-center gap-3 min-[760px]:flex-row">
+          <div className={cn("mt-8 flex flex-col flex-wrap items-center justify-center gap-3 min-[760px]:flex-row", compact && "min-[760px]:mt-7")}>
             <span className="inline-flex w-full max-w-[300px] justify-center min-[760px]:w-auto min-[760px]:max-w-none">
               <span ref={magnetRef} className="inline-flex w-full justify-center transition-transform duration-200 ease-out min-[760px]:w-auto">
                 <TryItNowButton
                   variant="solid"
                   source="final_cta_band"
-                  className="w-full justify-center shadow-[0_0_0_1px_rgba(72,216,138,.5),0_0_28px_rgba(34,197,115,.35)] focus-visible:ring-offset-forest min-[760px]:w-auto"
+                  className={cn(
+                    "w-full justify-center shadow-[0_0_0_1px_rgba(72,216,138,.5),0_0_28px_rgba(34,197,115,.35)] focus-visible:ring-offset-forest min-[760px]:w-auto",
+                    compact && "min-[760px]:h-[44px] min-[760px]:px-6 min-[760px]:text-[14.5px]",
+                  )}
                 />
               </span>
             </span>
             <TalkToUsButton
               variant="outline"
-              className="w-full max-w-[300px] justify-center border-[#3E5A4B] bg-transparent text-forest-foreground focus-visible:ring-offset-forest min-[760px]:w-auto min-[760px]:max-w-none"
+              className={cn(
+                "w-full max-w-[300px] justify-center border-[#3E5A4B] bg-transparent text-forest-foreground focus-visible:ring-offset-forest min-[760px]:w-auto min-[760px]:max-w-none",
+                compact && "min-[760px]:h-[44px] min-[760px]:px-6 min-[760px]:text-[14px]",
+              )}
             />
           </div>
-          <p className="mt-5 text-sm text-forest-muted-strong">
+          <p className={cn("mt-5 text-sm text-forest-muted-strong", compact && "min-[760px]:mt-4 min-[760px]:text-[13px]")}>
             Zensus Pro is $199 a month after a 14-day free trial.{" "}
             <Link
               to="/pricing"

@@ -151,7 +151,12 @@ const About = () => (
 
     <main>
       {/* Opening: the mission as one line, in the homepage hero's ruled
-          column with its registration marks. */}
+          column with its registration marks.
+          Scale: like the homepage hero (21 Oct 2026), from 820px every
+          section's copy, photos and gaps are set about 15% smaller than the
+          first cut (22 Oct 2026) while the frames, panels and section
+          padding keep their size, so the content sits smaller inside the
+          same page. Phones are unchanged. */}
       <section className="relative">
         <div aria-hidden className="pointer-events-none absolute inset-0 [background:radial-gradient(48rem_20rem_at_50%_40%,rgba(34,197,115,.10),transparent_70%)]" />
         <div className="relative mx-auto max-w-6xl px-4 min-[820px]:px-6">
@@ -159,10 +164,10 @@ const About = () => (
             <CornerMark className="-left-[6px] top-[4.5rem] hidden min-[820px]:block" />
             <CornerMark className="-right-[6px] top-[4.5rem] hidden min-[820px]:block" />
             <p className={eyebrow}>About Zensus</p>
-            <h1 className="mx-auto mt-5 max-w-[16ch] text-balance text-[40px] font-bold leading-[1.05] tracking-[-0.02em] text-foreground min-[820px]:text-[56px]">
+            <h1 className="mx-auto mt-5 max-w-[16ch] text-balance text-[40px] font-bold leading-[1.05] tracking-[-0.02em] text-foreground min-[820px]:text-[48px]">
               No business should run out of cash by surprise.
             </h1>
-            <p className="mx-auto mt-6 max-w-[600px] text-pretty text-[17px] leading-[1.6] text-muted-foreground">
+            <p className="mx-auto mt-6 max-w-[600px] text-pretty text-[17px] leading-[1.6] text-muted-foreground min-[820px]:mt-5 min-[820px]:max-w-[540px] min-[820px]:text-balance min-[820px]:text-[15px]">
               Zensus is cash flow forecasting software for businesses of any size. It connects your bank, QuickBooks,
               and HubSpot and shows, month by month, when cash gets tight, so a hard month arrives as a decision instead
               of a crisis.
@@ -176,12 +181,12 @@ const About = () => (
         <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 min-[820px]:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] min-[820px]:gap-16 min-[820px]:px-16 min-[820px]:py-24">
           <div>
             <p className={eyebrow}>Where it started</p>
-            <h2 id="origin-heading" className="mt-3 text-balance text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[32px]">
+            <h2 id="origin-heading" className="mt-3 text-balance text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[27px]">
               In a room full of founders who were running out of time.
             </h2>
-            <p className="mt-4 text-sm text-muted-foreground">Capital Factory, Austin, Texas</p>
+            <p className="mt-4 text-sm text-muted-foreground min-[820px]:text-[13px]">Capital Factory, Austin, Texas</p>
           </div>
-          <div className="max-w-[62ch] space-y-5 text-[17px] leading-[1.7] text-foreground/90">
+          <div className="max-w-[62ch] space-y-5 text-[17px] leading-[1.7] text-foreground/90 min-[820px]:space-y-4 min-[820px]:text-[15px]">
             <p>
               Zensus started at Capital Factory, Austin's startup hub. At one networking event after another, our
               founder, Ajin Sunny, met founders building things that mattered, and watched too many of them run out of
@@ -203,17 +208,17 @@ const About = () => (
       </section>
 
       {/* The team, straight after the story so the people behind it come
-          next: the title centred above an even 2 by 2 grid, held to 680px
-          so the photos stay portrait sized (about 300px) rather than filling
-          the page. From 820px the gaps are 64px both ways (caption to the
+          next: the title centred above an even 2 by 2 grid, held to 580px
+          from 820px (photos about 262px) so they stay portrait sized rather
+          than filling the page, with 56px gaps both ways (caption to the
           next photo, and photo to photo across); 20px across and 40px down
           on phones. Each card carries the person's anchor (see TEAM). */}
       <section aria-labelledby="team-heading" className="border-t border-border">
         <div className="mx-auto max-w-6xl px-5 py-16 min-[820px]:px-16 min-[820px]:py-24">
-          <h2 id="team-heading" className="text-center text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[32px]">
+          <h2 id="team-heading" className="text-center text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[27px]">
             Our Team
           </h2>
-          <ul className="mx-auto mt-10 grid max-w-[680px] grid-cols-2 gap-x-5 gap-y-10 min-[820px]:mt-14 min-[820px]:gap-x-16 min-[820px]:gap-y-16">
+          <ul className="mx-auto mt-10 grid max-w-[680px] grid-cols-2 gap-x-5 gap-y-10 min-[820px]:mt-12 min-[820px]:max-w-[580px] min-[820px]:gap-x-14 min-[820px]:gap-y-14">
             {TEAM.map((m) => (
               <li key={m.id} id={m.id} className="group scroll-mt-24">
                 <div className="aspect-square overflow-hidden rounded-2xl border border-border bg-forest">
@@ -236,10 +241,10 @@ const About = () => (
                     </div>
                   )}
                 </div>
-                <div className="mt-4 flex items-start justify-between gap-2">
+                <div className="mt-4 flex items-start justify-between gap-2 min-[820px]:mt-3.5">
                   <div className="min-w-0">
-                    <h3 className="text-[17px] font-semibold leading-tight text-foreground">{m.name}</h3>
-                    {m.title ? <p className="mt-1 text-sm text-muted-foreground">{m.title}</p> : null}
+                    <h3 className="text-[17px] font-semibold leading-tight text-foreground min-[820px]:text-[15px]">{m.name}</h3>
+                    {m.title ? <p className="mt-1 text-sm text-muted-foreground min-[820px]:text-[13px]">{m.title}</p> : null}
                   </div>
                   {m.linkedin ? (
                     <a
@@ -249,7 +254,7 @@ const About = () => (
                       aria-label={`${m.name} on LinkedIn (opens in a new tab)`}
                       className="mt-0.5 shrink-0 rounded text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
-                      <Linkedin size={18} aria-hidden />
+                      <Linkedin size={16} aria-hidden />
                     </a>
                   ) : null}
                 </div>
@@ -265,23 +270,23 @@ const About = () => (
           <h2 id="beliefs-heading" className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-forest-muted-strong">
             What we believe
           </h2>
-          <ul className="mt-8 divide-y divide-forest-border">
+          <ul className="mt-8 divide-y divide-forest-border min-[820px]:mt-7">
             {BELIEFS.map((b) => (
               <li
                 key={b.line}
-                className="grid gap-2 py-6 first:pt-0 last:pb-0 min-[820px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] min-[820px]:items-baseline min-[820px]:gap-12 min-[820px]:py-8"
+                className="grid gap-2 py-6 first:pt-0 last:pb-0 min-[820px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] min-[820px]:items-baseline min-[820px]:gap-12 min-[820px]:py-7"
               >
-                <p className="text-balance text-[24px] font-bold leading-[1.2] tracking-[-0.01em] min-[820px]:text-[30px]">
+                <p className="text-balance text-[24px] font-bold leading-[1.2] tracking-[-0.01em] min-[820px]:text-[26px]">
                   {b.line}
                 </p>
-                <p className="text-[15.5px] leading-[1.6] text-forest-muted-strong">{b.body}</p>
+                <p className="text-[15.5px] leading-[1.6] text-forest-muted-strong min-[820px]:text-[14px]">{b.body}</p>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      <FinalCTABand />
+      <FinalCTABand compact />
     </main>
     <Footer />
   </div>
