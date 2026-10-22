@@ -1,11 +1,11 @@
 import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
-import { Linkedin } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import FinalCTABand from "@/components/landing/FinalCTABand";
 import { CornerMark } from "@/components/landing/Backdrop";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+import { BeliefsStack, HeroParallax, StoryParagraphs, TeamGrid, type TeamMember } from "@/components/about/AboutMotion";
 
 const PAGE_URL = `${SITE_URL}/about`;
 const TITLE = "About Zensus · Why We Built Cash Flow Forecasting";
@@ -23,15 +23,7 @@ const breadcrumbs = breadcrumbSchema([HOME_CRUMB, { name: "About", url: PAGE_URL
  * without one shows the person's initials). `title` and `linkedin` render
  * only when set.
  */
-type Member = {
-  id: string;
-  name: string;
-  title: string;
-  photo?: string;
-  linkedin?: string;
-};
-
-const TEAM: Member[] = [
+const TEAM: TeamMember[] = [
   {
     id: "ajin-sunny",
     name: "Ajin Sunny",
@@ -62,16 +54,14 @@ const TEAM: Member[] = [
   },
 ];
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .filter(Boolean)
-    .map((w) => w[0])
-    .filter((_, i, a) => i === 0 || i === a.length - 1)
-    .join("");
-
 // What we believe: standalone statements, each a quotable line with one
 // sentence of reasons. Not numbered, because they are not a sequence.
+const STORY = [
+  "Zensus started at Capital Factory, Austin's startup hub. At one networking event after another, our founder, Ajin Sunny, met founders building things that mattered, and watched too many of them run out of money before the work was done.",
+  "The pattern repeated. Teams were so focused on the mission that cash became an afterthought. When money got tight, the numbers in the investor update got rounder and more hopeful, because nobody had time to build an honest forecast. Survival came to depend on a story instead of a plan.",
+  "Ajin knew that feeling from the inside. He is a first-generation immigrant who studied and worked in the United States for more than 12 years on his own, and clear visibility into his own cash was never something he had. Zensus is the tool he wanted then: one that shows where the money is going before it is gone.",
+];
+
 const BELIEFS = [
   {
     line: "Cash should never run out by surprise.",
@@ -156,13 +146,14 @@ const About = () => (
           section's copy, photos and gaps are set about 15% smaller than the
           first cut (22 Oct 2026) while the frames, panels and section
           padding keep their size, so the content sits smaller inside the
-          same page. Phones are unchanged. */}
-      <section className="relative">
-        <div aria-hidden className="pointer-events-none absolute inset-0 [background:radial-gradient(48rem_20rem_at_50%_40%,rgba(34,197,115,.10),transparent_70%)]" />
+          same page. Phones are unchanged.
+          Motion for all four sections lives in components/about. */}
+      <HeroParallax glow="[background:radial-gradient(48rem_20rem_at_50%_40%,rgba(34,197,115,.10),transparent_70%)]">
         <div className="relative mx-auto max-w-6xl px-4 min-[820px]:px-6">
           <div className="relative border-x border-transparent px-1 pb-16 pt-32 text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pb-24 min-[820px]:pt-40">
             <CornerMark className="-left-[6px] top-[4.5rem] hidden min-[820px]:block" />
             <CornerMark className="-right-[6px] top-[4.5rem] hidden min-[820px]:block" />
+            <div data-parallax-copy className="will-change-transform">
             <p className={eyebrow}>About Zensus</p>
             <h1 className="mx-auto mt-5 max-w-[16ch] text-balance text-[40px] font-bold leading-[1.05] tracking-[-0.02em] text-foreground min-[820px]:text-[48px]">
               No business should run out of cash by surprise.
@@ -172,38 +163,26 @@ const About = () => (
               and HubSpot and shows, month by month, when cash gets tight, so a hard month arrives as a decision instead
               of a crisis.
             </p>
+            </div>
           </div>
         </div>
-      </section>
+      </HeroParallax>
 
-      {/* Origin story: where it started on the left, the story on the right. */}
+      {/* Origin story: where it started on the left (held in view beside the
+          story from 820px), the story on the right. */}
       <section aria-labelledby="origin-heading" className="border-t border-border">
         <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 min-[820px]:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] min-[820px]:gap-16 min-[820px]:px-16 min-[820px]:py-24">
-          <div>
+          <div className="min-[820px]:sticky min-[820px]:top-28 min-[820px]:self-start">
             <p className={eyebrow}>Where it started</p>
             <h2 id="origin-heading" className="mt-3 text-balance text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[27px]">
               In a room full of founders who were running out of time.
             </h2>
             <p className="mt-4 text-sm text-muted-foreground min-[820px]:text-[13px]">Capital Factory, Austin, Texas</p>
           </div>
-          <div className="max-w-[62ch] space-y-5 text-[17px] leading-[1.7] text-foreground/90 min-[820px]:space-y-4 min-[820px]:text-[15px]">
-            <p>
-              Zensus started at Capital Factory, Austin's startup hub. At one networking event after another, our
-              founder, Ajin Sunny, met founders building things that mattered, and watched too many of them run out of
-              money before the work was done.
-            </p>
-            <p>
-              The pattern repeated. Teams were so focused on the mission that cash became an afterthought. When money
-              got tight, the numbers in the investor update got rounder and more hopeful, because nobody had time to
-              build an honest forecast. Survival came to depend on a story instead of a plan.
-            </p>
-            <p>
-              Ajin knew that feeling from the inside. He is a first-generation immigrant who studied and worked in the
-              United States for more than 12 years on his own, and clear visibility into his own cash was never
-              something he had. Zensus is the tool he wanted then: one that shows where the money is going before it
-              is gone.
-            </p>
-          </div>
+          <StoryParagraphs
+            paragraphs={STORY}
+            className="max-w-[62ch] space-y-5 text-[17px] leading-[1.7] text-foreground/90 min-[820px]:space-y-4 min-[820px]:text-[15px]"
+          />
         </div>
       </section>
 
@@ -218,73 +197,16 @@ const About = () => (
           <h2 id="team-heading" className="text-center text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[27px]">
             Our Team
           </h2>
-          <ul className="mx-auto mt-10 grid max-w-[680px] grid-cols-2 gap-x-5 gap-y-10 min-[820px]:mt-12 min-[820px]:max-w-[580px] min-[820px]:gap-x-14 min-[820px]:gap-y-14">
-            {TEAM.map((m) => (
-              <li key={m.id} id={m.id} className="group scroll-mt-24">
-                <div className="aspect-square overflow-hidden rounded-2xl border border-border bg-forest">
-                  {m.photo ? (
-                    <img
-                      src={m.photo}
-                      alt={`${m.name}${m.title ? `, ${m.title} at Zensus` : ", Zensus"}`}
-                      width={512}
-                      height={512}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover transition-transform duration-500 ease-ui group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-                    />
-                  ) : (
-                    <div
-                      aria-hidden
-                      className="flex h-full w-full items-center justify-center text-[clamp(2rem,7vw,3.5rem)] font-bold tracking-[-0.02em] text-forest-muted-strong [background:radial-gradient(circle_at_30%_25%,hsl(var(--forest-raised)),hsl(var(--forest))_70%)]"
-                    >
-                      {initials(m.name)}
-                    </div>
-                  )}
-                </div>
-                <div className="mt-4 flex items-start justify-between gap-2 min-[820px]:mt-3.5">
-                  <div className="min-w-0">
-                    <h3 className="text-[17px] font-semibold leading-tight text-foreground min-[820px]:text-[15px]">{m.name}</h3>
-                    {m.title ? <p className="mt-1 text-sm text-muted-foreground min-[820px]:text-[13px]">{m.title}</p> : null}
-                  </div>
-                  {m.linkedin ? (
-                    <a
-                      href={m.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${m.name} on LinkedIn (opens in a new tab)`}
-                      className="mt-0.5 shrink-0 rounded text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      <Linkedin size={16} aria-hidden />
-                    </a>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ul>
+          <TeamGrid
+            team={TEAM}
+            className="mx-auto mt-10 grid max-w-[680px] grid-cols-2 gap-x-5 gap-y-10 min-[820px]:mt-12 min-[820px]:max-w-[580px] min-[820px]:gap-x-14 min-[820px]:gap-y-14"
+          />
         </div>
       </section>
 
-      {/* What we believe: the manifesto, on the site's forest surface. */}
-      <section aria-labelledby="beliefs-heading" className="px-3 pb-16 min-[820px]:px-6 min-[820px]:pb-24">
-        <div className="mx-auto max-w-6xl rounded-[28px] bg-forest px-6 py-14 text-forest-foreground min-[820px]:px-16 min-[820px]:py-20">
-          <h2 id="beliefs-heading" className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-forest-muted-strong">
-            What we believe
-          </h2>
-          <ul className="mt-8 divide-y divide-forest-border min-[820px]:mt-7">
-            {BELIEFS.map((b) => (
-              <li
-                key={b.line}
-                className="grid gap-2 py-6 first:pt-0 last:pb-0 min-[820px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] min-[820px]:items-baseline min-[820px]:gap-12 min-[820px]:py-7"
-              >
-                <p className="text-balance text-[24px] font-bold leading-[1.2] tracking-[-0.01em] min-[820px]:text-[26px]">
-                  {b.line}
-                </p>
-                <p className="text-[15.5px] leading-[1.6] text-forest-muted-strong min-[820px]:text-[14px]">{b.body}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {/* What we believe: the manifesto on the forest panel, pinned from
+          820px with the beliefs arriving one at a time (BeliefsStack). */}
+      <BeliefsStack beliefs={BELIEFS} />
 
       <FinalCTABand compact />
     </main>
