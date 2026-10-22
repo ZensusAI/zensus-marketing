@@ -203,15 +203,17 @@ const About = () => (
       </section>
 
       {/* The team, straight after the story so the people behind it come
-          next: the title centred above an even 2 by 2 grid, held to 640px
+          next: the title centred above an even 2 by 2 grid, held to 680px
           so the photos stay portrait sized (about 300px) rather than filling
-          the page. Each card carries the person's anchor (see TEAM). */}
+          the page. From 820px the gaps are 64px both ways (caption to the
+          next photo, and photo to photo across); 20px across and 40px down
+          on phones. Each card carries the person's anchor (see TEAM). */}
       <section aria-labelledby="team-heading" className="border-t border-border">
         <div className="mx-auto max-w-6xl px-5 py-16 min-[820px]:px-16 min-[820px]:py-24">
           <h2 id="team-heading" className="text-center text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[32px]">
             Our Team
           </h2>
-          <ul className="mx-auto mt-10 grid max-w-[640px] grid-cols-2 gap-x-4 gap-y-8 min-[820px]:mt-12 min-[820px]:gap-x-8 min-[820px]:gap-y-12">
+          <ul className="mx-auto mt-10 grid max-w-[680px] grid-cols-2 gap-x-5 gap-y-10 min-[820px]:mt-14 min-[820px]:gap-x-16 min-[820px]:gap-y-16">
             {TEAM.map((m) => (
               <li key={m.id} id={m.id} className="group scroll-mt-24">
                 <div className="aspect-square overflow-hidden rounded-2xl border border-border bg-forest">
