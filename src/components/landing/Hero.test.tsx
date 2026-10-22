@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
 import { describe, expect, it, vi } from "vitest";
 import Hero from "./Hero";
-import { TALK_TO_US_URL, trialUrlFor } from "@/lib/constants";
+import { trialUrlFor } from "@/lib/constants";
 
 vi.mock("./SignupModal", () => ({
   SignupModal: ({ children }: { children: React.ReactNode }) => children,
@@ -75,7 +75,7 @@ describe("homepage hero", () => {
     expect(markup).not.toContain("<video");
   });
 
-  it("asks for an email, keeps the booking link and states the follow-up", () => {
+  it("asks for an email, with nothing under the field", () => {
     const markup = renderToStaticMarkup(
       <HelmetProvider>
         <Hero />
@@ -88,8 +88,8 @@ describe("homepage hero", () => {
     const button = markup.match(/<button[^>]*type="submit"[\s\S]*?<\/button>/)?.[0] ?? "";
     expect(button.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()).toBe("See when my cash runs out");
     expect(markup).toContain(">Email address</label>");
-    expect(markup).toContain(`href="${TALK_TO_US_URL}"`);
-    expect(markup).toContain("We&#x27;ll email your sign-in link and a few setup tips.");
+    expect(markup).not.toContain("No charge until it ends.");
+    expect(markup).not.toContain("Prefer a walkthrough?");
   });
 
   it("sends the address to the app login with the subscribe redirect", () => {

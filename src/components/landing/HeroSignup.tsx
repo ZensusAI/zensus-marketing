@@ -1,7 +1,7 @@
 import { useId, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
-import { TALK_TO_US_URL, trialUrlFor } from "@/lib/constants";
+import { trialUrlFor } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 
@@ -35,6 +35,8 @@ function within<T>(promise: Promise<T>, ms: number): Promise<T | undefined> {
 // screen is "Check your email". The lead is best-effort: the redirect happens
 // whether or not it saved. Turnstile loads on first focus, not on page load,
 // so the homepage does not pay for Cloudflare's script before anyone types.
+// The field stands alone: the trial terms and the booking link that sat under
+// it were removed at the user's request (21 Oct 2026); both live on /pricing.
 export function HeroSignup() {
   const id = useId();
   const [email, setEmail] = useState("");
@@ -81,12 +83,12 @@ export function HeroSignup() {
 
   const errorId = `${id}-error`;
   return (
-    // 460px wide: about two thirds of the 672px subhead above it, so the
-    // field reads as part of the copy column rather than a second band. 52px
-    // tall, the height of the buttons it replaced. Under 480px the one pill
+    // About two thirds of the subhead above it (460 of 672px, then 420 of
+    // 576px from 820px, where the hero copy steps down a size), so the field
+    // reads as part of the copy column rather than a second band. Under 480px the one pill
     // splits in two: the field becomes its own pill and the button a second
     // one under it, both the full column width, so neither is squeezed.
-    <div className="mx-auto mt-8 w-full max-w-[460px]">
+    <div className="mx-auto mt-8 w-full max-w-[460px] min-[820px]:mt-7 min-[820px]:max-w-[420px]">
       <form
         ref={formRef}
         onSubmit={onSubmit}
@@ -124,7 +126,7 @@ export function HeroSignup() {
           disabled={sending}
           className={cn(
             "h-12 min-w-0 flex-none rounded-full border bg-card px-5 text-base text-foreground transition-[border-color,box-shadow] duration-200 placeholder:text-muted-foreground focus:outline-none disabled:opacity-70",
-            "min-[480px]:h-11 min-[480px]:flex-1 min-[480px]:border-0 min-[480px]:bg-transparent min-[480px]:px-4 min-[480px]:shadow-none min-[480px]:focus:shadow-none",
+            "min-[480px]:h-11 min-[480px]:flex-1 min-[820px]:h-10 min-[820px]:text-[15px] min-[480px]:border-0 min-[480px]:bg-transparent min-[480px]:px-4 min-[480px]:shadow-none min-[480px]:focus:shadow-none",
             error
               ? "border-destructive/70 shadow-[0_0_0_3px_hsl(var(--destructive)/.12)]"
               : "border-[#E4D3A1] shadow-[0_0_14px_rgba(235,217,166,.4)] focus:border-primary/60 focus:shadow-[0_0_0_3px_hsl(var(--primary)/.14)]",
@@ -139,7 +141,7 @@ export function HeroSignup() {
         <button
           type="submit"
           disabled={sending}
-          className="group inline-flex h-12 shrink-0 min-[480px]:h-11 items-center justify-center rounded-full bg-primary px-6 text-[15px] font-semibold text-primary-foreground transition-colors duration-300 ease-ui hover:bg-[hsl(150_70%_41%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card disabled:cursor-wait disabled:opacity-80"
+          className="group inline-flex h-12 shrink-0 min-[480px]:h-11 min-[820px]:h-10 min-[820px]:px-5 min-[820px]:text-sm items-center justify-center rounded-full bg-primary px-6 text-[15px] font-semibold text-primary-foreground transition-colors duration-300 ease-ui hover:bg-[hsl(150_70%_41%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card disabled:cursor-wait disabled:opacity-80"
         >
           {sending ? (
             "Opening Zensus..."
@@ -173,25 +175,6 @@ export function HeroSignup() {
         <Turnstile ref={turnstileRef} siteKey={TURNSTILE_SITE_KEY} options={{ size: "invisible" }} />
       ) : null}
 
-      <p className="mt-3 text-balance text-[13px] text-muted-foreground min-[480px]:text-sm">
-        {/* Two block spans so each sentence keeps its own line on desktop;
-            the space keeps them two sentences for text extractors. */}
-        <span className="block">14-day free trial, cancel anytime. No charge until it ends.</span>{" "}
-        <span className="block">We'll email your sign-in link and a few setup tips.</span>
-      </p>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Prefer a walkthrough?{" "}
-        <a
-          href={TALK_TO_US_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackCtaClick("hero", { destination: "talk_to_us" })}
-          className="inline-flex items-center gap-0.5 font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary"
-        >
-          Book a call with the team
-          <ArrowUpRight size={14} aria-hidden />
-        </a>
-      </p>
     </div>
   );
 }
