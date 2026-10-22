@@ -462,11 +462,10 @@ function DesktopNav({ open, setOpen }: { open: MenuKey | null; setOpen: (k: Menu
   };
 
   // `glow` (About only, 22 Oct 2026): a green halo behind the label that
-  // breathes to draw the eye and invite the click, with the label itself in
-  // the deep sage (the brighter primary green on the dark routes, where the
-  // deep sage reads dim). Hover or focus holds the halo at full strength. Static
-  // under reduced motion. The halo is decoration; the label is the same
-  // plain link as its neighbours.
+  // breathes to draw the eye and invite the click. The label keeps the same
+  // colour as its neighbours. Hover or focus holds the halo at full
+  // strength. Static under reduced motion. The halo is decoration; the label
+  // is the same plain link as its neighbours.
   const plainLink = (href: string, label: string, glow = false) => (
     <li>
       <Link
@@ -475,7 +474,7 @@ function DesktopNav({ open, setOpen }: { open: MenuKey | null; setOpen: (k: Menu
         onFocus={close}
         className={cn(
           "flex h-16 items-center text-[15px] font-semibold text-foreground",
-          glow && "group relative isolate text-sage-deep [:root:not(.theme-cream)_&]:text-primary transition-colors duration-300 [text-shadow:0_0_12px_hsl(var(--primary)/.35)]",
+          glow && "group relative isolate",
           focusRing,
         )}
       >
