@@ -169,9 +169,11 @@ const About = () => (
       </HeroParallax>
 
       {/* Origin story: where it started on the left (held in view beside the
-          story from 820px), the story on the right. */}
+          story from 820px), the story on the right. From 820px the section
+          runs long (160px padding, 80px between paragraphs) so the spotlight
+          rests on each paragraph in turn while the heading stays beside it. */}
       <section aria-labelledby="origin-heading" className="border-t border-border">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 min-[820px]:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] min-[820px]:gap-16 min-[820px]:px-16 min-[820px]:py-24">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 min-[820px]:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] min-[820px]:gap-16 min-[820px]:px-16 min-[820px]:py-40">
           <div className="min-[820px]:sticky min-[820px]:top-28 min-[820px]:self-start">
             <p className={eyebrow}>Where it started</p>
             <h2 id="origin-heading" className="mt-3 text-balance text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[27px]">
@@ -181,7 +183,7 @@ const About = () => (
           </div>
           <StoryParagraphs
             paragraphs={STORY}
-            className="max-w-[62ch] space-y-5 text-[17px] leading-[1.7] text-foreground/90 min-[820px]:space-y-4 min-[820px]:text-[15px]"
+            className="max-w-[62ch] space-y-5 text-[17px] leading-[1.7] text-foreground/90 min-[820px]:space-y-20 min-[820px]:text-[15px]"
           />
         </div>
       </section>
@@ -193,7 +195,7 @@ const About = () => (
           next photo, and photo to photo across); 20px across and 40px down
           on phones. Each card carries the person's anchor (see TEAM). */}
       <section aria-labelledby="team-heading" className="border-t border-border">
-        <div className="mx-auto max-w-6xl px-5 py-16 min-[820px]:px-16 min-[820px]:py-24">
+        <div className="mx-auto max-w-6xl px-5 py-16 min-[820px]:px-16 min-[820px]:py-40">
           <h2 id="team-heading" className="text-center text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[27px]">
             Our Team
           </h2>

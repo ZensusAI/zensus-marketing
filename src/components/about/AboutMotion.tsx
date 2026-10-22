@@ -127,10 +127,10 @@ export function TeamGrid({ team, className }: { team: TeamMember[]; className?: 
     cards.current.forEach((li, i) => {
       if (!li) return;
       const r = li.getBoundingClientRect();
-      // Stands up over the first 55% of a screen after its top enters; the
+      // Stands up over the first 80% of a screen after its top enters; the
       // right-hand column a beat behind the left. A card holding keyboard
       // focus is shown finished.
-      const raw = clamp01((vh - r.top) / (vh * 0.55) - (i % 2) * 0.12);
+      const raw = clamp01((vh - r.top) / (vh * 0.8) - (i % 2) * 0.12);
       const t = li.contains(document.activeElement) ? 1 : ease(raw);
       const u = 1 - t;
       li.style.opacity = (0.15 + 0.85 * t).toFixed(3);
