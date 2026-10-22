@@ -19,6 +19,17 @@ import grokLogo from "@/assets/ai/grok.png";
 import perplexityLogo from "@/assets/ai/perplexity.svg";
 import { HERO_MESH } from "./hero-mesh";
 
+// Full names for the state codes in COMPANY_ADDRESSES (the footer's <abbr>).
+const REGION_NAMES: Record<string, string> = { DE: "Delaware", TX: "Texas" };
+
+// A line break in an address: a new line on screen, a comma in the text.
+const LineBreak = () => (
+  <>
+    <span className="sr-only">, </span>
+    <br />
+  </>
+);
+
 // The footer is the one block that appears on every page, so it carries the
 // facts search and AI engines use to pin down the entity: the legal name, the
 // registered addresses, the support mailbox, the public profiles, and the
@@ -290,17 +301,61 @@ const Footer = () => {
               </a>
             </div>
 
-            <address className="mt-7 text-sm not-italic leading-[1.6] text-muted-foreground">
-              <p className="font-medium text-foreground">{LEGAL_NAME}</p>
-              {COMPANY_ADDRESSES.map((office) => (
-                <p key={office.label} className="mt-1.5">
-                  <span className="max-[759px]:block">{office.street}</span>
-                  <span className="max-[759px]:hidden">, </span>
-                  <span className="whitespace-nowrap max-[759px]:block">
-                    {office.locality}, {office.region} {office.postalCode}
-                  </span>
-                </p>
-              ))}
+            {/* The legal entity and its two addresses, as postal blocks: the
+                street, the suite, then city, state and ZIP, then the
+                country, each on its own line, under a label naming the
+                state. Laid out side by side from 480px, stacked below. Each
+                visual line break also carries a hidden ", " (LineBreak), so
+                text read without layout (tag-stripping extractors, AI
+                crawlers, screen readers) gets "254 Chapman Rd, Ste 208
+                #23940, Newark, DE 19702, United States" rather than
+                "Rd" running into "Ste". Microdata ties the visible
+                text to the same Organization @id as the JSON-LD in
+                index.html, so engines read one entity with these addresses
+                rather than a second one. The abbreviations expand for
+                screen readers and machines (<abbr title>). */}
+            <address
+              itemScope
+              itemType="https://schema.org/Organization"
+              itemID={`${SITE_URL}/#organization`}
+              className="mt-7 text-sm not-italic leading-[1.6] text-muted-foreground"
+            >
+              <meta itemProp="name" content="Zensus" />
+              <link itemProp="url" href={SITE_URL} />
+              <p itemProp="legalName" className="font-medium text-foreground">
+                {LEGAL_NAME}
+              </p>{" "}
+              <div className="mt-3 grid gap-4 min-[480px]:grid-cols-2 min-[480px]:gap-8">
+                {COMPANY_ADDRESSES.map((office) => (
+                  <p key={office.label} itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+                    <span className="mb-1 block text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground/80">
+                      {office.label}
+                    </span>
+                    <span className="sr-only">: </span>
+                    {/* Street, then the suite on its own line (USPS address
+                        line 2), so neither column wraps mid-number. */}
+                    <span itemProp="streetAddress">
+                      {office.street.split(", ").map((part, i) => (
+                        <span key={part}>
+                          {i > 0 ? <LineBreak /> : null}
+                          {part}
+                        </span>
+                      ))}
+                    </span>
+                    <LineBreak />
+                    <span itemProp="addressLocality">{office.locality}</span>,{" "}
+                    <abbr title={REGION_NAMES[office.region]} itemProp="addressRegion" className="no-underline">
+                      {office.region}
+                    </abbr>{" "}
+                    <span itemProp="postalCode">{office.postalCode}</span>
+                    <LineBreak />
+                    <span itemProp="addressCountry" content={office.country}>
+                      United States
+                    </span>
+                    <span className="sr-only">. </span>
+                  </p>
+                ))}
+              </div>
             </address>
 
             <ul className="mt-5 flex gap-2" aria-label="Zensus profiles">
