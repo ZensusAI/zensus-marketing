@@ -1,11 +1,8 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import Hero from "./Hero";
-
-vi.mock("./SignupModal", () => ({
-  SignupModal: ({ children }: { children: React.ReactNode }) => children,
-}));
+import { trialUrlFor } from "@/lib/constants";
 
 describe("homepage hero", () => {
   it("leads with cash visibility instead of the 13-week mechanic", () => {
@@ -65,12 +62,36 @@ describe("homepage hero", () => {
       "Cash flow forecasting for businesses with unpredictable revenue.",
     );
     const h1 = markup.indexOf("<h1");
-    // The button reads "Start" (the trial terms sit in the line under it).
-    const trial = markup.indexOf(">Start<");
+    // The email signup's button (the trial terms sit in the line under it).
+    const trial = markup.indexOf(">See ");
 
     expect(tagline).toBeGreaterThan(-1);
     expect(tagline).toBeLessThan(h1);
     expect(h1).toBeLessThan(trial);
     expect(markup).not.toContain("<video");
+  });
+
+  it("asks for an email, with nothing under the field", () => {
+    const markup = renderToStaticMarkup(
+      <HelmetProvider>
+        <Hero />
+      </HelmetProvider>,
+    );
+
+    expect(markup).toMatch(/<input[^>]*type="email"/);
+    // The button shows "See" at rest and opens on hover, but the whole label
+    // is in the HTML, so its accessible name is the full sentence.
+    const button = markup.match(/<button[^>]*type="submit"[\s\S]*?<\/button>/)?.[0] ?? "";
+    expect(button.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()).toBe("See when my cash runs out");
+    expect(markup).toContain(">Email address</label>");
+    expect(markup).not.toContain("No charge until it ends.");
+    expect(markup).not.toContain("Prefer a walkthrough?");
+  });
+
+  it("sends the address to the app login with the subscribe redirect", () => {
+    const url = new URL(trialUrlFor("owner+cash@example.com"));
+    expect(url.origin + url.pathname).toBe("https://app.zensus.app/login");
+    expect(url.searchParams.get("email")).toBe("owner+cash@example.com");
+    expect(url.searchParams.get("redirect")).toBe("/subscribe");
   });
 });

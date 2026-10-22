@@ -217,10 +217,14 @@ export function trackCtaClick(
   track(EVENTS.CTA_CLICKED, { location, ...props });
 }
 
-/** Record the hero trial CTA before it opens the signup modal. */
-export function trackHeroTrialClick(): void {
+/**
+ * Record the hero email signup, the homepage's primary conversion. Until 21
+ * Oct 2026 the hero opened the signup modal instead, recorded with action
+ * "open_signup_modal"; funnels spanning that date need both actions.
+ */
+export function trackHeroEmailSubmit(): void {
   trackCtaClick("hero", {
     destination: "trial",
-    action: "open_signup_modal",
+    action: "email_submit",
   });
 }

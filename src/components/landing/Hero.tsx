@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
-import { TryItNowButton } from "./TryItNowButton";
-import { TalkToUsButton } from "./TalkToUsButton";
+import { HeroSignup } from "./HeroSignup";
 import { CornerMark } from "./Backdrop";
 import { HERO_MESH } from "./hero-mesh";
 
@@ -20,7 +19,7 @@ const wavesStyle = {
 } as CSSProperties;
 
 // Centred hero from handoff 02-hero (variant a, waves texture): audience line,
-// two-line headline, subhead, the two buttons and the trial terms, inside a
+// two-line headline, subhead and the email signup, inside a
 // ruled column with registration marks at its top corners. No ledger grid,
 // no plotted cells and no console card, per the handoff. The responsive
 // switch is the handoff's own: 820px.
@@ -40,18 +39,22 @@ const Hero = () => (
 
     <div className="relative mx-auto max-w-6xl px-4 min-[820px]:px-6">
       {/* The ruled column runs from the top of the page, behind the fixed
-          64px navbar, down to the proof strip. The bottom padding is the
-          handoff's 56px plus the proof strip's 56px wave band: the band is
-          drawn here rather than as its own layer, because a separate layer
-          repainted the waves at a different crop and left a visible seam
-          (seen at 1920px). */}
-      <div className="relative border-x border-transparent px-1 pb-28 pt-[6.5rem] text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pt-32">
+          64px navbar, down to the proof strip. The waves above the proof
+          strip are drawn in this padding rather than as their own layer,
+          because a separate layer repainted them at a different crop and
+          left a visible seam (seen at 1920px). From 820px the copy is set
+          about 15% smaller than the handoff (21 Oct 2026) inside a frame of
+          the former height. The block is centred in the visible band, from
+          the navbar's bottom edge to the proof strip: the top padding is the
+          64px navbar plus the bottom padding (13.5rem = 64px + 9.5rem from
+          820px; 8.75rem = 64px + 4.75rem below it). */}
+      <div className="relative border-x border-transparent px-1 pb-[4.75rem] pt-[8.75rem] text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pb-[9.5rem] min-[820px]:pt-[13.5rem]">
         <CornerMark className="-left-[6px] top-[4.5rem] hidden min-[820px]:block" />
         <CornerMark className="-right-[6px] top-[4.5rem] hidden min-[820px]:block" />
 
-        <p className="text-sm font-medium text-muted-foreground min-[820px]:text-base">{KICKER}</p>
+        <p className="text-sm font-medium text-muted-foreground min-[1201px]:text-[15px]">{KICKER}</p>
 
-        <h1 className="mx-auto mt-4 text-[40px] font-bold leading-[1.05] tracking-[-0.02em] text-foreground min-[820px]:text-[54px] min-[1201px]:text-[62px]">
+        <h1 className="mx-auto mt-4 text-[40px] font-bold leading-[1.05] tracking-[-0.02em] text-foreground min-[820px]:mt-3.5 min-[820px]:text-[46px] min-[1201px]:text-[53px]">
           <span className="block">{H1_LINE_1}</span>
           {/* Both lines are block spans, so this space draws nothing. It is
               there for anything that reads the H1 as text: without it the
@@ -59,16 +62,12 @@ const Hero = () => (
           <span className="block text-balance">{H1_LINE_2}</span>
         </h1>
 
-        <p className="mx-auto mt-6 max-w-[672px] text-pretty text-[17px] leading-[1.55] text-muted-foreground min-[820px]:text-[19px]">
+        <p className="mx-auto mt-6 max-w-[672px] text-pretty text-[17px] leading-[1.55] text-muted-foreground min-[820px]:mt-5 min-[820px]:max-w-[576px] min-[820px]:text-base">
           Zensus is cash flow forecasting software that connects your bank, QuickBooks, and HubSpot to project the
           month your cash runs out.
         </p>
 
-        <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <TryItNowButton variant="solid" trackHeroConversion />
-          <TalkToUsButton variant="outline" />
-        </div>
-        <p className="mt-3 text-balance text-sm text-muted-foreground">14-day free trial, cancel anytime. No charge until it ends.</p>
+        <HeroSignup />
       </div>
     </div>
   </section>

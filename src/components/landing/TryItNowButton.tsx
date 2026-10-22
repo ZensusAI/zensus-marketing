@@ -3,17 +3,12 @@ import { Button } from "@/components/ui/button";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { SignupModal } from "./SignupModal";
 import { cn } from "@/lib/utils";
-import { trackCtaClick, trackHeroTrialClick } from "@/lib/analytics/events";
+import { trackCtaClick } from "@/lib/analytics/events";
 
 interface TryItNowButtonProps {
   className?: string;
   size?: "md" | "lg";
-  trackHeroConversion?: boolean;
-  /**
-   * Analytics location for placements other than the hero (for example
-   * "pricing_preview"). Ignored when trackHeroConversion is set, which keeps
-   * the hero's existing event name intact.
-   */
+  /** Analytics location for this placement (for example "pricing_preview"). */
   source?: string;
   /**
    * "shine" (default) keeps the animated border used across the site.
@@ -34,19 +29,16 @@ const SOLID =
 export const TryItNowButton = ({
   className,
   size = "md",
-  trackHeroConversion = false,
   source,
   variant = "shine",
 }: TryItNowButtonProps) => {
-  const onClick = trackHeroConversion
-    ? trackHeroTrialClick
-    : source
-      ? () =>
-          trackCtaClick(source, {
-            destination: "trial",
-            action: "open_signup_modal",
-          })
-      : undefined;
+  const onClick = source
+    ? () =>
+        trackCtaClick(source, {
+          destination: "trial",
+          action: "open_signup_modal",
+        })
+    : undefined;
 
   if (variant === "solid") {
     return (

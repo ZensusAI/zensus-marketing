@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
             Privacy Policy
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: October 19, 2026
+            Last Updated: October 21, 2026
           </p>
         </header>
 
@@ -223,7 +223,8 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Marketing-site Sales Intelligence:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>On the public marketing site at <a href={SITE_URL} className="text-primary hover:underline">{SITE_HOST}</a>, we run Apollo.io's website tracker. Apollo performs reverse-IP lookups against its business database to identify the company an anonymous visitor's IP is associated with; it does not identify the individual visitor</li>
+                  <li>On the public marketing site at <a href={SITE_URL} className="text-primary hover:underline">{SITE_HOST}</a>, we run Apollo.io's website tracker. Apollo performs reverse-IP lookups against its business database to identify the company an anonymous visitor's IP is associated with; the tracker does not identify the individual visitor</li>
+                  <li>When you enter your email in the homepage signup to start a trial, we save that address as a contact in Apollo, so we can follow up with a few emails to help you set up, or to pick up a signup you did not finish. Every one carries an unsubscribe link</li>
                   <li>This only runs on the marketing site, not inside the authenticated product app</li>
                 </ul>
               </div>
@@ -399,7 +400,7 @@ export default function PrivacyPolicy() {
 
               <div>
                 <p className="font-semibold text-foreground">Apollo.io</p>
-                <p className="text-foreground/80 text-sm">Reverse-IP sales intelligence on the marketing site only (not the product app). Apollo identifies the company an anonymous visitor's IP is associated with for outbound sales.</p>
+                <p className="text-foreground/80 text-sm">Reverse-IP sales intelligence on the marketing site only (not the product app). Apollo identifies the company an anonymous visitor's IP is associated with for outbound sales, and holds the email address of visitors who start a trial from the homepage signup, for setup follow-ups.</p>
               </div>
             </div>
 
@@ -625,7 +626,7 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
                   <li>Identifiers (email, name, federated identity provider subject)</li>
                   <li>Financial information (data you upload or sync for runway/forecast)</li>
-                  <li>Internet activity (limited server-side telemetry; marketing-site reverse-IP intelligence via Apollo)</li>
+                  <li>Internet activity (limited server-side telemetry; marketing-site reverse-IP intelligence via Apollo); the email entered in the homepage signup, held in Apollo</li>
                   <li>Geolocation (general location from IP address)</li>
                 </ul>
               </div>
