@@ -19,8 +19,8 @@ const breadcrumbs = breadcrumbSchema([HOME_CRUMB, { name: "About", url: PAGE_URL
  * anchor of their card and the fragment of their schema.org Person @id
  * (`/about#<id>`), which blog bylines point at, so an id never changes once
  * published. Ajin's Person node ships sitewide in index.html; the others are
- * emitted below. `photo` is a square image under public/team/; until one is
- * added the card shows the person's initials. `title` and `linkedin` render
+ * emitted below. `photo` is a 512px square WebP under public/team/ (a card
+ * without one shows the person's initials). `title` and `linkedin` render
  * only when set.
  */
 type Member = {
@@ -32,10 +32,34 @@ type Member = {
 };
 
 const TEAM: Member[] = [
-  { id: "ajin-sunny", name: "Ajin Sunny", title: "Founder & CEO", linkedin: "https://www.linkedin.com/in/ajinsunny/" },
-  { id: "john-george", name: "John George", title: "" },
-  { id: "elsa-iris-reyes", name: "Elsa Iris Reyes", title: "" },
-  { id: "joe-anglim", name: "Joe Anglim", title: "" },
+  {
+    id: "ajin-sunny",
+    name: "Ajin Sunny",
+    title: "Founder",
+    photo: "/team/ajin-sunny.webp",
+    linkedin: "https://www.linkedin.com/in/ajinsunny/",
+  },
+  {
+    id: "john-george",
+    name: "John George",
+    title: "Co-Founder",
+    photo: "/team/john-george.webp",
+    linkedin: "https://www.linkedin.com/in/johngeorge28/",
+  },
+  {
+    id: "elsa-iris-reyes",
+    name: "Elsa Iris Reyes",
+    title: "Board Advisor",
+    photo: "/team/elsa-iris-reyes.webp",
+    linkedin: "https://www.linkedin.com/in/elsairisreyes/",
+  },
+  {
+    id: "joe-anglim",
+    name: "Joe Anglim",
+    title: "Strategic Advisor",
+    photo: "/team/joe-anglim.webp",
+    linkedin: "https://www.linkedin.com/in/joe-anglim/",
+  },
 ];
 
 const initials = (name: string) =>
@@ -92,8 +116,7 @@ const aboutPageLd = {
 };
 
 // Ajin's Person node is sitewide (index.html); this page adds the rest of the
-// team. Ashwin Menon is kept as a node because his blog posts credit
-// /about#ashwin-menon as their author.
+// team. Advisors are members, not employees, hence memberOf for them.
 const peopleLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -102,19 +125,10 @@ const peopleLd = {
       "@id": `${SITE_URL}/about#${m.id}`,
       name: m.name,
       ...(m.title ? { jobTitle: m.title } : {}),
-      worksFor: { "@id": `${SITE_URL}/#organization` },
+      [m.title.includes("Advisor") ? "memberOf" : "worksFor"]: { "@id": `${SITE_URL}/#organization` },
       url: `${PAGE_URL}#${m.id}`,
       ...(m.linkedin ? { sameAs: [m.linkedin] } : {}),
     })),
-    {
-      "@type": "Person",
-      "@id": `${SITE_URL}/about#ashwin-menon`,
-      name: "Ashwin Menon",
-      jobTitle: "Software Developer",
-      worksFor: { "@id": `${SITE_URL}/#organization` },
-      url: PAGE_URL,
-      sameAs: ["https://www.linkedin.com/in/ashwinmenon502/"],
-    },
   ],
 };
 
@@ -227,19 +241,22 @@ const About = () => (
           <h2 id="team-heading" className="mt-3 text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[32px]">
             The people building Zensus
           </h2>
+          {/* Photos sit desaturated so four different backdrops read as one
+              set, and come to full colour on hover or focus (always colour
+              on touch screens, which have no hover). */}
           <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 min-[1024px]:grid-cols-4 min-[1024px]:gap-6">
             {TEAM.map((m) => (
-              <li key={m.id} id={m.id} className="scroll-mt-24">
+              <li key={m.id} id={m.id} className="group scroll-mt-24">
                 <div className="aspect-square overflow-hidden rounded-2xl border border-border bg-forest">
                   {m.photo ? (
                     <img
                       src={m.photo}
                       alt={`${m.name}${m.title ? `, ${m.title} at Zensus` : ", Zensus"}`}
-                      width={800}
-                      height={800}
+                      width={512}
+                      height={512}
                       loading="lazy"
                       decoding="async"
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover grayscale-[.85] transition-[filter,transform] duration-500 ease-ui group-hover:scale-[1.02] group-hover:grayscale-0 group-focus-within:grayscale-0 motion-reduce:transition-none motion-reduce:group-hover:scale-100 [@media(hover:none)]:grayscale-0"
                     />
                   ) : (
                     <div
