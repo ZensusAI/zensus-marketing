@@ -1,4 +1,4 @@
-import { SITE_URL, LEGAL_NAME, SUPPORT_EMAIL } from "@/lib/constants";
+import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
 import { Linkedin } from "lucide-react";
 import Navbar from "@/components/landing/Navbar";
@@ -93,16 +93,6 @@ const BELIEFS = [
     line: "A public price, and no contract.",
     body: "Zensus Pro is $199 a month after a 14-day free trial. Cancel the same day if it is not a fit.",
   },
-];
-
-const FACTS: { term: string; detail: string }[] = [
-  { term: "Company", detail: LEGAL_NAME },
-  { term: "What it makes", detail: "Cash flow forecasting software for businesses of any size" },
-  { term: "Founded", detail: "August 2025, by Ajin Sunny" },
-  { term: "Where it started", detail: "Capital Factory, Austin, Texas" },
-  { term: "Registered in", detail: "Newark, Delaware, and Houston, Texas" },
-  { term: "Connects to", detail: "Plaid (banks), QuickBooks Online, HubSpot and Slack" },
-  { term: "Contact", detail: SUPPORT_EMAIL },
 ];
 
 const aboutPageLd = {
@@ -212,39 +202,23 @@ const About = () => (
         </div>
       </section>
 
-      {/* What we believe: the manifesto, on the site's forest surface. */}
-      <section aria-labelledby="beliefs-heading" className="px-3 min-[820px]:px-6">
-        <div className="mx-auto max-w-6xl rounded-[28px] bg-forest px-6 py-14 text-forest-foreground min-[820px]:px-16 min-[820px]:py-20">
-          <h2 id="beliefs-heading" className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-forest-muted-strong">
-            What we believe
-          </h2>
-          <ul className="mt-8 divide-y divide-forest-border">
-            {BELIEFS.map((b) => (
-              <li
-                key={b.line}
-                className="grid gap-2 py-6 first:pt-0 last:pb-0 min-[820px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] min-[820px]:items-baseline min-[820px]:gap-12 min-[820px]:py-8"
-              >
-                <p className="text-balance text-[24px] font-bold leading-[1.2] tracking-[-0.01em] min-[820px]:text-[30px]">
-                  {b.line}
-                </p>
-                <p className="text-[15.5px] leading-[1.6] text-forest-muted-strong">{b.body}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* The team. Each card carries the person's anchor (see TEAM). */}
-      <section aria-labelledby="team-heading">
-        <div className="mx-auto max-w-6xl px-5 py-16 min-[820px]:px-16 min-[820px]:py-24">
-          <p className={eyebrow}>The team</p>
-          <h2 id="team-heading" className="mt-3 text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[32px]">
-            The people building Zensus
-          </h2>
+      {/* The team, straight after the story so the people behind it come
+          next. Same two-column frame as the story above it: heading on
+          the left, the four people as an even 2 by 2 grid on the right. Each
+          card carries the person's anchor (see TEAM). */}
+      <section aria-labelledby="team-heading" className="border-t border-border">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 min-[820px]:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] min-[820px]:gap-16 min-[820px]:px-16 min-[820px]:py-24">
+          {/* The heading stays in view beside the grid while it scrolls. */}
+          <div className="min-[820px]:sticky min-[820px]:top-28 min-[820px]:self-start">
+            <p className={eyebrow}>The team</p>
+            <h2 id="team-heading" className="mt-3 text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[32px]">
+              The people building Zensus
+            </h2>
+          </div>
           {/* Photos sit desaturated so four different backdrops read as one
               set, and come to full colour on hover or focus (always colour
               on touch screens, which have no hover). */}
-          <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 min-[1024px]:grid-cols-4 min-[1024px]:gap-6">
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-8 min-[820px]:gap-x-8 min-[820px]:gap-y-12">
             {TEAM.map((m) => (
               <li key={m.id} id={m.id} className="group scroll-mt-24">
                 <div className="aspect-square overflow-hidden rounded-2xl border border-border bg-forest">
@@ -290,31 +264,25 @@ const About = () => (
         </div>
       </section>
 
-      {/* Company facts: who, where, when, in one list engines can quote. */}
-      <section aria-labelledby="facts-heading" className="border-t border-border">
-        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 min-[820px]:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] min-[820px]:gap-16 min-[820px]:px-16 min-[820px]:py-20">
-          <div>
-            <p className={eyebrow}>Company facts</p>
-            <h2 id="facts-heading" className="mt-3 text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[32px]">
-              Zensus at a glance
-            </h2>
-          </div>
-          <dl className="divide-y divide-border border-y border-border">
-            {FACTS.map((f) => (
-              <div key={f.term} className="grid gap-1 py-4 min-[560px]:grid-cols-[180px_minmax(0,1fr)] min-[560px]:gap-6">
-                <dt className="text-sm font-medium text-muted-foreground">{f.term}</dt>
-                <dd className="text-[15.5px] text-foreground">
-                  {f.term === "Contact" ? (
-                    <a href={`mailto:${f.detail}`} className="underline decoration-border underline-offset-4 hover:decoration-primary">
-                      {f.detail}
-                    </a>
-                  ) : (
-                    f.detail
-                  )}
-                </dd>
-              </div>
+      {/* What we believe: the manifesto, on the site's forest surface. */}
+      <section aria-labelledby="beliefs-heading" className="px-3 pb-16 min-[820px]:px-6 min-[820px]:pb-24">
+        <div className="mx-auto max-w-6xl rounded-[28px] bg-forest px-6 py-14 text-forest-foreground min-[820px]:px-16 min-[820px]:py-20">
+          <h2 id="beliefs-heading" className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-forest-muted-strong">
+            What we believe
+          </h2>
+          <ul className="mt-8 divide-y divide-forest-border">
+            {BELIEFS.map((b) => (
+              <li
+                key={b.line}
+                className="grid gap-2 py-6 first:pt-0 last:pb-0 min-[820px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] min-[820px]:items-baseline min-[820px]:gap-12 min-[820px]:py-8"
+              >
+                <p className="text-balance text-[24px] font-bold leading-[1.2] tracking-[-0.01em] min-[820px]:text-[30px]">
+                  {b.line}
+                </p>
+                <p className="text-[15.5px] leading-[1.6] text-forest-muted-strong">{b.body}</p>
+              </li>
             ))}
-          </dl>
+          </ul>
         </div>
       </section>
 
