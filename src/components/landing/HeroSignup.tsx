@@ -100,17 +100,38 @@ export function HeroSignup() {
           disabled={sending}
           className="h-12 min-w-0 flex-1 rounded-full bg-transparent px-5 text-base text-foreground placeholder:text-muted-foreground focus:outline-none disabled:opacity-70"
         />
+        {/* At rest the button reads "See"; hover or keyboard focus opens it to
+            "See when my cash runs out ->". The rest of the label is always in
+            the DOM (the accessible name and the prerendered HTML carry the
+            whole sentence), only its column is 0fr wide. It stays open where
+            there is no hover (touch) and on the stacked phone layout. Under
+            reduced motion it opens without the slide. */}
         <button
           type="submit"
           disabled={sending}
-          className="group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-6 text-base font-semibold text-primary-foreground transition-colors duration-300 ease-ui hover:bg-[hsl(150_70%_41%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card disabled:cursor-wait disabled:opacity-80"
+          className="group inline-flex h-12 shrink-0 items-center justify-center rounded-full bg-primary px-7 text-base font-semibold text-primary-foreground transition-colors duration-300 ease-ui hover:bg-[hsl(150_70%_41%)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card disabled:cursor-wait disabled:opacity-80"
         >
-          {sending ? "Starting..." : "Start free trial"}
-          <ArrowRight
-            size={16}
-            aria-hidden
-            className="transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none"
-          />
+          {sending ? (
+            "Opening Zensus..."
+          ) : (
+            <>
+              See{" "}
+              <span className="grid grid-cols-[0fr] transition-[grid-template-columns] duration-500 ease-ui group-hover:grid-cols-[1fr] group-focus-visible:grid-cols-[1fr] motion-reduce:transition-none max-[479px]:grid-cols-[1fr] [@media(hover:none)]:grid-cols-[1fr]">
+                {/* The clipping span has no padding of its own, so at 0fr it
+                    is truly zero wide; the gap after "See" lives inside. */}
+                <span className="min-w-0 overflow-hidden">
+                  <span className="flex items-center gap-2 whitespace-nowrap pl-[0.28em] pr-0.5 opacity-0 transition-opacity duration-300 ease-ui group-hover:opacity-100 group-hover:delay-100 group-focus-visible:opacity-100 max-[479px]:opacity-100 [@media(hover:none)]:opacity-100">
+                    when my cash runs out
+                    <ArrowRight
+                      size={16}
+                      aria-hidden
+                      className="shrink-0 transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none"
+                    />
+                  </span>
+                </span>
+              </span>
+            </>
+          )}
         </button>
       </form>
       {error ? (

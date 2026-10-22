@@ -67,7 +67,7 @@ describe("homepage hero", () => {
     );
     const h1 = markup.indexOf("<h1");
     // The email signup's button (the trial terms sit in the line under it).
-    const trial = markup.indexOf("Start free trial");
+    const trial = markup.indexOf(">See ");
 
     expect(tagline).toBeGreaterThan(-1);
     expect(tagline).toBeLessThan(h1);
@@ -83,6 +83,10 @@ describe("homepage hero", () => {
     );
 
     expect(markup).toMatch(/<input[^>]*type="email"/);
+    // The button shows "See" at rest and opens on hover, but the whole label
+    // is in the HTML, so its accessible name is the full sentence.
+    const button = markup.match(/<button[^>]*type="submit"[\s\S]*?<\/button>/)?.[0] ?? "";
+    expect(button.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()).toBe("See when my cash runs out");
     expect(markup).toContain(">Email address</label>");
     expect(markup).toContain(`href="${TALK_TO_US_URL}"`);
     expect(markup).toContain("We&#x27;ll email your sign-in link and a few setup tips.");
