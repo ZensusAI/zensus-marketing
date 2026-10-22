@@ -87,8 +87,10 @@ export function HeroSignup() {
     // 576px from 820px, where the hero copy steps down a size), so the field
     // reads as part of the copy column rather than a second band. Under 480px the one pill
     // splits in two: the field becomes its own pill and the button a second
-    // one under it, both the full column width, so neither is squeezed.
-    <div className="mx-auto mt-8 w-full max-w-[460px] min-[820px]:mt-7 min-[820px]:max-w-[420px]">
+    // one under it, both the full column width, so neither is squeezed. The
+    // error line floats under the field (absolute), so it never pushes the
+    // centred hero block off centre.
+    <div className="relative mx-auto mt-8 w-full max-w-[460px] min-[820px]:mt-7 min-[820px]:max-w-[420px]">
       <form
         ref={formRef}
         onSubmit={onSubmit}
@@ -167,7 +169,7 @@ export function HeroSignup() {
         </button>
       </form>
       {error ? (
-        <p id={errorId} role="alert" className="mt-2 text-sm text-destructive">
+        <p id={errorId} role="alert" className="absolute inset-x-0 top-full mt-2 text-sm text-destructive">
           {error}
         </p>
       ) : null}

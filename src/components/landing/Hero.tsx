@@ -46,8 +46,10 @@ const Hero = () => (
           (seen at 1920px). From 820px the copy is set about 15% smaller than
           the handoff (21 Oct 2026) and the padding grows to keep the hero
           its former height, so the content sits smaller inside the same
-          frame, with the waves filling the room under the field. */}
-      <div className="relative border-x border-transparent px-1 pb-28 pt-[6.5rem] text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pb-[14.5rem] min-[820px]:pt-[8.5rem]">
+          frame. The block is centred in the visible band, from the navbar's
+          bottom edge to the proof strip: 13.5rem on top is the 64px navbar
+          plus 9.5rem, the same 152px as the bottom. */}
+      <div className="relative border-x border-transparent px-1 pb-28 pt-[6.5rem] text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pb-[9.5rem] min-[820px]:pt-[13.5rem]">
         <CornerMark className="-left-[6px] top-[4.5rem] hidden min-[820px]:block" />
         <CornerMark className="-right-[6px] top-[4.5rem] hidden min-[820px]:block" />
 
