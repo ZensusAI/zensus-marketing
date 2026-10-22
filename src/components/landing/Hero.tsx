@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
-import { TryItNowButton } from "./TryItNowButton";
-import { TalkToUsButton } from "./TalkToUsButton";
+import { HeroSignup } from "./HeroSignup";
 import { CornerMark } from "./Backdrop";
 import { HERO_MESH } from "./hero-mesh";
 
@@ -20,7 +19,7 @@ const wavesStyle = {
 } as CSSProperties;
 
 // Centred hero from handoff 02-hero (variant a, waves texture): audience line,
-// two-line headline, subhead, the two buttons and the trial terms, inside a
+// two-line headline, subhead, the email signup and the trial terms, inside a
 // ruled column with registration marks at its top corners. No ledger grid,
 // no plotted cells and no console card, per the handoff. The responsive
 // switch is the handoff's own: 820px.
@@ -64,11 +63,7 @@ const Hero = () => (
           month your cash runs out.
         </p>
 
-        <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <TryItNowButton variant="solid" trackHeroConversion />
-          <TalkToUsButton variant="outline" />
-        </div>
-        <p className="mt-3 text-balance text-sm text-muted-foreground">14-day free trial, cancel anytime. No charge until it ends.</p>
+        <HeroSignup />
       </div>
     </div>
   </section>

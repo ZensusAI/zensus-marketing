@@ -154,9 +154,9 @@ const CATEGORIES: Category[] = [
         name: "Apollo.io",
         country: "United States",
         purpose:
-          "Marketing-site visitor identification for outbound sales. Apollo matches visitor IP addresses against its database of company IPs and reports which businesses are browsing our site.",
+          "Marketing-site visitor identification for outbound sales, and the contact record for visitors who start a trial from the homepage. Apollo matches visitor IP addresses against its database of company IPs and reports which businesses are browsing our site. When you enter your email in the homepage signup, it is saved in Apollo so we can send your setup follow-ups.",
         dataCategories:
-          "Visitor IP, user-agent, pageview events.",
+          "Visitor IP, user-agent, pageview events; email address entered in the homepage signup.",
       },
       {
         name: "Vercel (Web Analytics and Speed Insights)",
@@ -211,7 +211,7 @@ const Subprocessors = () => (
           Subprocessors
         </h1>
         <p className="text-sm text-muted-foreground mb-6">
-          Last updated: September 13, 2026
+          Last updated: October 21, 2026
         </p>
         <p className="text-lg text-muted-foreground mb-12">
           Zensus uses trusted third-party services to operate our platform.

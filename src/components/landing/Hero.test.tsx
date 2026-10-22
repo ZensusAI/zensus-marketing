@@ -2,6 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
 import { describe, expect, it, vi } from "vitest";
 import Hero from "./Hero";
+import { TALK_TO_US_URL, trialUrlFor } from "@/lib/constants";
 
 vi.mock("./SignupModal", () => ({
   SignupModal: ({ children }: { children: React.ReactNode }) => children,
@@ -65,12 +66,32 @@ describe("homepage hero", () => {
       "Cash flow forecasting for businesses with unpredictable revenue.",
     );
     const h1 = markup.indexOf("<h1");
-    // The button reads "Start" (the trial terms sit in the line under it).
-    const trial = markup.indexOf(">Start<");
+    // The email signup's button (the trial terms sit in the line under it).
+    const trial = markup.indexOf("Start free trial");
 
     expect(tagline).toBeGreaterThan(-1);
     expect(tagline).toBeLessThan(h1);
     expect(h1).toBeLessThan(trial);
     expect(markup).not.toContain("<video");
+  });
+
+  it("asks for an email, keeps the booking link and states the follow-up", () => {
+    const markup = renderToStaticMarkup(
+      <HelmetProvider>
+        <Hero />
+      </HelmetProvider>,
+    );
+
+    expect(markup).toMatch(/<input[^>]*type="email"/);
+    expect(markup).toContain(">Email address</label>");
+    expect(markup).toContain(`href="${TALK_TO_US_URL}"`);
+    expect(markup).toContain("We&#x27;ll email your sign-in link and a few setup tips.");
+  });
+
+  it("sends the address to the app login with the subscribe redirect", () => {
+    const url = new URL(trialUrlFor("owner+cash@example.com"));
+    expect(url.origin + url.pathname).toBe("https://app.zensus.app/login");
+    expect(url.searchParams.get("email")).toBe("owner+cash@example.com");
+    expect(url.searchParams.get("redirect")).toBe("/subscribe");
   });
 });
