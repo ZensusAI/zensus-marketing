@@ -34,6 +34,8 @@ export interface SchemaAuthor {
   name: string;
   jobTitle: string;
   sameAs: string[];
+  /** The byline's target: a site path or an absolute URL. Defaults to /about. */
+  url?: string;
 }
 
 export interface BlogPostingSchemaInput {
@@ -83,7 +85,7 @@ export const blogPostingSchema = ({
     name: author.name,
     jobTitle: author.jobTitle,
     worksFor: { "@id": ORGANIZATION_ID },
-    url: `${SITE_URL}/about`,
+    url: author.url?.startsWith("http") ? author.url : `${SITE_URL}${author.url ?? "/about"}`,
     sameAs: author.sameAs,
   },
   publisher: { "@id": ORGANIZATION_ID },

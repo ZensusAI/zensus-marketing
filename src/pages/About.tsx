@@ -1,24 +1,90 @@
 import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
+import FinalCTABand from "@/components/landing/FinalCTABand";
+import { CornerMark } from "@/components/landing/Backdrop";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+import { BeliefsStack, HeroParallax, StoryParagraphs, TeamGrid, type TeamMember } from "@/components/about/AboutMotion";
 
 const PAGE_URL = `${SITE_URL}/about`;
-const PERSONAL_GITHUB = "https://github.com/ajinsunny";
-const PERSONAL_LINKEDIN = "https://www.linkedin.com/in/ajinsunny/";
+const TITLE = "About Zensus · Why We Built Cash Flow Forecasting";
+const DESCRIPTION =
+  "Zensus started at Capital Factory in Austin, where founder Ajin Sunny watched good startups run out of cash. Meet the team and what we believe.";
 
-const breadcrumbs = breadcrumbSchema([
-  HOME_CRUMB,
-  { name: "About", url: PAGE_URL },
-]);
+const breadcrumbs = breadcrumbSchema([HOME_CRUMB, { name: "About", url: PAGE_URL }]);
 
-// Ashwin's Person node lives here because his BlogPosting author @id points
-// at /about#ashwin-menon. Ajin's node ships in the sitewide @graph in
-// index.html, so only Ashwin needs a page-level block.
+/*
+ * The team, in the order the page shows them. Each person's `id` is the
+ * anchor of their card and the fragment of their schema.org Person @id
+ * (`/about#<id>`), which blog bylines point at, so an id never changes once
+ * published. Ajin's Person node ships sitewide in index.html; the others are
+ * emitted below. `photo` is a 512px square WebP under public/team/ (a card
+ * without one shows the person's initials). `title` and `linkedin` render
+ * only when set.
+ */
+const TEAM: TeamMember[] = [
+  {
+    id: "ajin-sunny",
+    name: "Ajin Sunny",
+    title: "Founder",
+    photo: "/team/ajin-sunny.webp",
+    linkedin: "https://www.linkedin.com/in/ajinsunny/",
+  },
+  {
+    id: "john-george",
+    name: "John George",
+    title: "Co-Founder",
+    photo: "/team/john-george.webp",
+    linkedin: "https://www.linkedin.com/in/johngeorge28/",
+  },
+  {
+    id: "elsa-iris-reyes",
+    name: "Elsa Iris Reyes",
+    title: "Board Advisor",
+    photo: "/team/elsa-iris-reyes.webp",
+    linkedin: "https://www.linkedin.com/in/elsairisreyes/",
+  },
+  {
+    id: "joe-anglim",
+    name: "Joe Anglim",
+    title: "Strategic Advisor",
+    photo: "/team/joe-anglim.webp",
+    linkedin: "https://www.linkedin.com/in/joe-anglim/",
+  },
+];
+
+// What we believe: standalone statements, each a quotable line with one
+// sentence of reasons. Not numbered, because they are not a sequence.
+const STORY = [
+  "Zensus started at Capital Factory, Austin's startup hub. At one networking event after another, our founder, Ajin Sunny, met founders building things that mattered, and watched too many of them run out of money before the work was done.",
+  "The pattern repeated. Teams were so focused on the mission that cash became an afterthought. When money got tight, the numbers in the investor update got rounder and more hopeful, because nobody had time to build an honest forecast. Survival came to depend on a story instead of a plan.",
+  "Ajin knew that feeling from the inside. He is a first-generation immigrant who studied and worked in the United States for more than 12 years on his own, and clear visibility into his own cash was never something he had. Zensus is the tool he wanted then: one that shows where the money is going before it is gone.",
+];
+
+const BELIEFS = [
+  {
+    line: "Cash should never run out by surprise.",
+    body: "A business can get through a hard month it sees coming. It rarely gets through one it does not.",
+  },
+  {
+    line: "Honest numbers beat hopeful ones.",
+    body: "No one should have to round a forecast up to keep going. A forecast built on real bank data and real billing dates is one you can show anyone.",
+  },
+  {
+    line: "Clarity should not need a finance team.",
+    body: "Businesses of any size deserve the cash visibility that large companies pay analysts for.",
+  },
+  {
+    line: "Your data stays yours.",
+    body: "Bank and accounting credentials live with Plaid and Intuit, never with us. Your data never trains an AI model, and every query is isolated by account.",
+  },
+  {
+    line: "A public price, and no contract.",
+    body: "Zensus Pro is $199 a month after a 14-day free trial. Cancel the same day if it is not a fit.",
+  },
+];
+
 const aboutPageLd = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
@@ -29,242 +95,122 @@ const aboutPageLd = {
   mainEntity: { "@id": `${SITE_URL}/#organization` },
 };
 
-const ashwinPersonLd = {
+// Ajin's Person node is sitewide (index.html); this page adds the rest of the
+// team. Advisors are members, not employees, hence memberOf for them.
+const peopleLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "@id": `${SITE_URL}/about#ashwin-menon`,
-  name: "Ashwin Menon",
-  jobTitle: "Software Developer",
-  worksFor: { "@id": `${SITE_URL}/#organization` },
-  url: PAGE_URL,
-  sameAs: ["https://www.linkedin.com/in/ashwinmenon502/"],
+  "@graph": [
+    ...TEAM.filter((m) => m.id !== "ajin-sunny").map((m) => ({
+      "@type": "Person",
+      "@id": `${SITE_URL}/about#${m.id}`,
+      name: m.name,
+      ...(m.title ? { jobTitle: m.title } : {}),
+      [m.title.includes("Advisor") ? "memberOf" : "worksFor"]: { "@id": `${SITE_URL}/#organization` },
+      url: `${PAGE_URL}#${m.id}`,
+      ...(m.linkedin ? { sameAs: [m.linkedin] } : {}),
+    })),
+  ],
 };
 
-const personalLinks = [
-  { label: "LinkedIn", href: PERSONAL_LINKEDIN, external: true },
-  { label: "GitHub", href: PERSONAL_GITHUB, external: true },
-];
-
-const principles = [
-  {
-    title: "Real numbers, not averages.",
-    body: "Annual contracts hit on real billing dates, not smeared into monthly MRR. Same-day transfers don't look like burn.",
-  },
-  {
-    title: "Your data stays yours.",
-    body: "Bank and accounting credentials live with Plaid and Intuit, never with us. Your data never trains an AI model. Every query is isolated by account.",
-  },
-  {
-    title: "A public price. No contract.",
-    body: "Zensus Pro is $199 a month, billed monthly. Sign up, connect your data, and cancel the same day if it is not a fit. Teams that need a tailored setup can talk to us about Zensus Custom.",
-  },
-];
+const eyebrow = "font-mono text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground";
 
 const About = () => (
-  <div className="min-h-screen bg-background">
+  <div className="min-h-screen overflow-x-clip bg-background">
     <Helmet>
-      <title>About Zensus · Cash Flow Forecasting</title>
-      <meta
-        name="description"
-        content="Zensus is cash flow forecasting for businesses of any size. Built because too many businesses fail from missed cash flow, not missed missions."
-      />
+      <title>{TITLE}</title>
+      <meta name="description" content={DESCRIPTION} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={PAGE_URL} />
       <meta property="og:site_name" content="Zensus" />
-      <meta property="og:title" content="About Zensus · Cash Flow Forecasting" />
-      <meta
-        property="og:description"
-        content="Zensus is cash flow forecasting for businesses of any size. Built because too many businesses fail from missed cash flow, not missed missions."
-      />
+      <meta property="og:title" content={TITLE} />
+      <meta property="og:description" content={DESCRIPTION} />
       <meta property="og:image" content={`${SITE_URL}/og/about.png`} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="About Zensus social preview card" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="About Zensus · Cash Flow Forecasting" />
-      <meta
-        name="twitter:description"
-        content="Zensus is cash flow forecasting for businesses of any size. Built because too many businesses fail from missed cash flow, not missed missions."
-      />
+      <meta name="twitter:title" content={TITLE} />
+      <meta name="twitter:description" content={DESCRIPTION} />
       <meta name="twitter:image" content={`${SITE_URL}/og/about.png`} />
       <link rel="canonical" href={PAGE_URL} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
-      <script type="application/ld+json">{JSON.stringify(ashwinPersonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(aboutPageLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(peopleLd)}</script>
     </Helmet>
     <Navbar />
-    <main className="pt-24 pb-16">
-      <section className="section-padding">
-        <div className="section-container max-w-2xl">
-          {/* Hero */}
-          <p className="text-sm font-mono uppercase tracking-widest text-muted-foreground mb-4">
-            About
-          </p>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            About Zensus
-          </h1>
-          <p className="text-lg text-muted-foreground mb-12">
-            Cash flow forecasting built for businesses of any size.
-          </p>
 
-          {/* What we do */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-foreground mb-4">
-              What we do
-            </h2>
-            <div className="space-y-4 text-base text-foreground leading-relaxed">
-              <p>
-                Zensus connects your bank (via Plaid), QuickBooks, HubSpot,
-                and Slack, then gives you a cash flow forecast, updated with every sync, that
-                respects how your business actually earns and spends money.
-                Annual contracts hit on their real billing dates. Subscription
-                revenue flows in with contract cadence. Same-day internal
-                transfers don't show up as fake burn spikes.
-              </p>
-              <p>
-                You ask questions in plain English and watch projections
-                update. Set a cash floor and Slack pings you when a sync shows
-                your 30-day projection crossing it.
-              </p>
-            </div>
-          </section>
-
-          {/* Why we built this */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-foreground mb-4">
-              Why we built this
-            </h2>
-            <div className="space-y-4 text-base text-foreground leading-relaxed">
-              <p>
-                Most business owners check their bank balance every Monday and still
-                aren't sure they can make payroll in six weeks. That isn't a
-                financial strategy. It's anxiety with a spreadsheet.
-              </p>
-              <p>
-                Zensus exists because too many businesses fail from the same
-                root cause: owners so focused on the work that cash flow
-                becomes an afterthought until it is already too late.
-                Visibility closes that gap. Early warning turns a crisis into
-                a decision.
-              </p>
-            </div>
-          </section>
-
-          {/* How we think about it */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-foreground mb-4">
-              How we think about it
-            </h2>
-            <ul className="space-y-6">
-              {principles.map((p) => (
-                <li key={p.title}>
-                  <p className="font-semibold text-foreground mb-1">
-                    {p.title}
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {p.body}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* Meet the founder */}
-          <section id="ajin-sunny" className="border-t border-border pt-10 mb-12">
-            <h2 className="text-2xl font-semibold text-foreground mb-2">
-              Meet the founder
-            </h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              Ajin Sunny, Founder &amp; CEO
+    <main>
+      {/* Opening: the mission as one line, in the homepage hero's ruled
+          column with its registration marks.
+          Scale: like the homepage hero (21 Oct 2026), from 820px every
+          section's copy, photos and gaps are set about 15% smaller than the
+          first cut (22 Oct 2026) while the frames, panels and section
+          padding keep their size, so the content sits smaller inside the
+          same page. Phones are unchanged.
+          Motion for all four sections lives in components/about. */}
+      <HeroParallax glow="[background:radial-gradient(48rem_20rem_at_50%_40%,rgba(34,197,115,.10),transparent_70%)]">
+        <div className="relative mx-auto max-w-6xl px-4 min-[820px]:px-6">
+          <div className="relative border-x border-transparent px-1 pb-16 pt-32 text-center min-[820px]:border-border min-[820px]:px-10 min-[820px]:pb-24 min-[820px]:pt-40">
+            <CornerMark className="-left-[6px] top-[4.5rem] hidden min-[820px]:block" />
+            <CornerMark className="-right-[6px] top-[4.5rem] hidden min-[820px]:block" />
+            <div data-parallax-copy className="will-change-transform">
+            <p className={eyebrow}>About Zensus</p>
+            <h1 className="mx-auto mt-5 max-w-[16ch] text-balance text-[40px] font-bold leading-[1.05] tracking-[-0.02em] text-foreground min-[820px]:text-[48px]">
+              No business should run out of cash by surprise.
+            </h1>
+            <p className="mx-auto mt-6 max-w-[600px] text-pretty text-[17px] leading-[1.6] text-muted-foreground min-[820px]:mt-5 min-[820px]:max-w-[540px] min-[820px]:text-balance min-[820px]:text-[15px]">
+              Zensus is cash flow forecasting software for businesses of any size. It connects your bank, QuickBooks,
+              and HubSpot and shows, month by month, when cash gets tight, so a hard month arrives as a decision instead
+              of a crisis.
             </p>
-            <div className="space-y-4 text-base text-foreground leading-relaxed">
-              <p>
-                Ajin Sunny is the founder of Zensus. Before Zensus, he spent
-                five years as a full-stack engineer building and scaling web
-                applications.
-              </p>
-              <p>
-                He started Zensus after realizing that many startups fail by
-                not having clear observability on the cash flow, because
-                founders are so focused on their mission that they forget
-                fluctuations in their cash flow.
-              </p>
             </div>
-            <div className="flex flex-wrap gap-4 mt-6">
-              {personalLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noopener noreferrer" : undefined}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
-                >
-                  {link.label}
-                  {link.external && <ExternalLink size={14} />}
-                </a>
-              ))}
-            </div>
-          </section>
+          </div>
+        </div>
+      </HeroParallax>
 
-          {/* Team */}
-          <section id="ashwin-menon" className="border-t border-border pt-10 mb-12">
-            <h2 className="text-2xl font-semibold text-foreground mb-2">
-              Team
+      {/* Origin story: where it started on the left (held in view beside the
+          story from 820px), the story on the right. From 820px the section
+          runs long (160px padding, 80px between paragraphs) so the spotlight
+          rests on each paragraph in turn while the heading stays beside it. */}
+      <section aria-labelledby="origin-heading" className="border-t border-border">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 min-[820px]:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] min-[820px]:gap-16 min-[820px]:px-16 min-[820px]:py-40">
+          <div className="min-[820px]:sticky min-[820px]:top-28 min-[820px]:self-start">
+            <p className={eyebrow}>Where it started</p>
+            <h2 id="origin-heading" className="mt-3 text-balance text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[27px]">
+              In a room full of founders who were running out of time.
             </h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              Ashwin Menon, Software Developer
-            </p>
-            <div className="space-y-4 text-base text-foreground leading-relaxed">
-              <p>
-                Ashwin Menon is a software developer at Zensus. He works
-                across the product and writes on the Zensus blog about the
-                engineering behind AI products and founder finance.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-4 mt-6">
-              <a
-                href="https://www.linkedin.com/in/ashwinmenon502/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
-              >
-                LinkedIn
-                <ExternalLink size={14} />
-              </a>
-            </div>
-          </section>
-
-          {/* CTA */}
-          <section className="border-t border-border pt-10 text-center">
-            <div className="flex justify-center mb-6">
-              <TalkToUsButton size="lg" />
-            </div>
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-1.5 text-primary hover:underline"
-              >
-                See the product
-                <ArrowRight size={14} />
-              </Link>
-              <Link
-                to="/pricing"
-                className="inline-flex items-center gap-1.5 text-primary hover:underline"
-              >
-                Pricing
-                <ArrowRight size={14} />
-              </Link>
-              <Link
-                to="/security"
-                className="inline-flex items-center gap-1.5 text-primary hover:underline"
-              >
-                Security
-                <ArrowRight size={14} />
-              </Link>
-            </div>
-          </section>
+            <p className="mt-4 text-sm text-muted-foreground min-[820px]:text-[13px]">Capital Factory, Austin, Texas</p>
+          </div>
+          <StoryParagraphs
+            paragraphs={STORY}
+            className="max-w-[62ch] space-y-5 text-[17px] leading-[1.7] text-foreground/90 min-[820px]:space-y-20 min-[820px]:text-[15px]"
+          />
         </div>
       </section>
+
+      {/* The team, straight after the story so the people behind it come
+          next: the title centred above an even 2 by 2 grid, held to 580px
+          from 820px (photos about 262px) so they stay portrait sized rather
+          than filling the page, with 56px gaps both ways (caption to the
+          next photo, and photo to photo across); 20px across and 40px down
+          on phones. Each card carries the person's anchor (see TEAM). */}
+      <section aria-labelledby="team-heading" className="border-t border-border">
+        <div className="mx-auto max-w-6xl px-5 py-16 min-[820px]:px-16 min-[820px]:py-40">
+          <h2 id="team-heading" className="text-center text-[28px] font-bold leading-[1.15] tracking-[-0.01em] text-foreground min-[820px]:text-[27px]">
+            Our Team
+          </h2>
+          <TeamGrid
+            team={TEAM}
+            className="mx-auto mt-10 grid max-w-[680px] grid-cols-2 gap-x-5 gap-y-10 min-[820px]:mt-12 min-[820px]:max-w-[580px] min-[820px]:gap-x-14 min-[820px]:gap-y-14"
+          />
+        </div>
+      </section>
+
+      {/* What we believe: the manifesto on the forest panel, pinned from
+          820px with the beliefs arriving one at a time (BeliefsStack). */}
+      <BeliefsStack beliefs={BELIEFS} />
+
+      <FinalCTABand compact />
     </main>
     <Footer />
   </div>

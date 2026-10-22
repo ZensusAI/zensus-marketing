@@ -38,6 +38,13 @@ export function usePrefersReducedMotion(): boolean {
   return useSyncExternalStore(reducedStore.subscribe, reducedStore.getSnapshot, getServerSnapshot);
 }
 
+const wideStore = store("(min-width: 820px)");
+
+/** True from 820px wide, where the About page adds its 3D scroll and pinned stack. */
+export function useWide820(): boolean {
+  return useSyncExternalStore(wideStore.subscribe, wideStore.getSnapshot, getServerSnapshot);
+}
+
 /** True when pinned sections should render static (reduced motion or a short viewport). */
 export function useStaticPins(): boolean {
   return useSyncExternalStore(staticPinsStore.subscribe, staticPinsStore.getSnapshot, getServerSnapshot);

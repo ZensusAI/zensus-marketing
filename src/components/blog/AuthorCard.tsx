@@ -29,6 +29,18 @@ export function AuthorCard({ author, className }: AuthorCardProps) {
       </div>
     </div>
   );
+  if (author.url?.startsWith("http")) {
+    return (
+      <a
+        href={author.url}
+        target="_blank"
+        rel="author noopener noreferrer"
+        className="group block rounded-lg transition-colors hover:bg-muted/40"
+      >
+        {inner}
+      </a>
+    );
+  }
   if (author.url) {
     return (
       <Link

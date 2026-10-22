@@ -158,6 +158,12 @@ export default {
           "0%, 100%": { boxShadow: "0 0 20px hsl(142 71% 45% / 0.3)" },
           "50%": { boxShadow: "0 0 40px hsl(142 71% 45% / 0.5)" },
         },
+        // The navbar About halo: a breath between soft and bright, wide
+        // enough at its peak to read as a call to click.
+        "nav-glow": {
+          "0%, 100%": { opacity: "0.6", transform: "translate(-50%, -50%) scale(0.9)" },
+          "50%": { opacity: "1", transform: "translate(-50%, -50%) scale(1.15)" },
+        },
         "slide-in-left": {
           "0%": { opacity: "0", transform: "translateX(-60px)" },
           "100%": { opacity: "1", transform: "translateX(0)" },
@@ -181,6 +187,7 @@ export default {
         "fade-in-up": "fade-in-up 0.8s ease-out forwards",
         "scale-in": "scale-in 0.4s ease-out forwards",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "nav-glow": "nav-glow 2.6s ease-in-out infinite",
         "slide-in-left": "slide-in-left 0.7s ease-out forwards",
         "slide-in-right": "slide-in-right 0.7s ease-out forwards",
         shine: "shine var(--duration, 14s) linear infinite",

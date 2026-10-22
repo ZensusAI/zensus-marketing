@@ -4,10 +4,12 @@ export interface Author {
   position: string;
   avatar: string;
   bio?: string;
+  /** Where the byline links: a site path, or an absolute URL for an author
+      who is not on /about. */
   url?: string;
-  /** Stable Person @id referenced by BlogPosting JSON-LD. Must match the
-      author's anchor on /about so the visible byline and the structured
-      data always credit the same human. */
+  /** Stable Person @id referenced by BlogPosting JSON-LD. For people on the
+      /about team it is their card's anchor there; never change a published
+      one, since engines key the entity on it. */
   personId: string;
   jobTitle: string;
   sameAs: string[];
@@ -31,7 +33,9 @@ export const authors = {
     name: "Ashwin Menon",
     position: "Software Developer, Zensus",
     avatar: "/authors/ashwin.svg",
-    url: "/about",
+    // A freelance developer for Zensus, not on the /about team (22 Oct
+    // 2026), so his byline links to his LinkedIn instead.
+    url: "https://www.linkedin.com/in/ashwinmenon502/",
     personId: `${SITE_URL}/about#ashwin-menon`,
     jobTitle: "Software Developer",
     sameAs: ["https://www.linkedin.com/in/ashwinmenon502/"],

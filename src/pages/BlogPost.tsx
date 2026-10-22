@@ -185,13 +185,24 @@ const BlogPost = () => {
 
             <p className="text-sm text-muted-foreground">
               By{" "}
-              <Link
-                to={author.url ?? "/about"}
-                rel="author"
-                className="font-medium text-foreground hover:text-primary hover:underline"
-              >
-                {author.name}
-              </Link>
+              {author.url?.startsWith("http") ? (
+                <a
+                  href={author.url}
+                  rel="author noopener noreferrer"
+                  target="_blank"
+                  className="font-medium text-foreground hover:text-primary hover:underline"
+                >
+                  {author.name}
+                </a>
+              ) : (
+                <Link
+                  to={author.url ?? "/about"}
+                  rel="author"
+                  className="font-medium text-foreground hover:text-primary hover:underline"
+                >
+                  {author.name}
+                </Link>
+              )}
               {author.position ? `, ${author.position}` : null}
             </p>
           </div>

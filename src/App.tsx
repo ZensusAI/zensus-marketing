@@ -60,7 +60,8 @@ const RouteFallback = () => <div className="min-h-screen bg-background" />;
 // mounts Index would otherwise inherit cream and never remove it. Driving the
 // class from the current pathname keeps every route, prerendered or
 // client-navigated, on its own theme.
-const CREAM_ROUTES = new Set(["/"]);
+// /about joined on 22 Oct 2026 with its redesign in the homepage language.
+const CREAM_ROUTES = new Set(["/", "/about"]);
 
 const ThemeScope = () => {
   const { pathname } = useLocation();
