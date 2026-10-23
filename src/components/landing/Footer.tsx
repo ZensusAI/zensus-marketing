@@ -1,9 +1,10 @@
 import { type ComponentType, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Instagram, Linkedin } from "lucide-react";
+import { ArrowUpRight, Instagram, Linkedin, MapPin } from "lucide-react";
 import {
   COMPANY_ADDRESSES,
   COMPANY_PROFILES,
+  GOOGLE_MAP_EMBED_URL,
   LEGAL_NAME,
   SITE_URL,
   SUPPORT_EMAIL,
@@ -59,6 +60,7 @@ const SOCIAL_LINKS: { label: string; href: string; Icon: Icon }[] = [
   { label: "LinkedIn", href: COMPANY_PROFILES.linkedin, Icon: Linkedin },
   { label: "X", href: COMPANY_PROFILES.x, Icon: XIcon },
   { label: "Instagram", href: COMPANY_PROFILES.instagram, Icon: Instagram },
+  { label: "Google", href: COMPANY_PROFILES.google, Icon: MapPin },
 ];
 
 // "Ask AI about Zensus": each assistant opens with the same prompt filled in.
@@ -357,6 +359,34 @@ const Footer = () => {
                 ))}
               </div>
             </address>
+
+            {/* The Google Business Profile on a map (the Houston address), from
+                Google's own embed code. loading="lazy" keeps it from loading
+                until the footer nears the screen, so pages do not pay for
+                Google Maps up front; the title names the place for screen
+                readers, and the link opens the profile itself. */}
+            <figure className="mt-6 max-w-[560px] overflow-hidden rounded-xl border border-border bg-card">
+              <iframe
+                src={GOOGLE_MAP_EMBED_URL}
+                title="Zensus on Google Maps: 17350 State Hwy 249, Houston, Texas"
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="block h-[180px] w-full border-0"
+              />
+              <figcaption className="flex items-center justify-between gap-3 px-3.5 py-2.5 text-[13px] text-muted-foreground">
+                <span>Zensus on Google</span>
+                <a
+                  href={COMPANY_PROFILES.google}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn("inline-flex items-center gap-1 font-medium text-foreground hover:underline", focusRing)}
+                >
+                  Open in Google Maps
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+                </a>
+              </figcaption>
+            </figure>
 
             <ul className="mt-5 flex gap-2" aria-label="Zensus profiles">
               {SOCIAL_LINKS.map(({ label, href, Icon }) => (
