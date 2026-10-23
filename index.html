@@ -17,6 +17,8 @@
 
     <!-- Meta domain verification for the Zensus Inc. business portfolio in Meta Business Suite. Meta's instructions say verification fails if the tag is outside the head or loaded by JavaScript, so it has to be in the HTML as served. It lives in this template rather than in a page's Helmet block because it is page-agnostic, and from here it reaches every route's HTML whether or not that route was prerendered. -->
     <meta name="facebook-domain-verification" content="bvzq9nz3zmuyzvgo54ycrvapmvkv2i" />
+    <!-- Bing Webmaster Tools site ownership (added 23 Oct 2026). Bing reads it from the served HTML of the home page, so it lives in this template for the same reason as the Meta tag above. Bing says to keep it after verification succeeds, or the site falls out of verification. -->
+    <meta name="msvalidate.01" content="72880B5DF672DCE2EE96C1609CF65322" />
 
     <!-- Geist is self-hosted (see the @font-face block in src/index.css). We
          preload only the sans variable file (the primary text + headline font)
