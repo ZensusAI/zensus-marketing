@@ -120,7 +120,11 @@ async function prerender() {
   });
 
   try {
+    // Seconds per route in the log, so a page that slows the build stands
+    // out (a blog post loop once took the build from 5 to 20 minutes).
+    const started = Date.now();
     for (const route of ROUTES) {
+      const routeStart = Date.now();
       const url = `http://localhost:${PORT}${route}`;
       const page = await browser.newPage();
       // Signal to client code that this is the prerender crawl, before any app
@@ -173,8 +177,9 @@ async function prerender() {
           : join(distDir, route.replace(/^\//, ""), "index.html");
       await mkdir(dirname(outPath), { recursive: true });
       await writeFile(outPath, html, "utf-8");
-      console.log(`[prerender] wrote ${outPath}`);
+      console.log(`[prerender] wrote ${outPath} (${((Date.now() - routeStart) / 1000).toFixed(1)}s)`);
     }
+    console.log(`[prerender] ${ROUTES.length} routes in ${((Date.now() - started) / 1000).toFixed(0)}s`);
   } finally {
     await browser.close();
     server.close();

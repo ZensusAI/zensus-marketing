@@ -118,11 +118,24 @@ export function FlickeringGrid({
     let animationFrameId: number;
     let gridParams: ReturnType<typeof setupCanvas>;
 
+    // A still grid, drawn once, under reduced motion and in the build's
+    // prerender (window.__PRERENDER__, set by scripts/prerender.mjs). The
+    // flicker loop redraws the canvas every frame for as long as it is on
+    // screen; on Vercel's GPU-less build machine that kept each blog post's
+    // renderer so busy that prerendering a post took about 60s instead of
+    // 9s, and the production build 20 minutes instead of 5 (24 Oct 2026).
+    const still =
+      (window as { __PRERENDER__?: boolean }).__PRERENDER__ === true ||
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
+
     const updateCanvasSize = () => {
       const newWidth = width || container.clientWidth;
       const newHeight = height || container.clientHeight;
       setCanvasSize({ width: newWidth, height: newHeight });
       gridParams = setupCanvas(canvas, newWidth, newHeight);
+      if (still) {
+        drawGrid(ctx, canvas.width, canvas.height, gridParams.cols, gridParams.rows, gridParams.squares, gridParams.dpr);
+      }
     };
 
     updateCanvasSize();
@@ -154,7 +167,7 @@ export function FlickeringGrid({
     );
     intersectionObserver.observe(canvas);
 
-    if (isInView) {
+    if (isInView && !still) {
       animationFrameId = requestAnimationFrame(animate);
     }
 
