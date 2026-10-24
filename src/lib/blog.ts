@@ -23,7 +23,10 @@ export interface BlogPostMeta {
   ogSubtitle?: string;
   /** Optional FAQ block for FAQPage JSON-LD (targets People Also Ask). */
   faqs?: BlogFaqItem[];
-  /** Topic tags surfaced in the card and used by the index tag filter. */
+  /** The post's one topic on the blog index (BLOG_TOPICS below). */
+  topic: BlogTopicId;
+  /** Keywords: the post page shows them and emits them as BlogPosting keywords,
+   *  and ReadMoreSection ranks related posts by them. The index uses `topic`. */
   tags?: string[];
   /** When true, the post is highlighted as a featured/lead card. */
   featured?: boolean;
@@ -31,6 +34,30 @@ export interface BlogPostMeta {
   thumbnail?: string;
   /** Author key into the authors map; defaults to the site's default author. */
   author?: string;
+}
+
+/*
+ * The blog index's five topics, in the order the index shows them (handoff
+ * 15-blog). Each post sets exactly one in its meta. The id is what
+ * /blog?topic= carries, so an id never changes once published.
+ */
+export const BLOG_TOPICS = [
+  { id: "runway-and-burn", name: "Runway and burn", description: "How long the cash lasts, and the numbers investors check." },
+  { id: "payroll", name: "Payroll", description: "Making every payroll run, including the years with 27." },
+  { id: "13-week-forecasting", name: "13-week forecasting", description: "Building and running a weekly cash forecast." },
+  { id: "working-capital", name: "Working capital", description: "Where cash waits between the invoice and the bank." },
+  {
+    id: "tools-and-integrations",
+    name: "Tools and integrations",
+    description: "What QuickBooks, HubSpot and AI tools can and can't forecast.",
+  },
+] as const;
+
+export type BlogTopicId = (typeof BLOG_TOPICS)[number]["id"];
+export type BlogTopic = (typeof BLOG_TOPICS)[number];
+
+export function getTopic(id: string | null | undefined): BlogTopic | undefined {
+  return BLOG_TOPICS.find((t) => t.id === id);
 }
 
 export interface BlogPostModule {
