@@ -318,7 +318,13 @@ const Blog = () => {
       </Helmet>
       <Navbar />
 
-      <main>
+      {/* Scale (24 Oct 2026): from 760px everything in the page body (text,
+          cards, images, controls and the spacing between them) is drawn 15%
+          smaller with CSS zoom, as on the homepage hero and /about. Zoom keeps
+          the layout's own proportions and the viewport breakpoints. Phones
+          are unchanged: there the search input must stay 16px, or iOS zooms
+          the page when it gets focus. The navbar and footer are not scaled. */}
+      <main className="min-[760px]:[zoom:0.85]">
         <header className={cn(GUTTER, "relative z-20 pb-12 pt-[calc(4rem+56px)] min-[760px]:pb-[88px] min-[760px]:pt-[calc(4rem+128px)]")}>
           <div className={cn(CONTAINER, "flex flex-wrap items-end justify-between gap-x-8 gap-y-5")}>
             <div className="flex min-w-0 flex-col gap-3.5">
