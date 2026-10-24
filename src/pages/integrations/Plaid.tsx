@@ -164,6 +164,7 @@ const PlaidIntegration = () => (
     displayName="bank via Plaid"
     tagline="Bank transactions and account balances, read-only and synced automatically. No CSV uploads, no brittle scrapers."
     logoSrc={plaidLogo}
+    logoClassName="logo-on-light"
     metaTitle="Plaid Integration · Connect Your Bank to Zensus"
     metaDescription="Connect your bank to Zensus through Plaid. Read-only transactions and balances, synced by webhook, with no bank credentials stored."
     sections={sections}

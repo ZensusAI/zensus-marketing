@@ -128,12 +128,10 @@
   }
 
   /* Cream-first brand theme (brand book: "Cream first. Sage signals. Forest
-     holds the data."). Scoped to a class on <html> so individual routes can
-     opt in (ThemeScope in App.tsx toggles it per route; the landing page is
-     the only cream route today) while the rest of the site keeps the dark
-     theme until it is migrated. Promoting the whole site later = move these
-     values into :root. Written as :root.theme-cream so it always beats
-     :root and .dark. */
+     holds the data."). Scoped to a class on <html>, which index.html sets
+     for every route (sitewide since 24 Oct 2026; before that only / and
+     /about opted in). The class stays because the rules below key off it.
+     Written as :root.theme-cream so it always beats :root and .dark. */
   :root.theme-cream {
     --background: 43 92% 95%;      /* Cream #FEF7E6 (canvas) */
     --foreground: 172 24% 13%;     /* Ink #1A2A28 (type) */
