@@ -155,6 +155,7 @@ const LEGAL_LINKS: FooterLink[] = [
   { label: "Terms", href: "/terms" },
   { label: "Subprocessors", href: "/subprocessors" },
   { label: "Security", href: "/security" },
+  { label: "Sitemap", href: "/sitemap" },
 ];
 
 const focusRing =

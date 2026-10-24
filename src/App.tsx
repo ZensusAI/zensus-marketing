@@ -39,6 +39,7 @@ const QuickBooksForecasting = lazy(
   () => import("./pages/QuickBooksForecasting"),
 );
 const LlmInfo = lazy(() => import("./pages/LlmInfo"));
+const Sitemap = lazy(() => import("./pages/Sitemap"));
 const PlaidIntegration = lazy(() => import("./pages/integrations/Plaid"));
 const QuickBooksIntegration = lazy(
   () => import("./pages/integrations/QuickBooks"),
@@ -119,6 +120,7 @@ const App = () => (
               element={<QuickBooksForecasting />}
             />
             <Route path="/llm-info" element={<LlmInfo />} />
+            <Route path="/sitemap" element={<Sitemap />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

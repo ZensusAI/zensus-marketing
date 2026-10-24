@@ -104,4 +104,13 @@ describe("route coverage", () => {
   it("generates an Open Graph card for every static route", () => {
     expect(ogCardSlugs()).toEqual(app.map(routeToCardSlug).sort());
   });
+
+  // The /sitemap page lists static routes by hand (posts come from the blog
+  // loader), so a new route would otherwise be missing from it unnoticed.
+  it("links every static route from the /sitemap page", () => {
+    const source = read("src", "pages", "Sitemap.tsx");
+    const linked = new Set([...source.matchAll(/href: "([^"]+)"/g)].map((m) => m[1]));
+    const missing = app.filter((p) => p !== "/sitemap" && !linked.has(p));
+    expect(missing).toEqual([]);
+  });
 });
