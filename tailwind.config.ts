@@ -130,6 +130,11 @@ export default {
           "0%": { transform: "scale(1)", opacity: "0.7" },
           "100%": { transform: "scale(2.3)", opacity: "0" },
         },
+        // Pricing ask bar caret (handoff 14-pricing "zcaret").
+        "caret-blink": {
+          "0%, 49%": { opacity: "1" },
+          "50%, 100%": { opacity: "0" },
+        },
         "nav-in": {
           from: { opacity: "0", transform: "translateY(4px)" },
           to: { opacity: "1", transform: "none" },
@@ -179,6 +184,7 @@ export default {
       },
       animation: {
         "nav-in": "nav-in 0.2s ease-out",
+        "caret-blink": "caret-blink 1s steps(1) infinite",
         "mesh-drift": "mesh-drift 40s ease-in-out infinite alternate",
         "ring-ping": "ring-ping 1.4s ease-out infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
