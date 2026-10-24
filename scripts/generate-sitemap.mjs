@@ -63,6 +63,7 @@ const STATIC_URLS = [
   { loc: `${SITE_URL}/compare/zensus-vs-cash-flow-frog`, sources: ["src/pages/compare/ZensusVsCashFlowFrog.tsx", "src/lib/compare-pages.ts"], changefreq: "monthly", priority: "0.7" },
   { loc: `${SITE_URL}/quickbooks-cash-flow-forecasting`, sources: ["src/pages/QuickBooksForecasting.tsx"], changefreq: "monthly", priority: "0.8" },
   { loc: `${SITE_URL}/llm-info`, sources: ["src/pages/LlmInfo.tsx"], changefreq: "monthly", priority: "0.6" },
+  { loc: `${SITE_URL}/sitemap`, sources: ["src/pages/Sitemap.tsx"], changefreq: "weekly", priority: "0.4" },
   { loc: `${SITE_URL}/about`, sources: ["src/pages/About.tsx"], changefreq: "monthly", priority: "0.6" },
   { loc: `${SITE_URL}/privacy`, sources: ["src/pages/Privacy.tsx"], changefreq: "yearly", priority: "0.3" },
   { loc: `${SITE_URL}/terms`, sources: ["src/pages/Terms.tsx"], changefreq: "yearly", priority: "0.3" },

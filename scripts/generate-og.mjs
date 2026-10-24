@@ -129,6 +129,14 @@ const CARDS = [
     accent: "green",
   },
   {
+    slug: "sitemap",
+    category: "Sitemap",
+    title: "Every page on Zensus",
+    subtitle:
+      "The product, pricing, integrations, free tools, comparisons, and every guide.",
+    accent: "green",
+  },
+  {
     slug: "llm-info",
     category: "AI",
     title: "Zensus entity summary",

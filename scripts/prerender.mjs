@@ -49,6 +49,7 @@ const STATIC_ROUTES = [
   "/compare/zensus-vs-cash-flow-frog",
   "/quickbooks-cash-flow-forecasting",
   "/llm-info",
+  "/sitemap",
 ];
 
 // Minimal static file server over dist/ with SPA fallback to index.html
