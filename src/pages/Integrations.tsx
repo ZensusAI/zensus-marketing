@@ -34,6 +34,7 @@ interface Card {
   name: string;
   blurb: string;
   logo: string;
+  logoClassName?: string;
 }
 
 const CARDS: Card[] = [
@@ -42,6 +43,8 @@ const CARDS: Card[] = [
     name: "Plaid",
     blurb: "Bank transactions and balances through Plaid, read-only. Synced by webhook, no CSVs.",
     logo: plaidLogo,
+    // The Plaid mark is white; logo-on-light repaints it ink on cream.
+    logoClassName: "logo-on-light",
   },
   {
     slug: "quickbooks",
@@ -121,7 +124,7 @@ const Integrations = () => (
               className="group rounded-2xl border border-border bg-card p-6 hover:border-primary/40 transition-colors"
             >
               <div className="flex items-center gap-3 mb-3 h-9">
-                <img src={card.logo} alt="" className="h-8 w-auto" />
+                <img src={card.logo} alt="" className={`h-8 w-auto ${card.logoClassName ?? ""}`} />
                 <h2 className="text-lg font-semibold text-foreground">
                   {card.name}
                 </h2>

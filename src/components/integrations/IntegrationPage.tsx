@@ -27,6 +27,8 @@ interface IntegrationPageProps {
   displayName: string;
   tagline: string;
   logoSrc: string;
+  /** Extra classes for the logo, e.g. logo-on-light for a white mark. */
+  logoClassName?: string;
   metaTitle: string;
   metaDescription: string;
   sections: IntegrationSection[];
@@ -54,6 +56,7 @@ export const IntegrationPage = ({
   displayName,
   tagline,
   logoSrc,
+  logoClassName,
   metaTitle,
   metaDescription,
   sections,
@@ -104,7 +107,7 @@ export const IntegrationPage = ({
     <main className="pt-24 pb-16">
       <div className="section-container max-w-3xl">
         <div className="flex items-center gap-4 mb-6">
-          <img src={logoSrc} alt={displayName} className="h-12 w-auto" />
+          <img src={logoSrc} alt={displayName} className={`h-12 w-auto ${logoClassName ?? ""}`} />
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
             Connect your {displayName} with Zensus
           </h1>
