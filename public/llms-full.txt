@@ -116,6 +116,19 @@ The 13-week cash flow forecast is the standard short-term liquidity model: one f
 - Best practice is three scenarios per forecast: base case, upside, and downside; the spread between them matters more than any single number.
 - A free downloadable 13-week template (XLSX with chained weekly balances and a cash buffer check) is available at https://zensus.finance/templates/13-week-cash-flow-template.xlsx, and a browser builder that fills in a first 13 weeks is at https://zensus.finance/tools/13-week-cash-flow-template
 
+### Predictive Cash Flow Forecasting
+https://zensus.finance/blog/predictive-cash-flow-forecasting
+
+How to see a cash shortfall before it happens by forecasting cash on the dates money actually arrives and leaves. Key facts from the guide:
+
+- Revenue, profit, and cash measure different things; a profitable month can still contain a week where payroll is due before customer payments arrive.
+- Forecast accuracy is measured against actuals: a forecast of $120,000 ending cash against an actual $105,000 is a 12.5% absolute percentage error, and the cause (late receivables, higher expenses, an earlier hire) decides the fix.
+- Forecasting a range (optimistic, expected, pessimistic) shows the risk a single line hides; from $200,000, the three cases in the guide end three months later at $215,000, $155,000, and $50,000.
+- Invoices should be dated by when the customer actually pays: a $40,000 invoice on 30-day terms from a customer who pays 15 days late arrives 45 days after it is issued.
+- A week can end positive and still go negative in the middle: $35,000 opening cash, $28,000 payroll on Wednesday and a $12,000 vendor payment on Thursday reach minus $5,000 before a $30,000 payment lands on Friday.
+- A one-hour starter forecast: 13 weeks by week, ending cash equals beginning cash plus cash received minus cash paid, then move the largest expected payment two weeks later and compare.
+- Zensus projects cash by month, week, and day from Plaid, QuickBooks, and HubSpot, and models a scenario (a hire, a lost customer, a one-off expense) against the baseline.
+
 ### Will I Make Payroll?
 https://zensus.finance/blog/will-i-make-payroll
 
@@ -343,6 +356,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - Blog: https://zensus.finance/blog
 - What Is Cash Flow Forecasting? (blog): https://zensus.finance/blog/what-is-cash-flow-forecasting
 - What Is a 13-Week Cash Flow Forecast? (blog): https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast
+- Predictive Cash Flow Forecasting (blog): https://zensus.finance/blog/predictive-cash-flow-forecasting
 - Will I Make Payroll? (blog): https://zensus.finance/blog/will-i-make-payroll
 - ARR vs Cash for Founders (blog): https://zensus.finance/blog/arr-vs-cash-for-founders
 - Cash Conversion Cycle (blog): https://zensus.finance/blog/cash-conversion-cycle
