@@ -1,10 +1,10 @@
 import { SITE_URL } from "@/lib/constants";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { BLOG_TOPICS, getAllPosts, getTopic, postUrl, type BlogPostMeta } from "@/lib/blog";
+import { BLOG_TOPICS, getAllPosts, getTopic, postUrl, topicPath, type BlogPostMeta } from "@/lib/blog";
 import { FOCUS_RING, PostCard, SQUIRCLE } from "@/components/blog/PostCard";
 import { FeaturedCarousel } from "@/components/blog/FeaturedCarousel";
 import { BlogBanners } from "@/components/blog/BlogBanners";
@@ -15,9 +15,11 @@ import { cn } from "@/lib/utils";
  * The blog index, from handoff 15-blog (31a). Home view: header with search
  * and Explore topics, the four newest guides in a carousel, then one section
  * per topic (up to three cards and "View all"), with the template and Ask AI
- * banners after the second. ?topic=<id> and ?q=<text> switch to a list of
- * that topic or of the search results, so both views are linkable. No scroll
- * animation: transitions only on hover, focus and the topics chevron.
+ * banners after the second. ?q=<text> switches to the search results, so a
+ * search is linkable. Each topic has its own page (BlogTopic.tsx); the old
+ * ?topic=<id> view redirects there, at the edge in vercel.json and here for
+ * in-app navigation. No scroll animation: transitions only on hover, focus
+ * and the topics chevron.
  */
 
 const breadcrumbs = breadcrumbSchema([
@@ -40,12 +42,10 @@ const GRID = "grid gap-5 min-[760px]:grid-cols-2 min-[760px]:gap-x-10 min-[760px
 
 function Controls({
   posts,
-  topicId,
   query,
   setQuery,
 }: {
   posts: BlogPostMeta[];
-  topicId: string | null;
   query: string;
   setQuery: (q: string) => void;
 }) {
@@ -53,7 +53,6 @@ function Controls({
   const [topicsOpen, setTopicsOpen] = useState(false);
   const wrap = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
-  const current = getTopic(topicId);
 
   useEffect(() => {
     if (query) setSearchOpen(true);
@@ -145,7 +144,7 @@ function Controls({
               topicsOpen ? "border-foreground" : "border-border",
             )}
           >
-            <span>{current ? current.name : "Explore topics"}</span>
+            <span>Explore topics</span>
             <svg
               aria-hidden
               width="14"
@@ -173,11 +172,11 @@ function Controls({
           )}
         >
           {menu.map((t) => {
-            const on = (t.id ?? null) === (current?.id ?? null);
+            const on = t.id === null;
             return (
               <Link
                 key={t.name}
-                to={t.id ? `/blog?topic=${t.id}` : "/blog"}
+                to={t.id ? topicPath(t.id) : "/blog"}
                 onClick={() => setTopicsOpen(false)}
                 aria-current={on ? "page" : undefined}
                 className={cn(
@@ -209,13 +208,15 @@ function TopicSection({ topic, posts }: { topic: (typeof BLOG_TOPICS)[number]; p
             {topic.name}
           </h2>
           <Link
-            to={`/blog?topic=${topic.id}`}
+            to={topicPath(topic.id)}
             className={cn(
               "inline-flex min-h-11 flex-none items-center whitespace-nowrap rounded-md px-0.5 text-[15px] text-muted-foreground transition-colors duration-200 hover:text-foreground",
               FOCUS_RING,
             )}
           >
-            View all {posts.length} →
+            View all {posts.length}
+            <span className="sr-only">&nbsp;{topic.name} guides</span>
+            {"\u00a0→"}
           </Link>
         </div>
         {/* Phones: a swipe row of 82%-wide cards that bleeds to the screen
@@ -242,18 +243,16 @@ function TopicSection({ topic, posts }: { topic: (typeof BLOG_TOPICS)[number]; p
 const Blog = () => {
   const posts = useMemo(() => getAllPosts(), []);
   const [searchParams, setSearchParams] = useSearchParams();
-  const topicParam = searchParams.get("topic");
+  const legacyTopic = getTopic(searchParams.get("topic"));
   const query = searchParams.get("q") ?? "";
-  const topic = getTopic(topicParam);
   const needle = query.trim().toLowerCase();
-  const mode = needle ? "search" : topic ? "topic" : "home";
+  const mode = needle ? "search" : "home";
 
   const setQuery = (q: string) => {
     setSearchParams(q ? { q } : {}, { replace: true });
   };
 
   // A new view starts at the top of the page.
-  const view = mode === "topic" ? `topic:${topic?.id}` : mode;
   const firstView = useRef(true);
   useEffect(() => {
     if (firstView.current) {
@@ -261,13 +260,13 @@ const Blog = () => {
       return;
     }
     window.scrollTo({ top: 0 });
-  }, [view]);
+  }, [mode]);
 
   const byTopic = (id: string) => posts.filter((p) => p.topic === id);
   const results = needle
     ? posts.filter((p) => `${p.title} ${p.description} ${getTopic(p.topic)?.name ?? ""}`.toLowerCase().includes(needle))
     : [];
-  const listed = mode === "topic" && topic ? byTopic(topic.id) : results;
+  const listed = results;
 
   const blogItemListLd = useMemo(
     () =>
@@ -280,6 +279,8 @@ const Blog = () => {
       ),
     [posts],
   );
+
+  if (legacyTopic) return <Navigate to={topicPath(legacyTopic.id)} replace />;
 
   return (
     <div className="min-h-screen overflow-x-clip bg-background">
@@ -335,7 +336,7 @@ const Blog = () => {
                 Practical guides on cash flow forecasting and financial decision-making for business owners and finance teams.
               </p>
             </div>
-            <Controls posts={posts} topicId={topic?.id ?? null} query={query} setQuery={setQuery} />
+            <Controls posts={posts} query={query} setQuery={setQuery} />
           </div>
         </header>
 
@@ -360,12 +361,10 @@ const Blog = () => {
                   ← All guides
                 </Link>
                 <h2 className="text-[40px] font-semibold leading-[1.02] tracking-[-0.045em] text-foreground min-[760px]:text-[64px]">
-                  {mode === "topic" && topic ? topic.name : `Results for "${query.trim()}"`}
+                  {`Results for "${query.trim()}"`}
                 </h2>
                 <p className="text-base text-muted-foreground">
-                  {mode === "topic" && topic
-                    ? `${topic.description} ${listed.length} guides.`
-                    : `${listed.length} ${listed.length === 1 ? "guide" : "guides"} found.`}
+                  {`${listed.length} ${listed.length === 1 ? "guide" : "guides"} found.`}
                 </p>
               </div>
             </section>

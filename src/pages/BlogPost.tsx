@@ -6,11 +6,12 @@ import { Helmet } from "react-helmet-async";
 import { blogMdxComponents } from "@/mdx-components";
 import { BlogPostFaq } from "@/components/blog/BlogPostFaq";
 import { ReadingLine, TocBar, TocRail, useArticleSections } from "@/components/blog/ArticleToc";
+import { Breadcrumbs } from "@/components/blog/Breadcrumbs";
 import { KeepReading } from "@/components/blog/KeepReading";
 import { FOCUS_RING, SQUIRCLE } from "@/components/blog/PostCard";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { formatPostDate, getPostBySlug, getTopic, postBreadcrumbs, postUrl } from "@/lib/blog";
+import { formatPostDate, getPostBySlug, getTopic, postBreadcrumbs, postUrl, topicPath } from "@/lib/blog";
 import { getAuthor, type Author } from "@/lib/authors";
 import { blogStats } from "@/generated/blog-stats";
 import { cn } from "@/lib/utils";
@@ -23,7 +24,7 @@ import {
 /*
  * The article page, from handoff 16-blog-post-template. A reading line under
  * the navbar, and below 1100px an "On this page" bar. The header sits on the
- * reading column (Home / Blog / post breadcrumb, H1, description, byline
+ * reading column (Home / Blog / topic / post breadcrumb, H1, description, byline
  * with the topic and Copy link), a 16:9
  * hero from meta.thumbnail spans the container, then a 200px sticky contents
  * rail beside the 680px column: body, FAQ, and "Keep reading" in the topic.
@@ -173,30 +174,7 @@ const BlogPost = () => {
         <div className="mx-auto max-w-[1280px] px-6 min-[760px]:px-12">
           <header className={cn(GRID, "pt-12 min-[760px]:pt-[104px]")}>
             <div className={cn(COLUMN, "flex flex-col gap-5")}>
-              <nav aria-label="Breadcrumb">
-                <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-[14px] text-muted-foreground">
-                  {trail.map((crumb, i) => {
-                    const last = i === trail.length - 1;
-                    return (
-                      <li key={crumb.url} className="flex items-center gap-x-1.5">
-                        {i > 0 ? <span aria-hidden>/</span> : null}
-                        {last ? (
-                          <span aria-current="page" className="text-foreground">
-                            {crumb.name}
-                          </span>
-                        ) : (
-                          <Link
-                            to={crumb.url.slice(SITE_URL.length) || "/"}
-                            className={cn("rounded-sm transition-colors hover:text-foreground", FOCUS_RING)}
-                          >
-                            {crumb.name}
-                          </Link>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ol>
-              </nav>
+              <Breadcrumbs trail={trail} />
 
               <h1
                 id="blog-article-title"
@@ -243,7 +221,7 @@ const BlogPost = () => {
                       <>
                         {" · "}
                         <Link
-                          to={`/blog?topic=${topic.id}`}
+                          to={topicPath(topic.id)}
                           className={cn("rounded-sm text-sage-dark transition-colors hover:text-foreground", FOCUS_RING)}
                         >
                           {topic.name}

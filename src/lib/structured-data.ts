@@ -168,6 +168,32 @@ export interface BlogIndexPost {
 }
 
 /** ItemList on /blog so crawlers see published posts in structured form. */
+/**
+ * A blog topic page: a CollectionPage inside the Blog, whose main entity is
+ * the list of that topic's guides in the order the page shows them.
+ */
+export const topicCollectionSchema = (topic: { name: string; description: string; url: string }, posts: BlogIndexPost[]) => ({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${topic.url}#collection`,
+  url: topic.url,
+  name: `${topic.name} guides`,
+  description: topic.description,
+  inLanguage: "en-US",
+  isPartOf: { "@type": "Blog", "@id": BLOG_ID, name: "Zensus Blog", url: `${SITE_URL}/blog` },
+  publisher: { "@id": ORGANIZATION_ID },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: posts.length,
+    itemListElement: posts.map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: post.name,
+      url: post.url,
+    })),
+  },
+});
+
 export const blogIndexItemListSchema = (posts: BlogIndexPost[]) => ({
   "@context": "https://schema.org",
   "@type": "ItemList",

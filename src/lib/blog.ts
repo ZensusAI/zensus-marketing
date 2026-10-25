@@ -37,19 +37,64 @@ export interface BlogPostMeta {
 }
 
 /*
- * The blog index's five topics, in the order the index shows them (handoff
- * 15-blog). Each post sets exactly one in its meta. The id is what
- * /blog?topic= carries, so an id never changes once published.
+ * The blog's five topics, in the order the index shows them (handoff
+ * 15-blog). Each post sets exactly one in its meta, and each topic has its
+ * own page at /blog/topic/<id> (topicPath below), so an id never changes
+ * once published. `description` is the one line the index menu and cards
+ * use; `seoTitle`, `metaDescription` and `intro` belong to the topic page.
+ * scripts/blog-topics.mjs repeats the ids and names for the build scripts,
+ * and blog-topics.test.ts keeps the two in step.
  */
 export const BLOG_TOPICS = [
-  { id: "runway-and-burn", name: "Runway and burn", description: "How long the cash lasts, and the numbers investors check." },
-  { id: "payroll", name: "Payroll", description: "Making every payroll run, including the years with 27." },
-  { id: "13-week-forecasting", name: "13-week forecasting", description: "Building and running a weekly cash forecast." },
-  { id: "working-capital", name: "Working capital", description: "Where cash waits between the invoice and the bank." },
+  {
+    id: "runway-and-burn",
+    name: "Runway and burn",
+    description: "How long the cash lasts, and the numbers investors check.",
+    seoTitle: "Runway and Burn Rate Guides | Zensus",
+    metaDescription:
+      "Guides on cash runway, burn rate, burn multiple and the zero-cash date: how long your cash lasts, how to work it out weekly, and what investors check.",
+    intro:
+      "Runway is how long your cash lasts at the current burn rate. These guides cover how to calculate runway and net burn, why a weekly zero-cash date is more reliable than a count of months, how burn multiple and default alive are worked out, and how to forecast costs that grow with usage, such as AI compute.",
+  },
+  {
+    id: "payroll",
+    name: "Payroll",
+    description: "Making every payroll run, including the years with 27.",
+    seoTitle: "Payroll Cash Planning Guides | Zensus",
+    metaDescription:
+      "Guides on making payroll: how to know weeks ahead that a run will clear, which years have 27 biweekly pay periods, and what to do if you might miss one.",
+    intro:
+      "Payroll is usually the largest payment a business makes, and the one that cannot be late. These guides show how to project cash to each payroll date, which years have 27 biweekly pay periods instead of 26, and what happens, legally and practically, when a payroll run is missed.",
+  },
+  {
+    id: "13-week-forecasting",
+    name: "13-week forecasting",
+    description: "Building and running a weekly cash forecast.",
+    seoTitle: "13-Week Cash Flow Forecasting Guides | Zensus",
+    metaDescription:
+      "Guides on cash flow forecasting and the 13-week cash flow forecast: what it is, how to build one in Excel, and how to see a cash shortfall before it happens.",
+    intro:
+      "A 13-week cash flow forecast projects cash in and cash out week by week for the quarter ahead. These guides explain cash flow forecasting from the basics, walk through building a 13-week forecast in Excel with a free template, and show how dating each payment by when it really arrives reveals a shortfall weeks in advance.",
+  },
+  {
+    id: "working-capital",
+    name: "Working capital",
+    description: "Where cash waits between the invoice and the bank.",
+    seoTitle: "Working Capital and Cash Timing Guides | Zensus",
+    metaDescription:
+      "Guides on working capital and cash timing: the cash conversion cycle, why ARR and cash differ, and how to forecast cash when clients pay late.",
+    intro:
+      "Working capital is the cash tied up between doing the work and getting paid for it. These guides explain the cash conversion cycle (DSO, DIO and DPO), why annual recurring revenue and the bank balance tell different stories, and how agencies and service businesses forecast cash when clients pay on 30 to 60 day terms.",
+  },
   {
     id: "tools-and-integrations",
     name: "Tools and integrations",
     description: "What QuickBooks, HubSpot and AI tools can and can't forecast.",
+    seoTitle: "Cash Flow Tools and Integrations Guides | Zensus",
+    metaDescription:
+      "Guides on cash flow forecasting tools: what QuickBooks can and cannot forecast, turning HubSpot data into a cash forecast, and MCP vs CLI for finance teams.",
+    intro:
+      "Most of the data a cash flow forecast needs already sits in a bank account, an accounting system and a CRM. These guides cover what the QuickBooks Online Cash Flow Planner does and where it stops, how to turn a HubSpot sales pipeline into a cash forecast, and how finance teams connect AI assistants to their data through MCP servers or command-line tools.",
   },
 ] as const;
 
@@ -109,18 +154,40 @@ export function postUrl(slug: string): string {
   return `${SITE_URL}/blog/${slug}`;
 }
 
+/** Site-relative path of a topic's page, for links. */
+export function topicPath(id: BlogTopicId): string {
+  return `/blog/topic/${id}`;
+}
+
+/** Absolute URL of a topic's page, for canonical and structured data. */
+export function topicUrl(id: BlogTopicId): string {
+  return `${SITE_URL}${topicPath(id)}`;
+}
+
+export interface Crumb {
+  name: string;
+  url: string;
+}
+
+const BLOG_TRAIL: Crumb[] = [
+  { name: "Home", url: `${SITE_URL}/` },
+  { name: "Blog", url: `${SITE_URL}/blog` },
+];
+
+/** A topic page's breadcrumb trail: Home, Blog, the topic. */
+export function topicBreadcrumbs(topic: BlogTopic): Crumb[] {
+  return [...BLOG_TRAIL, { name: topic.name, url: topicUrl(topic.id) }];
+}
+
 /**
- * A post's breadcrumb trail: Home, Blog, the post. The page shows it and
- * emits it as BreadcrumbList JSON-LD from this one list, so the visible
- * trail and the markup cannot drift apart. Every step is a canonical,
- * prerendered URL; the topic is not a step, because /blog?topic= is a filter
- * of /blog (it canonicalizes there), not a page of its own. The post is named
- * by its short ogTitle, the form a search result's breadcrumb line can show.
+ * A post's breadcrumb trail: Home, Blog, its topic, the post. The page shows
+ * it and emits it as BreadcrumbList JSON-LD from this one list, so the
+ * visible trail and the markup cannot drift apart. Every step is a canonical,
+ * prerendered page; Google asks for "a typical user path to a page", and
+ * readers reach a post through its topic. The post is named by its short
+ * ogTitle, the form a search result's breadcrumb line can show.
  */
-export function postBreadcrumbs(meta: Pick<BlogPostMeta, "slug" | "title" | "ogTitle">) {
-  return [
-    { name: "Home", url: `${SITE_URL}/` },
-    { name: "Blog", url: `${SITE_URL}/blog` },
-    { name: meta.ogTitle ?? meta.title, url: postUrl(meta.slug) },
-  ];
+export function postBreadcrumbs(meta: Pick<BlogPostMeta, "slug" | "title" | "ogTitle" | "topic">): Crumb[] {
+  const topic = getTopic(meta.topic);
+  return [...(topic ? topicBreadcrumbs(topic) : BLOG_TRAIL), { name: meta.ogTitle ?? meta.title, url: postUrl(meta.slug) }];
 }
