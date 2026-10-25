@@ -1,5 +1,6 @@
 import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { cn } from "@/lib/utils";
@@ -48,6 +49,8 @@ interface ChangelogEntry {
   category: ChangelogCategory;
   title: string;
   body: string[];
+  /** The page that explains the feature this entry ships, linked under it. */
+  learnMore?: { to: string; label: string };
 }
 
 const entries: ChangelogEntry[] = [
@@ -55,6 +58,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-09-23",
     category: "Improved",
     title: "More accurate cash forecast",
+    learnMore: { to: "/blog/what-is-cash-flow-forecasting", label: "How cash flow forecasting works" },
     body: [
       "Payments stay open until they clear, and bank transactions match the right forecast row.",
       "Open invoices no longer stack on forecast revenue; refunds are not counted as sales.",
@@ -65,6 +69,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-09-20",
     category: "Improved",
     title: "Clearer bank sync status",
+    learnMore: { to: "/integrations/plaid", label: "How the Plaid bank sync works" },
     body: [
       "The dashboard notices when a bank was asked for its balance and did not answer.",
       "Syncs finish faster when a bank is slow to return a live balance.",
@@ -75,6 +80,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-09-08",
     category: "New",
     title: "Zero-cash date on the runway chart",
+    learnMore: { to: "/blog/zero-cash-date-for-founders", label: "How the zero-cash date is calculated" },
     body: [
       "The chart shows your zero-cash date.",
       "The header names that date alongside the other runway metrics.",
@@ -84,6 +90,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-08-10",
     category: "New",
     title: "Connect more than one bank",
+    learnMore: { to: "/integrations/plaid", label: "Connecting banks through Plaid" },
     body: [
       "Link multiple bank connections under one account.",
       "Runway cash and sync status reflect each connected bank.",
@@ -93,6 +100,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-07-31",
     category: "New",
     title: "13-week cash view",
+    learnMore: { to: "/blog/what-is-a-13-week-cash-flow-forecast", label: "What a 13-week cash flow forecast is" },
     body: [
       "Switch between Monthly and 13-Week on the runway projection.",
       "Includes a 13-week chart, reconciling table, and CSV export.",
@@ -111,6 +119,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-05-24",
     category: "Improved",
     title: "Support page and acknowledgment email",
+    learnMore: { to: "/support", label: "The support page" },
     body: [
       "Support form at /support, no login required.",
       "Instant confirmation email sent the moment you submit.",
@@ -120,6 +129,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-05-19",
     category: "New",
     title: "14-day free trial",
+    learnMore: { to: "/pricing", label: "Zensus pricing and the free trial" },
     body: [
       "Full access for 14 days before your card is charged.",
       "No feature limits during the trial period.",
@@ -156,6 +166,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-04-17",
     category: "New",
     title: "Slack cash-crunch alerts",
+    learnMore: { to: "/integrations/slack", label: "How Slack cash alerts work" },
     body: [
       "Set a dollar floor; Zensus fires a Slack alert when your 30-day projection crosses it.",
       "Re-alerts on a week-earlier breach or a 10% balance dip; snooze or adjust from Slack.",
@@ -165,6 +176,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-04-14",
     category: "Improved",
     title: "Scenario drill-down with dual projection",
+    learnMore: { to: "/use-cases", label: "Hiring and other scenarios Zensus models" },
     body: [
       "Scenarios render side by side with the baseline at month, week, or day granularity.",
       "Ask a question, see both numbers, decide.",
@@ -183,6 +195,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-04-03",
     category: "Improved",
     title: "Subscription-aware projections for HubSpot subscriptions",
+    learnMore: { to: "/integrations/hubspot", label: "How the HubSpot sync works" },
     body: [
       "Annual and quarterly contracts flow into projections on their real billing dates, not smeared as MRR.",
       "Runway forecast respects contract cadence.",
@@ -192,6 +205,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-04-01",
     category: "Improved",
     title: "Webhook sync for Plaid and HubSpot",
+    learnMore: { to: "/integrations", label: "Every Zensus integration" },
     body: [
       "Plaid and HubSpot changes arrive by webhook; QuickBooks syncs once a day.",
       "Runway recalculates after each sync, as transactions clear and invoices change.",
@@ -280,6 +294,16 @@ const Changelog = () => (
                       <li key={i}>{bullet}</li>
                     ))}
                   </ul>
+                  {entry.learnMore ? (
+                    <p className="mt-2 text-sm">
+                      <Link
+                        to={entry.learnMore.to}
+                        className="font-medium text-primary underline-offset-4 hover:underline"
+                      >
+                        {entry.learnMore.label} →
+                      </Link>
+                    </p>
+                  ) : null}
                 </div>
               </article>
             </li>

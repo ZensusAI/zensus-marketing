@@ -6,6 +6,12 @@ export interface CompareTableRow {
   zensus: string;
 }
 
+export interface CompareRelatedLink {
+  to: string;
+  label: string;
+  why: string;
+}
+
 export interface ComparePageConfig {
   slug: string;
   competitorName: string;
@@ -26,6 +32,11 @@ export interface ComparePageConfig {
   };
   tableRows: CompareTableRow[];
   faqs: FaqItem[];
+  /** In-body links to the Zensus pages that go deeper on what this
+   *  comparison turns on, each with one line on why. Shown under "Where each
+   *  tool wins"; the page otherwise linked only to pricing and the other
+   *  comparisons. */
+  related: CompareRelatedLink[];
   /** Caption under the table, when this page's vendor facts were read on a
    *  different date from COMPARE_METHODOLOGY. */
   methodology?: string;
@@ -48,6 +59,28 @@ export const COMPARE_METHODOLOGY = `Based on publicly available vendor pages, ${
 
 export const FLOAT_COMPARE: ComparePageConfig = {
   slug: "zensus-vs-float",
+  related: [
+    {
+      to: "/integrations/plaid",
+      label: "Live bank feeds through Plaid",
+      why: "how Zensus reads bank balances directly instead of through the accounting sync.",
+    },
+    {
+      to: "/integrations/hubspot",
+      label: "HubSpot subscriptions in the forecast",
+      why: "how annual and quarterly contracts land on the day they pay.",
+    },
+    {
+      to: "/blog/what-is-a-13-week-cash-flow-forecast",
+      label: "What is a 13-week cash flow forecast?",
+      why: "the weekly view both tools offer, and how to build one.",
+    },
+    {
+      to: "/tools/runway-calculator",
+      label: "Free runway calculator",
+      why: "your zero-cash date before you try either tool.",
+    },
+  ],
   competitorName: "Float",
   competitorSite: "https://floatapp.com",
   competitorPricingUrl: "https://floatapp.com/pricing",
@@ -166,6 +199,28 @@ export const FLOAT_COMPARE: ComparePageConfig = {
 
 export const PULSE_COMPARE: ComparePageConfig = {
   slug: "zensus-vs-pulse",
+  related: [
+    {
+      to: "/quickbooks-cash-flow-forecasting",
+      label: "QuickBooks cash flow forecasting",
+      why: "what Zensus adds on top of QuickBooks Online.",
+    },
+    {
+      to: "/blog/can-quickbooks-forecast-cash-flow",
+      label: "Can QuickBooks forecast cash flow?",
+      why: "what QuickBooks Cash Flow Planner does on its own, and where it stops.",
+    },
+    {
+      to: "/integrations/slack",
+      label: "Slack cash alerts",
+      why: "how Zensus warns you when projected cash crosses a threshold you set.",
+    },
+    {
+      to: "/blog/will-i-make-payroll",
+      label: "Will I make payroll?",
+      why: "the weekly method a cash flow tool should automate.",
+    },
+  ],
   competitorName: "Pulse",
   competitorSite: "https://pulseapp.com",
   competitorPricingUrl: "https://pulseapp.com/pricing",
@@ -294,6 +349,28 @@ export const PULSE_COMPARE: ComparePageConfig = {
  */
 export const CASH_FLOW_FROG_COMPARE: ComparePageConfig = {
   slug: "zensus-vs-cash-flow-frog",
+  related: [
+    {
+      to: "/quickbooks-cash-flow-forecasting",
+      label: "QuickBooks cash flow forecasting",
+      why: "how Zensus reads QuickBooks Online and adds your bank and HubSpot.",
+    },
+    {
+      to: "/integrations/hubspot",
+      label: "HubSpot subscriptions in the forecast",
+      why: "the CRM connection this comparison turns on.",
+    },
+    {
+      to: "/blog/what-is-cash-flow-forecasting",
+      label: "What is cash flow forecasting?",
+      why: "the methods and time horizons behind both tools.",
+    },
+    {
+      to: "/security",
+      label: "How Zensus handles your financial data",
+      why: "what is stored, what is never stored, and how it is protected.",
+    },
+  ],
   competitorName: "Cash Flow Frog",
   competitorSite: "https://cashflowfrog.com",
   competitorPricingUrl: "https://cashflowfrog.com/pricing/",
