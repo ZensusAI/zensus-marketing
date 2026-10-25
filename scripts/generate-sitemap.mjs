@@ -14,6 +14,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getBlogSlugs } from "./blog-slugs.mjs";
+import { BLOG_TOPICS } from "./blog-topics.mjs";
 import { SITE_URL } from "./site.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -85,6 +86,11 @@ async function getPostLastmod(slug) {
   return field("dateModified") ?? field("date") ?? null;
 }
 
+async function getPostTopic(slug) {
+  const source = await readFile(join(blogDir, `${slug}.mdx`), "utf-8");
+  return source.match(/topic:\s*['"]([a-z0-9-]+)['"]/)?.[1] ?? null;
+}
+
 function urlEntry({ loc, lastmod, changefreq, priority }) {
   const lastmodLine = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : "";
   return `  <url>
@@ -101,10 +107,25 @@ async function generate() {
     slugs.map(async (slug) => ({
       loc: `${SITE_URL}/blog/${slug}`,
       lastmod: await getPostLastmod(slug),
+      topic: await getPostTopic(slug),
       changefreq: "weekly",
       priority: "0.85",
     })),
   );
+
+  // A topic page is as fresh as the newest post in it.
+  const topicUrls = BLOG_TOPICS.map((t) => ({
+    loc: `${SITE_URL}/blog/topic/${t.id}`,
+    lastmod:
+      blogUrls
+        .filter((u) => u.topic === t.id)
+        .map((u) => u.lastmod)
+        .filter(Boolean)
+        .sort()
+        .at(-1) ?? null,
+    changefreq: "weekly",
+    priority: "0.7",
+  }));
 
   // The blog index is as fresh as its newest post.
   const newestPost = blogUrls
@@ -116,7 +137,7 @@ async function generate() {
     ...url,
     lastmod: sources ? (lastCommitDate(sources) ?? committed.get(url.loc) ?? null) : null,
   }));
-  const urls = [...staticUrls, ...blogUrls].map((url) =>
+  const urls = [...staticUrls, ...topicUrls, ...blogUrls.map(({ topic, ...url }) => url)].map((url) =>
     url.loc === `${SITE_URL}/blog` ? { ...url, lastmod: newestPost } : url,
   );
 
@@ -127,7 +148,7 @@ ${urls.map(urlEntry).join("\n")}
 `;
 
   await writeFile(outPath, xml, "utf-8");
-  console.log(`[sitemap] wrote ${outPath} (${urls.length} URLs, ${slugs.length} blog posts)`);
+  console.log(`[sitemap] wrote ${outPath} (${urls.length} URLs, ${topicUrls.length} topics, ${slugs.length} blog posts)`);
 }
 
 generate().catch((err) => {

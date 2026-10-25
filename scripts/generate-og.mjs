@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 import { SITE_HOST } from "./site.mjs";
+import { BLOG_TOPICS } from "./blog-topics.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -258,6 +259,15 @@ function readMetaString(text, field) {
   return match?.[1]?.trim();
 }
 
+// One card per blog topic page, written to dist/og/blog-topic-<id>.png.
+const TOPIC_CARDS = BLOG_TOPICS.map((t) => ({
+  slug: `blog-topic-${t.id}`,
+  category: "Blog",
+  title: `${t.name} guides`,
+  subtitle: t.metaDescription,
+  accent: "green",
+}));
+
 /** @returns {Promise<Array<{ slug: string, category: string, title: string, subtitle: string, accent: string, nested?: string }>>} */
 export async function loadBlogCards() {
   const blogDir = join(repoRoot, "src", "content", "blog");
@@ -361,7 +371,7 @@ async function generate() {
   await mkdir(publicOgDir, { recursive: true });
 
   const blogCards = await loadBlogCards();
-  const allCards = blogOnly ? blogCards : [...CARDS, ...blogCards];
+  const allCards = blogOnly ? blogCards : [...CARDS, ...TOPIC_CARDS, ...blogCards];
 
   try {
     for (const card of allCards) {

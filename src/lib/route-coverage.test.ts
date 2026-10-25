@@ -7,15 +7,18 @@
 // card per route). A route added to App.tsx but forgotten in STATIC_ROUTES
 // ships as an empty SPA shell to every crawler, which is silent and severe.
 //
-// Blog posts are derived from src/content/blog/*.mdx by blog-slugs.mjs, so
-// they cannot drift by construction; they are asserted here anyway to catch a
-// stale committed sitemap.
+// Blog posts are derived from src/content/blog/*.mdx by blog-slugs.mjs, and
+// blog topic pages from scripts/blog-topics.mjs (kept equal to BLOG_TOPICS by
+// blog-topics.test.ts), so they cannot drift by construction; they are
+// asserted here anyway to catch a stale committed sitemap or a script that
+// stops reading the list.
 
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
+import { BLOG_TOPICS } from "./blog";
 import { SITE_URL } from "./constants";
 
 const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
@@ -78,6 +81,7 @@ function routeToCardSlug(route: string): string {
 describe("route coverage", () => {
   const app = appRoutes();
   const staticSitemap = sitemapPaths().filter((p) => !p.startsWith("/blog/"));
+  const topicPaths = BLOG_TOPICS.map((t) => `/blog/topic/${t.id}`).sort();
 
   it("declares at least the routes we know shipped", () => {
     // Guards against a regex that silently matches nothing and passes.
@@ -95,10 +99,24 @@ describe("route coverage", () => {
 
   it("lists every blog post in the sitemap", () => {
     const inSitemap = sitemapPaths()
-      .filter((p) => p.startsWith("/blog/"))
+      .filter((p) => p.startsWith("/blog/") && !p.startsWith("/blog/topic/"))
       .map((p) => p.replace("/blog/", ""))
       .sort();
     expect(inSitemap).toEqual(mdxSlugs());
+  });
+
+  it("lists every blog topic page in the sitemap", () => {
+    expect(sitemapPaths().filter((p) => p.startsWith("/blog/topic/"))).toEqual(topicPaths);
+  });
+
+  it("routes, prerenders and cards every blog topic page", () => {
+    expect(read("src", "App.tsx")).toContain('path="/blog/topic/:topicId"');
+    const prerender = read("scripts", "prerender.mjs");
+    expect(prerender).toMatch(/import \{ getTopicRoutes \} from "\.\/blog-topics\.mjs"/);
+    expect(prerender).toMatch(/\.\.\.getTopicRoutes\(\)/);
+    const og = read("scripts", "generate-og.mjs");
+    expect(og).toMatch(/\.\.\.TOPIC_CARDS/);
+    expect(read("src", "pages", "BlogTopic.tsx")).toContain("/og/blog-topic-${topic.id}.png");
   });
 
   it("generates an Open Graph card for every static route", () => {

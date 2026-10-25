@@ -45,6 +45,11 @@ function blogRoutes(): string[] {
     .map((f) => `/blog/${f.replace(/\.mdx$/, "")}`);
 }
 
+/** Blog topic pages, one per BLOG_TOPICS id (/blog/topic/:topicId). */
+function topicRoutes(): string[] {
+  return [...read("src", "lib", "blog.ts").matchAll(/^\s{4}id: "([a-z0-9-]+)",$/gm)].map((m) => `/blog/topic/${m[1]}`);
+}
+
 function walk(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {
     const full = join(dir, name);
@@ -86,7 +91,7 @@ function linkTargets(): { file: string; target: string; path: string }[] {
 }
 
 describe("internal links", () => {
-  const known = new Set([...staticRoutes(), ...blogRoutes(), ...redirectSources()]);
+  const known = new Set([...staticRoutes(), ...blogRoutes(), ...topicRoutes(), ...redirectSources()]);
   const targets = linkTargets();
 
   it("finds the links, so a broken scan cannot pass", () => {

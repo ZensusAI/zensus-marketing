@@ -6,6 +6,12 @@
       "source": "/features",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/blog",
+      "has": [{ "type": "query", "key": "topic", "value": "(?<topic>runway-and-burn|payroll|13-week-forecasting|working-capital|tools-and-integrations)" }],
+      "destination": "/blog/topic/:topic",
+      "permanent": true
     }
   ],
   "headers": [

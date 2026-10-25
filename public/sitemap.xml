@@ -157,6 +157,36 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://zensus.finance/blog/topic/runway-and-burn</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zensus.finance/blog/topic/payroll</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zensus.finance/blog/topic/13-week-forecasting</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zensus.finance/blog/topic/working-capital</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zensus.finance/blog/topic/tools-and-integrations</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://zensus.finance/blog/27-pay-periods-2026-2027</loc>
     <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>

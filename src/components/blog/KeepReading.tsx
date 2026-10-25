@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getAllPosts, getTopic, type BlogPostMeta } from "@/lib/blog";
+import { getAllPosts, getTopic, topicPath, type BlogPostMeta } from "@/lib/blog";
 import { cn } from "@/lib/utils";
 import { FOCUS_RING, PostCard } from "./PostCard";
 
@@ -27,13 +27,15 @@ export function KeepReading({ post }: { post: BlogPostMeta }) {
           Keep reading in {topic.name}
         </h2>
         <Link
-          to={`/blog?topic=${topic.id}`}
+          to={topicPath(topic.id)}
           className={cn(
             "inline-flex min-h-11 flex-none items-center whitespace-nowrap rounded-md px-0.5 text-[14px] text-muted-foreground transition-colors duration-200 hover:text-foreground",
             FOCUS_RING,
           )}
         >
-          View all {inTopic} →
+          View all {inTopic}
+          <span className="sr-only">&nbsp;{topic.name} guides</span>
+          {" →"}
         </Link>
       </div>
       <div className="mt-8 grid grid-cols-1 gap-8 min-[760px]:grid-cols-2 min-[1100px]:grid-cols-3">

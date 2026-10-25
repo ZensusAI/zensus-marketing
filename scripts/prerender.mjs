@@ -16,13 +16,14 @@ import { fileURLToPath } from "node:url";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 import { getBlogRoutes } from "./blog-slugs.mjs";
+import { getTopicRoutes } from "./blog-topics.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const distDir = join(__dirname, "..", "dist");
 const PORT = 4173;
 
-// Static routes to prerender. Must match src/App.tsx (blog slugs appended at runtime).
+// Static routes to prerender. Must match src/App.tsx (topic pages and blog slugs appended at runtime).
 const STATIC_ROUTES = [
   "/",
   "/pricing",
@@ -99,7 +100,7 @@ function startServer() {
 
 async function prerender() {
   const blogRoutes = await getBlogRoutes();
-  const ROUTES = [...STATIC_ROUTES, ...blogRoutes];
+  const ROUTES = [...STATIC_ROUTES, ...getTopicRoutes(), ...blogRoutes];
   console.log(`[prerender] starting on http://localhost:${PORT} (${ROUTES.length} routes)`);
   const server = await startServer();
   // On Vercel we rely on the @sparticuz/chromium binary. Locally we

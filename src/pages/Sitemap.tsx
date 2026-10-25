@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { CornerMark } from "@/components/landing/Backdrop";
-import { getAllPosts } from "@/lib/blog";
+import { BLOG_TOPICS, getAllPosts, topicPath } from "@/lib/blog";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const PAGE_URL = `${SITE_URL}/sitemap`;
@@ -25,9 +25,9 @@ interface SitemapGroup {
 }
 
 /*
- * Every static route, grouped the way a visitor looks for it. Blog posts are
- * not listed here: they come from getAllPosts(), so a new post appears on its
- * own. src/lib/route-coverage.test.ts fails if a route in App.tsx is missing
+ * Every static route, grouped the way a visitor looks for it. Blog topic
+ * pages and posts are not listed here: they come from BLOG_TOPICS and
+ * getAllPosts(), so a new one appears on its own. src/lib/route-coverage.test.ts fails if a route in App.tsx is missing
  * from this list, so the page cannot fall behind the site.
  */
 const GROUPS: SitemapGroup[] = [
@@ -205,7 +205,7 @@ const Sitemap = () => (
           </p>
           <nav aria-label="Sitemap sections" className="mt-8">
             <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
-              {[...GROUPS.slice(0, 4), { id: "guides", title: "Guides" }, ...GROUPS.slice(4)].map((g) => (
+              {[...GROUPS.slice(0, 4), { id: "topics", title: "Blog topics" }, { id: "guides", title: "Guides" }, ...GROUPS.slice(4)].map((g) => (
                 <li key={g.id}>
                   <a href={`#${g.id}-heading`} className={`text-muted-foreground transition-colors hover:text-foreground ${focusRing}`}>
                     {g.title}
@@ -224,6 +224,12 @@ const Sitemap = () => (
           ))}
         </Group>
       ))}
+
+      <Group id="topics" title="Blog topics" count={BLOG_TOPICS.length}>
+        {BLOG_TOPICS.map((t) => (
+          <Row key={t.id} href={topicPath(t.id)} label={`${t.name} guides`} blurb={t.description} />
+        ))}
+      </Group>
 
       <Group id="guides" title="Guides" count={posts.length}>
         {posts.map((p) => (

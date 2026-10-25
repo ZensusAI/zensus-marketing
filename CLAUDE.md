@@ -130,6 +130,8 @@ Per-route `<title>`, description, canonical, and og/twitter tags are emitted by 
 
 **Add a post:** drop `src/content/blog/<slug>.mdx` exporting a `meta` object (slug must match filename). `scripts/blog-slugs.mjs` discovers it; sitemap, prerender, OG, and IndexNow pick it up on the next build. No edits to `App.tsx`, `STATIC_ROUTES`, or any script needed.
 
+**Topic pages.** Every post sets one `topic` from `BLOG_TOPICS` in `src/lib/blog.ts`, and each topic has a prerendered hub at `/blog/topic/<id>` (`src/pages/BlogTopic.tsx`) with its own `seoTitle`, `metaDescription` and `intro`. A post's breadcrumb runs Home / Blog / topic / post through it. `scripts/blog-topics.mjs` repeats the ids, names and descriptions for prerender, sitemap and OG cards, and `blog-topics.test.ts` fails if the two lists differ. The old `/blog?topic=<id>` view is a permanent redirect in `vercel.json`. A topic id never changes once published; adding a topic means updating both lists and that redirect.
+
 **Meta fields.** Required: `title`, `description`, `date`, `category`, `readTime`, `slug`, `ogImage` (**site-relative path**, e.g. `/og/blog/<slug>.png`; `BlogPost.tsx` resolves it
 against `SITE_URL` because Open Graph needs an absolute URL). Optional but encouraged: `seoTitle` (short string for the `<title>` tag, since `meta.title` can be long for the visible H1 and `BlogPosting.headline`), `ogTitle` / `ogSubtitle` (short for OG cards), `dateModified`, `faqs` (5 entries power both the in-page accordion and `FAQPage` JSON-LD), `tags` (drives the index `?tag=` filter), `featured`, `thumbnail`, `author` (key into `src/lib/authors.ts`, defaults to `ajin`).
 
