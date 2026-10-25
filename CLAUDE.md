@@ -141,9 +141,11 @@ against `SITE_URL` because Open Graph needs an absolute URL). Optional but encou
 - Include backlinks to other posts (`/blog/<other-slug>`), product pages (`/integrations`, `/integrations/<provider>`, `/security`, `/subprocessors`, `/pricing`), and authoritative external primary sources. Both internal and outbound links help citation and ranking. When a new post lands, add a reciprocal link from the older post to the new one to build a topical cluster.
 
 **Components** in `src/components/blog/`:
-- `BlogCallout` (boxed CTA, typically at the end of a post).
+- `BlogCallout` (forest CTA panel with Talk to us and Explore pricing buttons; one at the end of a post).
 - `BlogFigure` (image + caption, wraps `<figure>` + `<figcaption>`).
-- The post and index page chrome (`BlogCard`, `TagFilter`, `TableOfContents`, `MobileToc`, `AuthorCard`, `CopyHeader`, `ReadMoreSection`, `FlickeringGrid`) does not need to be touched per post.
+- `BlogTable` (data table with row and column headers, a caption, mono right-aligned amounts, and red or green row tints). Markdown tables get the same look through `src/mdx-components.tsx`.
+- The article page follows handoff 16-blog-post-template: `meta.thumbnail` is the 16:9 hero, so do not repeat it as the first figure. Body type (paragraphs, lists, lead, quotes, code chips) lives under `.blog-article-body` in `src/index.css`, because MDX does not replace the raw `<p>` and `<ul>` posts write.
+- The page chrome (`ArticleToc`, `KeepReading`, `BlogPostFaq`, `CopyHeader`, `PostCard`, `FeaturedCarousel`, `BlogBanners`) does not need to be touched per post.
 
 **Illustrations.** Drop PNGs into `public/blog/<slug>/<descriptive-kebab-name>.png`. Reference them with `<BlogFigure>` and **entity-dense alt text** (alt is what AI engines index, so name the entities: "QuickBooks", "MCP server", "OAuth padlock", etc.) plus a caption that restates the section's point. After dropping new images, run `node scripts/optimize-blog-images.mjs`: it scans `public/blog/**/*.png`, resizes anything wider than 1600 px, re-encodes with high PNG compression, and writes a `.webp` twin beside each PNG. Source PNGs from generative image tools are typically 5–6 MB; the optimizer brings them to ~300–500 KB without visible quality loss. **Reference the `.webp`, not the PNG, and pass `width` and `height`** (the image's real pixel size) on every `<BlogFigure>`; the `thumbnail` in `meta` takes the `.webp` too. The PNG stays in the repo as the editable source. `src/lib/blog-images.test.ts` fails if a post references a PNG, omits the dimensions, or points at a file that is not there. Each twin is under half its PNG's size, and the blog index's largest paint is a thumbnail, so a PNG there costs seconds on a phone.
 

@@ -44,20 +44,12 @@ export const meta = {
   ],
 };
 
-import { BlogFigure } from '@/components/blog/BlogFigure';
+import { BlogCallout } from '@/components/blog/BlogCallout';
 import { BlogTable } from '@/components/blog/BlogTable';
 
 <p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">
   Predictive cash flow forecasting projects how much cash your business will have on each date ahead, based on when money actually arrives and leaves, so you can see a cash shortfall weeks before it happens.
 </p>
-
-<BlogFigure
-  src="/blog/predictive-cash-flow-forecasting/cash-flow-forecast-range-shortfall.webp"
-  width={1600}
-  height={800}
-  alt="Predictive cash flow forecast chart: a projected cash balance line inside an optimistic to pessimistic scenario band, dipping to a highlighted cash shortfall point before a dashed forecast line recovers"
-  caption="A cash flow forecast as a range: the low point between payment dates is the number to watch, not the month-end balance."
-/>
 
 ## The Problem with How Businesses Think About Cash
 
@@ -265,7 +257,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
   ]}
   numeric={[2, 3]}
   nowrap={[0]}
-  highlightRow={2}
+  negativeRows={[2]}
 />
 
 <p>By Friday, the business expects to have $25,000 in cash.</p>
@@ -424,4 +416,6 @@ import { BlogTable } from '@/components/blog/BlogTable';
   <li><a href="/blog/can-quickbooks-forecast-cash-flow" className="font-medium text-primary underline-offset-4 hover:underline">Can QuickBooks forecast cash flow?</a>: what its built-in planner does and where it stops.</li>
 </ul>
 
-<p>If you'd rather see your own numbers than build the spreadsheet, you can <a href="https://app.zensus.app/login?redirect=%2Fsubscribe">start a 14-day free trial</a> (plans are on the <a href="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">pricing page</a>).</p>
+<BlogCallout title="See the Low Point in Your Own Numbers">
+Zensus builds the forecast from your bank, QuickBooks, and HubSpot data and shows it by month, week, or day, so the week your cash dips is visible before it arrives. You can <a href="https://app.zensus.app/login?redirect=%2Fsubscribe">start a 14-day free trial</a>.
+</BlogCallout>

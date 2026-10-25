@@ -26,7 +26,7 @@ export interface BlogPostMeta {
   /** The post's one topic on the blog index (BLOG_TOPICS below). */
   topic: BlogTopicId;
   /** Keywords: the post page shows them and emits them as BlogPosting keywords,
-   *  and ReadMoreSection ranks related posts by them. The index uses `topic`. */
+   *  and they feed BlogPosting keywords. The index and "Keep reading" use `topic`. */
   tags?: string[];
   /** When true, the post is highlighted as a featured/lead card. */
   featured?: boolean;

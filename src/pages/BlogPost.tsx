@@ -1,20 +1,19 @@
 import { SITE_URL } from "@/lib/constants";
+import { useState, type ReactNode } from "react";
 import { Link, useParams } from "react-router-dom";
 import { MDXProvider } from "@mdx-js/react";
-import { ArrowLeft, Clock } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { blogMdxComponents } from "@/mdx-components";
 import { BlogPostFaq } from "@/components/blog/BlogPostFaq";
-import { AuthorCard } from "@/components/blog/AuthorCard";
-import { TableOfContents } from "@/components/blog/TableOfContents";
-import { MobileToc } from "@/components/blog/MobileToc";
-import { ReadMoreSection } from "@/components/blog/ReadMoreSection";
-import { FlickeringGrid } from "@/components/blog/FlickeringGrid";
+import { ReadingLine, TocBar, TocRail, useArticleSections } from "@/components/blog/ArticleToc";
+import { KeepReading } from "@/components/blog/KeepReading";
+import { FOCUS_RING, SQUIRCLE } from "@/components/blog/PostCard";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { formatPostDate, getPostBySlug, postUrl } from "@/lib/blog";
-import { getAuthor } from "@/lib/authors";
+import { formatPostDate, getPostBySlug, getTopic, postUrl } from "@/lib/blog";
+import { getAuthor, type Author } from "@/lib/authors";
 import { blogStats } from "@/generated/blog-stats";
+import { cn } from "@/lib/utils";
 import {
   blogPostingSchema,
   breadcrumbSchema,
@@ -22,9 +21,60 @@ import {
   HOME_CRUMB,
 } from "@/lib/structured-data";
 
+/*
+ * The article page, from handoff 16-blog-post-template. A reading line under
+ * the navbar, and below 1100px an "On this page" bar. The header sits on the
+ * reading column (breadcrumb, H1, description, byline with Copy link), a 16:9
+ * hero from meta.thumbnail spans the container, then a 200px sticky contents
+ * rail beside the 680px column: body, FAQ, and "Keep reading" in the topic.
+ */
+
+/** Header and body share one grid so the header lines up with the reading column. */
+const GRID = "min-[1100px]:grid min-[1100px]:grid-cols-[200px_minmax(0,1fr)] min-[1100px]:gap-x-20";
+/** Below 1100px the reading column is centred; from 1100px it is the grid's second track. */
+const COLUMN = "mx-auto w-full max-w-[680px] min-[1100px]:col-start-2 min-[1100px]:mx-0";
+
+function AuthorLink({ author, className, children }: { author: Author; className?: string; children: ReactNode }) {
+  return author.url?.startsWith("http") ? (
+    <a href={author.url} rel="author noopener noreferrer" target="_blank" className={className}>
+      {children}
+    </a>
+  ) : (
+    <Link to={author.url ?? "/about"} rel="author" className={className}>
+      {children}
+    </Link>
+  );
+}
+
+function CopyLink({ url }: { url: string }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          await navigator.clipboard.writeText(url);
+          setCopied(true);
+          window.setTimeout(() => setCopied(false), 2000);
+        } catch {
+          // Clipboard blocked; the address bar still has the URL.
+        }
+      }}
+      className={cn(
+        "inline-flex h-10 flex-none items-center rounded-[14px] border border-border bg-card px-3.5 text-[13.5px] font-medium text-foreground transition-colors duration-200 hover:border-primary/55",
+        SQUIRCLE,
+        FOCUS_RING,
+      )}
+    >
+      <span aria-live="polite">{copied ? "Link copied" : "Copy link"}</span>
+    </button>
+  );
+}
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getPostBySlug(slug) : null;
+  const toc = useArticleSections(slug);
 
   if (!post) {
     return (
@@ -48,6 +98,7 @@ const BlogPost = () => {
   const pageUrl = postUrl(meta.slug);
   const published = meta.dateModified ?? meta.date;
   const author = getAuthor(meta.author);
+  const topic = getTopic(meta.topic);
 
   const breadcrumbs = breadcrumbSchema([
     HOME_CRUMB,
@@ -116,129 +167,117 @@ const BlogPost = () => {
         ) : null}
       </Helmet>
       <Navbar />
+      <ReadingLine />
 
-      <main className="pt-24">
-        <section className="relative overflow-hidden border-b border-border">
-          <div className="pointer-events-none absolute inset-0 z-0 h-full w-full [mask-image:linear-gradient(to_top,transparent_15%,black_95%)]">
-            <FlickeringGrid
-              className="absolute inset-0 h-full w-full"
-              squareSize={4}
-              gridGap={6}
-              color="#94A3B8"
-              maxOpacity={0.2}
-              flickerChance={0.05}
-            />
-          </div>
+      <main className="pt-[calc(4rem+3px+env(safe-area-inset-top))]">
+        <TocBar {...toc} />
 
-          <div className="section-container relative z-10 flex flex-col gap-6 py-12">
-            <Link
-              to="/blog"
-              className="inline-flex w-fit items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ArrowLeft size={14} />
-              Back to Blog
-            </Link>
-
-            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-              {meta.tags?.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex h-6 items-center rounded-md border border-border bg-muted/40 px-2 text-xs font-medium text-muted-foreground"
-                >
-                  {tag}
-                </span>
-              ))}
-              <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                {meta.category}
-              </span>
-              <time dateTime={meta.date} className="font-medium">
-                {formatPostDate(meta.date)}
-              </time>
-              {/* Render the revision date only when it differs from the publish
-                  date. BlogPosting.dateModified is emitted either way, and a
-                  freshness claim in structured data with nothing corroborating
-                  it on the page is the pattern engines discount. */}
-              {meta.dateModified && meta.dateModified !== meta.date ? (
-                <span className="inline-flex items-center gap-1">
-                  Updated{" "}
-                  <time dateTime={meta.dateModified} className="font-medium">
-                    {formatPostDate(meta.dateModified)}
-                  </time>
-                </span>
-              ) : null}
-              <span className="inline-flex items-center gap-1">
-                <Clock size={14} aria-hidden />
-                {meta.readTime}
-              </span>
-            </div>
-
-            <h1
-              id="blog-article-title"
-              className="text-4xl font-medium tracking-tighter text-balance md:text-5xl lg:text-6xl"
-            >
-              {meta.title}
-            </h1>
-
-            <p className="max-w-3xl text-base text-muted-foreground md:text-lg md:text-balance">
-              {meta.description}
-            </p>
-
-            <p className="text-sm text-muted-foreground">
-              By{" "}
-              {author.url?.startsWith("http") ? (
-                <a
-                  href={author.url}
-                  rel="author noopener noreferrer"
-                  target="_blank"
-                  className="font-medium text-foreground hover:text-primary hover:underline"
-                >
-                  {author.name}
-                </a>
-              ) : (
-                <Link
-                  to={author.url ?? "/about"}
-                  rel="author"
-                  className="font-medium text-foreground hover:text-primary hover:underline"
-                >
-                  {author.name}
+        <div className="mx-auto max-w-[1280px] px-6 min-[760px]:px-12">
+          <header className={cn(GRID, "pt-12 min-[760px]:pt-[104px]")}>
+            <div className={cn(COLUMN, "flex flex-col gap-5")}>
+              <nav aria-label="Breadcrumb" className="text-[14px] text-muted-foreground">
+                <Link to="/blog" className={cn("rounded-sm hover:text-foreground", FOCUS_RING)}>
+                  Blog
                 </Link>
-              )}
-              {author.position ? `, ${author.position}` : null}
-            </p>
-          </div>
-        </section>
+                {topic ? (
+                  <>
+                    <span aria-hidden> / </span>
+                    <Link to={`/blog?topic=${topic.id}`} className={cn("rounded-sm hover:text-foreground", FOCUS_RING)}>
+                      {topic.name}
+                    </Link>
+                  </>
+                ) : null}
+              </nav>
 
-        <div className="section-container relative">
-          <div className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_300px]">
-            <article className="min-w-0">
-              <div className="blog-article-body prose max-w-none prose-headings:scroll-mt-28 prose-headings:tracking-tight prose-headings:text-foreground prose-p:tracking-tight prose-p:text-foreground/85 prose-li:text-foreground/85 prose-a:text-primary prose-a:no-underline hover:prose-a:underline [&_figure>div]:overflow-hidden [&_figure>div]:rounded-2xl">
+              <h1
+                id="blog-article-title"
+                className="text-balance text-[38px] font-semibold leading-[1.02] tracking-[-0.045em] text-foreground min-[760px]:text-[52px] min-[1100px]:text-[64px]"
+              >
+                {meta.title}
+              </h1>
+
+              <p className="max-w-[680px] text-pretty text-[18px] leading-[1.5] text-muted-foreground min-[760px]:text-[21px]">
+                {meta.description}
+              </p>
+
+              <div className="mt-2 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-5">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-3.5">
+                  <AuthorLink author={author} className={cn("group flex items-center gap-3 rounded-[14px]", FOCUS_RING)}>
+                    <img
+                      src={author.avatar}
+                      alt=""
+                      width={42}
+                      height={42}
+                      className="h-[42px] w-[42px] rounded-full border border-border object-cover"
+                    />
+                    <span className="flex flex-col gap-0.5">
+                      <span className="text-[14px] font-semibold text-foreground transition-colors group-hover:text-sage-dark">
+                        {author.name}
+                      </span>
+                      <span className="text-[12.5px] text-muted-foreground">{author.position}</span>
+                    </span>
+                  </AuthorLink>
+                  <p className="text-[13.5px] text-muted-foreground">
+                    <time dateTime={meta.date}>{formatPostDate(meta.date)}</time>
+                    {/* Render the revision date only when it differs from the publish
+                        date. BlogPosting.dateModified is emitted either way, and a
+                        freshness claim in structured data with nothing corroborating
+                        it on the page is the pattern engines discount. */}
+                    {meta.dateModified && meta.dateModified !== meta.date ? (
+                      <>
+                        {" · "}Updated <time dateTime={meta.dateModified}>{formatPostDate(meta.dateModified)}</time>
+                      </>
+                    ) : null}
+                    {" · "}
+                    {meta.readTime}
+                  </p>
+                </div>
+                <CopyLink url={pageUrl} />
+              </div>
+            </div>
+          </header>
+
+          {meta.thumbnail ? (
+            <div className="pt-10 min-[760px]:pt-16">
+              <div
+                className={cn(
+                  "aspect-video overflow-hidden rounded-[24px] border border-border bg-card min-[760px]:rounded-[36px]",
+                  SQUIRCLE,
+                )}
+              >
+                <img
+                  src={meta.thumbnail}
+                  alt={meta.title}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="block h-full w-full object-contain"
+                />
+              </div>
+            </div>
+          ) : null}
+
+          <div className={cn(GRID, "pt-12 min-[760px]:pt-20")}>
+            <aside className="hidden min-[1100px]:block">
+              <TocRail {...toc} />
+            </aside>
+            <article data-article className={cn(COLUMN, "min-w-0")}>
+              <div className="blog-article-body">
                 <MDXProvider components={blogMdxComponents}>
                   <Content />
                 </MDXProvider>
               </div>
 
               {meta.faqs?.length ? <BlogPostFaq items={meta.faqs} /> : null}
-
-              <ReadMoreSection
-                currentSlug={meta.slug}
-                currentTags={meta.tags}
-                className="mt-12"
-              />
             </article>
+          </div>
 
-            <aside className="hidden lg:block">
-              <div className="sticky top-24 space-y-8">
-                <AuthorCard author={author} />
-                <div className="rounded-lg border border-border bg-card/40 p-5">
-                  <TableOfContents />
-                </div>
-              </div>
-            </aside>
+          <div className="pb-[120px] min-[760px]:pb-[200px]">
+            <KeepReading post={meta} />
           </div>
         </div>
       </main>
 
-      <MobileToc />
       <Footer />
     </div>
   );
