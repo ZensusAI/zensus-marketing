@@ -2,7 +2,7 @@
 // Regenerate with: node scripts/generate-blog-stats.mjs
 export const blogStats: Record<string, { wordCount: number; images: string[] }> = {
   "27-pay-periods-2026-2027": {
-    "wordCount": 1794,
+    "wordCount": 1843,
     "images": [
       "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2027-biweekly-fridays.webp"
     ]
@@ -23,14 +23,14 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "cash-conversion-cycle": {
-    "wordCount": 2819,
+    "wordCount": 2846,
     "images": [
       "https://zensus.finance/blog/cash-conversion-cycle/how-cash-conversion-cycle-works.webp",
       "https://zensus.finance/blog/cash-conversion-cycle/dio-dso-dpo-where-cash-gets-stuck.webp"
     ]
   },
   "cash-flow-forecasting-for-agencies": {
-    "wordCount": 1727,
+    "wordCount": 1793,
     "images": [
       "https://zensus.finance/blog/cash-flow-forecasting-for-agencies/agency-cash-forecast-due-dates-vs-actual-payment.webp"
     ]
@@ -45,7 +45,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "forecasting-ai-compute-costs-for-founders": {
-    "wordCount": 1854,
+    "wordCount": 1912,
     "images": [
       "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/inference-cost-paradox.webp",
       "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/ai-compute-cash-flow-forecast.webp",
@@ -53,7 +53,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "how-to-build-a-13-week-cash-flow-forecast-in-excel": {
-    "wordCount": 1980,
+    "wordCount": 2006,
     "images": [
       "https://zensus.finance/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel/13-week-cash-flow-forecast-excel-example.webp"
     ]
@@ -67,13 +67,19 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "mcp-vs-cli-for-finance-teams": {
-    "wordCount": 2202,
+    "wordCount": 2249,
     "images": [
       "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/agent-reaching-into-finance-stack.webp",
       "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/cli-vs-mcp-side-by-side.webp",
       "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/audit-trail-comparison.webp",
       "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/mcp-month-end-workflow.webp",
       "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/zensus-typed-integration-architecture.webp"
+    ]
+  },
+  "predictive-cash-flow-forecasting": {
+    "wordCount": 2646,
+    "images": [
+      "https://zensus.finance/blog/predictive-cash-flow-forecasting/cash-flow-forecast-range-shortfall.webp"
     ]
   },
   "runway-vs-burn-rate-for-founders": {
@@ -85,14 +91,14 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "what-happens-if-you-miss-payroll": {
-    "wordCount": 1776,
+    "wordCount": 1844,
     "images": [
       "https://zensus.finance/blog/what-happens-if-you-miss-payroll/payroll-not-processed-consequences.webp",
       "https://zensus.finance/blog/what-happens-if-you-miss-payroll/seven-day-payroll-emergency-plan.webp"
     ]
   },
   "what-is-a-13-week-cash-flow-forecast": {
-    "wordCount": 2206,
+    "wordCount": 2246,
     "images": [
       "https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast/13-week-cash-flow-forecast.webp",
       "https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast/revenue-earned-vs-cash-received.webp",
@@ -100,7 +106,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "what-is-cash-flow-forecasting": {
-    "wordCount": 2063,
+    "wordCount": 3155,
     "images": [
       "https://zensus.finance/blog/what-is-cash-flow-forecasting/cash-inflow-outflow.webp",
       "https://zensus.finance/blog/what-is-cash-flow-forecasting/modern-treasury-workflow.webp",
