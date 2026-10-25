@@ -37,8 +37,10 @@ const TOOLS: ResourceLink[] = [
 
 // Matched to the homepage's own topics: the definition, the 13-week view the
 // showcase leads with, the zero-cash date, runway after a raise, payroll, late
-// payers, QuickBooks, and HubSpot timing. The QuickBooks Online product page is
-// in the navbar and footer, so it is not repeated here.
+// payers, QuickBooks, and HubSpot timing. The QuickBooks Online product page
+// sits beside the QuickBooks guide: it was in the navbar and footer only, and
+// those links are not in-content, so the homepage passed it nothing while it
+// drew QuickBooks forecasting searches (Search Console, Oct 2026).
 const GUIDES: ResourceLink[] = [
   {
     to: "/blog/what-is-cash-flow-forecasting",
@@ -74,6 +76,11 @@ const GUIDES: ResourceLink[] = [
     to: "/blog/can-quickbooks-forecast-cash-flow",
     label: "Can QuickBooks forecast cash flow?",
     description: "What Cash Flow Planner does, and where it stops.",
+  },
+  {
+    to: "/quickbooks-cash-flow-forecasting",
+    label: "QuickBooks Online cash flow forecasting",
+    description: "What Zensus adds on top of QuickBooks Online, week by week.",
   },
   {
     to: "/blog/hubspot-pipeline-to-cash-forecast",

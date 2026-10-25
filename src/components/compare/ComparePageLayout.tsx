@@ -234,6 +234,22 @@ export function ComparePageLayout({ config }: ComparePageLayoutProps) {
             </div>
           </section>
 
+          <section className="mt-12" aria-labelledby="related-heading">
+            <h2 id="related-heading" className="text-2xl font-semibold tracking-tight">
+              Go deeper on Zensus
+            </h2>
+            <ul className="mt-6 space-y-3 text-sm leading-relaxed text-muted-foreground">
+              {config.related.map((r) => (
+                <li key={r.to}>
+                  <Link to={r.to} className={linkCls}>
+                    {r.label}
+                  </Link>
+                  : {r.why}
+                </li>
+              ))}
+            </ul>
+          </section>
+
           <section className="mt-12" aria-labelledby="faq-heading">
             <h2 id="faq-heading" className="text-2xl font-semibold tracking-tight">
               Frequently asked questions
