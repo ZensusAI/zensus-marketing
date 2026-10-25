@@ -246,6 +246,132 @@
   .section-padding {
     @apply py-16 md:py-24 lg:py-32;
   }
+
+  /*
+   * Article body (handoff 16-blog-post-template). Posts write raw <p>, <ul>
+   * and <li> in MDX, which MDXProvider does not replace, so the type lives
+   * here. :where() keeps these at one class of specificity, so a post's own
+   * utilities (the "mb-2 font-medium" lead-in lines) still win.
+   */
+  .blog-article-body {
+    font-size: 18px;
+    line-height: 1.72;
+    color: hsl(var(--foreground) / 0.88);
+  }
+  .blog-article-body :where(p) {
+    margin: 0 0 22px;
+  }
+  .blog-article-body :where(ul, ol) {
+    margin: 0 0 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .blog-article-body :where(ul) {
+    list-style: none;
+    padding-left: 22px;
+  }
+  .blog-article-body :where(ul > li) {
+    position: relative;
+  }
+  .blog-article-body :where(ul > li)::before {
+    content: "";
+    position: absolute;
+    left: -17px;
+    top: 0.74em;
+    width: 5px;
+    height: 5px;
+    border-radius: 9px;
+    background: hsl(var(--primary));
+  }
+  .blog-article-body :where(ol) {
+    list-style: decimal;
+    padding-left: 28px;
+  }
+  .blog-article-body :where(ol > li)::marker {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: hsl(var(--sage-dark));
+  }
+  .blog-article-body :where(strong) {
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+  /* These three deliberately outrank the classes posts carry on them:
+     text-primary green fails contrast on cream, and the old quote and code
+     styles predate the template. */
+  .blog-article-body a:not(.blog-button) {
+    color: hsl(var(--sage-dark));
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .blog-article-body a:not(.blog-button):hover {
+    color: #0a9a5c;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .blog-article-body #blog-article-lead {
+    margin-bottom: 28px;
+    font-size: 21px;
+    line-height: 1.45;
+    letter-spacing: -0.012em;
+    color: hsl(var(--foreground));
+  }
+  .blog-article-body blockquote {
+    position: relative;
+    margin: 32px 0;
+    border: 0;
+    padding: 0 0 0 34px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+    color: hsl(var(--foreground));
+  }
+  .blog-article-body blockquote::before {
+    content: "\201C";
+    position: absolute;
+    left: 0;
+    top: -8px;
+    font-size: 48px;
+    line-height: 1;
+    color: hsl(var(--primary));
+  }
+  .blog-article-body blockquote p {
+    margin: 0;
+  }
+  .blog-article-body code {
+    display: inline-block;
+    border-radius: 14px;
+    background: hsl(var(--forest));
+    padding: 8px 14px;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #c9f2db;
+  }
+  /* The callout is forest: its prose links and bold go light. */
+  .blog-article-body .blog-callout-body a {
+    color: hsl(var(--sage-light));
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .blog-article-body .blog-callout strong {
+    color: hsl(var(--forest-foreground));
+  }
+  .blog-article-body .blog-callout p {
+    margin: 0;
+  }
+  @media (min-width: 760px) {
+    .blog-article-body #blog-article-lead {
+      font-size: 24px;
+    }
+    .blog-article-body blockquote {
+      padding-left: 44px;
+      font-size: 30px;
+    }
+  }
 }
 
 @keyframes char-reveal {

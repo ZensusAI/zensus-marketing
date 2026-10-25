@@ -26,7 +26,7 @@ export interface BlogPostMeta {
   /** The post's one topic on the blog index (BLOG_TOPICS below). */
   topic: BlogTopicId;
   /** Keywords: the post page shows them and emits them as BlogPosting keywords,
-   *  and ReadMoreSection ranks related posts by them. The index uses `topic`. */
+   *  and they feed BlogPosting keywords. The index and "Keep reading" use `topic`. */
   tags?: string[];
   /** When true, the post is highlighted as a featured/lead card. */
   featured?: boolean;
@@ -107,4 +107,20 @@ export function formatPostDate(isoDate: string): string {
 
 export function postUrl(slug: string): string {
   return `${SITE_URL}/blog/${slug}`;
+}
+
+/**
+ * A post's breadcrumb trail: Home, Blog, the post. The page shows it and
+ * emits it as BreadcrumbList JSON-LD from this one list, so the visible
+ * trail and the markup cannot drift apart. Every step is a canonical,
+ * prerendered URL; the topic is not a step, because /blog?topic= is a filter
+ * of /blog (it canonicalizes there), not a page of its own. The post is named
+ * by its short ogTitle, the form a search result's breadcrumb line can show.
+ */
+export function postBreadcrumbs(meta: Pick<BlogPostMeta, "slug" | "title" | "ogTitle">) {
+  return [
+    { name: "Home", url: `${SITE_URL}/` },
+    { name: "Blog", url: `${SITE_URL}/blog` },
+    { name: meta.ogTitle ?? meta.title, url: postUrl(meta.slug) },
+  ];
 }

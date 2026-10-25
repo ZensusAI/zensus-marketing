@@ -5,6 +5,7 @@ import {
 } from "react";
 import { Link as LinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { goToSection } from "./ArticleToc";
 
 function extractText(node: ReactNode): string {
   if (node == null || typeof node === "boolean") return "";
@@ -48,23 +49,17 @@ export function CopyHeader({
   const handleClick = async () => {
     if (typeof window === "undefined") return;
     const url = `${window.location.origin}${window.location.pathname}#${id}`;
-    window.history.pushState({}, "", `#${id}`);
     try {
       await navigator.clipboard.writeText(url);
     } catch {
       // ignore; clipboard not available
     }
-    const el = document.getElementById(id);
-    if (el) {
-      const offset = 100;
-      const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
+    goToSection(id);
   };
 
   if (!copyOnClick) {
     return (
-      <HeadingTag id={id} className={cn("scroll-mt-28", className)} {...rest}>
+      <HeadingTag id={id} className={cn("scroll-mt-[136px] min-[1100px]:scroll-mt-28", className)} {...rest}>
         {children}
       </HeadingTag>
     );
@@ -76,7 +71,7 @@ export function CopyHeader({
       onClick={handleClick}
       title="Click to copy link to this section"
       className={cn(
-        "group relative flex cursor-pointer scroll-mt-28 items-center gap-2 transition-colors hover:text-primary",
+        "group relative flex cursor-pointer scroll-mt-[136px] items-center min-[1100px]:scroll-mt-28 gap-2 transition-colors hover:text-primary",
         className,
       )}
       {...rest}
