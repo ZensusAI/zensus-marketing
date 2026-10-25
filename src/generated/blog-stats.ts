@@ -77,7 +77,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "predictive-cash-flow-forecasting": {
-    "wordCount": 2646,
+    "wordCount": 2554,
     "images": [
       "https://zensus.finance/blog/predictive-cash-flow-forecasting/cash-flow-forecast-range-shortfall.webp"
     ]

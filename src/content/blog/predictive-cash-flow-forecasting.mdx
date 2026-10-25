@@ -45,6 +45,7 @@ export const meta = {
 };
 
 import { BlogFigure } from '@/components/blog/BlogFigure';
+import { BlogTable } from '@/components/blog/BlogTable';
 
 <p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">
   Predictive cash flow forecasting projects how much cash your business will have on each date ahead, based on when money actually arrives and leaves, so you can see a cash shortfall weeks before it happens.
@@ -108,22 +109,17 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>Here's an example:</p>
 
-<div className="not-prose my-6 overflow-x-auto">
-  <table className="w-full min-w-[320px] border-collapse text-left text-[15px] tabular-nums">
-    <thead>
-      <tr className="border-b border-border">
-        <th className="py-2.5 pr-6 font-semibold text-foreground">Measure</th>
-        <th className="py-2.5 font-semibold text-foreground">Amount</th>
-      </tr>
-    </thead>
-    <tbody className="text-foreground/85">
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Forecast ending cash</td><td className="py-2.5">$120,000</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Actual ending cash</td><td className="py-2.5">$105,000</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Forecast variance</td><td className="py-2.5">−$15,000</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Absolute percentage error</td><td className="py-2.5">12.5%</td></tr>
-    </tbody>
-  </table>
-</div>
+<BlogTable
+  caption="Measuring a forecast: the ending cash it predicted against the ending cash that actually arrived."
+  columns={['Measure', 'Amount']}
+  rows={[
+    ['Forecast ending cash', '$120,000'],
+    ['Actual ending cash', '$105,000'],
+    ['Forecast variance', '−$15,000'],
+    ['Absolute percentage error', '12.5%'],
+  ]}
+  numeric={[1]}
+/>
 
 <p>The forecast was off by $15,000, or 12.5% of the forecast amount.</p>
 
@@ -163,23 +159,16 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>Instead, think in <strong>scenarios</strong>:</p>
 
-<div className="not-prose my-6 overflow-x-auto">
-  <table className="w-full min-w-[520px] border-collapse text-left text-[15px] tabular-nums">
-    <thead>
-      <tr className="border-b border-border">
-        <th className="py-2.5 pr-6 font-semibold text-foreground">Scenario</th>
-        <th className="py-2.5 pr-6 font-semibold text-foreground">Monthly inflows</th>
-        <th className="py-2.5 pr-6 font-semibold text-foreground">Monthly outflows</th>
-        <th className="py-2.5 font-semibold text-foreground">Cash after 3 months</th>
-      </tr>
-    </thead>
-    <tbody className="text-foreground/85">
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Optimistic</td><td className="py-2.5 pr-6">$90,000</td><td className="py-2.5 pr-6">$85,000</td><td className="py-2.5">$215,000</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Expected</td><td className="py-2.5 pr-6">$75,000</td><td className="py-2.5 pr-6">$90,000</td><td className="py-2.5">$155,000</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Pessimistic</td><td className="py-2.5 pr-6">$45,000</td><td className="py-2.5 pr-6">$95,000</td><td className="py-2.5">$50,000</td></tr>
-    </tbody>
-  </table>
-</div>
+<BlogTable
+  caption="Three scenarios from the same $200,000 starting balance, three months out."
+  columns={['Scenario', 'Inflows per month', 'Outflows per month', 'Cash after 3 months']}
+  rows={[
+    ['Optimistic', '$90,000', '$85,000', '$215,000'],
+    ['Expected', '$75,000', '$90,000', '$155,000'],
+    ['Pessimistic', '$45,000', '$95,000', '$50,000'],
+  ]}
+  numeric={[1, 2, 3]}
+/>
 
 <p>Each scenario starts with the same $200,000 cash balance but assumes different monthly amounts.</p>
 
@@ -217,22 +206,17 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>Here's the timeline:</p>
 
-<div className="not-prose my-6 overflow-x-auto">
-  <table className="w-full min-w-[320px] border-collapse text-left text-[15px] tabular-nums">
-    <thead>
-      <tr className="border-b border-border">
-        <th className="py-2.5 pr-6 font-semibold text-foreground">Event</th>
-        <th className="py-2.5 font-semibold text-foreground">Date</th>
-      </tr>
-    </thead>
-    <tbody className="text-foreground/85">
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Invoice issued</td><td className="py-2.5">November 2</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Contractual payment due</td><td className="py-2.5">December 2</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Expected actual payment</td><td className="py-2.5">December 17</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Total time from invoice to payment</td><td className="py-2.5">45 days</td></tr>
-    </tbody>
-  </table>
-</div>
+<BlogTable
+  caption="A $40,000 invoice on 30-day terms from a customer who usually pays 15 days late."
+  columns={['Event', 'Date']}
+  rows={[
+    ['Invoice issued', 'November 2'],
+    ['Contractual payment due', 'December 2'],
+    ['Expected actual payment', 'December 17'],
+    ['Total time from invoice to payment', '45 days'],
+  ]}
+  numeric={[1]}
+/>
 
 <p>The business earned $40,000 in revenue, but it may not have that cash available for 45 days.</p>
 
@@ -270,23 +254,19 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>The cash position looks like this:</p>
 
-<div className="not-prose my-6 overflow-x-auto">
-  <table className="w-full min-w-[440px] border-collapse text-left text-[15px] tabular-nums">
-    <thead>
-      <tr className="border-b border-border">
-        <th className="py-2.5 pr-6 font-semibold text-foreground">Date</th>
-        <th className="py-2.5 pr-6 font-semibold text-foreground">Cash movement</th>
-        <th className="py-2.5 font-semibold text-foreground">Closing cash</th>
-      </tr>
-    </thead>
-    <tbody className="text-foreground/85">
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Mon, Nov 9</td><td className="py-2.5 pr-6">Opening balance</td><td className="py-2.5">$35,000</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Wed, Nov 11</td><td className="py-2.5 pr-6">Payroll: −$28,000</td><td className="py-2.5">$7,000</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Thu, Nov 12</td><td className="py-2.5 pr-6">Vendor: −$12,000</td><td className="py-2.5 font-semibold text-foreground">−$5,000</td></tr>
-      <tr className="border-b border-border"><td className="py-2.5 pr-6">Fri, Nov 13</td><td className="py-2.5 pr-6">Customer payment: +$30,000</td><td className="py-2.5">$25,000</td></tr>
-    </tbody>
-  </table>
-</div>
+<BlogTable
+  caption="One week, day by day: the balance goes negative on Thursday even though the week ends at $25,000."
+  columns={['Date', 'Cash movement', 'Amount', 'Closing cash']}
+  rows={[
+    ['Mon, Nov 9', 'Opening balance', '', '$35,000'],
+    ['Wed, Nov 11', 'Payroll', '−$28,000', '$7,000'],
+    ['Thu, Nov 12', 'Vendor payment', '−$12,000', '−$5,000'],
+    ['Fri, Nov 13', 'Customer payment', '+$30,000', '$25,000'],
+  ]}
+  numeric={[2, 3]}
+  nowrap={[0]}
+  highlightRow={2}
+/>
 
 <p>By Friday, the business expects to have $25,000 in cash.</p>
 
