@@ -211,7 +211,7 @@ const BlogPost = () => {
         <div className="section-container relative">
           <div className="grid grid-cols-1 gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_300px]">
             <article className="min-w-0">
-              <div className="blog-article-body prose prose-invert max-w-none prose-headings:scroll-mt-28 prose-headings:tracking-tight prose-headings:text-foreground prose-p:tracking-tight prose-p:text-foreground/85 prose-li:text-foreground/85 prose-a:text-primary prose-a:no-underline hover:prose-a:underline [&_figure>div]:overflow-hidden [&_figure>div]:rounded-2xl">
+              <div className="blog-article-body prose max-w-none prose-headings:scroll-mt-28 prose-headings:tracking-tight prose-headings:text-foreground prose-p:tracking-tight prose-p:text-foreground/85 prose-li:text-foreground/85 prose-a:text-primary prose-a:no-underline hover:prose-a:underline [&_figure>div]:overflow-hidden [&_figure>div]:rounded-2xl">
                 <MDXProvider components={blogMdxComponents}>
                   <Content />
                 </MDXProvider>
