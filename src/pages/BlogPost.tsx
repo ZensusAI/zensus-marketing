@@ -8,7 +8,7 @@ import { BlogPostFaq } from "@/components/blog/BlogPostFaq";
 import { ReadingLine, TocBar, TocRail, useArticleSections } from "@/components/blog/ArticleToc";
 import { Breadcrumbs } from "@/components/blog/Breadcrumbs";
 import { KeepReading } from "@/components/blog/KeepReading";
-import { FOCUS_RING, SQUIRCLE } from "@/components/blog/PostCard";
+import { FOCUS_RING, HIGH_PRIORITY, SQUIRCLE } from "@/components/blog/PostCard";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { formatPostDate, getPostBySlug, getTopic, postBreadcrumbs, postUrl, topicPath } from "@/lib/blog";
@@ -100,6 +100,7 @@ const BlogPost = () => {
   const published = meta.dateModified ?? meta.date;
   const author = getAuthor(meta.author);
   const topic = getTopic(meta.topic);
+  const cover = blogStats[meta.slug]?.thumbnail;
 
   // One list drives the visible trail and the BreadcrumbList, so they match.
   const trail = postBreadcrumbs(meta);
@@ -237,19 +238,26 @@ const BlogPost = () => {
 
           {meta.thumbnail ? (
             <div className="pt-10 min-[760px]:pt-16">
+              {/* The frame takes the cover's own shape (size read at build by
+                  generate-blog-stats), so nothing is cropped or letterboxed;
+                  16:9 is only the fallback for a cover with no recorded size. */}
               <div
                 className={cn(
-                  "aspect-video overflow-hidden rounded-[24px] border border-border bg-card min-[760px]:rounded-[36px]",
+                  "overflow-hidden rounded-[24px] border border-border bg-card min-[760px]:rounded-[36px]",
+                  !cover && "aspect-video",
                   SQUIRCLE,
                 )}
+                style={cover ? { aspectRatio: `${cover.width} / ${cover.height}` } : undefined}
               >
                 <img
                   src={meta.thumbnail}
-                  alt={meta.title}
+                  alt={meta.thumbnailAlt ?? meta.title}
+                  width={cover?.width}
+                  height={cover?.height}
                   loading="eager"
-                  fetchPriority="high"
                   decoding="async"
-                  className="block h-full w-full object-contain"
+                  className="block h-full w-full object-cover"
+                  {...HIGH_PRIORITY}
                 />
               </div>
             </div>

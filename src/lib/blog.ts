@@ -32,6 +32,9 @@ export interface BlogPostMeta {
   featured?: boolean;
   /** Card and hero image path (public/ relative or absolute). */
   thumbnail?: string;
+  /** What the cover shows, for its alt text; defaults to the title. Name the
+      entities in it, since alt is what AI engines index for the image. */
+  thumbnailAlt?: string;
   /** Author key into the authors map; defaults to the site's default author. */
   author?: string;
 }

@@ -53,7 +53,11 @@ export function BlogPostFaq({ items }: { items: BlogFaqItem[] }) {
                       isOpen ? "rotate-45 bg-primary text-forest" : "bg-[#F6EBD0] text-sage-dark",
                     )}
                   >
-                    +
+                    {/* An icon, not a "+" character, so the heading's text is
+                        exactly the question the FAQPage markup quotes. */}
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
+                      <path d="M6 1.5v9M1.5 6h9" />
+                    </svg>
                   </span>
                 </button>
               </h3>
