@@ -29,6 +29,10 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
       "https://zensus.finance/blog/cash-conversion-cycle/dio-dso-dpo-where-cash-gets-stuck.webp"
     ]
   },
+  "cash-flow-early-warning-system": {
+    "wordCount": 3557,
+    "images": []
+  },
   "cash-flow-forecasting-for-agencies": {
     "wordCount": 1793,
     "images": [
@@ -77,7 +81,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "predictive-cash-flow-forecasting": {
-    "wordCount": 2567,
+    "wordCount": 2589,
     "images": []
   },
   "runway-vs-burn-rate-for-founders": {
@@ -104,7 +108,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "what-is-cash-flow-forecasting": {
-    "wordCount": 3265,
+    "wordCount": 3285,
     "images": [
       "https://zensus.finance/blog/what-is-cash-flow-forecasting/cash-inflow-outflow.webp",
       "https://zensus.finance/blog/what-is-cash-flow-forecasting/modern-treasury-workflow.webp",

@@ -116,6 +116,19 @@ The 13-week cash flow forecast is the standard short-term liquidity model: one f
 - Best practice is three scenarios per forecast: base case, upside, and downside; the spread between them matters more than any single number.
 - A free downloadable 13-week template (XLSX with chained weekly balances and a cash buffer check) is available at https://zensus.finance/templates/13-week-cash-flow-template.xlsx, and a browser builder that fills in a first 13 weeks is at https://zensus.finance/tools/13-week-cash-flow-template
 
+### Cash Flow Early Warning System
+https://zensus.finance/blog/cash-flow-early-warning-system
+
+How to detect a cash shortage before it happens: the indicators to watch, a minimum cash policy, and alerts that lead to action. Key facts from the guide:
+
+- A cash flow early warning system combines reliable financial data, a forward-looking cash forecast, warning thresholds, and a process for acting when a threshold is crossed.
+- Six warning signs: the lowest projected balance keeps falling, DSO rises (for example from 45 to 58 days), overdue receivables age faster (overdue concentration from 10% to 25%), one customer is a large share of expected collections (60% in the example), net burn rises, and the forecast keeps getting payment timing wrong.
+- Cash headroom is the lowest projected balance minus the minimum cash threshold; an $18,000 low point against a $40,000 minimum is a $22,000 reserve shortfall.
+- The zero-cash date is the first date projected cash reaches zero, found by dating every receipt and payment; a $50,000 customer payment moved four days later turns a week ending at $45,000 into a minus $5,000 Friday.
+- A minimum cash policy adds the unavoidable outflows of a response window to a forecast error margin: $60,000 plus $9,000 gives a $69,000 minimum.
+- The JPMorgan Chase Institute found a median of 27 cash buffer days across about 597,000 small businesses (September 2016); the 2026 AFP FP&A Benchmarking Survey found only 14% of finance teams formally track forecast accuracy.
+- Zensus checks the 30-day cash projection after every sync and once a day, and posts a Slack alert when it drops below the cash floor you set.
+
 ### Predictive Cash Flow Forecasting
 https://zensus.finance/blog/predictive-cash-flow-forecasting
 
@@ -357,6 +370,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - What Is Cash Flow Forecasting? (blog): https://zensus.finance/blog/what-is-cash-flow-forecasting
 - What Is a 13-Week Cash Flow Forecast? (blog): https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast
 - Predictive Cash Flow Forecasting (blog): https://zensus.finance/blog/predictive-cash-flow-forecasting
+- Cash Flow Early Warning System (blog): https://zensus.finance/blog/cash-flow-early-warning-system
 - Will I Make Payroll? (blog): https://zensus.finance/blog/will-i-make-payroll
 - ARR vs Cash for Founders (blog): https://zensus.finance/blog/arr-vs-cash-for-founders
 - Cash Conversion Cycle (blog): https://zensus.finance/blog/cash-conversion-cycle
