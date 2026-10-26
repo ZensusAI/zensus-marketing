@@ -4,7 +4,7 @@ export const meta = {
   description:
     'How to model AI inference and agent costs as a line item in your cash flow forecast: the inference cost paradox, margins, and scenario planning.',
   date: '2026-06-09',
-  dateModified: '2026-10-05',
+  dateModified: '2026-10-25',
   category: 'Guide',
   readTime: '12 min read',
   slug: 'forecasting-ai-compute-costs-for-founders',
@@ -50,6 +50,7 @@ export const meta = {
 
 import { BlogCallout } from '@/components/blog/BlogCallout';
 import { BlogFigure } from '@/components/blog/BlogFigure';
+import { BlogTable } from '@/components/blog/BlogTable';
 
 
 <p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">
@@ -82,7 +83,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>The companies that win over the next five years will not necessarily be the ones with the most advanced models. They will be the ones that understand the economics of those models.</p>
 
 
-## The New Forecast Line Item
+## Why Is AI Compute a New Forecast Line Item?
 
 
 <p>Before 2024, most startups treated infrastructure costs as relatively predictable overhead. You paid for cloud servers, databases, storage, and networking. Costs increased gradually with scale.</p>
@@ -114,7 +115,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>For founders, this means AI compute is no longer simply a technical concern. It is a financial planning concern.</p>
 
 
-## The Inference Cost Paradox
+## Why Do AI Bills Rise When Model Prices Fall?
 
 
 <p>One of the most misunderstood trends in AI economics is what many operators now call the <strong>inference cost paradox</strong>.</p>
@@ -161,7 +162,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 />
 
 
-## AI Margins vs Traditional SaaS Margins
+## How Do AI Gross Margins Compare With SaaS Margins?
 
 
 <p>Traditional SaaS companies benefited from an extraordinary economic advantage. Once software was built, the cost of serving one additional user was relatively low. This is why many SaaS businesses achieved gross margins between 80% and 90%.</p>
@@ -179,7 +180,19 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>This is why <strong>AI startup unit economics</strong> have become a major topic in venture capital discussions throughout 2026. Growth alone is no longer enough. Margins matter.</p>
 
 
-## How to Model AI Compute as a Variable Cost
+<BlogTable
+  caption="Why AI-native gross margins sit below traditional SaaS."
+  columns={['', 'Traditional SaaS', 'AI-native product']}
+  rows={[
+    ['Typical gross margin', '80% to 90%', '50% to 60%'],
+    ['Cost of serving one more user', 'Low and mostly fixed', 'Real compute cost on every request'],
+    ['Main variable cost', 'Hosting, which grows slowly with scale', 'Inference, retrieval and embeddings, which grow with usage'],
+    ['What to forecast', 'Infrastructure as overhead', 'Compute per query, per user and per feature'],
+  ]}
+/>
+
+
+## How Do You Forecast AI Compute Costs?
 
 
 <p>The biggest forecasting mistake founders make is treating AI spend as a fixed monthly expense. It is not. AI compute behaves more like payment processing fees: usage drives cost.</p>
@@ -248,7 +261,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 />
 
 
-## Include Retrieval and Embedding Costs
+## Which AI Costs Besides Inference Belong in the Forecast?
 
 
 <p>Many forecasts underestimate true <strong>AI operating costs</strong>. Inference is only part of the equation.</p>
@@ -271,7 +284,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>These costs can become meaningful as usage scales. A realistic <strong>AI inference costs SaaS forecasting</strong> model includes both direct inference spend and supporting <strong>AI infrastructure costs</strong>. Ignoring the second category often creates surprises later.</p>
 
 
-## The Inference-to-Revenue Ratio
+## What Is the Inference-to-Revenue Ratio?
 
 
 <p>One of the most useful metrics emerging in AI SaaS is the <strong>inference-to-revenue ratio</strong>.</p>
@@ -301,7 +314,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>For founders, this may become one of the most important <strong>AI cost benchmarks</strong> to monitor.</p>
 
 
-## How AI Compute Costs Affect Runway
+## How Do AI Compute Costs Affect Runway?
 
 
 <p>Most founders think about runway in terms of payroll, marketing, office expenses, and infrastructure. AI compute now belongs on that list.</p>
@@ -327,7 +340,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>When founders <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">run forecast scenarios</a> inside Zensus, compute spend entered as a recurring expense sits in the same financial model as revenue growth, hiring, and operating expenses.</p>
 
 
-## What to Plan For
+## Which AI Pricing Scenarios Should You Plan For?
 
 
 <p>Many startups assume API prices will continue falling forever. That assumption may prove dangerous. Competition has driven rapid pricing declines across the AI ecosystem, but sustainable economics eventually matter.</p>
@@ -366,7 +379,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>The purpose of forecasting is not prediction. It is preparation. The best founders understand how their business performs across all three scenarios, and can <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">iterate those cases in one place</a> instead of copying three spreadsheet tabs.</p>
 
 
-## Architecture Determines Economics
+## Why Does Architecture Matter More Than Model Choice?
 
 
 <p>Many discussions about AI costs focus entirely on model selection. In practice, architecture often matters more.</p>

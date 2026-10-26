@@ -45,7 +45,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "forecasting-ai-compute-costs-for-founders": {
-    "wordCount": 1912,
+    "wordCount": 1938,
     "images": [
       "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/inference-cost-paradox.webp",
       "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/ai-compute-cash-flow-forecast.webp",
@@ -67,7 +67,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "mcp-vs-cli-for-finance-teams": {
-    "wordCount": 2249,
+    "wordCount": 2242,
     "images": [
       "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/agent-reaching-into-finance-stack.webp",
       "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/cli-vs-mcp-side-by-side.webp",
@@ -104,7 +104,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[] }> 
     ]
   },
   "what-is-cash-flow-forecasting": {
-    "wordCount": 3155,
+    "wordCount": 3265,
     "images": [
       "https://zensus.finance/blog/what-is-cash-flow-forecasting/cash-inflow-outflow.webp",
       "https://zensus.finance/blog/what-is-cash-flow-forecasting/modern-treasury-workflow.webp",
