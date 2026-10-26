@@ -549,6 +549,58 @@ export function payrollCalendarCsv(result: PayrollCalendarResult): string {
   return rows.map((r) => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
 }
 
+export interface PayrollSheet {
+  name: string;
+  rows: (string | number | Date)[][];
+}
+
+// The workbook behind "Download Excel": a summary sheet, then one sheet per
+// year with a row per payday. Dates stay Date values so Excel and Google
+// Sheets treat them as dates, not text. Kept free of the xlsx package so it
+// can be tested without loading it.
+export function payrollCalendarSheets(
+  result: PayrollCalendarResult,
+  amountPerRun: number,
+): PayrollSheet[] {
+  const withAmount = amountPerRun > 0;
+  const summary: PayrollSheet = {
+    name: "Summary",
+    rows: [
+      ["Year", "Pay periods", "Three-paycheck months", ...(withAmount ? ["Payroll cash"] : [])],
+      ...result.years.map((y) => [
+        y.year,
+        y.totalPeriods,
+        y.threePaycheckMonths.join(", "),
+        ...(withAmount ? [y.totalPeriods * amountPerRun] : []),
+      ]),
+    ],
+  };
+  const years = result.years.map((y) => ({
+    name: String(y.year),
+    rows: [
+      [
+        "Pay period",
+        "Period start",
+        "Period end",
+        "Scheduled payday",
+        "Paid on",
+        "Moved because",
+        ...(withAmount ? ["Payroll amount"] : []),
+      ],
+      ...y.payDates.map((d) => [
+        d.number,
+        d.periodStart,
+        d.periodEnd,
+        d.scheduled,
+        d.paid,
+        d.movedReason ?? "",
+        ...(withAmount ? [amountPerRun] : []),
+      ]),
+    ],
+  }));
+  return [summary, ...years];
+}
+
 export function payrollCalendarIcs(result: PayrollCalendarResult, stamp: Date = new Date()): string {
   // DTSTAMP must be UTC. date-fns formats in local time, so build it from the
   // ISO string instead: 2026-10-09T12:00:00.000Z becomes 20261009T120000Z.

@@ -11,6 +11,7 @@ import {
   payPeriodFor,
   payrollCalendarCsv,
   payrollCalendarIcs,
+  payrollCalendarSheets,
   previousBankingDay,
   toIsoDate,
 } from "./payroll-calendar";
@@ -340,5 +341,40 @@ describe("exports", () => {
     expect(ics).toContain("UID:payday-20261224@zensus.finance");
     expect(ics).toContain("Moved from Dec 25 (Christmas Day).");
     expect(ics.trim().endsWith("END:VCALENDAR")).toBe(true);
+  });
+});
+
+describe("payrollCalendarSheets", () => {
+  // The Excel download on /tools/payroll-calendar is built from these sheets.
+  const result = buildPayrollCalendar({
+    firstPayDate: d("2026-01-02"),
+    frequency: "biweekly",
+    amountPerRun: 40000,
+    adjustForBankHolidays: true,
+    lagDays: 0,
+  });
+
+  it("has a summary sheet and one sheet per year", () => {
+    expect(payrollCalendarSheets(result, 40000).map((s) => s.name)).toEqual(["Summary", "2026", "2027"]);
+  });
+
+  it("summarises 27 pay dates and their cost in 2026", () => {
+    const [summary] = payrollCalendarSheets(result, 40000);
+    expect(summary.rows[1]).toEqual([2026, 27, "January, July, December", 1080000]);
+  });
+
+  it("lists every payday as a date, with the January 1, 2027 run paid on December 31, 2026", () => {
+    const y2026 = payrollCalendarSheets(result, 40000)[1];
+    expect(y2026.rows).toHaveLength(1 + 27);
+    const last = y2026.rows[27];
+    expect(toIsoDate(last[4] as Date)).toBe("2026-12-31");
+    expect(toIsoDate(last[3] as Date)).toBe("2027-01-01");
+    expect(last[5]).toBe("New Year's Day");
+  });
+
+  it("drops the amount columns when no amount is set", () => {
+    const sheets = payrollCalendarSheets(result, 0);
+    expect(sheets[0].rows[0]).toHaveLength(3);
+    expect(sheets[1].rows[0]).toHaveLength(6);
   });
 });
