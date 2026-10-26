@@ -67,7 +67,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   <li><strong>Agreed terms are not always kept.</strong> Atradius, a trade credit insurer, reports that in the US "late payments affect an average of <a href="https://group.atradius.com/knowledge-and-research/reports/b2b-payment-practices-trends-in-the-us-2026" className="font-medium text-primary underline-offset-4 hover:underline">22% of B2B receivables</a>".</li>
 </ul>
 
-<p>Put together: half the costs leave every two weeks, and the income arrives about two months after the work, if it arrives on time.</p>
+<p>Put together: half the costs leave on fixed payroll dates, often every two weeks, and the income arrives about two months after the work, if it arrives on time.</p>
 
 <p>There is not much room for error either. The JPMorgan Chase Institute found that <a href="https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/report-cash-flows-balances-and-buffer-days" className="font-medium text-primary underline-offset-4 hover:underline">"the median small business holds 27 cash buffer days in reserve"</a>. That is less than one 30-day payment term.</p>
 
@@ -77,7 +77,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 ### 1. The Terms Gap
 
-<p>The time between sending an invoice and its due date. A retainer billed on the 1st with 30-day terms is paid in the following month. A project billed on completion with 60-day terms is paid two months after the work ended, and three or four after it began.</p>
+<p>The time between sending an invoice and its due date. A retainer billed on the 1st with 30-day terms is due about a month later. A project billed on completion with 60-day terms is paid two months after the work ended, and three or four after it began.</p>
 
 ### 2. The Late-Payment Gap
 
@@ -206,7 +206,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p className="mb-2 font-medium text-foreground">What it does for the four gaps:</p>
 
 <ul>
-  <li><strong>Invoices.</strong> It reads open invoices from <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a> and places each one on its due date. Once an invoice is overdue, it moves it forward instead of counting it as cash you have.</li>
+  <li><strong>Invoices.</strong> It reads open invoices from <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a> and places each one on its due date. Once an invoice is overdue, it moves it to two weeks after the due date (or today, if that is later), and it drops an invoice more than 90 days overdue from the forecast.</li>
   <li><strong>Payroll.</strong> It finds recurring payroll debits in your bank transactions through <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a> and places each future run on its own date.</li>
   <li><strong>What-ifs.</strong> You can <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">ask in plain English</a> what losing a client or making a hire does to the projection, and see it against your baseline.</li>
   <li><strong>Warnings.</strong> A <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alert</a> fires when the 30-day projection drops below the cash floor you set.</li>

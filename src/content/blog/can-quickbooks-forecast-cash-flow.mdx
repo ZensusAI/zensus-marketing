@@ -4,7 +4,7 @@ export const meta = {
   description:
     'What QuickBooks Cash Flow Planner actually does, where it works well, where it stops, and when a growing business needs dedicated cash flow forecasting.',
   date: '2026-06-23',
-  dateModified: '2026-10-09',
+  dateModified: '2026-10-26',
   category: 'Guide',
   readTime: '13 min read',
   slug: 'can-quickbooks-forecast-cash-flow',
@@ -20,7 +20,7 @@ export const meta = {
     {
       question: 'Can QuickBooks forecast cash flow?',
       answer:
-        'Yes. QuickBooks Cash Flow Planner projects expected cash inflows and outflows from your connected bank accounts and your QuickBooks data, such as future invoices, bills, and expenses, plus planning items you add yourself. It is built for operational planning on what is already in your books.',
+        'Yes. QuickBooks Cash Flow Planner projects expected cash inflows and outflows from your connected bank accounts and your QuickBooks data, such as future invoices, bills, and expenses, plus planning items you add yourself. Every QuickBooks Online plan also has a cash flow forecast grid that shows cash by account group over 13 weeks. Both are built for operational planning on what is already in your books.',
     },
     {
       question: 'What is the QuickBooks cash flow forecast horizon?',
@@ -35,7 +35,7 @@ export const meta = {
     {
       question: 'Does QuickBooks Desktop have cash flow forecasting?',
       answer:
-        'Not in current versions. Intuit says the Cash Flow Projector was discontinued in QuickBooks Desktop 2022; older supported versions still open it from Company, then Planning & Budgeting, and it projects about six weeks ahead. The Desktop Cash Flow Hub reports past cash from reconciled transactions, and the Cash Flow Planner is a QuickBooks Online feature.',
+        'Not in current versions. Intuit says the Cash Flow Projector was discontinued in QuickBooks Desktop 2022; earlier releases opened it from Company, then Planning & Budgeting, and it projected about six weeks ahead. The Desktop Cash Flow Hub reports past cash from reconciled transactions, and the Cash Flow Planner is a QuickBooks Online feature.',
     },
     {
       question: 'When should I move beyond QuickBooks Cash Flow Planner?',
@@ -129,13 +129,14 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p className="mb-2 font-medium text-foreground">What Intuit's own pages say, read in October 2026:</p>
 
 <ul>
-  <li><strong>Cash Flow Projector.</strong> Intuit's <a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/accounts-payable/set-cash-flow-projector-quickbooks-desktop/L0BSJYlHq_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">setup article</a> states: "Cash Flow Projector was discontinued in QuickBooks Desktop 2022." Older supported versions open it from the Company menu under Planning &amp; Budgeting, and "the projection uses your data in QuickBooks to look at how your business finances look for the next six weeks".</li>
+  <li><strong>Cash Flow Projector.</strong> Intuit's <a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/accounts-payable/set-cash-flow-projector-quickbooks-desktop/L0BSJYlHq_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">setup article</a> states: "Cash Flow Projector was discontinued in QuickBooks Desktop 2022." Earlier releases opened it from the Company menu under Planning &amp; Budgeting, and "the projection uses your data in QuickBooks to look at how your business finances look for the next six weeks".</li>
   <li><strong>Cash Flow Hub.</strong> In the Plus and Enterprise editions, the <a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/cash-flow/cash-flow-hub-quickbooks-desktop/L0yzfiruI_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">Cash Flow Hub</a> sits under the Company menu and shows money in, money out ("Paid and Upcoming vendor bills and payroll") and a trend chart. It looks back, not forward: the chart "uses the reconciled transactions recorded in QuickBooks and not online balances".</li>
   <li><strong>Forecasts in QuickBooks Online Advanced</strong> are not cash forecasts. Intuit's <a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/budget-forecast-reports/create-manage-forecasts-quickbooks-online/L7SlFsgsy_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">forecasts article</a> describes projections drawn from historical patterns that you run "budget versus actuals reports against", for the rest of the fiscal year, to the end of next year, or for three years. It does not mention cash.</li>
-  <li><strong>Intuit Enterprise Suite</strong> is the one Intuit product with a cash forecast beyond the planner. Intuit says it "uses 18 months to 2 years of past financial data to give you a 13-week forecast", with a monthly view up to 12 months out (<a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/forecasting/view-customize-ai-assisted-cash-flow-forecasts/L9Y1OnOVP_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">Intuit's article</a>).</li>
+  <li><strong>Cash flow forecast grid in QuickBooks Online.</strong> Intuit's <a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/forecasting/use-cash-flow-forecast-grid-quickbooks-online/L9SPec2UI_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">grid article</a> says it is available in Simple Start, Essentials, Plus, and Advanced, and "shows your cash flow by account group over 13 weeks". You can change expected dates on transactions or exclude them from the forecast.</li>
+  <li><strong>Intuit Enterprise Suite</strong> adds an AI-assisted cash forecast. Intuit says it "uses 18 months to 2 years of past financial data to give you a 13-week forecast", with a monthly view up to 12 months out (<a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/forecasting/view-customize-ai-assisted-cash-flow-forecasts/L9Y1OnOVP_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">Intuit's article</a>).</li>
 </ul>
 
-<p>So a business on QuickBooks Desktop 2022 or later has no projector (older versions had a six-week one), a hub that reports the past, and a planner that exists only in QuickBooks Online. That is the gap third-party forecasting tools fill, whether you stay on Desktop or move to QuickBooks Online.</p>
+<p>So a business on QuickBooks Desktop 2022 or later has no projector (earlier releases had a six-week one) and a hub that reports the past, while the planner and the 13-week grid exist only in QuickBooks Online. That is the gap third-party forecasting tools fill, whether you stay on Desktop or move to QuickBooks Online.</p>
 
 ## How Does QuickBooks Cash Flow Planner Work?
 
@@ -440,6 +441,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 | Short-term forecasting | Yes | Yes |
 | Projection from invoices, bills, and planned items | Yes | Yes |
 | Forward view | Up to 14 months ahead on the 24-month view | Usually 12 months or more |
+| Weekly 13-week view | Yes, in the separate cash flow forecast grid | Usually |
 | Runway tracking | Limited | Yes |
 | Scenario planning | Basic | Advanced |
 | Hiring models | Manual planner items only | Yes |
