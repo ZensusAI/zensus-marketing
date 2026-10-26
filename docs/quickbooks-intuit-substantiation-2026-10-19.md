@@ -36,8 +36,22 @@ Intuit stamp on the page: "Updated 8/3/2026 05:29"
 - Plan notes: "Converting a forecast to a budget is available in QuickBooks Online Advanced." and "Intelligence forecasting isn't available in Intuit Accountant Suite (IAS)."
 - Intuit's own caveats: "Your forecast is only as accurate as the data in your books." and "Review any forecast or scenario before you make business decisions."
 
+## Use the cash flow forecast grid in QuickBooks Online (added 2026-10-26)
+
+URL: https://quickbooks.intuit.com/learn-support/en-us/help-article/forecasting/use-cash-flow-forecast-grid-quickbooks-online/L9SPec2UI_US_en_US
+Intuit stamp on the page: none shown when read on 2026-10-26.
+
+Added after the blog fact check (#159) found the page left this feature out.
+
+- Plans: "The cash flow forecast grid is available in QuickBooks Online Simple Start, QuickBooks Online Essentials, QuickBooks Online Plus, and QuickBooks Online Advanced."
+- Horizon: "It shows your cash flow by account group over 13 weeks."
+- Basis: "The forecast uses your QuickBooks data and tracks when you receive or spend money, not when you create invoices or bills."
+- Future rows: "Open invoices, recurring bills, and manual projections, including expected dates and source details." Also "AI predictions: Predicted dates or amounts based on past activity."
+- Edits: "You can also update expected dates or exclude individual transactions from your forecast." and "These changes affect only your forecast. They don't change your original invoices or bills."
+
 ## How the page uses them
 
+- The section "Forecasting in QuickBooks Online beyond the planner" opens with the forecast grid, quoting its plans, 13-week horizon, future rows and edit sentences; two FAQs name it as one of Intuit's options.
 - The section "Forecasting in QuickBooks Online beyond the planner" quotes the plan, data source, horizon, accounting basis and 12-month and 2-year sentences above.
 - The FAQ "Does QuickBooks do sales or demand forecasting?" relies on the "income, cost of sales, and expenses" and "income, expenses, and cash flow" sentences: neither Intuit feature is described as a demand, sales-pipeline or purchase-cycle forecast. Zensus does not forecast demand either, and the FAQ says so.
 - Nothing on the page states a price for any Intuit plan.

@@ -47,6 +47,8 @@ const INTUIT = {
     "https://quickbooks.intuit.com/learn-support/en-us/help-article/accounts-payable/set-cash-flow-projector-quickbooks-desktop/L0BSJYlHq_US_en_US",
   desktopHub:
     "https://quickbooks.intuit.com/learn-support/en-us/help-article/cash-flow/cash-flow-hub-quickbooks-desktop/L0yzfiruI_US_en_US",
+  forecastGrid:
+    "https://quickbooks.intuit.com/learn-support/en-us/help-article/forecasting/use-cash-flow-forecast-grid-quickbooks-online/L9SPec2UI_US_en_US",
   advancedForecasts:
     "https://quickbooks.intuit.com/learn-support/en-us/help-article/budget-forecast-reports/create-manage-forecasts-quickbooks-online/L7SlFsgsy_US_en_US",
   intelligence:
@@ -77,12 +79,12 @@ const FAQS = [
   {
     question: "Does QuickBooks have cash flow forecasting built in?",
     answer:
-      "Yes. QuickBooks Online includes a cash flow planner. Intuit says it bases its projection on your QuickBooks data, such as future invoices, bills, and expenses, and on historical data from the bank accounts connected to QuickBooks Online. Intuit Intelligence forecasting also projects income, expenses, and cash flow for the next 12 months once your books hold at least two years of transaction history.",
+      "Yes. QuickBooks Online includes a cash flow planner. Intuit says it bases its projection on your QuickBooks data, such as future invoices, bills, and expenses, and on historical data from the bank accounts connected to QuickBooks Online. Every QuickBooks Online plan also has a cash flow forecast grid that shows cash by account group over 13 weeks. Intuit Intelligence forecasting also projects income, expenses, and cash flow for the next 12 months once your books hold at least two years of transaction history.",
   },
   {
     question: "Is there a forecasting tool that connects to QuickBooks Online?",
     answer:
-      "Yes. Intuit's own options are the Cash Flow Planner, Forecasts in QuickBooks Online Advanced, and Intuit Intelligence forecasting. Third-party tools connect through Intuit's API with OAuth, and Zensus is one of them. It reads invoices, bills, payments, and purchases from QuickBooks Online, syncs once a day, and combines them with your bank feed and HubSpot subscriptions in one weekly cash flow projection.",
+      "Yes. Intuit's own options are the Cash Flow Planner, the 13-week cash flow forecast grid, Forecasts in QuickBooks Online Advanced, and Intuit Intelligence forecasting. Third-party tools connect through Intuit's API with OAuth, and Zensus is one of them. It reads invoices, bills, payments, and purchases from QuickBooks Online, syncs once a day, and combines them with your bank feed and HubSpot subscriptions in one weekly cash flow projection.",
   },
   {
     question: "Does QuickBooks do sales or demand forecasting?",
@@ -355,12 +357,25 @@ const QuickBooksForecasting = () => (
 
         <Section id="intuit-forecasts" title="Forecasting in QuickBooks Online beyond the planner">
           <p>
-            Intuit describes two further forecasting features. Both are quoted
+            Intuit describes three further forecasting features. Each is quoted
             here from Intuit's own help pages, read in {INTUIT_REVIEWED}, so
             you can judge whether they cover what you need before paying for
             anything else.
           </p>
           <ul className="list-disc space-y-2 pl-5">
+            <li>
+              <strong className="text-foreground">The cash flow forecast grid.</strong>{" "}
+              <a href={INTUIT.forecastGrid} className={linkCls}>
+                Intuit says
+              </a>{" "}
+              it "is available in QuickBooks Online Simple Start, QuickBooks
+              Online Essentials, QuickBooks Online Plus, and QuickBooks Online
+              Advanced" and "shows your cash flow by account group over 13
+              weeks." Future weeks draw on "Open invoices, recurring bills, and
+              manual projections", and "You can also update expected dates or
+              exclude individual transactions from your forecast." It is a
+              weekly cash view built from what is already in your books.
+            </li>
             <li>
               <strong className="text-foreground">Forecasts in QuickBooks Online Advanced.</strong>{" "}
               <a href={INTUIT.advancedForecasts} className={linkCls}>
@@ -389,12 +404,13 @@ const QuickBooksForecasting = () => (
             </li>
           </ul>
           <p>
-            If your books are on the accrual basis, you have two years of
-            history, and a monthly view twelve months out is enough, those
-            features may be all you need. Zensus is built for the cases they
-            leave out: a balance that has to be watched week by week, contracts
-            billed from a CRM that are not yet in the books, and a company
-            younger than two years.
+            If thirteen weeks of what is already in your books is enough, the
+            grid may be all you need. If your books are on the accrual basis
+            and you have two years of history, the other two add a monthly view
+            twelve months or more out. Zensus is built for the cases they leave
+            out: a weekly view past thirteen weeks, contracts billed from a CRM
+            that are not yet in the books, and what-if changes tested without
+            two years of history.
           </p>
         </Section>
 
