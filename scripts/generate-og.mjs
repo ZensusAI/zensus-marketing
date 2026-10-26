@@ -30,7 +30,7 @@ const CARDS = [
     category: "",
     title: "Your cash flow, mapped as far ahead as you need",
     subtitle:
-      "A live, always-current picture of your cash position, built for businesses with unpredictable revenue.",
+      "Connect your bank, QuickBooks, and HubSpot and see the month your cash runs out.",
     accent: "green",
   },
   {
@@ -166,7 +166,7 @@ const CARDS = [
     category: "Privacy",
     title: "Privacy Policy",
     subtitle:
-      "How Zensus collects, uses, and protects your information. Bank credentials stay with Plaid, never with us, and your data never trains an AI model.",
+      "How Zensus collects, uses, and protects your information. Bank credentials stay with Plaid, never with us.",
     accent: "green",
   },
   {
@@ -198,7 +198,7 @@ const CARDS = [
     category: "Integrations",
     title: "Connect the tools that run your business",
     subtitle:
-      "Plaid for bank data, QuickBooks for accounting, HubSpot for pipeline, and Slack for alerts.",
+      "Plaid for bank data, QuickBooks for accounting, HubSpot for invoices and subscriptions, and Slack for alerts.",
     accent: "green",
   },
   {
@@ -214,7 +214,7 @@ const CARDS = [
     category: "Integration",
     title: "QuickBooks integration",
     subtitle:
-      "Sync accounts, invoices, bills, and vendors so your cash flow forecast matches your books.",
+      "Open invoices and bills from your books, placed on the weeks they are due in your cash flow forecast.",
     accent: "quickbooks",
   },
   {
@@ -222,7 +222,7 @@ const CARDS = [
     category: "Integration",
     title: "HubSpot integration",
     subtitle:
-      "Pipeline-weighted revenue projections so your forecast reflects the deals you are actually working.",
+      "Invoices and subscriptions on the dates they bill, so annual and quarterly contracts land when they are due.",
     accent: "hubspot",
   },
   {
@@ -230,7 +230,7 @@ const CARDS = [
     category: "Integration",
     title: "Slack integration",
     subtitle:
-      "Cash flow alerts, low-cash warnings, and daily digests delivered where your team already works.",
+      "An alert in Slack when your 30-day projection drops below the cash floor you set.",
     accent: "slack",
   },
 ];
@@ -246,25 +246,36 @@ const MIME = {
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
   ".ico": "image/x-icon",
   ".woff": "font/woff",
   ".woff2": "font/woff2",
 };
 
-/** Read a single-quoted meta string (supports line breaks after the colon). */
+/**
+ * Read a quoted meta string (supports line breaks after the colon). The
+ * closing quote must match the opening one, so a double-quoted value can
+ * hold an apostrophe ("A founder's ...").
+ */
 function readMetaString(text, field) {
   const match = text.match(
-    new RegExp(`${field}:\\s*(?:\\n\\s*)?['"]([^'"]+)['"]`),
+    new RegExp(`${field}:\\s*(?:\\n\\s*)?(['"])((?:(?!\\1)[^\\n])+)\\1`),
   );
-  return match?.[1]?.trim();
+  return match?.[2]?.trim();
 }
 
 // One card per blog topic page, written to dist/og/blog-topic-<id>.png.
+// The card subtitle is the description after its colon ("what it is, how
+// to build one..."), since the full sentence runs past two lines.
+const topicSubtitle = (text) => {
+  const rest = text.split(": ")[1];
+  return rest ? rest[0].toUpperCase() + rest.slice(1) : text;
+};
 const TOPIC_CARDS = BLOG_TOPICS.map((t) => ({
   slug: `blog-topic-${t.id}`,
   category: "Blog",
   title: `${t.name} guides`,
-  subtitle: t.metaDescription,
+  subtitle: topicSubtitle(t.metaDescription),
   accent: "green",
 }));
 

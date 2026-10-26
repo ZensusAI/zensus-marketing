@@ -10,16 +10,19 @@
       rel="stylesheet"
     />
     <style>
+      /* Cream-first brand card: the site's cream canvas, ink type, and the
+         homepage hero mesh across the lower half. Colors are the theme-cream
+         tokens in src/index.css. */
       :root {
-        --bg: #0a0a0c;
-        --fg: #f7f5f2;
-        --muted: #8b8b93;
-        --border: #22242c;
-        --accent: #22c55e;
-        --accent-plaid: #f7f5f2;
-        --accent-quickbooks: #2ca01c;
-        --accent-hubspot: #ff7a59;
-        --accent-slack: #e01e5a;
+        --cream: #fef7e6;
+        --ink: #1a2a28;
+        --muted: #506864;
+        --rule: #ebdcb8;
+        --accent: #0e5c3a;
+        --accent-plaid: #1a2a28;
+        --accent-quickbooks: #1f7a14;
+        --accent-hubspot: #c2482a;
+        --accent-slack: #a8164a;
       }
 
       *,
@@ -35,8 +38,8 @@
         width: 1200px;
         height: 630px;
         overflow: hidden;
-        background: var(--bg);
-        color: var(--fg);
+        background: var(--cream);
+        color: var(--ink);
         font-family:
           "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
           sans-serif;
@@ -48,201 +51,170 @@
         position: relative;
         width: 1200px;
         height: 630px;
-        padding: 72px 80px;
+        overflow: hidden;
+        background: var(--cream);
+      }
+
+      .mesh {
+        position: absolute;
+        left: -90px;
+        top: 196px;
+        width: 1380px;
+        height: auto;
+        opacity: 0.95;
+        pointer-events: none;
+      }
+
+      /* Hairline guides that run off the card edges, plus crop marks at the
+         corners of the frame they make. */
+      .rule {
+        position: absolute;
+        background: var(--rule);
+      }
+      .rule.h {
+        left: 0;
+        right: 0;
+        height: 1px;
+      }
+      .rule.v {
+        top: 0;
+        bottom: 0;
+        width: 1px;
+      }
+      .crop {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-color: var(--ink);
+        border-style: solid;
+        border-width: 0;
+      }
+      .crop.tl { left: 66px; top: 66px; border-left-width: 1.5px; border-top-width: 1.5px; }
+      .crop.tr { right: 66px; top: 66px; border-right-width: 1.5px; border-top-width: 1.5px; }
+      .crop.bl { left: 66px; bottom: 66px; border-left-width: 1.5px; border-bottom-width: 1.5px; }
+      .crop.br { right: 66px; bottom: 66px; border-right-width: 1.5px; border-bottom-width: 1.5px; }
+
+      .content {
+        position: absolute;
+        left: 114px;
+        top: 114px;
+        right: 114px;
+        bottom: 104px;
         display: flex;
         flex-direction: column;
+      }
+
+      .top {
+        display: flex;
+        align-items: center;
         justify-content: space-between;
-        overflow: hidden;
-        background:
-          radial-gradient(
-            1200px 600px at 85% 15%,
-            rgba(34, 197, 94, 0.08),
-            transparent 60%
-          ),
-          radial-gradient(
-            900px 500px at 15% 90%,
-            rgba(34, 197, 94, 0.04),
-            transparent 60%
-          ),
-          var(--bg);
-      }
-
-      .card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-          linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.03) 1px,
-            transparent 1px
-          );
-        background-size: 40px 40px;
-        pointer-events: none;
-      }
-
-      .card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border: 1px solid var(--border);
-        pointer-events: none;
       }
 
       .wordmark {
-        position: relative;
         display: flex;
         align-items: center;
         gap: 14px;
-        z-index: 1;
       }
-
       .wordmark img {
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         border-radius: 10px;
         display: block;
       }
-
       .wordmark span {
-        font-size: 28px;
+        font-size: 27px;
         font-weight: 600;
-        letter-spacing: -0.01em;
-        color: var(--fg);
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+
+      .host {
+        font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+        font-size: 17px;
+        font-weight: 500;
+        color: var(--muted);
       }
 
       .body {
-        position: relative;
-        z-index: 1;
-        max-width: 940px;
+        margin-top: 44px;
         display: flex;
         flex-direction: column;
-        gap: 26px;
       }
 
       .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
         font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
         font-size: 15px;
-        font-weight: 500;
-        letter-spacing: 0.18em;
+        font-weight: 600;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
         color: var(--accent);
+        margin-bottom: 18px;
       }
-
-      .eyebrow .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--accent);
-        box-shadow: 0 0 12px var(--accent);
-      }
-
       .eyebrow[data-empty="true"] {
         display: none;
       }
 
       .title {
         font-size: 76px;
-        line-height: 1.04;
+        line-height: 1.02;
         font-weight: 600;
-        letter-spacing: -0.02em;
-        color: var(--fg);
+        letter-spacing: -0.035em;
+        color: var(--ink);
+        max-width: 930px;
+        text-wrap: balance;
       }
 
       .subtitle {
-        font-size: 28px;
-        line-height: 1.4;
+        margin-top: 24px;
+        font-size: 25px;
+        line-height: 1.42;
         font-weight: 400;
         color: var(--muted);
-        max-width: 880px;
+        max-width: 800px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        /* A cream halo keeps the subtitle legible where it crosses the mesh. */
+        text-shadow:
+          0 0 6px var(--cream),
+          0 0 12px var(--cream);
       }
 
-      .footer {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-      }
-
-      .url {
-        font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
-        font-size: 20px;
-        font-weight: 500;
-        color: var(--muted);
-      }
-
-      .mark {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
-        font-size: 14px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .chart {
-        width: 96px;
-        height: 28px;
-      }
-
-      /* Accent variants: reroute --accent for brand-led integration cards. */
-      [data-accent="plaid"] {
-        --accent: var(--accent-plaid);
-      }
-      [data-accent="quickbooks"] {
-        --accent: var(--accent-quickbooks);
-      }
-      [data-accent="hubspot"] {
-        --accent: var(--accent-hubspot);
-      }
-      [data-accent="slack"] {
-        --accent: var(--accent-slack);
-      }
+      [data-accent="plaid"] { --accent: var(--accent-plaid); }
+      [data-accent="quickbooks"] { --accent: var(--accent-quickbooks); }
+      [data-accent="hubspot"] { --accent: var(--accent-hubspot); }
+      [data-accent="slack"] { --accent: var(--accent-slack); }
     </style>
   </head>
   <body>
     <div class="card" id="card">
-      <header class="wordmark">
-        <img src="/src/assets/zensus-logo.png" alt="" />
-        <span>Zensus</span>
-      </header>
+      <img class="mesh" src="/src/assets/hero-mesh-1440.webp" alt="" />
 
-      <section class="body">
-        <div class="eyebrow" id="eyebrow">
-          <span class="dot"></span>
-          <span id="category"></span>
-        </div>
-        <h1 class="title" id="title"></h1>
-        <p class="subtitle" id="subtitle"></p>
-      </section>
+      <span class="rule h" style="top: 72px"></span>
+      <span class="rule h" style="bottom: 72px"></span>
+      <span class="rule v" style="left: 72px"></span>
+      <span class="rule v" style="right: 72px"></span>
+      <span class="crop tl"></span>
+      <span class="crop tr"></span>
+      <span class="crop bl"></span>
+      <span class="crop br"></span>
 
-      <footer class="footer">
-        <span class="url" id="host"></span>
-        <span class="mark">
-          <svg
-            class="chart"
-            viewBox="0 0 96 28"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M2 22 L18 18 L34 20 L50 10 L66 12 L82 4 L94 6"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          cash flow
-        </span>
-      </footer>
+      <div class="content">
+        <header class="top">
+          <div class="wordmark">
+            <img src="/src/assets/zensus-logo.png" alt="" />
+            <span>Zensus</span>
+          </div>
+          <span class="host" id="host"></span>
+        </header>
+
+        <section class="body">
+          <div class="eyebrow" id="category"></div>
+          <h1 class="title" id="title"></h1>
+          <p class="subtitle" id="subtitle"></p>
+        </section>
+      </div>
     </div>
 
     <script>
@@ -253,21 +225,34 @@
       const subtitle = params.get("subtitle") || "";
       const category = params.get("category") || "";
       const accent = params.get("accent") || "green";
-      // Domain is passed in from scripts/site.mjs so the card footer follows
-      // SITE_URL rather than pinning the domain into 30 committed PNGs.
+      // Domain is passed in from scripts/site.mjs so the card follows
+      // SITE_URL rather than pinning the domain into committed PNGs.
       const host = params.get("host");
       if (host) document.getElementById("host").textContent = host;
 
-      document.getElementById("title").textContent = title;
+      const titleEl = document.getElementById("title");
+      titleEl.textContent = title;
       document.getElementById("subtitle").textContent = subtitle;
-      document.getElementById("category").textContent = category;
 
-      const eyebrow = document.getElementById("eyebrow");
-      if (!category) {
-        eyebrow.setAttribute("data-empty", "true");
-      }
+      const eyebrow = document.getElementById("category");
+      eyebrow.textContent = category;
+      if (!category) eyebrow.setAttribute("data-empty", "true");
 
       document.getElementById("card").setAttribute("data-accent", accent);
+
+      // Fit the title to two lines, stepping the size down for long titles;
+      // past the floor it may take three.
+      const fit = () => {
+        const lines = (size) => {
+          titleEl.style.fontSize = `${size}px`;
+          return Math.round(titleEl.getBoundingClientRect().height / (size * 1.02));
+        };
+        let size = 76;
+        while (size > 56 && lines(size) > 2) size -= 2;
+        while (size > 46 && lines(size) > 3) size -= 2;
+      };
+      document.fonts.ready.then(fit);
+      fit();
     </script>
   </body>
 </html>
