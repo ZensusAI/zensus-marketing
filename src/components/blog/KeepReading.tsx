@@ -24,7 +24,7 @@ export function KeepReading({ post }: { post: BlogPostMeta }) {
           id="keep-reading-heading"
           className="text-balance text-[28px] font-semibold leading-[1.1] tracking-[-0.035em] text-foreground min-[760px]:text-[40px]"
         >
-          Keep reading in {topic.name}
+          Keep reading in <span className="whitespace-nowrap">{topic.name}</span>
         </h2>
         <Link
           to={topicPath(topic.id)}

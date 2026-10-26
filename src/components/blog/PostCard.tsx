@@ -5,6 +5,13 @@ import { cn } from "@/lib/utils";
 /** Squircle corners; browsers without `corner-shape` keep the plain radius. */
 export const SQUIRCLE = "[corner-shape:squircle]";
 
+/**
+ * The fetchpriority hint as a plain attribute. React 18 does not recognise
+ * the camelCase fetchPriority prop on <img> (it warns and drops it), so the
+ * lowercase HTML attribute is spread in instead.
+ */
+export const HIGH_PRIORITY = { fetchpriority: "high" } as Record<string, string>;
+
 export const FOCUS_RING =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
@@ -26,9 +33,9 @@ export function PostImage({
           src={post.thumbnail}
           alt={post.title}
           loading={priority ? "eager" : "lazy"}
-          fetchPriority={priority ? "high" : undefined}
           decoding="async"
           className="block h-full w-full object-cover"
+          {...(priority ? HIGH_PRIORITY : {})}
         />
       ) : null}
     </div>
