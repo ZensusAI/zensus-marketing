@@ -9,7 +9,7 @@ import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
 import slackLogo from "@/assets/integrations/slack.svg";
-import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
+import { breadcrumbSchema, faqPageSchema, HOME_CRUMB } from "@/lib/structured-data";
 
 const integrationsItemList = {
   "@context": "https://schema.org",
@@ -66,6 +66,47 @@ const CARDS: Card[] = [
   },
 ];
 
+/*
+ * The questions people ask before connecting anything. Shown on the page and
+ * emitted as FAQPage JSON-LD from this one list, so the markup only ever
+ * quotes what a reader can see. Each answer stays within what the provider
+ * pages already state (sync cadence, read-only access, disconnect behaviour).
+ */
+const FAQS = [
+  {
+    question: "Which tools does Zensus connect to?",
+    answer:
+      "Zensus connects to four tools: your bank through Plaid, QuickBooks Online, HubSpot and Slack. Plaid supplies bank transactions and balances, QuickBooks supplies invoices, bills, receivables and payables, HubSpot supplies invoices and subscriptions, and Slack receives cash alerts.",
+  },
+  {
+    question: "Do I have to upload CSV files or spreadsheets?",
+    answer:
+      "No. Zensus reads your data through each tool's own sign-in (OAuth), so there is nothing to export or upload, and Zensus does not import spreadsheets or CSV files. You can export your forecast as a CSV.",
+  },
+  {
+    question: "How often does Zensus update my data?",
+    answer:
+      "Plaid and HubSpot notify Zensus by webhook when something changes, with a daily sync as well. QuickBooks syncs once a day. Zensus also refreshes when you open the app if the data is more than an hour old, and you can sync by hand at any time.",
+  },
+  {
+    question: "Does Zensus see my bank or account passwords?",
+    answer:
+      "No. You sign in on Plaid's, Intuit's, HubSpot's or Slack's own page, and Zensus receives an access token, never your password. Zensus never stores bank credentials, and every token is encrypted at rest with AES-256-GCM.",
+  },
+  {
+    question: "Can Zensus move money or make payments?",
+    answer:
+      "No. The bank connection through Plaid is read-only: Zensus reads transactions and balances and has no way to start a payment or a transfer. Zensus uses each connection to read the data its cash flow forecast needs.",
+  },
+  {
+    question: "What happens if I disconnect an integration?",
+    answer:
+      "Open Settings, then Integrations, in the Zensus app and disconnect it. Zensus revokes its access and deletes the stored tokens. Disconnecting the bank also deletes its synced transactions; QuickBooks and HubSpot data already synced is kept while your account is active, and you can ask for it to be deleted at any time.",
+  },
+];
+
+const faqLd = faqPageSchema(FAQS);
+
 const CHIPS = [
   "Bank-level OAuth",
   "AES-256-GCM at rest",
@@ -103,6 +144,7 @@ const Integrations = () => (
       <link rel="canonical" href={`${SITE_URL}/integrations`} />
       <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
       <script type="application/ld+json">{JSON.stringify(integrationsItemList)}</script>
+      <script type="application/ld+json">{JSON.stringify(faqLd)}</script>
     </Helmet>
     <Navbar />
     <main className="pt-24 pb-16">
@@ -151,6 +193,20 @@ const Integrations = () => (
             </span>
           ))}
         </div>
+
+        <section aria-labelledby="integrations-faq-heading" className="mb-12 border-t border-border pt-10">
+          <h2 id="integrations-faq-heading" className="text-xl font-semibold mb-6">
+            Common questions
+          </h2>
+          <dl className="space-y-6">
+            {FAQS.map((faq) => (
+              <div key={faq.question}>
+                <dt className="font-medium text-foreground mb-1">{faq.question}</dt>
+                <dd className="text-muted-foreground leading-relaxed">{faq.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
 
         <div className="text-center">
           <TalkToUsButton size="lg" />
