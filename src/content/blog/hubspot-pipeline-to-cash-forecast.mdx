@@ -4,7 +4,7 @@ export const meta = {
   description:
     'How to convert HubSpot pipeline data into a realistic cash flow forecast using deal probability, billing terms, contract timing, and payment behavior.',
   date: '2026-07-02',
-  dateModified: '2026-10-05',
+  dateModified: '2026-10-26',
   category: 'Guide',
   readTime: '13 min read',
   slug: 'hubspot-pipeline-to-cash-forecast',
@@ -182,7 +182,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 | Contract start | September 1 |
 | Billing terms | Annual prepaid |
 | Payment terms | Net 30 |
-| Customer payment behavior | Pays 15 days late |
+| Customer payment behavior | Pays 14 days late |
 
 <p>At first glance, a $100,000 Commit deal looks like imminent cash. It is not.</p>
 
@@ -214,7 +214,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   src="/blog/hubspot-pipeline-to-cash-forecast/pipeline-versus-cash-timeline-comparison.webp"
   width={1024}
   height={576}
-  alt="Timeline showing a $100K HubSpot Commit deal at day 0, contract start at day 30, invoice due at day 60, and cash received at day 75."
+  alt="Timeline showing a $100K HubSpot Commit deal at day 0, contract start at about day 30, invoice due at about day 60, and cash received at day 75."
   caption="A deal in the Commit category can still leave a long cash gap between CRM progress and bank deposits."
 />
 
@@ -367,7 +367,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>At <a href="/#product" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a>, founders connect bank data via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, accounting via <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and invoices and subscriptions via <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a>. See <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">how it works</a> for the connect-to-forecast flow.</p>
 
-<p>Zensus projects when annual and quarterly contracts hit the bank, not flat monthly spreads. Founders can <a href="/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">drill from monthly to weekly to daily</a> cash flow, <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">run scenarios in plain English</a> (for example, what if a new $100,000 annual contract starts next quarter?), and get <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when a 30-day projection crosses a cash floor they set.</p>
+<p>Zensus places annual and quarterly subscriptions on their billing dates, not as flat monthly spreads. Founders can <a href="/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">drill from monthly to weekly to daily</a> cash flow, <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">run scenarios in plain English</a> (for example, what if a new $100,000 annual contract starts next quarter?), and get <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when a 30-day projection crosses a cash floor they set.</p>
 
 <p>This creates a more realistic view of future cash than pipeline reports alone. Plans are on the <a href="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">pricing page</a>.</p>
 
@@ -397,6 +397,6 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <p>Whether you weight open pipeline in a spreadsheet or a 13-week forecast, and let a platform like Zensus handle the HubSpot invoices and subscriptions you have already won, connecting HubSpot data to actual cash timing creates a much clearer picture of the future.</p>
 
-<BlogCallout title="Connect HubSpot Pipeline to Cash Timing">
-Zensus syncs HubSpot invoices and subscriptions and projects when each contract hits the bank, with scenarios and Slack alerts on your cash floor. <a href="https://calendly.com/hello-zensus/introcall">Talk to us</a> or explore <a href="/pricing">pricing</a>.
+<BlogCallout title="Connect HubSpot Billing to Cash Timing">
+Zensus syncs HubSpot invoices and subscriptions and places each billing on the week it is due, with scenarios and Slack alerts on your cash floor. <a href="https://calendly.com/hello-zensus/introcall">Talk to us</a> or explore <a href="/pricing">pricing</a>.
 </BlogCallout>

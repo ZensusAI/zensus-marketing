@@ -66,6 +66,11 @@ for (let week = 1; week <= WEEKS; week += 1) {
 }
 
 label(R.weekOf, "Week beginning (enter date)");
+// Week 1's date is typed in B5; each later week is seven days on, blank until then.
+for (let week = 2; week <= WEEKS; week += 1) {
+  const prev = `${col(week - 1)}${xl(R.weekOf)}`;
+  set(R.weekOf, week, { t: "n", z: "yyyy-mm-dd", f: `IF(${prev}="","",${prev}+7)` });
+}
 label(R.opening, "Opening balance");
 set(R.opening, 1, { v: 100000, t: "n" });
 for (let week = 2; week <= WEEKS; week += 1) {

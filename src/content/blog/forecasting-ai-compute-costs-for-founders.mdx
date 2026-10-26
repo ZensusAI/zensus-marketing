@@ -4,7 +4,7 @@ export const meta = {
   description:
     'How to model AI inference and agent costs as a line item in your cash flow forecast: the inference cost paradox, margins, and scenario planning.',
   date: '2026-06-09',
-  dateModified: '2026-10-25',
+  dateModified: '2026-10-26',
   category: 'Guide',
   readTime: '12 min read',
   slug: 'forecasting-ai-compute-costs-for-founders',
@@ -38,7 +38,7 @@ export const meta = {
       question:
         'What is a healthy inference-to-revenue ratio?',
       answer:
-        'A common operator target is an inference-to-revenue ratio below 10% for chat-heavy AI applications. Zensus uses the same threshold in its own planning.',
+        'There is no published standard. Zensus uses a practical benchmark of keeping inference spend below 10% of revenue for a chat-heavy product; above that, compute becomes a first-class cost driver.',
     },
     {
       question: 'Will API prices keep falling?',
@@ -125,7 +125,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 <p>At first glance, that seems impossible. Historically, per-token inference costs have declined significantly year after year. New models are more efficient, competition is increasing, and providers continue to optimize infrastructure.</p>
 
 
-<p>Yet enterprise AI spending continues to rise. The same Goldman Sachs analysis expects enterprise agents alone to consume 56 quadrillion tokens a month by 2030, with global daily AI query volume growing from roughly 5 billion in 2025 to 23 billion. Inference dominates enterprise AI budgets because usage is growing faster than costs are falling.</p>
+<p>Yet enterprise AI spending continues to rise. The same Goldman Sachs analysis models daily queries to LLMs growing at a 40% compound annual rate to 11 billion by 2030. It also notes that the cost per token for inference is falling 60% to 70% a year, yet total consumption is projected to grow 24 times, so total spend still rises.</p>
 
 
 <p className="mb-2 font-medium text-foreground">Imagine a startup that launched an AI-powered fraud analysis agent:</p>
@@ -139,7 +139,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 </ul>
 
 
-<p>The cost per request fell. The total bill increased. This is the same phenomenon that transformed cloud computing, but at a much faster pace.</p>
+<p>The cost per user fell from $100 to $30 a month. The total bill tripled. This is the same phenomenon that transformed cloud computing, but at a much faster pace.</p>
 
 
 <p>Founders who assume falling API prices will automatically improve margins often underestimate how quickly token consumption can scale.</p>
@@ -163,13 +163,13 @@ import { BlogTable } from '@/components/blog/BlogTable';
 ## How Do AI Gross Margins Compare With SaaS Margins?
 
 
-<p>Traditional SaaS companies benefited from an extraordinary economic advantage. Once software was built, the cost of serving one additional user was relatively low. This is why many SaaS businesses achieved gross margins between 80% and 90%.</p>
+<p>Traditional SaaS companies benefited from an extraordinary economic advantage. Once software was built, the cost of serving one additional user was relatively low. This is why many SaaS businesses reach gross margins of 70% to 80% or more.</p>
 
 
 <p>AI-first companies operate differently. Every customer interaction may generate real-time compute expenses. The result is a new margin profile.</p>
 
 
-<p><a href="https://a16z.com/the-new-business-of-ai-and-how-its-different-from-traditional-software/" className="font-medium text-primary underline-offset-4 hover:underline">Andreessen Horowitz flagged this pattern</a> as early as 2020: many AI-native products operate in the 50% to 60% gross margin range, significantly below traditional SaaS benchmarks, because every request carries real compute cost.</p>
+<p><a href="https://a16z.com/the-new-business-of-ai-and-how-its-different-from-traditional-software/" className="font-medium text-primary underline-offset-4 hover:underline">Andreessen Horowitz flagged this pattern</a> in 2020: AI companies often ran 50% to 60% gross margins, below the 60% to 80%+ typical of comparable SaaS, because of heavy cloud compute for training and inference plus ongoing human support.</p>
 
 
 <p>Investors are increasingly evaluating startups through this lens. A company growing rapidly but spending an increasing percentage of revenue on inference may be viewed as less attractive than a slower-growing company with healthier economics.</p>
@@ -182,7 +182,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
   caption="Why AI-native gross margins sit below traditional SaaS."
   columns={['', 'Traditional SaaS', 'AI-native product']}
   rows={[
-    ['Typical gross margin', '80% to 90%', '50% to 60%'],
+    ['Typical gross margin', 'Roughly 60% to 80%+', '50% to 60%'],
     ['Cost of serving one more user', 'Low and mostly fixed', 'Real compute cost on every request'],
     ['Main variable cost', 'Hosting, which grows slowly with scale', 'Inference, retrieval and embeddings, which grow with usage'],
     ['What to forecast', 'Infrastructure as overhead', 'Compute per query, per user and per feature'],

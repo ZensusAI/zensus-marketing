@@ -42,7 +42,7 @@ export const meta = {
     {
       question: 'How much runway should a startup have in 2026?',
       answer:
-        'Investor expectations have shifted from roughly 12 to 15 months toward 18 to 24 months after a funding round, reflecting longer fundraising cycles and greater emphasis on capital efficiency.',
+        '18 to 24 months of runway after a funding round has long been the standard advice, and with longer gaps between rounds since 2022, Carta data suggests even that may not be enough.',
     },
   ],
 };
@@ -197,8 +197,8 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 
 <ul>
 
-  <li>Monthly expenses: $100,000</li>
-  <li>Monthly revenue: $40,000</li>
+  <li>Monthly cash outflows: $100,000</li>
+  <li>Monthly cash collected from customers: $40,000</li>
 
 </ul>
 
@@ -239,7 +239,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   width={1024}
   height={576}
   alt="Three-step diagram comparing gross burn as total cash outflow, net burn as gross burn minus revenue, and runway as cash reserve divided by net burn"
-  caption="Gross burn is total outflow. Net burn subtracts revenue. Runway is cash on hand divided by net burn."
+  caption="Gross burn is total outflow. Net burn subtracts cash collected. Runway is cash on hand divided by net burn."
 />
 
 
@@ -322,7 +322,6 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
   <li>accounting data</li>
   <li>subscription revenue</li>
   <li>payroll expenses</li>
-  <li>sales pipeline</li>
 
 </ul>
 
@@ -357,7 +356,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>If runway and burn rate were the most important startup metrics in 2021, burn multiple has become the metric investors increasingly watch in 2026.</p>
 
 
-<p>Burn multiple was popularized by David Sacks as a way to measure capital efficiency.</p>
+<p>David Sacks introduced the <a href="https://sacks.substack.com/p/the-burn-multiple-51a7e43cb200" className="font-medium text-primary underline-offset-4 hover:underline">burn multiple</a> in a 2020 essay as a measure of capital efficiency.</p>
 
 
 <p className="mb-2 font-medium text-foreground">Burn multiple formula:</p>
@@ -372,7 +371,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <ul>
 
   <li>Net burn: $200,000/month</li>
-  <li>Net new ARR created: $100,000</li>
+  <li>Net new ARR created: $100,000/month</li>
 
 </ul>
 
@@ -392,7 +391,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>In plain English: for every dollar of new recurring revenue generated, the company spent two dollars.</p>
 
 
-<p>This metric helps investors evaluate growth efficiency rather than growth alone. For the full 2026 context on runway targets and burn multiple thresholds, see our guide on <a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">13-week cash flow forecasting</a>.</p>
+<p>This metric helps investors evaluate growth efficiency rather than growth alone. For how burn multiple and runway combine into a test of whether you need to raise at all, see <a href="/blog/default-alive-vs-default-dead-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">default alive vs default dead</a>.</p>
 
 
 ## What Is a Good Burn Multiple in 2026?
@@ -422,15 +421,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>One of the most common questions founders ask today is how much runway investors expect in 2026.</p>
 
 
-<p>The benchmark has shifted significantly.</p>
-
-
-<ul>
-
-  <li><strong>In 2021:</strong> typical runway target of 12–15 months</li>
-  <li><strong>In 2026:</strong> typical runway target of 18–24 months</li>
-
-</ul>
+<p>The usual target after a funding round is 18 to 24 months of runway. That has long been the standard advice, and <a href="https://carta.com/data/linkedin-startup-runway-18-24-months-not-enough/" className="font-medium text-primary underline-offset-4 hover:underline">Carta data</a> on the longer gaps between rounds since 2022 suggests even 24 months may not be enough.</p>
 
 
 <p>Fundraising cycles are longer. Capital is more selective. Companies need more time to reach meaningful milestones before raising again.</p>
@@ -442,22 +433,21 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>Payroll is often the largest driver of burn. For a step-by-step method to know whether payroll clears weeks ahead, see <a href="/blog/will-i-make-payroll" className="font-medium text-primary underline-offset-4 hover:underline">Will I Make Payroll?</a></p>
 
 
-## Startup Runway Benchmarks by Stage
+## Startup Burn Benchmarks by Stage
 
 
-<p className="mb-2 font-medium text-foreground">Typical burn by stage:</p>
+<p>Published burn benchmarks disagree widely, because they come from different samples and years.</p>
 
 
 <ul>
 
-  <li><strong>Pre-seed:</strong> ~$100K per quarter</li>
-  <li><strong>Seed:</strong> ~$135K per quarter</li>
-  <li><strong>Series A+:</strong> ~$335K per quarter</li>
+  <li>One Q3 2023 dataset, summarised by <a href="https://www.zeni.ai/blog/average-burn-rate-for-startups" className="font-medium text-primary underline-offset-4 hover:underline">Zeni</a>, put spend at about $100K a quarter for pre-seed, $135K for seed and $335K for later-stage companies.</li>
+  <li>Other sources report far higher monthly medians at Series A.</li>
 
 </ul>
 
 
-<p>These numbers vary by geography and industry, but they provide useful reference points for founders evaluating their own burn rate.</p>
+<p>Treat any stage benchmark as a loose reference point. Your own runway, from your own bank data, is the number that matters.</p>
 
 
 <p>The goal is not minimizing burn. The goal is spending efficiently enough to reach the next milestone before cash runs out.</p>

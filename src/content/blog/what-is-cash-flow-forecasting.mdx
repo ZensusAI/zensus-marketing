@@ -70,7 +70,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 </ul>
 
 
-<p>Here is the idea in one example. A company starts the month with $120,000. It expects $90,000 from customers and $95,000 of payroll, rent, and vendor payments, so the month ends at $115,000 and looks safe. Week by week, the picture changes: two payroll runs of $40,000 leave in weeks one and three, and most customer payments arrive in week four. The balance drops to $25,000 in week three before recovering. A monthly forecast hides that dip. A weekly cash flow forecast shows it in time to act.</p>
+<p>Here is the idea in one example. A company starts the month with $120,000. It expects $90,000 from customers and $95,000 of payroll, rent, and vendor payments, so the month ends at $115,000 and looks safe. Week by week, the picture changes: two payroll runs of $40,000 leave in weeks one and three, $15,000 of rent and vendor bills leave in the first three weeks, and the $90,000 from customers arrives in week four. The balance drops to $25,000 in week three before recovering. A monthly forecast hides that dip. A weekly cash flow forecast shows it in time to act.</p>
 
 
 <p className="mb-2 font-medium text-foreground">This guide covers:</p>
@@ -353,7 +353,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 ### Long Term Forecasting
 
 
-<p>Long term forecasts may extend multiple years into the future. For a business seeking funding, the US Small Business Administration's <a href="https://www.sba.gov/business-guide/plan-your-business/write-your-business-plan" className="font-medium text-primary underline-offset-4 hover:underline">business plan guide</a> says: "Provide a prospective financial outlook for the next five years. Include forecasted income statements, balance sheets, cash flow statements, and capital expenditure budgets."</p>
+<p>Long term forecasts may extend multiple years into the future. For a business seeking funding, the US Small Business Administration's <a href="https://www.sba.gov/counseling/plan-your-business/#business-plan" className="font-medium text-primary underline-offset-4 hover:underline">business plan guide</a> says: "Provide a prospective financial outlook for the next five years. Include forecasted income statements, balance sheets, cash flow statements, and capital expenditure budgets."</p>
 
 
 <p className="mb-2 font-medium text-foreground">These forecasts support:</p>
@@ -486,7 +486,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
   caption="Weekly and monthly cash flow forecasts answer different questions; many teams run both."
   columns={['', 'Weekly forecast', 'Monthly forecast']}
   rows={[
-    ['Shows', 'The lowest balance inside each week', 'The closing balance at each month end'],
+    ['Shows', 'The closing balance at the end of each week', 'The closing balance at each month end'],
     ['Typical horizon', '13 weeks', '12 to 18 months'],
     ['Built from', 'Dated invoices, bills and payroll runs', 'Monthly totals and projected statements'],
     ['Updated', 'Every week, replacing estimates with actuals', 'Every month'],
@@ -748,7 +748,7 @@ Zensus is built for founders and finance teams who need a forecast that stays cu
 <ul>
 
   <li>
-    <strong>Connect financial data in a few minutes</strong>: OAuth to Plaid, QuickBooks, and HubSpot so bank, accounting, and subscription revenue live in one place. <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">How it works</a>.
+    <strong>Connect financial data in a few minutes</strong>: connect your bank through Plaid and authorize QuickBooks and HubSpot, so bank, accounting, and subscription revenue live in one place. <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">How it works</a>.
   </li>
   <li>
     <strong>Subscription-aware cash flow</strong>: Project when annual and quarterly contracts actually hit the bank, then <a href="/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">drill from monthly to weekly to daily</a> cash flow in a few clicks.
@@ -757,7 +757,7 @@ Zensus is built for founders and finance teams who need a forecast that stays cu
     <strong>Scenario planning in plain English</strong>: Stack hiring, churn, or revenue assumptions and watch your cash flow update. <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">Run scenarios in plain English</a>.
   </li>
   <li>
-    <strong>Alerts before cash runs out</strong>: Set a cash floor on your 30-day projection and get <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts when you breach it</a>, with re-alerts on material changes.
+    <strong>Alerts before cash runs out</strong>: Set a cash floor on your 30-day projection and get <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts when you breach it</a>, with a follow-up alert if the shortfall gets materially worse and a notice when it clears.
   </li>
 
 </ul>
