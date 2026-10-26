@@ -5,7 +5,7 @@ export const meta = {
   description:
     'MCP vs CLI access for AI agents in finance: what each is, the compliance tradeoffs, and what changes now that QuickBooks and Xero ship MCP servers.',
   date: '2026-05-28',
-  dateModified: '2026-06-10',
+  dateModified: '2026-10-25',
   category: 'Guide',
   readTime: '10 min read',
   slug: 'mcp-vs-cli-for-finance-teams',
@@ -48,6 +48,7 @@ export const meta = {
 
 import { BlogCallout } from '@/components/blog/BlogCallout';
 import { BlogFigure } from '@/components/blog/BlogFigure';
+import { BlogTable } from '@/components/blog/BlogTable';
 
 
 <p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">
@@ -75,7 +76,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 </ul>
 
 
-## Why AI Agents Suddenly Need a Way to Reach Your Finance Stack
+## Why Do AI Agents Need Access to Your Finance Stack?
 
 
 <p>Through 2024 and early 2025, most AI products were assistants. You typed, the model talked back. Useful, but bounded.</p>
@@ -109,7 +110,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 />
 
 
-## What a CLI Agent Actually Does (in Plain English)
+## What Does a CLI Agent Do?
 
 
 <p>A CLI agent gets a shell. The agent runs commands the way a developer would type them into a terminal, reads the text output, and decides what to do next.</p>
@@ -147,7 +148,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>For an engineer iterating locally, that tradeoff is fine. For an agent that is about to look at your books, it is a much harder thing to defend in front of an auditor.</p>
 
 
-## What an MCP Server Actually Does (in Plain English)
+## What Does an MCP Server Do?
 
 
 <p>The <a href="https://modelcontextprotocol.io" className="font-medium text-primary underline-offset-4 hover:underline">Model Context Protocol</a> is an open standard introduced by Anthropic in late 2024. It is now backed by OpenAI, Google, Microsoft, and IBM, with a clear public <a href="https://www.ibm.com/think/topics/model-context-protocol" className="font-medium text-primary underline-offset-4 hover:underline">explainer from IBM</a> on what the protocol does.</p>
@@ -188,7 +189,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>The cost is real. Loading a long list of tool schemas into the model's context window takes space, slows down simple tasks, and can confuse the agent on small jobs. For finance work, that cost is the price you pay for being able to prove what happened.</p>
 
 
-## Where Each One Fits, in Plain English
+## When Should Finance Teams Use MCP Instead of a CLI?
 
 
 <BlogFigure
@@ -230,10 +231,24 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 </ul>
 
 
+<BlogTable
+  caption="A CLI agent and an MCP server, compared on what matters for finance data."
+  columns={['', 'CLI agent', 'MCP server']}
+  rows={[
+    ['How it reaches data', 'Runs shell commands and reads text output', 'Calls typed tools with strict input and output schemas'],
+    ['What it can touch', 'Anything the machine user can reach', 'Only the tools the server publishes'],
+    ['Permissions', 'One boundary: the whole machine', 'Scoped per tool and per user'],
+    ['Audit trail', 'No structured record of what it read or wrote', 'A structured log of every tool call'],
+    ['Strength', 'Fast and flexible, no schema overhead', 'Auditable access to systems of record'],
+    ['Best for', 'A developer working locally with no regulated data', 'QuickBooks, the bank, the CRM and other finance data'],
+  ]}
+/>
+
+
 <p>If you are reading this and you run finance for a startup, almost every workflow you care about lands in the second list.</p>
 
 
-## The Compliance Argument: AI as a Data Processor Under Your WISP
+## Is an AI Agent a Data Processor Under Your WISP?
 
 
 <p>This is the part of the conversation that almost no one is having yet, and it is the most important one for finance teams.</p>
@@ -280,7 +295,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>You can read more about how Zensus thinks about the security posture for finance data on the <a href="/security" className="font-medium text-primary underline-offset-4 hover:underline">security page</a>, and the third parties that touch your data on the <a href="/subprocessors" className="font-medium text-primary underline-offset-4 hover:underline">subprocessors page</a>.</p>
 
 
-## What Is Shipping Right Now: QuickBooks, Xero, and Plaid
+## Which Finance Tools Have MCP Servers Today?
 
 
 <p>The reason this debate is no longer abstract is that 2025 and 2026 brought a wave of real MCP servers for the systems finance teams actually use.</p>
@@ -321,7 +336,7 @@ import { BlogFigure } from '@/components/blog/BlogFigure';
 <p>Most of these are tools the agent uses, not tools you log in to. The reader still sees QuickBooks as QuickBooks. What changes is who else, behind the scenes, can read it on your behalf, and on what terms.</p>
 
 
-## What This Changes for Cash Flow, A/R, A/P, and Month-End
+## What Does MCP Change for Cash Flow, A/R, A/P, and Month-End?
 
 
 <p>The compliance and performance questions are upstream. The downstream question is what actually gets easier when MCP is wired up correctly.</p>
