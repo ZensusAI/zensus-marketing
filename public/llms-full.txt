@@ -227,14 +227,14 @@ What the cash conversion cycle (CCC) is, how to calculate it, and how founders u
 ### Can QuickBooks Forecast Cash Flow?
 https://zensus.finance/blog/can-quickbooks-forecast-cash-flow
 
-What QuickBooks Cash Flow Planner does and does not do for founders. Key facts from the guide:
+Yes, QuickBooks Online can forecast cash flow; the guide covers its features, a step-by-step setup, its limits, and when another tool makes sense. Key facts from the guide:
 
-- QuickBooks Cash Flow Planner projects cash from connected bank activity, QuickBooks data such as future invoices, bills, and expenses, and planner items you add. Intuit publishes no single fixed horizon: its Cash Flow Planner FAQ says the 24-month chart view shows 14 months ahead, and the 12-month and 6-month views show 2 months.
-- It projects from what is already in the books, so hires, fundraising, and pipeline deals appear only if entered by hand; it is built for operational liquidity, not runway modeling, hiring scenarios, or board-level planning.
-- Unpaid invoices due in the future can be included in forecasts, but collection timing assumptions may not match reality.
-- Cash Flow Planner is not available when QuickBooks Multicurrency is enabled.
-- Venture-backed startups often keep QuickBooks for accounting and add a dedicated forecasting layer for runway, scenarios, and subscription-aware collections timing.
-- Zensus connects to QuickBooks via OAuth and extends forecasting with Plaid bank data, HubSpot subscriptions, scenario planning, and Slack alerts.
+- Intuit documents a 13-week cash flow forecast grid in QuickBooks Online Simple Start, Essentials, Plus, and Advanced, with beginning cash, money in, money out, and ending cash, plus open invoices, recurring bills, manual projections, and AI predictions.
+- Expected dates can be changed or transactions excluded without editing the original invoice or bill; projections can be one-time or repeating and do not change the books.
+- The cash runway card estimates how many months cash may last from average spending over the past three months, which is not the same as finding the week cash falls below a threshold.
+- Intuit Intelligence adds 12-month forecasts and scenario analysis and needs at least two years of transaction history; Intuit Enterprise Suite adds three-way financial forecasts.
+- Worked example: a $60,000 customer payment arriving two weeks late leaves the month-end balance at $85,000 but drops the lowest week from $55,000 to $25,000, $15,000 below a $40,000 reserve.
+- QuickBooks Desktop 2022 and later have no Cash Flow Projector. Zensus is independent of Intuit and builds a weekly forecast on QuickBooks Online data, Plaid bank data, and HubSpot invoices and subscriptions.
 
 ### Zero Cash Date for Founders
 https://zensus.finance/blog/zero-cash-date-for-founders

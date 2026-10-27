@@ -140,7 +140,7 @@ const related: IntegrationRelatedLink[] = [
     to: "/blog/can-quickbooks-forecast-cash-flow",
     label: "Can QuickBooks forecast cash flow?",
     description:
-      "What the built-in Cash Flow Planner does, where it stops, and when a business needs dedicated forecasting on top of QuickBooks.",
+      "What QuickBooks Online forecasts on its own, how to set it up, its limits, and when a business needs dedicated forecasting on top.",
   },
   {
     to: "/compare/zensus-vs-float",
