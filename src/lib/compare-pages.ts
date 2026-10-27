@@ -73,7 +73,7 @@ export const FLOAT_COMPARE: ComparePageConfig = {
     {
       to: "/blog/what-is-a-13-week-cash-flow-forecast",
       label: "What is a 13-week cash flow forecast?",
-      why: "the weekly view both tools offer, and how to build one.",
+      why: "the weekly view both tools offer, and why it beats a monthly one.",
     },
     {
       to: "/tools/runway-calculator",
