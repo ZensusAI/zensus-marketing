@@ -208,7 +208,7 @@ export const PULSE_COMPARE: ComparePageConfig = {
     {
       to: "/blog/can-quickbooks-forecast-cash-flow",
       label: "Can QuickBooks forecast cash flow?",
-      why: "what QuickBooks Cash Flow Planner does on its own, and where it stops.",
+      why: "what QuickBooks can forecast on its own, from its 13-week grid to its limits.",
     },
     {
       to: "/integrations/slack",

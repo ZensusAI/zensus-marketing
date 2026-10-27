@@ -308,7 +308,7 @@ const QuickBooksForecasting = () => (
             <Link to="/blog/can-quickbooks-forecast-cash-flow" className={linkCls}>
               Can QuickBooks forecast cash flow?
             </Link>
-            , walks through the planner in detail.
+            , walks through its forecasting features and how to set them up.
           </p>
         </Section>
 
@@ -659,8 +659,8 @@ const QuickBooksForecasting = () => (
                 Can QuickBooks forecast cash flow?
               </Link>
               <span className="block">
-                The built-in planner, feature by feature, with Intuit's own
-                wording.
+                QuickBooks Online's own forecasting, step by step, with its
+                limits.
               </span>
             </li>
             <li>

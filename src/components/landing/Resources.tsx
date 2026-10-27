@@ -75,7 +75,7 @@ const GUIDES: ResourceLink[] = [
   {
     to: "/blog/can-quickbooks-forecast-cash-flow",
     label: "Can QuickBooks forecast cash flow?",
-    description: "What Cash Flow Planner does, and where it stops.",
+    description: "Its 13-week forecast, how to set it up, and its limits.",
   },
   {
     to: "/quickbooks-cash-flow-forecasting",
