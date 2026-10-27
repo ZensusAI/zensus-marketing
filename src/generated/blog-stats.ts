@@ -144,10 +144,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-happens-if-you-miss-payroll": {
-    "wordCount": 1850,
+    "wordCount": 2348,
     "images": [
-      "https://zensus.finance/blog/what-happens-if-you-miss-payroll/payroll-not-processed-consequences.webp",
-      "https://zensus.finance/blog/what-happens-if-you-miss-payroll/seven-day-payroll-emergency-plan.webp"
+      "https://zensus.finance/blog/what-happens-if-you-miss-payroll/payroll-not-processed-consequences.webp"
     ],
     "thumbnail": {
       "width": 1024,
@@ -175,7 +174,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "will-i-make-payroll": {
-    "wordCount": 1572,
+    "wordCount": 1573,
     "images": [
       "https://zensus.finance/blog/will-i-make-payroll/june-payroll-calendar-projection.webp",
       "https://zensus.finance/blog/will-i-make-payroll/payroll-projection-method.webp",
