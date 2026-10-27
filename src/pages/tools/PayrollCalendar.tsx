@@ -29,6 +29,7 @@ import {
   nextPaydayStatus,
   payrollCalendarCsv,
   payrollCalendarIcs,
+  payrollCalendarSheets,
   type PayFrequency,
   type YearSummary,
 } from "@/lib/payroll-calendar";
@@ -38,10 +39,13 @@ const PAGE_URL = `${SITE_URL}/tools/payroll-calendar`;
 // The title names both years on purpose. Before #127 it read "(and 2026)" and the
 // page held position 7 to 9 for about 230 impressions a day; the day #127 dropped
 // 2026 from the title, those impressions fell by 95% (Search Console, 2026-10-19).
-// Titles are capped at 60 characters with " | Zensus" appended.
-const PAGE_TITLE = "2027 and 2026 Payroll Calendar and Pay Periods";
+// Titles are capped at 60 characters with " | Zensus" appended. "Template" was
+// added in October 2026 for "payroll calendar template" searches, where the
+// result above this page was a 2024 template; the slash keeps both years
+// inside the cap.
+const PAGE_TITLE = "2027/2026 Payroll Calendar Template and Pay Periods";
 const PAGE_DESCRIPTION =
-  "Every 2027 and 2026 pay date for biweekly, weekly, semimonthly and monthly payroll, moved off bank holidays: 26 or 27 pay periods, CSV and ICS.";
+  "Free 2027 and 2026 payroll calendar template: every biweekly, weekly, semimonthly and monthly pay date, moved off bank holidays. Excel, CSV and ICS.";
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
@@ -83,27 +87,27 @@ const FAQS = [
   {
     question: "Can I download the 2027 payroll calendar?",
     answer:
-      "Yes. Download CSV gives one row per payday for 2026 and 2027 with the period start, period end, scheduled date and paid date, for Excel or Google Sheets. Add to calendar gives an ICS file that imports into Google Calendar, Outlook and Apple Calendar as all-day payday events. Print gives a printable version of the tables.",
+      "Yes, free and without an email. Download Excel gives a workbook with a summary sheet and one sheet each for 2026 and 2027, one row per payday with the period start, period end, scheduled date, paid date and amount; it opens in Google Sheets too. Download CSV gives the same rows as plain text. Add to calendar gives an ICS file that imports into Google Calendar, Outlook and Apple Calendar as all-day payday events. Print gives a printable version of the tables.",
   },
   {
     question: "How many pay periods are in 2026?",
     answer:
-      "It depends on pay frequency and on which dates you pay. Biweekly schedules have 26 pay periods in most years, but 27 in 2026 when one of the paydays is Thursday, January 1, 2026. Weekly schedules have 52, or 53 if payday is a Thursday. Semimonthly has 24. Monthly has 12. Enter any payday on your schedule above to see your count.",
+      "It depends on pay frequency and on which dates you pay. Biweekly schedules have 26 pay periods in most years. A biweekly Friday schedule that pays on January 2, 2026 has 27 in 2026 when its Friday, January 1, 2027 payday is paid early, on Thursday, December 31, 2026; a biweekly Thursday schedule with a January 1, 2026 payday also has 27, unless that holiday run was paid early, on December 31, 2025. Weekly Friday schedules have 53 in 2026 for the same reason. Semimonthly has 24. Monthly has 12. Enter any payday on your schedule above to see your count.",
   },
   {
     question: "Which months have three paychecks in 2026?",
     answer:
-      "On a biweekly schedule, most months have two paychecks, but two months each year typically have three because 26 pay periods do not divide evenly across 12 calendar months. This calculator highlights those months and shows the extra cash outflow if you enter an amount per run.",
+      "On a biweekly Friday schedule that pays on January 2, 2026, January, July and December 2026 have three paychecks, the December one because the January 1, 2027 payday is paid on December 31. On the alternate Fridays, starting January 9, 2026, May and October have three. The calculator above marks the months for your own schedule and shows the extra cash outflow if you enter an amount per run.",
   },
   {
     question: "Why does 2026 have 27 pay periods for biweekly payroll?",
     answer:
-      "Biweekly pay is every 14 days. Over a 365-day calendar year that works out to about 26.07 cycles, so an early-January first payday can produce 27 pay dates that land inside the same calendar year. ADP and other payroll providers document this for 2026 schedules.",
+      "Because January 1, 2027 is a Friday and a bank holiday. A biweekly Friday payroll with that payday usually pays it a day early, on Thursday, December 31, 2026, which puts a 27th pay date into 2026. Pay it on Monday, January 4, 2027 instead and 2027 has the 27. Our guide to 27 pay periods in 2026 or 2027 walks through each case.",
   },
   {
     question: "How does payroll timing affect cash flow forecasting?",
     answer:
-      "Spreading annual payroll evenly across 12 months understates cash outflows in three-paycheck months and in 27-period years. Cash flow forecasts need pay dates on the calendar, not a flat monthly average. That is why payroll is often the first line item founders get wrong in a spreadsheet.",
+      "Spreading annual payroll evenly across 12 months understates cash outflows in three-paycheck months and in 27-period years. Cash flow forecasts need pay dates on the calendar, not a flat monthly average. That is why payroll is often the first line item a business gets wrong in a spreadsheet.",
   },
   {
     question: "How do I plan for three-paycheck months?",
@@ -320,6 +324,17 @@ const PayrollCalendar = () => {
   const fileBase = `zensus-payroll-calendar-2026-2027-${frequency}`;
   const downloadCsv = () =>
     downloadText(`${fileBase}.csv`, "text/csv;charset=utf-8", payrollCalendarCsv(result));
+  const downloadXlsx = async () => {
+    // Loaded on click so the spreadsheet library stays out of the page bundle.
+    const XLSX = await import("xlsx");
+    const workbook = XLSX.utils.book_new();
+    for (const sheet of payrollCalendarSheets(result, amountPerRun)) {
+      const ws = XLSX.utils.aoa_to_sheet(sheet.rows, { cellDates: true, dateNF: "yyyy-mm-dd" });
+      ws["!cols"] = sheet.rows[0].map((_, i) => ({ wch: i === 0 ? 12 : 18 }));
+      XLSX.utils.book_append_sheet(workbook, ws, sheet.name);
+    }
+    XLSX.writeFile(workbook, `${fileBase}.xlsx`);
+  };
   const downloadIcs = () =>
     downloadText(`${fileBase}.ics`, "text/calendar;charset=utf-8", payrollCalendarIcs(result));
   const printPage = () => {
@@ -360,13 +375,21 @@ const PayrollCalendar = () => {
             Free tool
           </p>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-            2027 and 2026 payroll calendar and pay period calculator
+            2027 and 2026 payroll calendar template and pay period calculator
           </h1>
-          <p className="text-lg text-muted-foreground mb-8">
+          <p className="text-lg text-muted-foreground mb-3">
             Every pay date in 2027 and 2026 for your schedule. Enter any payday and your pay
             frequency to get period start and end dates, paydays moved off weekends and bank
             holidays, 26 or 27 pay periods, three-paycheck months and the monthly cash impact.
-            Download it as a CSV, add it to your calendar, or print it.
+            Download it as an Excel template or a CSV, add it to your calendar, or print it.
+          </p>
+          <p className="text-sm text-muted-foreground mb-8">
+            Wondering whether your payroll has 27 pay dates in 2026 or 2027? It comes down to one
+            New Year payday:{" "}
+            <Link to="/blog/27-pay-periods-2026-2027" className={linkCls}>
+              27 pay periods in 2026 or 2027
+            </Link>{" "}
+            explains which year gets the extra run on your schedule.
           </p>
 
           {status ? (
@@ -469,6 +492,9 @@ const PayrollCalendar = () => {
           </div>
 
           <div className="flex flex-wrap gap-3 mb-2 print:hidden">
+            <Button type="button" variant="outline" onClick={downloadXlsx}>
+              Download Excel (.xlsx)
+            </Button>
             <Button type="button" variant="outline" onClick={downloadCsv}>
               Download CSV
             </Button>
@@ -480,8 +506,9 @@ const PayrollCalendar = () => {
             </Button>
           </div>
           <p className="text-xs text-muted-foreground mb-8 print:hidden">
-            The CSV opens in Excel or Google Sheets, one row per payday with period start and end.
-            The ICS file adds every payday to Google Calendar, Outlook or Apple Calendar.
+            The Excel template has a summary sheet and a sheet for each year, one row per payday,
+            and opens in Google Sheets too. The CSV has the same rows as plain text. The ICS file
+            adds every payday to Google Calendar, Outlook or Apple Calendar.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
