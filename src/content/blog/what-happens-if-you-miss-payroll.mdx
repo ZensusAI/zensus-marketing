@@ -57,6 +57,11 @@ export const meta = {
       answer:
         "Count the cash that's actually in the bank on the next payroll date. Add only payments that will clear by then. Subtract all earlier commitments. Compare to your full payroll requirement (wages + taxes). If it's short, act before the deadline.",
     },
+    {
+      question: "Can founders be personally liable for unpaid wages?",
+      answer:
+        "For unpaid payroll taxes, yes. The IRS can assess the Trust Fund Recovery Penalty personally against anyone responsible for paying over withheld taxes who willfully fails to, and the penalty equals the unpaid trust fund tax. For unpaid wages it depends on the state. California, for example, allows an owner, director, officer, or managing agent to be held liable for certain wage violations. Get local legal counsel quickly.",
+    },
   ],
 };
 
@@ -253,7 +258,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
   numeric={[1]}
 />
 
-<p>These percentages don't stack. But interest accumulates. And in serious cases, the IRS can assess the full 15% or pursue "<a href="https://www.irs.gov/businesses/small-businesses-self-employed/employment-taxes-and-the-trust-fund-recovery-penalty-tfrp" className="font-medium text-primary underline-offset-4 hover:underline">trust fund recovery</a>" against responsible individuals.</p>
+<p>These percentages don't stack. But interest accumulates. And if a deposit stays unpaid after an IRS notice, it rises to 15%. In serious cases, the IRS can also pursue "<a href="https://www.irs.gov/businesses/small-businesses-self-employed/employment-taxes-and-the-trust-fund-recovery-penalty-tfrp" className="font-medium text-primary underline-offset-4 hover:underline">trust fund recovery</a>" against responsible individuals.</p>
 
 <p><strong>Never divert payroll taxes to fund payroll.</strong> That's a separate legal problem from a cash-flow problem.</p>
 
@@ -483,7 +488,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>Model these scenarios. You might find you have a $5k gap that would otherwise go unnoticed.</p>
 
-<p>This is where tools like Zensus come in. We build cash-flow forecasts that focus on <strong>actual dates</strong>, giving founders and finance teams the visibility they need to make decisions <em>before</em> a crisis hits.</p>
+<p>This is where tools like Zensus come in. We build cash-flow forecasts around <strong>when cash is due to move</strong>, giving founders and finance teams the visibility they need to make decisions <em>before</em> a crisis hits.</p>
 
 <p>The goal isn't to predict the future. It's to reveal funding gaps <strong>early enough</strong> to fix them.</p>
 

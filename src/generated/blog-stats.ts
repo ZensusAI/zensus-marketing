@@ -144,7 +144,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-happens-if-you-miss-payroll": {
-    "wordCount": 2348,
+    "wordCount": 2359,
     "images": [
       "https://zensus.finance/blog/what-happens-if-you-miss-payroll/payroll-not-processed-consequences.webp"
     ],
