@@ -19,7 +19,9 @@ export function KeepReading({ post }: { post: BlogPostMeta }) {
 
   return (
     <section aria-labelledby="keep-reading-heading" className="pt-28 min-[760px]:pt-44">
-      <div className="flex items-end justify-between gap-4 border-b border-border pb-[18px]">
+      {/* Wraps so a long topic name ("Tools and integrations") pushes the
+          link to its own line on phones instead of past the screen edge. */}
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2 border-b border-border pb-[18px]">
         <h2
           id="keep-reading-heading"
           className="text-balance text-[28px] font-semibold leading-[1.1] tracking-[-0.035em] text-foreground min-[760px]:text-[40px]"
