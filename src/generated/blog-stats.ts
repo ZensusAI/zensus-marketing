@@ -155,11 +155,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-is-a-13-week-cash-flow-forecast": {
-    "wordCount": 2268,
+    "wordCount": 2466,
     "images": [
-      "https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast/13-week-cash-flow-forecast.webp",
-      "https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast/revenue-earned-vs-cash-received.webp",
-      "https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast/revenue-vs-cash.webp"
+      "https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast/13-week-cash-flow-forecast.webp"
     ],
     "thumbnail": {
       "width": 1024,
@@ -190,7 +188,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "zero-cash-date-for-founders": {
-    "wordCount": 2549,
+    "wordCount": 2589,
     "images": [
       "https://zensus.finance/blog/zero-cash-date-for-founders/runway-vs-zero-cash-date.webp"
     ],

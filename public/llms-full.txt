@@ -105,15 +105,17 @@ Cash flow forecasting estimates how much money a business will have available in
 ### What Is a 13-Week Cash Flow Forecast?
 https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast
 
-The 13-week cash flow forecast is the standard short-term liquidity model: one fiscal quarter of weekly cash visibility. Key facts from the guide:
+A 13-week cash flow forecast is a rolling, week-by-week projection of the cash you expect to receive and pay over the next 91 days. Key facts from the guide:
 
-- 13 weeks is long enough to capture payroll cycles, receivables, payables, and quarterly billing events, but short enough for direct forecasting to stay accurate.
-- A company can report $1M ARR with strong growth and still hit cash pressure; ARR is not cash timing.
-- Revenue recognition is not cash timing either: a $24,000 annual contract may be recognized at $2,000 a month while the cash arrives as one $24,000 payment upfront.
-- Annual prepaid contracts can extend runway by several months without changing price or customer count.
-- Carta's State of Seed data shows the median time from seed to Series A now runs over two years, which is why 2026 runway guidance is 18 to 24 months after funding.
-- Investors look for a burn multiple below 2x for venture-stage SaaS (David Sacks's threshold).
-- Best practice is three scenarios per forecast: base case, upside, and downside; the spread between them matters more than any single number.
+- It is a direct-method model built from real cash moving in and out, not derived from the P&L. Four lines: opening cash, cash inflows, cash outflows, closing cash.
+- Closing Cash = Opening Cash + Cash Inflows - Cash Outflows; each week's closing balance becomes the next week's opening.
+- Opening cash should be cash that is actually available to spend, and inflows should land when customers actually pay, not when the invoice is issued or the terms say.
+- A month can end at $30,000 while week 2 closes at $7,000, $3,000 under a $10,000 floor; a monthly view hides that.
+- In the worked 13-week example ($100,000 start, $40,000 floor), receipts total $320,000, payments $340,000, and week 13 closes at $80,000, but week 5 drops to $35,000, $5,000 below the floor.
+- The forecast rolls: each week, compare forecast to actuals, ask why on big variances, drop the finished week, and add a new 13th week.
+- A 13-week forecast is not a budget or a P&L: it is cash basis and rolling, where a budget and a P&L are accrual basis.
+- ARR is not cash: a $30,000 annual prepayment is $30,000 of cash in month one but $2,500 a month of revenue on the P&L.
+- For critical payments a daily view matters, because a healthy week-end balance can hide a midweek shortfall.
 - A free downloadable 13-week template (XLSX with chained weekly balances and a cash buffer check) is available at https://zensus.finance/templates/13-week-cash-flow-template.xlsx, and a browser builder that fills in a first 13 weeks is at https://zensus.finance/tools/13-week-cash-flow-template
 
 ### Cash Flow Early Warning System
