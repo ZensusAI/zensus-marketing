@@ -68,7 +68,7 @@ const CARDS = [
   {
     slug: "tools-runway-calculator",
     category: "Free Tool",
-    title: "Startup runway calculator",
+    title: "Zero cash date and runway calculator",
     subtitle:
       "Your zero-cash date, plus what a new hire at fully loaded cost does to it.",
     accent: "green",

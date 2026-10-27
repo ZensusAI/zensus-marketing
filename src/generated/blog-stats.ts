@@ -190,11 +190,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "zero-cash-date-for-founders": {
-    "wordCount": 2069,
+    "wordCount": 2549,
     "images": [
-      "https://zensus.finance/blog/zero-cash-date-for-founders/runway-vs-zero-cash-date.webp",
-      "https://zensus.finance/blog/zero-cash-date-for-founders/how-to-calculate-zero-cash-date.webp",
-      "https://zensus.finance/blog/zero-cash-date-for-founders/weekly-forecasting-finds-risk-earlier.webp"
+      "https://zensus.finance/blog/zero-cash-date-for-founders/runway-vs-zero-cash-date.webp"
     ],
     "thumbnail": {
       "width": 1024,

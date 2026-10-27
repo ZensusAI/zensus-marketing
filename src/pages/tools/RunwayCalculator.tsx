@@ -21,7 +21,9 @@ import {
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
 const PAGE_URL = `${SITE_URL}/tools/runway-calculator`;
-const PAGE_TITLE = "Startup Runway Calculator: Find Your Zero-Cash Date";
+// Leads with "zero cash date", the search this page already appears for
+// (around position 17), and keeps "startup runway calculator".
+const PAGE_TITLE = "Zero Cash Date and Startup Runway Calculator";
 const PAGE_DESCRIPTION =
   "Free startup runway calculator: enter cash, revenue, and expenses to get your zero-cash date, then model what a new hire or an annual contract does to it.";
 
@@ -64,7 +66,7 @@ const webAppLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "@id": `${PAGE_URL}#app`,
-  name: "Zensus Startup Runway Calculator",
+  name: "Zensus Zero Cash Date and Startup Runway Calculator",
   url: PAGE_URL,
   description: PAGE_DESCRIPTION,
   applicationCategory: "FinanceApplication",
@@ -208,7 +210,7 @@ const RunwayCalculator = () => {
             Free tool
           </p>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-            Startup runway calculator
+            Zero cash date and startup runway calculator
           </h1>
           <p className="text-lg text-muted-foreground mb-10">
             Enter your cash, revenue, and expenses to get your runway and your

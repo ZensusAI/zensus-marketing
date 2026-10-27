@@ -239,13 +239,14 @@ Yes, QuickBooks Online can forecast cash flow; the guide covers its features, a 
 ### Zero Cash Date for Founders
 https://zensus.finance/blog/zero-cash-date-for-founders
 
-How to calculate zero cash date with weekly forecasts instead of monthly runway averages. Key facts from the guide:
+How to calculate when your cash runs out from dated receipts and payments instead of a monthly runway average. Key facts from the guide:
 
-- Zero cash date is the calendar day projected cash reaches zero; runway is a smoothed month count and can overstate survival time.
-- Monthly burn of $50k on $300k cash implies six months, but a weekly model with $30k biweekly payroll, a $36k annual prepayment in week 1, and a $100k renewal due in week 22 runs out of cash in week 20, about four and a half months in.
-- Weekly forecasting captures payroll clustering, collection delays, vendor spikes, and tax timing.
-- A rolling 13-week cash flow forecast is the standard operational horizon for zero cash date planning.
-- Zensus calculates zero-cash date from Plaid, QuickBooks, and HubSpot data with weekly drill-down and Slack alerts.
+- A zero cash date is the first point projected available cash reaches zero; track it alongside the first negative balance and the first cash-floor breach.
+- Runway is a duration (available cash divided by average monthly net burn); the zero cash date is a calendar point, found by rolling cash forward week by week.
+- $300,000 at $50,000 a month looks like six months, but with $30,000 biweekly payroll, a $36,000 prepayment in week 1, and a $100,000 customer renewal arriving in week 22, cash first goes negative in week 20, about 4.5 months in.
+- A positive week-end balance can hide a shortfall: $50,000, then $40,000 payroll on Nov 2, a $25,000 vendor payment on Nov 4 (minus $15,000), and a $35,000 receipt on Nov 6 ends the week at $20,000.
+- A $30,000 cash floor is breached on Nov 2, two days before the first negative balance; weekly models show the week at risk, daily schedules show the day.
+- Zensus builds a weekly forecast from Plaid, QuickBooks, and HubSpot data, shows the projected cash-out month, and sends Slack alerts on a cash floor.
 
 ### HubSpot Pipeline to Cash Forecast
 https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast
@@ -308,7 +309,7 @@ A finance team's guide to letting AI touch financial data, comparing Model Conte
 
 ## Free Tools
 
-### Startup Runway Calculator
+### Zero Cash Date and Startup Runway Calculator
 https://zensus.finance/tools/runway-calculator
 
 Free interactive calculator: enter cash, monthly revenue, and monthly expenses to get your runway in months and your projected zero-cash date. Models hiring impact at 1.3x loaded salary cost and the timing of annual contract payments. No signup required.
