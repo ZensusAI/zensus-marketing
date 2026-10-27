@@ -233,11 +233,11 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>When you roll this forward, you might find that by <strong>week 20</strong>, your cash balance first hits zero, <strong>4.5 months out</strong>, not the full 6 months you thought.</p>
 
-<p>Why? Because the week 20 payroll lands two weeks before that $100,000 customer renewal arrives in week 22. Those two weeks of negative balance could be deadly.</p>
+<p>Why? Because the week 20 payroll lands two weeks before that $100,000 customer renewal arrives in week 22. Those two weeks of negative balance could be deadly. Over six months, the average burn really is $50,000; the timing is what moves the zero forward.</p>
 
 <p><strong>This is the central insight:</strong> Your first projected shortfall can arrive well before your "6-month runway" estimate suggests.</p>
 
-<p><strong>But here's the nuance:</strong> A week-20 zero is a forecast, not a prophecy. If your biggest customer pays that renewal two weeks early, you never cross zero. If it pays two weeks late, the shortfall lasts until week 24.</p>
+<p><strong>But here's the nuance:</strong> A week-20 zero is a forecast, not a prophecy. If your biggest customer pays that renewal two weeks early, cash stays above zero until week 26, the six months the average promised. If it pays two weeks late, the shortfall lasts until week 24.</p>
 
 <p>For a smaller, simpler example that's easy to reproduce:</p>
 
@@ -270,21 +270,21 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p><em>"How much cash did we have at month-end?"</em></p>
 
-<p><strong>Good for investors.</strong> If they know you had $50,000 on the 31st, they're relieved.</p>
+<p><strong>Good for investors.</strong> If they know you had $50,000 at month-end, they're relieved.</p>
 
-<p><strong>Not useful if you're making payroll.</strong> You don't get to decide when the 31st hit. You get to decide if there's enough money when payroll clears.</p>
+<p><strong>Not useful if you're making payroll.</strong> You don't get to decide when month-end hits. You get to decide if there's enough money when payroll clears.</p>
 
 <p className="mb-2 font-medium text-foreground">Consider this <strong>November example</strong>:</p>
 
 <ul>
   <li>Nov 1: Start with $50,000</li>
-  <li>Nov 15 (payroll): Pay $25,000 → $25,000 remaining</li>
-  <li>Nov 30 (big client): Receive $30,000 → $55,000 month-end</li>
+  <li>Nov 15 (payroll): Pay $55,000 → -$5,000 remaining</li>
+  <li>Nov 30 (big client): Receive $60,000 → $55,000 month-end</li>
 </ul>
 
 <p>Month-end looks great: <strong>$55,000, up from $50,000!</strong></p>
 
-<p>But wait: the jump from $25,000 to $55,000 depends on the client paying on Nov 30. What if the client is going to pay on Dec 1st, not Nov 30th?</p>
+<p>But wait: payroll on Nov 15 needed $5,000 you didn't have, and the jump from -$5,000 to $55,000 depends on the client paying on Nov 30. What if the client is going to pay on Dec 1st, not Nov 30th?</p>
 
 <p><strong>This is why weekly forecasting helps:</strong> It narrows the scope and makes dangerous timing gaps visible.</p>
 
@@ -304,16 +304,16 @@ import { BlogTable } from '@/components/blog/BlogTable';
   <li>A buffer for unexpected delays</li>
 </ul>
 
-<p>In the example above, suppose your policy is to keep at least <strong>$30,000</strong> in the account.</p>
+<p>In the Nov 2 to Nov 6 example above, suppose your policy is to keep at least <strong>$30,000</strong> in the account.</p>
 
-<p className="mb-2 font-medium text-foreground">Looking at the November example:</p>
+<p className="mb-2 font-medium text-foreground">Looking at that example:</p>
 
 <ul>
-  <li>Nov 1: $50,000</li>
+  <li>Before Nov 2: $50,000</li>
   <li>Nov 2: After payroll, $10,000 → <strong>This is your first cash-floor breach</strong></li>
 </ul>
 
-<p>Your company technically still has "positive cash" ($10,000 &gt; $0), but it's below what you need to keep running. If payroll comes again in 10 days, you've already lost the month.</p>
+<p>Your company technically still has "positive cash" ($10,000 &gt; $0), but it's below what you need to keep running. If the next payroll is two weeks away, $10,000 will not cover it.</p>
 
 <p><strong>Your first cash-floor breach (Nov 2) comes 2 days before your first zero-or-below point (Nov 4).</strong></p>
 

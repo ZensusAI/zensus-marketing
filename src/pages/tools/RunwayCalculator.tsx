@@ -66,7 +66,7 @@ const webAppLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "@id": `${PAGE_URL}#app`,
-  name: "Zensus Startup Runway Calculator",
+  name: "Zensus Zero Cash Date and Startup Runway Calculator",
   url: PAGE_URL,
   description: PAGE_DESCRIPTION,
   applicationCategory: "FinanceApplication",

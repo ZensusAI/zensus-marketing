@@ -80,7 +80,7 @@ const entries: ChangelogEntry[] = [
     date: "2026-09-08",
     category: "New",
     title: "Zero-cash date on the runway chart",
-    learnMore: { to: "/blog/zero-cash-date-for-founders", label: "How the zero-cash date is calculated" },
+    learnMore: { to: "/blog/zero-cash-date-for-founders", label: "How a zero-cash date is calculated" },
     body: [
       "The chart shows your zero-cash date.",
       "The header names that date alongside the other runway metrics.",
