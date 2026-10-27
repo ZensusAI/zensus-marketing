@@ -94,13 +94,13 @@ Only you. Your financial data is never shared, sold, or used to train AI models.
 ### What Is Cash Flow Forecasting?
 https://zensus.finance/blog/what-is-cash-flow-forecasting
 
-Cash flow forecasting predicts how much cash a business will have on hand at future points in time, based on expected inflows and outflows. Key facts from the guide:
+Cash flow forecasting estimates how much money a business will have available in the future by predicting when cash comes in and goes out. Key facts from the guide:
 
-- Direct forecasting projects actual cash receipts and payments; it is the accurate method for horizons up to about 13 weeks.
-- Indirect forecasting derives cash from projected income statements and balance sheets; it suits longer strategic horizons.
-- A rolling forecast continuously extends the planning window (for example, always showing the next 13 weeks) by adding a new period as each week closes.
-- Short-term forecasts (daily, weekly, monthly) manage operating liquidity; long-term forecasts extend multiple years and support strategic planning and fundraising.
-- Zensus automates the repetitive parts of the workflow: data sync from Plaid, QuickBooks, and HubSpot, expense categorization, and projection updates.
+- Every forecast has four building blocks: opening cash, cash inflows, cash outflows, and closing cash, which becomes the next period's opening cash.
+- Ending Cash = Opening Cash + Cash Inflows - Cash Outflows; $50,000 + $35,000 - $42,000 = $43,000.
+- A month that ends at $21,000 can drop to $1,000 in Week 2, which is why weekly forecasts catch gaps monthly ones hide.
+- The direct method suits short-term weekly forecasting; the indirect method suits longer-term planning. A 13-week direct-method rolling forecast is the recommended primary tool.
+- A cash flow statement reports what happened, a forecast predicts what will happen, and a budget sets what you want to happen.
 
 ### What Is a 13-Week Cash Flow Forecast?
 https://zensus.finance/blog/what-is-a-13-week-cash-flow-forecast
@@ -298,12 +298,13 @@ An eight-step build of a 13-week cash flow forecast in Excel, matching the free 
 ### MCP vs CLI for Finance Teams
 https://zensus.finance/blog/mcp-vs-cli-for-finance-teams
 
-A practical comparison of Model Context Protocol (MCP) servers and CLI access for AI agents working with financial data. Key facts from the guide:
+A finance team's guide to letting AI touch financial data, comparing Model Context Protocol (MCP) with command-line (CLI) scripts. Key facts from the guide:
 
-- MCP gives agents typed, scoped, auditable access to financial systems; CLI access is broader but harder to constrain and audit.
-- QuickBooks and Xero now ship MCP servers, which moves agent access from custom integration work to a supported vendor surface.
-- For finance teams, the compliance tradeoff favors MCP: least-privilege scopes, structured tool definitions, and audit logs.
-- Zensus's cash flow agent uses typed integrations and scoped tools (the same architecture the guide recommends) to keep inference costs low and behavior predictable.
+- MCP is built for AI to discover and call approved tools in a chat; CLI is for running commands you have already defined, such as a Monday report.
+- Neither is inherently more secure. Permissions, audit trails, and keeping AI from making changes have to be designed in either case.
+- Microsoft's Dynamics 365 ERP MCP server acts within the authenticated user's security role, and QuickBooks has an MCP connector for Google Gemini.
+- The recommended setup is hybrid: AI retrieves data through MCP, a controlled script validates it, a deterministic engine calculates the forecast, and a human approves before anything is posted.
+- Zensus is not an MCP server; it reads bank, QuickBooks, and HubSpot data to build a cash forecast and never posts entries or moves money.
 
 ## Free Tools
 
@@ -315,7 +316,7 @@ Free interactive calculator: enter cash, monthly revenue, and monthly expenses t
 ### 2027 and 2026 Payroll Calendar and Pay Period Calculator
 https://zensus.finance/tools/payroll-calendar
 
-Free tool: every 2026 and 2027 pay date for weekly, biweekly, semimonthly and monthly schedules, with period start and end dates, paydays moved off weekends and Federal Reserve holidays to the previous banking day, 26 or 27 pay periods, three-paycheck months, monthly payroll cash impact, and CSV and ICS downloads. The page also lists the 2027 pay dates for the common schedules in plain text and the 2026 and 2027 Federal Reserve holidays.
+Free tool: every 2026 and 2027 pay date for weekly, biweekly, semimonthly and monthly schedules, with period start and end dates, paydays moved off weekends and Federal Reserve holidays to the previous banking day, 26 or 27 pay periods, three-paycheck months, monthly payroll cash impact, and Excel, CSV and ICS downloads. The page also lists the 2027 pay dates for the common schedules in plain text and the 2026 and 2027 Federal Reserve holidays.
 
 ### 13-Week Cash Flow Forecast Template and Builder
 https://zensus.finance/tools/13-week-cash-flow-template

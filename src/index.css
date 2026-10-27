@@ -351,6 +351,25 @@
     line-height: 1.5;
     color: #c9f2db;
   }
+  /* A fenced code block: one forest panel that scrolls sideways on phones
+     instead of widening the page; the code inside drops its chip styling. */
+  .blog-article-body pre {
+    margin: 22px 0;
+    overflow-x: auto;
+    border-radius: 14px;
+    background: hsl(var(--forest));
+    padding: 14px 18px;
+  }
+  .blog-article-body pre code {
+    display: block;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    white-space: pre;
+    /* Geist Mono joins "--" into one glyph, which hides the space before a
+       command-line flag. */
+    font-variant-ligatures: none;
+  }
   /* The callout is forest: its prose links and bold go light. */
   .blog-article-body .blog-callout-body a {
     color: hsl(var(--sage-light));

@@ -2,7 +2,7 @@
 // Regenerate with: node scripts/generate-blog-stats.mjs
 export const blogStats: Record<string, { wordCount: number; images: string[]; thumbnail?: { width: number; height: number } }> = {
   "27-pay-periods-2026-2027": {
-    "wordCount": 1856,
+    "wordCount": 2227,
     "images": [
       "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2027-biweekly-fridays.webp"
     ],
@@ -114,13 +114,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "mcp-vs-cli-for-finance-teams": {
-    "wordCount": 2366,
+    "wordCount": 2268,
     "images": [
-      "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/cli-vs-mcp-side-by-side.webp",
-      "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/agent-reaching-into-finance-stack.webp",
-      "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/audit-trail-comparison.webp",
-      "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/mcp-month-end-workflow.webp",
-      "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/zensus-typed-integration-architecture.webp"
+      "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/agent-reaching-into-finance-stack.webp"
     ],
     "thumbnail": {
       "width": 1600,
@@ -128,7 +124,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "predictive-cash-flow-forecasting": {
-    "wordCount": 2588,
+    "wordCount": 2662,
     "images": [
       "https://zensus.finance/blog/predictive-cash-flow-forecasting/cash-flow-forecast-range-shortfall.webp"
     ],
@@ -173,11 +169,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-is-cash-flow-forecasting": {
-    "wordCount": 3313,
+    "wordCount": 2888,
     "images": [
-      "https://zensus.finance/blog/what-is-cash-flow-forecasting/spreadsheet-vs-automated.webp",
-      "https://zensus.finance/blog/what-is-cash-flow-forecasting/cash-inflow-outflow.webp",
-      "https://zensus.finance/blog/what-is-cash-flow-forecasting/modern-treasury-workflow.webp"
+      "https://zensus.finance/blog/what-is-cash-flow-forecasting/spreadsheet-vs-automated.webp"
     ],
     "thumbnail": {
       "width": 640,
