@@ -96,7 +96,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
   ]}
 />
 
-<p><strong>The difference between a processing failure and a wage violation:</strong> it's about whether employees actually receive their wages by the required date.</p>
+<p><strong>The difference between a processing failure and a wage violation:</strong> it's about whether employees <em>actually receive</em> their wages by the required date.</p>
 
 ## A Real-World Example
 
@@ -113,8 +113,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
     ['Customer payment', 'Friday', '+$35,000'],
   ]}
   numeric={[2]}
-  negativeRows={[2, 3]}
-  positiveRows={[4]}
+  negativeRows={[3]}
 />
 
 <p className="mb-2 font-medium text-foreground">Here's where it gets tricky:</p>
@@ -240,7 +239,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>If your employees aren't paid, that's a state wage-law issue.</p>
 
-<p>If your tax deposit to the IRS is late, that's a federal tax issue with <a href="https://www.irs.gov/payments/failure-to-deposit-penalty" className="font-medium text-primary underline-offset-4 hover:underline">separate penalties</a>.</p>
+<p>If your <em>tax deposit</em> to the IRS is late, that's a federal tax issue with <a href="https://www.irs.gov/payments/failure-to-deposit-penalty" className="font-medium text-primary underline-offset-4 hover:underline">separate penalties</a>.</p>
 
 <BlogTable
   caption="IRS failure-to-deposit penalty by how late the deposit is."
@@ -249,7 +248,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
     ['1–5 days late', '2%'],
     ['6–15 days late', '5%'],
     ['More than 15 days late', '10%'],
-    ['Unpaid 10+ days after the first IRS notice', '15%'],
+    ['More than 10 days after the first IRS notice, or on an immediate-demand notice', '15%'],
   ]}
   numeric={[1]}
 />
@@ -430,7 +429,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
   <li>Named owner for payroll approval</li>
   <li>Daily cash review before the payroll deadline</li>
   <li><a href="/blog/cash-flow-early-warning-system" className="font-medium text-primary underline-offset-4 hover:underline">Early warning system</a> for cash below the buffer</li>
-  <li><a href="/tools/payroll-calendar" className="font-medium text-primary underline-offset-4 hover:underline">Payroll calendar</a> that includes all payroll dates (not just the first day of the month)</li>
+  <li><a href="/tools/payroll-calendar" className="font-medium text-primary underline-offset-4 hover:underline">Payroll calendar</a> that includes <em>all</em> payroll dates (not just the first day of the month)</li>
 </ul>
 
 ### The One Rule
@@ -484,7 +483,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>Model these scenarios. You might find you have a $5k gap that would otherwise go unnoticed.</p>
 
-<p>This is where tools like Zensus come in. We build cash-flow forecasts that focus on <strong>actual dates</strong>, giving founders and finance teams the visibility they need to make decisions before a crisis hits.</p>
+<p>This is where tools like Zensus come in. We build cash-flow forecasts that focus on <strong>actual dates</strong>, giving founders and finance teams the visibility they need to make decisions <em>before</em> a crisis hits.</p>
 
 <p>The goal isn't to predict the future. It's to reveal funding gaps <strong>early enough</strong> to fix them.</p>
 
@@ -517,7 +516,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p><strong><a href="/" className="font-medium text-primary underline-offset-4 hover:underline">Learn how to forecast your cash accurately with Zensus</a></strong> so you can see payroll shortfalls before they become emergencies.</p>
 
-<p>Disclaimer: This article is for educational purposes only and does not constitute legal, tax, or financial advice. Payroll, wage, and tax rules vary by state and circumstance. If you have questions about your specific situation, consult with a qualified employment and tax professional.</p>
+<p><em>Disclaimer: This article is for educational purposes only and does not constitute legal, tax, or financial advice. Payroll, wage, and tax rules vary by state and circumstance. If you have questions about your specific situation, consult with a qualified employment and tax professional.</em></p>
 
 <p className="mb-2 font-medium text-foreground">Related guides:</p>
 
@@ -525,9 +524,9 @@ import { BlogTable } from '@/components/blog/BlogTable';
   <li><a href="/blog/will-i-make-payroll" className="font-medium text-primary underline-offset-4 hover:underline">Will I make payroll?</a>: checking each payroll date against your cash, weeks ahead.</li>
   <li><a href="/blog/cash-flow-early-warning-system" className="font-medium text-primary underline-offset-4 hover:underline">Cash flow early warning system</a>: setting a cash floor and alerts.</li>
   <li><a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">What is a 13-week cash flow forecast?</a>: the rolling weekly model.</li>
-  <li><a href="/blog/27-pay-periods-2026-2027" className="font-medium text-primary underline-offset-4 hover:underline">27 pay periods in 2026 and 2027</a>: the year with an extra payroll run.</li>
+  <li><a href="/blog/27-pay-periods-2026-2027" className="font-medium text-primary underline-offset-4 hover:underline">27 pay periods in 2026 or 2027?</a>: the year with an extra payroll run.</li>
 </ul>
 
 <BlogCallout title="See the Payroll Gap Before Payday">
-Zensus builds a weekly forecast from your bank, QuickBooks, and HubSpot invoices and subscriptions, and sends a Slack alert when the 30-day projection drops below your floor. [Talk to us](https://calendly.com/hello-zensus/introcall) or explore [pricing](/pricing).
+Zensus builds a cash forecast from your bank, QuickBooks, and HubSpot invoices and subscriptions, and sends a Slack alert when the 30-day projection drops below your floor. [Talk to us](https://calendly.com/hello-zensus/introcall) or explore [pricing](/pricing).
 </BlogCallout>
