@@ -24,11 +24,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "can-quickbooks-forecast-cash-flow": {
-    "wordCount": 2740,
+    "wordCount": 3148,
     "images": [
-      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/short-term-planning-to-strategic-forecasting.webp",
-      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/quickbooks-cash-flow-planner-data-flow.webp",
-      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/revenue-vs-cash-timeline.webp"
+      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/short-term-planning-to-strategic-forecasting.webp"
     ],
     "thumbnail": {
       "width": 1024,
