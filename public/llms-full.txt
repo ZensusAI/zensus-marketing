@@ -284,7 +284,7 @@ Which year has 27 biweekly pay dates, why sources disagree, and what the extra p
 ### Cash Flow Forecasting for Agencies
 https://zensus.finance/blog/cash-flow-forecasting-for-agencies
 
-A 13-week guide for agencies to retainers, payroll, and late payments. Key facts from the guide:
+A 13-week cash flow guide for agencies: retainers, payroll, and late payments. Key facts from the guide:
 
 - A profitable agency can still run out of cash: the forecast asks what the lowest bank balance will be over the next 13 weeks, and when to act before it.
 - Closing cash = opening cash + cash receipts that clear - cash payments that leave, repeated for 13 weeks and compared with a minimum operating cash floor.
