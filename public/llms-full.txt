@@ -255,7 +255,7 @@ https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast
 
 How to forecast cash from HubSpot invoices, subscriptions, and payment records rather than from sales reports. Key facts from the guide:
 
-- HubSpot shows revenue, not cash: its revenue reporting separates pipeline forecasts, booked revenue, billed revenue, and collected revenue, and none of those is money in the bank.
+- HubSpot shows revenue, not cash: its revenue reporting separates pipeline forecasts, booked revenue, billed revenue, and collected revenue, and a payment marked paid in HubSpot is not the same as cash deposited in the bank.
 - Start from open invoices, outstanding balances, due dates, and scheduled subscription billing, then estimate when each payment will actually reach the bank.
 - HubSpot invoice statuses are Draft, Open, Paid, and Void; a partially paid invoice stays Open, so forecast only the remaining balance ($6,000 left on a $10,000 invoice with $4,000 paid).
 - Subscription statuses (Active, Scheduled, Unpaid, Paused, Canceled, Expired) each need different treatment; keep an Unpaid subscription out of the baseline.

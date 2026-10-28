@@ -97,7 +97,7 @@ export const BLOG_TOPICS = [
     metaDescription:
       "Guides on cash flow forecasting tools: what QuickBooks can and cannot forecast, turning HubSpot data into a cash forecast, and MCP vs CLI for finance teams.",
     intro:
-      "Most of the data a cash flow forecast needs already sits in a bank account, an accounting system and a CRM. These guides cover what the QuickBooks Online Cash Flow Planner does and where it stops, how to turn a HubSpot sales pipeline into a cash forecast, and how finance teams connect AI assistants to their data through MCP servers or command-line tools.",
+      "Most of the data a cash flow forecast needs already sits in a bank account, an accounting system and a CRM. These guides cover what the QuickBooks Online Cash Flow Planner does and where it stops, how to turn HubSpot invoices and subscriptions into a cash forecast, and how finance teams connect AI assistants to their data through MCP servers or command-line tools.",
   },
 ] as const;
 
