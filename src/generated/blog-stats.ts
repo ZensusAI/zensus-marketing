@@ -130,7 +130,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "runway-vs-burn-rate-for-founders": {
-    "wordCount": 3442,
+    "wordCount": 3451,
     "images": [
       "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/cash-reserve-burn-runway.webp"
     ],
