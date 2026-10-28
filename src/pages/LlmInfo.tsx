@@ -275,7 +275,7 @@ const LlmInfo = () => (
                 to="/blog/hubspot-pipeline-to-cash-forecast"
                 className={linkCls}
               >
-                HubSpot pipeline to cash forecast
+                HubSpot invoices to cash forecast
               </Link>
             </li>
             <li>

@@ -52,7 +52,7 @@ Businesses of any size with variable revenue, complex hiring plans, annual contr
 - [Cash Conversion Cycle](https://zensus.finance/blog/cash-conversion-cycle)
 - [Can QuickBooks Forecast Cash Flow?](https://zensus.finance/blog/can-quickbooks-forecast-cash-flow)
 - [Zero Cash Date for Founders](https://zensus.finance/blog/zero-cash-date-for-founders)
-- [HubSpot Pipeline to Cash Forecast](https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast)
+- [Why Your HubSpot Revenue Numbers Don't Tell the Whole Cash Story](https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast)
 - [Forecasting AI Compute Costs for Founders](https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders)
 - [Runway vs Burn Rate for Founders](https://zensus.finance/blog/runway-vs-burn-rate-for-founders)
 - [Default Alive vs Default Dead for Founders](https://zensus.finance/blog/default-alive-vs-default-dead-for-founders)
