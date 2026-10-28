@@ -1,197 +1,403 @@
 export const meta = {
-  title: 'Will I Make Payroll? How to Know Weeks in Advance',
+  title: 'Will I Make Payroll? How to Forecast Payroll Cash Weeks Ahead',
   seoTitle: 'Will I Make Payroll? How to Know in Advance | Zensus',
   description:
     'A step-by-step way to know if you can make payroll: project cash to each payroll date, subtract committed outflows, and check it against your buffer.',
   date: '2026-06-01',
-  dateModified: '2026-06-06',
+  dateModified: '2026-10-28',
   category: 'Guide',
-  readTime: '9 min read',
+  readTime: '12 min read',
   slug: 'will-i-make-payroll',
   author: 'ajin',
   topic: 'payroll',
   tags: ['Cash Flow', 'Payroll', 'Guides'],
   featured: false,
-  thumbnail: '/blog/will-i-make-payroll/june-payroll-calendar-projection.webp',
+  thumbnail: '/blog/will-i-make-payroll/payroll-projection-method.webp',
+  thumbnailAlt:
+    'Five-step payroll cash projection method: available cash, payroll dates, add inflows, subtract outflows, compare to cash buffer',
   ogImage: '/og/blog/will-i-make-payroll.png',
   ogTitle: 'Will I Make Payroll?',
   ogSubtitle:
-    'A step-by-step method to know weeks in advance, with a worked example and a checklist.',
+    'A step-by-step method to know weeks in advance, with stress tests and a weekly checklist.',
   faqs: [
     {
-      question: 'How do I know if I will make payroll?',
+      question: 'How do I know if I can make payroll next week?',
       answer:
-        'Project your available cash forward to each payroll date, add only the inflows you realistically expect to clear before that date, subtract every committed outflow due before it (including the payroll run itself), and compare the result to your minimum cash buffer. If the projected balance on the payroll date stays above your buffer, you will make payroll; if it dips below, you have a gap to close.',
+        "Calculate cash available on your provider's funding deadline. Add receipts realistically expected to clear by then, subtract all other withdrawals. If the balance can't cover the provider's total debit, you have a funding shortfall.",
     },
     {
-      question: 'How far ahead should I forecast payroll?',
+      question: 'Is the funding date the same as payday?',
       answer:
-        'Forecast at least two full payroll cycles ahead, roughly 30 to 60 days for most businesses. That is far enough to act on a shortfall (collect receivables, delay a vendor, draw on credit, or adjust spend) instead of discovering it the morning payroll is due.',
+        "Usually not. Providers may need funds one to four business days before employees get paid, depending on processing speed and your account settings. The date you need cash is the provider's withdrawal date, not the direct deposit date.",
     },
     {
-      question: 'What is a safe cash buffer before payroll?',
+      question: 'Should I use net pay or gross payroll?',
       answer:
-        'A common rule of thumb is to keep at least one full payroll run, ideally two, in reserve above your projected low point, and many founders target two to six months of total operating expenses as a broader cash floor. The right number depends on how lumpy and predictable your revenue is: the more variable your inflows, the larger the buffer.',
+        "Use the actual amount the provider withdraws. That includes net wages, withholdings, and any payroll taxes they handle. Don't double-count taxes you'll handle separately.",
     },
     {
-      question: 'Why is my bank balance not enough to know if I will make payroll?',
+      question: 'What if a customer pays after payroll is funded?',
       answer:
-        'Your bank balance is a snapshot of today, not the day payroll clears. Between now and then, money moves: an annual contract may land, a customer may pay 20 days late, rent and vendor bills clear, and the payroll itself debits. Whether you make payroll depends on the timing of those flows, which a single balance cannot tell you.',
+        "Don't count it as funding for this payroll. Move the expected receipt to its new clearing date and recalculate. If it creates a gap, use your cash reserve or arrange financing.",
     },
     {
-      question: 'Can software tell me if I will make payroll?',
+      question: 'Can a profitable business still miss payroll?',
       answer:
-        'Yes. Cash flow forecasting tools connect to your bank, accounting, and billing systems, place each expected inflow and outflow on the date it actually hits, and project your balance to every upcoming payroll date. Zensus does this automatically and sends a Slack alert when a sync shows your 30-day projection crossing below the cash floor you set.',
+        "Absolutely. Profit is accounting: when you bill a customer, you book revenue, but don't collect cash until later. Payroll and other expenses still need to be paid on schedule. A profitable company can still run dry.",
+    },
+    {
+      question: 'How often should I check my payroll forecast?',
+      answer:
+        "At least weekly, and immediately after any major transaction changes. Before the provider's cutoff, verify: actual cash on hand, exact withdrawal amount, and processing timeline.",
+    },
+    {
+      question: 'Can a 13-week forecast help?',
+      answer:
+        'It helps catch issues earlier. A rolling 13-week view shows when cash comes in and goes out, letting you spot when multiple obligations will compete for the same funds. Include exact payroll dates and stress-test collections.',
+    },
+    {
+      question: 'Is falling below my reserve the same as missing payroll?',
+      answer:
+        "No. If you have enough to cover the provider's withdrawal, employees still get paid. A reserve breach means you have less cushion than you prefer, not that you can't pay your people.",
+    },
+    {
+      question: 'Can QuickBooks tell me if I\'ll make payroll?',
+      answer:
+        "QuickBooks gives you the accounting picture: what you think you'll owe, what customers owe you, what's recorded. But QuickBooks doesn't predict when customers will actually pay or when the provider withdraws. Answering the payroll question needs actual cash availability on real dates.",
+    },
+    {
+      question: "What if I really can't make payroll?",
+      answer:
+        "Before the provider deadline: verify the exact shortfall, contact your provider, explore financing options, and get advice on wage payment requirements. Our missed payroll playbook walks through what's next.",
     },
   ],
 };
 
-import { BlogFigure } from '@/components/blog/BlogFigure';
+import { BlogCallout } from '@/components/blog/BlogCallout';
 
-<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">To know whether you'll make payroll, project your available cash forward to the payroll date, subtract every committed outflow due before then, add only the inflows you're confident will clear in time, and compare the result to your minimum cash buffer. If the projected balance stays above your buffer, you'll make payroll. If it dips below, you have a gap, and the whole point is to see it weeks ahead, not the morning the run is due.</p>
+<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">Last week, I got a message from a founder who was panic-checking their bank account.</p>
 
-<p>Most founders answer "will I make payroll?" by glancing at their bank balance and doing some quick mental math. That feels reassuring, but the balance you see today is not the balance you'll have on payroll day. Between now and then, an annual contract might land, a big customer might pay three weeks late, rent and vendor bills clear, a tax payment goes out, and payroll itself debits your account. Whether you can cover it comes down to the <em>timing</em> of all those flows, and a single balance can't show you that.</p>
+<p><em>"Will I make payroll?"</em></p>
 
-<p>This guide walks through a simple, repeatable method to answer the question with confidence, a worked example you can copy, and a checklist you can run before every payroll cycle. The method is <a href="/blog/what-is-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">cash flow forecasting</a>, narrowed to the one date that matters most.</p>
+<p>And yes, there was enough money in the account.</p>
 
-## The method: project to the payroll date
+<p>But they were asking the wrong question.</p>
 
-<p>The reliable way to know if you'll make payroll is to build a short cash projection that ends on your payroll date. You don't need a finance degree or a 40-tab spreadsheet. You need five inputs.</p>
+<p>Their payroll provider needed to pull funds on a different day than when their employees got paid. Between that submission deadline and the actual deposit, money was going out: rent, vendor invoices, that one customer who was four days late with a $24,000 payment.</p>
 
-<BlogFigure
-  src="/blog/will-i-make-payroll/payroll-projection-method.webp"
-  width={1600}
-  height={893}
-  alt="Five-step payroll cash projection method: available cash, payroll dates, add inflows, subtract outflows, compare to cash buffer"
-  caption="The five inputs of a payroll cash projection, from available cash to the final buffer check."
-/>
+<p>Will they make payroll?</p>
 
-### 1. Start with your available cash, not your balance
+<p>The answer depends on how much cash they'll actually have when the provider needs to withdraw funds, not what's in the account today, and not when employees are scheduled to get paid.</p>
 
-<p>Begin with the cash you can actually use today: your bank balance minus any payments that have already been authorized but haven't cleared (pending card charges, scheduled transfers, checks you've sent). This is your true starting point.</p>
+## The Three Dates That Trip Up Most Founders
 
-### 2. List every payroll date you're checking
-
-<p>Write down the next one to three payroll runs and their exact dates and amounts (gross pay plus employer taxes and benefits, the full amount that leaves your account, not just net pay). Use the free <a href="/tools/payroll-calendar" className="font-medium text-primary underline-offset-4 hover:underline">payroll calendar calculator</a> to see how many pay periods fall in 2026 and 2027 and which months have three paychecks. If one of your paydays lands on January 1, <a href="/blog/27-pay-periods-2026-2027" className="font-medium text-primary underline-offset-4 hover:underline">27 pay periods in 2026 or 2027</a> explains which year gets the extra run. Remember that employment tax deposits follow the <a href="https://www.irs.gov/businesses/small-businesses-self-employed/depositing-and-reporting-employment-taxes" className="font-medium text-primary underline-offset-4 hover:underline">IRS deposit schedule</a>, monthly or semiweekly, so put those on their own dates too. Most shortfalls hide one cycle out, so always check at least two.</p>
-
-### 3. Add the inflows that will realistically clear in time
-
-<p>List the money you expect to receive <strong>before</strong> each payroll date, and be honest about timing, not hopeful:</p>
+<p className="mb-2 font-medium text-foreground">Here's where most business owners get caught off guard:</p>
 
 <ul>
-  <li>Invoices due, dated by when the customer <em>actually</em> pays, not the due date (if a client always pays net-45, use net-45; our <a href="/blog/cash-flow-forecasting-for-agencies" className="font-medium text-primary underline-offset-4 hover:underline">agency cash flow guide</a> works through an example)</li>
-  <li>Subscription or recurring revenue, on the day it hits your bank; annual and quarterly contracts land in lumps, not smooth monthly slices</li>
-  <li>Any financing, refunds, or transfers you've confirmed</li>
+  <li><strong>Employee payday:</strong> when staff receive their direct deposit</li>
+  <li><strong>Payroll funding date:</strong> when the provider withdraws money from your bank</li>
+  <li><strong>Payroll submission deadline:</strong> when you need to submit/approve for processing</li>
 </ul>
 
-<p>Leave out anything you only <em>hope</em> closes. An optimistic forecast that misses is worse than no forecast.</p>
+<p>These aren't always the same day.</p>
 
-### 4. Subtract every committed outflow due before then
+<p>I've had businesses approved for payroll on Tuesday, only to find out the provider actually needs funds by Wednesday morning. A $5,000 invoice that cleared Wednesday afternoon? Too late. The payday is Friday.</p>
 
-<p>Subtract all the cash leaving your account before each payroll date:</p>
+<p>According to <a href="https://relayfi.com/hc/en-us/articles/167435741869-How-to-fund-payroll-from-your-Relay-account/" className="font-medium text-primary underline-offset-4 hover:underline">Relay's payroll funding documentation</a>, funding deadlines depend on direct-deposit processing speeds. Some payrolls are funded one business day before payday. Others take four.</p>
+
+<p><strong>So here's what really matters:</strong> Will you have enough <em>cleared</em> cash available by your provider's funding deadline?</p>
+
+### It's Also About Your Safety Buffer
+
+<p>There's another piece people mix up.</p>
+
+<p>Imagine you have $42,000 available before payroll. Your provider needs to withdraw $28,000.</p>
+
+<p>After funding: $14,000 remains.</p>
+
+<p>If your business has a preferred cash reserve of $15,000, you're technically below that floor by $1,000.</p>
+
+<p>But can you still pay your team? Yes.</p>
+
+<p>These are two separate issues:</p>
+
+<p><strong>Payroll funding shortfall:</strong> Balance &lt; provider withdrawal means <strong>will miss payroll</strong></p>
+
+<p><strong>Cash reserve shortfall:</strong> After payroll &lt; preferred reserve means <strong>warning: low buffer</strong></p>
+
+<p>One means your employees don't get paid. The other means you're financially exposed but can still hit their direct deposits.</p>
+
+<p>A good forecast should show you both.</p>
+
+## What You Need to Know (Not Just What You Need to Count)
+
+<p>You don't need a financial model or Excel spreadsheet to figure this out.</p>
+
+<p>You need five pieces of information:</p>
+
+### 1. What's Actually Available Now
+
+<p>Start with what's genuinely usable in your business bank accounts.</p>
+
+<p className="mb-2 font-medium text-foreground">If you're on multiple banks, count them all. Then subtract:</p>
 
 <ul>
-  <li>The payroll run itself (the full loaded cost)</li>
-  <li>Rent, software, and recurring vendor payments</li>
-  <li>Loan or debt repayments</li>
-  <li>Estimated taxes and any one-off bills you've committed to</li>
+  <li>Restricted funds</li>
+  <li>Pending withdrawals (the ATM swipe, transfer you triggered)</li>
+  <li>Outstanding checks that haven't cleared</li>
+  <li>Other commitments already pulling cash</li>
 </ul>
 
-### 5. Compare each payroll date to your cash buffer
+<p><strong>Important:</strong> If you're already planning to pay something, don't subtract it again as a future event. Transfers between your own accounts don't create new cash. They just move it.</p>
 
-<p>For each payroll date, the projected balance is: starting cash, plus inflows that clear before the date, minus outflows due before the date. Compare that number to your <strong>minimum cash buffer</strong>, the floor you never want to drop below. If you stay above it, you'll make payroll comfortably. If you land below it, you've found a gap with enough lead time to do something about it.</p>
+<p>Your starting balance is what you actually have to work with.</p>
 
-## A worked example
+### 2. Your Next Two or Three Payroll Runs
 
-<p>Say it's June 1. Your numbers look like this (figures are illustrative):</p>
+<p>This is where most people miss the mark.</p>
+
+<p>If you run payroll biweekly, you need to forecast two cycles. That's about four weeks. Some months have three paydays; check the <a href="/tools/payroll-calendar" className="font-medium text-primary underline-offset-4 hover:underline">payroll calendar</a> for your exact schedule.</p>
+
+<p className="mb-2 font-medium text-foreground">For each run, you need:</p>
 
 <ul>
-  <li><strong>Available cash today:</strong> $80,000</li>
-  <li><strong>Payroll:</strong> $42,000 fully loaded, run on the 15th and the 30th</li>
-  <li><strong>Minimum cash buffer:</strong> $25,000</li>
+  <li>Submission deadline</li>
+  <li>Provider funding date</li>
+  <li>Total amount they'll withdraw</li>
 </ul>
 
-<p>Now lay the flows on a calendar:</p>
+<p><strong>Watch out:</strong> Your employees might take home $25,000 in net pay, but the provider could charge you $35,000 that week because of withheld taxes and benefits you're paying separately. Don't assume net pay equals the withdrawal amount. Use what the provider preview actually says.</p>
+
+### 3. Money Coming In
+
+<p className="mb-2 font-medium text-foreground">Now, what's expected before that funding deadline?</p>
 
 <ul>
-  <li><strong>June 5</strong>, rent + software clear: <strong>−$12,000</strong></li>
-  <li><strong>June 12</strong>, a customer pays an overdue invoice: <strong>+$30,000</strong></li>
-  <li><strong>June 15</strong>, payroll run #1: <strong>−$42,000</strong></li>
-  <li><strong>June 22</strong>, quarterly contract finally lands: <strong>+$18,000</strong></li>
-  <li><strong>June 30</strong>, payroll run #2: <strong>−$42,000</strong></li>
+  <li>Unpaid customer invoices</li>
+  <li>Subscription recurrences</li>
+  <li>Retainers</li>
+  <li>Loan or financing proceeds</li>
 </ul>
 
-<p>Walk the balance forward to each payroll date:</p>
+<p><strong>Here's the catch:</strong> Use the <em>clearing date</em>, not the invoice due date.</p>
+
+<p>A customer's $25,000 invoice is due November 10th, but they've been paying 10 days late. Does that money actually hit your account by the 10th? Probably not. If you count it on the due date, your forecast looks fine, until it isn't.</p>
+
+<p>Separate "we expect this" from "this is confirmed." And leave out speculative future sales.</p>
+
+### 4. Other Money Going Out
+
+<p className="mb-2 font-medium text-foreground">Before the payroll withdrawal, what else is pulling cash?</p>
 
 <ul>
-  <li><strong>Before June 15 payroll:</strong> 80,000 − 12,000 + 30,000 = $98,000, then −42,000 = <strong>$56,000</strong>. Well above the $25,000 buffer. ✅ You make this one easily.</li>
-  <li><strong>Before June 30 payroll:</strong> 56,000 + 18,000 = $74,000, then −42,000 = <strong>$32,000</strong>. Still above $25,000, but only by $7,000. ⚠️</li>
+  <li>Rent</li>
+  <li>Vendor bills</li>
+  <li>Loan payments</li>
+  <li>Software subscriptions</li>
+  <li>Insurance</li>
+  <li>Taxes</li>
 </ul>
 
-<BlogFigure
-  src="/blog/will-i-make-payroll/june-payroll-calendar-projection.webp"
-  width={1600}
-  height={893}
-  alt="June cash flow timeline with rent, invoice, payroll, and contract events, the projected balance ending at $32,000 just above a $25,000 cash buffer"
-  caption="The June projection: the balance clears both payroll runs, but the second one leaves only $7,000 above the $25,000 buffer."
-/>
+<p><strong>Payroll taxes need a note:</strong> <a href="https://www.irs.gov/businesses/small-businesses-self-employed/depositing-and-reporting-employment-taxes" className="font-medium text-primary underline-offset-4 hover:underline">The IRS has its own deposit schedule</a>. If your provider already pulls a tax amount and remits it, don't count that same tax again as your own separate payment. Easy way to get confused and overstate your cash needs.</p>
 
-<p>The bank balance on June 1 ($80,000) looked like nearly two payrolls of cushion. The projection tells the real story: the second run lands you within $7,000 of your floor, and that's <em>only</em> if the quarterly contract clears on the 22nd as expected. If it slips to July, June 30 payroll drops you to $14,000, below your buffer. You now know, on June 1, exactly which inflow to chase and by when.</p>
+### 5. What You Want Left After
 
-<p>That gap is invisible on a bank statement and invisible in a flat "monthly revenue minus monthly expenses" model. It only shows up when you place each flow on the date it actually moves.</p>
+<p>Finally, how much cash do you want to have on hand after payroll?</p>
 
-## The mistake most founders make
+<p>This isn't a legal minimum, just a number that keeps you safe. Maybe you need $15k to cover a month of fixed costs before the next customer payment arrives. Maybe you're adding a sales commission this cycle.</p>
 
-<p>The single most common payroll-cash error is using <strong>averages instead of timing</strong>. "We bring in about $120k a month and spend about $100k, so we're fine" hides the fact that the $120k arrives in two lumps on the 12th and 27th while payroll, rent, and a tax bill all clear before the 15th. Monthly averages smooth over exactly the timing mismatches that cause a missed payroll.</p>
+<p>Your cash floor is your own rule, not something someone told you is required.</p>
 
-<BlogFigure
-  src="/blog/will-i-make-payroll/monthly-averages-vs-timing.webp"
-  width={1600}
-  height={893}
-  alt="Monthly average of $120k revenue in versus $100k expenses out compared with actual timing, where rent, taxes, and payroll clear before mid-month inflows land"
-  caption="Averages say the month is fine. The calendar shows rent, taxes, and payroll clearing before most of the cash arrives."
-/>
+## The Simple Math (That Most People Skip)
 
-<p>The second mistake is <strong>optimistic receivables</strong>: assuming customers pay on the due date. Date your inflows by when each customer actually pays, and your forecast stops lying to you.</p>
+<p>Once you've got these five pieces, here's what you calculate:</p>
 
-## How far ahead should you forecast payroll?
+<p><strong>Available cash before payroll =</strong> Starting usable cash + Receipts that clear before the funding date − Other payments you need to make</p>
 
-<p>At least two full payroll cycles, roughly 30 to 60 days for most businesses. One cycle isn't enough: if you only look at the next run, you can clear it and still be walking into a wall on the one after. Two cycles gives you the lead time to collect a receivable, delay a discretionary payment, draw on a line of credit, or trim spend, all of which take days or weeks, not hours. If you want a longer horizon, a <a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">13-week cash flow forecast</a> extends the same discipline a full quarter out.</p>
+<p>Now compare that to what the provider needs:</p>
 
-## What's a safe cash buffer before payroll?
-
-<p>Keep at least one full payroll run in reserve above your projected low point, and ideally two. As a broader floor, many founders target two to six months of total operating expenses. The lumpier and less predictable your revenue, the larger that buffer should be: a business living on a few large annual contracts needs more cushion than one with smooth monthly subscriptions, because a single late payment moves the needle further. For context on how thin most buffers run: JPMorgan Chase Institute's analysis of nearly 600,000 small businesses found the <a href="https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/report-cash-flows-balances-and-buffer-days" className="font-medium text-primary underline-offset-4 hover:underline">median holds just 27 cash buffer days</a>, under a month of typical outflows.</p>
-
-<BlogFigure
-  src="/blog/will-i-make-payroll/cash-buffer-floor.webp"
-  width={1600}
-  height={893}
-  alt="Cash balance area chart dipping toward but staying above a dashed cash buffer line at two payroll dates, with one to two payroll runs of headroom"
-  caption="Keep one to two full payroll runs between your projected low point and your cash floor."
-/>
-
-## Your "will I make payroll" checklist
-
-<p>Run this before every payroll cycle:</p>
+<p><strong>Funding gap = max(0, provider withdrawal − available cash)</strong></p>
 
 <ul>
-  <li>Start from <strong>available</strong> cash (balance minus pending payments)</li>
-  <li>Map the next <strong>two</strong> payroll dates and their fully loaded amounts</li>
-  <li>Add only inflows you're confident clear in time, dated by <em>actual</em> payment behavior</li>
-  <li>Subtract every committed outflow due before each payroll date</li>
-  <li>Check the projected balance on each date against your minimum buffer</li>
-  <li>If any date lands below the buffer, identify the specific inflow to chase or outflow to defer now, while you have time</li>
-  <li>Re-run it whenever a big invoice, contract, or expense changes</li>
+  <li>If the gap is $3,000, you're $3,000 short at the funding deadline.</li>
+  <li>If the gap is $0, your forecast shows you should be okay.</li>
 </ul>
 
-<p>If the projection says you will not clear a run, act on it now rather than on payday morning. Our <a href="/blog/what-happens-if-you-miss-payroll" className="font-medium text-primary underline-offset-4 hover:underline">guide to what happens if you miss payroll</a> covers the legal exposure, what to do before paying anyone partially, and what to tell the team.</p>
+<p>Then what's left?</p>
 
-## How Zensus answers this automatically
+<p><strong>After payroll = Available cash before − provider withdrawal</strong></p>
 
-<p>Doing this by hand works, right up until your forecast goes stale the moment a transaction clears or an invoice slips. That's the part Zensus automates.</p>
+<p>And finally, check against your reserve:</p>
 
-<p>Connect your bank (via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>), <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a>, and Zensus places every recurring inflow and outflow (each payroll run, your annual and quarterly contracts, and your committed bills) on the date it is expected to hit your account. Your cash flow forecast updates after every sync, so the balance projected to each payroll date stays current, not a snapshot from last week. How Zensus handles your financial data is documented on the <a href="/security" className="font-medium text-primary underline-offset-4 hover:underline">security page</a>.</p>
+<p><strong>Reserve gap = max(0, your preferred floor − after-payroll cash)</strong></p>
 
-<p>Then set your cash floor once. Zensus watches your rolling 30-day projection and fires a <strong><a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alert</a> when a sync shows it on track to cross that floor</strong>, and alerts again if the breach moves at least a week earlier or your projected low drops by 10 percent or more. Instead of asking "will I make payroll?" every Monday, you find out as soon as the next sync shows the answer has changed.</p>
+<p className="mb-2 font-medium text-foreground">These four numbers tell you:</p>
 
-<p>If you'd rather see it than build it, you can <a href="https://app.zensus.app/login?redirect=%2Fsubscribe">start a 14-day free trial</a> (plans are on the <a href="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">pricing page</a>) and have your cash flow forecast and your next two payroll dates in front of you in a few minutes.</p>
+<ol>
+  <li>Can the payroll be funded?</li>
+  <li>How much cash will remain?</li>
+  <li>Will you still be above your reserve?</li>
+  <li>Where's the first point of risk?</li>
+</ol>
+
+<p><strong>Pro tip:</strong> Check the projected balance on key dates too, right before every major transaction. A temporary dip to $500 before the payroll cuts through is just as important as the post-funding balance.</p>
+
+## The Real Test: Stress-Test Your Numbers
+
+<p>A forecast should show one version of reality, but your forecast should also show what breaks.</p>
+
+### Stress Scenario 1: Your Biggest Customer Pays Late
+
+<p>You expect $25,000 three days before payroll. But they pay 14 days late?</p>
+
+<p>That money isn't available for the withdrawal.</p>
+
+<p>Shift the expected receipt by 7, 14, or 21 days and recalculate. Watch which payroll run turns red.</p>
+
+### Stress Scenario 2: Your Funding Date Moves Up
+
+<p>Payday's Friday. You planned on a Thursday funding date. The provider changed the cutoff to Tuesday?</p>
+
+<p>Same cash you have now. Suddenly, it isn't enough.</p>
+
+<p>This is why you need to track <em>funding dates</em>, not just when employees get paid.</p>
+
+### Stress Scenario 3: That One Commission Payment
+
+<p>Your sales team crushed it. Next week's payroll includes an $8,000 commission on top of the regular $28,000.</p>
+
+<p>If your forecast still assumes $28,000, you're blind to that $8,000 surprise.</p>
+
+<p>Track variable compensation separately. And if you're on a biweekly schedule, remember that some months have three payroll runs. Annual salary costs stay the same, but your cash needs spike.</p>
+
+<p>These aren't "what ifs." These are scenarios you should run before approval day.</p>
+
+## How Far Out Do You Need to Look?
+
+<p><strong>Minimum:</strong> Two payroll cycles. For biweekly pay, that's four weeks out.</p>
+
+<p>But a rolling 13-week forecast catches bigger problems earlier.</p>
+
+<p>Imagine you'll have enough for the next two payrolls, but six weeks out: quarterly taxes, a $50k loan payment, and another payroll all land in the same week. That's where the real risk lives.</p>
+
+<p>A 13-week view helps you see when obligations start competing for the same cash.</p>
+
+<p>A weekly forecast is useful for spotting trends. But for payroll, you need actual transaction dates. The provider's cutoff matters more than "weekly averages."</p>
+
+<p>For a deeper dive on the 13-week method, <a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">we have a dedicated guide here</a>.</p>
+
+## How Much Cash Should You Keep After Payroll?
+
+<p>This is where I talk to founders who need a reality check.</p>
+
+<p className="mb-2 font-medium text-foreground">A predictable subscription SaaS company has different risks than a boutique agency on a few client invoices. The right buffer depends on:</p>
+
+<ul>
+  <li>What's coming in next</li>
+  <li>How lumpy those collections are</li>
+  <li>When major customers usually pay</li>
+  <li>Whether you have easy access to financing</li>
+  <li>What disruption your team can actually handle</li>
+</ul>
+
+<p>Some founders plan for "one more payroll cycle." Others budget three months of operating expenses.</p>
+
+<p>Neither is the magic number for you.</p>
+
+<p className="mb-2 font-medium text-foreground">Instead, build your floor around your own risks:</p>
+
+<ul>
+  <li>How much for the next payroll?</li>
+  <li>When's the next reliable payment due?</li>
+  <li>How late could our biggest customer be?</li>
+  <li>What happens if a major client doesn't pay this month?</li>
+  <li>Which bills can't move without serious consequences?</li>
+</ul>
+
+<p>Here's the data point: <a href="https://gusto.com/resources/gusto-insights/impact-of-missing-payroll-2026" className="font-medium text-primary underline-offset-4 hover:underline">Gusto's 2026 payroll liquidity research</a> found about one-third of small businesses in its analysis had at least one payroll when balances didn't cover wages.</p>
+
+<p>The good news? Many bridged the gap through transfers, short-term financing, or early invoice payments. The distinction matters: a temporary dip isn't the same as missing a paycheck.</p>
+
+<p><strong>Bottom line:</strong> Your reserve is a warning signal, not a legal obligation. But it should tell you whether you're about to get tight.</p>
+
+## Your Weekly Payroll Checklist
+
+<p>Payroll forecasting isn't something you do once and forget.</p>
+
+<p className="mb-2 font-medium text-foreground">Set aside time each week, even when things look fine. Use this:</p>
+
+<ul>
+  <li>Bank balance reconciled (cleared only)</li>
+  <li>Next 2–3 payroll funding dates confirmed</li>
+  <li>Total provider withdrawal amounts verified</li>
+  <li>Customer invoices reviewed (due dates and expected clearing)</li>
+  <li>Vendor payments, loans, subscriptions updated</li>
+  <li>Taxes scheduled (if separate from provider)</li>
+  <li>Cash balance checked right before each funding deadline</li>
+  <li>First at-risk payroll identified (if any)</li>
+  <li>Post-payroll cash above preferred floor?</li>
+  <li>Tested delayed collections or higher payroll?</li>
+</ul>
+
+<p>If a major invoice clears, a customer delays payment, or an expense shifts, refresh the forecast.</p>
+
+<p>Then 48 hours before your provider's cutoff, double-check: actual cash on hand, exact withdrawal amount, and processing timeline.</p>
+
+<p>Turn this into a routine, not a panic-button moment.</p>
+
+## Tools That Actually Help
+
+<p>You could build this in a spreadsheet. It works, if you're disciplined about updates.</p>
+
+<p>Every cleared invoice, every new vendor bill, every late payment changes the picture. A forecast from Monday could be outdated by Thursday.</p>
+
+<p>Bank data shows what actually moved. <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a> (or similar) shows what's recorded. Payroll providers show what you're actually charged.</p>
+
+<p className="mb-2 font-medium text-foreground">Each answers a different question:</p>
+
+<ul>
+  <li><strong>Bank feed:</strong> Real cash in and out</li>
+  <li><strong>Accounting software:</strong> What you think will happen</li>
+  <li><strong>Payroll preview:</strong> What you'll actually owe</li>
+</ul>
+
+<p>A payroll-focused forecast connects these: it takes forward-looking accounting estimates and overlays the actual provider withdrawal schedule.</p>
+
+<p>That's the difference between "I think I'll make payroll" and "Here's exactly when the risk starts."</p>
+
+<p>We built free tools for this: the <a href="/tools/payroll-calendar" className="font-medium text-primary underline-offset-4 hover:underline">payroll calendar</a> lists every payday on your schedule for 2026 and 2027, and the <a href="/tools/13-week-cash-flow-template" className="font-medium text-primary underline-offset-4 hover:underline">13-week cash flow template</a> lays out your next payrolls, expected collections, committed bills, and your desired reserve week by week, and flags any week below your floor. No email required.</p>
+
+## The Takeaway
+
+<p>Making payroll shouldn't feel like a guessing game.</p>
+
+<p>It shouldn't depend on whether a customer conveniently pays on the day it's due.</p>
+
+<p>And it shouldn't depend on today's balance.</p>
+
+<p>The question is: <strong>Do you have enough cleared, available cash on the date your provider needs to withdraw funds?</strong></p>
+
+<p>Start with that date. Forecast the next two or three payroll runs. Plug in realistic collections and committed payments. Test scenarios where things go wrong.</p>
+
+<p>And keep your cash reserve separate from the minimum needed to hit payroll.</p>
+
+<p><strong>The sooner you spot a potential shortfall, the more options you have before it becomes a problem.</strong></p>
+
+<p>That's what effective cash flow forecasting should feel like: control before the crisis hits.</p>
+
+<p><a href="/tools/13-week-cash-flow-template" className="font-medium text-primary underline-offset-4 hover:underline">Try the free 13-week cash flow template</a></p>
+
+<p><em>Disclaimer: This article provides general financial planning guidance for U.S. businesses. It's not legal, tax, or compliance advice. Confirm payroll processing and funding deadlines with your provider. Review wage and tax requirements with qualified advisers. Forecasted receipt dates are assumptions: actual settlement depends on customer behavior and bank processing.</em></p>
+
+<p className="mb-2 font-medium text-foreground">Related guides:</p>
+
+<ul>
+  <li><a href="/blog/what-happens-if-you-miss-payroll" className="font-medium text-primary underline-offset-4 hover:underline">What happens if you miss payroll?</a>: our missed payroll playbook, with a 7-day plan.</li>
+  <li><a href="/blog/27-pay-periods-2026-2027" className="font-medium text-primary underline-offset-4 hover:underline">27 pay periods in 2026 or 2027?</a>: the year with an extra payroll run.</li>
+  <li><a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">What is a 13-week cash flow forecast?</a>: the rolling weekly model.</li>
+  <li><a href="/blog/cash-flow-early-warning-system" className="font-medium text-primary underline-offset-4 hover:underline">Cash flow early warning system</a>: setting a cash floor and alerts.</li>
+</ul>
+
+<BlogCallout title="See Your Next Payroll Coming">
+Zensus detects payroll from your bank debits, projects your cash to each payroll date, and sends a Slack alert when the 30-day projection drops below your floor. [Talk to us](https://calendly.com/hello-zensus/introcall) or explore [pricing](/pricing).
+</BlogCallout>

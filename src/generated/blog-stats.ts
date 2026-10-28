@@ -172,12 +172,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "will-i-make-payroll": {
-    "wordCount": 1573,
+    "wordCount": 2055,
     "images": [
-      "https://zensus.finance/blog/will-i-make-payroll/june-payroll-calendar-projection.webp",
-      "https://zensus.finance/blog/will-i-make-payroll/payroll-projection-method.webp",
-      "https://zensus.finance/blog/will-i-make-payroll/monthly-averages-vs-timing.webp",
-      "https://zensus.finance/blog/will-i-make-payroll/cash-buffer-floor.webp"
+      "https://zensus.finance/blog/will-i-make-payroll/payroll-projection-method.webp"
     ],
     "thumbnail": {
       "width": 1600,
