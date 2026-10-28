@@ -100,7 +100,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "hubspot-pipeline-to-cash-forecast": {
-    "wordCount": 1734,
+    "wordCount": 1736,
     "images": [
       "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/revenue-vs-cash-forecast-dashboard.webp"
     ],

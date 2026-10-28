@@ -261,7 +261,7 @@ How to forecast cash from HubSpot invoices, subscriptions, and payment records r
 - Subscription statuses (Active, Scheduled, Unpaid, Paused, Canceled, Expired) each need different treatment; keep an Unpaid subscription out of the baseline.
 - Two companies with $12,000 of MRR can collect cash very differently: $12,000 every month, or $144,000 once a year.
 - A payment marked Succeeded in HubSpot is not necessarily in the bank; manually recorded payments are Succeeded when recorded, and processors pay out on their own schedule.
-- Worked example from October 27, 2026: $48,000 of expected receipts, only $6,000 before Nov 10 and $42,000 in the week of Nov 10; from $20,000 of starting cash the month ends at $31,000, but if the $42,000 slips, that week drops to $1,000.
+- Worked example from October 27, 2026: $48,000 of expected receipts, only $6,000 before Nov 10 and $42,000 in the week of Nov 10; from $20,000 of starting cash the month ends at $31,000, but even on schedule cash dips to $7,000 on Nov 12, when a $10,000 vendor bill goes out before the larger invoices land.
 - When HubSpot, QuickBooks, Stripe, and the bank all hold records of the same transaction, link them so each collection is counted once; HubSpot does not sync a QuickBooks payment applied to several invoices.
 - Zensus reads HubSpot invoices and subscriptions (not deals) alongside bank and QuickBooks data, and sends a Slack alert when the 30-day projection drops below a user's floor.
 
