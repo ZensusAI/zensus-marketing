@@ -50,8 +50,8 @@ describe("blog images", () => {
   it("finds the figures and thumbnails it is meant to check", () => {
     // A floor that proves the pattern still finds figures, not a quota: the
     // October 2026 rewrites replaced several image-heavy posts with text and
-    // tables, taking the total from about 40 to 20.
-    expect(figures().length).toBeGreaterThan(10);
+    // tables, taking the total from about 40 to 9.
+    expect(figures().length).toBeGreaterThan(5);
     expect(thumbnails().length).toBeGreaterThan(10);
   });
 
