@@ -84,8 +84,8 @@ const GUIDES: ResourceLink[] = [
   },
   {
     to: "/blog/hubspot-pipeline-to-cash-forecast",
-    label: "Forecast cash from your sales pipeline",
-    description: "Why pipeline is not cash yet, and how to time when it lands.",
+    label: "Forecast cash from HubSpot invoices",
+    description: "Why HubSpot revenue is not cash yet, and how to time when it lands.",
   },
 ];
 

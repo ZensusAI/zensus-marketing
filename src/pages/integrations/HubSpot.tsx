@@ -144,9 +144,9 @@ const faqs = [
 const related: IntegrationRelatedLink[] = [
   {
     to: "/blog/hubspot-pipeline-to-cash-forecast",
-    label: "How to forecast cash from your sales pipeline",
+    label: "Why HubSpot revenue is not the whole cash story",
     description:
-      "A method for turning an open pipeline into expected cash, using probability, billing terms, and contract timing.",
+      "How to turn invoices, subscriptions, and payment statuses into a dated cash collection forecast.",
   },
   {
     to: "/blog/arr-vs-cash-for-founders",

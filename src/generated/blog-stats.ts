@@ -12,7 +12,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "arr-vs-cash-for-founders": {
-    "wordCount": 1930,
+    "wordCount": 1931,
     "images": [
       "https://zensus.finance/blog/arr-vs-cash-for-founders/same-arr-different-cash-journey.webp",
       "https://zensus.finance/blog/arr-vs-cash-for-founders/arr-vs-cash-timing-comparison.webp",
@@ -100,10 +100,8 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "hubspot-pipeline-to-cash-forecast": {
-    "wordCount": 1975,
+    "wordCount": 1735,
     "images": [
-      "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/from-deal-value-to-cash-forecast.webp",
-      "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/pipeline-versus-cash-timeline-comparison.webp",
       "https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast/revenue-vs-cash-forecast-dashboard.webp"
     ],
     "thumbnail": {
@@ -122,7 +120,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "predictive-cash-flow-forecasting": {
-    "wordCount": 2662,
+    "wordCount": 2663,
     "images": [
       "https://zensus.finance/blog/predictive-cash-flow-forecasting/cash-flow-forecast-range-shortfall.webp"
     ],
