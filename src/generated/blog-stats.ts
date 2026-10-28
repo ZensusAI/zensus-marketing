@@ -65,7 +65,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "default-alive-vs-default-dead-for-founders": {
-    "wordCount": 1757,
+    "wordCount": 1762,
     "images": [
       "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-vs-default-dead.webp",
       "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/investor-screening-gates.webp",
@@ -130,11 +130,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "runway-vs-burn-rate-for-founders": {
-    "wordCount": 1219,
+    "wordCount": 3451,
     "images": [
-      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/cash-reserve-burn-runway.webp",
-      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/gross-burn-net-burn-runway.webp",
-      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/burn-multiple-formula.webp"
+      "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/cash-reserve-burn-runway.webp"
     ],
     "thumbnail": {
       "width": 1024,

@@ -186,14 +186,16 @@ How to model AI inference and agent costs as a first-class line item in a cash f
 ### Runway vs Burn Rate for Founders (2026)
 https://zensus.finance/blog/runway-vs-burn-rate-for-founders
 
-The difference between runway, burn rate, net burn, gross burn, and burn multiple, and what investors expect in 2026. Key facts from the guide:
+The difference between runway, burn rate, net burn, gross burn, and burn multiple, the formulas, and the founder decisions they inform. Key facts from the guide:
 
-- Burn rate measures speed of spending; runway measures time until cash runs out at the current net burn rate.
-- Gross burn is total monthly outflows; net burn subtracts cash inflows and is what most investors care about.
-- The classic formula (cash ÷ net burn) breaks quickly when hires, churn, or variable costs like AI compute change mid-month.
-- Burn multiple (net burn ÷ net new ARR) has become a primary capital-efficiency metric; below 2x is the common investor threshold David Sacks popularized.
-- 2026 runway guidance has shifted to 18–24 months post-fundraise, up from 12–15 months in 2021.
-- Rolling cash flow forecasts tied to live bank, accounting, and subscription data produce more accurate runway than static spreadsheets.
+- Burn rate is the speed at which a startup consumes cash; runway is how long that cash lasts at that speed. Neither tells you when a payment might fail.
+- Gross burn = total operating cash outflows. Net burn = operating cash outflows - operating cash inflows. Runway (months) = available cash / average monthly net burn.
+- Use cash collected, not revenue: $100,000 of expenses against $45,000 collected is $55,000 of net burn, not $20,000 against $80,000 of booked revenue.
+- Example: $1,200,000 with $100,000 of net burn is 12 months; hiring two engineers adds $25,000 a month and cuts runway to 9.6 months.
+- Monthly averages hide timing: a company opening June with $100,000 that pays $85,000 of payroll on June 5 and a $25,000 vendor on June 9 goes to -$10,000 on June 9, even though it ends the month at $50,000.
+- Carta data: startups that raised a Series A in Q4 2024 had waited a median of 774 days since seed (about 2.1 years), up from 420 days in Q4 2021. Plan runway around milestones and delays rather than a fixed 18 to 24 months.
+- Burn multiple compares net burn with net new ARR; lower is better, and around 2x is a commonly cited rule of thumb (David Sacks).
+- Track available cash, monthly net burn with a three-month trend, and the first projected cash shortfall (the date cash dips below your floor).
 
 ### Default Alive vs Default Dead for Founders
 https://zensus.finance/blog/default-alive-vs-default-dead-for-founders
