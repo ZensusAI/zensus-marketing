@@ -290,7 +290,7 @@ A 13-week cash flow guide for agencies: retainers, payroll, and late payments. K
 - Closing cash = opening cash + cash receipts that clear - cash payments that leave, repeated for 13 weeks and compared with a minimum operating cash floor.
 - Four timing gaps drive agency cash problems: payment terms (advance vs. arrears billing, milestone splits), late payment, pass-through costs such as media spend paid before the client reimburses, and fixed payroll dates.
 - Schedule receipts on the date they clear and payments on their actual debit dates; if net-30 clients consistently pay at day 45, use day 45. Keep unsigned pipeline in an upside scenario, not the baseline.
-- Worked example: an agency with $50,000 in cash and a $30,000 floor collects $98,000 and pays $62,000 over five weeks, ending at $86,000, but week 3 closes at $13,000, $17,000 below the floor. Had the second $25,000 retainer paid on day 30 instead of day 40, week 3 would have been $38,000.
+- Worked example: an agency with $50,000 in cash and a $30,000 floor collects $98,000 and pays $84,000 over five weeks, ending at $64,000, but week 3 closes at $13,000, $17,000 below the floor. Had the second $25,000 retainer arrived in week 3 instead of week 4, week 3 would have been $38,000.
 - Stress tests: the biggest client paying 21 days late, a canceled retainer (costs such as payroll, software and rent stay), and fronting a $25,000 media campaign for four weeks.
 - Four weekly metrics: client collection time, lowest projected cash balance, payroll coverage, and pass-through exposure.
 - Zensus covers QuickBooks invoice inputs, bank-linked payroll, and what-if scenarios, but it does not learn each client's payment habits, so collection assumptions still need review.

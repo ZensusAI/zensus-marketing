@@ -12,7 +12,9 @@ export const meta = {
   topic: 'working-capital',
   tags: ['Cash Flow', 'Agencies', 'Guides'],
   thumbnail:
-    '/blog/cash-flow-forecasting-for-agencies/agency-cash-forecast-due-dates-vs-actual-payment.webp',
+    '/blog/cash-flow-forecasting-for-agencies/agency-five-week-cash-vs-floor.webp',
+  thumbnailAlt:
+    "Bar chart of an agency's closing cash over five weeks against a $30,000 cash floor: $53,000, $35,000, then $13,000 in week 3, $17,000 below the floor, before recovering to $68,000 and $64,000.",
   ogImage: '/og/blog/cash-flow-forecasting-for-agencies.png',
   ogTitle: 'Cash Flow Forecasting for Agencies',
   ogSubtitle:
@@ -114,11 +116,11 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 ### The late-payment gap
 
-<p>A net-30 invoice <em>says</em> it's due 30 days after you send it. That doesn't mean your bank will actually see the money on day 30. I've seen clients who always pay around day 45. I've also seen "reliable" clients ghost us for 60+ days. Record both the due date <em>and</em> what you're expecting the client to actually do. If you've never collected from a prospect, don't assume they'll pay on 30-day terms in your forecast.</p>
+<p>A <a href="https://www.ana.net/content/show/id/pr-2020-payment-terms" className="font-medium text-primary underline-offset-4 hover:underline">net-30 invoice</a> <em>says</em> it's due 30 days after you send it. That doesn't mean your bank will actually see the money on day 30. I've seen clients who always pay around day 45. I've also seen "reliable" clients ghost us for 60+ days. Record both the due date <em>and</em> what you're expecting the client to actually do. If you've never collected from a prospect, don't assume they'll pay on 30-day terms in your forecast.</p>
 
 ### The pass-through gap
 
-<p>This is a silent killer. A marketing agency might pay $18,000 to a media platform in week 2, and the client reimburses in week 5. The agency makes zero margin on that, sure, but that $18,000 is still gone from the bank for three weeks. You're treating it like a wash when it's actually working capital. Track the media spend and reimbursement as separate events. Or, if the contract allows, push for direct billing to the client.</p>
+<p>This is a silent killer. A marketing agency might pay $18,000 to a media platform in week 2, and the client reimburses in week 5. The agency makes zero margin on that, sure, but that $18,000 is still gone from the bank for three weeks. You're treating it like a wash when it's actually <a href="https://www.aaaa.org/wp-content/uploads/The-Ripple-Effect-of-Extending-Payment-Terms-1.pdf?access_pid=113664" className="font-medium text-primary underline-offset-4 hover:underline">working capital</a>. Track the media spend and reimbursement as separate events. Or, if the contract allows, push for direct billing to the client.</p>
 
 ### The payroll gap
 
@@ -191,17 +193,17 @@ import { BlogTable } from '@/components/blog/BlogTable';
     ['2', '$0', '$18,000', <strong>$35,000</strong>, '+$5,000'],
     ['3', '$0', '$22,000', <strong>$13,000</strong>, <strong>−$17,000</strong>],
     ['4', '$55,000', '$0', <strong>$68,000</strong>, '+$38,000'],
-    ['5', '$18,000', '$0', <strong>$86,000</strong>, '+$56,000'],
+    ['5', '$18,000', '$22,000', <strong>$64,000</strong>, '+$34,000'],
   ]}
   numeric={[1, 2, 3, 4]}
   negativeRows={[2]}
 />
 
-<p>The math works out: $50,000 start + $98,000 collected − $62,000 paid = $86,000 ending.</p>
+<p>The math works out: $50,000 start + $98,000 collected − $84,000 paid = $64,000 ending.</p>
 
 <p>But here's the scary part: <strong>they dip $17,000 below their cash floor in week 3</strong>. That's invisible on a quarter-end P&L summary.</p>
 
-<p>If that second $25,000 retainer had paid on day 30 instead of day 40, week 3 would have been $38,000, comfortably above floor. Same contracts, same total cash, completely different risk profile.</p>
+<p>If that second $25,000 retainer had arrived in week 3 instead of week 4 (day 30 instead of day 40 after its invoice), week 3 would have been $38,000, comfortably above floor. Same contracts, same total cash, completely different risk profile.</p>
 
 <p>A cash-floor breach isn't always an instant overdraft. They still have $13,000 in the bank. But they've lost their cushion and <em>now</em> need to act before another payment slips.</p>
 
