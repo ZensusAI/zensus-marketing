@@ -1,12 +1,12 @@
 export const meta = {
-  title: 'Default Alive or Default Dead? A Checklist for Founders',
+  title: 'Default Alive or Default Dead? A Checklist for Founders (2026)',
   seoTitle: 'Default Alive vs Default Dead (2026) | Zensus',
   description:
-    'How to tell if your startup is default alive or default dead: the four numbers investors screen for in 2026, including burn multiple, runway, and margin.',
+    'Is your startup default alive or default dead? The four inputs, a step-by-step projection, a worked example, and what to do if the answer is dead.',
   date: '2026-06-15',
-  dateModified: '2026-10-05',
+  dateModified: '2026-10-28',
   category: 'Guide',
-  readTime: '14 min read',
+  readTime: '17 min read',
   slug: 'default-alive-vs-default-dead-for-founders',
   thumbnail:
     '/blog/default-alive-vs-default-dead-for-founders/default-alive-vs-default-dead.webp',
@@ -17,611 +17,578 @@ export const meta = {
     '/og/blog/default-alive-vs-default-dead-for-founders.png',
   ogTitle: 'Default Alive or Default Dead?',
   ogSubtitle:
-    'The four numbers that determine startup fundability in 2026, and what to do if you are default dead today.',
+    'Will you reach profitability before the cash runs out? Four inputs, a worked example, and a checklist.',
   faqs: [
     {
-      question: 'What does default alive mean?',
+      question: 'What does "default alive" mean for a startup?',
       answer:
-        'A startup is default alive if it can reach profitability before running out of cash without raising additional funding. Default alive does not mean profitable today; it means current growth and margin trends lead to profitability before cash reaches zero.',
+        "It means your business is on a trajectory where your current revenue and growth, continuing at their recent pace, will bring you to profitability before your cash runs out. You don't need to raise money for the plan to work.",
     },
     {
-      question: 'What does default dead mean?',
+      question: 'What does "default dead" mean?',
       answer:
-        'A startup is default dead if current cash and growth trends are insufficient to reach profitability before money runs out. Default dead companies typically need a funding round, venture debt, bridge capital, or a major revenue acceleration to survive.',
+        'Your current trajectory leads to a cash shortfall before you reach profitability. You need to either improve the trajectory or secure new capital to survive.',
     },
     {
-      question: 'How do you calculate default alive?',
+      question: 'Who came up with default alive vs. default dead?',
       answer:
-        'Evaluate runway, burn multiple, gross margins, and whether revenue growth outpaces burn growth. If profitability arrives before cash reaches zero on the current trajectory, the company is default alive.',
+        'Y Combinator co-founder Paul Graham, in his October 2015 essay. It became a practical framework for founders to think about whether their growth and cash could carry them to profitability.',
     },
     {
-      question: 'What is a good burn multiple in 2026?',
+      question: 'Can a startup be default alive and still be losing money?',
       answer:
-        'Many investors consider a startup burn multiple below 2x a strong indicator of capital efficiency. Under 1x is elite; between 1x and 2x is healthy; above 2x requires explanation.',
+        'Absolutely. A startup might be burning $50,000 a month but growing revenue by $150,000 a month. As long as cash stays positive until profitability arrives, the company is default alive.',
     },
     {
-      question: 'How much runway should a startup have?',
+      question: 'How do I calculate it?',
       answer:
-        'Most investors prefer startups to hold 18 to 24 months of runway after a financing event, and with longer gaps between rounds since 2022, Carta data suggests even that may not be enough.',
+        'Start with four numbers: available cash, current monthly revenue, realistic growth rate, and monthly expenses. Project forward until you find the break-even point. Then check whether that comes before you run out of cash. Model actual cash timing, not just monthly totals.',
     },
     {
-      question: 'Can a startup be growing and still be default dead?',
+      question: "Isn't it just about having at least 12 months of runway?",
       answer:
-        'Yes. If expenses grow faster than revenue, the company can remain default dead despite strong top-line growth.',
+        "No. I've seen companies with 24 months of runway default dead, and companies with 6 months default alive. Runway is about how long cash lasts at today's burn. Default alive is whether you can reach profitability in time. They measure different things.",
     },
     {
-      question: 'Can a default dead startup still raise funding?',
+      question: 'Can a default-dead company raise money?',
       answer:
-        'Yes. Many venture-backed startups are default dead at some stage. The key is demonstrating a credible path to becoming default alive.',
+        "Yes, but it's not guaranteed. Many default-dead companies have successfully raised, especially when they show they know the problem and have a plan to fix it. The key is not being default dead by default, i.e., by waiting too long to act.",
     },
     {
-      question: 'What makes a startup fundable in 2026?',
+      question: 'How can we become default alive?',
       answer:
-        'Investors increasingly look for strong capital efficiency, a burn multiple below 2x, 18+ months of runway, healthy gross margins, sustainable growth, and a realistic path to startup profitability.',
+        'Typically one of three things (or a mix). Increase cash coming in: better collections, pricing changes, revenue improvements. Reduce cash going out: cut expenses, pause non-essential hiring, renegotiate contracts. Add capital: bridge round, SAFEs, investors. You need to test what assumptions you need to change.',
+    },
+    {
+      question: 'Do we need a special default-alive calculator?',
+      answer:
+        "A good projection tool helps, but what matters is the methodology, not the tool. You need something that projects monthly (or weekly) revenue and expenses, accounts for cash timing, shows break-even and first shortfall dates, and allows you to test different scenarios. Our tool at Zensus does most of this: it projects revenue and expenses on real dates, shows the month cash runs short, and lets you test scenarios.",
     },
   ],
 };
 
 import { BlogCallout } from '@/components/blog/BlogCallout';
-import { BlogFigure } from '@/components/blog/BlogFigure';
+import { BlogTable } from '@/components/blog/BlogTable';
 
+<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">Here's a question that keeps most founders up at night:</p>
 
-<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">In October 2015, Paul Graham introduced one of the most useful concepts in startup finance.</p>
+<p><strong>When will you run out of cash?</strong></p>
 
+<p>You might have 12 months of <a href="/blog/runway-vs-burn-rate-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">runway</a>. You're growing revenue. Investors love your traction. But unless you calculate and understand the answer to this one question, you're flying blind:</p>
 
-<p className="mb-2 font-medium text-foreground">His test was deceptively simple:</p>
+<p><strong>Will your company become profitable before it runs out of cash?</strong></p>
 
+<p>This is where things get real. Y Combinator co-founder Paul Graham wrote about this back in 2015: what he called <em>default alive</em> versus <em>default dead</em>.</p>
 
-<blockquote className="my-6 border-l-4 border-primary/30 pl-4 not-italic text-muted-foreground">
+<p>But here's what most people don't realize: Graham was really asking you to project your cash, not just worry about the next round. And that's where I think his framework is still the best tool founders have today.</p>
 
-  <p>Assuming their expenses remain constant and their revenue growth is what it has been over the last several months, do they make it to profitability on the money they have left?</p>
+<p>The math is straightforward, but the human part matters most. Because knowing whether you're default alive or default dead changes everything you do next: with hiring, spending, your product, and when you start thinking about raising money.</p>
 
-</blockquote>
+<p>A founder who knows their numbers can make deliberate choices. A founder who doesn't? Well, they'll usually figure it out the day they <em>can't</em> figure it out anymore.</p>
 
-
-<p>If the answer is yes, you're <strong>default alive</strong>.</p>
-
-
-<p>If the answer is no, you're <strong>default dead</strong>.</p>
-
-
-<p>A decade later, the framework remains just as relevant, but the startup environment has changed dramatically.</p>
-
-
-<p>In 2021, many startups could raise another round before profitability became urgent.</p>
-
-
-<p>In 2026, investors increasingly expect founders to demonstrate <strong>capital efficiency</strong>, healthy <strong>startup runway</strong>, strong <strong>gross margins</strong>, and a realistic path to sustainability.</p>
-
-
-<p>Today, <strong>default alive vs default dead</strong> is no longer just a theoretical exercise. It is one of the clearest indicators of <strong>startup fundability</strong>.</p>
-
-
-<p className="mb-2 font-medium text-foreground">This guide breaks down:</p>
-
+<p className="mb-2 font-medium text-foreground">In the sections below, I'm going to walk you through:</p>
 
 <ul>
-
-  <li>the four numbers that determine whether you're default alive in 2026</li>
-  <li>the benchmarks investors quietly screen for</li>
-  <li>what to do if you're currently default dead</li>
-
+  <li>How to calculate whether your startup is default alive or default dead</li>
+  <li>A real checklist you can actually use</li>
+  <li>Why your "runway" number might be lying to you</li>
+  <li>What to do if the answer is "default dead"</li>
+  <li>How Zensus can help you model your cash trajectory</li>
 </ul>
 
+<p>This isn't just theory. This is a survival guide.</p>
 
-## What Does Default Alive Mean?
+## What Does "Default Alive" vs. "Default Dead" Actually Mean?
 
+<p>Here's the simple version:</p>
 
-<p>The original <strong>default alive</strong> definition remains unchanged:</p>
+<p><strong>You're default alive</strong> when, at today's growth rate and spending, you're on track to reach profitability before you run out of cash. You don't <em>need</em> new money for this to work: your business does.</p>
 
+<p><strong>You're default dead</strong> when, at today's trajectory, you'll run out of cash before you hit profitability. Your current path requires outside capital or a change in direction.</p>
 
-<p><strong>A startup is default alive if it can reach profitability before running out of money without raising additional capital.</strong></p>
+<p><strong>Both are forecasts, not fate.</strong></p>
 
+<p>Paul Graham's <a href="https://paulgraham.com/aord.html" className="font-medium text-primary underline-offset-4 hover:underline">original essay</a> explains this brilliantly. But most people miss the point.</p>
 
-<p>Importantly: default alive does <strong>not</strong> mean profitable today.</p>
+<p>A default alive startup can still be burning cash today. Default dead doesn't mean you're bankrupt. It means the numbers say you need to change course before it's too late.</p>
 
+<p>Here's a quick comparison:</p>
 
-<p>A company can still be losing money and be default alive. What matters is the trajectory.</p>
-
-
-<p>If current growth, margins, and spending trends naturally lead to profitability before cash reaches zero, the company is default alive.</p>
-
-
-<p>This is one reason founders often misunderstand the concept. They assume default alive means profitable. It doesn't. It means survival is possible without another fundraising event.</p>
-
-
-<p>Paul Graham introduced the framework in his essay <a href="http://paulgraham.com/aord.html" className="font-medium text-primary underline-offset-4 hover:underline">Default Alive or Default Dead</a>. <strong>Who created the default alive framework?</strong> Paul Graham, in October 2015. <strong>Why is default alive important for startups?</strong> Because it answers whether the business can reach sustainability on its own, which is the core question behind startup survival metrics and fundraising readiness.</p>
-
-
-### Am I Default Alive?
-
-
-<p><strong>How to know if my startup is default alive:</strong> if you never raised another dollar, would current revenue growth and margin improvements eventually make the business profitable before your cash balance reaches zero?</p>
-
-
-<p>If yes, you're likely default alive.</p>
-
-
-<p>If no, you're likely default dead.</p>
-
-
-## What Does Default Dead Mean?
-
-
-<p><strong>What does default dead mean?</strong> A startup is default dead if current cash plus expected growth is insufficient to reach profitability before running out of money.</p>
-
-
-<p>This does not necessarily mean the company is failing. Many successful startups have spent periods as default dead.</p>
-
-
-<p>The distinction is that default dead companies require an external event to survive. Usually one of:</p>
-
-
-<ul>
-
-  <li>a funding round</li>
-  <li>venture debt</li>
-  <li>a bridge round</li>
-  <li>a major revenue acceleration</li>
-
-</ul>
-
-
-<p>Without one of those events, the company eventually runs out of cash.</p>
-
-
-### Can a Default Dead Startup Still Raise Money?
-
-
-<p><strong>Can a default dead startup raise money?</strong> Absolutely. Many venture-backed startups are default dead.</p>
-
-
-<p>The key difference is whether investors can see a credible path to becoming default alive.</p>
-
-
-## What Is the Difference Between Default Alive and Default Dead?
-
-
-<p><strong>What is the difference between default alive and default dead?</strong> Default alive means profitability arrives before cash runs out on the current path. Default dead means it doesn't, unless something external changes the trajectory.</p>
-
-
-<p>One measures sustainability. The other measures dependency on the next capital event.</p>
-
-
-<p>For the underlying math on runway and burn, see our guide on <a href="/blog/runway-vs-burn-rate-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">runway vs burn rate</a>.</p>
-
-
-<BlogFigure
-  src="/blog/default-alive-vs-default-dead-for-founders/default-alive-vs-default-dead.webp"
-  width={1024}
-  height={576}
-  alt="Side-by-side comparison of default alive versus default dead: cash reserve, revenue growth, burn rate, and whether profitability arrives before cash runs out"
-  caption="Default alive means profitability arrives before cash runs out. Default dead means it doesn't unless something external changes the trajectory."
+<BlogTable
+  caption="Default alive and default dead compared, question by question."
+  columns={['Question', 'Default Alive', 'Default Dead']}
+  rows={[
+    ['Will your current trajectory lead to profitability before cash runs out?', 'Yes', 'No'],
+    ['Does your base case require raising money to survive?', 'Not unless conditions worsen', 'Yes, or you need to change course'],
+    ['Is your company profitable today?', 'Probably not', 'Probably not'],
+    ['What should you do next?', 'Protect the runway, invest carefully', 'Change the trajectory: cut costs, improve collections, or start fundraising'],
+    ['Can either status change?', 'Yes', 'Yes, absolutely'],
+  ]}
 />
 
+<p><strong>Default dead is a signal, not a death sentence.</strong></p>
 
-## Why Investors Care More About This in 2026
+<p>The whole point is that you know there's time to do something different while you still have options.</p>
 
+## The Four Inputs You Need
 
-<p>One of the biggest changes in startup finance over the last few years has been investor expectations.</p>
+<p>You don't need a fancy financial model. Paul Graham's original test asked a simple question: if your revenue grows and expenses stay flat, will you get to profitability before your cash runs out?</p>
 
+<p>That's four numbers.</p>
 
-<p>The era of growth at all costs has largely ended. Limited partners increasingly demand real returns. Venture firms pass that pressure to startups.</p>
+### 1. Available cash
 
+<p>How much cash can you actually spend right now?</p>
 
-<p className="mb-2 font-medium text-foreground">As a result, investors are now asking questions like:</p>
+<p>Include money that's available across your operating accounts. But leave out restricted cash, invoices you haven't collected, uncommitted financing, and any funds you can't or won't be able to legally spend.</p>
 
+<p><strong>Example: $300,000</strong></p>
 
-<ul>
+<p>That's your runway. Your buffer. Your margin for error.</p>
 
-  <li>What is your <strong>startup burn multiple</strong>?</li>
-  <li>How much <strong>startup runway</strong> remains?</li>
-  <li>What are your <strong>startup gross margin</strong> benchmarks?</li>
-  <li>How quickly can you reach <strong>startup profitability</strong>?</li>
-  <li>Are you a <strong>capital efficient startup</strong>?</li>
+### 2. Current monthly revenue
 
-</ul>
+<p>How much money is coming into the business month over month?</p>
 
+<p>Here's where people trip up: don't confuse annual recurring revenue (ARR) with actual cash collections.</p>
 
-<p><strong>How investors evaluate startups in 2026</strong> often comes down to these founder finance metrics, even when investors never say the phrase "default alive" out loud.</p>
+<p>If you're a SaaS company and close a $120,000 annual contract, that's $10,000 a month on paper. But depending on when that payment comes in and how many times a year customers renew, your actual cash timing could be very different.</p>
 
+<p>For our working example, we'll assume:</p>
 
-<p>If a company is default dead with no realistic path to becoming default alive, the investment becomes significantly riskier.</p>
+<p><strong>Monthly revenue: $50,000</strong></p>
 
+### 3. Recent monthly revenue growth
 
-<BlogFigure
-  src="/blog/default-alive-vs-default-dead-for-founders/investor-screening-gates.webp"
-  width={1024}
-  height={576}
-  alt="Investor review funnel with four screening gates: burn multiple under 2x, runway of 18 plus months, gross margin benchmarks, and growth outpacing burn growth"
-  caption="Investors screen startups through four gates: burn multiple, runway, gross margin, and growth efficiency. Passing all four signals fundability."
-/>
+<p>How fast has revenue actually been growing?</p>
 
+<p>Don't use your best month. Use several months to get a representative picture. If you grew from $40,000 to $50,000 over four months, your compound monthly growth rate is:</p>
 
-## The Four Numbers That Determine Default Alive in 2026
+<p>Monthly growth = (50,000 ÷ 40,000)<sup>1/4</sup> − 1 ≈ 5.7%</p>
 
+<p>Think of growth as an assumption, not a promise. Test different scenarios: what if growth slows to 3%? What if a key customer churns? What if collections lag?</p>
 
-<p>Paul Graham's original framework can now be translated into four practical metrics. Together they form a practical <strong>startup capital efficiency checklist</strong> and a workable <strong>default alive calculation</strong>.</p>
+### 4. Monthly operating expenses
 
+<p>How much does it cost to run the business?</p>
 
-<BlogFigure
-  src="/blog/default-alive-vs-default-dead-for-founders/default-alive-score.webp"
-  width={1024}
-  height={576}
-  alt="Default alive score dashboard showing burn multiple under 2x, runway of 18 plus months, gross margin benchmarks for software and AI, and growth outpacing burn"
-  caption="The default alive score combines four metrics: burn multiple, runway, gross margin, and growth relative to burn."
-/>
+<p>Payroll, software, infrastructure, contractors, rent, marketing: put it all in. For a more accurate picture, also include taxes, debt payments, and planned hires with their actual payment dates.</p>
 
+<p><strong>Example: $90,000</strong></p>
 
-### 1. Burn Multiple
+<p>With these four numbers, you can project when you'll break even, and whether you'll survive until then.</p>
 
+## How to Calculate: Your Default Alive or Default Dead Status
 
-<p><strong>Startup burn multiple</strong> has become one of the strongest indicators of startup capital efficiency.</p>
+<p>This isn't a simple ratio. It's a forward-looking cash projection.</p>
 
-
-<p className="mb-2 font-medium text-foreground">Formula:</p>
-
-
-<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">Burn Multiple = Net Burn ÷ Net New ARR</code></p>
-
-
-<p className="mb-2 font-medium text-foreground">Example:</p>
-
-
-<ul>
-
-  <li>Net burn: $200,000/month</li>
-  <li>Net new ARR: $120,000/month</li>
-
-</ul>
-
-
-<p><strong>Burn multiple = 1.67x</strong></p>
-
-
-<p className="mb-2 font-medium text-foreground">What is a good burn multiple in 2026?</p>
-
-
-<ul>
-
-  <li><strong>Under 1x:</strong> exceptional</li>
-  <li><strong>Between 1x and 2x:</strong> strong</li>
-  <li><strong>Above 2x:</strong> potential concern</li>
-
-</ul>
-
-
-<p>For many software startups, a burn multiple below 2x has become a common fundability threshold. For how burn multiple sits alongside runway and burn, see <a href="/blog/runway-vs-burn-rate-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">runway vs burn rate</a>.</p>
-
-
-### 2. Runway
-
-
-<p>The second factor is <strong>startup runway</strong>.</p>
-
-
-<p className="mb-2 font-medium text-foreground">Formula:</p>
-
-
-<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">Runway = Cash on Hand ÷ Monthly Net Burn</code></p>
-
-
-<p className="mb-2 font-medium text-foreground">Example:</p>
-
-
-<ul>
-
-  <li>Cash balance: $1.8M</li>
-  <li>Net burn: $100K/month</li>
-
-</ul>
-
-
-<p><strong>Runway = 18 months</strong></p>
-
-
-<p className="mb-2 font-medium text-foreground">How much runway should a startup have in 2026?</p>
-
-
-<p>The typical <strong>startup runway benchmark</strong> after a round is 18 to 24 months. That has long been the standard advice, and <a href="https://carta.com/data/linkedin-startup-runway-18-24-months-not-enough/" className="font-medium text-primary underline-offset-4 hover:underline">Carta data</a> suggests even that may not be enough now.</p>
-
-
-<p>Fundraising takes longer. Markets are more selective. Companies need more time to hit milestones.</p>
-
-
-<p><strong>Is 12 months of runway enough?</strong> Increasingly, no. Most investors prefer to see at least 18 months of runway after a financing event.</p>
-
-
-<p>Model yours with the free <a href="/tools/runway-calculator" className="font-medium text-primary underline-offset-4 hover:underline">startup runway calculator</a>, or build a rolling view with our guide on <a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">13-week cash flow forecasting</a>.</p>
-
-
-### 3. Gross Margin
-
-
-<p>The third factor is <strong>startup gross margin</strong> and overall <strong>startup financial health</strong>.</p>
-
-
-<p className="mb-2 font-medium text-foreground">Formula:</p>
-
-
-<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">Gross Margin = Gross Profit ÷ Revenue</code></p>
-
-
-<p className="mb-2 font-medium text-foreground">Software companies:</p>
-
-
-<p>Healthy benchmark: <strong>70%+ gross margin</strong></p>
-
-
-<p className="mb-2 font-medium text-foreground">AI-heavy companies:</p>
-
-
-<p>Typical range: <strong>often 50% to 60% gross margin</strong>, below the 70%+ of traditional software</p>
-
-
-<p>The difference exists because AI businesses often have meaningful inference and infrastructure costs. See <a href="/blog/forecasting-ai-compute-costs-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">forecasting AI compute costs</a> for how variable compute spend affects margins and <strong>startup unit economics</strong>.</p>
-
-
-<p><strong>Can an AI startup be default alive with lower margins?</strong> Yes. Investors understand AI companies operate differently. However, lower margins mean the company must compensate through stronger growth or lower burn.</p>
-
-
-### 4. Growth Rate vs Burn Growth
-
-
-<p>The final factor is often ignored in a <strong>startup burn rate</strong> snapshot alone.</p>
-
-
-<p>Revenue growth must outpace burn growth.</p>
-
-
-<p className="mb-2 font-medium text-foreground">Company A:</p>
-
-
-<ul>
-
-  <li>Revenue growing 12% monthly</li>
-  <li>Burn growing 3% monthly</li>
-
-</ul>
-
-
-<p>Likely moving toward default alive.</p>
-
-
-<p className="mb-2 font-medium text-foreground">Company B:</p>
-
-
-<ul>
-
-  <li>Revenue growing 6% monthly</li>
-  <li>Burn growing 10% monthly</li>
-
-</ul>
-
-
-<p>Likely moving toward default dead.</p>
-
-
-<p>Growth alone is not enough. What matters is whether the business is becoming more sustainable over time.</p>
-
-
-<p><strong>Can a startup be growing and still be default dead?</strong> Absolutely. Many startups grow revenue while increasing expenses even faster. That creates growth without sustainability.</p>
-
-
-## The Quick Default Alive Calculation
-
-
-<p>Most founders don't need a complex model to run a first-pass <strong>default alive calculation</strong>. Start with three of the four numbers:</p>
-
-
-<p className="mb-2 font-medium text-foreground">Runway:</p>
-
-
-<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">Cash on Hand ÷ Net Monthly Burn</code></p>
-
-
-<p className="mb-2 font-medium text-foreground">Burn multiple:</p>
-
-
-<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">Net Burn ÷ Net New ARR</code></p>
-
-
-<p className="mb-2 font-medium text-foreground">Gross margin:</p>
-
-
-<p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">Gross Profit ÷ Revenue</code></p>
-
-
-<p>Then ask:</p>
-
-
-<blockquote className="my-6 border-l-4 border-primary/30 pl-4 not-italic text-muted-foreground">
-
-  <p>If these trends continue, do we become profitable before runway reaches zero?</p>
-
-</blockquote>
-
-
-<p>That is essentially the default alive calculation. A rolling <strong>startup profitability forecast</strong> inside your <a href="/blog/what-is-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">cash flow forecast</a> answers the same question with real timing, not averages alone.</p>
-
-
-## What To Do If You Are Default Dead
-
-
-<p>Discovering you're default dead isn't necessarily bad news. The important thing is acting early. This is the practical side of <strong>how to become default alive</strong>.</p>
-
-
-<BlogFigure
-  src="/blog/default-alive-vs-default-dead-for-founders/default-dead-to-default-alive.webp"
-  width={1024}
-  height={576}
-  alt="Roadmap from default dead to default alive through reducing burn, increasing revenue, improving margins, and extending runway with bridge capital"
-  caption="Move from default dead to default alive by reducing burn, increasing revenue, improving margins, and extending runway when you need more time."
-/>
-
-
-### Reduce Burn
-
-
-<p className="mb-2 font-medium text-foreground">Focus on:</p>
-
-
-<ul>
-
-  <li>delaying non-essential hires</li>
-  <li>reducing contractor spend</li>
-  <li>renegotiating vendor contracts</li>
-  <li>eliminating low-ROI expenses</li>
-
-</ul>
-
-
-<p>The goal is not cutting costs blindly. The goal is improving capital efficiency.</p>
-
-
-### Accelerate Revenue
-
-
-<p>Many founders immediately focus on reducing burn. Often the better answer is increasing revenue.</p>
-
-
-<p className="mb-2 font-medium text-foreground">Examples:</p>
-
-
-<ul>
-
-  <li>improve conversion rates</li>
-  <li>shorten sales cycles</li>
-  <li>increase pricing</li>
-  <li>improve expansion revenue</li>
-  <li>launch high-impact features</li>
-
-</ul>
-
-
-<p>Revenue growth can move a company toward default alive faster than cost cutting alone.</p>
-
-
-### Explore Transitional Capital
-
-
-<p>Sometimes companies need more time. Options include bridge rounds, SAFE extensions, and venture debt.</p>
-
-
-<p>The objective is not permanent dependency on fundraising. The objective is creating enough runway to become sustainably default alive.</p>
-
-
-<p><a href="/templates/13-week-cash-flow-template.xlsx" download className="font-medium text-primary underline-offset-4 hover:underline">Download the free 13-week template</a> to stress-test how much time each option buys before your next milestone.</p>
-
-
-## Why Investors Ask This Even When They Don't Say It
-
-
-<p>Investors rarely ask "Are you default alive?" directly.</p>
-
-
-<p className="mb-2 font-medium text-foreground">Instead they ask:</p>
-
-
-<ul>
-
-  <li>What's your burn multiple?</li>
-  <li>What's your runway?</li>
-  <li>What are your margins?</li>
-  <li>How quickly are you growing?</li>
-
-</ul>
-
-
-<p>They're asking the same question indirectly.</p>
-
-
-<p>Many startups never raise the next round. Companies that can survive independently are dramatically less risky investments.</p>
-
-
-<p className="mb-2 font-medium text-foreground">What makes a startup fundable in 2026?</p>
-
-
-<ul>
-
-  <li>burn multiple below 2x</li>
-  <li>18+ months runway</li>
-  <li>strong gross margins</li>
-  <li>sustainable growth</li>
-  <li>clear path to profitability</li>
-
-</ul>
-
-
-<p>These are effectively the default alive metrics.</p>
-
-
-## How Zensus Helps Founders Know
-
-
-<p>The biggest challenge is that default alive is not a static calculation.</p>
-
-
-<p>Every new hire changes it. Every new customer changes it. Every pricing decision changes it.</p>
-
-
-<p>This is why spreadsheet calculations become outdated quickly.</p>
-
-
-<p>At <a href="/#product" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a>, founders connect bank data via <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a>, accounting via <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a>, and subscription revenue via <a href="/integrations/hubspot" className="font-medium text-primary underline-offset-4 hover:underline">HubSpot</a> into a single financial model. See <a href="/#how-it-works" className="font-medium text-primary underline-offset-4 hover:underline">how it works</a> for the connect-to-forecast flow.</p>
-
-
-<p className="mb-2 font-medium text-foreground">Founders can then answer questions such as:</p>
-
-
-<ul>
-
-  <li>Are we default alive today?</li>
-  <li>What happens if hiring accelerates?</li>
-  <li>What if growth slows?</li>
-  <li>How much runway remains under different scenarios?</li>
-
-</ul>
-
-
-<p>Instead of debating assumptions, teams can <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">run scenarios in plain English</a>, <a href="/#features-drill-down" className="font-medium text-primary underline-offset-4 hover:underline">drill from monthly to weekly to daily</a> cash flow, and get <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when a 30-day projection crosses a cash floor they set.</p>
-
-
-## Final Thoughts
-
-
-<p>Paul Graham's original framework remains one of the most useful startup finance concepts ever created.</p>
-
-
-<p className="mb-2 font-medium text-foreground">The question is still the same:</p>
-
-
-<blockquote className="my-6 border-l-4 border-primary/30 pl-4 not-italic text-muted-foreground">
-
-  <p>Will you reach profitability before you run out of money?</p>
-
-</blockquote>
-
-
-<p>The difference in 2026 is that founders can answer that question with four concrete numbers:</p>
-
+<p className="mb-2 font-medium text-foreground">You're looking for two dates:</p>
 
 <ol>
-
-  <li>burn multiple</li>
-  <li>runway</li>
-  <li>gross margin</li>
-  <li>growth relative to burn</li>
-
+  <li>When revenue covers expenses (break-even)</li>
+  <li>When your cash runs out</li>
 </ol>
 
+<p><strong>If the break-even date comes first → Default alive</strong></p>
 
-<p>Together, these metrics determine whether your company is default alive or default dead.</p>
+<p><strong>If the cash runs out first → Default dead</strong></p>
 
+### Step 1: Project monthly revenue
 
-<p>Investors increasingly screen for them. Founders should too.</p>
+<p>Assuming your growth rate holds steady, your revenue in month m would be:</p>
 
+<p>Revenue<sub>m</sub> = Current revenue × (1 + growth rate)<sup>m−1</sup></p>
 
-<BlogCallout title="Improve Financial Visibility with Zensus">
-Zensus helps founders and finance teams improve cash visibility, streamline forecasting workflows, and reduce manual financial reporting with one forecast that updates after every sync. [Talk to us](https://calendly.com/hello-zensus/introcall) or explore [pricing](/pricing).
+<p>Month 1 is next month. If you start at $50,000 and grow 10% monthly, you get $55,000 in month 2, then $60,500 in month 3, and so on.</p>
+
+### Step 2: Project expenses
+
+<p>In Graham's simplified version, expenses stay flat. But in the real world, they don't. New hires? Their salaries. Contract renewals? Their costs. Growth might mean higher marketing or sales commissions.</p>
+
+<p>Use consistent time periods and assumptions for both revenue and expenses.</p>
+
+### Step 3: Calculate monthly cash flow
+
+<p>If you're a cash-based business (collections happen in the month the sale closes):</p>
+
+<p><strong>Monthly net cash flow = Cash receipts − Cash payments</strong></p>
+
+<p><strong>Ending cash = Starting cash + Monthly net cash flow</strong></p>
+
+<p>When receipts are lower than expenses, cash drains. When receipts beat expenses, cash grows. Repeat for each month in your forecast.</p>
+
+### Step 4: Find your break-even month
+
+<p>When does recurring revenue finally cover your operating expenses?</p>
+
+<p>In our example, that's month 8 when revenue hits around $90,000.</p>
+
+<p><strong>Important:</strong> Accounting profit ≠ cash availability. Taxes, working capital changes, and financing payments all mess with the timing.</p>
+
+### Step 5: Find the first cash shortfall
+
+<p>This is where most people go wrong. Don't just check the ending balance.</p>
+
+<p>A company might have cash through month 8, but what if they need to pay a $150,000 vendor bill on the 15th, but a key customer doesn't pay until the 25th?</p>
+
+<p>They're "fine" at month-end, but they can't actually pay the bill.</p>
+
+<p>Use weekly or daily cash dates for accuracy. Model the timing of real payments and receipts.</p>
+
+### Step 6: Compare
+
+<p>If break-even comes before the first cash shortfall → <strong>default alive</strong></p>
+
+<p>If cash runs out before break-even → <strong>default dead</strong></p>
+
+<p><strong>And here's the kicker:</strong> When your forecast is close to the boundary, don't assume you're safe. Test conservative scenarios. What if growth slows? What if collections lag?</p>
+
+## Worked Example: Growth Makes All the Difference
+
+<p>Let's imagine a SaaS startup with these numbers:</p>
+
+<BlogTable
+  caption="The worked example's starting numbers."
+  columns={['Input', 'Amount']}
+  rows={[
+    ['Opening cash', '$300,000'],
+    ['Monthly revenue', '$50,000'],
+    ['Monthly expenses', '$90,000'],
+    ['Net burn rate', '$40,000'],
+    ['New funding in forecast', '$0'],
+  ]}
+  numeric={[1]}
+/>
+
+<p>Assumptions: Revenue is collected the same month you recognize it. Expenses stay flat. No taxes. No one-time costs.</p>
+
+### Scenario A: 10% monthly growth
+
+<p>Revenue grows fast enough to cover expenses.</p>
+
+<BlogTable
+  caption="Scenario A: at 10% monthly growth, revenue passes $90,000 in month 8 with about $152,000 still in the bank."
+  columns={['Month', 'Revenue', 'Expenses', 'Ending Cash']}
+  rows={[
+    ['1', '$50,000', '$90,000', '$260,000'],
+    ['4', '$66,550', '$90,000', '$172,050'],
+    ['8', '$97,436', '$90,000', '$151,794'],
+  ]}
+  numeric={[1, 2, 3]}
+/>
+
+<p>You hit break-even in month 8 with $152,000 cash left in the bank.</p>
+
+<p><strong>Verdict: Default alive.</strong></p>
+
+<p>Notice: You're not a "high growth" company by most definitions. But your trajectory works.</p>
+
+### Scenario B: 3% monthly growth
+
+<p>Same company, slower growth.</p>
+
+<BlogTable
+  caption="Scenario B: at 3% monthly growth, cash goes negative in month 9, long before revenue reaches $90,000."
+  columns={['Month', 'Revenue', 'Expenses', 'Ending Cash']}
+  rows={[
+    ['1', '$50,000', '$90,000', '$260,000'],
+    ['4', '$54,636', '$90,000', '$149,181'],
+    ['8', '$61,494', '$90,000', '$24,617'],
+    ['9', '$63,339', '$90,000', <strong>−$2,045</strong>],
+  ]}
+  numeric={[1, 2, 3]}
+  negativeRows={[3]}
+/>
+
+<p>Revenue doesn't reach $90,000/month until month 21. But you're in the red in month 9.</p>
+
+<p><strong>Verdict: Default dead.</strong></p>
+
+<p><strong>What changed?</strong> Nothing about your starting cash, expenses, or current revenue. Just a 7-point difference in the assumed growth rate.</p>
+
+<p>But that single assumption change flips your entire financial outlook.</p>
+
+<BlogTable
+  caption="The two scenarios side by side."
+  columns={['Metric', 'Scenario A (10% growth)', 'Scenario B (3% growth)']}
+  rows={[
+    ['Monthly growth rate', '10%', '3%'],
+    ['First break-even', 'Month 8', 'Month 21'],
+    ['First cash shortfall', 'None in forecast', 'Month 9'],
+    ['Default status', 'Alive', 'Dead'],
+  ]}
+/>
+
+<p>This is why your "10 months of runway" number doesn't actually tell you what you need to know.</p>
+
+<p>Runway answers: How long until we run out <em>if nothing changes</em>? Default alive answers: Can we reach profitability before running out?</p>
+
+<p>One is about the status quo. The other is about possibility.</p>
+
+## The Founder's Default Alive Checklist
+
+<p className="mb-2 font-medium text-foreground">Use this checklist in three situations:</p>
+
+<ul>
+  <li>During your monthly financial review</li>
+  <li>Before making a major hiring decision</li>
+  <li>When investors ask whether your company is "fundable"</li>
+</ul>
+
+<ul>
+  <li><strong>1. Verify your available cash.</strong> Reconcile balances. Exclude restricted cash, uncleared deposits, and anything you can't actually spend.</li>
+  <li><strong>2. Validate your revenue.</strong> Separate recognized revenue from actual cash collected. Factor in unpaid invoices and any irregular customers.</li>
+  <li><strong>3. Calculate realized growth.</strong> Use recent representative months. Factor in churn, seasonality, and concentrate on recurring business, not one-off deals.</li>
+  <li><strong>4. Forecast expenses.</strong> Payroll, vendors, software, rent, marketing, and committed hiring. For accuracy, model payment dates.</li>
+  <li><strong>5. Find break-even.</strong> When will recurring revenue cover operating expenses? Distinguish accounting profit from cash flow.</li>
+  <li><strong>6. Find first shortfall.</strong> Project cash through break-even and note the first negative balance. Watch the minimum cash balance along the way, not just the ending number.</li>
+  <li><strong>7. Stress-test.</strong> What if growth slows? What if collections lag? What if a key customer churns? How does the forecast change?</li>
+  <li><strong>8. Write a no-fundraise Plan B.</strong> What would you do if investors don't move? Who owns the changes? What's the last date you can delay?</li>
+  <li><strong>9. Recalculate monthly.</strong> And again whenever something changes: new hire, big win, lost customer, changed terms, financing decision.</li>
+</ul>
+
+### Three questions that matter most
+
+<p>Once you've run through the checklist, ask yourself:</p>
+
+<p><strong>When do we become profitable?</strong></p>
+
+<p><strong>When could we first run short of cash?</strong></p>
+
+<p><strong>What's the last safe date to change our plan?</strong></p>
+
+<p>If you can't answer all three, stop. Your forecast needs work before you make real decisions.</p>
+
+## Why Your "Runway" Number Might Be Misleading
+
+<p>Founders know their runway. They'll say, "We have 12 months of runway."</p>
+
+<p>But that number often tells you more about how you calculated it than what it actually means.</p>
+
+### Runway assumes the burn rate stays the same
+
+<p><strong>Runway = Available cash / Monthly net burn</strong></p>
+
+<p>In our example: $300,000 / $40,000 = 7.5 months.</p>
+
+<p>But that assumes nothing changes. And things <em>will</em> change. If revenue grows and expenses stay flat, your net burn drops. You might reach profitability with months to spare.</p>
+
+<p><strong>Runway measures your cash at today's burn.</strong> It's backward-looking.</p>
+
+### Burn multiple measures growth efficiency, not survival
+
+<p>David Sacks introduced burn multiple to measure capital efficiency:</p>
+
+<p><strong>Burn multiple = Net burn during a period / Net new ARR in that period</strong></p>
+
+<p>If you burned $600,000 in Q1 and added $300,000 in net new ARR, your burn multiple is 2.0x. You spent two dollars of cash to add one dollar of growth.</p>
+
+<p>Lower is better, when you're growing. If your new ARR is zero, the metric breaks down.</p>
+
+<p>But here's what I think gets missed:</p>
+
+<p><strong>Burn multiple doesn't tell you when you'll survive. It tells you how efficiently you're burning.</strong></p>
+
+<p>A company can have a 1.5x burn multiple and still be default dead if growth is too slow to reach profitability in time. A company can be default alive even with a 3x burn multiple if they're close to profitability.</p>
+
+<p><strong>Runway measures cash duration. Burn multiple measures capital efficiency. Default alive measures whether your business can survive on its own trajectory.</strong></p>
+
+<p>You need all three numbers to make sense.</p>
+
+## The Cash Timing Problem: Your "Safe" Month Hides a Crisis
+
+<p>I've seen this play out too many times.</p>
+
+<p>A startup comes to me saying, "Our month-end cash balance is positive. We're fine."</p>
+
+<p>Here's what I found:</p>
+
+<p>They started the month with $20,000. They expected $60,000 in customer payments. They had $50,000 in payroll coming up.</p>
+
+<p>Month-end projection: $20,000 + $60,000 − $50,000 = $30,000. "We're good."</p>
+
+<p>Reality: The payroll is due on the 15th. The customer payment comes on the 25th.</p>
+
+<BlogTable
+  caption="The same month, dated: payroll on the 15th takes the balance to −$30,000 before the customer pays on the 25th."
+  columns={['Date', 'What happens', 'Cash balance']}
+  rows={[
+    ['Month 1st', 'Start with $20,000', '$20,000'],
+    ['15th', 'Payroll due', <strong>−$30,000</strong>],
+    ['25th', 'Customer payment', '$30,000'],
+  ]}
+  numeric={[2]}
+  negativeRows={[1]}
+/>
+
+<p>They couldn't <a href="/blog/will-i-make-payroll" className="font-medium text-primary underline-offset-4 hover:underline">make payroll</a> on the 15th. They would have gone to collections or needed a loan before the 15th.</p>
+
+<p>Monthly averages hide cash problems that are actually about timing.</p>
+
+<p>This is why you need a <strong><a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">13-week cash flow forecast</a></strong>. It shows you what's coming up in the next 90 days. And if you're really stressed, go weekly and model actual payment dates.</p>
+
+<p>The goal isn't "what's the month-end balance." It's "what's the lowest point I hit and when?"</p>
+
+## What To Do If The Answer Is "Default Dead"
+
+<p>Here's the hard truth: finding out you're default dead sucks.</p>
+
+<p>But the earlier you know it, the more time you have to do something about it.</p>
+
+<p>Your goal isn't to make your runway number look better. Your goal is to change your trajectory.</p>
+
+### 1. Cut spending that isn't essential
+
+<p>Look at every recurring expense. Is this software actually used? Does this contractor deliver value? Will this marketing spend actually generate customers? What about planned hiring that's justified by future revenue that might never materialize?</p>
+
+<p>There's a difference between costs that keep the engine running and costs that the engine hopes to carry.</p>
+
+### 2. Fix your cash collection
+
+<p>You can improve cash availability without changing sales.</p>
+
+<p>Look at: How quickly do customers pay? What's our overdue balance? Are we getting paid upfront or net-30/60/90?</p>
+
+<p>For subscription businesses: is growth coming in collected cash or just reported ARR? I've seen startups get carried away by top-line ARR numbers only to discover half of it doesn't actually convert to cash.</p>
+
+### 3. Reduce expenses to meet the new reality
+
+<p>Going back to our example: cut expenses from $90,000 to $70,000 and 3% growth now gets you to break-even by month 13.</p>
+
+<p>Cost cuts alone won't solve every problem, but they can fundamentally shift the math in your favor.</p>
+
+### 4. Treat fundraising as a choice, not a guarantee
+
+<p className="mb-2 font-medium text-foreground">If you're default dead, you need to start thinking about raising money. But here's what I wish more people understood:</p>
+
+<ul>
+  <li>A SAFE that hasn't been signed isn't money</li>
+  <li>A bridge round that depends on "getting a larger round" isn't secured capital</li>
+  <li>A loan that depends on a certain balance sheet isn't accessible capital</li>
+</ul>
+
+<p>Build two forecasts:</p>
+
+<p><strong>Base case (no new money):</strong> Your current trajectory. Know when you hit bottom.</p>
+
+<p><strong>Funded scenario:</strong> Realistic timing and amount of capital. Know what it costs and what new obligations you're taking on.</p>
+
+<p>Decide how many months you can operate in the base case before activating the funded scenario.</p>
+
+### 5. Set a decision deadline
+
+<p>You might be able to delay changes, but don't delay the decision.</p>
+
+<p>If your cash runs out in eight weeks, you need to know now what you're committing to. Work backward from your threshold and your obligations.</p>
+
+## The "Fatal Pinch": A Silent Trap
+
+<p>Paul Graham had a name for this: the <em>fatal pinch</em>.</p>
+
+<p>It's three conditions combined:</p>
+
+<p><strong>Default dead + slow growth + no time to fix it.</strong></p>
+
+<p>I've watched companies sit for months, convinced the next fundraise will save them. The cash drains. Growth stutters. And then, suddenly, they can't get money anymore.</p>
+
+<p>The market, investors, even your own traction: they've changed.</p>
+
+<p>By the time the numbers finally look bad, it's often too late. The options for fixing things have disappeared.</p>
+
+<p>This is why checking your default-alive status early matters. You're not predicting doom. You're buying time to make choices.</p>
+
+## How Often Should You Re-run This?
+
+<p>Monthly. At minimum.</p>
+
+<p className="mb-2 font-medium text-foreground">And whenever something changes:</p>
+
+<ul>
+  <li>New hire or major spending commitment</li>
+  <li>Big customer win or unexpected churn</li>
+  <li>Growth accelerates or stalls</li>
+  <li>Payment terms or collections change</li>
+  <li>You make a financing decision</li>
+  <li>A significant change in infrastructure or operating costs</li>
+</ul>
+
+<p>The longer-term "when will we be profitable" projection and the 13-week "what's coming next" forecast serve different purposes.</p>
+
+<p><strong>Long-term projection:</strong> Can we become sustainable?</p>
+
+<p><strong>Short-term forecast:</strong> Can we survive the next 90 days?</p>
+
+<p>When liquidity is tight, review your 13-week forecast weekly. Stress the scenarios. What if we lose our two biggest customers? What if growth slows to zero?</p>
+
+## How Zensus Can Help
+
+<p>Okay, here's where I'm going to be honest.</p>
+
+<p>You can absolutely do this in Excel. Many founders do. The framework is simple enough.</p>
+
+<p>But as soon as you factor in the reality of how money actually moves (payments arrive on day 15, not day 30, and day 25), as soon as you have payroll dates, tax deadlines, bank holidays, and customers who split payments across months, the model gets fragile.</p>
+
+<p>That's where tools designed for this become useful.</p>
+
+<p className="mb-2 font-medium text-foreground"><a href="/" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a> helps you build forward-looking cash models with the complexity that actually matters:</p>
+
+<ul>
+  <li>Actual payment and receipt dates</li>
+  <li>A scenario with adjustable assumptions</li>
+  <li>What-if testing for hiring, churn, pricing, and one-off costs</li>
+  <li>Your scenario compared against your baseline</li>
+</ul>
+
+<p>You don't have to trust "end of month averages." You can see the actual cash trajectory week by week.</p>
+
+<p className="mb-2 font-medium text-foreground"><strong>Example questions Zensus can help you answer:</strong></p>
+
+<ul>
+  <li>What happens to our cash if revenue growth slows by 5%?</li>
+  <li>How does adding one senior engineer change our projected burn?</li>
+  <li>What if we lose our biggest customer?</li>
+  <li>What does a one-off $50,000 cost next quarter do to our cash?</li>
+</ul>
+
+<p>That's the difference between knowing your runway number and actually understanding your financial survival.</p>
+
+<p><em>A note on terminology:</em> Zensus offers a <a href="/tools/runway-calculator" className="font-medium text-primary underline-offset-4 hover:underline">runway calculator</a>, which is a useful tool for estimating cash duration. It's not a "default alive calculator," which would require a more complex forward revenue-expense projection. The tools do different things.</p>
+
+## The Bottom Line
+
+<p>Know your trajectory before you need to change it.</p>
+
+<p>Being default alive doesn't mean you're guaranteed to succeed. Being default dead doesn't mean you're destined to fail.</p>
+
+<p>But knowing gives you control.</p>
+
+<p>Before your next board meeting, your next raise, your next hiring decision, ask:</p>
+
+<p><strong>When do we become profitable?</strong></p>
+
+<p><strong>Will our cash last until then?</strong></p>
+
+<p><strong>What's our Plan B if the answer to either is no?</strong></p>
+
+<p>Answer those questions honestly. And remember: the worst thing you can do is wait to discover the answer when you have no options left.</p>
+
+<p className="mb-2 font-medium text-foreground"><strong>Sources & Further Reading:</strong></p>
+
+<ul>
+  <li><a href="https://paulgraham.com/aord.html" className="font-medium text-primary underline-offset-4 hover:underline">Paul Graham: Default Alive or Default Dead? (2015)</a></li>
+  <li><a href="https://www.ycombinator.com/blog/how-not-to-fail/" className="font-medium text-primary underline-offset-4 hover:underline">Y Combinator: How Not to Fail (2016)</a></li>
+  <li><a href="https://sacks.substack.com/p/the-burn-multiple-51a7e43cb200" className="font-medium text-primary underline-offset-4 hover:underline">David Sacks: The Burn Multiple (2020)</a></li>
+</ul>
+
+<p className="mb-2 font-medium text-foreground">Related guides:</p>
+
+<ul>
+  <li><a href="/blog/runway-vs-burn-rate-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">Runway vs burn rate</a>: the formulas behind both numbers.</li>
+  <li><a href="/blog/zero-cash-date-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">Zero cash date</a>: finding the date your cash actually runs out.</li>
+  <li><a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">What is a 13-week cash flow forecast?</a>: the short-term view of the next 90 days.</li>
+  <li><a href="/blog/arr-vs-cash-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">ARR vs cash</a>: why reported ARR and collected cash disagree.</li>
+</ul>
+
+<BlogCallout title="Know Your Trajectory">
+Zensus builds a forecast from your bank, QuickBooks, and HubSpot invoices and subscriptions, shows the month your cash is projected to run out, lets you test a hire or a lost customer against your baseline, and sends a Slack alert when the 30-day projection drops below your floor. [Talk to us](https://calendly.com/hello-zensus/introcall) or explore [pricing](/pricing).
 </BlogCallout>

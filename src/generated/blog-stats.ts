@@ -65,12 +65,9 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "default-alive-vs-default-dead-for-founders": {
-    "wordCount": 1762,
+    "wordCount": 3048,
     "images": [
-      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-vs-default-dead.webp",
-      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/investor-screening-gates.webp",
-      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-score.webp",
-      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-dead-to-default-alive.webp"
+      "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-vs-default-dead.webp"
     ],
     "thumbnail": {
       "width": 1024,

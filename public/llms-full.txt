@@ -200,14 +200,16 @@ The difference between runway, burn rate, net burn, gross burn, and burn multipl
 ### Default Alive vs Default Dead for Founders
 https://zensus.finance/blog/default-alive-vs-default-dead-for-founders
 
-How to tell whether a startup reaches profitability before its cash runs out, using four numbers. Key facts from the guide:
+Whether a startup reaches profitability before its cash runs out, using Paul Graham's 2015 default alive / default dead test, with a founder checklist. Key facts from the guide:
 
-- Paul Graham introduced the framework in his October 2015 essay "Default Alive or Default Dead".
-- A startup is default alive if its current growth and margin trends lead to profitability before cash reaches zero, without raising more money. It does not have to be profitable today.
-- A startup is default dead if those trends run out of cash first. It then needs funding, bridge capital, lower burn, or faster revenue.
-- The guide turns the framework into four numbers: burn multiple, runway, gross margin, and whether revenue is growing faster than burn.
-- Burn multiple is net burn divided by net new ARR. $200,000 of net burn against $120,000 of net new ARR is a burn multiple of 1.67x.
-- A company can be growing and still be default dead, if expenses grow faster than revenue.
+- Default alive: at today's growth and spending, the company reaches profitability before cash runs out, without new money. Default dead: cash runs out first. Both are forecasts, not fate.
+- Four inputs: available cash, current monthly revenue (cash collected, not ARR), recent monthly revenue growth, and monthly operating expenses. Growing from $40,000 to $50,000 over four months is about 5.7% compound monthly growth.
+- Find two dates: break-even (revenue covers expenses) and the first cash shortfall. If break-even comes first the company is default alive; if cash runs out first it is default dead.
+- Worked example: $300,000 of cash, $50,000 of monthly revenue, $90,000 of monthly expenses. At 10% monthly growth revenue passes expenses in month 8 with about $152,000 left (default alive); at 3% cash goes negative in month 9 while break-even is not until month 21 (default dead). Cutting expenses to $70,000 at 3% growth reaches break-even by month 13.
+- Runway ($300,000 / $40,000 = 7.5 months) assumes nothing changes; burn multiple (net burn / net new ARR, David Sacks) measures efficiency, not survival.
+- Month-end balances hide timing: $20,000 + $60,000 - $50,000 = $30,000 at month-end, but payroll on the 15th before a payment on the 25th takes the balance to -$30,000.
+- Graham's "fatal pinch" is default dead + slow growth + not enough time to fix it.
+- Zensus projects cash on real dates, shows the month cash is projected to run out, and tests a scenario (hiring, churn, pricing, one-off costs) against the baseline; its runway calculator estimates cash duration and is not a default alive calculator.
 
 ### ARR vs Cash for Founders
 https://zensus.finance/blog/arr-vs-cash-for-founders
