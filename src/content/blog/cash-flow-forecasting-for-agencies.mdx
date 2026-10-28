@@ -1,12 +1,12 @@
 export const meta = {
-  title: 'Cash Flow Forecasting for Agencies: Planning Around Late-Paying Clients',
+  title: 'Cash Flow Forecasting for Agencies: A 13-Week Guide to Retainers, Payroll, and Late Payments',
   seoTitle: 'Cash Flow Forecasting for Agencies (2026 Guide) | Zensus',
   description:
     'How agencies forecast cash when clients pay late and payroll never does: the four timing gaps, a weekly method, and a worked example with real numbers.',
   date: '2026-10-05',
-  dateModified: '2026-10-05',
+  dateModified: '2026-10-28',
   category: 'Guide',
-  readTime: '11 min read',
+  readTime: '12 min read',
   slug: 'cash-flow-forecasting-for-agencies',
   author: 'ajin',
   topic: 'working-capital',
@@ -19,212 +19,256 @@ export const meta = {
     'Clients pay late. Payroll does not. A weekly method for the gap between them, with a worked example.',
   faqs: [
     {
-      question: 'How do agencies forecast cash flow?',
+      question: 'How do marketing agencies forecast cash flow?',
       answer:
-        'By week, not by month. List every invoice with the date the client is likely to pay, not the due date. Put each payroll run on its pay date. Add costs you pay on a client\'s behalf in the week you pay them. Then check the closing balance each week against a floor, such as one payroll run.',
+        'Start with available cash. Place each expected client payment in its likely settlement week (not invoice date). Schedule payroll, contractor fees, taxes, and media charges on their actual payment dates. Calculate 13 weeks of closing balances and update them from actual bank transactions.',
     },
     {
-      question: 'Why do profitable agencies run out of cash?',
+      question: 'What should a 13-week agency cash flow forecast include?',
       answer:
-        'Because the costs are on fixed dates and the income is not. Payroll is about half of an agency\'s expenses and is due on fixed dates. Client payments arrive on the client\'s terms and often after the due date. An agency can be profitable over a quarter and still be short in the weeks between.',
+        'Retainers, open receivables, deposits, milestone receipts, reimbursable spend, payroll, taxes, freelancers, rent, software, and all other committed payments. Include your minimum cash floor and any scenario assumptions.',
     },
     {
-      question: 'What payment terms do agencies get from clients?',
+      question: 'How do I forecast retainers when clients consistently pay late?',
       answer:
-        'Longer than they used to. A study by the Association of National Advertisers found that advertisers\' payment terms for agency fees were 58.1 days in 2019, up from 45.7 days in 2013, and about 10 percent of respondents had terms of 90 days or more.',
+        'Track the contracted amount, invoice date, contractual due date, and expected cleared date separately. Use actual client payment history where you have it. If a client has a bad track record, test later dates in your model.',
     },
     {
-      question: 'How much cash should an agency keep in reserve?',
+      question: 'How do deposits and project milestones affect the forecast?',
       answer:
-        'A practical floor is at least one full payroll run, taxes and benefits included, so that one late client payment cannot stop payroll. For context, the JPMorgan Chase Institute found the median small business holds 27 days of cash in reserve.',
+        "A deposit enters the forecast on the week it's expected to clear. A milestone belongs on the week you expect collection, accounting for approval, invoice issuance, and client acceptance. Don't use the date work was completed: that's when you earned it, not when you get cash.",
     },
     {
-      question: 'Should an agency forecast on invoice due dates?',
+      question: 'Should an agency finance client advertising spend?',
       answer:
-        'Only as the optimistic case. A due date is when the client has agreed to pay, not when the money arrives. Forecast each client on its own payment history, and treat the due-date version as the best outcome.',
+        'Depends on the contract and your liquidity. If the agency must advance funds to the ad platform, forecast both the outbound payment and the inbound reimbursement as separate events. Where the contract allows, advocate for direct client billing to the platform.',
+    },
+    {
+      question: 'How should I handle freelancer and contractor payments?',
+      answer:
+        "Schedule each payment on the date cash actually leaves the bank. Don't average them monthly. A freelancer whose contract ends in week 4 won't necessarily be paid until week 6.",
+    },
+    {
+      question: 'Can a profitable agency still run out of payroll cash?',
+      answer:
+        'Absolutely. Profit is an accounting rule; cash is a bank reality. You can deliver the work, earn the revenue, and still owe payroll next Friday when no cash has cleared from late receivables.',
+    },
+    {
+      question: 'How much cash should an agency reserve for payroll?',
+      answer:
+        "There's no universal number. Model the next payroll cycle, related taxes, essential operating obligations, your clients' collection behavior, and your available financing options. A full payroll run is a good starting floor, but many agencies need more.",
+    },
+    {
+      question: 'Should unsigned pipeline be included in the baseline?',
+      answer:
+        "Generally no. Keep unsigned opportunities in an upside scenario. Only bring them into your baseline forecast once they're signed, contractual, and the collection timing is reasonably certain.",
+    },
+    {
+      question: 'Can QuickBooks help forecast agency cash flow?',
+      answer:
+        'It provides the invoice, payable, and historical transaction data. But you still need to translate contractual due dates into realistic cash collection dates and add upcoming project commitments, payroll obligations, and client-funded media spend that may not yet appear in the ledger.',
+    },
+    {
+      question: 'How often should I update my cash forecast?',
+      answer:
+        "Weekly for a 13-week view, especially if cash is tight or you're waiting on a large payment. Reconcile to actual bank statements, move unpaid receipts forward or back, compare to previous forecasts, and extend the forecast one week.",
+    },
+    {
+      question: 'What changes if an agency loses its largest client?',
+      answer:
+        "Remove their future revenue, account for any contractual notice period payments, and stress-test what happens to your costs. Some expenses disappear quickly (freelancers on contract). Others don't (rent, core staff salaries, software). Check your new cash balance.",
     },
   ],
 };
 
 import { BlogCallout } from '@/components/blog/BlogCallout';
-import { BlogFigure } from '@/components/blog/BlogFigure';
+import { BlogTable } from '@/components/blog/BlogTable';
 
-<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">Cash flow forecasting for an agency means dating every client payment by when the client actually pays and every payroll run by when it leaves the bank, because the first is often late and the second never is.</p>
+<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">Let's be honest: <strong>you can be profitable for the whole quarter and still run out of cash next Friday.</strong></p>
 
-<p>Agencies rarely fail a profit test. They fail a timing test. The work is done, the invoice is out, the margin is fine, and payroll is due on Friday while the client's accounts team is still "processing".</p>
+<p>A marketing agency might have delivered the work, sent the invoice, recorded the revenue in their books, and even shown a nice profit on the P&L. But that doesn't mean the money's actually in the bank when you need it. Meanwhile, your payroll is due in exactly two weeks, your software vendor is chalking up that monthly charge, and that ad platform requires payment before the client reimburses you.</p>
 
-<p>This guide covers why agency cash is harder to predict than agency profit, a weekly method that handles it, and a worked example where the same quarter looks safe on paper and is not.</p>
+<p>That's where cash flow forecasting comes in. It's not about predicting <em>how much</em> profit you'll make. It's about answering a terrifyingly simple question: <strong>What's the lowest bank balance we expect over the next 13 weeks? And when do we need to act before that happens?</strong></p>
 
-## Why Is Agency Cash Flow Hard to Forecast?
+## What Is Cash Flow Forecasting for Agencies?
 
-<p><strong>Because the biggest cost is fixed to the calendar and the income is fixed to someone else's.</strong></p>
+<p>Here's the thing: a cash flow forecast for agencies is about <em>timing</em>. It's a date-based plan of when money comes in and goes out.</p>
 
-<p className="mb-2 font-medium text-foreground">Three facts set the problem:</p>
+<p>You start with the cash you have in the bank <em>right now</em>, add up the client payments you expect to see in the weeks ahead, and subtract all the money you're obligated to pay when it's actually due, not when you wish it were due.</p>
 
-<ul>
-  <li><strong>Payroll is about half of the cost base.</strong> In the US Census Bureau's <a href="https://www.census.gov/data/tables/2022/econ/services/sas-naics.html" className="font-medium text-primary underline-offset-4 hover:underline">Service Annual Survey</a>, firms in advertising, public relations, and related services reported $99.2 billion of expenses in 2022. Gross payroll was $47.8 billion of that, or 48 percent, and 54 percent with benefits.</li>
-  <li><strong>Clients set long terms.</strong> The Association of National Advertisers found that advertisers' payment terms for agency fees were <a href="https://www.ana.net/content/show/id/pr-2020-payment-terms" className="font-medium text-primary underline-offset-4 hover:underline">58.1 days in 2019, up from 45.7 days in 2013</a>. In the same study, "37 percent of respondents extended payment terms while 18 percent reduced them".</li>
-  <li><strong>Agreed terms are not always kept.</strong> Atradius, a trade credit insurer, reports that in the US "late payments affect an average of <a href="https://group.atradius.com/knowledge-and-research/reports/b2b-payment-practices-trends-in-the-us-2026" className="font-medium text-primary underline-offset-4 hover:underline">22% of B2B receivables</a>".</li>
-</ul>
+<p>The formula? Simple:</p>
 
-<p>Put together: half the costs leave on fixed payroll dates, often every two weeks, and the income arrives about two months after the work, if it arrives on time.</p>
+<p>Closing cash = Opening cash + cash receipts that clear − cash payments that leave</p>
 
-<p>There is not much room for error either. The JPMorgan Chase Institute found that <a href="https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/report-cash-flows-balances-and-buffer-days" className="font-medium text-primary underline-offset-4 hover:underline">"the median small business holds 27 cash buffer days in reserve"</a>. That is less than one 30-day payment term.</p>
+<p>Repeat that for 13 weeks. Compare each week's ending balance with your <a href="/blog/cash-flow-early-warning-system" className="font-medium text-primary underline-offset-4 hover:underline">minimum operating cash floor</a>. If you dip below that floor, you have a problem before you even hit quarter-end.</p>
 
-## What Are the Four Timing Gaps in an Agency?
+<p>Here's where agencies get themselves into trouble: a project can have an attractive margin but still burn cash during delivery. If your designer gets paid in week 2 and the client doesn't pay until week 7, you're financing that work for five weeks. Profitability and cash flow are both important, but they're asking two different questions.</p>
 
-<p><strong>Every agency cash problem is one of four gaps between doing something and being paid for it.</strong></p>
+## Why Agency Cash Timing Is Unpredictably Difficult
 
-### 1. The Terms Gap
+<p>Most agencies face four overlapping timing gaps that keep getting in the way:</p>
 
-<p>The time between sending an invoice and its due date. A retainer billed on the 1st with 30-day terms is due about a month later. A project billed on completion with 60-day terms is paid two months after the work ended, and three or four after it began.</p>
+### The terms gap
 
-### 2. The Late-Payment Gap
+<p>You land a $20,000 monthly retainer. Great! But when does the payment actually hit? If you bill in advance on the 1st, your cash arrives early. If you bill after the month closes, that retainer might not clear for another 30 days. A 50/30/20 milestone project structure similarly spreads out the cash differently than a single upfront deposit.</p>
 
-<p>The time between the due date and the day the money arrives. This one is specific to each client. Some pay on the day. Some pay two weeks late every time. The pattern is usually stable, which makes it forecastable.</p>
+### The late-payment gap
 
-### 3. The Pass-Through Gap
+<p>A net-30 invoice <em>says</em> it's due 30 days after you send it. That doesn't mean your bank will actually see the money on day 30. I've seen clients who always pay around day 45. I've also seen "reliable" clients ghost us for 60+ days. Record both the due date and what you're expecting the client to actually do. If you've never collected from a prospect, don't assume they'll pay on 30-day terms in your forecast.</p>
 
-<p>Money you spend on a client's behalf and bill back: media, production, freelancers, print. You pay the supplier now and the client pays you later, often with no margin on the amount.</p>
+### The pass-through gap
 
-<p>The 4A's, the US agency trade association, describes the effect bluntly. Long terms are <a href="https://www.aaaa.org/wp-content/uploads/The-Ripple-Effect-of-Extending-Payment-Terms-1.pdf?access_pid=113664" className="font-medium text-primary underline-offset-4 hover:underline">"particularly destructive with respect to zero margin pass-through billing, forcing agencies to act as banks"</a> to their clients.</p>
+<p>This is a silent killer. A marketing agency might pay $18,000 to a media platform in week 2, and the client reimburses in week 5. The agency makes zero margin on that, sure, but that $18,000 is still gone from the bank for three weeks. You're treating it like a wash when it's actually working capital. Track the media spend and reimbursement as separate events. Or, if the contract allows, push for direct billing to the client.</p>
 
-### 4. The Payroll Gap
+### The payroll gap
 
-<p>Payroll does not wait for any of the above. In <a href="https://www.bls.gov/ces/publications/length-pay-period.htm" className="font-medium text-primary underline-offset-4 hover:underline">Bureau of Labor Statistics data</a> for February 2023, biweekly was the most common pay period, used by an estimated 43.0 percent of US private establishments. A biweekly payroll leaves the account 26 times a year, and in some months three times. The free <a href="/tools/payroll-calendar" className="font-medium text-primary underline-offset-4 hover:underline">2026 and 2027 payroll calendar</a> shows which months.</p>
+<p>Payroll, taxes, benefits, freelancer payments: these don't bend to client behavior. They're fixed dates. If you run payroll biweekly, you're liable every other week. A client payment that slips can cascade into a <a href="/blog/will-i-make-payroll" className="font-medium text-primary underline-offset-4 hover:underline">payroll shortfall</a> if you didn't account for the timing gap.</p>
 
-## How Do You Build an Agency Cash Flow Forecast?
+## What Data Do You Need for an Agency Cash Flow Forecast?
 
-<p><strong>Forecast by week, and date every line by when cash moves.</strong></p>
+<p>You don't need a Fortune 500 financial model to build this. Start simple, but get your dates right.</p>
 
-<p className="mb-2 font-medium text-foreground">The method, in six steps:</p>
-
-<ol>
-  <li><strong>Start with the bank balance.</strong> Use today's real balance across your accounts.</li>
-  <li><strong>List every open and expected invoice by client.</strong> Retainers, milestones, and final invoices each get their own line.</li>
-  <li><strong>Give each client a payment habit.</strong> Look at their last few invoices. If they pay 14 days after the due date, forecast them 14 days after the due date.</li>
-  <li><strong>Put payroll on its pay dates.</strong> Add payroll taxes and benefits to the same weeks.</li>
-  <li><strong>Put pass-through costs in the week you pay the supplier,</strong> and the reimbursement in the week that client usually pays.</li>
-  <li><strong>Set a floor and check every week against it.</strong> One full payroll run is a sensible minimum.</li>
-</ol>
-
-<p>Thirteen weeks is the usual horizon, because it covers a full quarter of payroll and at least one payment cycle for every client. See <a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">what a 13-week cash flow forecast is</a> for the model, and <a href="/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel" className="font-medium text-primary underline-offset-4 hover:underline">how to build one in Excel</a> for the spreadsheet.</p>
-
-## Worked Example: The Same Quarter, Forecast Two Ways
-
-<p>A 12-person agency starts the quarter with $60,000 in the bank. It sets a cash floor of $40,000, which is one payroll run.</p>
-
-<p className="mb-2 font-medium text-foreground">Its costs for the quarter:</p>
-
-<ul>
-  <li>payroll of $34,000 plus $6,000 of payroll taxes and benefits, every two weeks from week 1</li>
-  <li>rent and software of $7,000 in weeks 1, 5, 9, and 13</li>
-  <li>freelancers at $6,000 in weeks 2, 6, and 10</li>
-  <li>$20,000 of media bought for a client in week 5, billed back with no margin</li>
-</ul>
-
-<p className="mb-2 font-medium text-foreground">Its invoices, with the due date and the date the client really pays:</p>
-
-| Invoice | Amount | Due | Actually paid |
-| --- | ---: | --- | --- |
-| Retainers A and B, monthly | $55,000 | Weeks 1, 5, 9 | On time |
-| Retainer C, monthly | $28,000 | Weeks 1, 5, 9 | Two weeks late: weeks 3, 7, 11 |
-| Project milestone | $60,000 | Week 4 | Week 7 |
-| Media reimbursement | $20,000 | Week 8 | Week 11 |
-| Final project invoice | $45,000 | Week 10 | Week 13 |
-
-<p>Over the quarter the agency collects $374,000 and spends $346,000. It is profitable, and it ends the quarter with $88,000 either way.</p>
-
-<BlogFigure
-  src="/blog/cash-flow-forecasting-for-agencies/agency-cash-forecast-due-dates-vs-actual-payment.webp"
-  width={1600}
-  height={900}
-  alt="Line chart of an agency's weekly cash balance over 13 weeks: forecast on invoice due dates it never falls below $50,000, but on actual client payment dates it falls to $38,000 and $32,000 in weeks 5 and 6, below a $40,000 cash floor"
-  caption="Forecast on due dates, the balance never drops below $50,000. On the dates clients actually pay, it spends two weeks under the $40,000 floor."
+<BlogTable
+  caption="The inputs an agency cash flow forecast needs, where to find each one, and what to record."
+  columns={['Forecast input', 'Where to find it', 'What to record']}
+  rows={[
+    ['Usable starting cash', 'Bank accounts', <>Cleared/<wbr />available balance and as-of date; exclude funds you can't actually deploy</>],
+    ['Open customer invoices', 'QuickBooks or AR ledger', <>Client, invoice ID, outstanding amount, due date, <strong>expected receipt date</strong></>],
+    ['Retainer schedules', 'Signed contracts + billing records', <>Advance vs. arrears billing, amount, renewal/<wbr />cancellation status</>],
+    ['Project milestones', 'Signed SOW and project tracker', 'Completion status, invoice date, expected collection date'],
+    ['Payroll and taxes', <>Payroll calendar/<wbr />provider</>, 'Actual debit dates and amounts'],
+    ['Freelancers and vendors', 'Accounts payable', 'Committed amounts, payment dates, terms'],
+    ['Advertising spend', 'Media plan and supplier schedule', 'Supplier debit date, client reimbursement date'],
+    ['Software, rent, taxes', 'Recurring obligations', 'Payment dates and amounts'],
+  ]}
 />
 
-| Week | Closing balance, on due dates | Closing balance, as clients pay |
-| ---: | ---: | ---: |
-| 1 | $96,000 | $68,000 |
-| 2 | $90,000 | $62,000 |
-| 3 | $50,000 | $50,000 |
-| 4 | $110,000 | $50,000 |
-| 5 | $126,000 | $38,000 |
-| 6 | $120,000 | $32,000 |
-| 7 | $80,000 | $80,000 |
-| 8 | $100,000 | $80,000 |
-| 9 | $136,000 | $88,000 |
-| 10 | $175,000 | $82,000 |
-| 11 | $135,000 | $90,000 |
-| 12 | $135,000 | $90,000 |
-| 13 | $88,000 | $88,000 |
+<p><strong>Crucial:</strong> Don't count the same payment twice. An invoice in receivables and a matching bank deposit aren't two inflows. They're one. When the deposit clears, mark the forecasted receipt as settled.</p>
 
-### What the Two Forecasts Show
+<p>Separate <strong>confirmed work</strong> from <strong>uncommitted pipeline</strong>. Signed retainers and issued invoices go in the baseline. A proposal nobody accepted? Keep that in an upside scenario, not your base case.</p>
 
-<p>On due dates, the lowest week is $50,000 and the agency never touches its floor. The forecast says the quarter is comfortable.</p>
+## How to Build a 13-Week Cash Flow Forecast for an Agency
 
-<p>On real payment dates, week 5 closes at $38,000 and week 6 at $32,000. The agency goes into its week 7 payroll run of $40,000 with $32,000 in the bank, relying on a $60,000 milestone payment that is already three weeks late.</p>
+### Step 1: Start with real, usable bank cash
 
-<p>Nothing about the business changed between the two columns. Revenue, costs, and profit are identical. One client pays two weeks late, one project payment slips three weeks, and $20,000 of media is carried for six weeks.</p>
+<p>Check your accounts and only count what's actually available. Exclude client funds that are restricted, uncleared transfers, undrawn credit lines, and anything you're not legally able to move.</p>
 
-<p>If the milestone slips one more week, week 7 closes at $20,000, half the floor. One more late payment after that and payroll does not clear. The due-date forecast would not have shown any of this until it happened. The second forecast shows it at the start of the quarter.</p>
+### Step 2: Schedule receipts by *clearing* dates, not invoicing dates
 
-## What Can an Agency Do When the Forecast Shows a Gap?
+<p>List retainer collections, project deposits, approved milestones, unpaid invoices, and reimbursements as separate items with client IDs.</p>
 
-<p><strong>Change the timing before you change the business.</strong></p>
+<p>Advance-billed? An invoice on November 1 might clear on November 3. Arrears-billed? That November retainer doesn't hit your bank until December. A $100,000 project billed 50/30/20? The deposit, approval milestone, and final payment all have different dates. Don't schedule them all on contract signing.</p>
 
-<p className="mb-2 font-medium text-foreground">In rough order of how quickly they work:</p>
+<p>Review the last few payments from each of your material clients. If your net-30 clients consistently pay at day 45, use <em>that</em> in your baseline unless you have reason to believe they've changed behavior.</p>
+
+### Step 3: Schedule payments on *actual debit dates*
+
+<p>When is cash actually leaving the bank? When your payroll runs, when vendor invoices are paid, when ad platforms charge the account. Keep agency-funded ad spend separate from its reimbursement. If the client pays the platform directly? Neither transaction appears in your agency's cash forecast.</p>
+
+### Step 4: Calculate every week's closing cash and identify the danger week
+
+<p>Run the formula for each week and carry that balance forward. What's your minimum cash floor? Set it based on: one complete payroll cycle, essential operating payments, and some margin for uncertainty.</p>
+
+<p>Cash headroom = Projected closing cash − Minimum cash floor</p>
+
+<p>Find the <strong>lowest projected closing balance</strong> in your 13-week view. Compare it to the floor.</p>
+
+### Step 5: Update from actuals every single week
+
+<p>Each week, pull the bank statement, match cleared payments to invoices/expenses, and roll the forecast forward one week. Compare it to last week's forecast.</p>
+
+<p><strong>Why?</strong> Because that variance tells you what assumptions were wrong. Was it a client who paid late? A vendor who changed payment dates? A milestone that got delayed? You're learning about your cash flow every time you update.</p>
+
+## Worked Example: Retainers, Project Milestones, Media Spend, and Payroll
+
+<p>Let's say we have a hypothetical agency with $50,000 in available cash and a $30,000 operating cash floor. Here's what happens over the first five weeks:</p>
+
+<BlogTable
+  caption="Five weeks for a hypothetical agency with $50,000 in cash and a $30,000 floor: week 3 closes $17,000 below the floor."
+  columns={['Week', 'Receipts cleared', 'Payments made', 'Closing cash', 'Headroom vs. floor']}
+  rows={[
+    ['1', '$25,000', '$22,000', <strong>$53,000</strong>, '+$23,000'],
+    ['2', '$0', '$18,000', <strong>$35,000</strong>, '+$5,000'],
+    ['3', '$0', '$22,000', <strong>$13,000</strong>, <strong>−$17,000</strong>],
+    ['4', '$55,000', '$0', <strong>$68,000</strong>, '+$38,000'],
+    ['5', '$18,000', '$0', <strong>$86,000</strong>, '+$56,000'],
+  ]}
+  numeric={[1, 2, 3, 4]}
+  negativeRows={[2]}
+/>
+
+<p>The math works out: $50,000 start + $98,000 collected − $62,000 paid = $86,000 ending.</p>
+
+<p>But here's the scary part: <strong>they dip $17,000 below their cash floor in week 3</strong>. That's invisible on a quarter-end P&L summary.</p>
+
+<p>If that second $25,000 retainer had paid on day 30 instead of day 40, week 3 would have been $38,000, comfortably above floor. Same contracts, same total cash, completely different risk profile.</p>
+
+<p>A cash-floor breach isn't always an instant overdraft. They still have $13,000 in the bank. But they've lost their cushion and <em>now</em> need to act before another payment slips.</p>
+
+## Three Agency Scenarios to Stress-Test
+
+### Scenario 1: Your biggest client pays 21 days late
+
+<p>Take one of your major expected receipts and push it three weeks later. Recalculate. What's your lowest balance now? Which payroll runs are now exposed?</p>
+
+<p>If the model breaks, call that client's accounts payable team before you've delivered work for that month. Explore partial payments or revised billing cadence.</p>
+
+### Scenario 2: A major retainer gets canceled
+
+<p>If the client gives 30 days' notice, remove the revenue after the notice period from the forecast, not money you've already collected. Now ask: how many of your costs actually disappear? Freelancers can roll off quickly. Fixed payroll, software, rent: those stay. A lost $20,000 retainer doesn't magically save $20,000 in cash costs. Stress-test the whole thing.</p>
+
+### Scenario 3: The agency fronts a $25,000 media campaign
+
+<p>Client pays the platform directly? Great. But if the agency has to pay $25,000 in week 2 and gets reimbursed in week 6? That's four weeks of exposure. Test alternatives: advance client funding, split the supplier payment, or switch to direct billing.</p>
+
+<p>For big decisions, run three scenarios: baseline, downside (clients pay late), and upside (clients pay early). Don't quietly add hypothetical new business to cover a known liquidity hole.</p>
+
+## Four Metrics to Monitor Weekly
+
+<BlogTable
+  caption="Four numbers an agency should review weekly alongside its forecast."
+  columns={['Metric', 'How to use it']}
+  rows={[
+    [<strong>Client collection time</strong>, 'Track days from invoice to receipt. Compare to contractual terms. This is your leading indicator.'],
+    [<strong>Lowest projected cash balance</strong>, 'Find the cash trough in your 13-week view, not just this week or quarter-end.'],
+    [<strong>Payroll coverage</strong>, 'How many payroll runs do usable cash and reliable collections cover?'],
+    [<strong>Pass-through exposure</strong>, 'How much unreimbursed spend are you carrying on the books right now?'],
+  ]}
+/>
+
+<p>Don't worship any single metric. Review these <em>together</em> alongside your forecast.</p>
+
+## How to Maintain the Forecast With QuickBooks, Bank Data, and Project Records
+
+<p className="mb-2 font-medium text-foreground">Different systems are the authority for different things:</p>
 
 <ul>
-  <li><strong>Chase the specific invoice.</strong> In the example, one phone call about the $60,000 milestone is worth more than any cost cut.</li>
-  <li><strong>Stop funding pass-through costs.</strong> Bill media and production before you commit to them, or have the client pay the supplier directly.</li>
-  <li><strong>Bill earlier.</strong> Take a deposit at kickoff and bill milestones during the project, not one invoice at the end.</li>
-  <li><strong>Shorten terms on new work.</strong> The 4A's states its position plainly: "Anything beyond a normal 30-day cycle is incompatible with the typical agency commercial model".</li>
-  <li><strong>Move your own payment dates.</strong> Shift a software renewal or a freelancer payment a week past a client receipt.</li>
-  <li><strong>Arrange credit before you need it.</strong> A credit line is easier to open in a strong month than in the week payroll is short.</li>
+  <li><strong><a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a></strong> (or your accounting software) → invoices, payables, historical transactions</li>
+  <li><strong>Bank feed</strong> → actual cash movements and dates</li>
+  <li><strong>CRM / project tracker</strong> → upcoming retainers, milestone status, commitments not yet in the books</li>
 </ul>
 
-<p>If a payroll run is already at risk, the steps are in <a href="/blog/what-happens-if-you-miss-payroll" className="font-medium text-primary underline-offset-4 hover:underline">what happens if you miss payroll</a>.</p>
+<p>Use invoice IDs and bank transaction references to reconcile between them. When a client payment clears, mark the forecast receipt as settled, not add it again as a new deposit. If a milestone isn't approved yet? Keep it conditional in the forecast.</p>
 
-## Which Numbers Should an Agency Track?
+<p>Zensus works with connected financial data and cash-flow scenarios. It covers QuickBooks invoice inputs, bank-linked payroll, and <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">what-if modeling</a>. But it's important to be clear: <strong>Zensus doesn't automatically learn your clients' actual payment habits</strong>. So a due-date-based forecast isn't the same as "what your clients typically actually pay." You still need to review collection assumptions and verify any alerts or automations in your own setup.</p>
 
-<p className="mb-2 font-medium text-foreground">Four are enough:</p>
+## Forecast the Week, Not Just the Quarter
 
-<ul>
-  <li><strong>Days to get paid, by client.</strong> Measure from invoice date to cash received. This is the input the whole forecast depends on. The <a href="/blog/cash-conversion-cycle" className="font-medium text-primary underline-offset-4 hover:underline">cash conversion cycle</a> guide covers DSO.</li>
-  <li><strong>The lowest closing balance in the next 13 weeks,</strong> and the week it falls in.</li>
-  <li><strong>Cash buffer in payroll runs.</strong> Bank balance divided by one full payroll run.</li>
-  <li><strong>Pass-through cash outstanding.</strong> What you have paid on clients' behalf and not yet collected.</li>
-</ul>
+<p>Late-paying clients aren't just an accounts receivable problem. They're a schedule problem for every single payroll run, contractor invoice, and vendor charge your agency must fund <em>before</em> cash arrives.</p>
 
-<p>Revenue and utilization tell you whether the agency is healthy. These four tell you whether it can pay people in six weeks.</p>
+<p>A <a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">13-week cash forecast</a> turns that uncertainty into specific dates, specific balances, and specific decisions. Start with real bank cash, model each client payment honestly based on actual behavior, and act on the first week your cash drops below your operating floor, not on the last day of a "profitable" quarter.</p>
 
-## How Does Zensus Help an Agency?
-
-<p><a href="/#product" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a> builds the forecast from connected accounts instead of a spreadsheet you update by hand.</p>
-
-<p className="mb-2 font-medium text-foreground">What it does for the four gaps:</p>
-
-<ul>
-  <li><strong>Invoices.</strong> It reads open invoices from <a href="/integrations/quickbooks" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks</a> and places each one on its due date. Once an invoice is overdue, it moves it to two weeks after the due date (or today, if that is later), and it drops an invoice more than 90 days overdue from the forecast.</li>
-  <li><strong>Payroll.</strong> It finds recurring payroll debits in your bank transactions through <a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Plaid</a> and places each future run on its own date.</li>
-  <li><strong>What-ifs.</strong> You can <a href="/#features-scenarios" className="font-medium text-primary underline-offset-4 hover:underline">ask in plain English</a> what losing a client or making a hire does to the projection, and see it against your baseline.</li>
-  <li><strong>Warnings.</strong> A <a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alert</a> fires when the 30-day projection drops below the cash floor you set.</li>
-</ul>
-
-<p>One limit is worth knowing. Zensus does not learn each client's payment habits. A client who always pays two weeks late is forecast on the due date until that invoice is overdue. Treat the due-date view as the optimistic case, as this guide does.</p>
-
-<p>More examples are on <a href="/use-cases" className="font-medium text-primary underline-offset-4 hover:underline">who uses Zensus</a>, and plans are on the <a href="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">pricing page</a>.</p>
+<p><strong>Download the <a href="/tools/13-week-cash-flow-template" className="font-medium text-primary underline-offset-4 hover:underline">free 13-week cash flow template</a> to get started</strong>, and explore <a href="/" className="font-medium text-primary underline-offset-4 hover:underline">Zensus</a> for connected-data forecasting and scenario planning when you're ready to automate.</p>
 
 <p className="mb-2 font-medium text-foreground">Related guides:</p>
 
 <ul>
-  <li><a href="/blog/will-i-make-payroll" className="font-medium text-primary underline-offset-4 hover:underline">Will I make payroll?</a>: how to know weeks in advance, one pay date at a time.</li>
-  <li><a href="/blog/can-quickbooks-forecast-cash-flow" className="font-medium text-primary underline-offset-4 hover:underline">Can QuickBooks forecast cash flow?</a>: what Cash Flow Planner does, and where it stops.</li>
-  <li><a href="/blog/zero-cash-date-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">Zero cash date</a>: how to find the week cash runs out, not just the month.</li>
+  <li><a href="/blog/will-i-make-payroll" className="font-medium text-primary underline-offset-4 hover:underline">Will I make payroll?</a>: checking each payroll date against your cash, weeks ahead.</li>
+  <li><a href="/blog/what-happens-if-you-miss-payroll" className="font-medium text-primary underline-offset-4 hover:underline">What happens if you miss payroll?</a>: the exposure, and a 7-day plan.</li>
+  <li><a href="/blog/cash-conversion-cycle" className="font-medium text-primary underline-offset-4 hover:underline">Cash conversion cycle</a>: how collection time sets the working capital gap.</li>
   <li><a href="/blog/hubspot-pipeline-to-cash-forecast" className="font-medium text-primary underline-offset-4 hover:underline">Forecast cash from HubSpot invoices</a>: turning invoices and subscriptions into dated bank inflows.</li>
 </ul>
 
-<BlogCallout title="Forecast the Week, Not the Quarter">
-Start with the free <a href="/templates/13-week-cash-flow-template.xlsx" download>13-week cash flow template</a> and date each client by when they really pay. To have it kept current from your bank and QuickBooks, <a href="https://calendly.com/hello-zensus/introcall">talk to us</a> or look at <a href="/pricing">pricing</a>.
+<BlogCallout title="See Your Agency's Danger Week">
+Zensus builds a weekly forecast from your bank and QuickBooks, picks up payroll from your bank debits, lets you test scenarios like a lost client, and sends a Slack alert when the 30-day projection drops below your floor. [Talk to us](https://calendly.com/hello-zensus/introcall) or explore [pricing](/pricing).
 </BlogCallout>

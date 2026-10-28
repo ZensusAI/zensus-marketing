@@ -55,7 +55,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "cash-flow-forecasting-for-agencies": {
-    "wordCount": 1815,
+    "wordCount": 1960,
     "images": [
       "https://zensus.finance/blog/cash-flow-forecasting-for-agencies/agency-cash-forecast-due-dates-vs-actual-payment.webp"
     ],

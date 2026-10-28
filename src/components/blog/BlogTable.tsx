@@ -12,10 +12,10 @@ export const TABLE_FRAME =
 export const TABLE = "w-full border-collapse text-left text-[14px] leading-snug min-[760px]:text-[15px]";
 export const TABLE_HEAD_ROW = "bg-[#F6EBD0]";
 export const TABLE_HEAD_CELL =
-  "px-2 py-3 align-bottom text-[12.5px] font-semibold text-muted-foreground first:pl-3.5 last:pr-3.5 min-[760px]:px-3.5 min-[760px]:first:pl-5 min-[760px]:last:pr-5";
+  "px-1.5 py-3 align-bottom text-[12.5px] font-semibold text-muted-foreground first:pl-3 last:pr-3 min-[760px]:px-3.5 min-[760px]:first:pl-5 min-[760px]:last:pr-5";
 export const TABLE_ROW = "border-t border-border text-foreground/90";
 export const TABLE_CELL =
-  "px-2 py-3 align-top first:pl-3.5 last:pr-3.5 min-[760px]:px-3.5 min-[760px]:first:pl-5 min-[760px]:last:pr-5";
+  "px-1.5 py-3 align-top first:pl-3 last:pr-3 min-[760px]:px-3.5 min-[760px]:first:pl-5 min-[760px]:last:pr-5";
 /** Amount cells: digits that line up, kept on one line so a minus sign stays
     with its number. Mono from 760px; phones keep the narrower sans figures so
     a four-column table still fits. */
