@@ -147,13 +147,16 @@ How to see a cash shortfall before it happens by forecasting cash on the dates m
 ### Will I Make Payroll?
 https://zensus.finance/blog/will-i-make-payroll
 
-A step-by-step method for founders to know weeks in advance whether payroll clears. Key facts from the guide:
+How to forecast payroll cash weeks ahead, by Zensus founder Ajin Sunny. Key facts from the guide:
 
-- JPMorgan Chase Institute research across roughly 600,000 small businesses found the median business holds just 27 cash buffer days.
-- The method: project cash to each payroll date using committed inflows only, subtract total payroll cost including taxes and benefits, and keep a cash buffer above a floor you set.
-- Worked example: $80,000 starting cash, $42,000 of payroll runs, $25,000 buffer, leaving a $7,000 margin of safety.
-- Employer payroll taxes follow IRS deposit schedules, so the cash leaves the account on a predictable calendar.
-- Zensus projects payroll coverage continuously and sends Slack alerts when a 30-day projection crosses your cash floor.
+- The question is not today's balance or payday: it is whether you have enough cleared, available cash on the date your payroll provider withdraws funds.
+- Three dates differ: employee payday, the payroll funding date (when the provider withdraws), and the payroll submission deadline. Relay, for example, debits a set number of business days before payday, closer to payday for faster deposit speeds (1-day or 4-day direct deposit).
+- A funding shortfall (balance below the provider withdrawal) means missing payroll; a reserve shortfall (cash left after payroll below your preferred floor) is a warning. Example: $42,000 available, a $28,000 withdrawal, $14,000 left, $1,000 under a $15,000 reserve, and payroll still clears.
+- Available cash before payroll = starting usable cash + receipts that clear before the funding date - other payments. Funding gap = max(0, provider withdrawal - available cash). Reserve gap = max(0, preferred floor - after-payroll cash).
+- Use the provider's total withdrawal (net pay plus withholdings and taxes it remits), not net pay, and date receipts by when they clear, not the invoice due date.
+- Forecast at least two payroll cycles (about four weeks for biweekly pay); a rolling 13-week view shows when payroll, taxes and loan payments compete for the same week. Stress-test a late customer, an earlier funding date, and a commission spike.
+- Gusto's 2026 research found about one-third of small businesses in its analysis had at least one payroll their balances did not cover; many bridged the gap with transfers, short-term financing or early invoice payments.
+- Zensus detects payroll from recurring bank debits, projects cash to each payroll date, and sends a Slack alert when the 30-day projection drops below a user's floor.
 
 ### What Happens If You Miss Payroll?
 https://zensus.finance/blog/what-happens-if-you-miss-payroll
