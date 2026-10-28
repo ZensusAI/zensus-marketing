@@ -172,7 +172,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "will-i-make-payroll": {
-    "wordCount": 2052,
+    "wordCount": 2055,
     "images": [
       "https://zensus.finance/blog/will-i-make-payroll/payroll-projection-method.webp"
     ],
