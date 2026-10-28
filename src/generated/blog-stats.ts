@@ -65,7 +65,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "default-alive-vs-default-dead-for-founders": {
-    "wordCount": 1757,
+    "wordCount": 1762,
     "images": [
       "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-vs-default-dead.webp",
       "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/investor-screening-gates.webp",
