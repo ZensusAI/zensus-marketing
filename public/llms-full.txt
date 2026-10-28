@@ -284,14 +284,16 @@ Which year has 27 biweekly pay dates, why sources disagree, and what the extra p
 ### Cash Flow Forecasting for Agencies
 https://zensus.finance/blog/cash-flow-forecasting-for-agencies
 
-How agencies forecast cash when clients pay late and payroll does not. Key facts from the guide:
+A 13-week cash flow guide for agencies: retainers, payroll, and late payments. Key facts from the guide:
 
-- Payroll is about half of an agency's costs: in the Census Bureau's Service Annual Survey, advertising, public relations and related services firms reported $99.2 billion of expenses in 2022, of which gross payroll was $47.8 billion (48 percent, or 54 percent with benefits).
-- Advertisers' payment terms for agency fees were 58.1 days in 2019, up from 45.7 days in 2013 (Association of National Advertisers).
-- In the US, late payments affect an average of 22 percent of B2B receivables (Atradius, 2026).
-- Four timing gaps drive agency cash problems: payment terms, late payment, pass-through costs paid on a client's behalf, and payroll dates.
-- Worked example: a 12-person agency with $60,000 in the bank and a $40,000 floor collects $374,000 and spends $346,000 in a quarter. Forecast on invoice due dates, its balance never falls below $50,000. On the dates clients actually pay, it falls to $38,000 and $32,000 in weeks 5 and 6. Both versions end at $88,000.
-- Zensus places open QuickBooks invoices on their due dates and moves overdue ones forward. It does not learn each client's payment habits.
+- A profitable agency can still run out of cash: the forecast asks what the lowest bank balance will be over the next 13 weeks, and when to act before it.
+- Closing cash = opening cash + cash receipts that clear - cash payments that leave, repeated for 13 weeks and compared with a minimum operating cash floor.
+- Four timing gaps drive agency cash problems: payment terms (advance vs. arrears billing, milestone splits), late payment, pass-through costs such as media spend paid before the client reimburses, and fixed payroll dates.
+- Schedule receipts on the date they clear and payments on their actual debit dates; if net-30 clients consistently pay at day 45, use day 45. Keep unsigned pipeline in an upside scenario, not the baseline.
+- Worked example: an agency with $50,000 in cash and a $30,000 floor collects $98,000 and pays $84,000 over five weeks, ending at $64,000, but week 3 closes at $13,000, $17,000 below the floor. Had the second $25,000 retainer arrived in week 3 instead of week 4, week 3 would have been $38,000.
+- Stress tests: the biggest client paying 21 days late, a canceled retainer (costs such as payroll, software and rent stay), and fronting a $25,000 media campaign for four weeks.
+- Four weekly metrics: client collection time, lowest projected cash balance, payroll coverage, and pass-through exposure.
+- Zensus covers QuickBooks invoice inputs, bank-linked payroll, and what-if scenarios, but it does not learn each client's payment habits, so collection assumptions still need review.
 
 ### How to Build a 13-Week Cash Flow Forecast in Excel
 https://zensus.finance/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel
