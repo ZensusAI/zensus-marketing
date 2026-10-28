@@ -36,7 +36,7 @@ const FAQS = [
   {
     question: "How do I calculate startup runway?",
     answer:
-      "Divide your current cash balance by your monthly net burn (expenses minus revenue). $250,000 in cash with $25,000 of net monthly burn is 10 months of runway. This calculator also projects the calendar date your balance crosses zero, which is the number investors actually ask about.",
+      "Divide your current cash balance by your monthly net burn: expenses minus the cash customers actually pay you, not booked revenue. $250,000 in cash with $25,000 of net monthly burn is 10 months of runway. This calculator also projects the calendar date your balance crosses zero, which is the number investors actually ask about.",
   },
   {
     question: "What is a zero-cash date?",
@@ -51,7 +51,7 @@ const FAQS = [
   {
     question: "How much runway should a startup have?",
     answer:
-      "Current guidance is 18 to 24 months after a raise. Carta's State of Seed data shows the median time from seed to Series A now runs over two years, so a 12-month plan leaves no room for a slow fundraise.",
+      "There is no universal number. 18 to 24 months after a raise is a common rule of thumb, but the right amount depends on your stage and the next milestone you need to reach. Carta data shows the median time from seed to Series A ran over two years for startups that raised in late 2024, so a 12-month plan leaves little room for a slow fundraise.",
   },
   {
     question: "Is this calculator accurate for lumpy revenue?",
@@ -384,7 +384,7 @@ const RunwayCalculator = () => {
             <div className="text-muted-foreground leading-relaxed space-y-3">
               <p className="mb-2 font-medium text-foreground">The math, in plain terms:</p>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Runway is cash divided by net monthly burn (expenses minus revenue).</li>
+                <li>Runway is cash divided by net monthly burn (expenses minus the cash you collect, not booked revenue).</li>
                 <li>
                   The zero-cash date projects your balance month by month and
                   interpolates the day your balance crosses zero.
