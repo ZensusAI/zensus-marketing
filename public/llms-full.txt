@@ -301,13 +301,15 @@ A 13-week cash flow guide for agencies: retainers, payroll, and late payments. K
 ### How to Build a 13-Week Cash Flow Forecast in Excel
 https://zensus.finance/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel
 
-An eight-step build of a 13-week cash flow forecast in Excel, matching the free Zensus template cell for cell. Key facts from the guide:
+An eight-step build of a 13-week cash flow forecast in Excel, in the same layout as the free Zensus template. Key facts from the guide:
 
-- The sheet is one column of labels, 13 weekly columns (B to N), and 24 rows: opening balance, three cash-in rows, six cash-out rows, totals, net cash flow, closing balance, a cash floor, and a check.
-- Six formulas do the calculating: total cash in =SUM(B8:B10), total cash out =SUM(B13:B18), net cash flow =B11-B19, closing balance =B6+B20, next opening balance =B21, and the check =IF(B21<$B$23,"BELOW FLOOR","OK").
-- Enter each amount in the week the cash moves: receipts when the customer pays, payroll on its pay dates, annual and quarterly items in their own week.
-- Worked example: a company opens with $100,000 and a $25,000 floor, collects $252,000 and spends $309,500 over 13 weeks, and ends at $42,500. Weeks 7 and 11 still close below the floor, at $23,500 and $15,500. Moving one $9,000 payment a week later and one $48,000 receipt a week earlier clears both.
-- Update weekly: replace the week that ended with actuals, reconcile to the bank, and add a new week 13.
+- The sheet has 13 weekly columns (B to N): dates in row 5, opening cash in row 6, cash in in rows 8 to 10, total cash in in row 11, cash out in rows 13 to 18, total cash out in row 19, net cash flow in row 20, closing balance in row 21, the cash floor in row 23, and the status check in row 24.
+- Six formulas do the calculating: total cash in =SUM(B8:B10), total cash out =SUM(B13:B18), net cash flow =B11-B19, closing balance =B6+B20, next opening balance =B21, and the floor check =IF(B21<$B$23,"BELOW FLOOR","OK"). Week dates step with =B5+7.
+- Enter each amount in the week the cash moves: a $20,000 invoice sent in week 2 on 30-day terms from a customer who pays 10 days late belongs in week 7. Biweekly payroll goes only in the weeks it is paid, never divided across every week.
+- Worked example: $100,000 opening cash and a $25,000 floor, with $12,000 collected every week and $28,000 biweekly payroll plus $6,000 payroll taxes. The quarter ends at $42,500, but week 7 closes at $23,500 and week 11 at $15,500. Moving a $9,000 software renewal a week later and a $48,000 receipt a week earlier clears both.
+- A positive week-end balance can hide a mid-week shortfall: $20,000 on Monday and a $30,000 payroll on Tuesday leave the account $10,000 short before a Friday collection.
+- Update every Monday: compare last week to the bank, archive it as actuals, roll the weeks forward, and add a new week 13. Four quick tests catch broken links and overwritten formulas.
+- Zensus does the same from bank (Plaid), QuickBooks, and HubSpot data, with monthly, weekly, daily, and 13-week views and Slack alerts when the 30-day projection drops below a threshold.
 
 ### MCP vs CLI for Finance Teams
 https://zensus.finance/blog/mcp-vs-cli-for-finance-teams
