@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet-async";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
 import { HERO_MESH } from "@/components/landing/hero-mesh";
-import HeroShowcase from "@/components/landing/HeroShowcase";
 import CustomerStory from "@/components/landing/CustomerStory";
 import { TrustBar } from "@/components/landing/TrustBar";
 import Problem from "@/components/landing/Problem";
@@ -39,9 +38,9 @@ const Index = () => {
   }, []);
 
   return (
-    // overflow-x-clip, not hidden: the showcase screenshot bleeds off the right
-    // edge by design between 820 and 1280px, and clip trims it without making
-    // a scroll container, so the pinned sections' sticky stages keep working.
+    // overflow-x-clip, not hidden: clip trims anything that bleeds off the
+    // edge without making a scroll container, so the pinned sections' sticky
+    // stages keep working.
     <div className="min-h-screen overflow-x-clip bg-background">
       <Helmet>
         {/* The category term "cash flow forecasting" appears nowhere in the H1 by
@@ -86,8 +85,6 @@ const Index = () => {
         <Hero />
         {/* 03-proof-strip: redesigned. */}
         <TrustBar />
-        {/* 04-product-showcase: redesigned (pinned). */}
-        <HeroShowcase />
         {/* 05-customer-story: redesigned. */}
         <CustomerStory />
         {/* 06-problem: redesigned. */}
