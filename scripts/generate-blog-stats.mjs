@@ -10,6 +10,7 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { SITE_URL } from "./site.mjs";
+import { bodyWords } from "./blog-search-text.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const blogDir = join(__dirname, "..", "src", "content", "blog");
@@ -33,6 +34,7 @@ function webpSize(buf) {
 }
 
 const stats = {};
+const searchIndex = {};
 for (const file of files) {
   const slug = file.replace(/\.mdx$/, "");
   const source = await readFile(join(blogDir, file), "utf-8");
@@ -57,6 +59,9 @@ for (const file of files) {
   const wordCount = text.split(/\s+/).filter(Boolean).length;
 
   stats[slug] = thumbnail ? { wordCount, images, thumbnail } : { wordCount, images };
+
+  // The blog index search matches on body words too (src/lib/blog-search.ts).
+  searchIndex[slug] = bodyWords(source).join(" ");
 }
 
 const banner =
@@ -65,3 +70,7 @@ const banner =
 const body = `export const blogStats: Record<string, { wordCount: number; images: string[]; thumbnail?: { width: number; height: number } }> = ${JSON.stringify(stats, null, 2)};\n`;
 await writeFile(outPath, banner + body, "utf-8");
 console.log(`[blog-stats] wrote ${outPath} (${files.length} posts)`);
+
+const searchPath = join(publicDir, "blog-search.json");
+await writeFile(searchPath, JSON.stringify(searchIndex) + "\n", "utf-8");
+console.log(`[blog-stats] wrote ${searchPath}`);
