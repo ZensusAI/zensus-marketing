@@ -23,7 +23,7 @@ export const meta = {
     {
       question: 'How do you build a 13-week cash flow forecast in Excel?',
       answer:
-        "You enter 13 weekly columns, put your starting cash in the first cell, list expected receipts and payments in the weeks they'll actually clear, then link each week's opening balance to the last week's closing. Excel does the rest.",
+        "You enter 13 weekly columns, put your starting cash in the first week's opening cell, list expected receipts and payments in the weeks they'll actually clear, then link each week's opening balance to the last week's closing. Excel does the rest.",
     },
     {
       question: 'Do I really need this many rows and columns?',
@@ -197,7 +197,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p><strong>Important:</strong> <em>An invoice is not a cash receipt.</em></p>
 
-<p>If you send a $20k invoice in Week 2 with 30-day terms, that doesn't mean $20k hits your bank in Week 2. Enter it in the week you realistically expect it to clear.</p>
+<p>If you send a $20k invoice at the start of Week 2 with 30-day terms, that doesn't mean $20k hits your bank in Week 2. Enter it in the week you realistically expect it to clear.</p>
 
 <p>Look at your customer's payment history. If they consistently pay 10 days late, put it in Week 7, not Week 6. Don't assume they'll pay on the invoice due date. Trust what their actual behavior has been.</p>
 
@@ -230,7 +230,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p><strong>If you pay biweekly:</strong> Enter each payroll amount only in the weeks it actually hits. A $28k biweekly payroll might hit in Weeks 1 and 3, leaving Weeks 2, 4, 6... with no payroll line. That's <em>the point</em>: the forecast should show you where the big cash holes are.</p>
 
-<p><strong>Don't do this:</strong> Don't divide monthly payroll by four and enter it every week. That smoothes the bumps and gives you false security.</p>
+<p><strong>Don't do this:</strong> Don't divide monthly payroll by four and enter it every week. That smooths the bumps and gives you false security.</p>
 
 <p>Watch out for one-time payments too: annual software renewals, insurance premiums, tax payments. A single year-end payment can create a cash hole in the 13-week window.</p>
 
@@ -277,7 +277,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>Now Week 2's opening balance automatically takes Week 1's closing. Week 3's opening takes Week 2's, and so on.</p>
 
-<p>Then drag your SUM formulas for inflows and outflows across to columns C through N, and your closing balance formula too.</p>
+<p>Then drag your net cash flow and closing balance formulas (B20 and B21) across to column N.</p>
 
 <p>Now when you change a single input (say, a customer payment moves from Week 5 to Week 7), all the downstream balances recalculate. You can finally see how timing affects your cash position.</p>
 
@@ -513,7 +513,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>The forecast assumed $20k came in. It didn't. Your closing cash is $8k lower than planned.</p>
 
-<p>You can calculate variance directly (actual minus forecast):</p>
+<p>If you lay this out with Forecast in column B and Actual in column C, the variance in D2 is (actual minus forecast):</p>
 
 <p><code className="rounded bg-muted px-1.5 py-0.5 text-sm">=C2-B2</code></p>
 
@@ -566,7 +566,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p><strong>Test 3: Cash floor alert</strong></p>
 
-<p>Temporarily lower a key inflow so Week 1 closing drops below your floor. The status cell should turn to "BELOW FLOOR." Fix your input and restore.</p>
+<p>Temporarily raise a Week 1 outflow (or raise the floor in B23) so Week 1 closing drops below your floor. The status cell should turn to "BELOW FLOOR." Fix your input and restore.</p>
 
 <p><strong>Test 4: Timing shift</strong></p>
 
@@ -607,8 +607,8 @@ import { BlogTable } from '@/components/blog/BlogTable';
 <ul>
   <li><a href="/integrations/plaid" className="font-medium text-primary underline-offset-4 hover:underline">Bank feed syncing</a> (actuals post automatically)</li>
   <li><a href="/quickbooks-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">Invoice-to-cash tracking</a> from your accounting system</li>
-  <li>Automatic syncing from your bank, QuickBooks, and HubSpot</li>
-  <li>Scenario modeling, with monthly, weekly, daily, and 13-week views</li>
+  <li>Payroll detected from recurring bank debits and placed on its actual pay dates</li>
+  <li>Monthly, weekly, daily, and 13-week views, plus what-if scenarios</li>
   <li><a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when your 30-day projection drops below your floor</li>
 </ul>
 

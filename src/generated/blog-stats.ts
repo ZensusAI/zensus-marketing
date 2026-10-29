@@ -87,7 +87,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "how-to-build-a-13-week-cash-flow-forecast-in-excel": {
-    "wordCount": 2976,
+    "wordCount": 3002,
     "images": [
       "https://zensus.finance/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel/13-week-cash-flow-forecast-excel-example.webp"
     ],
