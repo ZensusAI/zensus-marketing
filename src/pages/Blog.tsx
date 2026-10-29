@@ -10,6 +10,7 @@ import { FeaturedCarousel } from "@/components/blog/FeaturedCarousel";
 import { BlogBanners } from "@/components/blog/BlogBanners";
 import { blogIndexItemListSchema, breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 import { cn } from "@/lib/utils";
+import { loadBodyIndex, searchPosts, type BlogBodyIndex } from "@/lib/blog-search";
 
 /*
  * The blog index, from handoff 15-blog (31a). Home view: header with search
@@ -262,10 +263,21 @@ const Blog = () => {
     window.scrollTo({ top: 0 });
   }, [mode]);
 
+  // Body words load on the first search; until then the metadata alone matches.
+  const [bodyIndex, setBodyIndex] = useState<BlogBodyIndex>();
+  useEffect(() => {
+    if (!needle || bodyIndex) return;
+    let live = true;
+    loadBodyIndex().then((index) => {
+      if (live && index) setBodyIndex(index);
+    });
+    return () => {
+      live = false;
+    };
+  }, [needle, bodyIndex]);
+
   const byTopic = (id: string) => posts.filter((p) => p.topic === id);
-  const results = needle
-    ? posts.filter((p) => `${p.title} ${p.description} ${getTopic(p.topic)?.name ?? ""}`.toLowerCase().includes(needle))
-    : [];
+  const results = useMemo(() => (needle ? searchPosts(posts, query, bodyIndex) : []), [posts, needle, query, bodyIndex]);
   const listed = results;
 
   const blogItemListLd = useMemo(

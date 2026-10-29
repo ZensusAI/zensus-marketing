@@ -33,6 +33,7 @@ function webpSize(buf) {
 }
 
 const stats = {};
+const searchIndex = {};
 for (const file of files) {
   const slug = file.replace(/\.mdx$/, "");
   const source = await readFile(join(blogDir, file), "utf-8");
@@ -57,6 +58,26 @@ for (const file of files) {
   const wordCount = text.split(/\s+/).filter(Boolean).length;
 
   stats[slug] = thumbnail ? { wordCount, images, thumbnail } : { wordCount, images };
+
+  // The blog index search matches on body words too (src/lib/blog-search.ts).
+  // Keep each post's distinct words, normalized the same way as the query;
+  // attribute values (classes, URLs) and component prop names are dropped so
+  // they cannot match, while captions and table cells stay.
+  const bodyText = source
+    .replace(/^import\s.*$/gm, "")
+    .replace(/export const meta = \{[\s\S]*?\n\};?/, "")
+    .replace(/\b(?:className|href|src|id|width|height)=(?:"[^"]*"|\{[^}]*\})/g, " ")
+    .replace(/\b(?:caption|columns|rows|numeric|nowrap|negativeRows|positiveRows|alt|title)=/g, " ")
+    .replace(/<\/?[A-Za-z][^>]*>|<\/?>/g, " ")
+    .replace(/\]\([^)]*\)/g, " ");
+  const words = bodyText
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .split(" ")
+    .filter(Boolean);
+  searchIndex[slug] = [...new Set(words)].join(" ");
 }
 
 const banner =
@@ -65,3 +86,7 @@ const banner =
 const body = `export const blogStats: Record<string, { wordCount: number; images: string[]; thumbnail?: { width: number; height: number } }> = ${JSON.stringify(stats, null, 2)};\n`;
 await writeFile(outPath, banner + body, "utf-8");
 console.log(`[blog-stats] wrote ${outPath} (${files.length} posts)`);
+
+const searchPath = join(publicDir, "blog-search.json");
+await writeFile(searchPath, JSON.stringify(searchIndex) + "\n", "utf-8");
+console.log(`[blog-stats] wrote ${searchPath}`);
