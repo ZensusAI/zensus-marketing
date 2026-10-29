@@ -73,7 +73,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "forecasting-ai-compute-costs-for-founders": {
-    "wordCount": 3844,
+    "wordCount": 3849,
     "images": [
       "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/cheaper-per-request-bigger-bill.webp"
     ],
