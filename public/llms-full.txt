@@ -221,18 +221,19 @@ Why ARR and the bank balance diverge for SaaS companies, and how to forecast the
 - Forecast cash weekly: start from the reconciled bank balance, place each customer payment on its expected settlement date, include every outflow, bridge week by week, and stress-test against a cash floor.
 - Zensus builds the forecast from bank (Plaid), QuickBooks and HubSpot invoices and subscriptions. It places open invoices and renewals on their due dates and moves overdue invoices two weeks out; it does not learn each customer's payment habits.
 
-### Cash Conversion Cycle
+### Cash Conversion Cycle: Formula, Examples, and How to Improve It
 https://zensus.finance/blog/cash-conversion-cycle
 
-What the cash conversion cycle (CCC) is, how to calculate it, and how founders use it with a cash flow forecast. Key facts from the guide:
+What the cash conversion cycle (CCC) is, how to calculate it, how to improve it, and why it does not replace a cash flow forecast. Key facts from the guide:
 
-- CCC = Days Inventory Outstanding (DIO) + Days Sales Outstanding (DSO) − Days Payable Outstanding (DPO).
-- A longer CCC generally means more cash is tied up in inventory and receivables before customer collections return it to the bank.
-- The same CCC headline can hide different bottlenecks: a 45-day CCC can be an inventory problem or a collections problem depending on DIO vs DSO.
-- A negative CCC means customers pay before suppliers must be paid, which can reduce working capital needs when the business model supports it.
-- CCC does not replace a cash flow forecast or runway model; payroll, one-time purchases, and fundraising delays can still create a cash shortage.
-- Worked example at a $10,000/day sales rate: moving from 30-day to 60-day DSO can create about $300,000 of additional receivables funding need.
-- Zensus connects Plaid, QuickBooks, and HubSpot so collections timing, payables, and runway move in one forecast with scenarios and Slack alerts.
+- CCC = Days Inventory Outstanding (DIO) + Days Sales Outstanding (DSO) − Days Payable Outstanding (DPO). It is an average, not a forecast of exact dates.
+- Worked example: a hypothetical manufacturer with average inventory $100,000, A/R $120,000 and A/P $90,000, annual COGS $730,000 and credit sales $1,095,000, has DIO 50, DSO 40 and DPO 45 days, a 45-day CCC. Supplier credit offsets about half of its 90-day operating cycle.
+- The same 45-day CCC can come from too much inventory (DIO 50, DSO 40) or slow collections (DIO 10, DSO 80), so look at the components.
+- The operating cycle is DIO + DSO; the CCC subtracts DPO. A negative CCC (DPO greater than DIO + DSO) is healthy when customers prepay, and a warning sign when it comes from paying suppliers late.
+- Levers: collect faster (at $10,000 a day of credit sales, 15 more days of DSO ties up about $150,000), cut excess inventory without stockouts, and negotiate longer supplier terms instead of paying late.
+- SaaS and agencies have little or no inventory, so collection timing, deferred revenue, runway and payroll dates matter more than the classic formula.
+- A one-column Excel calculator: =AVERAGE(B3:B4)/B10*B2 for DIO, =AVERAGE(B5:B6)/B9*B2 for DSO, =AVERAGE(B7:B8)/B10*B2 for DPO, and =B12+B13-B14 for CCC.
+- For dated cash planning, pair CCC with a 13-week cash flow forecast. Zensus builds one from bank (Plaid), QuickBooks and HubSpot data, with monthly, weekly, daily and 13-week views and Slack alerts.
 
 ### Can QuickBooks Forecast Cash Flow?
 https://zensus.finance/blog/can-quickbooks-forecast-cash-flow

@@ -48,10 +48,12 @@ function thumbnails(): { file: string; src: string }[] {
 
 describe("blog images", () => {
   it("finds the figures and thumbnails it is meant to check", () => {
-    // A floor that proves the pattern still finds figures, not a quota: the
-    // October 2026 rewrites replaced several image-heavy posts with text and
-    // tables, taking the total from about 40 to 9.
-    expect(figures().length).toBeGreaterThan(5);
+    // Proves the patterns find what is there, without a quota: every
+    // <BlogFigure in a post's source must parse as a figure (posts may have
+    // none, as many text-and-table rewrites do), and posts carry a thumbnail.
+    const tags = posts.reduce((n, { source }) => n + (source.match(/<BlogFigure\b/g) ?? []).length, 0);
+    expect(tags).toBeGreaterThan(0);
+    expect(figures().length).toBe(tags);
     expect(thumbnails().length).toBeGreaterThan(10);
   });
 

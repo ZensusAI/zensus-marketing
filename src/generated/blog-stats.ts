@@ -32,7 +32,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "cash-conversion-cycle": {
-    "wordCount": 2846,
+    "wordCount": 2481,
     "images": [
       "https://zensus.finance/blog/cash-conversion-cycle/how-cash-conversion-cycle-works.webp",
       "https://zensus.finance/blog/cash-conversion-cycle/dio-dso-dpo-where-cash-gets-stuck.webp"

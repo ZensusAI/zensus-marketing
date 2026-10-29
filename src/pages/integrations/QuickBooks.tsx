@@ -158,7 +158,7 @@ const related: IntegrationRelatedLink[] = [
     to: "/blog/cash-conversion-cycle",
     label: "Cash conversion cycle",
     description:
-      "How the timing of receivables and payables (DSO and DPO) decides when cash actually arrives.",
+      "How DSO and DPO show how long receivables and payables tie up cash, on average.",
   },
   {
     to: "/quickbooks-cash-flow-forecasting",
