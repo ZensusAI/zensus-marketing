@@ -5,7 +5,7 @@ import { APP_HOST, SIGN_IN_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 import { SignupModal } from "./SignupModal";
-import zensusLogo from "@/assets/zensus-logo.png";
+import zensusLogo from "@/assets/zensus-logo-64.webp";
 import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
