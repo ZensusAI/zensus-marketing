@@ -43,8 +43,8 @@ const CARDS = [
     src: "AFP FP&A Benchmarking Survey 2025",
     url: AFP,
     guide: {
-      to: "/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel#when-does-a-spreadsheet-stop-being-enough",
-      label: "When a spreadsheet stops being enough",
+      to: "/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel#excel-vs-automated-forecasting-tools",
+      label: "Excel vs automated forecasting tools",
     },
   },
   {
