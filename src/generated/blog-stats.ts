@@ -73,15 +73,13 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "forecasting-ai-compute-costs-for-founders": {
-    "wordCount": 1956,
+    "wordCount": 3849,
     "images": [
-      "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/inference-cost-paradox.webp",
-      "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/ai-compute-cash-flow-forecast.webp",
-      "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/ai-compute-scenarios-runway.webp"
+      "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/cheaper-per-request-bigger-bill.webp"
     ],
     "thumbnail": {
-      "width": 1024,
-      "height": 576
+      "width": 1600,
+      "height": 900
     }
   },
   "how-to-build-a-13-week-cash-flow-forecast-in-excel": {
