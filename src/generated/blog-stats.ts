@@ -2,8 +2,9 @@
 // Regenerate with: node scripts/generate-blog-stats.mjs
 export const blogStats: Record<string, { wordCount: number; images: string[]; thumbnail?: { width: number; height: number } }> = {
   "27-pay-periods-2026-2027": {
-    "wordCount": 2227,
+    "wordCount": 2726,
     "images": [
+      "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2026-biweekly-fridays.webp",
       "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2027-biweekly-fridays.webp"
     ],
     "thumbnail": {

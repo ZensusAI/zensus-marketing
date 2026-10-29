@@ -278,18 +278,19 @@ How to forecast cash from HubSpot invoices, subscriptions, and payment records r
 - When HubSpot, QuickBooks, Stripe, and the bank all hold records of the same transaction, link them so each collection is counted once; HubSpot does not sync a QuickBooks payment applied to several invoices.
 - Zensus reads HubSpot invoices and subscriptions (not deals) alongside bank and QuickBooks data, and sends a Slack alert when the 30-day projection drops below a user's floor.
 
-### 27 Pay Periods in 2026 or 2027?
+### 27 Pay Periods in 2026 or 2027? How to Tell Which Year Has the Extra Payday
 https://zensus.finance/blog/27-pay-periods-2026-2027
 
-Which year has 27 biweekly pay dates, why sources disagree, and what the extra payroll run costs. Key facts from the guide:
+Which year has 27 biweekly pay dates, why sources disagree, and what the extra payroll run costs in cash. Key facts from the guide:
 
-- A biweekly payroll has 27 pay dates in a calendar year only when a payday lands on January 1 (or on January 1 or 2 in a leap year). For one schedule that happens about once every 11 years.
-- January 1 and December 31, 2027 are both Fridays, so a biweekly schedule with a payday on Friday, January 1, 2027 has 27 pay dates on the 2027 calendar.
-- January 1, 2027 is a Federal Reserve holiday and ACH payments do not settle on federal holidays. If that payday is paid early, on Thursday, December 31, 2026, the 27th pay date moves into 2026 and 2027 has 26.
-- The federal payroll calendar published by the General Services Administration shows this: 27 pay dates in 2026, ending December 31, and 26 in 2027.
-- The 27th run adds 1/26, about 3.8 percent, to payroll cash for the year. At $40,000 a run, the year costs $1,080,000 instead of $1,040,000.
-- An annual salary divided by 27 instead of 26 lowers every paycheck. The federal exemption test in 29 CFR 541.600 is per pay period ($684 a week, $1,368 biweekly), so a $36,000 salary clears it at 26 paychecks ($1,384.62) and not at 27 ($1,333.33).
-- Annual limits such as the 401(k) deferral limit ($24,500 in 2026, per the IRS) do not grow with an extra payday.
+- It depends on the payday and how the employer handles January 1. A biweekly Friday schedule starting January 2, 2026 has its 27th scheduled payday on Friday, January 1, 2027, a bank holiday.
+- Paid early on Thursday, December 31, 2026, that run gives 2026 27 pay dates and 2027 26. Paid on Monday, January 4, 2027, it gives 2026 26 and 2027 27. Other biweekly schedules generally have 26 a year.
+- The GSA 2026 payroll calendar lists EFT pay dates of December 4, 18 and 31, and the USPS 2026 schedule runs from January 2 to December 31.
+- Sources disagree because some count the nominal January 1, 2027 payday and others count the actual pay date.
+- On the January 2, 2026 schedule paid early, January (2, 16, 30), July (3, 17, 31) and December (4, 18, 31) have three paydays.
+- A $78,000 salary paid at $3,000 a check totals $81,000 over 27 paydays; divided by 27 it is about $2,888.89 a check. Neither method is universally required.
+- At $40,000 a run, a 27-payday year takes $1,080,000 out of the bank instead of $1,040,000, about 3.85% more cash, and a three-paycheck month needs $120,000 against $80,000.
+- Forecast payroll by actual pay date in a weekly cash forecast. The free Zensus payroll calendar lists 2026 and 2027 paydays, can move holiday paydays to the earlier banking day, and exports CSV and ICS.
 
 ### Cash Flow Forecasting for Agencies
 https://zensus.finance/blog/cash-flow-forecasting-for-agencies
