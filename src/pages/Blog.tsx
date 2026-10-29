@@ -50,14 +50,9 @@ function Controls({
   query: string;
   setQuery: (q: string) => void;
 }) {
-  const [searchOpen, setSearchOpen] = useState(!!query);
   const [topicsOpen, setTopicsOpen] = useState(false);
   const wrap = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (query) setSearchOpen(true);
-  }, [query]);
 
   // Close the topics menu on a click outside it or on Escape.
   useEffect(() => {
@@ -79,96 +74,76 @@ function Controls({
     ...BLOG_TOPICS.map((t) => ({ id: t.id, name: t.name, description: t.description, count: posts.filter((p) => p.topic === t.id).length })),
   ];
 
+  // The search is always open, on its own centered row under the title, so a
+  // reader can type straight away; the topics menu sits beside it.
   return (
-    <div ref={wrap} className="relative flex w-full gap-2.5 min-[760px]:w-auto">
-      {searchOpen ? (
-        <label
-          className={cn(
-            "flex h-[52px] flex-1 items-center gap-2.5 rounded-full border border-primary/70 bg-card pl-4 pr-2 shadow-[0_0_0_4px_rgba(34,197,115,.14)] min-[760px]:min-w-[420px]",
-            SQUIRCLE,
-          )}
-        >
-          <SearchIcon size={17} stroke="hsl(var(--muted-foreground))" />
-          <span className="sr-only">Search guides</span>
-          <input
-            ref={input}
-            type="search"
-            autoFocus
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Escape") {
-                setQuery("");
-                setSearchOpen(false);
-              }
-            }}
-            placeholder={`Search ${posts.length} guides`}
-            className="min-w-0 flex-1 border-0 bg-transparent text-base text-foreground outline-none placeholder:text-faint [&::-webkit-search-cancel-button]:hidden"
-          />
+    <div ref={wrap} className="relative mx-auto flex w-full max-w-[880px] flex-col gap-2.5 min-[760px]:flex-row">
+      <label
+        className={cn(
+          "flex h-[56px] w-full min-w-0 flex-none items-center gap-2.5 rounded-full border border-border bg-card pl-5 pr-2 transition-[border-color,box-shadow] duration-200 hover:border-foreground/40 focus-within:border-primary/70 focus-within:shadow-[0_0_0_4px_rgba(34,197,115,.14)] min-[760px]:h-[60px] min-[760px]:flex-1",
+          SQUIRCLE,
+        )}
+      >
+        <SearchIcon size={18} stroke="hsl(var(--muted-foreground))" />
+        <span className="sr-only">Search guides</span>
+        <input
+          ref={input}
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setQuery("");
+          }}
+          placeholder={`Search ${posts.length} guides by keyword`}
+          className="min-w-0 flex-1 border-0 bg-transparent text-base text-foreground outline-none placeholder:text-faint min-[760px]:text-[17px] [&::-webkit-search-cancel-button]:hidden"
+        />
+        {query ? (
           <button
             type="button"
             onClick={() => {
               setQuery("");
-              setSearchOpen(false);
+              input.current?.focus();
             }}
-            className={cn("h-9 rounded-full px-3 text-[13.5px] text-muted-foreground hover:bg-border/50", FOCUS_RING)}
+            className={cn("h-10 rounded-full px-3.5 text-[13.5px] text-muted-foreground hover:bg-border/50", FOCUS_RING)}
           >
-            Close
+            Clear
           </button>
-        </label>
-      ) : (
-        <>
-          <button
-            type="button"
-            aria-label="Search"
-            onClick={() => {
-              setSearchOpen(true);
-              setTopicsOpen(false);
-            }}
-            className={cn(
-              "flex h-[52px] w-[52px] flex-none items-center justify-center rounded-[18px] border border-border bg-card transition-colors duration-200 hover:border-foreground",
-              SQUIRCLE,
-              FOCUS_RING,
-            )}
-          >
-            <SearchIcon size={19} stroke="hsl(var(--foreground))" />
-          </button>
-          <button
-            type="button"
-            aria-expanded={topicsOpen}
-            aria-haspopup="true"
-            onClick={() => setTopicsOpen((o) => !o)}
-            className={cn(
-              "flex h-[52px] flex-1 items-center justify-between gap-3 rounded-[18px] border bg-card px-5 text-[15px] font-medium text-foreground transition-colors duration-200 hover:border-foreground min-[760px]:flex-none",
-              SQUIRCLE,
-              FOCUS_RING,
-              topicsOpen ? "border-foreground" : "border-border",
-            )}
-          >
-            <span>Explore topics</span>
-            <svg
-              aria-hidden
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={cn("transition-transform duration-200", topicsOpen && "rotate-180")}
-            >
-              <path d="m6 9 6 6 6-6" />
-            </svg>
-          </button>
-        </>
-      )}
+        ) : null}
+      </label>
+      <button
+        type="button"
+        aria-expanded={topicsOpen}
+        aria-haspopup="true"
+        onClick={() => setTopicsOpen((o) => !o)}
+        className={cn(
+          "flex h-[56px] flex-none items-center justify-between gap-3 rounded-[18px] border bg-card px-5 text-[15px] font-medium text-foreground transition-colors duration-200 hover:border-foreground min-[760px]:h-[60px]",
+          SQUIRCLE,
+          FOCUS_RING,
+          topicsOpen ? "border-foreground" : "border-border",
+        )}
+      >
+        <span>Explore topics</span>
+        <svg
+          aria-hidden
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={cn("transition-transform duration-200", topicsOpen && "rotate-180")}
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
 
-      {topicsOpen && !searchOpen ? (
+      {topicsOpen ? (
         <nav
           aria-label="Blog topics"
           className={cn(
-            "absolute right-0 top-[62px] z-30 flex w-full flex-col rounded-[26px] border border-border bg-card p-2 shadow-[0_24px_48px_-20px_rgba(15,28,22,.35)] min-[760px]:w-[380px]",
+            "absolute right-0 top-full z-30 mt-2.5 flex w-full flex-col rounded-[26px] border border-border bg-card p-2 shadow-[0_24px_48px_-20px_rgba(15,28,22,.35)] min-[760px]:w-[380px]",
             SQUIRCLE,
           )}
         >
@@ -339,8 +314,8 @@ const Blog = () => {
           the page when it gets focus. The navbar and footer are not scaled. */}
       <main className="min-[760px]:[zoom:0.85]">
         <header className={cn(GUTTER, "relative z-20 pb-12 pt-[calc(4rem+56px)] min-[760px]:pb-[88px] min-[760px]:pt-[calc(4rem+128px)]")}>
-          <div className={cn(CONTAINER, "flex flex-wrap items-end justify-between gap-x-8 gap-y-5")}>
-            <div className="flex min-w-0 flex-col gap-3.5">
+          <div className={cn(CONTAINER, "flex flex-col gap-8 min-[760px]:gap-12")}>
+            <div className="flex min-w-0 flex-col items-center gap-3.5 text-center">
               <h1 className="text-[52px] font-semibold leading-[.95] tracking-[-0.05em] text-foreground min-[760px]:text-[76px] min-[1100px]:text-[96px]">
                 The Zensus Blog
               </h1>
