@@ -219,7 +219,7 @@ Why ARR and the bank balance diverge for SaaS companies, and how to forecast the
 - Two $12,000-a-year customers bring the same cash over a year: $12,000 in January when billed annually upfront, $1,000 a month when billed monthly. Annual billing speeds up cash but does not add ARR, profit or runway past the contract year.
 - Deferred revenue (a contract liability) is service still owed. It can exist without cash: an invoice due before the service is delivered creates one even if unpaid. It is not spendable cash.
 - Forecast cash weekly: start from the reconciled bank balance, place each customer payment on its expected settlement date, include every outflow, bridge week by week, and stress-test against a cash floor.
-- Zensus builds the forecast from bank (Plaid), QuickBooks and HubSpot invoices and subscriptions, placing invoices and renewals on their due dates; it does not learn each customer's payment habits.
+- Zensus builds the forecast from bank (Plaid), QuickBooks and HubSpot invoices and subscriptions. It places open invoices and renewals on their due dates and moves overdue invoices two weeks out; it does not learn each customer's payment habits.
 
 ### Cash Conversion Cycle
 https://zensus.finance/blog/cash-conversion-cycle
