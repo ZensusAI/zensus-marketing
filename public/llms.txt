@@ -7,11 +7,12 @@ Zensus helps businesses of any size know exactly when their cash runs out, and w
 ## Key Features
 
 - Real-time cash flow projection with zero-cash date
-- Agentic multi-turn scenario planning (text and voice)
+- Multi-turn scenario planning in chat (hiring, churn, one-off costs, revenue and subscription changes)
 - Subscription-intelligent revenue projections (annual, quarterly, monthly contracts)
 - Direct integrations: QuickBooks, Plaid bank feeds, HubSpot
 - Expense categorization across 8 business categories
-- Weekly and daily cash flow drill-down
+- Monthly, weekly, daily, and 13-week cash flow views
+- Slack alerts when the 30-day cash projection drops below your threshold
 - CSV export at multiple granularities
 
 ## Company location
