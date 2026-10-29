@@ -332,7 +332,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 <p>Here's the complete formula reference. Six core patterns, plus the date math:</p>
 
 <BlogTable
-  caption="The formulas in a 13-week cash flow forecast, for column B (Week 1)."
+  caption="The formulas in a 13-week cash flow forecast, as written for Week 1. The date and next-week opening formulas go in column C."
   columns={['Formula', 'What it does']}
   rows={[
     ['Weekly date', <><code>=B5+7</code> (add 7 days to start next week)</>],
@@ -347,7 +347,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>Paste these in, link them together, and you're done. I've tested this in both Excel and Google Sheets.</p>
 
-<p>Need a reference? Microsoft's docs on <a href="https://support.microsoft.com/en-us/excel/functions/sum-function" className="font-medium text-primary underline-offset-4 hover:underline">SUM</a>, <a href="https://support.microsoft.com/en-us/office/if-function-69aed7c9-4e8a-4755-a9bc-aa8bbff73be2" className="font-medium text-primary underline-offset-4 hover:underline">IF</a>, and <a href="https://support.microsoft.com/en-us/excel/switch-between-relative-absolute-and-mixed-references" className="font-medium text-primary underline-offset-4 hover:underline">absolute vs. relative references</a> are solid.</p>
+<p>Need a reference? Microsoft's docs on <a href="https://support.microsoft.com/en-us/excel/functions/sum-function" className="font-medium text-primary underline-offset-4 hover:underline">SUM</a>, <a href="https://support.microsoft.com/en-us/excel/functions/if-function" className="font-medium text-primary underline-offset-4 hover:underline">IF</a>, and <a href="https://support.microsoft.com/en-us/excel/switch-between-relative-absolute-and-mixed-references" className="font-medium text-primary underline-offset-4 hover:underline">absolute vs. relative references</a> are solid.</p>
 
 ## Worked Example: A Quarter That Looks Fine, Has Two Bad Weeks
 
@@ -609,7 +609,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
   <li><a href="/quickbooks-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">Invoice-to-cash tracking</a> from your accounting system</li>
   <li>Automatic syncing from your bank, QuickBooks, and HubSpot</li>
   <li>Scenario modeling, with monthly, weekly, daily, and 13-week views</li>
-  <li><a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when your 30-day projection drops below your threshold</li>
+  <li><a href="/integrations/slack" className="font-medium text-primary underline-offset-4 hover:underline">Slack alerts</a> when your 30-day projection drops below your floor</li>
 </ul>
 
 <p><strong>Here's my take:</strong> Start with Excel and the free template. Get comfortable with the mechanics. Once your volume of transactions grows and manual reconciliation becomes a drag, that's when you consider a connected platform.</p>
