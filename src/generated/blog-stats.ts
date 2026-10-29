@@ -12,7 +12,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "arr-vs-cash-for-founders": {
-    "wordCount": 3004,
+    "wordCount": 3008,
     "images": [
       "https://zensus.finance/blog/arr-vs-cash-for-founders/annual-vs-monthly-cash-timing.webp"
     ],
