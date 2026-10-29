@@ -25,7 +25,7 @@ const STOP_WORDS = new Set([
   "on", "or", "the", "to", "versus", "vs", "what", "when", "why", "with", "you", "your",
 ]);
 
-/** Lowercase, drop accents and punctuation, collapse spaces. */
+/** Lowercase, drop accents and punctuation, collapse spaces. scripts/blog-search-text.mjs mirrors it for the body index. */
 export function normalize(text: string): string {
   return text
     .normalize("NFKD")
@@ -88,10 +88,20 @@ export function searchPosts(posts: BlogPostMeta[], query: string, bodyIndex?: Bl
 
 let bodyIndexRequest: Promise<BlogBodyIndex | undefined> | undefined;
 
-/** Fetch the body index once per page load; resolves undefined if it fails. */
+/**
+ * Fetch the body index, sharing one request between callers. It resolves
+ * undefined when the request fails, and a failure is not cached, so the
+ * next search tries again.
+ */
 export function loadBodyIndex(): Promise<BlogBodyIndex | undefined> {
   bodyIndexRequest ??= fetch(BODY_INDEX_PATH)
-    .then((res) => (res.ok ? (res.json() as Promise<BlogBodyIndex>) : undefined))
-    .catch(() => undefined);
+    .then((res) => {
+      if (!res.ok) throw new Error(`${BODY_INDEX_PATH}: ${res.status}`);
+      return res.json() as Promise<BlogBodyIndex>;
+    })
+    .catch(() => {
+      bodyIndexRequest = undefined;
+      return undefined;
+    });
   return bodyIndexRequest;
 }

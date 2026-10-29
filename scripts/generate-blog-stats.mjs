@@ -10,6 +10,7 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { SITE_URL } from "./site.mjs";
+import { bodyWords } from "./blog-search-text.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const blogDir = join(__dirname, "..", "src", "content", "blog");
@@ -60,24 +61,7 @@ for (const file of files) {
   stats[slug] = thumbnail ? { wordCount, images, thumbnail } : { wordCount, images };
 
   // The blog index search matches on body words too (src/lib/blog-search.ts).
-  // Keep each post's distinct words, normalized the same way as the query;
-  // attribute values (classes, URLs) and component prop names are dropped so
-  // they cannot match, while captions and table cells stay.
-  const bodyText = source
-    .replace(/^import\s.*$/gm, "")
-    .replace(/export const meta = \{[\s\S]*?\n\};?/, "")
-    .replace(/\b(?:className|href|src|id|width|height)=(?:"[^"]*"|\{[^}]*\})/g, " ")
-    .replace(/\b(?:caption|columns|rows|numeric|nowrap|negativeRows|positiveRows|alt|title)=/g, " ")
-    .replace(/<\/?[A-Za-z][^>]*>|<\/?>/g, " ")
-    .replace(/\]\([^)]*\)/g, " ");
-  const words = bodyText
-    .normalize("NFKD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .split(" ")
-    .filter(Boolean);
-  searchIndex[slug] = [...new Set(words)].join(" ");
+  searchIndex[slug] = bodyWords(source).join(" ");
 }
 
 const banner =

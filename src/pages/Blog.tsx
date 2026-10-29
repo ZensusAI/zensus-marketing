@@ -238,13 +238,19 @@ const Blog = () => {
     window.scrollTo({ top: 0 });
   }, [mode]);
 
-  // Body words load on the first search; until then the metadata alone matches.
+  // Body words load on the first search; until then the metadata alone
+  // matches, and an empty result says "Searching" rather than "No guides".
+  // A failed load is retried on the next change to the query.
   const [bodyIndex, setBodyIndex] = useState<BlogBodyIndex>();
+  const [bodyPending, setBodyPending] = useState(false);
   useEffect(() => {
     if (!needle || bodyIndex) return;
     let live = true;
+    setBodyPending(true);
     loadBodyIndex().then((index) => {
-      if (live && index) setBodyIndex(index);
+      if (!live) return;
+      if (index) setBodyIndex(index);
+      setBodyPending(false);
     });
     return () => {
       live = false;
@@ -350,8 +356,8 @@ const Blog = () => {
                 <h2 className="text-[40px] font-semibold leading-[1.02] tracking-[-0.045em] text-foreground min-[760px]:text-[64px]">
                   {`Results for "${query.trim()}"`}
                 </h2>
-                <p className="text-base text-muted-foreground">
-                  {`${listed.length} ${listed.length === 1 ? "guide" : "guides"} found.`}
+                <p aria-live="polite" className="text-base text-muted-foreground">
+                  {bodyPending ? "Searching every guide…" : `${listed.length} ${listed.length === 1 ? "guide" : "guides"} found.`}
                 </p>
               </div>
             </section>
@@ -363,7 +369,7 @@ const Blog = () => {
                   ))}
                 </div>
               </section>
-            ) : (
+            ) : bodyPending ? null : (
               <section className={cn(GUTTER, "pt-10")}>
                 <div className={cn(CONTAINER, "rounded-[30px] border border-dashed border-[#D9C79A] p-10 text-center", SQUIRCLE)}>
                   <p className="text-[17px] font-semibold text-foreground">No guides match that search.</p>
