@@ -12,6 +12,11 @@
       "has": [{ "type": "query", "key": "topic", "value": "(?<topic>runway-and-burn|payroll|13-week-forecasting|working-capital|tools-and-integrations)" }],
       "destination": "/blog/topic/:topic",
       "permanent": true
+    },
+    {
+      "source": "/blog/:slug/:image([a-z0-9-]+)\\.png",
+      "destination": "/blog/:slug/:image.webp",
+      "permanent": true
     }
   ],
   "headers": [
