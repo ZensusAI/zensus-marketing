@@ -12,7 +12,7 @@ Zensus is a US company. Legal name: Zensus Inc., a Delaware C-corporation. Regis
 
 ## Identifiers
 
-Wikidata item: Q141775682 (https://www.wikidata.org/wiki/Q141775682). Profiles: LinkedIn linkedin.com/company/zensusai, X @zensusai, GitHub ZensusAI, Crunchbase crunchbase.com/organization/zensus, Product Hunt producthunt.com/products/zensus, YouTube channel UCfQAlHd9bQN-aZmV-e5x1VQ, Instagram @zensus.finance, G2 g2.com/products/zensus/reviews.
+Wikidata item: Q141775682 (https://www.wikidata.org/wiki/Q141775682). Profiles: LinkedIn linkedin.com/company/zensusai, X @zensusai, GitHub ZensusAI, Crunchbase crunchbase.com/organization/zensus, YouTube channel UCfQAlHd9bQN-aZmV-e5x1VQ, Instagram @zensus.finance, G2 g2.com/products/zensus/reviews.
 
 ## Problem It Solves
 
