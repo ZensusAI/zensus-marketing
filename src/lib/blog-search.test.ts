@@ -71,12 +71,12 @@ describe("blog search on the published guides", () => {
     expect(top("13-week excel")).toBe("how-to-build-a-13-week-cash-flow-forecast-in-excel");
   });
 
-  it("finds words that appear only in the article, including captions", () => {
+  // Captions and alt text are covered by the builder fixture below, which
+  // does not break when a post's images change.
+  it("finds words that appear only in the article", () => {
     expect(searchPosts(posts, "aging", bodyIndex).map((p) => p.slug)).toContain(
       "how-to-build-a-13-week-cash-flow-forecast-in-excel",
     );
-    // "$120K" is only in an image caption and alt text in the ARR guide.
-    expect(searchPosts(posts, "120K", bodyIndex).map((p) => p.slug)).toContain("arr-vs-cash-for-founders");
   });
 
   it("returns nothing when a word appears nowhere", () => {

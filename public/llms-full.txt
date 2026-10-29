@@ -207,17 +207,19 @@ Whether a startup reaches profitability before its cash runs out, using Paul Gra
 - Graham's "fatal pinch" is default dead + slow growth + not enough time to fix it.
 - Zensus projects cash on real dates, shows the month cash is projected to run out, and tests a scenario (hiring, churn, pricing, one-off costs) against the baseline; its runway calculator estimates cash duration and is not a default alive calculator.
 
-### ARR vs Cash for Founders
+### ARR vs Cash Flow: Why Your Bank Balance Disagrees With Your ARR
 https://zensus.finance/blog/arr-vs-cash-for-founders
 
-Why ARR and bank balance diverge for SaaS companies. Key facts from the guide:
+Why ARR and the bank balance diverge for SaaS companies, and how to forecast the cash. Key facts from the guide:
 
-- ARR measures recurring revenue sold; cash flow measures money actually in the bank. Companies spend cash, not ARR.
-- A $120,000 annual prepaid contract adds $120,000 to cash on day one but only $10,000 of recognized revenue per month.
-- Deferred revenue is cash collected before service is delivered; it is not the same as available liquidity.
-- Two companies at $1M ARR can have completely different runway depending on annual vs monthly billing mix.
-- Subscription cash flow forecasting requires billing schedules, renewal timing, and collections behavior, not ARR alone.
-- Zensus syncs HubSpot subscriptions and projects when annual and quarterly contracts hit the bank, not flat monthly spreads.
+- ARR is the annualized value of active subscriptions at a point in time. Cash flow is money moving in and out. The bank balance is what is in the account now. Billings, cash collections, recognized revenue and bank cash each change on a different date.
+- A $120,000 annual contract billed and paid upfront on January 1 adds $120,000 to ARR and $120,000 of January cash, but only $10,000 of recognized revenue a month; deferred revenue is $110,000 at the end of January and $0 in December.
+- The same contract billed monthly still adds $120,000 of ARR. If the customer has not paid by month end, a company with $200,000 that collects $30,000 from existing customers and pays $55,000 ends the month at $175,000.
+- Five dates control the gap: subscription activation, invoice issuance, payment settlement, revenue recognition and expense payments, plus the signing date.
+- Two $12,000-a-year customers bring the same cash over a year: $12,000 in January when billed annually upfront, $1,000 a month when billed monthly. Annual billing speeds up cash but does not add ARR, profit or runway past the contract year.
+- Deferred revenue (a contract liability) is service still owed. It can exist without cash: an invoice due before the service is delivered creates one even if unpaid. It is not spendable cash.
+- Forecast cash weekly: start from the reconciled bank balance, place each customer payment on its expected settlement date, include every outflow, bridge week by week, and stress-test against a cash floor.
+- Zensus builds the forecast from bank (Plaid), QuickBooks and HubSpot invoices and subscriptions. It places open invoices and renewals on their due dates and moves overdue invoices two weeks out; it does not learn each customer's payment habits.
 
 ### Cash Conversion Cycle
 https://zensus.finance/blog/cash-conversion-cycle
@@ -389,7 +391,7 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - Predictive Cash Flow Forecasting (blog): https://zensus.finance/blog/predictive-cash-flow-forecasting
 - Cash Flow Early Warning System (blog): https://zensus.finance/blog/cash-flow-early-warning-system
 - Will I Make Payroll? (blog): https://zensus.finance/blog/will-i-make-payroll
-- ARR vs Cash for Founders (blog): https://zensus.finance/blog/arr-vs-cash-for-founders
+- ARR vs Cash Flow (blog): https://zensus.finance/blog/arr-vs-cash-for-founders
 - Cash Conversion Cycle (blog): https://zensus.finance/blog/cash-conversion-cycle
 - Can QuickBooks Forecast Cash Flow? (blog): https://zensus.finance/blog/can-quickbooks-forecast-cash-flow
 - Zero Cash Date for Founders (blog): https://zensus.finance/blog/zero-cash-date-for-founders

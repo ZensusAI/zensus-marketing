@@ -12,15 +12,13 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "arr-vs-cash-for-founders": {
-    "wordCount": 1928,
+    "wordCount": 3008,
     "images": [
-      "https://zensus.finance/blog/arr-vs-cash-for-founders/same-arr-different-cash-journey.webp",
-      "https://zensus.finance/blog/arr-vs-cash-for-founders/arr-vs-cash-timing-comparison.webp",
-      "https://zensus.finance/blog/arr-vs-cash-for-founders/from-contract-to-cash.webp"
+      "https://zensus.finance/blog/arr-vs-cash-for-founders/annual-vs-monthly-cash-timing.webp"
     ],
     "thumbnail": {
-      "width": 1024,
-      "height": 682
+      "width": 1600,
+      "height": 900
     }
   },
   "can-quickbooks-forecast-cash-flow": {
@@ -127,7 +125,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "runway-vs-burn-rate-for-founders": {
-    "wordCount": 3451,
+    "wordCount": 3452,
     "images": [
       "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/cash-reserve-burn-runway.webp"
     ],
