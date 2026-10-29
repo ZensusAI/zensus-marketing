@@ -470,29 +470,6 @@
   }
 }
 
-/* Product showcase (HeroShowcase.tsx) under reduced motion: the finished end
-   state, before and after hydration. Scroll-driven inline styles are ignored,
-   the rail is full and every step's description is open. .showcase-reveal is
-   content that fades in (forced visible and flat); .showcase-still only stops
-   moving and keeps its own opacity (the dots, the faint waves and the
-   screenshots, of which only the first is shown). Same query as the pins. */
-@media (prefers-reduced-motion: reduce), (max-height: 719px) {
-  .showcase-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .showcase-still {
-    transform: none !important;
-  }
-  .showcase-rail {
-    height: 100% !important;
-  }
-  .showcase-step-body {
-    grid-template-rows: 1fr !important;
-    opacity: 1 !important;
-  }
-}
-
 /* Customer story (CustomerStory.tsx) under reduced motion: everything in its
    final place before and after hydration. .story-reveal content shows flat,
    the video window is fully open, and nothing is zoomed. */

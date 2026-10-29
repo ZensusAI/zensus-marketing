@@ -35,8 +35,8 @@ const TOOLS: ResourceLink[] = [
   },
 ];
 
-// Matched to the homepage's own topics: the definition, the 13-week view the
-// showcase leads with, the zero-cash date, runway after a raise, payroll, late
+// Matched to the homepage's own topics: the definition, the 13-week view,
+// the zero-cash date, runway after a raise, payroll, late
 // payers, QuickBooks, and HubSpot timing. The QuickBooks Online product page
 // sits beside the QuickBooks guide: it was in the navbar and footer only, and
 // those links are not in-content, so the homepage passed it nothing while it

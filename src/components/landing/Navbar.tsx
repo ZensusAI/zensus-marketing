@@ -58,8 +58,9 @@ const QUESTIONS: Question[] = [
   {
     q: "When does my cash run out?",
     feature: "Zero-cash date and 13-week rolling forecast",
-    // The showcase is where the zero-cash date and the 13-week view live.
-    href: "/#product",
+    // The runway section is where the homepage shows the forecast and the
+    // zero-cash date now that the product showcase is gone.
+    href: "/#features",
     url: APP_HOST,
     img: dashboard13Week,
     width: 1984,
