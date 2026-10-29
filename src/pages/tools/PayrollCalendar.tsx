@@ -62,7 +62,7 @@ const FAQS = [
   {
     question: "How many pay periods are in 2027?",
     answer:
-      "It depends on pay frequency and on which dates you pay. Biweekly schedules have 26 pay periods in most years, but 27 in 2027 when one of the paydays is Friday, January 1, 2027. Weekly schedules have 52, or 53 if payday is a Friday. Semimonthly has 24. Monthly has 12. Enter any payday on your schedule above to see your count.",
+      "It depends on pay frequency and on which dates you pay. Biweekly schedules have 26 pay periods in most years, but 27 in 2027 when one of the paydays is Friday, January 1, 2027 and that run is paid in 2027 rather than early on December 31, 2026. Weekly schedules have 52, or 53 if payday is a Friday. Semimonthly has 24. Monthly has 12. Enter any payday on your schedule above to see your count.",
   },
   {
     question: "Does 2027 have 27 pay periods?",
@@ -77,7 +77,7 @@ const FAQS = [
   {
     question: "Which months have three paychecks in 2027?",
     answer:
-      "It depends on which dates you pay. A biweekly schedule with a payday on Friday, January 1, 2027 has three paydays in January, July, and December 2027. A biweekly schedule that pays on Friday, January 8, 2027 has three in April and October. The calculator above marks the three-paycheck months for your own schedule.",
+      "It depends on which dates you pay. A biweekly schedule with a payday on Friday, January 1, 2027 has three paydays in July and December 2027, and in January too if the January 1 run is paid in 2027 rather than early on December 31, 2026. A biweekly schedule that pays on Friday, January 8, 2027 has three in April and October. The calculator above marks the three-paycheck months for your own schedule.",
   },
   {
     question: "When does a pay period start and end?",
