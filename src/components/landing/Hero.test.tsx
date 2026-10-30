@@ -82,7 +82,7 @@ describe("homepage hero", () => {
     // The button shows "See" at rest and opens on hover, but the whole label
     // is in the HTML, so its accessible name is the full sentence.
     const button = markup.match(/<button[^>]*type="submit"[\s\S]*?<\/button>/)?.[0] ?? "";
-    expect(button.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()).toBe("See when my cash runs out");
+    expect(button.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()).toBe("See my projection");
     expect(markup).toContain(">Email address</label>");
     expect(markup).not.toContain("No charge until it ends.");
     expect(markup).not.toContain("Prefer a walkthrough?");
