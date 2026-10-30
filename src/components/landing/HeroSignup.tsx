@@ -148,7 +148,7 @@ export function HeroSignup() {
           )}
         />
         {/* At rest the button reads "See"; hover or keyboard focus opens it to
-            "See when my cash runs out ->". The rest of the label is always in
+            "See my projection ->". The rest of the label is always in
             the DOM (the accessible name and the prerendered HTML carry the
             whole sentence), only its column is 0fr wide. It stays open where
             there is no hover (touch) and on the stacked phone layout. Under
@@ -168,7 +168,7 @@ export function HeroSignup() {
                     is truly zero wide; the gap after "See" lives inside. */}
                 <span className="min-w-0 overflow-hidden">
                   <span className="flex items-center gap-2 whitespace-nowrap pl-[0.28em] pr-0.5 opacity-0 transition-opacity duration-300 ease-ui group-hover:opacity-100 group-hover:delay-100 group-focus-visible:opacity-100 max-[479px]:opacity-100 [@media(hover:none)]:opacity-100">
-                    when my cash runs out
+                    my projection
                     <ArrowRight
                       size={16}
                       aria-hidden
