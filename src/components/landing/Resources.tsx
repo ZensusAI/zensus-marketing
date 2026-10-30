@@ -36,9 +36,9 @@ const TOOLS: ResourceLink[] = [
 ];
 
 // Matched to the homepage's own topics: the definition, the 13-week view,
-// the zero-cash date, runway after a raise, payroll, late
-// payers, QuickBooks, and HubSpot timing. The QuickBooks Online product page
-// sits beside the QuickBooks guide: it was in the navbar and footer only, and
+// the zero-cash date, runway after a raise, payroll, the 27th pay
+// period (drawing 2027 payroll searches, Oct 2026), late payers, QuickBooks,
+// and HubSpot timing. The QuickBooks Online product page sits beside the QuickBooks guide: it was in the navbar and footer only, and
 // those links are not in-content, so the homepage passed it nothing while it
 // drew QuickBooks forecasting searches (Search Console, Oct 2026).
 const GUIDES: ResourceLink[] = [
@@ -66,6 +66,11 @@ const GUIDES: ResourceLink[] = [
     to: "/blog/will-i-make-payroll",
     label: "Will I make payroll?",
     description: "How to know weeks in advance, one pay date at a time.",
+  },
+  {
+    to: "/blog/27-pay-periods-2026-2027",
+    label: "27 pay periods in 2026 or 2027?",
+    description: "Which year has the extra payday, and what it costs.",
   },
   {
     to: "/blog/cash-flow-forecasting-for-agencies",
