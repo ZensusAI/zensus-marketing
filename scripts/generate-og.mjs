@@ -8,11 +8,12 @@
 
 import { createServer } from "node:http";
 import { existsSync } from "node:fs";
-import { readFile, readdir, mkdir, copyFile } from "node:fs/promises";
+import { readFile, readdir, mkdir, copyFile, writeFile } from "node:fs/promises";
 import { join, extname, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
+import sharp from "sharp";
 import { SITE_HOST } from "./site.mjs";
 import { BLOG_TOPICS } from "./blog-topics.mjs";
 
@@ -413,12 +414,20 @@ async function generate() {
         await mkdir(join(outDir, card.nested), { recursive: true });
       }
 
+      // Chrome's own PNG is lossless and unoptimised (about 460 KB a card).
+      // A 256-colour palette at quality 90 looks the same at about a third
+      // of the size, and every deployment stores a copy of every card.
       const screenshotTarget = publicPath ?? distPath;
-      await page.screenshot({
-        path: screenshotTarget,
+      const raw = await page.screenshot({
         type: "png",
         clip: { x: 0, y: 0, width: 1200, height: 630 },
       });
+      await writeFile(
+        screenshotTarget,
+        await sharp(raw)
+          .png({ palette: true, quality: 90, effort: 10, compressionLevel: 9 })
+          .toBuffer(),
+      );
 
       if (publicPath && publicPath !== distPath) {
         await mkdir(dirname(distPath), { recursive: true });
