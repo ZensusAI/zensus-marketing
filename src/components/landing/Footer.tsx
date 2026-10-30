@@ -4,7 +4,6 @@ import { ArrowUpRight, Instagram, Linkedin, MapPin } from "lucide-react";
 import {
   COMPANY_ADDRESSES,
   COMPANY_PROFILES,
-  GOOGLE_MAP_EMBED_URL,
   LEGAL_NAME,
   SITE_URL,
   SUPPORT_EMAIL,
@@ -20,8 +19,13 @@ import grokLogo from "@/assets/ai/grok.png";
 import perplexityLogo from "@/assets/ai/perplexity.svg";
 import { HERO_MESH } from "./hero-mesh";
 
-// Full names for the state codes in COMPANY_ADDRESSES (the footer's <abbr>).
-const REGION_NAMES: Record<string, string> = { DE: "Delaware", TX: "Texas" };
+// The footer shows the registered Delaware office only. The Houston address
+// was taken off the footer at the owner's request (30 Oct 2026); it stays in
+// COMPANY_ADDRESSES for the legal pages and LLM info.
+const FOOTER_OFFICES = COMPANY_ADDRESSES.filter((office) => office.region === "DE");
+
+// Full names for the state codes in FOOTER_OFFICES (the footer's <abbr>).
+const REGION_NAMES: Record<string, string> = { DE: "Delaware" };
 
 // A line break in an address: a new line on screen, a comma in the text.
 const LineBreak = () => (
@@ -276,7 +280,7 @@ const Footer = () => {
 
       <div className="relative mx-auto max-w-6xl">
         <div className="grid gap-12 min-[1024px]:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] min-[1024px]:gap-16">
-          <div className="min-w-0">
+          <div className="flex min-w-0 flex-col">
             {/* Brand sign-off: same lockup drawing as the navbar and OG cards
                 (32px tile, 22px name, -0.02em tracking, 9px gap). */}
             <Link to="/" aria-label="Zensus home" className={cn("inline-flex w-fit items-center gap-[9px]", focusRing)}>
@@ -303,100 +307,75 @@ const Footer = () => {
               </a>
             </div>
 
-            {/* The legal entity and its two addresses, as postal blocks: the
-                street, the suite, then city, state and ZIP, then the
-                country, each on its own line, under a label naming the
-                state. Laid out side by side from 480px, stacked below. Each
-                visual line break also carries a hidden ", " (LineBreak), so
-                text read without layout (tag-stripping extractors, AI
-                crawlers, screen readers) gets "254 Chapman Rd, Ste 208
-                #23940, Newark, DE 19702, United States" rather than
-                "Rd" running into "Ste". Microdata ties the visible
-                text to the same Organization @id as the JSON-LD in
-                index.html, so engines read one entity with these addresses
-                rather than a second one. The abbreviations expand for
-                screen readers and machines (<abbr title>). */}
-            <address
-              itemScope
-              itemType="https://schema.org/Organization"
-              itemID={`${SITE_URL}/#organization`}
-              className="mt-7 text-sm not-italic leading-[1.6] text-muted-foreground"
-            >
-              <meta itemProp="name" content="Zensus" />
-              <link itemProp="url" href={SITE_URL} />
-              <p itemProp="legalName" className="font-medium text-foreground">
-                {LEGAL_NAME}
-              </p>{" "}
-              <div className="mt-3 grid gap-4 min-[480px]:grid-cols-2 min-[480px]:gap-8">
-                {COMPANY_ADDRESSES.map((office) => (
-                  <p key={office.label} itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-                    <span className="mb-1 block text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground/80">
-                      {office.label}
-                    </span>
-                    <span className="sr-only">: </span>
-                    {/* Street, then the suite on its own line (USPS address
-                        line 2), so neither column wraps mid-number. */}
-                    <span itemProp="streetAddress">
-                      {office.street.split(", ").map((part, i) => (
-                        <span key={part}>
-                          {i > 0 ? <LineBreak /> : null}
-                          {part}
-                        </span>
-                      ))}
-                    </span>
-                    <LineBreak />
-                    <span itemProp="addressLocality">{office.locality}</span>,{" "}
-                    <abbr title={REGION_NAMES[office.region]} itemProp="addressRegion" className="no-underline">
-                      {office.region}
-                    </abbr>{" "}
-                    <span itemProp="postalCode">{office.postalCode}</span>
-                    <LineBreak />
-                    <span itemProp="addressCountry" content={office.country}>
-                      United States
-                    </span>
-                    <span className="sr-only">. </span>
-                  </p>
+            {/* From 1024px the address and the profile links share a row pushed
+                to the bottom of the column, so they end level with the last
+                row of footer links. Below that they stack. */}
+            <div className="mt-7 flex flex-col gap-5 min-[1024px]:mt-auto min-[1024px]:flex-row min-[1024px]:items-end min-[1024px]:justify-between min-[1024px]:gap-6 min-[1024px]:pt-8">
+              {/* The legal entity and its address, as a postal block: the street,
+                  the suite, then city, state and ZIP, then the country, each on
+                  its own line, under a label naming the state. Each visual line
+                  break also carries a hidden ", " (LineBreak), so text read
+                  without layout (tag-stripping extractors, AI crawlers, screen
+                  readers) gets "254 Chapman Rd, Ste 208 #23940, Newark, DE
+                  19702, United States" rather than "Rd" running into "Ste".
+                  Microdata ties the visible text to the same Organization @id
+                  as the JSON-LD in index.html, so engines read one entity
+                  rather than a second one. The abbreviation expands for screen
+                  readers and machines (<abbr title>). */}
+              <address
+                itemScope
+                itemType="https://schema.org/Organization"
+                itemID={`${SITE_URL}/#organization`}
+                className="text-sm not-italic leading-[1.6] text-muted-foreground"
+              >
+                <meta itemProp="name" content="Zensus" />
+                <link itemProp="url" href={SITE_URL} />
+                <p itemProp="legalName" className="font-medium text-foreground">
+                  {LEGAL_NAME}
+                </p>{" "}
+                <div className="mt-3">
+                  {FOOTER_OFFICES.map((office) => (
+                    <p key={office.label} itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+                      <span className="mb-1 block text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground/80">
+                        {office.label}
+                      </span>
+                      <span className="sr-only">: </span>
+                      {/* Street, then the suite on its own line (USPS address
+                          line 2), so neither column wraps mid-number. */}
+                      <span itemProp="streetAddress">
+                        {office.street.split(", ").map((part, i) => (
+                          <span key={part}>
+                            {i > 0 ? <LineBreak /> : null}
+                            {part}
+                          </span>
+                        ))}
+                      </span>
+                      <LineBreak />
+                      <span itemProp="addressLocality">{office.locality}</span>,{" "}
+                      <abbr title={REGION_NAMES[office.region]} itemProp="addressRegion" className="no-underline">
+                        {office.region}
+                      </abbr>{" "}
+                      <span itemProp="postalCode">{office.postalCode}</span>
+                      <LineBreak />
+                      <span itemProp="addressCountry" content={office.country}>
+                        United States
+                      </span>
+                      <span className="sr-only">. </span>
+                    </p>
+                  ))}
+                </div>
+              </address>
+
+              <ul className="flex shrink-0 gap-2" aria-label="Zensus profiles">
+                {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+                  <li key={label}>
+                    <a href={href} target="_blank" rel="noopener noreferrer me" aria-label={`Zensus on ${label}`} title={label} className={roundButton}>
+                      <Icon className="h-[18px] w-[18px]" aria-hidden />
+                    </a>
+                  </li>
                 ))}
-              </div>
-            </address>
-
-            {/* The Google Business Profile on a map (the Houston address), from
-                Google's own embed code. loading="lazy" keeps it from loading
-                until the footer nears the screen, so pages do not pay for
-                Google Maps up front; the title names the place for screen
-                readers, and the link opens the profile itself. */}
-            <figure className="mt-6 max-w-[560px] overflow-hidden rounded-xl border border-border bg-card">
-              <iframe
-                src={GOOGLE_MAP_EMBED_URL}
-                title="Zensus on Google Maps: 17350 State Hwy 249, Houston, Texas"
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className="block h-[180px] w-full border-0"
-              />
-              <figcaption className="flex items-center justify-between gap-3 px-3.5 py-2.5 text-[13px] text-muted-foreground">
-                <span>Zensus on Google</span>
-                <a
-                  href={COMPANY_PROFILES.google}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn("inline-flex items-center gap-1 font-medium text-foreground hover:underline", focusRing)}
-                >
-                  Open in Google Maps
-                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
-                </a>
-              </figcaption>
-            </figure>
-
-            <ul className="mt-5 flex gap-2" aria-label="Zensus profiles">
-              {SOCIAL_LINKS.map(({ label, href, Icon }) => (
-                <li key={label}>
-                  <a href={href} target="_blank" rel="noopener noreferrer me" aria-label={`Zensus on ${label}`} title={label} className={roundButton}>
-                    <Icon className="h-[18px] w-[18px]" aria-hidden />
-                  </a>
-                </li>
-              ))}
-            </ul>
+              </ul>
+            </div>
           </div>
 
           <nav

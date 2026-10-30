@@ -79,8 +79,3 @@ export const COMPANY_PROFILES = {
   google: "https://maps.google.com/?cid=12599874963521321543",
 } as const;
 
-// The Google Business Profile's map, as Google's own "Embed a map" code gives
-// it (Maps, Share, Embed a map). Shown in the footer; frame-src in
-// vercel.json's Content-Security-Policy allows https://www.google.com for it.
-export const GOOGLE_MAP_EMBED_URL =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.792802252794!2d-95.54152859999999!3d29.956637899999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640cd947ac66ab9%3A0xaedbbf85b706ba47!2sZensus!5e0!3m2!1sen!2sus!4v1792775739957!5m2!1sen!2sus";
