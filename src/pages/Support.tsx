@@ -501,15 +501,11 @@ export default function Support() {
                 </a>
                 .
               </p>
-              {/* About, the changelog, the blog and the sitemap had almost no
-                  in-content links pointing at them; a support reader is the
-                  one most likely to want them. */}
+              {/* About, the blog and the sitemap had almost no in-content
+                  links pointing at them; a support reader is the one most
+                  likely to want them. */}
               <p className="mt-3 text-sm text-muted-foreground">
-                See what changed recently in the{" "}
-                <Link to="/changelog" className="text-primary underline underline-offset-4">
-                  changelog
-                </Link>
-                , read the step-by-step guides on the{" "}
+                Read the step-by-step guides on the{" "}
                 <Link to="/blog" className="text-primary underline underline-offset-4">
                   Zensus blog
                 </Link>

@@ -262,7 +262,7 @@ const Subprocessors = () => (
               We update this page whenever we add, remove, or materially
               change a subprocessor. For changes that affect customer data,
               we aim to give reasonable advance notice (typically 30 days)
-              through our changelog and, where appropriate, by email to
+              on this page and, where appropriate, by email to
               account administrators.
             </p>
             <p>

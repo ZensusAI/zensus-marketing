@@ -51,14 +51,6 @@ const CARDS = [
     accent: "green",
   },
   {
-    slug: "changelog",
-    category: "Changelog",
-    title: "What is shipping in Zensus",
-    subtitle:
-      "Release notes, what is in progress, and what is coming next.",
-    accent: "green",
-  },
-  {
     slug: "security",
     category: "Security",
     title: "Security at Zensus",

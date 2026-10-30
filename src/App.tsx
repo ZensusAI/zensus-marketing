@@ -17,7 +17,6 @@ const Pricing = lazy(() => import("./pages/Pricing"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogTopic = lazy(() => import("./pages/BlogTopic"));
-const Changelog = lazy(() => import("./pages/Changelog"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Security = lazy(() => import("./pages/Security"));
 const About = lazy(() => import("./pages/About"));
@@ -88,7 +87,6 @@ const App = () => (
               element={<HubSpotIntegration />}
             />
             <Route path="/integrations/slack" element={<SlackIntegration />} />
-            <Route path="/changelog" element={<Changelog />} />
             <Route path="/use-cases" element={<UseCases />} />
             <Route
               path="/tools/runway-calculator"

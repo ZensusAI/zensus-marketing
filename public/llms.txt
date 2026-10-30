@@ -68,7 +68,6 @@ Businesses of any size with variable revenue, complex hiring plans, annual contr
 - [QuickBooks Online cash flow forecasting software](https://zensus.finance/quickbooks-cash-flow-forecasting)
 - [LLM entity summary](https://zensus.finance/llm-info)
 - [Free 13-week cash flow template (XLSX)](https://zensus.finance/templates/13-week-cash-flow-template.xlsx)
-- [Changelog](https://zensus.finance/changelog)
 - [Security](https://zensus.finance/security)
 - [Use Cases](https://zensus.finance/use-cases)
 - [Integrations](https://zensus.finance/integrations)

@@ -3,7 +3,7 @@
 // In-content links are how search engines read which page answers which
 // topic; the navbar and footer link every page equally and say nothing about
 // it. A Frase audit and a link census in October 2026 found the comparison
-// pages and the changelog linking nowhere in their body, the QuickBooks Online
+// pages linking nowhere in their body, the QuickBooks Online
 // page linked from four pages while it drew QuickBooks forecasting searches,
 // and several guides linking only two other guides. This test keeps a floor
 // under each of those so an edit that drops links fails instead of passing
@@ -59,14 +59,6 @@ describe("contextual links", () => {
       expect(config.related.filter((r) => r.to !== "/pricing").length).toBeGreaterThanOrEqual(3);
     },
   );
-
-  it("links most changelog entries to the page that explains the feature", () => {
-    const source = read("src", "pages", "Changelog.tsx");
-    const entries = source.match(/^ {4}title: "/gm)?.length ?? 0;
-    const linked = source.match(/^ {4}learnMore: \{ to: "/gm)?.length ?? 0;
-    expect(entries).toBeGreaterThan(10);
-    expect(linked / entries).toBeGreaterThanOrEqual(0.6);
-  });
 
   it.each(["/quickbooks-cash-flow-forecasting", "/blog/can-quickbooks-forecast-cash-flow"])(
     "%s is linked from at least six in-content sources",

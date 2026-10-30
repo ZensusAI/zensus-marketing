@@ -44,7 +44,6 @@ const GROUPS: SitemapGroup[] = [
         blurb: "What QuickBooks Cash Flow Planner does, and what Zensus adds on top of it.",
       },
       { href: "/security", label: "Security", blurb: "What Zensus stores, what it never stores, and how your data is protected." },
-      { href: "/changelog", label: "Changelog", blurb: "What we have shipped, most recent first." },
     ],
   },
   {
