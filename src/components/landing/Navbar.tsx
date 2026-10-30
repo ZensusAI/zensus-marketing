@@ -139,7 +139,6 @@ const INTEGRATIONS = [
 
 const LEARN: PanelLink[] = [
   { href: "/blog", label: "Blog", description: "Guides, product updates, and announcements." },
-  { href: "/changelog", label: "Changelog", description: "Ship notes and what's new in Zensus." },
   { href: "/#faq", label: "FAQ", description: "Quick answers about pricing, data, and setup." },
 ];
 
@@ -182,7 +181,6 @@ const RESOURCE_COLUMNS = [
 // scorecard, which links to all four comparison pages.
 const LEARN_SHORT = [
   { href: "/blog", label: "Blog" },
-  { href: "/changelog", label: "Changelog" },
   { href: "/#faq", label: "FAQ" },
   { href: "/#compare", label: "Compare" },
 ];

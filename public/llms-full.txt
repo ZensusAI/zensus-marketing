@@ -404,7 +404,6 @@ Free XLSX template: 13 weekly columns with inflow and outflow line items, chaine
 - Forecasting AI Compute Costs for Founders (blog): https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders
 - Runway vs Burn Rate for Founders (blog): https://zensus.finance/blog/runway-vs-burn-rate-for-founders
 - MCP vs CLI for Finance Teams (blog): https://zensus.finance/blog/mcp-vs-cli-for-finance-teams
-- Changelog: https://zensus.finance/changelog
 - Security: https://zensus.finance/security
 - Use Cases: https://zensus.finance/use-cases
 - Integrations: https://zensus.finance/integrations

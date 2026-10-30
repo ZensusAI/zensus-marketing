@@ -28,7 +28,6 @@ const STATIC_ROUTES = [
   "/",
   "/pricing",
   "/blog",
-  "/changelog",
   "/security",
   "/about",
   "/privacy",

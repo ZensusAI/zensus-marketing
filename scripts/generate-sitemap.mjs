@@ -52,7 +52,6 @@ const STATIC_URLS = [
   { loc: `${SITE_URL}/`, sources: ["src/pages/Index.tsx", "src/components/landing", ":(exclude)src/components/landing/Footer.tsx", ":(exclude)src/components/landing/Navbar.tsx", ":(exclude)src/components/landing/SignupModal.tsx"], changefreq: "weekly", priority: "1.0" },
   { loc: `${SITE_URL}/pricing`, sources: ["src/pages/Pricing.tsx"], changefreq: "monthly", priority: "0.8" },
   { loc: `${SITE_URL}/blog`, changefreq: "weekly", priority: "0.6" },
-  { loc: `${SITE_URL}/changelog`, sources: ["src/pages/Changelog.tsx"], changefreq: "weekly", priority: "0.7" },
   { loc: `${SITE_URL}/security`, sources: ["src/pages/Security.tsx"], changefreq: "monthly", priority: "0.7" },
   { loc: `${SITE_URL}/use-cases`, sources: ["src/pages/UseCases.tsx"], changefreq: "monthly", priority: "0.7" },
   { loc: `${SITE_URL}/tools/runway-calculator`, sources: ["src/pages/tools/RunwayCalculator.tsx"], changefreq: "monthly", priority: "0.8" },

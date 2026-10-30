@@ -19,12 +19,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://zensus.finance/changelog</loc>
-    <lastmod>2026-10-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://zensus.finance/security</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
