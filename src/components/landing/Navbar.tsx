@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { APP_HOST, SIGN_IN_URL } from "@/lib/constants";
+import { SIGN_IN_URL } from "@/lib/constants";
 import { trackCtaClick } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 import { SignupModal } from "./SignupModal";
@@ -10,10 +10,11 @@ import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
 import slackLogo from "@/assets/integrations/slack.svg";
-import dashboard13Week from "@/assets/dashboard-13week.webp";
-import runwayDrilldown from "@/assets/runway-drilldown-weekly.webp";
-import runwayWhatIf from "@/assets/runway-whatif-overview.webp";
-import runwayAlerts from "@/assets/runway-alerts-a.webp";
+import cashRunsOutArt from "@/assets/nav/cash-runs-out.webp";
+import contractPaysArt from "@/assets/nav/contract-pays.webp";
+import affordHiresArt from "@/assets/nav/afford-hires.webp";
+import roundRunwayArt from "@/assets/nav/round-runway.webp";
+import alertSignalArt from "@/assets/nav/alert-signal.webp";
 
 /*
  * Site navbar, redesigned from handoff 01-navbar (locked variant: mega menu
@@ -23,7 +24,7 @@ import runwayAlerts from "@/assets/runway-alerts-a.webp";
  *
  * Every panel is always in the DOM (display: none while closed), so the links
  * are in the prerendered HTML for search and AI crawlers, and the panel
- * screenshots, which are lazy, only load once a panel opens.
+ * illustrations, which are lazy, only load once a panel opens.
  *
  * The handoff's small mono uppercase labels ("Ask Zensus", "Works with", the
  * Resources column titles) are plain sentence-case labels here, per the
@@ -46,13 +47,15 @@ interface Question {
   q: string;
   feature: string;
   href: string;
-  url: string;
   img: string;
-  width: number;
-  height: number;
   alt: string;
   desc: string;
 }
+
+// Illustrations, not screenshots, so nothing here reads as a real product
+// screen. Text-free by design. All five are this size.
+const NAV_ART_WIDTH = 1200;
+const NAV_ART_HEIGHT = 671;
 
 const QUESTIONS: Question[] = [
   {
@@ -61,11 +64,8 @@ const QUESTIONS: Question[] = [
     // The runway section is where the homepage shows the forecast and the
     // zero-cash date now that the product showcase is gone.
     href: "/#features",
-    url: APP_HOST,
-    img: dashboard13Week,
-    width: 1984,
-    height: 1468,
-    alt: "Zensus 13-week rolling cash flow forecast with the zero-cash date",
+    img: cashRunsOutArt,
+    alt: "Illustration of a cash flow wave falling to a flat line at the zero-cash date",
     desc: "Zensus combines your bank, QuickBooks, and HubSpot data into a weekly forecast and recalculates your zero-cash date every time cash moves.",
   },
   {
@@ -74,11 +74,8 @@ const QUESTIONS: Question[] = [
     // The contract-timing use case answers it for QuickBooks and HubSpot
     // users alike; the HubSpot page would only help HubSpot users.
     href: "/use-cases#saas-contracts",
-    url: `${APP_HOST}/runway`,
-    img: runwayDrilldown,
-    width: 1506,
-    height: 906,
-    alt: "Zensus weekly cash flow drill-down showing when subscription contracts pay",
+    img: contractPaysArt,
+    alt: "Illustration of a flowing line looping toward the single day a contract pays",
     desc: "Click any month to see weekly cash flow, then drill into daily details. Subscription-aware projections show when annual and quarterly contracts hit your bank.",
   },
   {
@@ -86,11 +83,8 @@ const QUESTIONS: Question[] = [
     feature: "Plain-English scenarios",
     // The scenarios step's own example is "we hire two engineers".
     href: "/#features-scenarios",
-    url: `${APP_HOST}/runway`,
-    img: runwayWhatIf,
-    width: 2264,
-    height: 1138,
-    alt: "Zensus what-if scenario comparing cash runway before and after two hires",
+    img: affordHiresArt,
+    alt: "Illustration of one cash flow wave splitting into two possible futures",
     desc: "Stack hiring, churn, and pricing assumptions in one conversation and compare before-and-after projections. Revert any change instantly.",
   },
   // Added at the user's request (21 Oct 2026), not in the 01-navbar handoff:
@@ -104,22 +98,16 @@ const QUESTIONS: Question[] = [
     // the raise, so the caption says what it does rather than "scenarios".
     feature: "Runway after a raise",
     href: "/tools/runway-calculator",
-    url: `${APP_HOST}/runway`,
-    img: runwayWhatIf,
-    width: 2264,
-    height: 1138,
-    alt: "Zensus scenario showing how a funding round moves the zero-cash date",
+    img: roundRunwayArt,
+    alt: "Illustration of a long cash runway stretching toward the horizon",
     desc: "Add a raise as a one-off inflow and see how far it moves your zero-cash date. Stack it with a hiring plan to see what the round really buys.",
   },
   {
     q: "Will I know before it gets tight?",
     feature: "Slack threshold alerts",
     href: "/integrations/slack",
-    url: `${APP_HOST}/settings`,
-    img: runwayAlerts,
-    width: 982,
-    height: 554,
-    alt: "Zensus cash floor alert settings for Slack",
+    img: alertSignalArt,
+    alt: "Illustration of a narrowing cash flow wave reaching an alert signal",
     desc: "Set your cash floor. Zensus watches your 30-day projection and pings Slack when it crosses the line, then re-alerts on material change.",
   },
 ];
@@ -250,7 +238,6 @@ const TrialButton = ({ source, className, arrow = true }: { source: string; clas
 
 function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
   const [active, setActive] = useState(0);
-  const current = QUESTIONS[active];
 
   return (
     <div className="mx-auto grid max-w-[1280px] grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-10 px-8 pb-6 pt-7">
@@ -314,16 +301,7 @@ function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
       </div>
 
       <div className="flex flex-col gap-3.5">
-        <div className="overflow-hidden rounded-[14px] border border-forest-border bg-[#19291F] shadow-[0_24px_48px_-28px_rgba(15,28,22,.6)]">
-          <div className="flex items-center gap-2.5 border-b border-forest-border/60 bg-forest px-3 py-[9px]">
-            <span aria-hidden className="flex gap-[5px]">
-              <span className="h-2 w-2 rounded-full bg-forest-border" />
-              <span className="h-2 w-2 rounded-full bg-forest-border" />
-              <span className="h-2 w-2 rounded-full bg-forest-border" />
-            </span>
-            <span className="flex-1 text-center font-mono text-[10.5px] text-forest-muted">{current.url}</span>
-            <span className="text-[11px] font-medium text-sage-light">Live</span>
-          </div>
+        <div className="overflow-hidden rounded-[14px] border border-border bg-[#FDF6E3]">
           <div className="relative aspect-[16/8.2]">
             {QUESTIONS.map((row, i) => (
               <img
@@ -331,12 +309,12 @@ function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
                 src={row.img}
                 alt={i === active ? row.alt : ""}
                 aria-hidden={i !== active}
-                width={row.width}
-                height={row.height}
+                width={NAV_ART_WIDTH}
+                height={NAV_ART_HEIGHT}
                 loading="lazy"
                 decoding="async"
                 className={cn(
-                  "absolute inset-0 h-full w-full object-cover object-left-top transition-[opacity,transform] duration-[450ms] motion-reduce:transition-none",
+                  "absolute inset-0 h-full w-full object-cover object-center transition-[opacity,transform] duration-[450ms] motion-reduce:transition-none",
                   i === active ? "scale-100 opacity-100" : "scale-[1.03] opacity-0",
                 )}
               />
@@ -445,7 +423,7 @@ function DesktopNav({ open, setOpen }: { open: MenuKey | null; setOpen: (k: Menu
             )}
           />
         </button>
-        {/* A click on the panel's text or screenshots must not take focus
+        {/* A click on the panel's text or illustrations must not take focus
             away from the trigger (that blur would close the panel). */}
         <div
           id={`nav-panel-${key}`}
@@ -539,9 +517,9 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
                     href={row.href}
                     onClick={onClose}
                     ariaLabel={row.q}
-                    className={cn("mb-3 block overflow-hidden rounded-[10px] border border-forest-border animate-nav-in motion-reduce:animate-none", focusRing)}
+                    className={cn("mb-3 block overflow-hidden rounded-[10px] border border-border bg-[#FDF6E3] animate-nav-in motion-reduce:animate-none", focusRing)}
                   >
-                    <img src={row.img} alt={row.alt} width={row.width} height={row.height} loading="lazy" decoding="async" className="block w-full" />
+                    <img src={row.img} alt={row.alt} width={NAV_ART_WIDTH} height={NAV_ART_HEIGHT} loading="lazy" decoding="async" className="block w-full" />
                   </NavAnchor>
                 )}
               </li>
