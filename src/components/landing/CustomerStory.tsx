@@ -31,6 +31,11 @@ import { cn } from "@/lib/utils";
 // public/demo/ and referenced by absolute path so Vite does not hash them.
 const VIDEO_SRC = "/demo/product-demo.mp4";
 const POSTER_SRC = "/demo/product-demo-poster.webp";
+// What the <video> shows: 1200px wide (the 1600px file stays for the
+// VideoObject thumbnail). A poster ignores loading="lazy", so it is only set
+// once the section nears the viewport; otherwise its bytes compete with the
+// hero on a slow first load.
+const POSTER_PLAYER_SRC = "/demo/product-demo-poster-1200.webp";
 const VIDEO_LABEL = "Video testimonial from Jameson Pitts, CEO of Sangfroid! Studios";
 
 // VideoObject makes the self-hosted testimonial a citable video entity for AI
@@ -83,6 +88,28 @@ const CustomerStory = () => {
   const [paused, setPaused] = useState(true);
   // Set when the viewer pauses, so scrolling back into view does not resume.
   const userPaused = useRef(false);
+  const [posterNear, setPosterNear] = useState(false);
+
+  useEffect(() => {
+    // Never in the prerendered HTML, where the parser would fetch it at once.
+    if ((window as unknown as { __PRERENDER__?: boolean }).__PRERENDER__) return;
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setPosterNear(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setPosterNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "1200px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const onProgress = useCallback(({ entry: e }: ScrollProgress) => {
     const narrow = window.matchMedia(NARROW_QUERY).matches;
@@ -217,7 +244,7 @@ const CustomerStory = () => {
                 <video
                   ref={videoRef}
                   src={VIDEO_SRC}
-                  poster={POSTER_SRC}
+                  poster={posterNear ? POSTER_PLAYER_SRC : undefined}
                   muted
                   loop={!reduced}
                   playsInline

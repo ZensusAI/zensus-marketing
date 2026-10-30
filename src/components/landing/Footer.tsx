@@ -12,7 +12,7 @@ import {
 } from "@/lib/constants";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
-import zensusLogo from "@/assets/zensus-logo.png";
+import zensusLogo from "@/assets/zensus-logo-64.webp";
 import chatgptLogo from "@/assets/ai/chatgpt.svg";
 import claudeLogo from "@/assets/ai/claude.svg";
 import geminiLogo from "@/assets/ai/gemini.svg";

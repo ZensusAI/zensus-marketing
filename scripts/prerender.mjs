@@ -98,6 +98,36 @@ function startServer() {
   });
 }
 
+// The prerendered HTML is the whole visible page, so the app bundle (about
+// 160 KB) is not needed to paint it. Left as a plain module script it starts
+// downloading with the HTML and splits a slow connection's bandwidth with the
+// hero image and fonts, which pushes LCP back by seconds on mobile. Start it
+// once the page has loaded and its largest element has painted (or after
+// 2.5s, whichever comes first). The first tap, key press or focus starts it
+// at once, so a visitor who reaches for the menu or the email field early
+// waits only for the download. main.tsx still uses createRoot, so React
+// rebuilds the same DOM when it arrives.
+// Idempotent: later routes are served this rewritten index.html as their
+// fallback, so the crawl's injected tag is dropped and the loader kept.
+const LOADER_ATTR = "data-app-loader";
+function deferAppScript(html) {
+  const out = html.replace(/<script\b[^>]*\bdata-deferred-app\b[^>]*><\/script>/g, "");
+  if (out.includes(LOADER_ATTR)) return out;
+  const tag = /<script type="module" crossorigin(?:="")? src="([^"]+)"><\/script>/;
+  const match = out.match(tag);
+  if (!match) throw new Error("[prerender] app module script not found");
+  const loader =
+    `<script ${LOADER_ATTR}>(function(){var done=false,loaded=false,painted=false;function go(){if(done)return;done=true;` +
+    `var s=document.createElement("script");s.type="module";s.crossOrigin="";s.src=${JSON.stringify(match[1])};` +
+    `s.setAttribute("data-deferred-app","");document.head.appendChild(s)}` +
+    `function check(){if(loaded&&painted)go()}` +
+    `try{new PerformanceObserver(function(){painted=true;check()}).observe({type:"largest-contentful-paint",buffered:true})}catch(e){painted=true}` +
+    `function onLoad(){loaded=true;check()}` +
+    `["pointerdown","touchstart","keydown","focusin"].forEach(function(t){addEventListener(t,go,{once:true,passive:true,capture:true})});` +
+    `if(document.readyState==="complete")onLoad();else addEventListener("load",onLoad,{once:true});setTimeout(go,2500)})()</script>`;
+  return out.replace(tag, loader);
+}
+
 async function prerender() {
   const blogRoutes = await getBlogRoutes();
   const ROUTES = [...STATIC_ROUTES, ...getTopicRoutes(), ...blogRoutes];
@@ -169,7 +199,7 @@ async function prerender() {
           if (helmetDup) tag.remove();
         });
       });
-      const html = await page.content();
+      const html = deferAppScript(await page.content());
       await page.close();
 
       const outPath =

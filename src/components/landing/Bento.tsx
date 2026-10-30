@@ -3,7 +3,7 @@ import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
 import hubspotLogo from "@/assets/integrations/hubspot.svg";
 import slackLogo from "@/assets/integrations/slack.svg";
-import zensusLogo from "@/assets/zensus-logo.png";
+import zensusLogo from "@/assets/zensus-logo-64.webp";
 import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
 import { clamp01, easeInOutCubic as ease, lerp } from "@/lib/motion";
