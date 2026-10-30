@@ -103,7 +103,9 @@ function startServer() {
 // downloading with the HTML and splits a slow connection's bandwidth with the
 // hero image and fonts, which pushes LCP back by seconds on mobile. Start it
 // once the page has loaded and its largest element has painted (or after
-// 2.5s, whichever comes first). main.tsx still uses createRoot, so React
+// 2.5s, whichever comes first). The first tap, key press or focus starts it
+// at once, so a visitor who reaches for the menu or the email field early
+// waits only for the download. main.tsx still uses createRoot, so React
 // rebuilds the same DOM when it arrives.
 // Idempotent: later routes are served this rewritten index.html as their
 // fallback, so the crawl's injected tag is dropped and the loader kept.
@@ -121,6 +123,7 @@ function deferAppScript(html) {
     `function check(){if(loaded&&painted)go()}` +
     `try{new PerformanceObserver(function(){painted=true;check()}).observe({type:"largest-contentful-paint",buffered:true})}catch(e){painted=true}` +
     `function onLoad(){loaded=true;check()}` +
+    `["pointerdown","touchstart","keydown","focusin"].forEach(function(t){addEventListener(t,go,{once:true,passive:true,capture:true})});` +
     `if(document.readyState==="complete")onLoad();else addEventListener("load",onLoad,{once:true});setTimeout(go,2500)})()</script>`;
   return out.replace(tag, loader);
 }
