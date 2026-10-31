@@ -164,7 +164,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "which-months-have-3-paychecks-2027": {
-    "wordCount": 2271,
+    "wordCount": 2267,
     "images": [
       "https://zensus.finance/blog/which-months-have-3-paychecks-2027/april-and-october-3-paydays-2027-biweekly-fridays.webp"
     ],
