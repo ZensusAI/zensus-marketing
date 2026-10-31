@@ -137,6 +137,11 @@ export function initAnalytics(): Promise<void> {
       capture_pageleave: true,
       // See file header: funnel-only events, cost + EU data minimisation.
       autocapture: false,
+      // Set here so a project setting cannot turn them back on: the session
+      // recorder and survey scripts are about 100 KB, downloaded on every
+      // visit, and were the longest tasks on a mobile load (Oct 2026).
+      disable_session_recording: true,
+      disable_surveys: true,
       // Scope the distinct_id cookie to the registrable domain so any future
       // subdomain of this site shares one anonymous id. It does NOT reach the
       // product app: app.zensus.app is a different registrable domain once the

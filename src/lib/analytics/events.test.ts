@@ -33,6 +33,15 @@ describe("marketing analytics helpers", () => {
     vi.unstubAllEnvs();
   });
 
+  it("keeps session recording and surveys off", async () => {
+    const { posthog, events } = await loadFresh();
+    await events.initAnalytics();
+    expect(posthog.init).toHaveBeenCalledWith(
+      "phc_test",
+      expect.objectContaining({ disable_session_recording: true, disable_surveys: true }),
+    );
+  });
+
   it("buffers capture before the SDK loads (no capture until then)", async () => {
     const { posthog, events } = await loadFresh();
     events.track(events.EVENTS.CTA_CLICKED, { location: "navbar_desktop" });
