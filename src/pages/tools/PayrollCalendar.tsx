@@ -389,7 +389,11 @@ const PayrollCalendar = () => {
             <Link to="/blog/27-pay-periods-2026-2027" className={linkCls}>
               27 pay periods in 2026 or 2027
             </Link>{" "}
-            explains which year gets the extra run on your schedule.
+            explains which year gets the extra run on your schedule, and{" "}
+            <Link to="/blog/which-months-have-3-paychecks-2027" className={linkCls}>
+              which months have 3 paychecks in 2027
+            </Link>{" "}
+            lists the months for each Friday schedule.
           </p>
 
           {status ? (

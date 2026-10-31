@@ -2,7 +2,7 @@
 // Regenerate with: node scripts/generate-blog-stats.mjs
 export const blogStats: Record<string, { wordCount: number; images: string[]; thumbnail?: { width: number; height: number } }> = {
   "27-pay-periods-2026-2027": {
-    "wordCount": 2726,
+    "wordCount": 2728,
     "images": [
       "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2026-biweekly-fridays.webp",
       "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2027-biweekly-fridays.webp"
@@ -13,7 +13,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "arr-vs-cash-for-founders": {
-    "wordCount": 3008,
+    "wordCount": 3010,
     "images": [
       "https://zensus.finance/blog/arr-vs-cash-for-founders/annual-vs-monthly-cash-timing.webp"
     ],
@@ -33,7 +33,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "cash-conversion-cycle": {
-    "wordCount": 2481,
+    "wordCount": 2491,
     "images": [
       "https://zensus.finance/blog/cash-conversion-cycle/how-cash-conversion-cycle-works.webp",
       "https://zensus.finance/blog/cash-conversion-cycle/dio-dso-dpo-where-cash-gets-stuck.webp"
@@ -64,7 +64,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "default-alive-vs-default-dead-for-founders": {
-    "wordCount": 3048,
+    "wordCount": 3051,
     "images": [
       "https://zensus.finance/blog/default-alive-vs-default-dead-for-founders/default-alive-vs-default-dead.webp"
     ],
@@ -74,7 +74,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "forecasting-ai-compute-costs-for-founders": {
-    "wordCount": 3849,
+    "wordCount": 3850,
     "images": [
       "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/cheaper-per-request-bigger-bill.webp"
     ],
@@ -84,7 +84,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "how-to-build-a-13-week-cash-flow-forecast-in-excel": {
-    "wordCount": 3014,
+    "wordCount": 3036,
     "images": [
       "https://zensus.finance/blog/how-to-build-a-13-week-cash-flow-forecast-in-excel/13-week-cash-flow-forecast-excel-example.webp"
     ],
@@ -134,7 +134,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-happens-if-you-miss-payroll": {
-    "wordCount": 2359,
+    "wordCount": 2360,
     "images": [
       "https://zensus.finance/blog/what-happens-if-you-miss-payroll/payroll-not-processed-consequences.webp"
     ],
@@ -154,7 +154,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-is-cash-flow-forecasting": {
-    "wordCount": 2888,
+    "wordCount": 2884,
     "images": [
       "https://zensus.finance/blog/what-is-cash-flow-forecasting/spreadsheet-vs-automated.webp"
     ],
@@ -163,8 +163,12 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
       "height": 755
     }
   },
+  "which-months-have-3-paychecks-2027": {
+    "wordCount": 2271,
+    "images": []
+  },
   "will-i-make-payroll": {
-    "wordCount": 2055,
+    "wordCount": 2056,
     "images": [
       "https://zensus.finance/blog/will-i-make-payroll/payroll-projection-method.webp"
     ],
