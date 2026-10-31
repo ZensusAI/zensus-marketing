@@ -23,14 +23,15 @@ import {
 
 /*
  * The article page, from handoff 16-blog-post-template. A reading line under
- * the navbar, and below 1100px an "On this page" bar. The header sits on the
- * reading column (Home / Blog / topic / post breadcrumb, H1, description, byline
- * with the topic and Copy link), a 16:9
- * hero from meta.thumbnail spans the container, then a 200px sticky contents
- * rail beside the 680px column: body, FAQ, and "Keep reading" in the topic.
+ * the navbar, and below 1100px an "On this page" bar. The header spans the full
+ * container, not the reading column, so a long title wraps to two or three lines
+ * (Home / Blog / topic / post breadcrumb, H1 up to 1080px, description up to
+ * 760px, byline with the topic and Copy link). A 16:9 hero from meta.thumbnail
+ * spans the container too, then a 200px sticky contents rail beside the 680px
+ * column: body, FAQ, and "Keep reading" in the topic.
  */
 
-/** Header and body share one grid so the header lines up with the reading column. */
+/** The contents rail and the reading column. */
 const GRID = "min-[1100px]:grid min-[1100px]:grid-cols-[200px_minmax(0,1fr)] min-[1100px]:gap-x-20";
 /** Below 1100px the reading column is centred; from 1100px it is the grid's second track. */
 const COLUMN = "mx-auto w-full max-w-[680px] min-[1100px]:col-start-2 min-[1100px]:mx-0";
@@ -173,18 +174,18 @@ const BlogPost = () => {
         <TocBar {...toc} />
 
         <div className="mx-auto max-w-[1280px] px-6 min-[760px]:px-12">
-          <header className={cn(GRID, "pt-12 min-[760px]:pt-[104px]")}>
-            <div className={cn(COLUMN, "flex flex-col gap-5")}>
+          <header className="pt-12 min-[760px]:pt-[104px]">
+            <div className="flex flex-col gap-5">
               <Breadcrumbs trail={trail} />
 
               <h1
                 id="blog-article-title"
-                className="text-balance text-[38px] font-semibold leading-[1.02] tracking-[-0.045em] text-foreground min-[760px]:text-[52px] min-[1100px]:text-[64px]"
+                className="max-w-[1080px] text-pretty text-[38px] font-semibold leading-[1.04] tracking-[-0.045em] text-foreground min-[760px]:text-[52px] min-[1100px]:text-[64px]"
               >
                 {meta.title}
               </h1>
 
-              <p className="max-w-[680px] text-pretty text-[18px] leading-[1.5] text-muted-foreground min-[760px]:text-[21px]">
+              <p className="max-w-[760px] text-pretty text-[18px] leading-[1.5] text-muted-foreground min-[760px]:text-[21px]">
                 {meta.description}
               </p>
 

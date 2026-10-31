@@ -29,11 +29,11 @@ export function BlogCallout({ title, children }: BlogCalloutProps) {
       )}
     >
       <img
+        loading="lazy"
+        decoding="async"
         src={meshInverted960}
         alt=""
         aria-hidden
-        loading="lazy"
-        decoding="async"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20 mix-blend-screen"
       />
       <div className="relative flex flex-col gap-3">
