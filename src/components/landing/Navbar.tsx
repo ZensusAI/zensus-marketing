@@ -306,13 +306,13 @@ function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
             {QUESTIONS.map((row, i) => (
               <img
                 key={row.q}
+                loading="lazy"
+                decoding="async"
                 src={row.img}
                 alt={i === active ? row.alt : ""}
                 aria-hidden={i !== active}
                 width={NAV_ART_WIDTH}
                 height={NAV_ART_HEIGHT}
-                loading="lazy"
-                decoding="async"
                 className={cn(
                   "absolute inset-0 h-full w-full object-cover object-center transition-[opacity,transform] duration-[450ms] motion-reduce:transition-none",
                   i === active ? "scale-100 opacity-100" : "scale-[1.03] opacity-0",
@@ -519,7 +519,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
                     ariaLabel={row.q}
                     className={cn("mb-3 block overflow-hidden rounded-[10px] border border-border bg-[#FDF6E3] animate-nav-in motion-reduce:animate-none", focusRing)}
                   >
-                    <img src={row.img} alt={row.alt} width={NAV_ART_WIDTH} height={NAV_ART_HEIGHT} loading="lazy" decoding="async" className="block w-full" />
+                    <img loading="lazy" decoding="async" src={row.img} alt={row.alt} width={NAV_ART_WIDTH} height={NAV_ART_HEIGHT} className="block w-full" />
                   </NavAnchor>
                 )}
               </li>
