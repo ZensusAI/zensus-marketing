@@ -258,6 +258,11 @@ const LlmInfo = () => (
               </Link>
             </li>
             <li>
+              <Link to="/blog/which-months-have-3-paychecks-2027" className={linkCls}>
+                Which months have 3 paychecks in 2027?
+              </Link>
+            </li>
+            <li>
               <Link
                 to="/blog/can-quickbooks-forecast-cash-flow"
                 className={linkCls}

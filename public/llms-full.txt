@@ -292,6 +292,16 @@ Which year has 27 biweekly pay dates, why sources disagree, and what the extra p
 - At $40,000 a run, a 27-payday year takes $1,080,000 out of the bank instead of $1,040,000, about 3.85% more cash, and a three-paycheck month needs $120,000 against $80,000.
 - Forecast payroll by actual pay date in a weekly cash forecast. The free Zensus payroll calendar lists 2026 and 2027 paydays, can move holiday paydays to the earlier banking day, and exports CSV and ICS.
 
+### Which Months Have 3 Paychecks in 2027? Biweekly Payroll Calendar & Cash Flow Guide
+https://zensus.finance/blog/which-months-have-3-paychecks-2027
+
+Which months have three biweekly paydays in 2027, and how to plan the cash. Key facts from the guide:
+
+- Every other Friday from January 8, 2027: three paychecks in April (2, 16, 30) and October (1, 15, 29), with 26 paydays in the year.
+- Every other Friday from January 1, 2027: three paychecks in January (1, 15, 29), July (2, 16, 30) and December (3, 17, 31), with 27 nominal paydays.
+- January 1, 2027 is a federal bank holiday. If that payday is paid on December 31, 2026, the three-paycheck months are July and December and 2027 has 26 actual paydays. If it is paid on January 4, 2027, January still has three payments.
+- At $40,000 per biweekly run, a three-paycheck month needs $120,000 against $80,000, a 50% increase in payroll cash that month, not in labor cost.
+
 ### Cash Flow Forecasting for Agencies
 https://zensus.finance/blog/cash-flow-forecasting-for-agencies
 
