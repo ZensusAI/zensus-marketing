@@ -126,17 +126,18 @@ const CATEGORIES: Category[] = [
         dataCategories:
           "User prompts, conversation history, financial context (cash, MRR, expense breakdown, billing timeline), sanitized transaction descriptors.",
       },
-      {
-        name: "OpenAI",
-        country: "United States",
-        purpose: "Speech-to-text transcription for the voice assistant.",
-        dataCategories: "Voice audio submitted to the voice agent.",
-      },
     ],
   },
   {
     title: "Security and abuse prevention",
     vendors: [
+      {
+        name: "Sentry",
+        country: "United States",
+        purpose: "Error and performance monitoring for the product backend.",
+        dataCategories:
+          "Error details and traces, with request bodies, cookies, and headers removed before sending.",
+      },
       {
         name: "ipapi.co",
         country: "United States",
@@ -150,6 +151,14 @@ const CATEGORIES: Category[] = [
   {
     title: "Analytics and marketing intelligence",
     vendors: [
+      {
+        name: "PostHog",
+        country: "United States",
+        purpose:
+          "Product and marketing-site analytics. In the product app it runs after you accept analytics, and can include session replays.",
+        dataCategories:
+          "Page views, product events, email address, and session replays, which can include information shown on screen.",
+      },
       {
         name: "Apollo.io",
         country: "United States",
@@ -165,6 +174,17 @@ const CATEGORIES: Category[] = [
           "First-party, cookieless marketing-site performance metrics.",
         dataCategories:
           "Aggregated page-load timings and route-level traffic counts. No persistent identifiers.",
+      },
+    ],
+  },
+  {
+    title: "Customer support",
+    vendors: [
+      {
+        name: "Linear",
+        country: "United States",
+        purpose: "Tracking feedback sent from the product app.",
+        dataCategories: "Feedback text and the sender's email address.",
       },
     ],
   },
@@ -211,7 +231,7 @@ const Subprocessors = () => (
           Subprocessors
         </h1>
         <p className="text-sm text-muted-foreground mb-6">
-          Last updated: October 21, 2026
+          Last updated: November 2, 2026
         </p>
         <p className="text-lg text-muted-foreground mb-12">
           Zensus uses trusted third-party services to operate our platform.

@@ -2,5 +2,5 @@
 Contact: mailto:support@zensus.app
 Expires: 2027-06-15T23:59:59.000Z
 Preferred-Languages: en
-Canonical: https://zensus.app/.well-known/security.txt
-Policy: https://zensus.app/security#responsible-disclosure
+Canonical: https://zensus.finance/.well-known/security.txt
+Policy: https://zensus.finance/security#responsible-disclosure
