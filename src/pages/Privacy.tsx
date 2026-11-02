@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
             Privacy Policy
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: October 21, 2026
+            Last Updated: November 2, 2026
           </p>
         </header>
 
@@ -233,7 +233,6 @@ export default function PrivacyPolicy() {
                 <p className="font-semibold text-foreground mb-2">Product &amp; Marketing Analytics:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
                   <li>We use PostHog (PostHog, Inc.) for analytics across our marketing site (<a href={SITE_URL} className="text-primary hover:underline">{SITE_HOST}</a>) and the product app (<a href={APP_URL} className="text-primary hover:underline">{APP_HOST}</a>). PostHog records page views, navigation, and funnel events, and sets a first-party analytics cookie scoped to whichever of the two sites you are on. The marketing site and the product app are separate domains, so that cookie is not shared between them and your activity on each is measured separately rather than linked into one profile. This data is stored in PostHog's US cloud.</li>
-                  <li>PostHog also captures session recordings (replays of on-page interactions) to help us debug and improve the experience; form inputs are masked by default.</li>
                   <li>This activity is pseudonymous (tied to a random identifier, not your name) until you sign in. See{' '}
                     <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PostHog's Privacy Policy</a>.</li>
                 </ul>
@@ -271,7 +270,7 @@ export default function PrivacyPolicy() {
               <li><strong className="text-foreground">Local Storage:</strong> Runway calculator state and analytics identifiers (persisted locally for convenience)</li>
             </ul>
             <p className="text-foreground/80 mt-3">
-              Server-side operational telemetry is also collected via AWS CloudWatch. You can disable analytics cookies and session recording through your browser settings without affecting your ability to use the product; disabling essential cookies will prevent you from using authenticated features.
+              Server-side operational telemetry is also collected via AWS CloudWatch. You can disable analytics cookies through your browser settings without affecting your ability to use the product; disabling essential cookies will prevent you from using authenticated features.
             </p>
           </section>
 
@@ -405,7 +404,7 @@ export default function PrivacyPolicy() {
             </div>
 
             <p className="text-foreground/80 mt-3">
-              Additional subprocessors used in narrower contexts (federated identity providers, web fonts, voice transcription for the voice agent, IP geolocation, etc.) are enumerated on the{' '}
+              Additional subprocessors used in narrower contexts (federated identity providers, web fonts, IP geolocation, etc.) are enumerated on the{' '}
               <a href={`${SITE_URL}/subprocessors`} className="text-primary hover:underline">subprocessors page</a>.
               All service providers are contractually obligated to protect your data and use it only for the purposes we specify.
             </p>
@@ -519,7 +518,7 @@ export default function PrivacyPolicy() {
               <li><strong className="text-foreground">Right to Data Portability:</strong> Request your data in a structured, machine-readable format</li>
             </ul>
             <p className="text-foreground/80 mt-3">
-              Authenticated Zensus users can export their personal data in JSON form from the product app at <a href={APP_URL} className="text-primary hover:underline">{APP_HOST}</a>. We may also fulfill access and portability requests by email (see § 5.5).
+              To request an export of your personal data, contact us by email (see § 5.5).
             </p>
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">5.2 Correction and Deletion</h3>

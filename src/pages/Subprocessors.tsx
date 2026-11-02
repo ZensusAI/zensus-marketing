@@ -155,9 +155,9 @@ const CATEGORIES: Category[] = [
         name: "PostHog",
         country: "United States",
         purpose:
-          "Product and marketing-site analytics. In the product app it runs after you accept analytics, and can include session replays.",
+          "Product and marketing-site analytics. In the product app it runs after you accept analytics. Session replay is turned off.",
         dataCategories:
-          "Page views, product events, email address, and session replays, which can include information shown on screen.",
+          "Page views, product events, and email address.",
       },
       {
         name: "Apollo.io",
