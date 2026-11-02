@@ -1,34 +1,21 @@
 import { SITE_URL } from "@/lib/constants";
 import { Helmet } from "react-helmet-async";
-import {
-  Lock,
-  Cable,
-  KeyRound,
-  Users,
-  EyeOff,
-  MapPin,
-  DatabaseBackup,
-  ScanLine,
-  ShieldCheck,
-  Check,
-  Minus,
-  ExternalLink,
-  type LucideIcon,
-} from "lucide-react";
+import { Check, ExternalLink } from "lucide-react";
+import meshInverted960 from "@/assets/hero-mesh-inverted-960.webp";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { TalkToUsButton } from "@/components/landing/TalkToUsButton";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import DataFlow from "@/components/security/DataFlow";
 import SecurityFaq from "@/components/security/SecurityFaq";
+import {
+  COMPLIANCE,
+  FACTS,
+  KEEP_OR_REMOVE,
+  LAST_REVIEWED,
+  NEVER_STORES,
+  STORE_GROUPS,
+} from "@/components/security/security-content";
+import { useSceneReveal } from "@/components/security/useSceneReveal";
 import { breadcrumbSchema, HOME_CRUMB } from "@/lib/structured-data";
 import { cn } from "@/lib/utils";
 
@@ -37,332 +24,338 @@ const breadcrumbs = breadcrumbSchema([
   { name: "Security", url: `${SITE_URL}/security` },
 ]);
 
-// Spec-sheet stats shown directly under the hero, hairline-separated.
-const STATS: [string, string][] = [
-  ["Last reviewed", "June 2026"],
-  ["Encryption", "AES-256-GCM"],
-  ["Hosting", "AWS, US region"],
-  ["AI training", "None"],
-];
+const STORE_COUNT = STORE_GROUPS.reduce((total, group) => total + group.items.length, 0);
 
-// Every control is a real, currently true control. Detail strings render in
-// Geist Mono: the technical exactness is part of how the page conveys trust.
-const CONTROLS: { icon: LucideIcon; title: string; detail: string }[] = [
-  { icon: Lock, title: "Encryption at rest", detail: "AES-256-GCM" },
-  { icon: Cable, title: "Encryption in transit", detail: "TLS on every request" },
-  { icon: KeyRound, title: "Bank-level OAuth", detail: "Plaid and Intuit hold credentials" },
-  { icon: Users, title: "Account isolation", detail: "Every query scoped to your user" },
-  { icon: EyeOff, title: "No AI training", detail: "Your data never trains a model" },
-  { icon: MapPin, title: "US data residency", detail: "Stored data in an AWS US region" },
-  { icon: DatabaseBackup, title: "Encrypted backups", detail: "Tested recovery, not a first restore" },
-  { icon: ScanLine, title: "Static analysis in CI", detail: "Semgrep and Gitleaks on commit" },
-  { icon: ShieldCheck, title: "Security headers", detail: "HSTS, CSP, clickjacking protection" },
-];
+/** One full-height screen, content centred. 66px is the navbar plus progress line. */
+const SCENE =
+  "flex min-h-[calc(100svh-66px)] items-center justify-center px-6 py-[72px] [scroll-snap-align:start] min-[760px]:px-12 min-[760px]:py-24 min-[1100px]:py-[104px]";
+const H2_LARGE =
+  "text-balance text-[34px] font-semibold leading-[1.04] tracking-[-0.045em] min-[760px]:text-[50px] min-[1100px]:text-[64px]";
+const H2_SMALL =
+  "text-balance text-[32px] font-semibold leading-[1.06] tracking-[-0.04em] min-[760px]:text-[44px] min-[1100px]:text-[52px]";
+const SUB = "text-[18px] leading-[1.45] min-[760px]:text-[22px]";
+const BLOCK = "rounded-[24px] [corner-shape:squircle]";
+const BLOCK_PAD = "px-[22px] pb-2 pt-[22px] min-[760px]:px-7 min-[760px]:pb-2.5 min-[760px]:pt-[26px]";
+const END_CARD = cn(BLOCK, "flex flex-col gap-4 px-6 py-7 min-[760px]:p-10");
+const LINK = "text-sage-dark underline decoration-primary/55 underline-offset-4 hover:text-sage-deep";
+const FOREST_LINK = "font-medium text-sage-light underline underline-offset-4";
 
-const STORES = [
-  "OAuth tokens for each connected provider, encrypted at rest with AES-256-GCM.",
-  "Transactions and balances within the sync window needed to project your runway.",
-  "Scenario chat history for your account only.",
-  "Derived runway projections and alert state.",
-];
+const Security = () => {
+  const { rootRef, progressRef } = useSceneReveal();
 
-const NEVER_STORES = [
-  "Bank or QuickBooks passwords. Plaid and Intuit hold those.",
-  "Payment card details.",
-  "Raw transactions outside the sync window needed for projections.",
-];
+  return (
+    <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Security at Zensus · How We Protect Your Financial Data</title>
+        <meta
+          name="description"
+          content="How Zensus protects your financial data: AES-256-GCM token encryption, OAuth via Plaid and Intuit, account isolation, US data residency, no AI training."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${SITE_URL}/security`} />
+        <meta property="og:site_name" content="Zensus" />
+        <meta property="og:title" content="Security at Zensus · How We Protect Your Financial Data" />
+        <meta
+          property="og:description"
+          content="How Zensus protects your financial data. OAuth through Plaid and Intuit, encryption at rest, account-level isolation."
+        />
+        <meta property="og:image" content={`${SITE_URL}/og/security.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Security at Zensus social preview card" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Security at Zensus · How We Protect Your Financial Data" />
+        <meta
+          name="twitter:description"
+          content="How Zensus protects your financial data. OAuth through Plaid and Intuit, encryption at rest, account-level isolation."
+        />
+        <meta name="twitter:image" content={`${SITE_URL}/og/security.png`} />
+        <link rel="canonical" href={`${SITE_URL}/security`} />
+        <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
+      </Helmet>
+      <Navbar />
 
-const PROTECTIONS: { title: string; body: string }[] = [
-  {
-    title: "Account isolation",
-    body: "Every database query is filtered by user ID. Zensus staff cannot reach your data without an explicit, audited authorization path. Cross-account access is impossible by design, not just by policy.",
-  },
-  {
-    title: "Backups and recovery",
-    body: "Your data is backed up on a regular schedule, encrypted at rest on the same AWS infrastructure. We test the recovery process, so a restore is a known procedure, not a first-time experiment during an incident.",
-  },
-  {
-    title: "Data residency",
-    body: "Zensus runs on AWS in a United States region. Your stored data, OAuth tokens, in-window transactions, and scenario history, lives in that US infrastructure. When you run a scenario, the request is processed by Claude per request and returns to you.",
-  },
-  {
-    title: "Pipeline security",
-    body: "The backend runs Semgrep static analysis on every commit. Gitleaks blocks any pull request that introduces a secret. Dependencies are tracked with automated vulnerability alerts.",
-  },
-  {
-    title: "AI and your data",
-    body: "Your data never trains a model. Scenarios are sent to Claude per request, analyzed, and returned to you. No fine-tuning, no memory, and no data crossing between accounts.",
-  },
-];
+      {/* Reading progress, sitting directly under the fixed navbar. */}
+      <div
+        className="fixed inset-x-0 top-[calc(4rem+1px+env(safe-area-inset-top))] z-40 h-0.5 bg-border/50"
+        aria-hidden="true"
+      >
+        <div ref={progressRef} className="h-full origin-left scale-x-0 bg-primary" />
+      </div>
 
-const COMPLIANCE: { area: string; detail: string; active: boolean; status: string }[] = [
-  { area: "Encryption", detail: "AES-256-GCM at rest, TLS in transit", active: true, status: "Active" },
-  { area: "Hosting", detail: "AWS, United States region", active: true, status: "Active" },
-  { area: "Backups", detail: "Encrypted, recovery tested", active: true, status: "Active" },
-  { area: "Data isolation", detail: "Per-user, enforced at query level", active: true, status: "Active" },
-  { area: "AI training", detail: "None on your data", active: true, status: "Active" },
-  { area: "HTTP headers", detail: "HSTS preload, CSP, X-Frame-Options DENY", active: true, status: "Active" },
-];
-
-const Control = ({ icon: Icon, title, detail }: { icon: LucideIcon; title: string; detail: string }) => (
-  <Card className="rounded-md border-border bg-card shadow-none transition-colors hover:border-primary/40">
-    <CardContent className="p-5">
-      <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
-      <h3 className="mt-3 text-sm font-semibold text-foreground">{title}</h3>
-      <p className="mt-1 font-mono text-xs leading-relaxed text-muted-foreground">{detail}</p>
-    </CardContent>
-  </Card>
-);
-
-const Block = ({
-  n,
-  title,
-  id,
-  children,
-}: {
-  n: string;
-  title: string;
-  id?: string;
-  children: React.ReactNode;
-}) => (
-  <section id={id} className="scroll-mt-24 border-t border-border pt-14">
-    <div className="mb-6 flex items-baseline gap-4">
-      <span className="font-mono text-xs tracking-widest text-primary">{n}</span>
-      <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">{title}</h2>
-    </div>
-    {children}
-  </section>
-);
-
-const Security = () => (
-  <div className="min-h-screen bg-background">
-    <Helmet>
-      <title>Security at Zensus · How We Protect Your Financial Data</title>
-      <meta
-        name="description"
-        content="How Zensus protects your financial data: AES-256-GCM encryption, OAuth via Plaid and Intuit, account-level isolation, US data residency, no AI training."
-      />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={`${SITE_URL}/security`} />
-      <meta property="og:site_name" content="Zensus" />
-      <meta property="og:title" content="Security at Zensus · How We Protect Your Financial Data" />
-      <meta
-        property="og:description"
-        content="How Zensus protects your financial data. Bank-level OAuth, encryption at rest, account-level isolation."
-      />
-      <meta property="og:image" content={`${SITE_URL}/og/security.png`} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content="Security at Zensus social preview card" />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Security at Zensus · How We Protect Your Financial Data" />
-      <meta
-        name="twitter:description"
-        content="How Zensus protects your financial data. Bank-level OAuth, encryption at rest, account-level isolation."
-      />
-      <meta name="twitter:image" content={`${SITE_URL}/og/security.png`} />
-      <link rel="canonical" href={`${SITE_URL}/security`} />
-      <script type="application/ld+json">{JSON.stringify(breadcrumbs)}</script>
-    </Helmet>
-    <Navbar />
-    <main className="pt-24 pb-20">
-      <div className="section-container max-w-4xl">
-        {/* Hero */}
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary">Security</p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-6xl">
-          How Zensus handles your financial data
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-          Bank-level access, handled with bank-level care. Zensus reads from your
-          banks, books, and CRM to forecast cash. Here is exactly what we hold,
-          what we never touch, and how it is protected.
-        </p>
-
-        <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-4">
-          {STATS.map(([label, value]) => (
-            <div key={label} className="bg-background p-4">
-              <dt className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                {label}
-              </dt>
-              <dd className="mt-1 font-mono text-sm text-foreground">{value}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <div className="mt-16 space-y-14">
-          <Block n="01" title="Controls at a glance">
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {CONTROLS.map((c) => (
-                <Control key={c.title} icon={c.icon} title={c.title} detail={c.detail} />
-              ))}
-            </div>
-          </Block>
-
-          <Block n="02" title="How your data flows">
-            <p className="mb-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              You connect through OAuth. Credentials stay with the provider.
-              Zensus only ever holds scoped tokens, and stores only what it needs
-              to compute your runway.
+      <main ref={rootRef} className="pt-[calc(66px+env(safe-area-inset-top))] text-foreground">
+        <header data-scene className={cn(SCENE, "text-center")}>
+          <div className="flex w-full max-w-[1000px] flex-col items-center gap-7">
+            <h1 className="text-balance text-[46px] font-semibold leading-[.98] tracking-[-0.05em] min-[760px]:text-[72px] min-[1100px]:text-[96px]">
+              How Zensus handles your financial data
+            </h1>
+            <p className="max-w-[600px] text-balance text-[18px] leading-[1.5] text-muted-foreground min-[760px]:text-[21px]">
+              Zensus reads from your banks, books, and CRM to forecast cash. Here is exactly what we
+              hold, what we never touch, and how it is protected.
             </p>
-            <DataFlow />
-          </Block>
+            <p className="mt-4 flex items-center gap-2 text-[14px] text-muted-foreground">
+              <span className="h-[7px] w-[7px] rounded-full bg-primary" aria-hidden="true" />
+              Last reviewed <span className="font-mono text-foreground">{LAST_REVIEWED}</span>
+            </p>
+          </div>
+        </header>
 
-          <Block n="03" title="What we store, and never store">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Card className="rounded-md border-border bg-card shadow-none">
-                <CardContent className="p-6">
-                  <p className="mb-4 font-mono text-xs uppercase tracking-widest text-primary">
-                    Stores
-                  </p>
-                  <ul className="space-y-3">
-                    {STORES.map((item) => (
-                      <li key={item} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-              <Card className="rounded-md border-border bg-card shadow-none">
-                <CardContent className="p-6">
-                  <p className="mb-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                    Never stores
-                  </p>
-                  <ul className="space-y-3">
-                    {NEVER_STORES.map((item) => (
-                      <li key={item} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
-                        <Minus className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+        <section data-scene aria-labelledby="security-password" className={cn(SCENE, "text-center")}>
+          <div className="flex w-full max-w-[1080px] flex-col items-center gap-10 min-[760px]:gap-14">
+            <div className="flex flex-col items-center gap-4">
+              <h2 id="security-password" className={cn(H2_LARGE, "max-w-[860px]")}>
+                We never see your bank or QuickBooks password.
+              </h2>
+              <p className={cn(SUB, "text-muted-foreground")}>Plaid and Intuit hold those.</p>
             </div>
-          </Block>
+            <DataFlow />
+            <div className="flex w-full max-w-[720px] flex-col items-center gap-2.5 border-t border-border pt-7 min-[760px]:pt-9">
+              <h3 className="text-balance text-[26px] font-semibold leading-[1.15] tracking-[-0.03em] min-[760px]:text-[34px]">
+                Zensus cannot move your money.
+              </h3>
+              <p className="max-w-[560px] text-balance text-[17px] leading-[1.5] text-muted-foreground">
+                We read your financial data and never write to your bank, QuickBooks, or HubSpot.
+              </p>
+            </div>
+          </div>
+        </section>
 
-          <Block n="04" title="How your data is protected">
-            <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
-              {PROTECTIONS.map((p) => (
-                <div key={p.title}>
-                  <h3 className="mb-1.5 text-base font-semibold text-foreground">{p.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+        <section
+          data-scene
+          aria-labelledby="security-stored"
+          className={cn(SCENE, "relative overflow-hidden bg-forest text-center text-forest-foreground")}
+        >
+          <div className="relative z-10 flex w-full max-w-[1080px] flex-col items-center gap-10 min-[760px]:gap-14">
+            <div className="flex flex-col items-center gap-4">
+              <h2 id="security-stored" className={cn(H2_LARGE, "max-w-[900px] text-forest-foreground")}>
+                Your data is encrypted, backed up daily, and stored in the United States.
+              </h2>
+              <p className={cn(SUB, "text-forest-muted-strong")}>Your data never trains an AI model.</p>
+            </div>
+            <dl className="grid w-full grid-cols-2 gap-x-8 gap-y-7 min-[760px]:grid-cols-4">
+              {FACTS.map((fact) => (
+                <div
+                  key={fact.label}
+                  className="flex flex-col items-center gap-2 border-t border-forest-border pt-5"
+                >
+                  <dt className="text-[14px] text-forest-muted">{fact.label}</dt>
+                  <dd className="font-mono text-[22px] leading-[1.15] tracking-[-0.02em] text-sage-light min-[760px]:text-[28px] min-[1100px]:text-[34px]">
+                    {fact.value}
+                  </dd>
+                  <dd className="text-balance text-[14px] leading-[1.5] text-forest-muted-strong">
+                    {fact.note}
+                  </dd>
                 </div>
               ))}
-            </div>
-          </Block>
+            </dl>
+          </div>
+          <img
+            loading="lazy"
+            decoding="async"
+            src={meshInverted960}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%] w-full object-cover object-bottom opacity-[.14] mix-blend-screen"
+          />
+        </section>
 
-          <Block n="05" title="Compliance status">
-            <div className="overflow-hidden rounded-md border border-border">
-              <Table>
-                <TableHeader>
-                  <TableRow className="hover:bg-transparent">
-                    <TableHead className="font-mono text-xs uppercase tracking-wider">Area</TableHead>
-                    <TableHead className="font-mono text-xs uppercase tracking-wider">Detail</TableHead>
-                    <TableHead className="text-right font-mono text-xs uppercase tracking-wider">
-                      Status
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {COMPLIANCE.map((row) => (
-                    <TableRow key={row.area}>
-                      <TableCell className="font-medium text-foreground">{row.area}</TableCell>
-                      <TableCell className="font-mono text-xs text-muted-foreground">
-                        {row.detail}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <span className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground">
+        <section data-scene aria-labelledby="security-hold" className={SCENE}>
+          <div className="flex w-full max-w-[1080px] flex-col items-center gap-7 min-[760px]:gap-12">
+            <h2 id="security-hold" className={cn(H2_SMALL, "text-center")}>
+              What we store, and never store
+            </h2>
+            <div className="grid w-full grid-cols-1 items-start gap-7 min-[760px]:gap-12 min-[1100px]:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+              <div>
+                <div className="flex items-baseline justify-between border-b border-foreground pb-3">
+                  <h3 className="text-[17px] font-semibold">Stores</h3>
+                  <span className="font-mono text-[12.5px] text-muted-foreground">{STORE_COUNT} items</span>
+                </div>
+                {STORE_GROUPS.map((group) => (
+                  <div
+                    key={group.title}
+                    className="grid grid-cols-1 gap-x-7 gap-y-2.5 border-b border-border py-5 min-[760px]:grid-cols-[minmax(0,170px)_minmax(0,1fr)]"
+                  >
+                    <div className="flex flex-col gap-1.5">
+                      <h4 className="text-[17px] font-semibold leading-[1.3] tracking-[-0.015em]">{group.title}</h4>
+                      <p className="text-[14px] leading-[1.5] text-muted-foreground">{group.summary}</p>
+                    </div>
+                    <ul className="flex flex-col gap-2">
+                      {group.items.map((item) => (
+                        <li key={item} className="grid grid-cols-[18px_minmax(0,1fr)] gap-2 text-[14px] leading-[1.5]">
+                          <Check className="mt-1 h-[13px] w-[13px] text-sage-deep" strokeWidth={2.4} aria-hidden="true" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col gap-5">
+                <div className={cn(BLOCK, BLOCK_PAD, "bg-secondary")}>
+                  <h3 className="mb-1 text-[17px] font-semibold">Never stores</h3>
+                  {NEVER_STORES.map((entry, i) => (
+                    <p key={entry.item} className={cn("flex flex-col gap-1.5 py-[18px]", i > 0 && "border-t border-border")}>
+                      <span className="text-[21px] font-semibold leading-[1.2] tracking-[-0.025em] min-[760px]:text-[24px]">
+                        {entry.item}
+                      </span>
+                      <span className="text-[15px] text-muted-foreground">{entry.holder}</span>
+                    </p>
+                  ))}
+                </div>
+                <div className={cn(BLOCK, BLOCK_PAD, "border border-border")}>
+                  <h3 className="mb-1 text-[17px] font-semibold">Keeping or removing your data</h3>
+                  {KEEP_OR_REMOVE.map((line, i) => (
+                    <p key={line} className={cn("py-3 text-[14.5px] leading-[1.55]", i > 0 && "border-t border-rule-soft")}>
+                      {line}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section data-scene aria-labelledby="security-trust" className={cn(SCENE, "bg-secondary")}>
+          <div className="flex w-full max-w-[1080px] flex-col items-center gap-7 min-[760px]:gap-12">
+            <h2 id="security-trust" className={cn(H2_SMALL, "text-center")}>
+              Who can see it, and where we stand
+            </h2>
+            <div className="grid w-full grid-cols-1 items-start gap-7 min-[760px]:gap-12 min-[1100px]:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+              <div className="flex flex-col gap-7">
+                <div className="flex flex-col gap-2.5 border-t border-foreground pt-[18px]">
+                  <h3 className="text-[19px] font-semibold tracking-[-0.02em]">Staff access</h3>
+                  <p className="text-pretty text-[16px] leading-[1.6]">
+                    One named Zensus admin can open a one-hour support session on an account. Each
+                    session needs a second factor and a written reason, and is logged.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2.5 border-t border-foreground pt-[18px]">
+                  <h3 className="text-[19px] font-semibold tracking-[-0.02em]">Account isolation</h3>
+                  <p className="text-pretty text-[16px] leading-[1.6]">
+                    Every account is separate. The application ties each request to your signed-in
+                    user and filters your data by that user.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <div className="rounded-[20px] border border-border bg-card px-[22px] py-1.5 [corner-shape:squircle]">
+                  <h3 className="pb-3 pt-3.5 text-[19px] font-semibold tracking-[-0.02em]">Compliance status</h3>
+                  <ul>
+                    {COMPLIANCE.map((row) => (
+                      <li
+                        key={row.area}
+                        className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-0.5 border-t border-rule-soft py-3"
+                      >
+                        <span className="text-[15px] font-semibold">{row.area}</span>
+                        <span className="flex items-center justify-end gap-2 whitespace-nowrap text-[13.5px] font-medium">
                           <span
                             className={cn(
-                              "h-1.5 w-1.5 rounded-full",
-                              row.active ? "bg-primary" : "border border-muted-foreground",
+                              "h-2 w-2 rounded-full",
+                              row.status === "Active" ? "bg-primary" : "bg-scenario",
                             )}
                             aria-hidden="true"
                           />
                           {row.status}
                         </span>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                        <span className="col-span-full font-mono text-[12.5px] leading-[1.5] text-muted-foreground">
+                          {row.detail}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <p className="text-pretty text-[15px] leading-[1.6]">
+                  Zensus is not yet SOC 2 certified, and we would rather tell you exactly where we
+                  stand than imply otherwise. If your procurement process needs specific evidence,
+                  talk to us and we will share what we have.
+                </p>
+                <a
+                  href={`https://securityheaders.com/?q=${encodeURIComponent(SITE_URL)}&followRedirects=on`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center gap-1.5 self-start text-[15px] font-medium text-sage-dark hover:text-sage-deep"
+                >
+                  Verify our HTTP security headers
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </div>
             </div>
-            <div className="mt-5 space-y-2">
-              <a
-                href={`https://securityheaders.com/?q=${encodeURIComponent(SITE_URL)}&followRedirects=on`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-mono text-xs text-primary hover:underline"
-              >
-                Verify our HTTP security headers
-                <ExternalLink className="h-3 w-3" aria-hidden="true" />
-              </a>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                Zensus is not yet SOC 2 certified. Our data protection and
-                access control practices are documented and reviewable on
-                request. If your procurement process needs specific evidence,
-                talk to us and we will share what we have.
+          </div>
+        </section>
+
+        <section data-scene aria-labelledby="security-faq" className={SCENE}>
+          <div className="flex w-full max-w-[780px] flex-col items-center gap-7 min-[760px]:gap-12">
+            <div className="flex flex-col items-center gap-3.5 text-center">
+              <h2 id="security-faq" className={H2_SMALL}>
+                Common security questions
+              </h2>
+              <p className="text-[16px] leading-[1.55] text-muted-foreground">
+                The full detail for procurement and IT reviewers follows the questions.
               </p>
             </div>
-          </Block>
+            <SecurityFaq />
+          </div>
+        </section>
 
-          {/* Temporary security contact: support@zensus.app (swap to security@ later) */}
-          <Block n="06" title="Responsible disclosure" id="responsible-disclosure">
-            <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
-              <p>
+        <section data-scene aria-label="Disclosure and procurement" className={SCENE}>
+          <div className="grid w-full max-w-[1080px] grid-cols-1 items-stretch gap-7 min-[760px]:gap-12 min-[1100px]:grid-cols-2">
+            <div
+              id="responsible-disclosure"
+              className={cn(END_CARD, "scroll-mt-24 border border-border bg-card")}
+            >
+              <h2 className="text-[28px] font-semibold leading-[1.1] tracking-[-0.03em]">Responsible disclosure</h2>
+              <p className="text-[15.5px] leading-[1.65]">
                 Found a security issue? Email{" "}
-                <a href="mailto:support@zensus.app" className="text-primary hover:underline">
+                <a href="mailto:support@zensus.app" className={cn(LINK, "font-medium")}>
                   support@zensus.app
                 </a>{" "}
-                and we will work with you on it. We support good-faith security
-                research. If you report a vulnerability responsibly, test only
-                against your own account, give us reasonable time to fix the issue
-                before disclosing it, and do not access, modify, or delete data
-                that is not your own, we will not pursue legal action against you
-                for your research.
+                and we will work with you on it. We support good-faith security research. If you
+                report a vulnerability responsibly, test only against your own account, give us
+                reasonable time to fix the issue before disclosing it, and do not access, modify, or
+                delete data that is not your own, we will not pursue legal action against you for
+                your research.
               </p>
-              <p>
+              <p className="text-[15.5px] leading-[1.65]">
                 Our machine-readable policy lives at{" "}
-                <a
-                  href="/.well-known/security.txt"
-                  className="font-mono text-primary hover:underline"
-                >
+                <a href="/.well-known/security.txt" className={cn(LINK, "whitespace-nowrap font-mono text-[14px]")}>
                   /.well-known/security.txt
                 </a>
                 .
               </p>
             </div>
-          </Block>
-
-          <Block n="07" title="Common security questions">
-            <SecurityFaq />
-          </Block>
-
-          <Block n="08" title="Documentation for procurement">
-            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Request our security overview and data-handling details, and review
-              the{" "}
-              <a href="/subprocessors" className="text-primary hover:underline">
-                subprocessors
-              </a>{" "}
-              we rely on. Security questions, disclosures, and procurement
-              inquiries go to{" "}
-              <a href="mailto:support@zensus.app" className="text-primary hover:underline">
-                support@zensus.app
-              </a>
-              .
-            </p>
-            <div className="mt-8">
-              <TalkToUsButton size="lg" />
+            <div className={cn(END_CARD, "relative justify-between gap-7 overflow-hidden bg-forest text-forest-foreground")}>
+              <img
+                loading="lazy"
+                decoding="async"
+                src={meshInverted960}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] w-full object-cover object-bottom opacity-[.16] mix-blend-screen"
+              />
+              <div className="relative flex flex-col gap-4">
+                <h2 className="text-[28px] font-semibold leading-[1.1] tracking-[-0.03em] text-forest-foreground">
+                  Procurement
+                </h2>
+                <p className="text-[15.5px] leading-[1.65] text-forest-muted-strong">
+                  Review the{" "}
+                  <a href="/subprocessors" className={FOREST_LINK}>
+                    subprocessors
+                  </a>{" "}
+                  we rely on. Security questions, disclosures, and procurement inquiries go to{" "}
+                  <a href="mailto:support@zensus.app" className={FOREST_LINK}>
+                    support@zensus.app
+                  </a>
+                  .
+                </p>
+              </div>
+              <TalkToUsButton size="lg" className="relative self-start hover:bg-sage-light" />
             </div>
-          </Block>
-        </div>
-      </div>
-    </main>
-    <Footer />
-  </div>
-);
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 export default Security;

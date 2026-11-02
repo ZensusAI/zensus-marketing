@@ -516,6 +516,16 @@
     background-size: 100% 0.12em !important;
   }
 }
+/* /security (handoff 17-security): snap to each full-height screen, desktop
+   only, set by useSceneReveal. Proximity, so tall screens still scroll freely.
+   The padding clears the fixed navbar and progress line. */
+@media (min-width: 760px) and (prefers-reduced-motion: no-preference) {
+  html.security-snap {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 66px;
+  }
+}
+
 /* The visible % sign is generated too, so the stat's text is exactly "39%". */
 .problem-pct::before {
   content: "%";
