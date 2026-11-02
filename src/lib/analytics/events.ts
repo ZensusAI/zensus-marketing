@@ -92,6 +92,9 @@ let optOutRequested = false;
  * of the same URL to a single $pageview.
  */
 let pendingPageview: string | null = null;
+/** True while listeners wait for the first interaction to start session replay. */
+let recordingArmed = false;
+
 /** Named events queued before load, flushed on load if opted in. */
 const pendingEvents: Array<{ name: EventName; props?: Record<string, unknown> }> =
   [];
@@ -137,9 +140,10 @@ export function initAnalytics(): Promise<void> {
       capture_pageleave: true,
       // See file header: funnel-only events, cost + EU data minimisation.
       autocapture: false,
-      // Set here so a project setting cannot turn them back on: the session
-      // recorder and survey scripts are about 100 KB, downloaded on every
-      // visit, and were the longest tasks on a mobile load (Oct 2026).
+      // Set here so a project setting cannot turn them on at load: the session
+      // recorder and survey scripts are about 100 KB and were the longest tasks
+      // on a mobile load (Oct 2026). Replay starts later instead, on the first
+      // interaction: see startRecordingOnFirstInteraction.
       disable_session_recording: true,
       disable_surveys: true,
       // Scope the distinct_id cookie to the registrable domain so any future
@@ -170,17 +174,39 @@ export function initAnalytics(): Promise<void> {
         posthog.capture("$pageview", { $current_url: pendingPageview });
       }
       for (const e of pendingEvents) posthog.capture(e.name, e.props);
+      startRecordingOnFirstInteraction();
     }
     pendingPageview = null;
     pendingEvents.length = 0;
   });
 }
 
+/**
+ * Session replay for consented visitors, started on the first scroll, tap or
+ * key press so the recorder never competes with the first paint on a phone.
+ * The product app is on the replay URL blocklist in PostHog; this file only
+ * runs on the marketing site.
+ */
+function startRecordingOnFirstInteraction(): void {
+  if (recordingArmed || typeof window.addEventListener !== "function") return;
+  recordingArmed = true;
+  const triggers = ["scroll", "pointerdown", "keydown"] as const;
+  const start = () => {
+    for (const name of triggers) window.removeEventListener(name, start);
+    recordingArmed = false;
+    if (!optOutRequested) ph?.startSessionRecording();
+  };
+  for (const name of triggers) window.addEventListener(name, start, { passive: true });
+}
+
 /** Start capturing (call once the visitor has consented / implied consent). */
 export function grantCapturing(): void {
   optInRequested = true;
   optOutRequested = false;
-  if (ph) ph.opt_in_capturing();
+  if (ph) {
+    ph.opt_in_capturing();
+    startRecordingOnFirstInteraction();
+  }
 }
 
 /** Stop capturing and clear analytics persistence (visitor declined). */

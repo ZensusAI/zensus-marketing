@@ -233,6 +233,7 @@ export default function PrivacyPolicy() {
                 <p className="font-semibold text-foreground mb-2">Product &amp; Marketing Analytics:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
                   <li>We use PostHog (PostHog, Inc.) for analytics across our marketing site (<a href={SITE_URL} className="text-primary hover:underline">{SITE_HOST}</a>) and the product app (<a href={APP_URL} className="text-primary hover:underline">{APP_HOST}</a>). PostHog records page views, navigation, and funnel events, and sets a first-party analytics cookie scoped to whichever of the two sites you are on. The marketing site and the product app are separate domains, so that cookie is not shared between them and your activity on each is measured separately rather than linked into one profile. This data is stored in PostHog's US cloud.</li>
+                  <li>On the marketing site only, PostHog also captures session recordings (replays of on-page interactions) to help us improve the site; form inputs are masked. Session recording does not run in the product app.</li>
                   <li>This activity is pseudonymous (tied to a random identifier, not your name) until you sign in. See{' '}
                     <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PostHog's Privacy Policy</a>.</li>
                 </ul>
@@ -270,7 +271,7 @@ export default function PrivacyPolicy() {
               <li><strong className="text-foreground">Local Storage:</strong> Runway calculator state and analytics identifiers (persisted locally for convenience)</li>
             </ul>
             <p className="text-foreground/80 mt-3">
-              Server-side operational telemetry is also collected via AWS CloudWatch. You can disable analytics cookies through your browser settings without affecting your ability to use the product; disabling essential cookies will prevent you from using authenticated features.
+              Server-side operational telemetry is also collected via AWS CloudWatch. You can disable analytics cookies and session recording through your browser settings without affecting your ability to use the product; disabling essential cookies will prevent you from using authenticated features.
             </p>
           </section>
 

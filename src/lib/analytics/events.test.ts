@@ -9,6 +9,7 @@ vi.mock("posthog-js", () => ({
     capture: vi.fn(),
     opt_in_capturing: vi.fn(),
     opt_out_capturing: vi.fn(),
+    startSessionRecording: vi.fn(),
   },
 }));
 
@@ -33,13 +34,57 @@ describe("marketing analytics helpers", () => {
     vi.unstubAllEnvs();
   });
 
-  it("keeps session recording and surveys off", async () => {
+  it("keeps session recording and surveys off at load", async () => {
     const { posthog, events } = await loadFresh();
     await events.initAnalytics();
     expect(posthog.init).toHaveBeenCalledWith(
       "phc_test",
       expect.objectContaining({ disable_session_recording: true, disable_surveys: true }),
     );
+    expect(posthog.startSessionRecording).not.toHaveBeenCalled();
+  });
+
+  describe("session replay", () => {
+    /** A stub window that keeps listeners, so a test can fire an interaction. */
+    function stubWindowWithListeners() {
+      const listeners = new Map<string, () => void>();
+      vi.stubGlobal("window", {
+        location: { origin: "https://zensus.app" },
+        addEventListener: (name: string, fn: () => void) => listeners.set(name, fn),
+        removeEventListener: (name: string) => listeners.delete(name),
+      });
+      return listeners;
+    }
+
+    it("starts on the first interaction, once, for a consented visitor", async () => {
+      const listeners = stubWindowWithListeners();
+      const { posthog, events } = await loadFresh();
+      events.grantCapturing();
+      await events.initAnalytics();
+      expect(posthog.startSessionRecording).not.toHaveBeenCalled();
+
+      listeners.get("scroll")?.();
+      expect(posthog.startSessionRecording).toHaveBeenCalledTimes(1);
+      expect(listeners.size).toBe(0);
+    });
+
+    it("never starts without consent", async () => {
+      const listeners = stubWindowWithListeners();
+      const { events } = await loadFresh();
+      await events.initAnalytics();
+      expect(listeners.size).toBe(0);
+    });
+
+    it("does not start if the visitor declines before interacting", async () => {
+      const listeners = stubWindowWithListeners();
+      const { posthog, events } = await loadFresh();
+      events.grantCapturing();
+      await events.initAnalytics();
+      events.denyCapturing();
+
+      listeners.get("pointerdown")?.();
+      expect(posthog.startSessionRecording).not.toHaveBeenCalled();
+    });
   });
 
   it("buffers capture before the SDK loads (no capture until then)", async () => {
