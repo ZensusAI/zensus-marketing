@@ -71,7 +71,7 @@ const ReviewerRows = ({ group }: { group: ReviewerGroup }) => (
     <dl className="mb-4">
       {group.rows.map(([term, detail]) => (
         <div
-          key={term}
+          key={detail}
           className="grid grid-cols-1 gap-x-5 gap-y-1 border-t border-rule-soft py-[11px] min-[760px]:grid-cols-[190px_minmax(0,1fr)]"
         >
           <dt className="text-[14.5px] font-semibold">{term}</dt>

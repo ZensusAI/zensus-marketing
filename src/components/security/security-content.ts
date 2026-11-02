@@ -40,6 +40,7 @@ export const STORE_GROUPS: { title: string; summary: string; items: string[] }[]
       "Derived runway projections and alert state.",
       "Your email address, plus the IP address and browser used for sign-in events, kept for security.",
       "Feedback you send us and your profile image.",
+      "Two-factor settings, if you turn them on. Your authenticator secret is encrypted with AES-256-GCM, and recovery codes are stored as hashes.",
     ],
   },
 ];
@@ -62,6 +63,7 @@ export const COMPLIANCE: { area: string; detail: string; status: "Active" | "Not
   { area: "Data isolation", detail: "Per-user, enforced by the application", status: "Active" },
   { area: "AI training", detail: "None on your data", status: "Active" },
   { area: "HTTP headers", detail: "HSTS preload, CSP, X-Frame-Options DENY", status: "Active" },
+  { area: "Two-factor authentication", detail: "Optional, with an authenticator app", status: "Active" },
   { area: "SOC 2", detail: "Not certified", status: "Not yet" },
 ];
 
@@ -70,6 +72,11 @@ export const FAQS: FaqItem[] = [
     question: "Is my financial data safe with Zensus?",
     answer:
       "Stored data is encrypted at rest on AWS in the United States, integration tokens are also encrypted with AES-256-GCM, and data moves over TLS. Every request is tied to your signed-in user, and your data is filtered by that user.",
+  },
+  {
+    question: "Does Zensus support two-factor authentication?",
+    answer:
+      "Yes. You can turn on two-factor authentication with an authenticator app, and you get 10 single-use recovery codes. It is optional, and we email you when these settings change.",
   },
   {
     question: "Does Zensus store my bank password?",
@@ -117,6 +124,8 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
       ["Encryption in transit", "TLS, required by the database"],
       ["Connections", "OAuth and Plaid Link. Providers hold your credentials"],
       ["Sign-in", "Google or an emailed link"],
+      ["Two-factor authentication", "Optional, with an authenticator app"],
+      ["Recovery codes", "10 single-use codes, stored as hashes"],
       ["Account isolation", "Every request tied to your signed-in user"],
       ["No AI training", "Your data never trains a model"],
       ["US data residency", "AWS us-east-1"],
@@ -143,6 +152,10 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
     title: "How your data is protected",
     rows: [
       [
+        "Two-factor authentication",
+        "You can turn on two-factor authentication with an authenticator app. Repeated wrong codes lock the attempt, and we email you when these settings change. Turning it on or off also signs out your other sessions.",
+      ],
+      [
         "Backups and recovery",
         "Your data is backed up daily and kept for 7 days, with point-in-time recovery. Backups are encrypted, and the database runs across multiple availability zones in AWS us-east-1.",
       ],
@@ -162,8 +175,17 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
       ],
       [
         "Pipeline security",
-        "Every code pull request is scanned for secrets and cannot merge with a finding. We run Semgrep static analysis across the codebase every month. Dependencies are tracked with automated vulnerability alerts and audited twice a month.",
+        "Every code pull request is scanned for secrets and cannot merge with a finding. We run Semgrep static analysis across the codebase every month. Dependencies are tracked with automated vulnerability alerts and audited twice a month, and dependency changes are checked for known vulnerabilities.",
       ],
+    ],
+  },
+  {
+    title: "What changed",
+    intro: "Security updates to the product and this page, newest first.",
+    rows: [
+      ["November 2026", "Two-factor authentication added, with an authenticator app and recovery codes."],
+      ["November 2026", "Session replay blocked in the product app."],
+      ["November 2026", "Every claim on this page rechecked against the product and its production settings."],
     ],
   },
 ];

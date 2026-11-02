@@ -236,6 +236,13 @@ const Security = () => {
                     user and filters your data by that user.
                   </p>
                 </div>
+                <div className="flex flex-col gap-2.5 border-t border-foreground pt-[18px]">
+                  <h3 className="text-[19px] font-semibold tracking-[-0.02em]">Two-factor authentication</h3>
+                  <p className="text-pretty text-[16px] leading-[1.6]">
+                    You can turn on two-factor authentication with an authenticator app. You get 10
+                    single-use recovery codes, and we email you when these settings change.
+                  </p>
+                </div>
               </div>
               <div className="flex flex-col gap-4">
                 <div className="rounded-[20px] border border-border bg-card px-[22px] py-1.5 [corner-shape:squircle]">
@@ -345,7 +352,7 @@ const Security = () => {
                   <a href="mailto:support@zensus.app" className={FOREST_LINK}>
                     support@zensus.app
                   </a>
-                  .
+                  . If a breach affects your data, we will notify you without undue delay.
                 </p>
               </div>
               <TalkToUsButton size="lg" className="relative self-start hover:bg-sage-light" />

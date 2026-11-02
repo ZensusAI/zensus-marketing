@@ -53,6 +53,7 @@ Most businesses make million-dollar decisions (hiring, fundraising timing, contr
 - Bank and QuickBooks credentials stay with Plaid and Intuit and are never stored by Zensus
 - Financial data is never sold or used to train AI models
 - Every request is tied to the signed-in user, and data is filtered by that user
+- Optional two-factor authentication with an authenticator app, with 10 single-use recovery codes
 - Zensus is not SOC 2 certified
 
 ## Pricing
