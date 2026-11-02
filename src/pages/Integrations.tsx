@@ -108,10 +108,10 @@ const FAQS = [
 const faqLd = faqPageSchema(FAQS);
 
 const CHIPS = [
-  "Bank-level OAuth",
-  "AES-256-GCM at rest",
+  "OAuth through Plaid and Intuit",
+  "AES-256-GCM token encryption",
   "Account-level isolation",
-  "Credentials never stored",
+  "Bank credentials never stored",
 ];
 
 const Integrations = () => (

@@ -40,7 +40,7 @@ const FAQS = [
   {
     question: "Is my financial data secure?",
     answer:
-      "Yes. Bank credentials are handled by Plaid and never touch our servers, every query is isolated by account, and your data never trains an AI model. Our Security and Privacy pages cover the details.",
+      "Yes. Bank credentials are handled by Plaid and never touch our servers, every request is tied to your signed-in user, and your data never trains an AI model. Our Security and Privacy pages cover the details.",
   },
   {
     question: "Which tools does Zensus connect to?",

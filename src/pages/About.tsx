@@ -83,7 +83,7 @@ const BELIEFS = [
   },
   {
     line: "Your data stays yours.",
-    body: "Bank and accounting credentials live with Plaid and Intuit, never with us. Your data never trains an AI model, and every query is isolated by account.",
+    body: "Bank and accounting credentials live with Plaid and Intuit, never with us. Your data never trains an AI model, and every account is separate.",
   },
   {
     line: "A public price, and no contract.",

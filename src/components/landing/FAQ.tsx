@@ -73,13 +73,13 @@ const faqGroups = [
     items: [
       {
         question: "Is my financial data secure?",
-        answer: "Yes. All integration tokens are encrypted at rest with AES-256-GCM. Your bank and QuickBooks credentials are never stored on our servers; we rely on OAuth managed by Plaid and Intuit. Every query is isolated by account at the database level, and data sits on encrypted AWS infrastructure.",
-        links: [{ text: "encrypted at rest with AES-256-GCM", to: "/security" }],
+        answer: "Yes. Integration tokens are encrypted with AES-256-GCM before storage, and all stored data is encrypted at rest on AWS. Your bank and QuickBooks credentials are never stored on our servers; they stay with Plaid and Intuit. Every request is tied to your signed-in user, and your data is filtered by that user.",
+        links: [{ text: "encrypted with AES-256-GCM", to: "/security" }],
       },
       {
         question: "Who can see my data?",
-        answer: "Only you. Your financial data is never shared, sold, or used to train AI models. Each account is completely isolated.",
-        links: [{ text: "Each account is completely isolated.", to: "/security" }],
+        answer: "You do. One named Zensus admin can also open a one-hour support session on an account, which needs a second factor and a written reason, and is logged. Your financial data is never sold or used to train AI models, and every account is separate.",
+        links: [{ text: "every account is separate", to: "/security" }],
       },
     ],
   },

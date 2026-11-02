@@ -20,7 +20,7 @@ const LOGOS: { src: string; alt: string; to: string; className?: string }[] = [
   { src: slackLogo, alt: "Slack", to: "/integrations/slack" },
 ];
 
-const FACTS = ["Bank-level OAuth", "AES-256-GCM at rest", "TLS in transit", "Account-level isolation", "Credentials never stored"];
+const FACTS = ["OAuth through Plaid and Intuit", "AES-256-GCM token encryption", "TLS in transit", "Account-level isolation", "Bank credentials never stored"];
 
 const STAR =
   "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z";
@@ -33,7 +33,7 @@ const focusRing =
  * band that carries the hero's waves and ruled column down is part of the
  * hero (Hero.tsx bottom padding), so the waves never seam. Then three cells
  * on a ruled Cream Warm band: the G2 rating with the customer quote, the four
- * integrations (each links to its page), and "Bank-level security" (links to
+ * integrations (each links to its page), and "Encrypted, US-hosted" (links to
  * /security; hover or focus shows the security facts). The encryption facts
  * are also visible under the label, since text that only appears on hover is
  * weaker for search and AI answers; the full list is always in the HTML.
@@ -83,16 +83,16 @@ export const TrustBar = () => (
           </div>
         </div>
 
-        {/* Bank-level security */}
+        {/* Security */}
         <div className="group relative flex items-center py-[22px] min-[820px]:pl-7">
           <div className="flex items-center gap-3">
             <span aria-hidden className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/[0.12] text-sage-dark">
               <ShieldCheck size={18} strokeWidth={2} />
             </span>
             <span>
-              <span className="block text-[15px] font-semibold text-foreground">Bank-level security</span>
+              <span className="block text-[15px] font-semibold text-foreground">Encrypted, US-hosted</span>
               <span className="mt-0.5 block text-[13px] text-muted-foreground">
-                AES-256-GCM at rest, TLS in transit ·{" "}
+                AES-256-GCM tokens, TLS in transit ·{" "}
                 <Link to="/security" className={`whitespace-nowrap text-primary hover:underline ${focusRing}`}>
                   How we protect your data
                 </Link>
