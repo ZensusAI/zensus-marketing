@@ -214,7 +214,7 @@ const Problem = () => {
                       href={card.url}
                       target="_blank"
                       rel="noopener"
-                      className="block text-xs text-forest-muted underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light min-[760px]:mt-4 min-[760px]:text-[13px]"
+                      className="flex min-h-[24px] items-center self-start text-xs text-forest-muted underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light min-[760px]:mt-4 min-[760px]:text-[13px]"
                     >
                       {card.src} ↗<span className="sr-only"> (opens in a new tab)</span>
                     </a>

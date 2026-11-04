@@ -196,7 +196,7 @@ const Comparison = () => {
                 scope="row"
                 className={cn(
                   "col-span-4 flex items-center gap-3 px-1 pb-0.5 pt-2.5 text-left text-[14.5px] transition-colors duration-300 min-[760px]:col-span-1 min-[760px]:px-5 min-[760px]:py-0 min-[760px]:text-[17px]",
-                  act ? "font-[650] text-foreground" : st === "fut" ? "font-medium text-[#6B7F7A]" : "font-medium text-foreground",
+                  act ? "font-[650] text-foreground" : st === "fut" ? "font-medium text-muted-foreground" : "font-medium text-foreground",
                   act ? "min-[760px]:min-h-[60px]" : "min-[760px]:min-h-[52px]",
                 )}
               >
