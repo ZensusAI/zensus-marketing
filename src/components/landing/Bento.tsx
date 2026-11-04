@@ -1,52 +1,47 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import plaidLogo from "@/assets/integrations/plaid.svg";
-import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
-import hubspotLogo from "@/assets/integrations/hubspot.svg";
-import slackLogo from "@/assets/integrations/slack.svg";
+import quickbooksLogo from "@/assets/integrations/quickbooks-logo-black.png";
 import zensusLogo from "@/assets/zensus-logo-64.webp";
 import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
-import { clamp01, easeInOutCubic as ease, lerp } from "@/lib/motion";
+import { easeInOutCubic as ease, lerp } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { PinnedSection } from "./PinnedSection";
 
 /*
- * Sync section from handoff 08-sync (locked 16d), pinned for 4 viewports, one
- * beat per fact:
+ * Sync section, locked 16d: handoff 08-sync, revised by handoff 21 (4 Nov
+ * 2026), which removes the four-fact strip, sets the logos by the brand rules
+ * and thins the shimmer. Pinned for 4 viewports, four beats:
  *   1. The source chips connect, their input lines draw, and they get ticks.
  *   2. A glowing shimmer sweeps each input line into the hub ("webhook" /
  *      "daily"; QuickBooks slower), and the Incoming card shows raw bank rows.
  *   3. The output lines draw, the zero-cash date resolves from "Calculating..."
  *      and keeps recalculating, and the shimmer runs out to it and to Slack.
  *   4. Raw bank descriptors flip to clean vendor names ("Normalized").
- * The fact rails fill one per beat; on phones only the active fact shows, but
- * all four stay in the HTML and in the accessibility tree. Geometry, easing
- * and timings are the handoff's renderVals(). Transaction names, amounts and
- * dates are its placeholders.
+ * Geometry, easing and timings are the handoff's renderVals(). Transaction
+ * names, amounts and dates are its placeholders. The diagram is decorative
+ * (aria-hidden); a visually hidden sentence names the sources and outputs.
  * Reduced motion or a short viewport: the end state, still (no shimmer, no
- * ticking), with all four facts shown at every width.
+ * ticking).
+ *
+ * Logos (handoff 21 brand rules): Plaid's white logo, unaltered, on a forest
+ * pill; Intuit's official black QuickBooks file with clear space; HubSpot and
+ * "Slack alert" as plain text; no logo on the transaction rows. The shimmer
+ * is the handoff's three strokes, but the glow is a faint wider stroke instead
+ * of an SVG blur filter, which repainted on the CPU every frame.
  * The ambient motion (shimmer, hub pulse, ticking readouts) runs for at most
  * CLOCK_MS each time the diagram comes into view, then settles (WCAG 2.2.2).
  *
- * Corrections: the app shows the zero-cash date as a month and year, so the
- * fact says "The month you run out" and the chip cycles months, not days.
- * Setup time is "a few minutes" (the app's own tour says about five), and
- * normalization is about vendor names, not accounting reconciliation.
+ * Correction kept from 08-sync: the app shows the zero-cash date as a month
+ * and year, so the chip cycles months, not days.
  */
 
-const FACTS = [
-  { lead: "Connect in a few minutes.", tail: "OAuth to Plaid, QuickBooks, and HubSpot. No spreadsheets, no CSV uploads." },
-  { lead: "Automatic sync.", tail: "Bank and HubSpot changes arrive by webhook. QuickBooks syncs daily." },
-  { lead: "Zero-cash date.", tail: "The month you run out, recalculated live." },
-  { lead: "Vendor normalization.", tail: "Stripe payouts, ACH transfers, and card purchases all show up under clean vendor names." },
-];
-
+// The sync cadence on each wire matches the app (Plaid and HubSpot webhooks,
+// QuickBooks daily; app code, 4 Nov 2026).
 const SOURCES = [
-  // The Plaid file is the full wordmark; cropping it to its left edge leaves the
-  // square mark, which is what the 15px icon slot shows (the name is beside it).
-  { name: "Plaid", icon: plaidLogo, className: "logo-on-light object-cover object-left", sync: "webhook" },
-  { name: "QuickBooks", icon: quickbooksLogo, sync: "daily" },
-  { name: "HubSpot", icon: hubspotLogo, sync: "webhook" },
+  { name: "Plaid", sync: "webhook" },
+  { name: "QuickBooks", sync: "daily" },
+  { name: "HubSpot", sync: "webhook" },
 ];
 
 const ROWS = [
@@ -208,7 +203,7 @@ const Bento = () => {
   if (!still && kFlow > 0) {
     const add = (B: Bez, sp: number, o: number, k: number) => {
       const L = blen(B);
-      const seg = Math.max(26, L * 0.28);
+      const seg = Math.max(34, L * 0.34);
       const t = (now / sp + o) % 1;
       const pos = t * (L + seg);
       const fade = Math.min(1, t * 5, (1 - t) * 5) * k;
@@ -218,12 +213,20 @@ const Bento = () => {
         off: seg - pos,
         da2: `${(seg * 0.4).toFixed(1)} ${(L + seg * 2).toFixed(1)}`,
         off2: seg * 0.4 - pos + seg * 0.3,
-        op: 0.95 * fade,
-        gop: 0.45 * fade,
+        op: 0.6 * fade,
+        gop: 0.25 * fade,
       });
     };
-    ins.forEach((B, i) => add(B, i === 1 ? 3400 : 2100, i * 0.31, kFlow));
-    if (ko > 0.9) outs.forEach((B, i) => add(B, 2300, 0.15 + i * 0.5, 1));
+    ins.forEach((B, i) => {
+      const sp = i === 1 ? 3000 : 1900;
+      add(B, sp, i * 0.31, kFlow);
+      add(B, sp, i * 0.31 + 0.5, kFlow);
+    });
+    if (ko > 0.9)
+      outs.forEach((B, i) => {
+        add(B, 2000, 0.15 + i * 0.37, 1);
+        add(B, 2000, 0.65 + i * 0.37, 1);
+      });
   }
 
   const labels = narrow
@@ -238,8 +241,6 @@ const Bento = () => {
   const [hx, hy] = pc(G.hub[0], G.hub[1]);
   const ring = kFlow * (still ? 4.5 : 3 + 3 * (0.5 + 0.5 * Math.sin(now / 300)));
   const secs = 1 + (Math.floor(now / 1000) % 5);
-  const factFill = [0, 1, 2, 3].map((i) => clamp01(P * 4 - i));
-  const activeFact = Math.min(3, Math.floor(P * 4));
 
   return (
     <PinnedSection id="sync" viewports={PIN_VIEWPORTS} onProgress={onProgress} aria-labelledby="sync-heading" className="bg-background" stageClassName="overflow-hidden">
@@ -255,10 +256,13 @@ const Bento = () => {
           </div>
 
           <div className="flex min-h-0 flex-1 items-center justify-center">
+            <p className="sr-only">
+              Plaid bank feeds and HubSpot arrive by webhook and QuickBooks syncs daily. Zensus normalizes the
+              transactions into clean vendor names, keeps your zero-cash date current and sends Slack alerts.
+            </p>
             <div
               ref={diagramRef}
-              role="img"
-              aria-label="Diagram: Plaid, QuickBooks, and HubSpot stream into Zensus, which outputs your zero-cash date and Slack alerts"
+              aria-hidden
               className="relative w-full max-w-[380px] min-[760px]:max-w-[880px]"
               style={{ aspectRatio: `${W} / ${H}`, maxHeight: "100%" }}
             >
@@ -279,9 +283,9 @@ const Bento = () => {
                 {shims.map((s, i) => (
                   <g key={i}>
                     {/* The glow is a wide, faint stroke rather than an SVG blur filter, which repainted on the CPU every frame. */}
-                    <path d={s.d} fill="none" stroke="#22C573" strokeOpacity={s.gop * 0.5} strokeWidth={6} strokeLinecap="round" strokeDasharray={s.da} strokeDashoffset={s.off} />
-                    <path d={s.d} fill="none" stroke="#7CF0B0" strokeOpacity={s.op} strokeWidth={2.25} strokeLinecap="round" strokeDasharray={s.da} strokeDashoffset={s.off} />
-                    <path d={s.d} fill="none" stroke="#FFFDF7" strokeOpacity={s.op} strokeWidth={1.25} strokeLinecap="round" strokeDasharray={s.da2} strokeDashoffset={s.off2} />
+                    <path d={s.d} fill="none" stroke="#22C573" strokeOpacity={s.gop} strokeWidth={3.5} strokeLinecap="round" strokeDasharray={s.da} strokeDashoffset={s.off} />
+                    <path d={s.d} fill="none" stroke="#5BE59A" strokeOpacity={s.op} strokeWidth={1.5} strokeLinecap="round" strokeDasharray={s.da} strokeDashoffset={s.off} />
+                    <path d={s.d} fill="none" stroke="#FFFDF7" strokeOpacity={s.op} strokeWidth={0.8} strokeLinecap="round" strokeDasharray={s.da2} strokeDashoffset={s.off2} />
                   </g>
                 ))}
               </svg>
@@ -306,8 +310,15 @@ const Bento = () => {
                     )}
                     style={{ ...box(G.src[i]), opacity: 0.25 + 0.75 * kc[i], transform: `scale(${lerp(0.92, 1, kc[i])})` }}
                   >
-                    <img src={s.icon} alt="" className={cn("h-[15px] w-[15px] object-contain", s.className)} />
-                    <span>{s.name}</span>
+                    {s.name === "Plaid" ? (
+                      <span className="inline-flex h-5 items-center rounded-full bg-forest px-2 min-[760px]:h-6 min-[760px]:px-2.5">
+                        <img src={plaidLogo} alt="" className="block h-[11px] w-auto min-[760px]:h-3.5" />
+                      </span>
+                    ) : s.name === "QuickBooks" ? (
+                      <img src={quickbooksLogo} alt="" className="block h-4 w-auto min-[760px]:h-5" />
+                    ) : (
+                      <span className="font-semibold">{s.name}</span>
+                    )}
                     <span
                       className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-primary-foreground"
                       style={{ transform: `scale(${ease((P - 0.14 - i * 0.03) / 0.04)})` }}
@@ -321,8 +332,7 @@ const Bento = () => {
                   className="absolute flex items-center justify-center gap-[5px] whitespace-nowrap rounded-[9px] border border-border bg-card text-[11.5px] text-foreground min-[760px]:gap-[7px] min-[760px]:text-[13px]"
                   style={{ ...box(G.outs[1]), opacity: 0.25 + 0.75 * kO[1], transform: `scale(${lerp(0.92, 1, kO[1])})` }}
                 >
-                  <img src={slackLogo} alt="" className="h-[15px] w-[15px]" />
-                  <span>Slack alert</span>
+                  <span className="font-semibold">Slack alert</span>
                 </div>
 
                 <div
@@ -376,10 +386,9 @@ const Bento = () => {
                       return (
                         <div
                           key={r.raw}
-                          className="grid h-[26px] grid-cols-[16px_minmax(0,1fr)_auto] items-center gap-2 border-t border-[#F1E6CB] min-[760px]:h-6"
+                          className="grid h-[26px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 border-t border-[#F1E6CB] min-[760px]:h-6"
                           style={{ opacity: kr, transform: `translateX(${((1 - kr) * -10).toFixed(1)}px)` }}
                         >
-                          <img src={plaidLogo} alt="" className="logo-on-light h-[13px] w-[13px] object-cover object-left" />
                           <div className="grid min-w-0">
                             <span
                               className="truncate font-mono text-[10.5px] text-muted-foreground [grid-area:1/1]"
@@ -405,39 +414,6 @@ const Bento = () => {
             </div>
           </div>
 
-          {/* The four facts: rails fill one per beat. Pinned phones show only
-              the active fact (the rail copy below); all four stay in the HTML
-              and the accessibility tree. Static, all four show everywhere. */}
-          <div className="mx-auto w-full max-w-[1040px]">
-            <ol className={cn("grid gap-2.5 min-[760px]:grid-cols-4 min-[760px]:gap-7", reduced ? "grid-cols-1 gap-4" : "grid-cols-4")}>
-              {FACTS.map((f, i) => (
-                <li key={f.lead} className="flex min-w-0 flex-col gap-2.5">
-                  <div aria-hidden className="h-0.5 overflow-hidden rounded-sm bg-border">
-                    <div className="h-full bg-foreground" style={{ width: `${(factFill[i] * 100).toFixed(1)}%` }} />
-                  </div>
-                  <p className={cn("text-pretty text-sm leading-[1.55]", reduced ? "block" : "hidden min-[760px]:block")}>
-                    <span className="mr-1.5 font-mono text-[11px] text-sage-dark">({i + 1})</span>
-                    <b className={cn("font-semibold transition-colors duration-300", reduced || i === activeFact ? "text-foreground" : "text-muted-foreground")}>{f.lead}</b>{" "}
-                    <span className="text-muted-foreground">{f.tail}</span>
-                  </p>
-                </li>
-              ))}
-            </ol>
-            <div className={cn("mt-3 grid min-[760px]:hidden", reduced && "hidden")}>
-              {FACTS.map((f, i) => (
-                <p
-                  key={f.lead}
-                  className={cn(
-                    "text-sm leading-[1.55] transition-[opacity,transform] duration-[400ms] [grid-area:1/1]",
-                    i === activeFact ? "translate-y-0 opacity-100" : i < activeFact ? "-translate-y-2 opacity-0" : "translate-y-2 opacity-0",
-                  )}
-                >
-                  <span className="mr-1.5 font-mono text-[11px] text-sage-dark">({i + 1})</span>
-                  <b className="font-semibold">{f.lead}</b> <span className="text-muted-foreground">{f.tail}</span>
-                </p>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </PinnedSection>
