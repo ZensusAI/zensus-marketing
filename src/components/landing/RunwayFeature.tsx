@@ -272,18 +272,20 @@ function ProductChart({ beat, p, step }: { beat: Beat; p: number; step: number }
       <p aria-hidden className={cn("mt-6 min-h-[18px] whitespace-nowrap text-xs font-medium leading-[1.4] transition-colors duration-300 min-[1024px]:hidden", cap ? "text-forest-foreground" : "text-forest-muted")}>
         {cap ?? "Weekly projected balance"}
       </p>
-      {/* Desktop: legend, dimming what the step does not show. */}
-      <div aria-hidden className="mt-10 hidden gap-[22px] text-xs font-medium text-forest-muted-strong min-[1024px]:flex">
-        <span className="flex items-center gap-[7px] transition-opacity duration-300" style={{ opacity: v.line ? 1 : 0.35 }}>
-          <span className="h-0.5 w-4 rounded-sm bg-sage-light" />
+      {/* Desktop: legend, dimming what the step does not show: the swatch
+          fades and the label turns the faint muted tone, which still reads at
+          5:1 on forest (fading the label too dropped it far below AA). */}
+      <div aria-hidden className="mt-10 hidden gap-[22px] text-xs font-medium min-[1024px]:flex">
+        <span className={cn("flex items-center gap-[7px] transition-colors duration-300", v.line ? "text-forest-muted-strong" : "text-forest-muted-faint")}>
+          <span className="transition-opacity duration-300 h-0.5 w-4 rounded-sm bg-sage-light" style={{ opacity: v.line ? 1 : 0.35 }} />
           Projected balance
         </span>
-        <span className="flex items-center gap-[7px] transition-opacity duration-300" style={{ opacity: v.scen ? 1 : 0.35 }}>
-          <span className="w-4 border-t-2 border-dashed border-[#E0A23A]" />
+        <span className={cn("flex items-center gap-[7px] transition-colors duration-300", v.scen ? "text-forest-muted-strong" : "text-forest-muted-faint")}>
+          <span className="transition-opacity duration-300 w-4 border-t-2 border-dashed border-[#E0A23A]" style={{ opacity: v.scen ? 1 : 0.35 }} />
           Scenario
         </span>
-        <span className="flex items-center gap-[7px] transition-opacity duration-300" style={{ opacity: v.floor ? 1 : 0.35 }}>
-          <span className="w-4 border-t-2 border-dashed border-[#E86A5A]" />
+        <span className={cn("flex items-center gap-[7px] transition-colors duration-300", v.floor ? "text-forest-muted-strong" : "text-forest-muted-faint")}>
+          <span className="transition-opacity duration-300 w-4 border-t-2 border-dashed border-[#E86A5A]" style={{ opacity: v.floor ? 1 : 0.35 }} />
           Floor
         </span>
       </div>
