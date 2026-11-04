@@ -73,7 +73,7 @@ describe("hero Cash flow card", () => {
 
   it("carries 26 weekly bars, 13 of them for phones", () => {
     const markup = render();
-    const bars = markup.match(/class="hero-bar[^"]*"/g) ?? [];
+    const bars: string[] = markup.match(/class="hero-bar[^"]*"/g) ?? [];
     expect(bars).toHaveLength(26);
     expect(bars.filter((b) => b.includes("max-[759px]:hidden"))).toHaveLength(13);
   });
