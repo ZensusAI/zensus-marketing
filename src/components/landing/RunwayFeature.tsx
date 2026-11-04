@@ -375,9 +375,12 @@ const Heading = () => (
   </>
 );
 
-// The chart is decorative; this table is its text alternative.
+// The chart is decorative; this table is its text alternative. The wrapper
+// is what hides it: a <table> ignores sr-only's 1px width and kept the page
+// 561px wide on phones.
 const DataTable = () => (
-  <table className="sr-only">
+  <div className="sr-only">
+  <table>
     <caption>Example weekly projected cash balance, week of Nov 3 to week of Jan 26</caption>
     <thead>
       <tr>
@@ -394,6 +397,7 @@ const DataTable = () => (
       ))}
     </tbody>
   </table>
+  </div>
 );
 
 const RunwayFeature = () => {

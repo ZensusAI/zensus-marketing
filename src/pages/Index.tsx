@@ -88,17 +88,17 @@ const Index = () => {
         {/* 18-hero-v2 proof strip (replaces 03-proof-strip), just below the
             fold. */}
         <TrustBar />
-        {/* 05-customer-story: redesigned. */}
+        {/* 19-customer-story-problem (41a): customer story. */}
         <CustomerStory />
-        {/* 06-problem: redesigned. */}
+        {/* 19-customer-story-problem (43a/44a): problem. */}
         <Problem />
-        {/* 07-runway-feature: redesigned (pinned). */}
+        {/* 20 (45a/46a): the cash flow product (pinned). */}
         <RunwayFeature />
-        {/* 08-sync: redesigned (pinned). */}
+        {/* 21 (16d revised): everything stays in sync (pinned). */}
         <Bento />
-        {/* 09-comparison: redesigned (pinned). */}
+        {/* 22 (48a/48b): how Zensus compares (pinned). */}
         <Comparison />
-        {/* 10-how-it-works: redesigned (pinned). */}
+        {/* 23 (49a/49b): how it works (pinned). */}
         <HowItWorks />
         {/* 11-faq: redesigned (search-first; keeps the FAQPage JSON-LD). */}
         <FAQ />
