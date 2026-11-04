@@ -1,107 +1,91 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Pause, Play, Volume2, VolumeX } from "lucide-react";
-import hubspotLogo from "@/assets/integrations/hubspot.svg";
 import { SITE_URL } from "@/lib/constants";
+import { EVENTS, track } from "@/lib/analytics/events";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
-import { useScrollProgress, type ScrollProgress } from "@/hooks/use-scroll-progress";
-import { clamp01, easeInOutCubic } from "@/lib/motion";
-import { cn } from "@/lib/utils";
 
 /*
- * Customer story from handoff 05-customer-story (locked 11a): a video
- * testimonial from Jameson Pitts beside a forest card on the feature he
- * mentions. Not pinned; scrubbed as the section scrolls in: the heading words
- * roll up, the video opens through a rounded clip-path window while settling
- * from a slight zoom, then the card slides in and its chips stagger in. The
- * play and sound buttons appear once the reveal completes. Values follow the handoff's
- * renderVals(). The G2 quote is not repeated here (it is in the proof strip).
+ * Customer story from handoff 19 (locked 41a, 4 Nov 2026), replacing 11a: one
+ * idea per screen, video first. A centred heading, the testimonial video
+ * (960x480 from 760px, 16:9 on phones) and a caption row naming the speaker
+ * and the feature he mentions, inside one <figure>. The feature card, chips
+ * and HubSpot description of 11a are gone; HubSpot is plain text (Zensus is
+ * not in the HubSpot Marketplace, so no logo).
  *
- * The video is muted autoplay while at least half of it is on screen, and it
- * loads only then (preload="none"). A pause button sits beside the sound
- * button (WCAG 2.2.2: looping motion needs a way to stop it), and a pause by
- * the viewer sticks until they press play. Both buttons are hidden (not just
- * transparent) until the reveal completes, so keyboard focus never lands on
- * an invisible control. Reduced motion: everything in its final place
- * (index.css, .story-*), and a click-to-play poster instead of autoplay.
+ * The video is muted autoplay while at least half of it is on screen and
+ * pauses when it leaves; it loads only once the section is near. Besides the
+ * handoff's sound pill there is a pause pill: the video loops for longer than
+ * five seconds, and WCAG 2.2.2 needs a way to stop it. A pause by the viewer
+ * sticks until they press play. Reduced motion: no autoplay, the poster with
+ * a play button.
+ *
+ * The cut is the handoff's new 13.8s video trimmed to 9.25s (4 Nov 2026, with
+ * the user): its end card showed the old marketing domain, so the video
+ * stops on the last studio frame. The captions are burned in; the transcript
+ * below repeats them so the testimonial is indexable.
  */
 
-// Self-hosted, with burned-in captions so muted playback stays legible. Kept in
-// public/demo/ and referenced by absolute path so Vite does not hash them.
+// Self-hosted, kept in public/demo/ and referenced by absolute path so Vite
+// does not hash them.
 const VIDEO_SRC = "/demo/product-demo.mp4";
+// The 1600px poster is the VideoObject thumbnail; the player shows the 1200px
+// file. A poster ignores loading="lazy", so it is set only once the section
+// nears the viewport; otherwise its bytes compete with the hero.
 const POSTER_SRC = "/demo/product-demo-poster.webp";
-// What the <video> shows: 1200px wide (the 1600px file stays for the
-// VideoObject thumbnail). A poster ignores loading="lazy", so it is only set
-// once the section nears the viewport; otherwise its bytes compete with the
-// hero on a slow first load.
 const POSTER_PLAYER_SRC = "/demo/product-demo-poster-1200.webp";
-const VIDEO_LABEL = "Video testimonial from Jameson Pitts, CEO of Sangfroid! Studios";
+const VIDEO_NAME = "Zensus customer story: Sangfroid! Studios on cash flow forecasting with HubSpot";
+// Read from the burned-in captions. The cut ends mid-sentence, as delivered.
+const TRANSCRIPT =
+  "One of my favorite features of Zensus is the HubSpot integration. Zensus automatically synced with HubSpot. It was plugged directly in,";
 
-// VideoObject makes the self-hosted testimonial a citable video entity for AI
-// engines and Google Video. The same customer's verified 5-star G2 review is a
-// Review node on SoftwareApplication in index.html.
+// VideoObject makes the self-hosted testimonial a citable video entity. No
+// Review or AggregateRating here: Google does not show star snippets for
+// reviews a business publishes about itself (handoff 19, SEO).
 const videoLd = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
-  name: "Zensus customer testimonial: Jameson Pitts, CEO of Sangfroid! Studios",
-  description: "Customer video testimonial for Zensus by Jameson Pitts, CEO of Sangfroid! Studios.",
+  name: VIDEO_NAME,
+  description: "Jameson Pitts, CEO of Sangfroid! Studios, on why the HubSpot integration is one of his favorite features of Zensus.",
   thumbnailUrl: `${SITE_URL}${POSTER_SRC}`,
   contentUrl: `${SITE_URL}${VIDEO_SRC}`,
   // Full ISO 8601 with an explicit offset: Google's VideoObject validator
-  // reports a bare date as an invalid datetime with no timezone.
-  uploadDate: "2026-07-21T00:00:00+00:00",
+  // reports a bare date as an invalid datetime with no timezone. The date of
+  // the current cut.
+  uploadDate: "2026-11-04T00:00:00+00:00",
   duration: "PT9S",
+  transcript: TRANSCRIPT,
 };
 
-const HEADING = "Hear it from a customer.";
-// HubSpot syncs invoices and subscriptions; it never reads deals (app code,
-// 2026-10-05), so the handoff's "Deals" chip is "Invoices" here.
-const CHIPS = ["Invoices", "Subscriptions", "Annual + quarterly contracts"];
-// The homepage FAQ's HubSpot answer, verbatim.
-const HUBSPOT_ANSWER =
-  "Zensus syncs your HubSpot subscriptions (including annual and quarterly contracts) so your cash flow projections reflect when revenue actually hits your bank, not just flat monthly estimates.";
-
-const NARROW_QUERY = "(max-width: 819px)";
-const easeOut = (t: number) => 1 - Math.pow(1 - clamp01(t), 3);
-const rise = (el: HTMLElement | null, k: number, px: number) => {
-  if (!el) return;
-  el.style.opacity = k.toFixed(3);
-  el.style.transform = `translateY(${((1 - k) * px).toFixed(1)}px)`;
-};
+const pill =
+  "relative inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-full bg-[rgba(15,28,22,.72)] px-3.5 text-[13px] font-medium text-forest-foreground backdrop-blur-[8px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white " +
+  // 44px hit area on phones without growing the pill.
+  "before:absolute before:-inset-1 before:content-[''] min-[760px]:before:hidden";
 
 const CustomerStory = () => {
   const reduced = usePrefersReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
-  const kicker = useRef<HTMLParagraphElement>(null);
-  const name = useRef<HTMLParagraphElement>(null);
-  const words = useRef<(HTMLSpanElement | null)[]>([]);
-  const shadow = useRef<HTMLDivElement>(null);
-  const clip = useRef<HTMLDivElement>(null);
-  const zoom = useRef<HTMLDivElement>(null);
-  const sound = useRef<HTMLDivElement>(null);
-  const card = useRef<HTMLDivElement>(null);
-  const chips = useRef<(HTMLSpanElement | null)[]>([]);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
   const [started, setStarted] = useState(false);
   const [paused, setPaused] = useState(true);
+  const [near, setNear] = useState(false);
   // Set when the viewer pauses, so scrolling back into view does not resume.
   const userPaused = useRef(false);
-  const [posterNear, setPosterNear] = useState(false);
 
   useEffect(() => {
     // Never in the prerendered HTML, where the parser would fetch it at once.
     if ((window as unknown as { __PRERENDER__?: boolean }).__PRERENDER__) return;
     const el = sectionRef.current;
     if (!el || typeof IntersectionObserver === "undefined") {
-      setPosterNear(true);
+      setNear(true);
       return;
     }
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
-          setPosterNear(true);
+          setNear(true);
           io.disconnect();
         }
       },
@@ -111,52 +95,12 @@ const CustomerStory = () => {
     return () => io.disconnect();
   }, []);
 
-  const onProgress = useCallback(({ entry: e }: ScrollProgress) => {
-    const narrow = window.matchMedia(NARROW_QUERY).matches;
-    rise(kicker.current, easeOut((e - 0.15) / 0.3), 10);
-    words.current.forEach((el, i) => {
-      if (!el) return;
-      const k = easeOut(((e - 0.2) / 0.35) * 1.6 - i * 0.12);
-      el.style.opacity = k.toFixed(3);
-      el.style.transform = `translateY(${((1 - k) * 110).toFixed(1)}%)`;
-    });
-    rise(name.current, easeOut((e - 0.4) / 0.3), 10);
-
-    const k = easeInOutCubic((e - 0.25) / 0.55);
-    if (clip.current) {
-      clip.current.style.clipPath = `inset(${((1 - k) * 16).toFixed(2)}% ${((1 - k) * (narrow ? 8 : 20)).toFixed(2)}% round ${(18 + (1 - k) * (narrow ? 14 : 40)).toFixed(1)}px)`;
-    }
-    if (zoom.current) zoom.current.style.transform = `scale(${(1 + (1 - k) * 0.25).toFixed(3)})`;
-    if (shadow.current) shadow.current.style.opacity = k.toFixed(3);
-    if (sound.current) {
-      const s = clamp01((k - 0.85) / 0.15);
-      sound.current.style.opacity = s.toFixed(3);
-      sound.current.style.pointerEvents = s > 0.5 ? "auto" : "none";
-      sound.current.style.visibility = s > 0 ? "visible" : "hidden";
-    }
-
-    const k2 = easeOut((e - 0.55) / 0.35);
-    if (card.current) {
-      card.current.style.opacity = k2.toFixed(3);
-      card.current.style.transform = narrow
-        ? `translateY(${((1 - k2) * 50).toFixed(1)}px)`
-        : `translateX(${((1 - k2) * 90).toFixed(1)}px)`;
-    }
-    const chipBase = (e - 0.75) / 0.2;
-    chips.current.forEach((el, i) => rise(el, easeOut(chipBase * 2 - i * 0.35), 10));
-  }, []);
-
-  useScrollProgress(sectionRef, { disabled: reduced, onProgress });
-
-  // Muted autoplay while at least half the video is on screen; pause when it
-  // leaves, so scrolling away also stops any sound the viewer turned on.
   useEffect(() => {
     const video = videoRef.current;
-    if (reduced || !video || typeof IntersectionObserver === "undefined") return;
+    if (!video || reduced || typeof IntersectionObserver === "undefined") return;
     const io = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[entries.length - 1];
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+      ([entry]) => {
+        if (entry.intersectionRatio >= 0.5) {
           if (!userPaused.current) video.play().catch(() => {});
         } else if (!video.paused) video.pause();
       },
@@ -170,6 +114,7 @@ const CustomerStory = () => {
     const video = videoRef.current;
     if (!video) return;
     video.muted = !video.muted;
+    if (!video.muted) track(EVENTS.CUSTOMER_STORY_SOUND_ON);
     if (video.paused) {
       userPaused.current = false;
       video.play().catch(() => {});
@@ -196,138 +141,99 @@ const CustomerStory = () => {
     video.play().catch(() => {});
   };
 
-  const headingWords = HEADING.split(" ");
-
   return (
     <section
       ref={sectionRef}
+      id="customer-story"
       aria-labelledby="customer-story-heading"
-      className="bg-background px-5 pb-8 pt-12 min-[820px]:px-8 min-[820px]:pb-14 min-[820px]:pt-[72px]"
+      className="flex flex-col items-center bg-background px-5 py-16 text-center min-[760px]:px-8 min-[760px]:py-24"
     >
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(videoLd)}</script>
       </Helmet>
-      <div className="mx-auto max-w-6xl">
-        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
-          <div>
-            <p ref={kicker} className="story-reveal text-sm font-semibold text-primary">
-              Customer story
-            </p>
-            {/* Real spaces between the word masks, so the heading reads as
-                "Hear it from a customer." to crawlers and screen readers. */}
-            <h2
-              id="customer-story-heading"
-              className="mt-3 text-[28px] font-bold leading-[1.1] tracking-[-0.02em] text-foreground min-[820px]:text-[40px]"
+      <p className="text-sm font-semibold text-primary min-[760px]:text-[15px]">Customer story</p>
+      <h2
+        id="customer-story-heading"
+        className="mt-3 text-balance text-[34px] font-bold leading-[1.05] tracking-[-0.035em] text-foreground min-[760px]:text-[44px] min-[1024px]:text-[52px]"
+      >
+        Hear it from a customer.
+      </h2>
+
+      <figure className="mt-8 w-full max-w-[960px] text-left min-[760px]:mt-10">
+        {/* The box reserves the video's space before anything loads (no CLS):
+            16:9 on phones, the handoff's 960x480 from 760px. */}
+        <div className="relative aspect-video w-full overflow-hidden rounded-[20px] bg-forest shadow-[0_40px_80px_-40px_rgba(15,28,22,.55)] min-[760px]:aspect-[2/1]">
+          <video
+            ref={videoRef}
+            src={VIDEO_SRC}
+            poster={near ? POSTER_PLAYER_SRC : undefined}
+            muted
+            loop={!reduced}
+            playsInline
+            preload={near ? "metadata" : "none"}
+            title={VIDEO_NAME}
+            aria-label={VIDEO_NAME}
+            onVolumeChange={(ev) => setMuted(ev.currentTarget.muted)}
+            onPlaying={() => {
+              setStarted(true);
+              setPaused(false);
+            }}
+            onPause={() => setPaused(true)}
+            // The 2:1 box crops 60px of a 16:9 frame; take it from the top
+            // (headroom) so the burned-in captions at the bottom stay whole.
+            className="absolute inset-0 h-full w-full object-cover object-bottom"
+          />
+          {reduced && !started ? (
+            <button
+              type="button"
+              onClick={playWithSound}
+              aria-label={`Play ${VIDEO_NAME}`}
+              className="absolute inset-0 z-[2] flex items-center justify-center bg-black/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
             >
-              {headingWords.map((word, i) => (
-                <Fragment key={i}>
-                  {i > 0 && " "}
-                  <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                    <span ref={(el) => (words.current[i] = el)} className="story-reveal inline-block">
-                      {word}
-                    </span>
-                  </span>
-                </Fragment>
-              ))}
-            </h2>
-          </div>
-          <p ref={name} className="story-reveal text-[15px] text-muted-foreground">
-            <span className="font-semibold text-foreground">Jameson Pitts</span>, CEO of Sangfroid! Studios
-          </p>
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-card shadow-lg">
+                <Play aria-hidden className="ml-0.5 h-7 w-7 fill-current text-foreground" />
+              </span>
+            </button>
+          ) : (
+            <div className="absolute right-4 top-4 z-[2] flex gap-2">
+              <button type="button" onClick={togglePlay} className={pill}>
+                {paused ? <Play aria-hidden size={15} /> : <Pause aria-hidden size={15} />}
+                {paused ? "Play" : "Pause"}
+              </button>
+              {/* The visible text is the accessible name (WCAG 2.5.3). */}
+              <button type="button" onClick={toggleSound} aria-pressed={!muted} className={pill}>
+                {muted ? <VolumeX aria-hidden size={15} /> : <Volume2 aria-hidden size={15} />}
+                {muted ? "Tap for sound" : "Sound on"}
+              </button>
+            </div>
+          )}
         </div>
 
-        <div className="mt-8 grid items-center gap-5 min-[820px]:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-          <div className="relative aspect-video w-full self-start">
-            <div ref={shadow} aria-hidden className="story-reveal absolute inset-0 rounded-[18px] shadow-[0_30px_60px_-30px_rgba(26,42,40,.45)]" />
-            <div ref={clip} className="story-clip absolute inset-0 overflow-hidden rounded-[18px] border border-border bg-forest">
-              <div ref={zoom} className="story-still absolute inset-0">
-                <video
-                  ref={videoRef}
-                  src={VIDEO_SRC}
-                  poster={posterNear ? POSTER_PLAYER_SRC : undefined}
-                  muted
-                  loop={!reduced}
-                  playsInline
-                  preload="none"
-                  aria-label={VIDEO_LABEL}
-                  onVolumeChange={(ev) => setMuted(ev.currentTarget.muted)}
-                  onPlaying={() => {
-                    setStarted(true);
-                    setPaused(false);
-                  }}
-                  onPause={() => setPaused(true)}
-                  className="absolute inset-0 h-full w-full bg-black object-cover"
-                />
-              </div>
-              {reduced ? (
-                !started && (
-                  <button
-                    type="button"
-                    onClick={playWithSound}
-                    aria-label={`Play ${VIDEO_LABEL.toLowerCase()}`}
-                    className="absolute inset-0 z-[2] flex items-center justify-center bg-black/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
-                  >
-                    <span className="flex h-16 w-16 items-center justify-center rounded-full bg-card shadow-lg">
-                      <Play aria-hidden className="ml-0.5 h-7 w-7 fill-current text-foreground" />
-                    </span>
-                  </button>
-                )
-              ) : (
-                <div ref={sound} className="story-sound invisible absolute right-3 top-3 z-[2] flex gap-1.5 opacity-0 transition-opacity duration-300">
-                  <button
-                    type="button"
-                    onClick={togglePlay}
-                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-black/75 px-3 py-1.5 text-xs font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                  >
-                    {paused ? <Play aria-hidden size={14} /> : <Pause aria-hidden size={14} />}
-                    {paused ? "Play" : "Pause"}
-                  </button>
-                  {/* The visible text is the accessible name (WCAG 2.5.3). */}
-                  <button
-                    type="button"
-                    onClick={toggleSound}
-                    aria-pressed={!muted}
-                    className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-black/75 px-3 py-1.5 text-xs font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                  >
-                    {muted ? <VolumeX aria-hidden size={14} /> : <Volume2 aria-hidden size={14} />}
-                    Sound
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+        <figcaption className="mt-6 flex flex-col gap-2 text-[15px] text-muted-foreground min-[760px]:flex-row min-[760px]:items-center min-[760px]:justify-between min-[760px]:gap-6">
+          <span>
+            <span className="font-semibold text-foreground">Jameson Pitts</span>, CEO, Sangfroid! Studios
+          </span>
+          <span className="flex flex-wrap items-center gap-x-3.5 gap-y-1">
+            <span>
+              The feature he mentions: <span className="font-semibold text-foreground">HubSpot integration</span>
+            </span>
+            <Link
+              to="/integrations/hubspot"
+              onClick={() => track(EVENTS.CUSTOMER_STORY_FEATURE_LINK)}
+              className="rounded-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              How the HubSpot integration works →
+            </Link>
+          </span>
+        </figcaption>
 
-          <div ref={card} className="story-reveal flex min-[820px]:min-h-full">
-            <div className="flex flex-1 flex-col gap-3 rounded-[18px] bg-forest p-5 text-forest-foreground min-[820px]:gap-3.5 min-[820px]:p-[26px]">
-              <p className="text-sm font-semibold text-sage-light">The feature he mentions</p>
-              <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-card">
-                  <img src={hubspotLogo} alt="" width={24} height={24} className="h-6 w-6" />
-                </span>
-                <h3 className="text-xl font-bold tracking-[-0.02em]">HubSpot integration</h3>
-              </div>
-              <p className="text-pretty text-sm leading-[1.6] text-forest-muted min-[820px]:text-[14.5px]">{HUBSPOT_ANSWER}</p>
-              <ul className="mt-auto flex flex-wrap gap-1.5">
-                {CHIPS.map((chip, i) => (
-                  <li
-                    key={chip}
-                    ref={(el) => (chips.current[i] = el)}
-                    className="story-reveal whitespace-nowrap rounded-md border border-forest-border px-[9px] py-[5px] font-mono text-[11px] text-forest-muted-strong"
-                  >
-                    {chip}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                to="/integrations/hubspot"
-                className="rounded text-sm font-semibold text-sage-light hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light"
-              >
-                How the HubSpot integration works →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+        <details className="mt-4 text-[15px] text-muted-foreground">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 rounded-sm font-medium text-foreground underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background [&::-webkit-details-marker]:hidden">
+            Read transcript
+          </summary>
+          <p className="mt-2 max-w-[640px] text-pretty leading-[1.55]">&ldquo;{TRANSCRIPT}&rdquo;</p>
+        </details>
+      </figure>
     </section>
   );
 };

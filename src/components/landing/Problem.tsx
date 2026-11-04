@@ -1,23 +1,32 @@
-import { Fragment, useCallback, useRef, type CSSProperties } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
-import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
-import { useScrollProgress } from "@/hooks/use-scroll-progress";
-import { clamp01 } from "@/lib/motion";
+import { EVENTS, track } from "@/lib/analytics/events";
+import { cn } from "@/lib/utils";
 
 /*
- * Problem section from handoff 06-problem (locked 13b): a stat-led problem
- * for owners, fractional CFOs and finance leaders. Not pinned. Everything
- * starts as a faint blurred ghost and sharpens as it enters: the headline
- * words focus in sequence and a green underline draws under "week six.", and
- * each column's stat rolls like an odometer to its value. Values follow the
- * handoff's renderVals() (variant b). Columns: 4 from 1100px, 2 from 760px,
- * 1 below (the handoff's own switches).
+ * Problem section from handoff 19 (locked 43a desktop, 44a mobile, 4 Nov
+ * 2026), replacing 13b. One screen, not pinned: "Which sounds like your
+ * week?" with the four live problems. From 760px they are tabs beside a
+ * forest panel showing the picked one; below 760px they are an accordion
+ * whose open card turns forest.
  *
- * Every stat is checked against its source; see
- * docs/problem-section-stats-2026-10-21.md (the 96% line is corrected there).
- * The odometer's digit reels are CSS-generated content, so the text a crawler
- * reads is the real figure ("39%"), not ten digits per reel.
- * Reduced motion: final state in CSS (index.css, .problem-*).
+ * One DOM serves both layouts, so every title, stat, line, body, guide link
+ * and source is in the prerendered HTML exactly once. Each item is a wrapper
+ * (the accordion card on phones) holding a button and its body; from 760px
+ * the wrapper is display: contents, so buttons stack in the left column and
+ * all four bodies share the right column's grid cell, with only the selected
+ * one displayed (index.css, .problem-*). Phones collapse closed bodies with
+ * CSS, not by removing them.
+ *
+ * Copy is verbatim from the live section (13b). Every stat is checked against
+ * its source; see docs/problem-section-stats-2026-10-21.md (the 96% line is
+ * corrected there). The subhead's "cash answer" became "cash flow forecast"
+ * (approved in the handoff, 4 Nov 2026).
+ *
+ * Semantics are an accordion (button aria-expanded + region) at every width,
+ * with arrow keys between headers. The handoff asks for tabs from 760px, but
+ * a tablist cannot contain its panels, and the single DOM puts each panel
+ * beside its button.
  */
 
 const QB = "https://quickbooks.intuit.com/r/small-business-data/small-business-late-payments-report-2026/";
@@ -68,203 +77,153 @@ const CARDS = [
   },
 ];
 
-const WORDS = "The balance tells you today. Every decision is about week six.".split(" ");
-const UNDERLINED_FROM = 9; // "week six."
-
-const easeOut = (t: number) => 1 - Math.pow(1 - clamp01(t), 3);
-const st = (k: number, s: number, d: number) => easeOut((k - s) / d);
-// Faint blurred ghost to sharp: opacity from a floor, blur down to 0. Once
-// sharp, the filter is removed entirely (a leftover blur(0px) still costs a
-// filter layer on every frame).
-const ghost = (el: HTMLElement | null, k: number, floor: number, blur: number) => {
-  if (!el) return;
-  el.style.opacity = (floor + (1 - floor) * k).toFixed(3);
-  el.style.filter = k >= 0.999 ? "" : `blur(${((1 - k) * blur).toFixed(2)}px)`;
-};
-
-type CardRefs = {
-  col: HTMLDivElement | null;
-  rule: HTMLDivElement | null;
-  stat: HTMLSpanElement | null;
-  line: HTMLParagraphElement | null;
-  divider: HTMLDivElement | null;
-  title: HTMLHeadingElement | null;
-  body: HTMLParagraphElement | null;
-  src: HTMLDivElement | null;
-};
+const WIDE = "(min-width: 760px)";
 
 const Problem = () => {
-  const reduced = usePrefersReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const head = useRef<HTMLDivElement>(null);
-  const kicker = useRef<HTMLParagraphElement>(null);
-  const words = useRef<(HTMLSpanElement | null)[]>([]);
-  const sub = useRef<HTMLParagraphElement>(null);
-  const foot = useRef<HTMLParagraphElement>(null);
-  const cards = useRef<CardRefs[]>(CARDS.map(() => ({ col: null, rule: null, stat: null, line: null, divider: null, title: null, body: null, src: null })));
+  const base = useId();
+  // Desktop always shows one item; phones may close them all. `open` is the
+  // phone state, `shown` what the desktop panel shows (the last pick).
+  const [open, setOpen] = useState<number | null>(0);
+  const [shown, setShown] = useState(0);
+  // From 760px one item is always shown (a pick cannot close it); below,
+  // tapping the open card closes it. The prerender is wide.
+  const [wide, setWide] = useState(true);
+  const seen = useRef(new Set([0]));
+  const [seenCount, setSeenCount] = useState(1);
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // Each piece is driven by its own position in the viewport, as in the
-  // handoff (head and each column enter on their own schedule). Every rect is
-  // read before any style is written, so the frame forces one layout, not one
-  // per card.
-  const onFrame = useCallback(() => {
-    const vh = window.innerHeight;
-    const per = window.innerWidth < 760 ? 1 : window.innerWidth < 1100 ? 2 : 4;
-    const rel = (el: Element | null) => (el ? el.getBoundingClientRect().top : vh);
-    const headTop = rel(head.current);
-    const colTops = cards.current.map((c) => rel(c.col));
-
-    const hk = clamp01((vh - headTop - vh * 0.08) / (vh * 0.45));
-    if (kicker.current) {
-      const k = st(hk, 0, 0.3);
-      kicker.current.style.opacity = k.toFixed(3);
-      kicker.current.style.transform = `translateY(${((1 - k) * 10).toFixed(1)}px)`;
-    }
-    const u = st(hk, 0.7, 0.3);
-    words.current.forEach((el, i) => {
-      if (!el) return;
-      ghost(el, st(hk * 1.5 - i * 0.05, 0, 0.35), 0.12, 10);
-      if (i >= UNDERLINED_FROM) el.style.backgroundSize = `${(u * 100).toFixed(1)}% 0.12em`;
-    });
-    ghost(sub.current, st(hk, 0.45, 0.4), 0.15, 8);
-
-    let lastK = 0;
-    cards.current.forEach((c, i) => {
-      const raw = clamp01((vh - colTops[i] - vh * 0.06) / (vh * 0.5));
-      const lag = per > 1 ? (i % per) * 0.12 : 0;
-      const k = clamp01((raw - lag) / (1 - lag * 1.2));
-      if (i === CARDS.length - 1) lastK = k;
-      const g = (s: number) => st(k, s, 0.45);
-      if (c.rule) c.rule.style.transform = `scaleX(${st(k, 0, 0.5).toFixed(3)})`;
-      if (c.stat) {
-        c.stat.style.setProperty("--roll", easeOut(clamp01(k / 0.75)).toFixed(3));
-        ghost(c.stat, g(0), 0.15, 6);
-      }
-      ghost(c.line, g(0.1), 0.12, 6);
-      if (c.divider) c.divider.style.transform = `scaleX(${st(k, 0.2, 0.4).toFixed(3)})`;
-      ghost(c.title, g(0.25), 0.12, 6);
-      ghost(c.body, g(0.35), 0.12, 6);
-      if (c.src) c.src.style.opacity = g(0.5).toFixed(3);
-    });
-    if (foot.current) foot.current.style.opacity = st(lastK, 0.6, 0.4).toFixed(3);
+  useEffect(() => {
+    const mq = window.matchMedia(WIDE);
+    const sync = () => setWide(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
-  useScrollProgress(sectionRef, { disabled: reduced, onProgress: onFrame });
+  const pick = (i: number) => {
+    const closing = !wide && open === i;
+    setOpen(closing ? null : i);
+    setShown(i);
+    if (closing) return;
+    track(EVENTS.PROBLEM_PICK, { item: i + 1, viewport: wide ? "desktop" : "mobile" });
+    if (!seen.current.has(i)) {
+      seen.current.add(i);
+      setSeenCount(seen.current.size);
+      if (seen.current.size === CARDS.length) track(EVENTS.PROBLEM_EXPLORED_ALL);
+    }
+  };
+
+  // Arrow keys move between the headers (the accordion pattern allows it);
+  // from 760px they also select, like tabs.
+  const onKey = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
+    const last = CARDS.length - 1;
+    const next =
+      e.key === "ArrowDown" || e.key === "ArrowRight"
+        ? (i === last ? 0 : i + 1)
+        : e.key === "ArrowUp" || e.key === "ArrowLeft"
+          ? (i === 0 ? last : i - 1)
+          : e.key === "Home"
+            ? 0
+            : e.key === "End"
+              ? last
+              : null;
+    if (next === null) return;
+    e.preventDefault();
+    tabs.current[next]?.focus();
+    if (wide) pick(next);
+  };
 
   return (
     <section
-      ref={sectionRef}
-      id="problem"
-      aria-labelledby="problem-heading"
-      className="bg-background px-5 py-16 min-[760px]:px-8 min-[760px]:py-24"
+      id="cash-flow-problems"
+      aria-labelledby={`${base}-h`}
+      className="problem-grid relative mx-auto bg-background px-5 py-16 min-[760px]:grid min-[760px]:min-h-[640px] min-[760px]:max-w-[1280px] min-[760px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] min-[760px]:grid-rows-[1fr_auto_auto_auto_auto_auto_1fr] min-[760px]:gap-x-10 min-[760px]:px-8 min-[760px]:py-24 min-[1024px]:gap-x-16 min-[1280px]:grid-cols-[minmax(0,1fr)_minmax(0,560px)]"
     >
-      <div className="mx-auto max-w-6xl">
-        <div ref={head} className="max-w-[780px]">
-          <p ref={kicker} className="problem-reveal text-sm font-semibold text-primary">
-            The problem
+      <div className="min-[760px]:col-start-1 min-[760px]:row-start-2">
+        <p className="text-sm font-semibold text-primary min-[760px]:text-[15px]">The problem</p>
+        <h2
+          id={`${base}-h`}
+          className="mt-2.5 text-balance text-[32px] font-bold leading-[1.08] tracking-[-0.03em] text-foreground min-[760px]:mt-4 min-[760px]:text-[40px] min-[760px]:leading-[1.06] min-[760px]:tracking-[-0.035em] min-[1024px]:text-[48px]"
+        >
+          The balance tells you today. Every decision is about{" "}
+          <span className="underline decoration-primary decoration-4 underline-offset-[6px] min-[760px]:decoration-[5px] min-[760px]:underline-offset-8">
+            week six.
+          </span>
+        </h2>
+        <p className="mt-3.5 max-w-[500px] text-pretty text-base leading-[1.5] text-muted-foreground min-[760px]:mt-5 min-[760px]:text-[17px] min-[760px]:leading-[1.55]">
+          Whether you run the company or advise it, the cash flow forecast still comes from exports and a spreadsheet
+          that's out of date by Friday.
+        </p>
+        <div className="mt-6 flex items-baseline justify-between gap-3 min-[760px]:mb-3 min-[760px]:mt-8">
+          <p id={`${base}-q`} className="text-[15px] font-semibold text-foreground">
+            Which sounds like your week?
           </p>
-          <h2
-            id="problem-heading"
-            className="mt-3.5 text-[30px] font-bold leading-[1.1] tracking-[-0.025em] text-foreground min-[760px]:text-[46px]"
-          >
-            {WORDS.map((word, i) => (
-              <Fragment key={i}>
-                {i > 0 && " "}
-                <span className="inline-block pb-[0.1em] align-bottom">
-                  <span
-                    ref={(el) => (words.current[i] = el)}
-                    className={
-                      i >= UNDERLINED_FROM
-                        ? "problem-ghost problem-underline inline-block bg-[linear-gradient(#22C573,#22C573)] bg-[length:0%_0.12em] bg-[position:0_92%] bg-no-repeat"
-                        : "problem-ghost inline-block"
-                    }
-                  >
-                    {word}
-                  </span>
-                </span>
-              </Fragment>
-            ))}
-          </h2>
-          <p
-            ref={sub}
-            className="problem-ghost mt-[18px] max-w-[620px] text-pretty text-lg leading-[1.55] text-muted-foreground"
-          >
-            Whether you run the company or advise it, the cash answer still comes from exports and a spreadsheet that's out
-            of date by Friday.
-          </p>
+          <span className="text-[12.5px] text-muted-foreground min-[760px]:hidden" aria-live="polite">
+            {seenCount} of {CARDS.length} explored
+          </span>
         </div>
+      </div>
 
-        <div className="mt-12 grid grid-cols-1 min-[760px]:grid-cols-2 min-[1100px]:grid-cols-4">
-          {CARDS.map((card, i) => {
-            const r = cards.current[i];
-            const digits = String(card.n).split("");
-            return (
-              <div
-                key={card.n}
-                ref={(el) => (r.col = el)}
-                className={[
-                  "relative flex flex-col gap-3 py-6 min-[760px]:px-6 min-[760px]:py-7",
-                  // Rule between columns, never before the first in a row.
-                  i % 2 === 1 ? "min-[760px]:border-l min-[760px]:border-border" : "",
-                  i === 2 ? "min-[1100px]:border-l min-[1100px]:border-border" : "",
-                ].join(" ")}
-              >
-                <div ref={(el) => (r.rule = el)} aria-hidden className="problem-scale absolute inset-x-0 top-0 h-px origin-left bg-foreground" />
-                <span
-                  ref={(el) => (r.stat = el)}
-                  style={{ "--roll": 0 } as CSSProperties}
-                  className="problem-ghost problem-stat flex text-[44px] font-semibold leading-none tracking-[-0.04em] text-sage-dark tabular-nums min-[760px]:text-[52px]"
+      <div className="mt-3 flex flex-col gap-2 min-[760px]:contents">
+        {CARDS.map((card, i) => {
+          const isOpen = wide ? shown === i : open === i;
+          const btnId = `${base}-t${i}`;
+          const bodyId = `${base}-p${i}`;
+          return (
+            <div key={card.title} data-open={isOpen || undefined} className="problem-item">
+              <h3 className="m-0 min-[760px]:col-start-1" style={{ gridRowStart: i + 3 }}>
+                <button
+                  ref={(el) => (tabs.current[i] = el)}
+                  id={btnId}
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={bodyId}
+                  onClick={() => pick(i)}
+                  onKeyDown={(e) => onKey(e, i)}
+                  className="problem-tab flex min-h-[52px] w-full items-center justify-between gap-3 px-4 py-3.5 text-left text-[15px] font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
                 >
-                  <span className="sr-only">{card.n}%</span>
-                  <span aria-hidden className="flex">
-                    {digits.map((d, j) => (
-                      <span key={j} className="inline-block h-[1em] overflow-hidden">
-                        <span style={{ "--d": d } as CSSProperties} className="problem-reel block" />
-                      </span>
-                    ))}
-                    <span className="problem-pct" />
-                  </span>
-                </span>
-                <p ref={(el) => (r.line = el)} className="problem-ghost text-pretty text-sm leading-[1.5] text-foreground">
-                  {card.statLine}
-                </p>
-                <div ref={(el) => (r.divider = el)} aria-hidden className="problem-scale my-1.5 h-px origin-left bg-border" />
-                <h3 ref={(el) => (r.title = el)} className="problem-ghost text-lg font-semibold leading-[1.3] tracking-[-0.01em] text-foreground">
                   {card.title}
-                </h3>
-                <p ref={(el) => (r.body = el)} className="problem-ghost text-pretty text-[15px] leading-[1.55] text-muted-foreground">
-                  {card.body}
-                </p>
-                {/* The guide that goes deeper, then the stat's source.
-                    !opacity: a keyboard focus is never left on a faded link. */}
-                <div ref={(el) => (r.src = el)} className="problem-reveal mt-auto flex flex-col gap-2 pt-1.5 focus-within:!opacity-100">
-                  <Link
-                    to={card.guide.to}
-                    className="w-fit rounded-sm text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                  >
-                    {card.guide.label} →
-                  </Link>
-                  <a
-                    href={card.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-fit rounded-sm font-mono text-[11px] tracking-[0.04em] text-muted-foreground hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                  >
-                    {card.src}{"\u00a0"}↗
-                  </a>
+                  <span aria-hidden className="problem-icon shrink-0 text-lg leading-none" />
+                </button>
+              </h3>
+              <div
+                id={bodyId}
+                role="region"
+                aria-labelledby={btnId}
+                className="problem-body"
+              >
+                <div className="problem-body-inner">
+                  <div className="problem-body-content">
+                    <p className="m-0 text-[72px] font-semibold leading-[.9] tracking-[-0.05em] text-sage-light min-[760px]:text-[96px] min-[1024px]:text-[120px]">
+                      {card.n}%
+                    </p>
+                    <p className="mt-3 text-pretty text-base leading-[1.45] text-forest-foreground min-[760px]:mt-5 min-[760px]:text-[19px] min-[760px]:leading-[1.4] min-[1024px]:text-[21px]">
+                      {card.statLine}
+                    </p>
+                    <p className="mt-3 border-t border-forest-border pt-3 text-pretty text-sm leading-[1.5] text-forest-muted-strong min-[760px]:mt-6 min-[760px]:pt-5 min-[760px]:text-base min-[760px]:leading-[1.55]">
+                      {card.body}
+                    </p>
+                    <Link
+                      to={card.guide.to}
+                      onClick={() => track(EVENTS.PROBLEM_GUIDE_CLICK, { item: i + 1 })}
+                      className="mt-3.5 flex min-h-[44px] items-center text-[15px] font-semibold text-sage-light underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light focus-visible:ring-offset-2 focus-visible:ring-offset-forest min-[760px]:mt-6 min-[760px]:inline-flex min-[760px]:min-h-0 min-[760px]:text-base"
+                    >
+                      {card.guide.label}
+                    </Link>
+                    <a
+                      href={card.url}
+                      target="_blank"
+                      rel="noopener"
+                      className="flex min-h-[24px] items-center self-start text-xs text-forest-muted underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-light min-[760px]:mt-4 min-[760px]:text-[13px]"
+                    >
+                      {card.src} ↗<span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
-
-        <p ref={foot} className="problem-reveal mt-9 text-sm text-muted-foreground focus-within:!opacity-100">
-          Annual contracts, seasonal income, late-paying clients:{" "}
-          <Link to="/use-cases" className="font-medium text-primary underline-offset-4 hover:underline">
-            see who uses Zensus and what it solves
-          </Link>
-          .
-        </p>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

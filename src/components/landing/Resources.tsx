@@ -41,7 +41,15 @@ const TOOLS: ResourceLink[] = [
 // and HubSpot timing. The QuickBooks Online product page sits beside the QuickBooks guide: it was in the navbar and footer only, and
 // those links are not in-content, so the homepage passed it nothing while it
 // drew QuickBooks forecasting searches (Search Console, Oct 2026).
+// The use-cases page leads the list: its homepage link used to be the line
+// under the Problem section, which handoff 19 (43a) removed (4 Nov 2026),
+// and the homepage must still link to it (internal-links.test.ts).
 const GUIDES: ResourceLink[] = [
+  {
+    to: "/use-cases",
+    label: "Who uses Zensus",
+    description: "Annual contracts, seasonal income, late-paying clients: what it solves.",
+  },
   {
     to: "/blog/what-is-cash-flow-forecasting",
     label: "What is cash flow forecasting?",
@@ -115,7 +123,7 @@ const ResourceList = ({ title, items }: { title: string; items: ResourceLink[] }
 );
 
 const Resources = () => (
-  <section id="resources" className="section-padding scroll-mt-28 bg-background">
+  <section id="resources" className="scroll-mt-28 bg-background py-16 min-[760px]:py-24">
     {/* The redesigned sections' gutter (20px, 32px from 760px), not the
         shared section-container's 16px. */}
     <div className="mx-auto max-w-7xl px-5 min-[760px]:px-8">

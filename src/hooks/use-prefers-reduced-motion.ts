@@ -49,3 +49,20 @@ export function useWide820(): boolean {
 export function useStaticPins(): boolean {
   return useSyncExternalStore(staticPinsStore.subscribe, staticPinsStore.getSnapshot, getServerSnapshot);
 }
+
+const isPrerender = () =>
+  typeof window !== "undefined" && (window as unknown as { __PRERENDER__?: boolean }).__PRERENDER__ === true;
+
+/**
+ * useStaticPins for the pinned sections whose steps are React state rather
+ * than the --p CSS variable (RunwayFeature, Comparison, HowItWorks). The
+ * .pin-track media query cannot show their end state before the app bundle
+ * runs, so the prerender captures their static layout instead: every step and
+ * link visible, for crawlers, for short or reduced-motion screens until the app
+ * starts, and if it never does. The app then renders them pinned where the
+ * viewport allows. The bundle starts after the first paint, so on a tall
+ * screen the switch happens below the fold.
+ */
+export function useStaticPinsOrPrerender(): boolean {
+  return useStaticPins() || isPrerender();
+}

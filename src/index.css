@@ -519,50 +519,159 @@
   }
 }
 
-/* Customer story (CustomerStory.tsx) under reduced motion: everything in its
-   final place before and after hydration. .story-reveal content shows flat,
-   the video window is fully open, and nothing is zoomed. */
-@media (prefers-reduced-motion: reduce) {
-  .story-reveal {
-    opacity: 1 !important;
-    transform: none !important;
+/* Section rhythm: the homepage sections are 64px apart from their content on
+   phones and 96px from 760px (py-16, min-[760px]:py-24), so about 128px and
+   192px separate one section's content from the next. A pinned stage centres
+   its content in the screen from 1024px, which already leaves that much empty
+   space above and below it, so there a pinned section starts early (96px on a 900px screen), into
+   the padding of the section above (or the empty bottom of the stage above).
+   Pinned sections carry no background of their own, so the overlap never
+   hides anything. Static (reduced motion, short screens) none of this
+   applies, and the sync section takes the same padding as the rest (with
+   .pin-track for specificity: the min-[760px] utilities come later). */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) and (min-height: 720px) {
+  .pin-overlap {
+    /* 96px at 900px tall. A stage's empty space shrinks with the screen, so
+       the overlap does too, down to none at 708px. */
+    margin-top: min(0px, calc(354px - 50vh));
   }
-  .story-clip {
-    clip-path: none !important;
+}
+@media (prefers-reduced-motion: reduce), (max-height: 719px) {
+  .pin-track .sync-pad {
+    padding-top: 64px;
+    padding-bottom: 64px;
   }
-  .story-still {
-    transform: none !important;
+  @media (min-width: 760px) {
+    .pin-track .sync-pad {
+      padding-top: 96px;
+      padding-bottom: 96px;
+    }
   }
 }
 
-/* Problem section (Problem.tsx). Odometer reels: each reel is a column of the
-   digits 0-9 drawn as generated content (not DOM text, so crawlers read only
-   the real figure in the sr-only span), moved up by --d digits as --roll goes
-   0 to 1. Reduced motion: the final state before and after hydration. */
-.problem-reel {
-  transform: translateY(calc(var(--roll, 0) * var(--d, 0) * -1em));
+/* Problem section (Problem.tsx, handoff 19: 43a desktop, 44a mobile).
+   Phones: accordion cards; the open card turns forest and its body opens by
+   animating grid rows 0fr to 1fr (450ms). Closed bodies stay in the DOM,
+   collapsed and hidden from assistive tech with visibility. From 760px each
+   card is display: contents: headers stack in the left column, every body
+   sits in the right column's one grid cell, and only the shown one displays,
+   fading up 12px when it changes. Reduced motion: instant. */
+.problem-item {
+  border: 1px solid hsl(var(--border));
+  border-radius: 14px;
+  background: hsl(var(--card));
+  overflow: hidden;
+  transition: background-color .3s, border-color .3s;
 }
-.problem-reel::before {
-  content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9";
-  display: block;
-  white-space: pre;
-  line-height: 1em;
+.problem-item[data-open] {
+  background: hsl(var(--forest));
+  border-color: hsl(var(--forest));
+}
+.problem-item[data-open] .problem-tab {
+  color: hsl(var(--forest-foreground));
+}
+.problem-icon::before {
+  content: "+";
+  color: hsl(var(--sage-dark));
+}
+.problem-item[data-open] .problem-icon::before {
+  content: "\2212";
+  color: hsl(var(--sage-light));
+}
+.problem-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows .45s cubic-bezier(.22, 1, .36, 1), visibility 0s .45s;
+}
+.problem-item[data-open] .problem-body {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows .45s cubic-bezier(.22, 1, .36, 1), visibility 0s;
+}
+.problem-body-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+.problem-body-content {
+  padding: 0 16px 18px;
+}
+
+@media (min-width: 760px) {
+  .problem-item {
+    display: contents;
+  }
+  .problem-tab {
+    max-width: 520px;
+    margin-bottom: 8px;
+    padding: 14px 18px;
+    min-height: 0;
+    border: 1px solid hsl(var(--border));
+    border-radius: 12px;
+    background: hsl(var(--card));
+    transition: border-color .25s, background-color .25s;
+  }
+  .problem-tab:hover {
+    border-color: hsl(var(--primary));
+  }
+  .problem-item[data-open] .problem-tab {
+    color: hsl(var(--foreground));
+    border-color: hsl(var(--primary));
+    background: #EEF7EC;
+  }
+  .problem-icon::before,
+  .problem-item[data-open] .problem-icon::before {
+    content: "\2192";
+    color: hsl(var(--sage-dark));
+  }
+  .problem-icon {
+    opacity: 0;
+    transition: opacity .25s;
+  }
+  .problem-item[data-open] .problem-icon {
+    opacity: 1;
+  }
+  .problem-body {
+    display: none;
+    grid-column: 2;
+    grid-row: 1 / -1;
+    background: hsl(var(--forest));
+    visibility: visible;
+    transition: none;
+  }
+  .problem-item[data-open] .problem-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 40px;
+    border-radius: 24px;
+  }
+  .problem-body-inner {
+    overflow: visible;
+  }
+  .problem-body-content {
+    padding: 0;
+    animation: problem-panel-in .45s cubic-bezier(.22, 1, .36, 1) both;
+  }
+}
+@media (min-width: 1024px) {
+  .problem-item[data-open] .problem-body {
+    padding: 56px;
+  }
+}
+@keyframes problem-panel-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .problem-stat {
-    --roll: 1 !important;
+  .problem-item,
+  .problem-body,
+  .problem-item[data-open] .problem-body,
+  .problem-tab {
+    transition: none;
   }
-  .problem-ghost,
-  .problem-reveal {
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
-  }
-  .problem-scale {
-    transform: none !important;
-  }
-  .problem-underline {
-    background-size: 100% 0.12em !important;
+  .problem-body-content {
+    animation: none !important;
   }
 }
 /* /security (handoff 17-security): snap to each full-height screen, desktop
@@ -573,9 +682,4 @@
     scroll-snap-type: y proximity;
     scroll-padding-top: 66px;
   }
-}
-
-/* The visible % sign is generated too, so the stat's text is exactly "39%". */
-.problem-pct::before {
-  content: "%";
 }

@@ -70,6 +70,26 @@ export const EVENTS = {
   TOOL_EMAIL_FAILED: "marketing_tool_email_failed",
   /** Visitor downloaded a file from a tool page (template, CSV, ICS). */
   TOOL_DOWNLOADED: "marketing_tool_downloaded",
+
+  // Homepage section events, named as in handoffs 19 to 23 (4 Nov 2026).
+  // The handoffs ask for Vercel Analytics custom events, which the Hobby plan
+  // does not record, so they go to PostHog with the handoffs' names.
+  CUSTOMER_STORY_SOUND_ON: "customer_story_sound_on",
+  CUSTOMER_STORY_FEATURE_LINK: "customer_story_feature_link",
+  PROBLEM_PICK: "problem_pick",
+  PROBLEM_GUIDE_CLICK: "problem_guide_click",
+  PROBLEM_EXPLORED_ALL: "problem_explored_all",
+  RUNWAY_STEP_VIEW: "runway_step_view",
+  RUNWAY_RAIL_CLICK: "runway_rail_click",
+  RUNWAY_LINK_CLICK: "runway_link_click",
+  COMPARE_ROW_VIEW: "compare_row_view",
+  COMPARE_ROW_CLICK: "compare_row_click",
+  COMPARE_LINK_CLICK: "compare_link_click",
+  HIW_STEP_VIEW: "hiw_step_view",
+  HIW_CONNECT_TAP: "hiw_connect_tap",
+  HIW_THRESHOLD_DRAG: "hiw_threshold_drag",
+  HIW_START_CLICK: "hiw_start_click",
+  HIW_TALK_CLICK: "hiw_talk_click",
 } as const;
 
 export type EventName = (typeof EVENTS)[keyof typeof EVENTS];
