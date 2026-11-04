@@ -243,8 +243,8 @@ const Bento = () => {
   const secs = 1 + (Math.floor(now / 1000) % 5);
 
   return (
-    <PinnedSection id="sync" viewports={PIN_VIEWPORTS} onProgress={onProgress} aria-labelledby="sync-heading" className="bg-background" stageClassName="overflow-hidden">
-      <div className="h-full px-5 pb-5 pt-[calc(4rem+28px)] min-[760px]:px-8 min-[760px]:pb-10 min-[760px]:pt-[calc(4rem+52px)]">
+    <PinnedSection id="sync" viewports={PIN_VIEWPORTS} onProgress={onProgress} aria-labelledby="sync-heading" className="pin-overlap" stageClassName="overflow-hidden">
+      <div className="sync-pad h-full px-5 pb-5 pt-[calc(4rem+28px)] min-[760px]:px-8 min-[760px]:pb-10 min-[760px]:pt-[calc(4rem+52px)]">
         <div className="mx-auto flex h-full max-w-6xl flex-col gap-4 min-[760px]:gap-7">
           <div className="mx-auto max-w-3xl text-center">
             <h2 id="sync-heading" className="text-balance text-[28px] font-bold leading-[1.08] tracking-[-0.025em] text-foreground min-[760px]:text-[46px]">

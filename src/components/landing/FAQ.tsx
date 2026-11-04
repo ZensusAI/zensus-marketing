@@ -191,7 +191,7 @@ const FAQ = () => {
   const label = ql ? `${count} result${count === 1 ? "" : "s"} for “${ql}”` : `${count} questions`;
 
   return (
-    <section id="faq" aria-labelledby="faq-heading" className="bg-background px-5 py-[72px] min-[760px]:px-8 min-[760px]:py-28">
+    <section id="faq" aria-labelledby="faq-heading" className="bg-background px-5 py-16 min-[760px]:px-8 min-[760px]:py-24">
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
       </Helmet>

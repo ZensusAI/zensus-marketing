@@ -519,6 +519,36 @@
   }
 }
 
+/* Section rhythm: the homepage sections are 64px apart from their content on
+   phones and 96px from 760px (py-16, min-[760px]:py-24), so about 128px and
+   192px separate one section's content from the next. A pinned stage centres
+   its content in the screen from 1024px, which already leaves that much empty
+   space above and below it, so there a pinned section starts early (96px on a 900px screen), into
+   the padding of the section above (or the empty bottom of the stage above).
+   Pinned sections carry no background of their own, so the overlap never
+   hides anything. Static (reduced motion, short screens) none of this
+   applies, and the sync section takes the same padding as the rest (with
+   .pin-track for specificity: the min-[760px] utilities come later). */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) and (min-height: 720px) {
+  .pin-overlap {
+    /* 96px at 900px tall. A stage's empty space shrinks with the screen, so
+       the overlap does too, down to none at 708px. */
+    margin-top: min(0px, calc(354px - 50vh));
+  }
+}
+@media (prefers-reduced-motion: reduce), (max-height: 719px) {
+  .pin-track .sync-pad {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  @media (min-width: 760px) {
+    .pin-track .sync-pad {
+      padding-top: 96px;
+      padding-bottom: 96px;
+    }
+  }
+}
+
 /* Problem section (Problem.tsx, handoff 19: 43a desktop, 44a mobile).
    Phones: accordion cards; the open card turns forest and its body opens by
    animating grid rows 0fr to 1fr (450ms). Closed bodies stay in the DOM,

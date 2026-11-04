@@ -146,7 +146,7 @@ const CustomerStory = () => {
       ref={sectionRef}
       id="customer-story"
       aria-labelledby="customer-story-heading"
-      className="flex flex-col items-center bg-background px-5 pb-16 pt-14 text-center min-[760px]:min-h-screen min-[760px]:justify-center min-[760px]:px-8 min-[760px]:py-[72px]"
+      className="flex flex-col items-center bg-background px-5 py-16 text-center min-[760px]:px-8 min-[760px]:py-24"
     >
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(videoLd)}</script>

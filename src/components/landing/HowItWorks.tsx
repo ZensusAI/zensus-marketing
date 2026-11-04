@@ -401,7 +401,7 @@ const HowItWorks = () => {
 
   if (staticPins) {
     return (
-      <section id="how-it-works" aria-labelledby="how-it-works-heading" className="bg-background px-5 py-24 min-[1024px]:px-[120px] min-[1024px]:pb-[200px] min-[1024px]:pt-40">
+      <section id="how-it-works" aria-labelledby="how-it-works-heading" className="bg-background px-5 py-16 min-[760px]:py-24 min-[1024px]:px-[120px]">
         <div className="mx-auto max-w-[1040px]">
           <Heading />
           <ol className="mt-10 flex flex-col gap-12 min-[1024px]:gap-16">
@@ -423,13 +423,12 @@ const HowItWorks = () => {
   const { step, p } = pos;
   const ctaOn = step === 2 && p > 0.6;
   return (
-    <div className="pb-24 pt-24 min-[1024px]:pb-[200px] min-[1024px]:pt-40">
+    <div className="pin-overlap pb-16 min-[1024px]:pb-0">
       <PinnedSection
         id="how-it-works"
         viewports={PIN_VIEWPORTS}
         onProgress={onProgress}
         aria-labelledby="how-it-works-heading"
-        className="bg-background"
         stageClassName="flex flex-col px-5 pb-6 pt-24 max-[1023px]:[@media(max-height:820px)]:pt-[84px] min-[1024px]:justify-center min-[1024px]:px-[120px] min-[1024px]:py-16"
       >
         <div className="mx-auto flex w-full max-w-[1040px] flex-col min-[640px]:max-w-[640px] min-[1024px]:max-w-[1040px] min-[1024px]:pt-8">

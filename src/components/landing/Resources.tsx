@@ -123,7 +123,7 @@ const ResourceList = ({ title, items }: { title: string; items: ResourceLink[] }
 );
 
 const Resources = () => (
-  <section id="resources" className="section-padding scroll-mt-28 bg-background">
+  <section id="resources" className="scroll-mt-28 bg-background py-16 min-[760px]:py-24">
     {/* The redesigned sections' gutter (20px, 32px from 760px), not the
         shared section-container's 16px. */}
     <div className="mx-auto max-w-7xl px-5 min-[760px]:px-8">

@@ -461,7 +461,7 @@ const RunwayFeature = () => {
       onProgress={onProgress}
       aria-labelledby="cash-flow-product-heading"
       anchors={ANCHORS}
-      className="bg-background"
+      className="pin-overlap"
       stageClassName="flex items-center"
     >
       <span id="features" aria-hidden className="pointer-events-none absolute left-0 top-0 h-px w-px" />

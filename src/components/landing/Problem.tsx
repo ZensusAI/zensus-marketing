@@ -137,7 +137,7 @@ const Problem = () => {
     <section
       id="cash-flow-problems"
       aria-labelledby={`${base}-h`}
-      className="problem-grid relative bg-background px-5 pb-8 pt-10 min-[760px]:grid min-[760px]:min-h-[800px] min-[760px]:grid-cols-[minmax(0,1fr)_minmax(0,45%)] min-[760px]:grid-rows-[1fr_auto_auto_auto_auto_auto_1fr] min-[760px]:p-0 min-[1280px]:grid-cols-[minmax(0,1fr)_600px]"
+      className="problem-grid relative bg-background px-5 py-16 min-[760px]:my-24 min-[760px]:grid min-[760px]:min-h-[800px] min-[760px]:grid-cols-[minmax(0,1fr)_minmax(0,45%)] min-[760px]:grid-rows-[1fr_auto_auto_auto_auto_auto_1fr] min-[760px]:p-0 min-[1280px]:grid-cols-[minmax(0,1fr)_600px]"
     >
       <div className="min-[760px]:col-start-1 min-[760px]:row-start-2 min-[760px]:px-10 min-[1024px]:px-16">
         <p className="text-sm font-semibold text-primary min-[760px]:text-[15px]">The problem</p>

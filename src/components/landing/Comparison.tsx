@@ -353,7 +353,7 @@ const Comparison = () => {
 
   if (staticPins) {
     return (
-      <section id="compare" aria-labelledby="compare-heading" className="bg-background px-5 py-24 min-[760px]:px-[120px] min-[760px]:pb-[200px] min-[760px]:pt-40">
+      <section id="compare" aria-labelledby="compare-heading" className="bg-background px-5 py-16 min-[760px]:px-[120px] min-[760px]:py-24">
         <div className="mx-auto flex max-w-[1040px] flex-col min-[760px]:items-center">
           {heading}
           {table}
@@ -365,13 +365,12 @@ const Comparison = () => {
   }
 
   return (
-    <div className="pb-24 pt-24 min-[760px]:pb-[200px] min-[760px]:pt-40">
+    <div className="pin-overlap pb-16 min-[760px]:pb-0">
       <PinnedSection
         id="compare"
         viewports={PIN_VIEWPORTS}
         onProgress={onProgress}
         aria-labelledby="compare-heading"
-        className="bg-background"
         stageClassName="flex flex-col px-5 pt-[92px] min-[760px]:items-center min-[760px]:justify-center min-[760px]:px-[120px] min-[760px]:py-16"
       >
         <div className="mx-auto flex w-full max-w-[1040px] flex-col min-[760px]:items-center min-[760px]:pt-8">
