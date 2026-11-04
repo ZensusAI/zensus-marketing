@@ -11,7 +11,8 @@ function rows(): string[][] {
     </MemoryRouter>,
   );
   const body = markup.match(/<tbody[\s\S]*?<\/tbody>/)?.[0] ?? "";
-  return [...body.matchAll(/<tr[\s\S]*?<\/tr>/g)].map((row) =>
+  // Skip the aria-hidden rows that repeat a row's footnotes under it.
+  return [...body.matchAll(/<tr[\s\S]*?<\/tr>/g)].filter((row) => !row[0].includes("data-notes")).map((row) =>
     [...row[0].matchAll(/<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/g)].map((cell) =>
       cell[1].replace(/<[^>]*>/g, "").trim(),
     ),
@@ -50,6 +51,6 @@ describe("homepage comparison matrix", () => {
   it("keeps the note beside a tick readable", () => {
     const crm = rows()[2];
 
-    expect(crm[1]).toBe("Yes: HubSpot");
+    expect(crm[1]).toBe("Yes · HubSpot");
   });
 });

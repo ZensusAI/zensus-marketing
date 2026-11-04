@@ -261,3 +261,16 @@ page come from the sections above, with these additions and limits:
 - Zensus's own facts ($199/month, 14-day trial with a card collected at
   signup, integrations) come from the site's pricing page, not from this
   review.
+
+## Row renames, 4 November 2026
+
+Handoff 22 (homepage "How Zensus compares.", 48a/48b) renamed four rows to the
+terms people search for. No cell changed, so the evidence above still applies
+row for row:
+
+- "Accounting sync" is now "QuickBooks sync".
+- "CRM-aware forecasting" is now "HubSpot pipeline in the forecast".
+- "Built-in plain-English scenarios" is now "Scenario planning in plain English".
+- "Slack threshold alerts" is now "Low-cash alerts in Slack". "Slack" stays in
+  the name because competitors have generic alerts, so "Not found" holds only
+  for Slack.

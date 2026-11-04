@@ -1,16 +1,24 @@
-import { useCallback, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
-import { clamp01, easeInOutCubic as ease } from "@/lib/motion";
+import { EVENTS, track } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 import { PinnedSection } from "./PinnedSection";
 
 /**
- * Named-competitor comparison (homepage), from handoff 09-comparison (locked
- * 17d): a pinned deck of capability cards (4.2 viewports) beside a scorecard
- * that fills in as each card lands. After the pin: every footnote, the
- * trademark line and the links to the full comparisons.
+ * Named-competitor comparison (homepage), from handoff 22 (locked 48a desktop,
+ * 48b mobile, 4 Nov 2026), replacing 17d. One server-rendered <table>, pinned
+ * over six scroll steps: rows 1 to 5 fill one at a time (Zensus first, each
+ * cell 90ms after the last), the active row's own footnotes open below it,
+ * and step 6 compacts the table and shows every note, the trademark line and
+ * the links. Clicking a row jumps to its step. The fill is progressive
+ * enhancement: every cell and note is in the HTML on load. useStaticPins
+ * (reduced motion, short viewport): the completed table, unpinned.
+ *
+ * Rows 2 to 5 were renamed to search terms (approved in the handoff, 4 Nov
+ * 2026); their cells did not change. "Slack" stays in row 5's name because
+ * competitors have generic alerts, so "Not found" only holds for Slack.
  *
  * Legal guardrails (researched June 2026, FTC comparative-advertising policy
  * and Lanham Act substantiation):
@@ -20,10 +28,11 @@ import { PinnedSection } from "./PinnedSection";
  *   read "Not found", never "No". Only double-dagger cells (the vendor's own
  *   page says it does not offer it) read "No". Caveated yeses carry a
  *   dagger or section mark.
- * - Every mark has words, for screen readers and crawlers alike.
+ * - Every mark has words, for screen readers and crawlers alike; the symbols
+ *   are aria-hidden.
  * - The notes date the comparison. Re-verify vendor pages quarterly (last
  *   review: 21 September 2026; next review: December 2026) or when a
- *   competitor ships changes.
+ *   competitor ships changes, and update "September 2026" in the notes.
  * Per-cell source notes live in docs/comparison-substantiation-2026-09-21.md.
  * Update that file with every change to ROWS.
  */
@@ -36,7 +45,7 @@ interface Row {
 }
 
 const COLUMNS = ["Float", "Cash Flow Frog", "Forecastr", "Zensus"] as const;
-// The handoff lists Zensus first everywhere it shows vendors.
+// Zensus is shown first.
 const ORDER = [3, 0, 1, 2] as const;
 
 const ROWS: Row[] = [
@@ -45,19 +54,19 @@ const ROWS: Row[] = [
     cells: [{ mark: "no", symbol: "‡" }, { mark: "yes" }, { mark: "no", footnote: true }, { mark: "yes" }],
   },
   {
-    label: "Accounting sync",
+    label: "QuickBooks sync",
     cells: [{ mark: "yes" }, { mark: "yes" }, { mark: "yes" }, { mark: "yes" }],
   },
   {
-    label: "CRM-aware forecasting",
+    label: "HubSpot pipeline in the forecast",
     cells: [{ mark: "no", footnote: true }, { mark: "no", symbol: "‡" }, { mark: "yes-footnote", symbol: "§" }, { mark: "yes", note: "HubSpot" }],
   },
   {
-    label: "Built-in plain-English scenarios",
+    label: "Scenario planning in plain English",
     cells: [{ mark: "no", footnote: true }, { mark: "yes-footnote", symbol: "†" }, { mark: "yes-footnote", symbol: "§" }, { mark: "yes" }],
   },
   {
-    label: "Slack threshold alerts",
+    label: "Low-cash alerts in Slack",
     cells: [{ mark: "no", footnote: true }, { mark: "no", footnote: true }, { mark: "no", footnote: true }, { mark: "yes" }],
   },
 ];
@@ -69,8 +78,18 @@ const NOTES: Record<string, string> = {
   "§": "§ Forecastr lists CRM integrations on its $10,000/year Growth plan, and a built-in AI chatbot whose scope its public pages do not describe.",
 };
 const NOTE_ORDER = ["*", "†", "‡", "§"];
+const NOTE_ID: Record<string, string> = { "*": "compare-note-1", "†": "compare-note-2", "‡": "compare-note-3", "§": "compare-note-4" };
 const TRADEMARKS =
   "Based on publicly available vendor pages, September 2026. Float, Cash Flow Frog, and Forecastr are trademarks of their respective owners; Zensus is not affiliated with or endorsed by them.";
+
+// The handoff links Float and Cash Flow Frog; Pulse and Float alternatives stay
+// because the homepage must keep linking to them (internal-links.test.ts).
+const LINKS = [
+  { to: "/compare/zensus-vs-float", label: "Zensus vs Float", vendor: "float" },
+  { to: "/compare/zensus-vs-cash-flow-frog", label: "Zensus vs Cash Flow Frog", vendor: "cash_flow_frog" },
+  { to: "/compare/zensus-vs-pulse", label: "Zensus vs Pulse", vendor: "pulse" },
+  { to: "/compare/float-alternatives", label: "Float alternatives", vendor: "float_alternatives" },
+];
 
 const symbolOf = (cell: Cell) => (cell.mark === "no" ? (cell.symbol ?? (cell.footnote ? "*" : "")) : cell.mark === "yes-footnote" ? cell.symbol : "");
 
@@ -81,288 +100,279 @@ const symbolOf = (cell: Cell) => (cell.mark === "no" ? (cell.symbol ?? (cell.foo
  * confirms.
  */
 function cellText(cell: Cell): string {
-  if (cell.mark === "yes") return "Yes";
+  if (cell.mark === "yes") return cell.note ? `Yes · ${cell.note}` : "Yes";
   if (cell.mark === "yes-footnote") return "Yes, with a caveat";
   return cell.symbol ? "No" : "Not found";
 }
 
-const symbolsIn = (row: Row) => NOTE_ORDER.filter((s) => row.cells.some((c) => symbolOf(c) === s));
+const notesIn = (row: Row) => NOTE_ORDER.filter((s) => row.cells.some((c) => symbolOf(c) === s));
 
-const Tick = ({ size, className }: { size: number; className?: string }) => (
-  <svg aria-hidden width={size} height={size} viewBox="0 0 20 20" fill="none" className={className}>
-    <path d="M4 10.5l4 4 8-9" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-const Cross = ({ size, className }: { size: number; className?: string }) => (
-  <svg aria-hidden width={size} height={size} viewBox="0 0 20 20" fill="none" className={className}>
-    <path d="M5.5 5.5l9 9M14.5 5.5l-9 9" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" />
-  </svg>
-);
+const N_STEPS = ROWS.length + 1;
+const PIN_VIEWPORTS = 6;
+const ease = "cubic-bezier(.22,1,.36,1)";
 
-const PIN_VIEWPORTS = 4.2;
+// Grid columns for every row: label then the four vendors, from 760px; on
+// phones the label takes its own line over four equal columns.
+const GRID = "grid grid-cols-4 min-[760px]:grid-cols-[minmax(0,300px)_repeat(4,minmax(0,1fr))]";
 
-// Keeps hyphenated words ("plain-English") from breaking at the hyphen
-// without changing the text.
-const keepHyphens = (label: string) =>
-  label.split(/(\S+-\S+)/).map((part, i) => (i % 2 ? <span key={i} className="whitespace-nowrap">{part}</span> : part));
-
-// Darker than the brand greens so the marks pass 3:1 on cream (WCAG 1.4.11).
-const TICK = "text-[#178A4F]";
-const CROSS = "text-[#6F807A]";
+type State = "done" | "act" | "fut";
 
 const Comparison = () => {
-  const reduced = useStaticPins();
-  const [scrollP, setP] = useState(0);
-  const onProgress = useCallback(({ progress }: ScrollProgress) => setP(progress), []);
+  const staticPins = useStaticPins();
+  const [pos, setPos] = useState({ s: N_STEPS - 1, p: 1 });
+  const viewed = useRef(-1);
 
-  const p = reduced ? 1 : scrollP;
-  const pos = p * 5.4 - 0.2;
-  const act = reduced ? -1 : Math.min(4, Math.max(0, Math.floor(pos + 0.4)));
-  const enter = ROWS.map((_, i) => (i === 0 ? 1 : ease((pos - i + 0.7) / 0.6)));
+  const onProgress = useCallback(({ progress }: ScrollProgress) => {
+    const t = Math.min(0.9999, progress) * N_STEPS;
+    const s = Math.floor(t);
+    // Quantised to the reveal points, so React renders only when one passes.
+    const raw = t - s;
+    const p = [0.08, 0.17, 0.26, 0.35, 0.4].reduce((acc, m) => (raw >= m ? m : acc), 0);
+    setPos((cur) => (cur.s === s && cur.p === p ? cur : { s, p }));
+  }, []);
 
-  // Scorecard rows jump to their card.
+  useEffect(() => {
+    if (staticPins || pos.s >= ROWS.length || viewed.current === pos.s) return;
+    viewed.current = pos.s;
+    track(EVENTS.COMPARE_ROW_VIEW, { row: pos.s + 1 });
+  }, [pos, staticPins]);
+
   const jump = (i: number) => {
-    const track = document.getElementById("compare");
-    if (!track || reduced) return;
-    const top = track.getBoundingClientRect().top + window.scrollY;
-    const f = clamp01((i + 0.25) / 5.4 + 0.04);
-    window.scrollTo({ top: top + f * (track.offsetHeight - window.innerHeight), behavior: "smooth" });
+    track(EVENTS.COMPARE_ROW_CLICK, { row: i + 1 });
+    const el = document.getElementById("compare");
+    if (!el || staticPins) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + ((i + 0.6) / N_STEPS) * (el.offsetHeight - window.innerHeight), behavior: "smooth" });
   };
 
-  const card = (row: Row, i: number) => {
-    const syms = symbolsIn(row);
-    return (
-      <article
-        className="relative flex h-full flex-col overflow-hidden rounded-[20px] border border-border bg-card p-[18px] shadow-[0_-10px_30px_-18px_rgba(26,42,40,.35),0_30px_60px_-36px_rgba(26,42,40,.45)] min-[760px]:p-7"
-        aria-labelledby={`compare-cap-${i}`}
-      >
-        <p className="text-sm font-semibold text-primary">{`Capability 0${i + 1} of 05`}</p>
-        <h3 id={`compare-cap-${i}`} className="mt-2.5 text-balance text-[22px] font-bold leading-[1.15] tracking-[-0.02em] text-foreground min-[760px]:text-[30px]">
-          {keepHyphens(row.label)}
-        </h3>
-        <ul className="mt-4 flex flex-col gap-1.5 min-[760px]:mt-[22px]">
-          {ORDER.map((j) => {
-            const c = row.cells[j];
-            const z = j === 3;
-            const sym = symbolOf(c);
-            return (
-              <li
-                key={j}
+  const pinned = !staticPins;
+  const { s, p } = pinned ? pos : { s: N_STEPS - 1, p: 1 };
+  const finished = s === N_STEPS - 1;
+
+  const table = (
+    // The rows are CSS grids, which drops native table semantics in some
+    // browsers, so every part carries its ARIA role explicitly.
+    <table
+      role="table"
+      aria-label="Zensus compared with Float, Cash Flow Frog and Forecastr"
+      className="mt-4 block w-full min-[760px]:mt-8 min-[760px]:max-w-[1040px]"
+    >
+      <thead role="rowgroup" className="block">
+        <tr role="row" className={GRID}>
+          <th role="columnheader" scope="col" className="hidden h-14 items-end px-5 pb-3.5 text-left text-sm font-semibold text-muted-foreground min-[760px]:flex">
+            Capability
+          </th>
+          {ORDER.map((ci, j) => (
+            <th
+              key={ci}
+              role="columnheader"
+              scope="col"
+              className={cn(
+                "flex h-11 items-end justify-center px-1 pb-2 text-center text-xs font-semibold leading-[1.2] min-[760px]:h-14 min-[760px]:whitespace-nowrap min-[760px]:px-2 min-[760px]:pb-3.5 min-[760px]:text-[15px]",
+                j === 0 ? "rounded-t-xl bg-forest text-forest-foreground" : "text-foreground",
+              )}
+            >
+              {COLUMNS[ci]}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody role="rowgroup" className="block">
+      {ROWS.map((row, i) => {
+        const st: State = i < s ? "done" : i === s ? "act" : "fut";
+        const act = st === "act";
+        const last = i === ROWS.length - 1;
+        const notes = notesIn(row);
+        const open = pinned && act && notes.length > 0;
+        return (
+          <Fragment key={row.label}>
+            <tr
+              role="row"
+              className={cn(GRID, "cursor-pointer border-t border-border transition-colors duration-300", act ? "bg-card" : "bg-transparent")}
+              onClick={pinned ? () => jump(i) : undefined}
+            >
+              <th
+                role="rowheader"
+                scope="row"
                 className={cn(
-                  "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl px-3 py-[11px] min-[760px]:px-4 min-[760px]:py-[13px]",
-                  z ? "bg-forest text-forest-foreground" : "bg-[#F7EFDC] text-foreground",
+                  "col-span-4 flex items-center gap-3 px-1 pb-0.5 pt-2.5 text-left text-[14.5px] transition-colors duration-300 min-[760px]:col-span-1 min-[760px]:px-5 min-[760px]:py-0 min-[760px]:text-[17px]",
+                  act ? "font-[650] text-foreground" : st === "fut" ? "font-medium text-[#6B7F7A]" : "font-medium text-foreground",
+                  act ? "min-[760px]:min-h-[60px]" : "min-[760px]:min-h-[52px]",
                 )}
               >
-                <span className="text-sm font-semibold min-[760px]:text-[15px]">{COLUMNS[j]}</span>
-                <span
-                  className={cn(
-                    "flex items-center gap-2 whitespace-nowrap text-[12.5px] min-[760px]:text-sm",
-                    z ? "text-forest-foreground" : c.mark === "no" ? "text-muted-foreground" : "text-foreground",
-                  )}
-                >
-                  {c.mark === "no" ? <Cross size={16} className={CROSS} /> : <Tick size={18} className={z ? "text-sage-light" : TICK} />}
-                  <span>
-                    {cellText(c)}
-                    {c.mark === "yes" && c.note ? ` · ${c.note}` : ""}
-                    {sym && <sup className="ml-px text-[11px]">{sym}</sup>}
-                  </span>
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-        {syms.length > 0 && (
-          <div className="mt-4 flex flex-col gap-1 border-t border-rule-soft pt-3">
-            {/* Narrow pinned cards point to the notes below the deck (the full
-                notes do not fit the card); wider screens show the notes that
-                apply to this card. */}
-            <p className={cn("text-pretty text-xs leading-[1.5] text-muted-foreground", reduced ? "min-[760px]:hidden" : "min-[1024px]:hidden")}>
-              {`See notes ${syms.join(" ")} below.`}
-            </p>
-            {syms.map((s) => (
-              <p key={s} className={cn("hidden text-pretty text-xs leading-[1.5] text-muted-foreground", reduced ? "min-[760px]:block" : "min-[1024px]:block")}>
-                {NOTES[s]}
-              </p>
-            ))}
-          </div>
-        )}
-      </article>
+                <span aria-hidden className={cn("my-3.5 hidden w-[3px] self-stretch rounded-sm transition-colors duration-300 min-[760px]:block", act ? "bg-primary" : "bg-transparent")} />
+                {row.label}
+              </th>
+              {ORDER.map((ci, j) => {
+                const cell = row.cells[ci];
+                const z = j === 0;
+                const sym = symbolOf(cell);
+                const vis = !pinned || st === "done" || (act && p > 0.08 + j * 0.09);
+                const no = cell.mark === "no";
+                return (
+                  <td
+                    key={ci}
+                    role="cell"
+                    className={cn(
+                      "flex min-h-[46px] items-center justify-center px-1 text-center transition-[min-height] duration-300 min-[760px]:px-2",
+                      act ? "min-[760px]:min-h-[60px]" : "min-[760px]:min-h-[52px]",
+                      z && "bg-forest",
+                      z && last && !open && "rounded-b-xl",
+                    )}
+                  >
+                    <span
+                      className="relative inline-flex flex-col items-center gap-px min-[760px]:flex-row min-[760px]:gap-[7px]"
+                      style={{ opacity: vis ? 1 : 0, transform: vis ? "none" : "translateY(6px)", transition: `opacity .35s, transform .45s ${ease}` } as CSSProperties}
+                    >
+                      {/* SVG, not a glyph, so the mark is not part of the text. */}
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        className={cn("h-3.5 w-3.5 shrink-0 min-[760px]:h-4 min-[760px]:w-4", z ? "text-sage-light" : no ? "text-[#6F807A]" : "text-[#178A4F]")}
+                      >
+                        {no ? (
+                          <path d="M5.5 5.5l9 9M14.5 5.5l-9 9" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" />
+                        ) : (
+                          <path d="M4 10.5l4 4 8-9" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round" />
+                        )}
+                      </svg>
+                      <span
+                        className={cn(
+                          "text-[11.5px] leading-[1.25] min-[760px]:whitespace-nowrap min-[760px]:text-[15px]",
+                          z ? "font-semibold text-forest-foreground" : no ? "font-medium text-muted-foreground" : "font-medium text-foreground",
+                        )}
+                      >
+                        {/* The full wording at every width (the handoff shortens it on
+                            phones, but two variants would both be in the text). */}
+                        {cellText(cell)}
+                        {sym && (
+                          <>
+                            {" "}
+                            <sup className="text-[9.5px] min-[760px]:absolute min-[760px]:left-full min-[760px]:top-[-4px] min-[760px]:pl-0.5 min-[760px]:text-[11px]">
+                              <a href={`#${NOTE_ID[sym]}`} aria-hidden tabIndex={-1} className="no-underline">
+                                {sym}
+                              </a>
+                            </sup>
+                          </>
+                        )}
+                      </span>
+                    </span>
+                  </td>
+                );
+              })}
+            </tr>
+            {notes.length > 0 && pinned && (
+              // The active row's own notes, a visual aid only: the full notes
+              // below the table are the ones assistive tech and crawlers use.
+              <tr aria-hidden data-notes className={GRID}>
+                <td className="hidden min-[760px]:block" />
+                <td
+                  className={cn("hidden bg-forest min-[760px]:block", last && "rounded-b-xl")}
+                  style={{ maxHeight: open ? 160 : 0, transition: `max-height .45s ${ease}` }}
+                />
+                <td className="col-span-4 overflow-hidden min-[760px]:col-span-3" style={{ maxHeight: open ? 220 : 0, transition: `max-height .45s ${ease}` }}>
+                  <div className="flex flex-col gap-1 px-1 pb-2.5 pt-1.5 min-[760px]:gap-1.5 min-[760px]:px-5 min-[760px]:pb-[18px] min-[760px]:pt-0.5" style={{ opacity: open && p > 0.35 ? 1 : 0, transition: "opacity .4s" }}>
+                    {notes.map((n) => (
+                      <p key={n} className="text-pretty text-xs leading-[1.4] text-muted-foreground min-[760px]:text-[13.5px] min-[760px]:leading-[1.5]">
+                        {NOTES[n]}
+                      </p>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            )}
+          </Fragment>
+        );
+      })}
+      </tbody>
+    </table>
+  );
+
+  // Pinned, the notes render twice (in the stage from 760px, after the pin on
+  // phones; CSS shows one). Only the first copy carries the ids.
+  const endBlock = (cls: string, style?: CSSProperties, ids = true) => (
+    <div id={ids ? "compare-notes" : undefined} className={cls} style={style}>
+      <div className="grid gap-x-10 gap-y-2 min-[760px]:grid-cols-2 min-[760px]:gap-y-1.5">
+        {NOTE_ORDER.map((sym) => (
+          <p key={sym} id={ids ? NOTE_ID[sym] : undefined} className="text-pretty text-[12.5px] leading-[1.5] text-muted-foreground">
+            {NOTES[sym]}
+          </p>
+        ))}
+        <p className="text-[12.5px] leading-[1.5] text-muted-foreground min-[760px]:col-span-2 min-[760px]:mt-1">{TRADEMARKS}</p>
+      </div>
+      <div className="mt-1.5 flex flex-col min-[760px]:flex-row min-[760px]:flex-wrap min-[760px]:gap-x-6">
+        {LINKS.map((l) => (
+          <Link
+            key={l.to}
+            to={l.to}
+            onClick={() => track(EVENTS.COMPARE_LINK_CLICK, { vendor: l.vendor })}
+            className="flex min-h-[44px] items-center self-start rounded-sm text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background min-[760px]:min-h-0 min-[760px]:py-1"
+          >
+            {l.label} →
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+
+  const heading = (
+    <>
+      <h2
+        id="compare-heading"
+        className="m-0 text-[30px] font-bold leading-[1.08] tracking-[-0.03em] text-foreground min-[760px]:text-center min-[760px]:text-[46px] min-[760px]:leading-[1.05] min-[760px]:tracking-[-0.035em]"
+      >
+        How Zensus compares.
+      </h2>
+      <p className="mt-2 text-[15.5px] leading-[1.5] text-muted-foreground min-[760px]:mt-3 min-[760px]:text-center min-[760px]:text-lg">
+        Against the tools businesses actually shortlist for cash flow forecasting.
+      </p>
+    </>
+  );
+
+  if (staticPins) {
+    return (
+      <section id="compare" aria-labelledby="compare-heading" className="bg-background px-5 py-24 min-[760px]:px-[120px] min-[760px]:pb-[200px] min-[760px]:pt-40">
+        <div className="mx-auto flex max-w-[1040px] flex-col min-[760px]:items-center">
+          {heading}
+          {table}
+          <div className="w-full border-t border-border" />
+          {endBlock("w-full pt-4")}
+        </div>
+      </section>
     );
-  };
+  }
 
   return (
-    <>
+    <div className="pb-24 pt-24 min-[760px]:pb-[200px] min-[760px]:pt-40">
       <PinnedSection
         id="compare"
         viewports={PIN_VIEWPORTS}
         onProgress={onProgress}
         aria-labelledby="compare-heading"
         className="bg-background"
-        stageClassName={reduced ? undefined : "overflow-hidden"}
+        stageClassName="flex flex-col px-5 pt-[92px] min-[760px]:items-center min-[760px]:justify-center min-[760px]:px-[120px] min-[760px]:py-16"
       >
-        <div className="h-full px-5 pb-5 pt-[calc(4rem+28px)] min-[760px]:px-8 min-[760px]:pb-10 min-[760px]:pt-[calc(4rem+52px)]">
+        <div className="mx-auto flex w-full max-w-[1040px] flex-col min-[760px]:items-center min-[760px]:pt-8">
+          {heading}
+          {table}
+          <div className="w-full border-t border-border" />
+          {/* Desktop: the notes open under the table on the last step. */}
           <div
-            className={cn(
-              "mx-auto grid h-full max-w-6xl content-center items-center gap-5 min-[760px]:content-stretch min-[1024px]:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] min-[1024px]:gap-[72px]",
-              reduced && "h-auto items-start",
-            )}
+            className="hidden w-full overflow-hidden min-[760px]:block"
+            style={{ maxHeight: finished ? 260 : 0, pointerEvents: finished ? "auto" : "none", transition: `max-height .5s ${ease}` }}
+            {...(finished ? {} : { inert: "" })}
           >
-            <div className={cn("flex min-w-0 flex-col gap-[18px] min-[760px]:gap-7", reduced && "min-[1024px]:sticky min-[1024px]:top-24")}>
-              <div>
-                <h2 id="compare-heading" className="text-[30px] font-bold leading-[1.08] tracking-[-0.025em] text-foreground min-[760px]:text-[46px]">
-                  How Zensus compares.
-                </h2>
-                <p className="mt-2.5 text-pretty text-[15px] leading-[1.55] text-muted-foreground min-[760px]:mt-4 min-[760px]:text-lg">
-                  Against the tools businesses actually shortlist for cash flow forecasting.
-                </p>
-              </div>
-
-              {/* Scorecard: the whole comparison as a real table, in words.
-                  Visually hidden where it does not fit beside the deck (below
-                  1024px pinned, 760px static), but kept for screen readers and
-                  crawlers. */}
-              <table
-                className={cn("w-full border-collapse", reduced ? "max-[759px]:sr-only" : "max-[1023px]:sr-only")}
-                aria-describedby="compare-notes"
-              >
-                <caption className="sr-only">Capability comparison: Zensus, Float, Cash Flow Frog, and Forecastr</caption>
-                <thead>
-                  <tr>
-                    <th scope="col" className="pb-2 text-left text-[13px] font-semibold text-muted-foreground">
-                      Scorecard
-                    </th>
-                    {ORDER.map((j) => (
-                      <th
-                        key={j}
-                        scope="col"
-                        className={cn("w-16 pb-2 text-center text-[11px] font-semibold leading-[1.2]", j === 3 ? "text-sage-dark" : "text-foreground")}
-                      >
-                        {COLUMNS[j]}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {ROWS.map((row, i) => {
-                    const done = reduced || enter[i] > 0.5;
-                    const on = i === act;
-                    return (
-                      <tr key={row.label} onClick={() => jump(i)} className={cn("border-t border-border", !reduced && "cursor-pointer")}>
-                        <th scope="row" className="py-[9px] text-left">
-                          <span
-                            className={cn(
-                              "flex items-center gap-2.5 text-[13.5px] leading-[1.3] transition-colors duration-300",
-                              on ? "font-semibold text-foreground" : "font-medium text-muted-foreground",
-                            )}
-                          >
-                            <span
-                              aria-hidden
-                              className={cn("h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-300", on ? "bg-primary" : done ? "bg-foreground" : "bg-border")}
-                            />
-                            <span>{keepHyphens(row.label)}</span>
-                          </span>
-                        </th>
-                        {ORDER.map((j, q) => {
-                          const c = row.cells[j];
-                          const sym = symbolOf(c);
-                          return (
-                            <td key={j} className="py-[9px] text-center">
-                              <span
-                                className="relative inline-flex items-start justify-center gap-px transition-[opacity,transform] duration-[350ms] ease-out"
-                                style={{
-                                  opacity: done ? 1 : 0,
-                                  transform: `scale(${done ? 1 : 0.4})`,
-                                  transitionDelay: done && !reduced ? `${120 + q * 60}ms` : "0ms",
-                                }}
-                              >
-                                {c.mark === "no" ? <Cross size={13} className={CROSS} /> : <Tick size={15} className={j === 3 ? "text-sage-dark" : TICK} />}
-                                <span className="sr-only">
-                                  {c.mark === "yes" && c.note ? `${cellText(c)}: ${c.note}` : sym ? `${cellText(c)} ` : cellText(c)}
-                                </span>
-                                {sym && <span className="self-start text-[10px] leading-none text-muted-foreground">{sym}</span>}
-                              </span>
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-
-              {/* Below 1024px pinned, the scorecard becomes a five-step rail. */}
-              <div aria-hidden className={cn("grid grid-cols-5 gap-1.5 min-[1024px]:hidden", reduced && "hidden")}>
-                {ROWS.map((row, i) => (
-                  <div key={row.label} className="h-0.5 overflow-hidden rounded-sm bg-border">
-                    <div className="h-full bg-primary" style={{ width: `${(clamp01(pos - i + 0.7) * 100).toFixed(1)}%` }} />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {reduced ? (
-              // Reduced motion: no stacking, every card in the flow.
-              <div className="flex min-w-0 flex-col gap-4">{ROWS.map((row, i) => <div key={row.label}>{card(row, i)}</div>)}</div>
-            ) : (
-              <div className="relative h-[380px] min-w-0 self-start min-[760px]:h-[440px] min-[760px]:self-end min-[1024px]:h-[532px] min-[1024px]:self-center">
-                {ROWS.map((row, i) => {
-                  let depth = 0;
-                  for (let j = i + 1; j < ROWS.length; j++) depth += enter[j];
-                  const en = enter[i];
-                  return (
-                    // Cards under the top one are only faded, never aria-hidden:
-                    // screen readers and crawlers get all five.
-                    <div
-                      key={row.label}
-                      className="absolute inset-x-0 bottom-0 h-[350px] origin-top will-change-transform min-[760px]:h-[400px] min-[1024px]:h-[490px]"
-                      style={{
-                        zIndex: i + 1,
-                        opacity: en > 0.001 ? clamp01(1 - Math.max(0, depth - 2.2)) : 0,
-                        transform: `translateY(calc(${((1 - en) * 115).toFixed(2)}% - ${(depth * 14).toFixed(1)}px)) scale(${(1 - Math.min(depth, 3) * 0.045).toFixed(4)})`,
-                      }}
-                    >
-                      {card(row, i)}
-                      <div aria-hidden className="pointer-events-none absolute inset-0 rounded-[20px] bg-background" style={{ opacity: Math.min(0.55, depth * 0.28) }} />
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+            {endBlock("pt-4", { opacity: finished ? 1 : 0, transform: finished ? "none" : "translateY(10px)", transition: `opacity .5s, transform .6s ${ease}` })}
           </div>
+          <p className="mt-3 text-[13px] text-muted-foreground min-[760px]:hidden" style={{ opacity: finished ? 1 : 0, transition: "opacity .4s" }}>
+            Full notes and sources below.
+          </p>
         </div>
       </PinnedSection>
-
-      {/* After the pin: every footnote, the trademark line, the full comparisons. */}
-      <div className="bg-background px-5 pb-16 min-[760px]:px-8 min-[760px]:pb-24">
-        <div id="compare-notes" className="mx-auto max-w-6xl text-left text-xs leading-relaxed text-muted-foreground">
-          {NOTE_ORDER.map((s) => (
-            <p key={s} className="pt-1 first:pt-0">
-              {NOTES[s]}
-            </p>
-          ))}
-          <p className="pt-1">{TRADEMARKS}</p>
-        </div>
-        <p className="mx-auto mt-6 max-w-6xl text-sm text-muted-foreground">
-          Read the full comparisons:{" "}
-          <Link to="/compare/zensus-vs-float" className="font-medium text-primary underline-offset-4 hover:underline">
-            Zensus vs Float
-          </Link>
-          ,{" "}
-          <Link to="/compare/zensus-vs-pulse" className="font-medium text-primary underline-offset-4 hover:underline">
-            Zensus vs Pulse
-          </Link>
-          ,{" "}
-          <Link to="/compare/zensus-vs-cash-flow-frog" className="font-medium text-primary underline-offset-4 hover:underline">
-            Zensus vs Cash Flow Frog
-          </Link>
-          , and{" "}
-          <Link to="/compare/float-alternatives" className="font-medium text-primary underline-offset-4 hover:underline">
-            Float alternatives
-          </Link>
-          .
-        </p>
-      </div>
-    </>
+      {/* Phones: the notes and links follow the pin. */}
+      {endBlock("px-5 pt-2 min-[760px]:hidden", undefined, false)}
+    </div>
   );
 };
 
