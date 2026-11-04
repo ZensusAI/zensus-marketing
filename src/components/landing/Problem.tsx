@@ -137,9 +137,9 @@ const Problem = () => {
     <section
       id="cash-flow-problems"
       aria-labelledby={`${base}-h`}
-      className="problem-grid relative bg-background px-5 py-16 min-[760px]:my-24 min-[760px]:grid min-[760px]:min-h-[800px] min-[760px]:grid-cols-[minmax(0,1fr)_minmax(0,45%)] min-[760px]:grid-rows-[1fr_auto_auto_auto_auto_auto_1fr] min-[760px]:p-0 min-[1280px]:grid-cols-[minmax(0,1fr)_600px]"
+      className="problem-grid relative mx-auto bg-background px-5 py-16 min-[760px]:grid min-[760px]:min-h-[640px] min-[760px]:max-w-[1280px] min-[760px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] min-[760px]:grid-rows-[1fr_auto_auto_auto_auto_auto_1fr] min-[760px]:gap-x-10 min-[760px]:px-8 min-[760px]:py-24 min-[1024px]:gap-x-16 min-[1280px]:grid-cols-[minmax(0,1fr)_minmax(0,560px)]"
     >
-      <div className="min-[760px]:col-start-1 min-[760px]:row-start-2 min-[760px]:px-10 min-[1024px]:px-16">
+      <div className="min-[760px]:col-start-1 min-[760px]:row-start-2">
         <p className="text-sm font-semibold text-primary min-[760px]:text-[15px]">The problem</p>
         <h2
           id={`${base}-h`}
@@ -171,7 +171,7 @@ const Problem = () => {
           const bodyId = `${base}-p${i}`;
           return (
             <div key={card.title} data-open={isOpen || undefined} className="problem-item">
-              <h3 className="m-0 min-[760px]:col-start-1 min-[760px]:px-10 min-[1024px]:px-16" style={{ gridRowStart: i + 3 }}>
+              <h3 className="m-0 min-[760px]:col-start-1" style={{ gridRowStart: i + 3 }}>
                 <button
                   ref={(el) => (tabs.current[i] = el)}
                   id={btnId}

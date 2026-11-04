@@ -176,11 +176,11 @@ const Comparison = () => {
     <table
       role="table"
       aria-label="Zensus compared with Float, Cash Flow Frog and Forecastr"
-      className="mt-4 block w-full min-[760px]:mt-8 min-[760px]:max-w-[1040px]"
+      className="mt-4 block w-full max-[759px]:[@media(max-height:760px)]:mt-3 min-[760px]:mt-8 min-[760px]:max-w-[1040px] min-[760px]:[@media(max-height:820px)]:mt-5"
     >
       <thead role="rowgroup" className="block">
         <tr role="row" className={GRID}>
-          <th role="columnheader" scope="col" className="hidden h-14 items-end px-5 pb-3.5 text-left text-sm font-semibold text-muted-foreground min-[760px]:flex">
+          <th role="columnheader" scope="col" className="hidden h-14 items-end px-5 pb-3.5 text-left text-sm font-semibold text-muted-foreground min-[760px]:flex min-[760px]:[@media(max-height:820px)]:h-11 min-[760px]:[@media(max-height:820px)]:pb-2.5">
             Capability
           </th>
           {ORDER.map((ci, j) => (
@@ -189,7 +189,7 @@ const Comparison = () => {
               role="columnheader"
               scope="col"
               className={cn(
-                "flex h-11 items-end justify-center px-1 pb-2 text-center text-xs font-semibold leading-[1.2] min-[760px]:h-14 min-[760px]:whitespace-nowrap min-[760px]:px-2 min-[760px]:pb-3.5 min-[760px]:text-[15px]",
+                "flex h-11 items-end justify-center px-1 pb-2 text-center text-xs font-semibold leading-[1.2] max-[759px]:[@media(max-height:760px)]:h-9 min-[760px]:h-14 min-[760px]:[@media(max-height:820px)]:h-11 min-[760px]:[@media(max-height:820px)]:pb-2.5 min-[760px]:whitespace-nowrap min-[760px]:px-2 min-[760px]:pb-3.5 min-[760px]:text-[15px]",
                 j === 0 ? "rounded-t-xl bg-forest text-forest-foreground" : "text-foreground",
               )}
             >
@@ -216,9 +216,9 @@ const Comparison = () => {
                 role="rowheader"
                 scope="row"
                 className={cn(
-                  "col-span-4 flex items-center gap-3 px-1 pb-0.5 pt-2.5 text-left text-[14.5px] transition-colors duration-300 min-[760px]:col-span-1 min-[760px]:px-5 min-[760px]:py-0 min-[760px]:text-[17px]",
+                  "col-span-4 flex items-center gap-3 px-1 pb-0.5 pt-2.5 max-[759px]:[@media(max-height:760px)]:pt-1.5 text-left text-[14.5px] transition-colors duration-300 min-[760px]:col-span-1 min-[760px]:px-5 min-[760px]:py-0 min-[760px]:text-[17px]",
                   act ? "font-[650] text-foreground" : st === "fut" ? "font-medium text-muted-foreground" : "font-medium text-foreground",
-                  act ? "min-[760px]:min-h-[60px]" : "min-[760px]:min-h-[52px]",
+                  act ? "min-[760px]:min-h-[60px] min-[760px]:[@media(max-height:820px)]:min-h-[50px]" : "min-[760px]:min-h-[52px] min-[760px]:[@media(max-height:820px)]:min-h-[44px]",
                 )}
               >
                 <span aria-hidden className={cn("my-3.5 hidden w-[3px] self-stretch rounded-sm transition-colors duration-300 min-[760px]:block", act ? "bg-primary" : "bg-transparent")} />
@@ -235,8 +235,8 @@ const Comparison = () => {
                     key={ci}
                     role="cell"
                     className={cn(
-                      "flex min-h-[46px] items-center justify-center px-1 text-center transition-[min-height] duration-300 min-[760px]:px-2",
-                      act ? "min-[760px]:min-h-[60px]" : "min-[760px]:min-h-[52px]",
+                      "flex min-h-[46px] max-[759px]:[@media(max-height:760px)]:min-h-[38px] items-center justify-center px-1 text-center transition-[min-height] duration-300 min-[760px]:px-2",
+                      act ? "min-[760px]:min-h-[60px] min-[760px]:[@media(max-height:820px)]:min-h-[50px]" : "min-[760px]:min-h-[52px] min-[760px]:[@media(max-height:820px)]:min-h-[44px]",
                       z && "bg-forest",
                       z && last && !open && "rounded-b-xl",
                     )}
@@ -288,17 +288,19 @@ const Comparison = () => {
               // below the table are the ones assistive tech and crawlers use.
               <tr aria-hidden data-notes className={GRID}>
                 <td className="hidden min-[760px]:block" />
-                <td
-                  className={cn("hidden bg-forest min-[760px]:block", last && "rounded-b-xl")}
-                  style={{ maxHeight: open ? 160 : 0, transition: `max-height .45s ${ease}` }}
-                />
-                <td className="col-span-4 overflow-hidden min-[760px]:col-span-3" style={{ maxHeight: open ? 220 : 0, transition: `max-height .45s ${ease}` }}>
+                {/* Stretches to the notes' height, so the Zensus column runs on. */}
+                <td className={cn("hidden bg-forest min-[760px]:block", last && "rounded-b-xl")} />
+                {/* Opens to the notes' own height (grid rows 0fr to 1fr), so a
+                    long note on a narrow screen is never cut off. */}
+                <td className="col-span-4 grid min-[760px]:col-span-3" style={{ gridTemplateRows: open ? "1fr" : "0fr", transition: `grid-template-rows .45s ${ease}` }}>
+                  <div className="min-h-0 overflow-hidden">
                   <div className="flex flex-col gap-1 px-1 pb-2.5 pt-1.5 min-[760px]:gap-1.5 min-[760px]:px-5 min-[760px]:pb-[18px] min-[760px]:pt-0.5" style={{ opacity: open && p > 0.35 ? 1 : 0, transition: "opacity .4s" }}>
                     {notes.map((n) => (
                       <p key={n} className="text-pretty text-xs leading-[1.4] text-muted-foreground min-[760px]:text-[13.5px] min-[760px]:leading-[1.5]">
                         {NOTES[n]}
                       </p>
                     ))}
+                  </div>
                   </div>
                 </td>
               </tr>
@@ -341,7 +343,7 @@ const Comparison = () => {
     <>
       <h2
         id="compare-heading"
-        className="m-0 text-[30px] font-bold leading-[1.08] tracking-[-0.03em] text-foreground min-[760px]:text-center min-[760px]:text-[46px] min-[760px]:leading-[1.05] min-[760px]:tracking-[-0.035em]"
+        className="m-0 text-[30px] font-bold leading-[1.08] tracking-[-0.03em] text-foreground max-[759px]:[@media(max-height:760px)]:text-[26px] min-[760px]:text-center min-[760px]:text-[46px] min-[760px]:[@media(max-height:820px)]:text-[38px] min-[760px]:leading-[1.05] min-[760px]:tracking-[-0.035em]"
       >
         How Zensus compares.
       </h2>
@@ -353,7 +355,7 @@ const Comparison = () => {
 
   if (staticPins) {
     return (
-      <section id="compare" aria-labelledby="compare-heading" className="bg-background px-5 py-16 min-[760px]:px-[120px] min-[760px]:py-24">
+      <section id="compare" aria-labelledby="compare-heading" className="bg-background px-5 py-16 min-[760px]:px-8 min-[760px]:py-24 min-[1024px]:px-16 min-[1280px]:px-[120px]">
         <div className="mx-auto flex max-w-[1040px] flex-col min-[760px]:items-center">
           {heading}
           {table}
@@ -371,7 +373,7 @@ const Comparison = () => {
         viewports={PIN_VIEWPORTS}
         onProgress={onProgress}
         aria-labelledby="compare-heading"
-        stageClassName="flex flex-col px-5 pt-[92px] min-[760px]:items-center min-[760px]:justify-center min-[760px]:px-[120px] min-[760px]:py-16"
+        stageClassName="flex flex-col px-5 pt-[92px] max-[759px]:[@media(max-height:760px)]:pt-[80px] min-[760px]:[@media(max-height:820px)]:pb-4 min-[760px]:[@media(max-height:820px)]:pt-[84px] min-[760px]:items-center min-[760px]:justify-center min-[760px]:px-8 min-[760px]:py-16 min-[1024px]:px-16 min-[1280px]:px-[120px]"
       >
         <div className="mx-auto flex w-full max-w-[1040px] flex-col min-[760px]:items-center min-[760px]:pt-8">
           {heading}
@@ -379,11 +381,15 @@ const Comparison = () => {
           <div className="w-full border-t border-border" />
           {/* Desktop: the notes open under the table on the last step. */}
           <div
-            className="hidden w-full overflow-hidden min-[760px]:block"
-            style={{ maxHeight: finished ? 260 : 0, pointerEvents: finished ? "auto" : "none", transition: `max-height .5s ${ease}` }}
+            // Opens to its own height (grid rows 0fr to 1fr), so the notes and
+            // links are never cut off on a narrower screen.
+            className="hidden w-full min-[760px]:grid"
+            style={{ gridTemplateRows: finished ? "1fr" : "0fr", pointerEvents: finished ? "auto" : "none", transition: `grid-template-rows .5s ${ease}` }}
             {...(finished ? {} : { inert: "" })}
           >
-            {endBlock("pt-4", { opacity: finished ? 1 : 0, transform: finished ? "none" : "translateY(10px)", transition: `opacity .5s, transform .6s ${ease}` })}
+            <div className="min-h-0 overflow-hidden">
+              {endBlock("pt-4", { opacity: finished ? 1 : 0, transform: finished ? "none" : "translateY(10px)", transition: `opacity .5s, transform .6s ${ease}` })}
+            </div>
           </div>
           <p className="mt-3 text-[13px] text-muted-foreground min-[760px]:hidden" style={{ opacity: finished ? 1 : 0, transition: "opacity .4s" }}>
             Full notes and sources below.
