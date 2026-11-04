@@ -4,7 +4,9 @@
  * Consent first. Clarity sets its own first-party cookies (_clck, _clsk), so
  * it follows the same decision as PostHog: nothing loads until the visitor is
  * opted in (ConsentBanner, or main.tsx for a returning "granted" visitor),
- * and a later "denied" sends Clarity's consent signal to stop and clear them.
+ * and a later "denied" clears them and stops the recorder (a denied consent
+ * signal alone only switches Clarity to cookieless tracking, which still
+ * records, so it is paired with Clarity's "stop" command).
  * Clarity requires an explicit consent signal for visitors in the EEA, UK and
  * Switzerland, so every load sends consentV2 with analytics granted and ad
  * storage denied (this site runs no ads).
@@ -34,6 +36,8 @@ const TRIGGERS = ["scroll", "pointerdown", "keydown"] as const;
 let loaded = false;
 let armed = false;
 let wanted = false;
+/** True after stopClarity stopped a running recorder. */
+let stopped = false;
 let timer: ReturnType<typeof setTimeout> | undefined;
 
 function isPrerender(): boolean {
@@ -45,6 +49,12 @@ function disarm(start: () => void): void {
   if (timer !== undefined) clearTimeout(timer);
   timer = undefined;
   armed = false;
+}
+
+/** Clarity's command queue (installed by Clarity.init). */
+function command(name: "start" | "stop"): void {
+  const clarity = (window as unknown as { clarity?: (cmd: string) => void }).clarity;
+  clarity?.(name);
 }
 
 function load(): void {
@@ -60,8 +70,14 @@ export function startClarity(): void {
   if (typeof window === "undefined" || !PROJECT_ID || isPrerender()) return;
   wanted = true;
   if (loaded) {
-    // Opted back in after a "denied" in the same visit.
-    Clarity.consentV2({ ad_Storage: "denied", analytics_Storage: "granted" });
+    // Opted back in after a "denied" in the same visit: restore the cookies
+    // and restart the recorder that stopClarity stopped. A repeat opt-in
+    // while it is running changes nothing.
+    if (stopped) {
+      stopped = false;
+      Clarity.consentV2({ ad_Storage: "denied", analytics_Storage: "granted" });
+      command("start");
+    }
     return;
   }
   if (armed || typeof window.addEventListener !== "function") return;
@@ -74,9 +90,12 @@ export function startClarity(): void {
   timer = setTimeout(start, IDLE_START_MS);
 }
 
-/** The visitor declined: never load, or stop and clear Clarity's cookies. */
+/** The visitor declined: never load, or clear Clarity's cookies and stop it. */
 export function stopClarity(): void {
   wanted = false;
   if (!loaded) return;
+  if (stopped) return;
+  stopped = true;
   Clarity.consentV2({ ad_Storage: "denied", analytics_Storage: "denied" });
+  command("stop");
 }

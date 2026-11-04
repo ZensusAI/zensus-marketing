@@ -4,11 +4,12 @@ const init = vi.fn();
 const consentV2 = vi.fn();
 vi.mock("@microsoft/clarity", () => ({ default: { init, consentV2 } }));
 
-// A minimal window: event listeners and the prerender flag.
+// A minimal window: event listeners, the prerender flag, and Clarity's queue.
 function makeWindow() {
   const listeners = new Map<string, Set<() => void>>();
   return {
     __PRERENDER__: false as boolean,
+    clarity: vi.fn(),
     addEventListener: (name: string, fn: () => void) => {
       if (!listeners.has(name)) listeners.set(name, new Set());
       listeners.get(name)!.add(fn);
@@ -77,12 +78,34 @@ describe("Microsoft Clarity loader", () => {
     expect(init).not.toHaveBeenCalled();
   });
 
-  it("a denial after the load sends the denied consent signal", async () => {
+  it("a denial after the load clears consent and stops the recorder", async () => {
     const { startClarity, stopClarity } = await load("abc123");
     startClarity();
     win.fire("pointerdown");
     stopClarity();
     expect(consentV2).toHaveBeenLastCalledWith({ ad_Storage: "denied", analytics_Storage: "denied" });
+    expect(win.clarity).toHaveBeenLastCalledWith("stop");
+  });
+
+  it("opting back in restores consent and restarts the recorder", async () => {
+    const { startClarity, stopClarity } = await load("abc123");
+    startClarity();
+    win.fire("scroll");
+    stopClarity();
+    startClarity();
+    expect(consentV2).toHaveBeenLastCalledWith({ ad_Storage: "denied", analytics_Storage: "granted" });
+    expect(win.clarity).toHaveBeenLastCalledWith("start");
+    expect(init).toHaveBeenCalledTimes(1);
+  });
+
+  it("a repeat opt-in while recording sends nothing", async () => {
+    const { startClarity } = await load("abc123");
+    startClarity();
+    win.fire("scroll");
+    const calls = consentV2.mock.calls.length;
+    startClarity();
+    expect(consentV2.mock.calls.length).toBe(calls);
+    expect(win.clarity).not.toHaveBeenCalled();
   });
 
   it("does nothing without a project ID or during the prerender crawl", async () => {
