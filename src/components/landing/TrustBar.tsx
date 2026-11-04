@@ -64,7 +64,7 @@ export const TrustBar = () => (
               target="_blank"
               rel="noopener noreferrer"
               aria-label="5.0 on G2: Zensus star rating from a verified review (opens in a new tab)"
-              className={`whitespace-nowrap hover:text-primary hover:underline ${focusRing}`}
+              className={`whitespace-nowrap underline decoration-muted-foreground/50 underline-offset-2 hover:text-primary hover:decoration-primary ${focusRing}`}
             >
               5.0 on G2
             </a>
