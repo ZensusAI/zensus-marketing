@@ -51,7 +51,7 @@ export const TrustBar = () => (
 
       <div className="order-2 flex min-h-[84px] flex-col items-start justify-center gap-2.5 border-b border-border px-5 py-[18px] min-[760px]:order-3 min-[760px]:col-span-2 min-[760px]:flex-row min-[760px]:items-center min-[760px]:justify-start min-[760px]:gap-6 min-[760px]:border-b-0 min-[760px]:border-t min-[760px]:px-8 min-[1024px]:order-2 min-[1024px]:col-span-1 min-[1024px]:min-h-[108px] min-[1024px]:flex-col min-[1024px]:items-start min-[1024px]:justify-center min-[1024px]:gap-2.5 min-[1024px]:border-r min-[1024px]:border-t-0 min-[1024px]:py-0">
         <span className={`${subline} whitespace-nowrap`}>Works with</span>
-        <div className="flex flex-wrap items-center gap-x-[22px] gap-y-3">
+        <div className="flex flex-wrap items-center gap-x-3.5 gap-y-3 min-[760px]:gap-x-[22px]">
           <Link
             to="/integrations/plaid"
             aria-label="Plaid integration"
