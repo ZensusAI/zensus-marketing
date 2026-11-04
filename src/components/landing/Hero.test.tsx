@@ -59,3 +59,22 @@ describe("homepage hero (handoff 18-hero-v2)", () => {
     expect(new Set(links)).toEqual(new Set([TALK_TO_US_URL]));
   });
 });
+
+describe("hero Cash flow card", () => {
+  it("is one labelled image built from text and SVG, with no <img>", () => {
+    const markup = render();
+    const card = markup.match(/<div role="img"[\s\S]*$/)?.[0] ?? "";
+    expect(markup).toMatch(/<div role="img" aria-label="Example weekly cash flow forecast[^"]+"/);
+    expect(card).not.toContain("<img");
+    expect(card).toContain("<svg");
+    expect(text(card)).toContain("Halvorsen Logistics annual invoice");
+    expect(text(card)).toContain("$371,300");
+  });
+
+  it("carries 26 weekly bars, 13 of them for phones", () => {
+    const markup = render();
+    const bars = markup.match(/class="hero-bar[^"]*"/g) ?? [];
+    expect(bars).toHaveLength(26);
+    expect(bars.filter((b) => b.includes("max-[759px]:hidden"))).toHaveLength(13);
+  });
+});

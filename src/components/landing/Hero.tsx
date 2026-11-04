@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { HERO_MESH } from "./hero-mesh";
 import { TryItNowButton } from "./TryItNowButton";
 import { TalkToUsButton } from "./TalkToUsButton";
+import { HeroCashFlowCard } from "./HeroCashFlowCard";
 import { TALK_TO_US_URL } from "@/lib/constants";
 
 const H1 = "See every week of cash before it happens.";
@@ -23,9 +24,10 @@ const focusRing =
 
 // Hero v2 from handoff 18-hero-v2 (40a), replacing 5a (02-hero). A centred
 // stack under the fixed 64px navbar: headline, subhead, Start and Talk to us,
-// and the two trial lines. The audience kicker and the email field are gone
-// by the handoff. Responsive switches are the handoff's: 760px (phone) and
-// 1024px (mid). The proof strip follows in Index.tsx, below the first screen.
+// the two trial lines, and the coded Cash flow card (HeroCashFlowCard). The
+// audience kicker and the email field are gone by the handoff. Responsive
+// switches are the handoff's: 760px (phone) and 1024px (mid). The proof strip
+// follows in Index.tsx, below the first screen.
 const Hero = () => (
   <section id="hero" className="relative overflow-hidden bg-background">
     {/* Only the inner layer drifts, 6% oversized so its edges never show;
@@ -68,6 +70,8 @@ const Hero = () => (
         </a>{" "}
         to arrange it.
       </p>
+
+      <HeroCashFlowCard />
     </div>
   </section>
 );
