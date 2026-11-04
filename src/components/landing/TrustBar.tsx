@@ -63,7 +63,7 @@ export const TrustBar = () => (
               href={G2_REVIEW_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Zensus 5.0 star rating on G2, verified review (opens in a new tab)"
+              aria-label="5.0 on G2: Zensus star rating from a verified review (opens in a new tab)"
               className={`whitespace-nowrap hover:text-primary hover:underline ${focusRing}`}
             >
               5.0 on G2
@@ -93,7 +93,7 @@ export const TrustBar = () => (
               <span className="block text-[15px] font-semibold text-foreground">Encrypted, US-hosted</span>
               <span className="mt-0.5 block text-[13px] text-muted-foreground">
                 AES-256-GCM tokens, TLS in transit ·{" "}
-                <Link to="/security" className={`whitespace-nowrap text-primary hover:underline ${focusRing}`}>
+                <Link to="/security" className={`whitespace-nowrap text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary ${focusRing}`}>
                   How we protect your data
                 </Link>
               </span>

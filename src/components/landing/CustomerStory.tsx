@@ -36,6 +36,10 @@ const POSTER_SRC = "/demo/product-demo-poster.webp";
 // once the section nears the viewport; otherwise its bytes compete with the
 // hero on a slow first load.
 const POSTER_PLAYER_SRC = "/demo/product-demo-poster-1200.webp";
+// Below the 820px switch the player is at most about 460 CSS px wide, so a
+// phone gets the 768px file (23 KB, not 39 KB). A poster has no srcset, so the
+// choice is made when the poster is set.
+const POSTER_PLAYER_NARROW_SRC = "/demo/product-demo-poster-768.webp";
 const VIDEO_LABEL = "Video testimonial from Jameson Pitts, CEO of Sangfroid! Studios";
 
 // VideoObject makes the self-hosted testimonial a citable video entity for AI
@@ -88,20 +92,22 @@ const CustomerStory = () => {
   const [paused, setPaused] = useState(true);
   // Set when the viewer pauses, so scrolling back into view does not resume.
   const userPaused = useRef(false);
-  const [posterNear, setPosterNear] = useState(false);
+  const [poster, setPoster] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     // Never in the prerendered HTML, where the parser would fetch it at once.
     if ((window as unknown as { __PRERENDER__?: boolean }).__PRERENDER__) return;
+    const showPoster = () =>
+      setPoster(window.matchMedia(NARROW_QUERY).matches ? POSTER_PLAYER_NARROW_SRC : POSTER_PLAYER_SRC);
     const el = sectionRef.current;
     if (!el || typeof IntersectionObserver === "undefined") {
-      setPosterNear(true);
+      showPoster();
       return;
     }
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
-          setPosterNear(true);
+          showPoster();
           io.disconnect();
         }
       },
@@ -244,7 +250,7 @@ const CustomerStory = () => {
                 <video
                   ref={videoRef}
                   src={VIDEO_SRC}
-                  poster={posterNear ? POSTER_PLAYER_SRC : undefined}
+                  poster={poster}
                   muted
                   loop={!reduced}
                   playsInline
