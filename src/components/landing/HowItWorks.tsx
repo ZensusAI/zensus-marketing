@@ -1,47 +1,41 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import plaidLogo from "@/assets/integrations/plaid.svg";
-import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
-import hubspotLogo from "@/assets/integrations/hubspot.svg";
-import slackLogo from "@/assets/integrations/slack.svg";
 import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
-import { clamp01, easeInOutCubic as ease, lerp } from "@/lib/motion";
+import { EVENTS, track } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
+import plaidLogo from "@/assets/integrations/plaid.svg";
+import quickbooksLogo from "@/assets/integrations/quickbooks-logo-black.png";
 import { PinnedSection } from "./PinnedSection";
+import { TalkToUsButton } from "./TalkToUsButton";
+import { TryItNowButton } from "./TryItNowButton";
 
 /*
- * How it works, from handoff 10-how-it-works (locked 18d): a pinned setup
- * window (3.6 viewports) that plays each step. Each new step opens as a
- * circle (iris) wipe that grows from its own row in the step list (on phones,
- * from its segment of the top rail), edged by a glowing green ring; the
- * previous step scales down, blurs and dims underneath. The active title
- * decodes from scrambled letters over DECODE_MS each time its step becomes
- * active (by time, not scroll, so a parked reader never sees gibberish).
- * Values follow the handoff's renderVals().
- *   1. Connect: Plaid, QuickBooks, HubSpot go queued, connecting, linked.
- *   2. Projection: the 13-week line draws, then revises through three events.
- *   3. Alert: the threshold slides from $400K to $250K and the Slack message
- *      arrives.
- * The scramble is drawn from a data attribute (CSS content), so the heading's
- * text is always the real title, including in the prerendered HTML.
- * Reduced motion or a short viewport: all three windows in their end state,
- * no wipe or scramble.
+ * How it works from handoff 23 (locked 49a desktop, 49b mobile, 4 Nov 2026),
+ * replacing 18d. It answers "how much effort is it to start?" and leads into
+ * Start. Pinned over 3.6 viewports (kept short: long pins raise bounce), three
+ * steps on a rail that fills with scroll and jumps on click. Each step's card
+ * is never empty: the three connections go Connect, Connecting..., Connected
+ * (and connect on a tap); a progress bar builds the 13-week forecast; a real
+ * range input sets the alert threshold (it eases from $330K to $250K with
+ * scroll until someone drags it). Start, Talk to us and the trial line appear
+ * at 60% of step 3.
  *
- * Corrections, to match the app: the projection is the 13-week view (there is
- * no 90-day one); alerts carry the breach and the threshold, not a zero-cash
- * date, and are checked after each sync, not "the moment"; HubSpot is read for
- * subscriptions, not deals; only the connection is OAuth (QuickBooks access
- * is read and write, so "read-only" is not claimed); setup is "a few minutes".
+ * The steps are an ordered list with H3s, all in the HTML. useStaticPins
+ * (reduced motion, short viewport): the three steps stacked, each with its
+ * finished card, then the buttons.
+ *
+ * Copy: titles verbatim; descriptions 1 and 3 are the handoff's approved
+ * rewrites, kept as written at the user's request (4 Nov 2026). The trust
+ * line keeps "AES-256-GCM tokens", the wording chosen for the proof strip:
+ * that encryption covers tokens and secrets, not all data. Chart figures are
+ * placeholders from the shared ledger.
  */
 
-// `link` turns one phrase of the description into a link to the page that
-// goes deeper on it.
 const STEPS: { title: string; desc: string; link?: { text: string; to: string } }[] = [
   {
     title: "Connect your data",
-    desc: "OAuth to Plaid, QuickBooks, or HubSpot. All three if you want. No uploads.",
-    link: { text: "Plaid, QuickBooks, or HubSpot", to: "/integrations" },
+    desc: "Sign in to your bank, QuickBooks and HubSpot. All three if you want. No uploads.",
   },
   {
     title: "Watch the projection move",
@@ -50,418 +44,443 @@ const STEPS: { title: string; desc: string; link?: { text: string; to: string } 
   },
   {
     title: "Set your alert threshold",
-    desc: "Slack pings you when your 30-day projection crosses the line.",
-    link: { text: "Slack", to: "/integrations/slack" },
+    desc: "Slack pings you the moment your projection crosses the line.",
   },
 ];
+const N = STEPS.length;
+const PIN_VIEWPORTS = 3.6;
 
-// A step description with its linked phrase. Off-screen copies (faded or
-// collapsed) keep the link out of the tab order.
-const Desc = ({ step, focusable }: { step: (typeof STEPS)[number]; focusable: boolean }) => {
+const SOURCES = [
+  { key: "plaid", what: "Bank accounts" },
+  { key: "quickbooks", what: "Accounting" },
+  { key: "hubspot", what: "CRM pipeline" },
+] as const;
+
+// Weekly projected balance, week of Nov 3 to week of Jan 26 (placeholders).
+const BALANCE = [318400, 296200, 305100, 282300, 268900, 290400, 271600, 248100, 412300, 398700, 296500, 284200, 301000];
+const MONTHS: [string, number, number][] = [
+  ["Nov", 0, 4],
+  ["Dec", 4, 5],
+  ["Jan", 9, 4],
+];
+const SLOT = 100 / 13;
+const yPct = (v: number) => 100 - ((v - 200000) / 250000) * 100;
+const LINE = BALANCE.map((v, i) => `${i ? "L" : "M"}${(((i + 0.5) / 13) * 1000).toFixed(1)} ${yPct(v).toFixed(2)}`).join(" ");
+const fmt = (v: number) => `$${Math.round(v).toLocaleString("en-US")}`;
+const clamp = (x: number) => Math.max(0, Math.min(1, x));
+const ease = "cubic-bezier(.22,1,.36,1)";
+
+const rise = (on: boolean): CSSProperties => ({
+  opacity: on ? 1 : 0,
+  transform: on ? "none" : "translateY(14px)",
+  transition: `opacity .5s, transform .6s ${ease}`,
+});
+
+function Description({ step }: { step: (typeof STEPS)[number] }) {
   const l = step.link;
   const at = l ? step.desc.indexOf(l.text) : -1;
   if (!l || at < 0) return <>{step.desc}</>;
   return (
     <>
       {step.desc.slice(0, at)}
-      <Link
-        to={l.to}
-        tabIndex={focusable ? undefined : -1}
-        onClick={(e) => e.stopPropagation()}
-        className="rounded-sm font-medium text-sage-dark underline decoration-primary/40 underline-offset-4 hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-      >
+      <Link to={l.to} className="rounded-sm font-medium text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
         {l.text}
       </Link>
       {step.desc.slice(at + l.text.length)}
     </>
   );
-};
-
-const PROVIDERS = [
-  { name: "Plaid", logo: plaidLogo, className: "logo-on-light object-cover object-left" },
-  { name: "QuickBooks", logo: quickbooksLogo },
-  { name: "HubSpot", logo: hubspotLogo },
-];
-
-const HIST = "M6 46 C 22 43, 34 47, 48 43 C 54 41, 58 41, 62 40";
-const projPath = (a: number[]) =>
-  `${HIST} C 70 40, 77 ${a[0]}, 85 ${a[0]} C 93 ${a[0]}, 100 ${a[1]}, 108 ${a[1]} C 116 ${a[1]}, 123 ${a[2]}, 131 ${a[2]} C 139 ${a[2]}, 146 ${a[3]}, 154 ${a[3]}`;
-const BASE = [37, 34, 31, 28];
-const EVENTS = [
-  { label: "Annual invoice posts Dec 14", delta: "+$48K", positive: true, anchors: [37, 22, 19, 16], mi: 1, mx: 108 },
-  { label: "Payroll clears on the 1st", delta: "-$31K", positive: false, anchors: [42, 39, 36, 33], mi: 0, mx: 85 },
-  { label: "New subscription starts", delta: "+$9K MRR", positive: true, anchors: [35, 28, 20, 11], mi: 2, mx: 131 },
-];
-const SLACK_MESSAGE = "30-day projection dips below your $250K threshold in 3 weeks.";
-const PIN_VIEWPORTS = 3.6;
-const DECODE_MS = 600;
-const GL = "abcdefghijklmnopqrstuvwxyz";
-
-const scramble = (t: string, k: number, now: number) => {
-  if (k >= 1) return t;
-  const n = Math.floor(k * t.length);
-  const tick = Math.floor(now / 55);
-  return t
-    .split("")
-    .map((ch, j) => (j < n || ch === " " ? ch : GL[(j * 7 + tick * 13 + j * tick) % 26]))
-    .join("");
-};
-
-const projAt = (s: number) => {
-  if (s < 0) return { a: BASE, mop: 0, ev: null as (typeof EVENTS)[number] | null, evOp: 0 };
-  const i = Math.floor(s);
-  const f = ease(clamp01((s - i) * 4));
-  const from = i === 0 ? BASE : EVENTS[(i - 1) % 3].anchors;
-  const E = EVENTS[i % 3];
-  return { a: from.map((v, j) => lerp(v, E.anchors[j], f)), mop: clamp01(((s - i) * 4 - 0.7) / 0.3), ev: E, evOp: clamp01((s - i) * 6) };
-};
-
-function useNarrow() {
-  // Read the width up front so phones do not lay out the desktop geometry first.
-  const [narrow, setNarrow] = useState(() => typeof window !== "undefined" && !!window.matchMedia && window.matchMedia("(max-width: 759px)").matches);
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 759px)");
-    const sync = () => setNarrow(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-  return narrow;
 }
 
-interface WindowProps {
-  i: number;
-  k: number[];
-  s: number;
+const Axis = ({ small }: { small?: boolean }) => (
+  <>
+    {[200000, 300000, 400000].map((g) => (
+      <div key={g} className="absolute inset-x-0 border-t border-[#F1E6CB]" style={{ top: `${yPct(g)}%` }}>
+        <span className={cn("absolute -top-[7px] font-mono text-muted-foreground", small ? "-left-[38px] text-[10px]" : "-left-[38px] text-[10px] min-[1024px]:-left-11 min-[1024px]:text-[11px]")}>
+          ${g / 1000}K
+        </span>
+      </div>
+    ))}
+  </>
+);
+
+interface CardProps {
+  step: number;
+  p: number;
+  tapped: number[];
+  onTap: (i: number) => void;
+  thr: number | null;
+  onThr: (v: number) => void;
+  /** Static layout: only this step's panel, in its finished state. */
+  only?: number;
 }
 
-// One setup window's content at progress k (per step) and projection clock s.
-function Diorama({ i, k, s }: WindowProps) {
-  if (i === 0) {
-    const lk = k[0] * 3.3;
-    const all = k[0] >= 1;
+function StepCard({ step, p, tapped, onTap, thr, onThr, only }: CardProps) {
+  const sliderId = useId();
+  const show = (i: number) => (only === undefined ? step === i : only === i);
+  const fin = only !== undefined;
+
+  const conn = SOURCES.map((src, i) => {
+    const ok = fin || step > 0 || p > 0.28 + i * 0.16 || tapped.includes(i);
+    const busy = !ok && step === 0 && p > 0.18 + i * 0.16;
+    return { ...src, ok, busy };
+  });
+
+  const fill = fin || step > 1 ? 1 : step === 1 ? clamp((p - 0.12) / 0.45) : 0;
+  const ready = fill >= 1;
+
+  const eased = Math.round((330000 - 80000 * (step === 2 ? clamp((p - 0.1) / 0.45) : 0)) / 5000) * 5000;
+  const value = thr ?? (fin ? 250000 : eased);
+  const done = fin || (step === 2 && (p > 0.6 || thr !== null));
+  const pct = ((value - 200000) / 200000) * 100;
+
+  const panel = (i: number, children: ReactNode, cls: string) => {
+    const on = show(i);
     return (
-      <>
-        <p className="mb-[18px] text-sm text-muted-foreground">Connect your sources</p>
-        <ul className="flex flex-col gap-4">
-          {PROVIDERS.map((pv, j) => {
-            const done = lk > j + 1 || all;
-            const conn = !done && lk > j;
-            return (
-              <li key={pv.name} className="flex items-center gap-2.5 text-base text-foreground">
-                <img src={pv.logo} alt="" className={cn("h-5 w-5 object-contain", pv.className)} />
-                {pv.name}
-                <span
-                  className={cn(
-                    "ml-auto inline-flex items-center gap-1.5 font-mono text-xs",
-                    done ? "text-sage-dark" : "text-muted-foreground",
+      <div
+        className={cn("absolute inset-0 flex flex-col px-4 py-[18px] max-[1023px]:[@media(max-height:820px)]:py-3 min-[1024px]:px-8 min-[1024px]:py-7", cls)}
+        style={{ opacity: on ? 1 : 0, transition: "opacity .5s", pointerEvents: on ? "auto" : "none" }}
+        aria-hidden={on ? undefined : true}
+        {...(on ? {} : { inert: "" })}
+      >
+        {children}
+      </div>
+    );
+  };
+
+  return (
+    <div className={cn("relative overflow-hidden rounded-[18px] border border-border bg-card shadow-[0_40px_80px_-48px_rgba(26,42,40,.45)] min-[1024px]:rounded-[20px]", fin ? "h-[300px] min-[1024px]:h-[360px]" : "h-[300px] max-[1023px]:[@media(max-height:820px)]:h-[244px] min-[1024px]:h-[360px]")}>
+      {panel(
+        0,
+        <>
+          <span className="hidden items-baseline justify-between min-[1024px]:flex">
+            <span className="text-[15px] font-semibold text-foreground">Connect your sources</span>
+            <span className="text-[13px] text-muted-foreground">Tap to try</span>
+          </span>
+          {conn.map((c, i) => (
+            <div
+              key={c.key}
+              className={cn(
+                "flex h-[60px] max-[1023px]:[@media(max-height:820px)]:h-[50px] shrink-0 items-center justify-between gap-2.5 rounded-xl border bg-background px-3 transition-colors duration-300 min-[1024px]:h-16 min-[1024px]:gap-4 min-[1024px]:rounded-[14px] min-[1024px]:px-4",
+                c.ok ? "border-primary" : "border-border",
+              )}
+            >
+              <span className="flex min-w-0 items-center gap-3.5">
+                <span className="flex items-center min-[1024px]:w-[110px]">
+                  {c.key === "plaid" ? (
+                    <span className="inline-flex h-6 items-center rounded-full bg-forest px-2.5 min-[1024px]:h-[26px] min-[1024px]:px-3">
+                      <img src={plaidLogo} alt="Plaid" className="block h-[13px] w-auto min-[1024px]:h-3.5" />
+                    </span>
+                  ) : c.key === "quickbooks" ? (
+                    // Official Intuit file, unmodified; 18px on phones, 20px
+                    // from 1024px, with clear space around it.
+                    <img src={quickbooksLogo} alt="Intuit QuickBooks" className="mx-1 block h-[18px] w-auto min-[1024px]:h-5" />
+                  ) : (
+                    <span className="text-sm font-semibold text-foreground min-[1024px]:text-[15px]">HubSpot</span>
                   )}
-                >
-                  {conn && (
-                    <span
-                      aria-hidden
-                      className="inline-block h-2.5 w-2.5 animate-spin rounded-full border-[1.5px] border-sage-dark border-t-transparent"
-                    />
-                  )}
-                  {done ? "✓ linked" : conn ? "connecting" : "queued"}
                 </span>
-              </li>
-            );
-          })}
-        </ul>
-        <div className="mt-auto flex justify-between pt-4 font-mono text-[10.5px] text-muted-foreground">
-          <span>OAuth · no CSV uploads</span>
-          <span className={all ? "text-sage-dark" : "text-muted-foreground"}>{all ? "3 of 3 linked" : `${Math.min(3, Math.floor(lk))} of 3`}</span>
-        </div>
-      </>
-    );
-  }
-  if (i === 1) {
-    const P = projAt(s);
-    const dk = clamp01(k[1] / 0.6);
-    return (
-      <>
-        <p className="mb-1.5 text-sm text-muted-foreground">13-week projection</p>
-        <svg aria-hidden viewBox="0 0 160 64" width="100%" preserveAspectRatio="xMidYMid meet" className="block min-h-0 flex-1 overflow-visible max-[759px]:max-h-[140px] min-[760px]:max-h-[210px]">
-          <line x1="62" y1="6" x2="62" y2="58" stroke="#EBDCB8" strokeWidth={1} strokeDasharray="2 3" />
-          <text x="62" y="63" textAnchor="middle" fontSize="5.5" fill="#506864" fontFamily="Geist Mono, monospace">
-            today
-          </text>
-          <path
-            d={projPath(P.a)}
-            fill="none"
-            stroke="#0E5C3A"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeDasharray="220"
-            strokeDashoffset={(220 * (1 - ease(dk))).toFixed(1)}
-          />
-          <circle cx={P.ev ? P.ev.mx : 0} cy={P.ev ? P.ev.anchors[P.ev.mi] : 0} r="3.5" fill="none" stroke="#22C573" strokeWidth={1.5} opacity={P.mop} />
-          <circle cx="154" cy={P.a[3]} r="3" fill="#22C573" opacity={dk > 0.95 ? 1 : 0} />
-        </svg>
-        <p className="mt-auto min-h-4 pt-2 font-mono text-xs text-muted-foreground" style={{ opacity: P.ev ? P.evOp : dk > 0.9 ? 1 : 0 }}>
-          {P.ev ? P.ev.label : "projection live"}{" "}
-          <b className={cn("font-semibold", P.ev?.positive ? "text-sage-dark" : "text-muted-foreground")}>{P.ev ? P.ev.delta : ""}</b>
-        </p>
-      </>
-    );
-  }
-  const kn = ease(clamp01(k[2] / 0.55));
-  const km = ease((k[2] - 0.6) / 0.3);
-  const knob = lerp(72, 38, kn);
+                <span className="hidden whitespace-nowrap text-sm text-muted-foreground min-[1024px]:inline">{c.what}</span>
+              </span>
+              <button
+                type="button"
+                disabled={c.ok}
+                onClick={() => onTap(i)}
+                aria-label={c.ok ? `${c.key === "plaid" ? "Bank accounts" : c.key === "quickbooks" ? "QuickBooks" : "HubSpot"} connected` : `Connect ${c.key === "plaid" ? "bank accounts" : c.key === "quickbooks" ? "QuickBooks" : "HubSpot"}`}
+                className={cn(
+                  "relative inline-flex h-8 min-w-[104px] items-center justify-center rounded-full border px-3 text-[12.5px] font-semibold transition-colors duration-300 min-[1024px]:h-[34px] min-[1024px]:min-w-[116px] min-[1024px]:px-3.5 min-[1024px]:text-[13.5px]",
+                  "before:absolute before:-inset-1.5 before:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-default",
+                  c.ok ? "border-primary bg-[#EEF7EC] text-[hsl(var(--sage-dark))]" : "border-forest bg-forest text-forest-foreground",
+                )}
+              >
+                {c.ok ? "✓ Connected" : c.busy ? "Connecting…" : "Connect"}
+              </button>
+            </div>
+          ))}
+          <Link
+            to="/security"
+            className="flex min-h-[28px] items-center gap-2 rounded-sm text-xs text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring min-[1024px]:mt-1 min-[1024px]:text-[13px]"
+          >
+            <span aria-hidden className="inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-forest">
+              <svg width="10" height="10" viewBox="0 0 24 24">
+                <rect x="4.5" y="10" width="15" height="11.5" rx="3" fill="#48D88A" />
+                <path d="M7.5 10.5V7.75a4.5 4.5 0 0 1 9 0v2.75" fill="none" stroke="#48D88A" strokeWidth="2.6" />
+              </svg>
+            </span>
+            <span>
+              <b className="font-semibold text-foreground">Encrypted, US-hosted</b> · AES-256-GCM tokens
+              <span className="hidden min-[1024px]:inline"> · TLS in transit</span>
+            </span>
+          </Link>
+        </>,
+        "justify-center gap-2.5 max-[1023px]:[@media(max-height:820px)]:gap-2 min-[1024px]:gap-3",
+      )}
+
+      {panel(
+        1,
+        <>
+          <div aria-hidden className="flex items-baseline justify-between gap-2">
+            <span className="text-[13.5px] font-semibold text-foreground min-[1024px]:text-[15px]">{ready ? "Your 13-week forecast" : "Building your 13-week forecast"}</span>
+            <span className={cn("text-xs font-semibold min-[1024px]:text-[13px]", ready ? "text-[hsl(var(--sage-dark))]" : "text-muted-foreground")}>
+              {ready ? "✓ Ready" : `${Math.round(fill * 100)}%`}
+            </span>
+          </div>
+          <div aria-hidden className="mt-2.5 h-[5px] overflow-hidden rounded-[3px] bg-border min-[1024px]:mt-3 min-[1024px]:h-1.5">
+            <div className="h-full bg-primary transition-[width] duration-300" style={{ width: `${fill * 100}%` }} />
+          </div>
+          <div aria-hidden className="relative mb-6 ml-[38px] mt-5 flex-1 min-[1024px]:ml-11 min-[1024px]:mt-[26px]">
+            <Axis />
+            {BALANCE.map((v, i) => {
+              const h = ready ? 100 - yPct(v) : 9 + (i % 3) * 4;
+              return (
+                <div
+                  key={i}
+                  className="absolute bottom-0 rounded-t-sm transition-[background-color,height] duration-500"
+                  style={{ left: `${i * SLOT + SLOT * 0.22}%`, width: `${SLOT * 0.56}%`, height: `${h}%`, background: ready ? (i === 8 ? "#48D88A" : "#D7E9DC") : "#F1E6CB" }}
+                />
+              );
+            })}
+            <svg viewBox="0 0 1000 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
+              <path
+                d={LINE}
+                fill="none"
+                stroke="#0E5C3A"
+                strokeWidth="2.25"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+                style={{ clipPath: ready ? "inset(-20% 0 -20% 0)" : "inset(-20% 100% -20% 0)", transition: "clip-path .9s ease" }}
+              />
+            </svg>
+            {MONTHS.map(([l, a, n]) => (
+              <span key={l} className="absolute top-[calc(100%+6px)] -translate-x-1/2 text-[11px] font-medium text-muted-foreground min-[1024px]:text-xs" style={{ left: `${(a + n / 2) * SLOT}%` }}>
+                {l}
+              </span>
+            ))}
+          </div>
+        </>,
+        "",
+      )}
+
+      {panel(
+        2,
+        <>
+          <div className="flex items-baseline justify-between">
+            <label htmlFor={sliderId} className="text-[13.5px] font-semibold text-foreground min-[1024px]:text-[15px]">
+              Alert threshold <span className="hidden text-[13px] font-normal text-muted-foreground min-[1024px]:inline">· drag to try</span>
+            </label>
+            <b className="font-mono text-sm font-semibold text-foreground min-[1024px]:text-[15px]">{fmt(value)}</b>
+          </div>
+          {/* A real range input (44px hit area) under the styled track. */}
+          <div className="relative mt-3 flex h-[26px] items-center min-[1024px]:mt-3.5 min-[1024px]:h-7">
+            <div aria-hidden className="absolute inset-x-0 h-1 rounded-sm bg-border" />
+            <div aria-hidden className="absolute left-0 h-1 rounded-sm bg-primary" style={{ width: `${pct}%` }} />
+            <div
+              aria-hidden
+              className="absolute h-5 w-5 -translate-x-1/2 rounded-full border-2 border-primary bg-card shadow-[0_2px_6px_rgba(26,42,40,.2)] min-[1024px]:h-[22px] min-[1024px]:w-[22px]"
+              style={{ left: `${pct}%` }}
+            />
+            <input
+              id={sliderId}
+              type="range"
+              min={200000}
+              max={400000}
+              step={5000}
+              value={value}
+              onChange={(e) => onThr(Number(e.target.value))}
+              aria-valuetext={fmt(value)}
+              className="hiw-range absolute -left-2.5 h-11 w-[calc(100%+20px)] cursor-grab opacity-0"
+            />
+          </div>
+          <div aria-hidden className="relative ml-[38px] mt-4 h-[110px] max-[1023px]:[@media(max-height:820px)]:mt-3 max-[1023px]:[@media(max-height:820px)]:h-[70px] min-[1024px]:ml-11 min-[1024px]:mt-[22px] min-[1024px]:h-[150px]">
+            <Axis />
+            <svg viewBox="0 0 1000 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
+              <path d={LINE} fill="none" stroke="#0E5C3A" strokeWidth="2.25" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+            </svg>
+            <div className="absolute inset-x-0 border-t-2 border-dashed border-[#E86A5A] transition-[top] duration-200" style={{ top: `${yPct(value)}%` }} />
+          </div>
+          <div
+            role="status"
+            className="mt-auto flex items-center gap-2 rounded-xl bg-forest px-3 py-2.5 text-forest-foreground min-[1024px]:gap-2.5 min-[1024px]:px-3.5 min-[1024px]:py-3"
+            style={{ opacity: done ? 1 : 0, transform: done ? "none" : "translateY(8px)", transition: `opacity .5s, transform .5s ${ease}` }}
+          >
+            <span aria-hidden className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground min-[1024px]:h-[22px] min-[1024px]:w-[22px] min-[1024px]:text-xs">
+              ✓
+            </span>
+            <span className="text-[12.5px] leading-[1.35] min-[1024px]:text-[13.5px] min-[1024px]:leading-[1.4]">
+              {done ? `Alert set. Slack #finance when projected cash drops below ${fmt(value)}.` : ""}
+            </span>
+          </div>
+        </>,
+        "",
+      )}
+    </div>
+  );
+}
+
+function Cta({ visible, className }: { visible: boolean; className?: string }) {
+  return (
+    <div className={className} style={{ ...rise(visible), pointerEvents: visible ? "auto" : "none" }} {...(visible ? {} : { inert: "" })}>
+      <div className="flex gap-3">
+        <span className="flex flex-1 min-[1024px]:flex-none" onClickCapture={() => track(EVENTS.HIW_START_CLICK)}>
+          <TryItNowButton variant="solid" source="how_it_works" className="h-12 w-full justify-center px-6 min-[1024px]:w-auto" />
+        </span>
+        <span className="flex flex-1 min-[1024px]:flex-none" onClickCapture={() => track(EVENTS.HIW_TALK_CLICK)}>
+          <TalkToUsButton variant="outline" showArrow={false} className="h-12 w-full justify-center px-6 text-base min-[1024px]:w-auto" />
+        </span>
+      </div>
+      <p className="mt-3 text-sm text-muted-foreground">14-day free trial, cancel anytime. No charge until it ends.</p>
+    </div>
+  );
+}
+
+function StepText({ step, i, p, active }: { step: (typeof STEPS)[number]; i: number; p: number; active: boolean }) {
+  const on = (m: number) => active && p >= m;
   return (
     <>
-      <p className="mb-[18px] flex items-center gap-1.5 text-sm text-muted-foreground">
-        <img src={slackLogo} alt="" className="h-3 w-3" />
-        Slack
+      <p className="text-[15px] font-semibold text-primary" style={{ opacity: on(0.04) ? 1 : 0, transition: "opacity .4s" }}>
+        Step {i + 1} of {N}
       </p>
-      <div className="mb-3">
-        <div className="flex justify-between font-mono text-[10.5px] text-muted-foreground">
-          <span>Alert threshold</span>
-          <span className="font-semibold text-foreground">${Math.round(lerp(400, 250, kn) / 10) * 10}K</span>
-        </div>
-        <div className="relative mt-2 h-1 rounded bg-border">
-          <div className="absolute inset-y-0 left-0 rounded bg-sage-dark" style={{ width: `${knob}%` }} />
-          <span
-            className="absolute top-1/2 -ml-[7px] -mt-[7px] h-3.5 w-3.5 rounded-full border-2 border-sage-dark bg-card shadow-[0_2px_6px_rgba(26,42,40,.2)]"
-            style={{ left: `${knob}%` }}
-          />
-        </div>
-      </div>
-      <div className="rounded-[10px] border border-border bg-background px-3 py-2.5" style={{ opacity: km, transform: `translateY(${((1 - km) * 8).toFixed(1)}px)` }}>
-        <p className="text-xs font-semibold text-foreground">
-          Zensus <span className="ml-1 font-mono text-[9px] font-normal uppercase text-muted-foreground">app</span>
-        </p>
-        <p className="mt-1 text-[14px] leading-[1.55] text-muted-foreground max-[759px]:text-xs">{SLACK_MESSAGE}</p>
-      </div>
+      <h3 className="mt-2.5 text-balance text-2xl font-bold leading-[1.1] tracking-[-0.03em] text-foreground min-[1024px]:text-[38px]" style={rise(on(0.04))}>
+        {step.title}
+      </h3>
+      <p className="mt-2.5 max-w-[420px] text-pretty text-[15.5px] leading-[1.5] text-muted-foreground min-[1024px]:mt-4 min-[1024px]:text-lg min-[1024px]:leading-[1.55]" style={rise(on(0.22))}>
+        <Description step={step} />
+      </p>
     </>
   );
 }
 
-// 300px between 760 and 1023, where the window sits under the step list and
-// 340px would run past the bottom of a 900px-tall screen.
-const windowClass =
-  "relative flex h-[250px] flex-col overflow-hidden rounded-[18px] border border-border bg-card p-5 shadow-[0_30px_60px_-36px_rgba(26,42,40,.45)] min-[760px]:h-[300px] min-[760px]:p-7 min-[1024px]:h-[340px]";
+const Heading = ({ center }: { center?: boolean }) => (
+  <>
+    <h2 id="how-it-works-heading" className={cn("m-0 text-[30px] font-bold leading-[1.08] tracking-[-0.03em] text-foreground min-[1024px]:text-[46px] min-[1024px]:leading-[1.05] min-[1024px]:tracking-[-0.035em]", center && "min-[1024px]:text-center")}>
+      How it works
+    </h2>
+    <p className={cn("mt-2 text-[15.5px] leading-[1.5] text-muted-foreground min-[1024px]:mt-3 min-[1024px]:text-lg", center && "min-[1024px]:text-center")}>
+      From sign-up to a live cash flow forecast in a few minutes.
+    </p>
+  </>
+);
 
 const HowItWorks = () => {
-  const reduced = useStaticPins();
-  const narrow = useNarrow();
-  const [p, setP] = useState(0);
-  // The window's measured size (a ResizeObserver, not a read in the scroll
-  // handler), for the wipe geometry.
-  const [box, setBox] = useState({ w: 900, h: 340 });
-  const stageRef = useRef<HTMLDivElement>(null);
+  const staticPins = useStaticPins();
+  const [pos, setPos] = useState({ step: 0, p: 0 });
+  const [tapped, setTapped] = useState<number[]>([]);
+  const [thr, setThr] = useState<number | null>(null);
+  const dragged = useRef(false);
+  const viewed = useRef(-1);
 
-  const onProgress = useCallback(({ progress }: ScrollProgress) => setP(progress), []);
+  const onProgress = useCallback(({ progress }: ScrollProgress) => {
+    const t = Math.min(0.9999, progress) * N;
+    const step = Math.floor(t);
+    const p = Math.round((t - step) * 100) / 100;
+    setPos((cur) => (cur.step === step && cur.p === p ? cur : { step, p }));
+  }, []);
 
   useEffect(() => {
-    const el = stageRef.current;
-    if (!el || typeof ResizeObserver === "undefined") return;
-    const ro = new ResizeObserver(() => {
-      const win = el.querySelector<HTMLElement>("[data-window]");
-      setBox({ w: el.offsetWidth, h: win?.offsetHeight ?? 340 });
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [reduced]);
+    if (staticPins || viewed.current === pos.step || pos.p < 0.04) return;
+    viewed.current = pos.step;
+    track(EVENTS.HIW_STEP_VIEW, { step: pos.step + 1 });
+  }, [pos, staticPins]);
 
-  const act = Math.min(2, Math.floor(p * 3));
-  const loc = clamp01(p * 3 - act);
-
-  // The title scramble: each time a step becomes active inside the pin, its
-  // title decodes over DECODE_MS on the handoff's 55ms tick, then the clock
-  // stops (the spinner is a CSS animation).
-  const pinned = !reduced && p > 0 && p < 1;
-  const [dec, setDec] = useState({ act: -1, ms: DECODE_MS });
-  useEffect(() => {
-    if (!pinned) return;
-    const t0 = performance.now();
-    setDec({ act, ms: 0 });
-    const id = window.setInterval(() => {
-      const ms = performance.now() - t0;
-      setDec({ act, ms });
-      if (ms >= DECODE_MS) window.clearInterval(id);
-    }, 55);
-    return () => window.clearInterval(id);
-  }, [act, pinned]);
-
-  const k = reduced ? [1, 1, 1] : [0, 1, 2].map((i) => (i < act ? 1 : i > act ? 0 : loc));
-  const s = reduced ? 0.99 : act === 1 ? (loc < 0.3 ? -1 : ((loc - 0.3) / 0.7) * 2.99) : act > 1 ? 2.99 : -1;
-
-  const { w: sw, h: wH } = box;
-  const diag = Math.hypot(sw, wH) * 1.04;
-  const rv = (i: number) => (i === 0 ? 1 : ease(clamp01((p * 3 - i + 0.1) / 0.2)));
-  const ox = (i: number) => (narrow ? Math.round((sw * (i + 0.5)) / 3) : 0);
-  const oy = (i: number) => (narrow ? 0 : Math.round(wH * (0.2 + i * 0.3)));
+  const onTap = (i: number) => {
+    setTapped((cur) => (cur.includes(i) ? cur : [...cur, i]));
+    track(EVENTS.HIW_CONNECT_TAP, { source: SOURCES[i].key });
+  };
+  const onThr = (v: number) => {
+    setThr(v);
+    if (!dragged.current) {
+      dragged.current = true;
+      track(EVENTS.HIW_THRESHOLD_DRAG);
+    }
+  };
 
   const jump = (i: number) => {
-    const track = document.getElementById("how-it-works");
-    if (!track || reduced) return;
-    const top = track.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: top + ((i + 0.5) / 3) * (track.offsetHeight - window.innerHeight), behavior: "smooth" });
+    const el = document.getElementById("how-it-works");
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + ((i + 0.55) / N) * (el.offsetHeight - window.innerHeight), behavior: "smooth" });
   };
 
-  const titleOf = (i: number) => {
-    const shown = pinned && i === act && dec.act === act ? scramble(STEPS[i].title, clamp01(dec.ms / DECODE_MS), dec.ms) : STEPS[i].title;
-    const scrambling = shown !== STEPS[i].title;
+  if (staticPins) {
     return (
-      <span className="relative inline-block">
-        <span className={scrambling ? "text-transparent" : undefined}>{STEPS[i].title}</span>
-        {scrambling && <span aria-hidden data-s={shown} className="absolute inset-0 whitespace-nowrap before:content-[attr(data-s)]" />}
-      </span>
+      <section id="how-it-works" aria-labelledby="how-it-works-heading" className="bg-background px-5 py-24 min-[1024px]:px-[120px] min-[1024px]:pb-[200px] min-[1024px]:pt-40">
+        <div className="mx-auto max-w-[1040px]">
+          <Heading />
+          <ol className="mt-10 flex flex-col gap-12 min-[1024px]:gap-16">
+            {STEPS.map((s, i) => (
+              <li key={s.title} className="grid items-center gap-6 min-[1024px]:grid-cols-[minmax(0,1fr)_560px] min-[1024px]:gap-16">
+                <div>
+                  <StepText step={s} i={i} p={1} active />
+                </div>
+                <StepCard step={i} p={1} tapped={[0, 1, 2]} onTap={onTap} thr={thr} onThr={onThr} only={i} />
+              </li>
+            ))}
+          </ol>
+          <Cta visible className="mt-10" />
+        </div>
+      </section>
     );
-  };
+  }
 
+  const { step, p } = pos;
+  const ctaOn = step === 2 && p > 0.6;
   return (
-    <PinnedSection
-      id="how-it-works"
-      viewports={PIN_VIEWPORTS}
-      onProgress={onProgress}
-      aria-labelledby="how-heading"
-      className="bg-background"
-      stageClassName={reduced ? undefined : "overflow-hidden"}
-    >
-      <div className="h-full px-5 pb-5 pt-[calc(4rem+28px)] min-[760px]:px-8 min-[760px]:pb-10 min-[760px]:pt-[calc(4rem+52px)]">
-        <div className="mx-auto flex h-full max-w-6xl flex-col gap-5 min-[760px]:gap-7 min-[1024px]:justify-center">
-          <div className="grid items-end gap-x-10 gap-y-3 min-[1024px]:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
-            <h2 id="how-heading" className="text-[30px] font-bold leading-[1.08] tracking-[-0.025em] text-foreground min-[760px]:text-[46px]">
-              How it works
-            </h2>
-            <p className="text-pretty text-[15px] leading-[1.55] text-muted-foreground min-[760px]:text-lg">
-              From sign-up to a live cash flow forecast in a few minutes.
-            </p>
+    <div className="pb-24 pt-24 min-[1024px]:pb-[200px] min-[1024px]:pt-40">
+      <PinnedSection
+        id="how-it-works"
+        viewports={PIN_VIEWPORTS}
+        onProgress={onProgress}
+        aria-labelledby="how-it-works-heading"
+        className="bg-background"
+        stageClassName="flex flex-col px-5 pb-6 pt-24 max-[1023px]:[@media(max-height:820px)]:pt-[84px] min-[1024px]:justify-center min-[1024px]:px-[120px] min-[1024px]:py-16"
+      >
+        <div className="mx-auto flex w-full max-w-[1040px] flex-col min-[640px]:max-w-[640px] min-[1024px]:max-w-[1040px] min-[1024px]:pt-8">
+          <div className="flex flex-col min-[1024px]:items-center">
+            <Heading center />
+            <div className="mt-[18px] grid w-full grid-cols-3 gap-2 min-[1024px]:mt-8 min-[1024px]:max-w-[640px] min-[1024px]:gap-3">
+              {STEPS.map((s, i) => (
+                <button
+                  key={s.title}
+                  type="button"
+                  onClick={() => jump(i)}
+                  aria-current={i === step ? "step" : undefined}
+                  className="flex min-h-[44px] flex-col gap-2 rounded-sm text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background min-[1024px]:gap-2.5"
+                >
+                  <span className="h-[3px] w-full overflow-hidden rounded-sm bg-border">
+                    <span className="block h-full bg-primary" style={{ width: `clamp(0%, calc((var(--p, 0) * ${N} - ${i}) * 100%), 100%)` }} />
+                  </span>
+                  <span className={cn("text-[12.5px] transition-colors duration-300 min-[1024px]:text-sm", i === step ? "font-semibold text-foreground" : "font-medium text-muted-foreground")}>
+                    <span className="min-[1024px]:hidden">Step {i + 1}</span>
+                    <span className="hidden min-[1024px]:inline">
+                      {i + 1}. {s.title}
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
 
-          {reduced ? (
-            // Reduced motion: every step's window in its end state.
-            <ol className="grid gap-8 min-[1024px]:grid-cols-3 min-[1024px]:gap-6">
-              {STEPS.map((st, i) => (
-                <li key={st.title} className="min-w-0">
-                  <div className={windowClass}>
-                    <Diorama i={i} k={k} s={s} />
-                  </div>
-                  <span className="mt-4 block font-mono text-[11px] text-sage-dark">({i + 1})</span>
-                  <h3 className="mt-1 text-[19px] font-semibold leading-[1.3] tracking-[-0.01em] text-foreground">{st.title}</h3>
-                  <p className="mt-1 text-pretty text-[15px] leading-[1.6] text-muted-foreground">
-                    <Desc step={st} focusable />
-                  </p>
-                </li>
-              ))}
+          <div className="mt-1.5 grid gap-5 min-[1024px]:mt-11 min-[1024px]:grid-cols-[minmax(0,1fr)_560px] min-[1024px]:items-center min-[1024px]:gap-16">
+            <ol className="order-last grid min-[1024px]:order-none">
+              {STEPS.map((s, i) => {
+                const active = i === step;
+                return (
+                  <li
+                    key={s.title}
+                    className="col-start-1 row-start-1"
+                    aria-hidden={active ? undefined : true}
+                    {...(active ? {} : { inert: "" })}
+                    style={{ pointerEvents: active ? "auto" : "none" }}
+                  >
+                    <StepText step={s} i={i} p={active ? p : 0} active={active} />
+                    {i === N - 1 && <Cta visible={ctaOn} className="mt-5 min-[1024px]:mt-7" />}
+                  </li>
+                );
+              })}
             </ol>
-          ) : (
-            <div className="grid min-h-0 flex-1 min-[1024px]:flex-none items-center gap-5 min-[1024px]:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] min-[1024px]:gap-16">
-              {/* Step list (760px and up). */}
-              <ol className="hidden flex-col min-[760px]:flex">
-                {STEPS.map((st, i) => {
-                  const on = i === act;
-                  return (
-                    <li key={st.title}>
-                      {/* A click anywhere on the row jumps the pin to this step;
-                          the button in the heading does the same from the
-                          keyboard (a heading cannot sit inside a button, but a
-                          button can sit inside a heading). */}
-                      <div
-                        onClick={() => jump(i)}
-                        aria-current={on ? "step" : undefined}
-                        className="relative w-full cursor-pointer border-t border-border py-5 pl-5 text-left"
-                      >
-                        <span aria-hidden className="absolute bottom-5 left-0 top-5 w-0.5 overflow-hidden rounded-sm bg-border">
-                          <span className="block w-full bg-primary" style={{ height: `${(clamp01(p * 3 - i) * 100).toFixed(1)}%` }} />
-                        </span>
-                        <span className={cn("font-mono text-[11px]", on ? "text-sage-dark" : "text-muted-foreground")}>({i + 1})</span>
-                        <h3 className={cn("mt-1.5 text-[19px] font-semibold leading-[1.3] tracking-[-0.01em] transition-colors duration-300", on ? "text-foreground" : "text-muted-foreground")}>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              jump(i);
-                            }}
-                            className="rounded-sm text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                          >
-                            {titleOf(i)}
-                          </button>
-                        </h3>
-                        <span className={cn("grid transition-[grid-template-rows] duration-[450ms] ease-out", on ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
-                          <span className="overflow-hidden">
-                            <span className="mt-2 block text-pretty text-[15px] leading-[1.6] text-muted-foreground">
-                              <Desc step={st} focusable={on} />
-                            </span>
-                          </span>
-                        </span>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ol>
-
-              {/* Phones: a three-segment rail and the active caption. The
-                  inactive captions are only faded, so screen readers still get
-                  all three steps (the step list above is hidden on phones). */}
-              <div className="flex flex-col gap-3 min-[760px]:hidden">
-                <div aria-hidden className="grid grid-cols-3 gap-2">
-                  {STEPS.map((st, i) => (
-                    <div key={st.title} className="h-0.5 overflow-hidden rounded-sm bg-border">
-                      <div className="h-full bg-primary" style={{ width: `${(clamp01(p * 3 - i) * 100).toFixed(1)}%` }} />
-                    </div>
-                  ))}
-                </div>
-                <div className="grid">
-                  {STEPS.map((st, i) => (
-                    <div key={st.title} className="transition-opacity duration-[350ms] [grid-area:1/1]" style={{ opacity: i === act ? 1 : 0 }}>
-                      <span className="font-mono text-[11px] text-sage-dark">({i + 1})</span>
-                      <p className="mt-1 text-lg font-semibold text-foreground">{titleOf(i)}</p>
-                      <p className="mt-1.5 text-sm leading-[1.55] text-muted-foreground">
-                        <Desc step={st} focusable={i === act} />
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* The setup window: three stacked steps revealed by an iris wipe. */}
-              <div ref={stageRef} aria-hidden className="relative min-w-0">
-                <div className="grid">
-                  {STEPS.map((st, i) => {
-                    const r = rv(i);
-                    const R = r * diag;
-                    const rn = i < 2 ? rv(i + 1) : 0;
-                    return (
-                      <div
-                        key={st.title}
-                        className="min-w-0 [grid-area:1/1]"
-                        style={{
-                          clipPath: r >= 1 || i === 0 ? "none" : `circle(${R.toFixed(1)}px at ${ox(i)}px ${oy(i)}px)`,
-                          transform: `scale(${(1 - 0.05 * rn).toFixed(4)})`,
-                          filter: rn > 0.01 ? `blur(${(rn * 3).toFixed(2)}px) brightness(${(1 - 0.12 * rn).toFixed(3)})` : "none",
-                        }}
-                      >
-                        <div data-window className={windowClass}>
-                          <Diorama i={i} k={k} s={s} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-                {/* The glowing ring on each wipe's edge. */}
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-[250px] overflow-hidden rounded-[18px] min-[760px]:h-[340px]">
-                  {[1, 2].map((i) => {
-                    const r = rv(i);
-                    const R = r * diag;
-                    return (
-                      <span
-                        key={i}
-                        className="absolute rounded-full border-2 border-primary shadow-[0_0_28px_rgba(34,197,115,.45),inset_0_0_28px_rgba(34,197,115,.22)]"
-                        style={{ left: ox(i) - R, top: oy(i) - R, width: 2 * R, height: 2 * R, opacity: r > 0 && r < 1 ? Math.sin(r * Math.PI) : 0 }}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          )}
+            <StepCard step={step} p={p} tapped={tapped} onTap={onTap} thr={step === 2 ? thr : null} onThr={onThr} />
+          </div>
         </div>
-      </div>
-    </PinnedSection>
+      </PinnedSection>
+    </div>
   );
 };
 
