@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 import { HERO_MESH } from "./hero-mesh";
-import { TryItNowButton } from "./TryItNowButton";
-import { TalkToUsButton } from "./TalkToUsButton";
+import { HeroSignup } from "./HeroSignup";
 import { HeroCashFlowCard } from "./HeroCashFlowCard";
 import { TALK_TO_US_URL } from "@/lib/constants";
 
@@ -23,11 +22,12 @@ const focusRing =
   "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 // Hero v2 from handoff 18-hero-v2 (40a), replacing 5a (02-hero). A centred
-// stack under the fixed 64px navbar: headline, subhead, Start and Talk to us,
-// the two trial lines, and the coded Cash flow card (HeroCashFlowCard). The
-// audience kicker and the email field are gone by the handoff. Responsive
-// switches are the handoff's: 760px (phone) and 1024px (mid). The proof strip
-// follows in Index.tsx, below the first screen.
+// stack under the fixed 64px navbar: headline, subhead, the email signup
+// (HeroSignup, kept in place of the handoff's Start and Talk to us), the two
+// trial lines, and the coded Cash flow card (HeroCashFlowCard). The audience
+// kicker is gone by the handoff. Responsive switches are the handoff's: 760px
+// (phone) and 1024px (mid). The proof strip follows in Index.tsx, below the
+// first screen.
 const Hero = () => (
   <section id="hero" className="relative overflow-hidden bg-background">
     {/* Only the inner layer drifts, 6% oversized so its edges never show;
@@ -49,11 +49,10 @@ const Hero = () => (
         {SUBHEAD}
       </p>
 
-      {/* Stacked and equal width (max 300px) on phones, like the final CTA. */}
-      <div className="mt-7 flex w-full max-w-[300px] flex-col items-center gap-3 min-[760px]:w-auto min-[760px]:max-w-none min-[760px]:flex-row">
-        <TryItNowButton variant="solid" source="hero" className="w-full justify-center min-[760px]:w-auto" />
-        <TalkToUsButton variant="outline" className="w-full justify-center whitespace-nowrap min-[760px]:w-auto" />
-      </div>
+      {/* The email signup in place of the handoff's Start and Talk to us
+          buttons (restored 4 Nov 2026): it saves the address as an Apollo
+          lead, then opens the app login with it. */}
+      <HeroSignup />
 
       <p className="mt-3 text-pretty text-sm leading-[1.5] text-muted-foreground">
         14-day free trial, cancel anytime. No charge until it ends.

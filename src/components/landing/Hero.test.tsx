@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
 import { describe, expect, it } from "vitest";
 import Hero from "./Hero";
-import { TALK_TO_US_URL } from "@/lib/constants";
+import { TALK_TO_US_URL, trialUrlFor } from "@/lib/constants";
 
 const render = () =>
   renderToStaticMarkup(
@@ -33,30 +33,41 @@ describe("homepage hero (handoff 18-hero-v2)", () => {
     expect(markup.match(/See every week of cash before it happens\./g)).toHaveLength(1);
   });
 
-  it("drops the kicker and the email field, and has no video", () => {
+  it("drops the kicker and has no video", () => {
     const markup = render();
     expect(markup).not.toContain("Cash flow forecasting for businesses with unpredictable revenue.");
-    expect(markup).not.toMatch(/<input[^>]*type="email"/);
     expect(markup).not.toContain("<video");
   });
 
-  it("orders headline, Start, Talk to us, then the trial lines", () => {
+  // The email field replaces the handoff's Start and Talk to us buttons
+  // (restored 4 Nov 2026): it is how the homepage saves leads in Apollo.
+  it("asks for an email, then shows the trial lines", () => {
     const markup = render();
+    expect(markup).toMatch(/<input[^>]*type="email"/);
+    expect(markup).toContain(">Email address</label>");
+    // The button shows "See" at rest and opens on hover, but the whole label
+    // is in the HTML, so its accessible name is the full sentence.
+    const button = markup.match(/<button[^>]*type="submit"[\s\S]*?<\/button>/)?.[0] ?? "";
+    expect(text(button)).toBe("See my projection");
     const h1 = markup.indexOf("<h1");
-    const start = markup.indexOf(">Start<");
-    const talk = markup.indexOf(">Talk to us<");
+    const field = markup.indexOf('type="email"');
     const trial = markup.indexOf("14-day free trial");
     expect(h1).toBeGreaterThan(-1);
-    expect(h1).toBeLessThan(start);
-    expect(start).toBeLessThan(talk);
-    expect(talk).toBeLessThan(trial);
+    expect(h1).toBeLessThan(field);
+    expect(field).toBeLessThan(trial);
   });
 
-  it("sends the trial line's Talk to us to the same place as the button", () => {
+  it("sends the trial line's Talk to us to the booking page", () => {
     const markup = render();
     const links = [...markup.matchAll(/<a[^>]*href="([^"]+)"[^>]*>(?:(?!<\/a>)[\s\S])*Talk to us/g)].map((m) => m[1]);
-    expect(links).toHaveLength(2);
-    expect(new Set(links)).toEqual(new Set([TALK_TO_US_URL]));
+    expect(links).toEqual([TALK_TO_US_URL]);
+  });
+
+  it("sends the address to the app login with the subscribe redirect", () => {
+    const url = new URL(trialUrlFor("owner+cash@example.com"));
+    expect(url.origin + url.pathname).toBe("https://app.zensus.app/login");
+    expect(url.searchParams.get("email")).toBe("owner+cash@example.com");
+    expect(url.searchParams.get("redirect")).toBe("/subscribe");
   });
 });
 

@@ -31,6 +31,13 @@ export const SIGN_IN_URL = `${APP_URL}/login`;
 // so they land on the subscription page rather than bouncing from the paywall.
 export const START_TRIAL_URL = `${SIGN_IN_URL}?redirect=${encodeURIComponent("/subscribe")}`;
 
+// The same destination with the visitor's address, from the homepage hero's
+// email field. The app's login page prefills it and sends the magic link on
+// arrival (apps/landing/app/login/page.tsx in the product repo).
+export function trialUrlFor(email: string): string {
+  return `${SIGN_IN_URL}?${new URLSearchParams({ email, redirect: "/subscribe" })}`;
+}
+
 // The legal entity, its registered addresses and its support mailbox, as
 // published in the footer, the legal pages' contact blocks and /llm-info.
 // index.html cannot import this file, so its Organization schema repeats the
