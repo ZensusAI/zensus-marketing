@@ -30,7 +30,10 @@ const wordmark = "text-[15px] font-semibold leading-none tracking-[-0.01em] text
  * (white) on a forest pill; HubSpot and Slack as plain text. G2 lists one
  * review, so the copy never says "rated" or gives an average. The logos stay
  * linked to their integration pages, which the homepage must link to
- * (internal-links.test.ts); the handoff reference has no links there.
+ * (internal-links.test.ts); the handoff reference has no links there. The
+ * two linked cells take their accessible name from their visible text, with
+ * extra words in sr-only spans at the end, so the name always contains what
+ * is on screen (WCAG 2.5.3).
  */
 export const TrustBar = () => (
   <section aria-label="Customer review, integrations and security" className="relative z-10 border-y border-border bg-[#F8EFD8]">
@@ -39,13 +42,14 @@ export const TrustBar = () => (
         href={G2_REVIEW_URL}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="5/5 on G2, 1 review. Read the review on G2 (opens in a new tab)"
         className={`${cell} ${focusRing} order-1 border-b border-border min-[760px]:border-b-0 min-[760px]:border-r`}
       >
         <img src={g2Logo} alt="" width={44} height={44} className="h-11 w-11 shrink-0" />
         <span className="flex min-w-0 flex-col gap-1">
           <span className={title}>5/5 on G2</span>
-          <span className={`${subline} underline underline-offset-2`}>Read the review</span>
+          <span className={`${subline} underline underline-offset-2`}>
+            Read the review<span className="sr-only"> (1 review, opens in a new tab)</span>
+          </span>
         </span>
       </a>
 
@@ -76,7 +80,6 @@ export const TrustBar = () => (
           user, 4 Nov 2026, over the handoff's shorter line). */}
       <Link
         to="/security"
-        aria-label="Encrypted, US-hosted. AES-256-GCM tokens, TLS in transit. How we protect your data"
         className={`${cell} ${focusRing} order-3 min-[760px]:order-2 min-[1024px]:order-3`}
       >
         <span aria-hidden className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest">
@@ -89,7 +92,9 @@ export const TrustBar = () => (
         </span>
         <span className="flex min-w-0 flex-col gap-1">
           <span className={title}>Encrypted, US-hosted</span>
-          <span className={subline}>AES-256-GCM tokens · TLS in transit</span>
+          <span className={subline}>
+            AES-256-GCM tokens · TLS in transit<span className="sr-only">. How we protect your data</span>
+          </span>
         </span>
       </Link>
     </div>
