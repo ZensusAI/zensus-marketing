@@ -1,120 +1,97 @@
 import { Link } from "react-router-dom";
-import { Check, ShieldCheck } from "lucide-react";
 import plaidLogo from "@/assets/integrations/plaid.svg";
-import quickbooksLogo from "@/assets/integrations/quickbooks.svg";
-import hubspotLogo from "@/assets/integrations/hubspot.svg";
-import slackLogo from "@/assets/integrations/slack.svg";
+import quickbooksLogo from "@/assets/integrations/quickbooks-logo-black.png";
+import g2Logo from "@/assets/g2-logo-circle.png";
 
 const G2_REVIEW_URL = "https://www.g2.com/products/zensus/reviews";
-// From the customer's video captions, not his G2 review (which leans on
-// "AI-powered", off the site's positioning). So the attribution credits G2
-// with the rating ("5.0 on G2"), not the quote. Chosen with the user, 21 Oct.
-const QUOTE = "One of my favorite features of Zensus is the HubSpot integration.";
-
-const LOGOS: { src: string; alt: string; to: string; className?: string }[] = [
-  // The Plaid mark is a white SVG (tuned for dark canvases); logo-on-light
-  // repaints it ink on cream, the handoff's brightness(0) opacity(.82).
-  { src: plaidLogo, alt: "Plaid", to: "/integrations/plaid", className: "logo-on-light" },
-  { src: quickbooksLogo, alt: "QuickBooks", to: "/integrations/quickbooks" },
-  { src: hubspotLogo, alt: "HubSpot", to: "/integrations/hubspot" },
-  { src: slackLogo, alt: "Slack", to: "/integrations/slack" },
-];
-
-const FACTS = ["OAuth through Plaid and Intuit", "AES-256-GCM token encryption", "TLS in transit", "Account-level isolation", "Bank credentials never stored"];
-
-const STAR =
-  "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z";
 
 const focusRing =
-  "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring";
+const logoFocus =
+  "rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8EFD8]";
+
+// The two linked cells mirror each other: 44px circular mark, 16px gap, a
+// 16px/600 title over a 13px muted line.
+const cell =
+  "flex min-h-[84px] items-center gap-4 px-5 py-[18px] text-foreground transition-colors hover:bg-[#F4E9CE] min-[760px]:min-h-[108px] min-[760px]:px-8 min-[760px]:py-0";
+const title = "whitespace-nowrap text-base font-semibold leading-[1.25] tracking-[-0.01em]";
+const subline = "text-[13px] leading-[1.35] text-muted-foreground";
+const wordmark = "text-[15px] font-semibold leading-none tracking-[-0.01em] text-foreground";
 
 /*
- * Proof strip from handoff 03-proof-strip (locked 6c). The handoff's 56px
- * band that carries the hero's waves and ruled column down is part of the
- * hero (Hero.tsx bottom padding), so the waves never seam. Then three cells
- * on a ruled Cream Warm band: the G2 rating with the customer quote, the four
- * integrations (each links to its page), and "Encrypted, US-hosted" (links to
- * /security; hover or focus shows the security facts). The encryption facts
- * are also visible under the label, since text that only appears on hover is
- * weaker for search and AI answers; the full list is always in the HTML.
- * Cells stack below the handoff's 820px switch.
+ * Proof strip from handoff 18-hero-v2 ("Proof strip layout", revised 4 Nov
+ * 2026), below the hero's first screen. Three cells on a ruled band: the G2
+ * review, the integrations, and the security statement. Phones stack them;
+ * 760 to 1023px puts review | trust on one row with Works with full width
+ * below; from 1024px they sit in one row at 1fr / 1.4fr / 1fr.
+ *
+ * Third-party marks follow the handoff's brand compliance review: the
+ * official G2 and QuickBooks files, resized only; the Plaid mark as published
+ * (white) on a forest pill; HubSpot and Slack as plain text. G2 lists one
+ * review, so the copy never says "rated" or gives an average. The logos stay
+ * linked to their integration pages, which the homepage must link to
+ * (internal-links.test.ts); the handoff reference has no links there.
  */
 export const TrustBar = () => (
-    <section aria-label="Customer rating, integrations and security" className="relative z-10 border-y border-border bg-secondary/50">
-      <div className="mx-auto grid max-w-[1280px] px-5 min-[820px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.95fr)] min-[820px]:px-8">
-        {/* Rating and quote */}
-        <div className="flex items-center gap-3.5 border-b border-border py-[22px] min-[820px]:border-b-0 min-[820px]:border-r min-[820px]:pr-7">
-          <div className="flex shrink-0 flex-col items-start gap-1">
-            <span className="text-[26px] font-bold leading-none tracking-[-0.03em] text-foreground">5.0</span>
-            <span role="img" className="flex gap-0.5 text-primary" aria-label="5 out of 5 stars">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <svg key={i} aria-hidden width="12" height="12" viewBox="0 0 24 24" fill="hsl(var(--primary))">
-                  <path d={STAR} />
-                </svg>
-              ))}
-            </span>
-          </div>
-          <p className="m-0 text-[13.5px] leading-[1.45] text-muted-foreground">
-            <span className="italic text-foreground">{`"${QUOTE}"`}</span>
-            <br />
-            <span className="whitespace-nowrap">Jameson Pitts,</span>{" "}
-            <span className="whitespace-nowrap">CEO of Sangfroid! Studios</span> ·{" "}
-            <a
-              href={G2_REVIEW_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="5.0 on G2: Zensus star rating from a verified review (opens in a new tab)"
-              className={`whitespace-nowrap underline decoration-muted-foreground/50 underline-offset-2 hover:text-primary hover:decoration-primary ${focusRing}`}
-            >
-              5.0 on G2
-            </a>
-          </p>
-        </div>
+  <section aria-label="Customer review, integrations and security" className="relative z-10 border-y border-border bg-[#F8EFD8]">
+    <div className="mx-auto grid max-w-[1280px] grid-cols-1 min-[760px]:grid-cols-2 min-[1024px]:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_minmax(0,1fr)] min-[1024px]:px-8">
+      <a
+        href={G2_REVIEW_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="5/5 on G2, 1 review. Read the review on G2 (opens in a new tab)"
+        className={`${cell} ${focusRing} order-1 border-b border-border min-[760px]:border-b-0 min-[760px]:border-r`}
+      >
+        <img src={g2Logo} alt="" width={44} height={44} className="h-11 w-11 shrink-0" />
+        <span className="flex min-w-0 flex-col gap-1">
+          <span className={title}>5/5 on G2</span>
+          <span className={`${subline} underline underline-offset-2`}>Read the review</span>
+        </span>
+      </a>
 
-        {/* Works with */}
-        <div className="flex flex-col justify-center gap-3 border-b border-border py-[22px] min-[820px]:border-b-0 min-[820px]:border-r min-[820px]:px-7">
-          <span className="text-[13px] font-semibold text-muted-foreground">Works with</span>
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-3.5">
-            {LOGOS.map((logo) => (
-              <Link key={logo.alt} to={logo.to} aria-label={`${logo.alt} integration`} className={focusRing}>
-                <img src={logo.src} alt={`${logo.alt} integration`} height={24} className={`h-6 w-auto ${logo.className ?? ""}`} />
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Security */}
-        <div className="group relative flex items-center py-[22px] min-[820px]:pl-7">
-          <div className="flex items-center gap-3">
-            <span aria-hidden className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/[0.12] text-sage-dark">
-              <ShieldCheck size={18} strokeWidth={2} />
-            </span>
-            <span>
-              <span className="block text-[15px] font-semibold text-foreground">Encrypted, US-hosted</span>
-              <span className="mt-0.5 block text-[13px] text-muted-foreground">
-                AES-256-GCM tokens, TLS in transit ·{" "}
-                <Link to="/security" className={`whitespace-nowrap text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary ${focusRing}`}>
-                  How we protect your data
-                </Link>
-              </span>
-            </span>
-          </div>
-          <ul
-            className={[
-              "absolute right-0 top-[calc(100%-10px)] z-20 flex w-[300px] max-w-full flex-col gap-[9px] rounded-[14px] bg-forest px-4 py-3.5 text-forest-foreground",
-              "shadow-[0_24px_48px_-20px_rgba(15,28,22,.6)]",
-              "invisible translate-y-1 opacity-0 transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none",
-              "group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100",
-            ].join(" ")}
+      <div className="order-2 flex min-h-[84px] flex-col items-start justify-center gap-2.5 border-b border-border px-5 py-[18px] min-[760px]:order-3 min-[760px]:col-span-2 min-[760px]:flex-row min-[760px]:items-center min-[760px]:justify-start min-[760px]:gap-6 min-[760px]:border-b-0 min-[760px]:border-t min-[760px]:px-8 min-[1024px]:order-2 min-[1024px]:col-span-1 min-[1024px]:min-h-[108px] min-[1024px]:flex-col min-[1024px]:items-start min-[1024px]:justify-center min-[1024px]:gap-2.5 min-[1024px]:border-r min-[1024px]:border-t-0 min-[1024px]:py-0">
+        <span className={`${subline} whitespace-nowrap`}>Works with</span>
+        <div className="flex flex-wrap items-center gap-x-[22px] gap-y-3">
+          <Link
+            to="/integrations/plaid"
+            aria-label="Plaid integration"
+            className={`inline-flex h-8 shrink-0 items-center rounded-full bg-forest px-3.5 ${logoFocus}`}
           >
-            {FACTS.map((fact) => (
-              <li key={fact} className="flex items-center gap-[9px] font-mono text-xs">
-                <Check aria-hidden size={13} strokeWidth={2.5} className="text-sage-light" />
-                {fact}
-              </li>
-            ))}
-          </ul>
+            <img src={plaidLogo} alt="" width={53} height={20} className="block h-5 w-auto" />
+          </Link>
+          <Link to="/integrations/quickbooks" aria-label="Intuit QuickBooks integration" className={`mx-1.5 shrink-0 ${logoFocus}`}>
+            <img src={quickbooksLogo} alt="" width={102} height={26} className="block h-[26px] w-auto" />
+          </Link>
+          <Link to="/integrations/hubspot" aria-label="HubSpot integration" className={`${wordmark} ${logoFocus}`}>
+            HubSpot
+          </Link>
+          <Link to="/integrations/slack" aria-label="Slack integration" className={`${wordmark} ${logoFocus}`}>
+            Slack
+          </Link>
         </div>
       </div>
-    </section>
+
+      {/* "tokens" kept from the live line: AES-256-GCM covers bank tokens and
+          secrets, not all data (security audit, Nov 2026; chosen with the
+          user, 4 Nov 2026, over the handoff's shorter line). */}
+      <Link
+        to="/security"
+        aria-label="Encrypted, US-hosted. AES-256-GCM tokens, TLS in transit. How we protect your data"
+        className={`${cell} ${focusRing} order-3 min-[760px]:order-2 min-[1024px]:order-3`}
+      >
+        <span aria-hidden className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest">
+          <svg width="22" height="22" viewBox="0 0 24 24">
+            <path d="M7.5 10.5V7.75a4.5 4.5 0 0 1 9 0v2.75" fill="none" stroke="#48D88A" strokeWidth="2.2" strokeLinecap="round" />
+            <rect x="4.5" y="10" width="15" height="11.5" rx="3" fill="#48D88A" />
+            <circle cx="12" cy="14.9" r="1.7" fill="#0F1C16" />
+            <rect x="11.15" y="15.6" width="1.7" height="3.2" rx=".85" fill="#0F1C16" />
+          </svg>
+        </span>
+        <span className="flex min-w-0 flex-col gap-1">
+          <span className={title}>Encrypted, US-hosted</span>
+          <span className={subline}>AES-256-GCM tokens · TLS in transit</span>
+        </span>
+      </Link>
+    </div>
+  </section>
 );

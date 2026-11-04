@@ -43,28 +43,29 @@ const Index = () => {
     // stages keep working.
     <div className="min-h-screen overflow-x-clip bg-background">
       <Helmet>
-        {/* The category term "cash flow forecasting" appears nowhere in the H1 by
-            design (it would read like a directory listing), so the <title>
-            carries it. The brand leads: with the keyword first, Google replaced
-            this title with the H1 in results (seen 2026-10-19). Leading with the
-            brand is the fix tried; check the result in Search Console before
-            changing it again. The og:/twitter: titles
-            below keep the benefit line, since social cards are a click surface
-            rather than a ranking one. */}
-        <title>Zensus · Cash flow forecasting for unpredictable revenue</title>
-        <meta name="description" content="Zensus is cash flow forecasting software for businesses with unpredictable revenue. Connect your bank, QuickBooks and HubSpot to see the date cash runs out." />
+        {/* Title and description from handoff 18-hero-v2 (SEO, 4 Nov 2026),
+            chosen with the user over the brand-first title that replaced a
+            keyword-first one after Google swapped it for the H1 (19 Oct
+            2026). The H1 now differs from the title, which should make that
+            swap less likely; check Search Console before changing it again.
+            "Software" is dropped from the handoff's title to fit Google's 60
+            characters (search-snippets.test.ts); the phrase "cash flow
+            forecasting software" stays in the subhead. og:/twitter: titles
+            stay in step with the title. */}
+        <title>Cash Flow Forecasting for QuickBooks &amp; HubSpot | Zensus</title>
+        <meta name="description" content="Connect your bank, QuickBooks, and HubSpot to see every week of cash and the month it runs out. 14-day free trial." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${SITE_URL}/`} />
         <meta property="og:site_name" content="Zensus" />
-        <meta property="og:title" content="Zensus · Your cash flow, mapped as far ahead as you need" />
-        <meta property="og:description" content="Get a live, always-current picture of your cash position. Built for businesses with unpredictable revenue." />
+        <meta property="og:title" content="Cash Flow Forecasting for QuickBooks &amp; HubSpot | Zensus" />
+        <meta property="og:description" content="Connect your bank, QuickBooks, and HubSpot to see every week of cash and the month it runs out. 14-day free trial." />
         <meta property="og:image" content={`${SITE_URL}/og/home.png`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Zensus homepage social preview card" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Zensus · Your cash flow, mapped as far ahead as you need" />
-        <meta name="twitter:description" content="Get a live, always-current picture of your cash position. Built for businesses with unpredictable revenue." />
+        <meta name="twitter:title" content="Cash Flow Forecasting for QuickBooks &amp; HubSpot | Zensus" />
+        <meta name="twitter:description" content="Connect your bank, QuickBooks, and HubSpot to see every week of cash and the month it runs out. 14-day free trial." />
         <meta name="twitter:image" content={`${SITE_URL}/og/home.png`} />
         <link rel="canonical" href={`${SITE_URL}/`} />
         {/* The hero's mesh-wave background is the largest thing in the first
@@ -81,9 +82,11 @@ const Index = () => {
             and /pricing. The proof strip keeps the encryption claims as
             visible text, and the final CTA band carries the price with an
             in-content /pricing link. */}
-        {/* 02-hero: redesigned. */}
+        {/* 18-hero-v2: replaces 02-hero. The Cash flow card ends at the
+            800px fold on a 1280x800 screen. */}
         <Hero />
-        {/* 03-proof-strip: redesigned. */}
+        {/* 18-hero-v2 proof strip (replaces 03-proof-strip), just below the
+            fold. */}
         <TrustBar />
         {/* 05-customer-story: redesigned. */}
         <CustomerStory />

@@ -410,6 +410,13 @@ const Footer = () => {
             ))}
           </ul>
         </div>
+        {/* Trademark line from handoff 18-hero-v2 (brand compliance review,
+            4 Nov 2026), sitewide because the footer is. Counsel to confirm
+            the wording. */}
+        <p className="mt-4 text-pretty text-center text-xs leading-[1.5] text-muted-foreground min-[760px]:text-left">
+          Plaid, QuickBooks, HubSpot, Slack and G2 are trademarks of their respective owners. Slack is a registered
+          trademark and service mark of Slack Technologies, Inc. Use of these names does not imply endorsement.
+        </p>
       </div>
       <div className="h-6 min-[760px]:h-10" />
     </footer>

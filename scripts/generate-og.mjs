@@ -29,7 +29,7 @@ const CARDS = [
   {
     slug: "home",
     category: "",
-    title: "Your cash flow, mapped as far ahead as you need",
+    title: "See every week of cash before it happens",
     subtitle:
       "Connect your bank, QuickBooks, and HubSpot and see the month your cash runs out.",
     accent: "green",
