@@ -112,8 +112,11 @@ const PIN_VIEWPORTS = 6;
 const ease = "cubic-bezier(.22,1,.36,1)";
 
 // Grid columns for every row: label then the four vendors, from 760px; on
-// phones the label takes its own line over four equal columns.
-const GRID = "grid grid-cols-4 min-[760px]:grid-cols-[minmax(0,300px)_repeat(4,minmax(0,1fr))]";
+// phones the label takes its own line over four equal columns. Below 1024px
+// the label column is narrower and each cell stacks its mark over wording
+// that may wrap: "Yes, with a caveat" on one line needs about 150px, more
+// than a vendor column has on a tablet.
+const GRID = "grid grid-cols-4 min-[760px]:grid-cols-[minmax(0,200px)_repeat(4,minmax(0,1fr))] min-[1024px]:grid-cols-[minmax(0,300px)_repeat(4,minmax(0,1fr))]";
 
 type State = "done" | "act" | "fut";
 
@@ -132,7 +135,10 @@ const Comparison = () => {
   }, []);
 
   useEffect(() => {
-    if (staticPins || pos.s >= ROWS.length || viewed.current === pos.s) return;
+    // p is 0 until the row's first reveal point, which also keeps the
+    // progress the pin reports on load (0, section still below the screen)
+    // from counting as a view of row 1.
+    if (staticPins || pos.s >= ROWS.length || pos.p === 0 || viewed.current === pos.s) return;
     viewed.current = pos.s;
     track(EVENTS.COMPARE_ROW_VIEW, { row: pos.s + 1 });
   }, [pos, staticPins]);
@@ -242,7 +248,7 @@ const Comparison = () => {
                     )}
                   >
                     <span
-                      className="relative inline-flex flex-col items-center gap-px min-[760px]:flex-row min-[760px]:gap-[7px]"
+                      className="relative inline-flex flex-col items-center gap-px min-[760px]:gap-0.5 min-[1024px]:flex-row min-[1024px]:gap-[7px]"
                       style={{ opacity: vis ? 1 : 0, transform: vis ? "none" : "translateY(6px)", transition: `opacity .35s, transform .45s ${ease}` } as CSSProperties}
                     >
                       {/* SVG, not a glyph, so the mark is not part of the text. */}
@@ -260,7 +266,7 @@ const Comparison = () => {
                       </svg>
                       <span
                         className={cn(
-                          "text-[11.5px] leading-[1.25] min-[760px]:whitespace-nowrap min-[760px]:text-[15px]",
+                          "text-[11.5px] leading-[1.25] min-[760px]:text-[14px] min-[1024px]:whitespace-nowrap min-[1024px]:text-[15px]",
                           z ? "font-semibold text-forest-foreground" : no ? "font-medium text-muted-foreground" : "font-medium text-foreground",
                         )}
                       >

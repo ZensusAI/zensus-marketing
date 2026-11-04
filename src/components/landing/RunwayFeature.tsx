@@ -102,9 +102,15 @@ const PIN_VIEWPORTS = 4.25;
  * Deep-link targets from the blog and the navbar (/#features,
  * /#features-drill-down, /#features-scenarios, /#features-alerts): each
  * lands on its step's beat in the pin, or on the step itself when static.
- * internal-links.test.ts guards them.
+ * /#features lands on the first step. The anchors sit in the track, not the
+ * sticky stage: a target inside the stage moves with it, so a link followed
+ * from below the section landed on the last step. internal-links.test.ts
+ * guards them.
  */
-const ANCHORS = STEPS.map((s, i) => ({ id: s.id, at: (i + 0.62) / N }));
+const ANCHORS = [
+  { id: "features", at: 0.62 / N },
+  ...STEPS.map((s, i) => ({ id: s.id, at: (i + 0.62) / N })),
+];
 
 // Reveal points within a step (handoff): question 6%, sentence 30%, link
 // 55%; the chart's beats at 15%, 25%, 40% and 45%. Progress is quantised to
@@ -464,7 +470,6 @@ const RunwayFeature = () => {
       className="pin-overlap"
       stageClassName="flex items-center"
     >
-      <span id="features" aria-hidden className="pointer-events-none absolute left-0 top-0 h-px w-px" />
       <div className="mx-auto grid w-full max-w-[1280px] gap-5 px-5 pb-4 pt-[76px] max-[1023px]:[@media(max-height:820px)]:gap-3.5 max-[1023px]:[@media(max-height:820px)]:pt-[72px] min-[640px]:max-w-[640px] min-[1024px]:max-w-[1280px] min-[1024px]:grid-cols-[minmax(0,460px)_minmax(0,1fr)] min-[1024px]:items-center min-[1024px]:gap-14 min-[1024px]:px-16 min-[1024px]:py-0">
         <div className="contents flex-col min-[1024px]:flex">
           <div>
