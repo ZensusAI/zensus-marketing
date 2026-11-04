@@ -515,22 +515,6 @@
   }
 }
 
-/* Customer story (CustomerStory.tsx) under reduced motion: everything in its
-   final place before and after hydration. .story-reveal content shows flat,
-   the video window is fully open, and nothing is zoomed. */
-@media (prefers-reduced-motion: reduce) {
-  .story-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .story-clip {
-    clip-path: none !important;
-  }
-  .story-still {
-    transform: none !important;
-  }
-}
-
 /* Problem section (Problem.tsx, handoff 19: 43a desktop, 44a mobile).
    Phones: accordion cards; the open card turns forest and its body opens by
    animating grid rows 0fr to 1fr (450ms). Closed bodies stay in the DOM,
