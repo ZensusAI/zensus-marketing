@@ -8,7 +8,11 @@
  * above. Both live in the markup and CSS picks one, because the homepage is
  * prerendered at 1440px and the app bundle starts late on a phone, so a
  * JavaScript switch would show the desktop chart on a phone until it ran.
+ * The loop is CSS (index.css, .hero-chart) for the same reason; this
+ * component only pauses it while the card is off screen.
  */
+
+import { useEffect, useRef } from "react";
 
 // Closing balance per week, in $K, from the week of Nov 2, 2026.
 const W = [
@@ -46,8 +50,22 @@ const LABEL =
 const mono = "font-mono text-[10px] leading-none text-forest-muted-faint";
 
 export function HeroCashFlowCard() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) el.removeAttribute("data-paused");
+      else el.setAttribute("data-paused", "");
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div
+      ref={ref}
       role="img"
       aria-label={LABEL}
       className="hero-chart relative mt-8 flex h-[280px] w-full max-w-[1040px] flex-col rounded-[18px] border border-forest-border bg-forest text-left shadow-[0_-24px_60px_-30px_rgba(15,28,22,.55)] min-[760px]:mt-5 min-[760px]:h-[318px]"
