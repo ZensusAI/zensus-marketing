@@ -8,8 +8,9 @@
  * above. Both live in the markup and CSS picks one, because the homepage is
  * prerendered at 1440px and the app bundle starts late on a phone, so a
  * JavaScript switch would show the desktop chart on a phone until it ran.
- * The loop is CSS (index.css, .hero-chart) for the same reason; this
- * component only pauses it while the card is off screen.
+ * The animation is CSS (index.css, .hero-chart) for the same reason. It plays
+ * once, in about 3s, and holds; this component only resets it while the card
+ * is off screen, so it replays when the card comes back.
  */
 
 import { useEffect, useRef } from "react";
@@ -56,8 +57,8 @@ export function HeroCashFlowCard() {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
     const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) el.removeAttribute("data-paused");
-      else el.setAttribute("data-paused", "");
+      if (entry.isIntersecting) el.removeAttribute("data-offscreen");
+      else el.setAttribute("data-offscreen", "");
     });
     io.observe(el);
     return () => io.disconnect();

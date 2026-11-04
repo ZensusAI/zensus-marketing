@@ -412,31 +412,35 @@
     to { opacity: 1; }
   }
 }
-/* Hero v2 Cash flow card loop (handoff 18-hero-v2), 13s: bars grow from 0.2s
-   (0.8s each, 25ms stagger, set inline), the projected line draws from 1.4s,
-   the tooltip rises in and the Dec 28 bar highlights from 2.6s, then hold and
-   reset. CSS rather than React state, so it runs from the prerendered HTML
-   before the app bundle starts. Reduced motion gets the static end state,
-   which is the markup as written. HeroCashFlowCard sets data-paused while the
-   card is off screen. */
+/* Hero v2 Cash flow card (handoff 18-hero-v2): bars grow from 0.2s (0.8s
+   each, 25ms stagger, set inline), the projected line draws from 1.4s, the
+   tooltip rises in and the Dec 28 bar highlights from 2.6s, all done by about
+   3s. The keyframes keep the handoff's 13s timeline, but it plays once and
+   holds the end state instead of looping: a loop is motion that runs past five
+   seconds beside the signup form, which WCAG 2.2.2 says needs a pause control
+   (Codex review, 4 Nov 2026). HeroCashFlowCard replays it each time the card
+   comes back on screen. CSS rather than React state, so it runs from the
+   prerendered HTML before the app bundle starts. Reduced motion gets the
+   static end state, which is the markup as written. */
 @media (prefers-reduced-motion: no-preference) {
   .hero-chart .hero-bar {
     transform-origin: bottom;
-    animation: hero-bar-grow 13s infinite both;
+    animation: hero-bar-grow 13s both;
   }
   .hero-chart .hero-bar[data-tip] {
-    animation: hero-bar-grow 13s infinite both, hero-bar-tip 13s infinite both;
+    animation: hero-bar-grow 13s both, hero-bar-tip 13s both;
   }
   .hero-chart .hero-line {
-    animation: hero-line-draw 13s infinite both;
+    animation: hero-line-draw 13s both;
   }
   .hero-chart .hero-tip {
-    animation: hero-tip-in 13s infinite both;
+    animation: hero-tip-in 13s both;
   }
-  .hero-chart[data-paused] .hero-bar,
-  .hero-chart[data-paused] .hero-line,
-  .hero-chart[data-paused] .hero-tip {
-    animation-play-state: paused;
+  /* Off screen: no animation, so it starts over when the card returns. */
+  .hero-chart[data-offscreen] .hero-bar,
+  .hero-chart[data-offscreen] .hero-line,
+  .hero-chart[data-offscreen] .hero-tip {
+    animation: none;
   }
 }
 
