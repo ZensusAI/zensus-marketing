@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { Link } from "react-router-dom";
-import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
+import { useStaticPinsOrPrerender } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
 import { EVENTS, track } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
@@ -356,6 +356,9 @@ function StepText({ step, i, p, active, onLink }: { step: (typeof STEPS)[number]
         data-step={i + 1}
         className="mt-1 flex min-h-[44px] items-center self-start rounded-sm text-[15px] font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background min-[1024px]:mt-[18px] min-[1024px]:inline-flex min-[1024px]:min-h-0 min-[1024px]:text-base"
         style={show(on(0.55), 14)}
+        // Not focusable until it fades in, so the keyboard never lands on an
+        // invisible link.
+        {...(on(0.55) ? {} : { inert: "" })}
       >
         {step.link.label} →
       </Link>
@@ -401,7 +404,7 @@ const DataTable = () => (
 );
 
 const RunwayFeature = () => {
-  const staticPins = useStaticPins();
+  const staticPins = useStaticPinsOrPrerender();
   const [pos, setPos] = useState({ step: 0, p: 0 });
   const viewed = useRef(-1);
 

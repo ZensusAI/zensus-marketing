@@ -1,6 +1,6 @@
-import { Fragment, useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
-import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
+import { useStaticPinsOrPrerender } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
 import { EVENTS, track } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
@@ -118,7 +118,7 @@ const GRID = "grid grid-cols-4 min-[760px]:grid-cols-[minmax(0,300px)_repeat(4,m
 type State = "done" | "act" | "fut";
 
 const Comparison = () => {
-  const staticPins = useStaticPins();
+  const staticPins = useStaticPinsOrPrerender();
   const [pos, setPos] = useState({ s: N_STEPS - 1, p: 1 });
   const viewed = useRef(-1);
 
@@ -143,6 +143,27 @@ const Comparison = () => {
     if (!el || staticPins) return;
     const top = el.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({ top: top + ((i + 0.6) / N_STEPS) * (el.offsetHeight - window.innerHeight), behavior: "smooth" });
+  };
+
+  // Footnote marks. Static, the ids sit on the one visible copy of the notes
+  // and the plain anchor works. Pinned, phones show the copy after the pin,
+  // which carries no ids, and from 760px the notes stay closed until the last
+  // step, so scroll to whichever applies instead.
+  const goToNote = (sym: string, ev: MouseEvent) => {
+    // The row under the mark has its own click (jump to that row); this one
+    // goes to the note instead.
+    ev.stopPropagation();
+    if (staticPins) return;
+    ev.preventDefault();
+    const afterPin = document.querySelector<HTMLElement>(`[data-note-after-pin="${NOTE_ID[sym]}"]`);
+    if (afterPin && afterPin.getClientRects().length > 0) {
+      afterPin.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    const el = document.getElementById("compare");
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + el.offsetHeight - window.innerHeight, behavior: "smooth" });
   };
 
   const pinned = !staticPins;
@@ -250,7 +271,7 @@ const Comparison = () => {
                           <>
                             {" "}
                             <sup className="text-[9.5px] min-[760px]:absolute min-[760px]:left-full min-[760px]:top-[-4px] min-[760px]:pl-0.5 min-[760px]:text-[11px]">
-                              <a href={`#${NOTE_ID[sym]}`} aria-hidden tabIndex={-1} className="no-underline">
+                              <a href={`#${NOTE_ID[sym]}`} onClick={(ev) => goToNote(sym, ev)} onMouseDown={(ev) => ev.preventDefault()} aria-hidden tabIndex={-1} className="no-underline">
                                 {sym}
                               </a>
                             </sup>
@@ -295,7 +316,7 @@ const Comparison = () => {
     <div id={ids ? "compare-notes" : undefined} className={cls} style={style}>
       <div className="grid gap-x-10 gap-y-2 min-[760px]:grid-cols-2 min-[760px]:gap-y-1.5">
         {NOTE_ORDER.map((sym) => (
-          <p key={sym} id={ids ? NOTE_ID[sym] : undefined} className="text-pretty text-[12.5px] leading-[1.5] text-muted-foreground">
+          <p key={sym} id={ids ? NOTE_ID[sym] : undefined} data-note-after-pin={ids ? undefined : NOTE_ID[sym]} className="text-pretty text-[12.5px] leading-[1.5] text-muted-foreground">
             {NOTES[sym]}
           </p>
         ))}

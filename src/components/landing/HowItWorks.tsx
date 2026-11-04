@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
+import { useStaticPinsOrPrerender } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
 import { EVENTS, track } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
@@ -341,7 +341,7 @@ function StepText({ step, i, p, active }: { step: (typeof STEPS)[number]; i: num
       <h3 className="mt-2.5 text-balance text-2xl font-bold leading-[1.1] tracking-[-0.03em] text-foreground min-[1024px]:text-[38px]" style={rise(on(0.04))}>
         {step.title}
       </h3>
-      <p className="mt-2.5 max-w-[420px] text-pretty text-[15.5px] leading-[1.5] text-muted-foreground min-[1024px]:mt-4 min-[1024px]:text-lg min-[1024px]:leading-[1.55]" style={rise(on(0.22))}>
+      <p className="mt-2.5 max-w-[420px] text-pretty text-[15.5px] leading-[1.5] text-muted-foreground min-[1024px]:mt-4 min-[1024px]:text-lg min-[1024px]:leading-[1.55]" style={rise(on(0.22))} {...(on(0.22) ? {} : { inert: "" })}>
         <Description step={step} />
       </p>
     </>
@@ -360,7 +360,7 @@ const Heading = ({ center }: { center?: boolean }) => (
 );
 
 const HowItWorks = () => {
-  const staticPins = useStaticPins();
+  const staticPins = useStaticPinsOrPrerender();
   const [pos, setPos] = useState({ step: 0, p: 0 });
   const [tapped, setTapped] = useState<number[]>([]);
   const [thr, setThr] = useState<number | null>(null);
