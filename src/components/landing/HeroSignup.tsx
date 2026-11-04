@@ -37,8 +37,10 @@ function within<T>(promise: Promise<T>, ms: number): Promise<T | undefined> {
 // screen is "Check your email". The lead is best-effort: the redirect happens
 // whether or not it saved. Turnstile loads on first focus, not on page load,
 // so the homepage does not pay for Cloudflare's script before anyone types.
-// The field stands alone: the trial terms and the booking link that sat under
-// it were removed at the user's request (21 Oct 2026); both live on /pricing.
+// Hero v2 (handoff 18-hero-v2) swapped this for Start and Talk to us; the field
+// was restored at the user's request (4 Nov 2026) so the homepage keeps saving
+// leads. The handoff's two trial lines sit under it in Hero.tsx, and the
+// second carries the booking link.
 export function HeroSignup() {
   const id = useId();
   const [email, setEmail] = useState("");
@@ -101,9 +103,9 @@ export function HeroSignup() {
     // reads as part of the copy column rather than a second band. Under 480px the one pill
     // splits in two: the field becomes its own pill and the button a second
     // one under it, both the full column width, so neither is squeezed. The
-    // error line floats under the field (absolute), so it never pushes the
-    // centred hero block off centre.
-    <div className="relative mx-auto mt-8 w-full max-w-[460px] min-[820px]:mt-7 min-[820px]:max-w-[420px]">
+    // error line sits in the flow under the field, so it pushes the trial
+    // lines down instead of covering them.
+    <div className="relative mx-auto mt-7 w-full max-w-[460px] min-[820px]:max-w-[420px]">
       <form
         ref={formRef}
         onSubmit={onSubmit}
@@ -182,7 +184,7 @@ export function HeroSignup() {
         </button>
       </form>
       {error ? (
-        <p id={errorId} role="alert" className="absolute inset-x-0 top-full mt-2 text-sm text-destructive">
+        <p id={errorId} role="alert" className="mt-2 text-sm text-destructive">
           {error}
         </p>
       ) : null}
