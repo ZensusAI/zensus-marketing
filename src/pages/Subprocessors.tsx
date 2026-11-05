@@ -160,6 +160,14 @@ const CATEGORIES: Category[] = [
           "Page views, product events, and email address. On the marketing site, session replays with form inputs masked.",
       },
       {
+        name: "Microsoft Clarity",
+        country: "United States",
+        purpose:
+          "Heatmaps and session recordings on the marketing site only, after the visitor consents to analytics cookies. Clarity does not run in the product app.",
+        dataCategories:
+          "Page views, clicks, scrolls, and session replays with form inputs masked; device, browser, and approximate location derived from IP address.",
+      },
+      {
         name: "Apollo.io",
         country: "United States",
         purpose:
@@ -231,7 +239,7 @@ const Subprocessors = () => (
           Subprocessors
         </h1>
         <p className="text-sm text-muted-foreground mb-6">
-          Last updated: November 2, 2026
+          Last updated: November 4, 2026
         </p>
         <p className="text-lg text-muted-foreground mb-12">
           Zensus uses trusted third-party services to operate our platform.

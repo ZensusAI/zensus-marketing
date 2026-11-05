@@ -45,6 +45,7 @@
  */
 
 import type { PostHog } from "posthog-js";
+import { startClarity, stopClarity } from "./clarity";
 
 const POSTHOG_KEY = import.meta.env.VITE_PUBLIC_POSTHOG_KEY as
   | string
@@ -223,6 +224,8 @@ function startRecordingOnFirstInteraction(): void {
 export function grantCapturing(): void {
   optInRequested = true;
   optOutRequested = false;
+  // Clarity follows the same consent decision (clarity.ts).
+  startClarity();
   if (ph) {
     ph.opt_in_capturing();
     startRecordingOnFirstInteraction();
@@ -233,6 +236,7 @@ export function grantCapturing(): void {
 export function denyCapturing(): void {
   optOutRequested = true;
   optInRequested = false;
+  stopClarity();
   // Drop anything buffered before the decision; a declined visitor is not
   // captured retroactively.
   pendingPageview = null;
