@@ -236,6 +236,8 @@ export default function PrivacyPolicy() {
                   <li>On the marketing site only, PostHog also captures session recordings (replays of on-page interactions) to help us improve the site; form inputs are masked. Session recording does not run in the product app.</li>
                   <li>This activity is pseudonymous (tied to a random identifier, not your name) until you sign in. See{' '}
                     <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PostHog's Privacy Policy</a>.</li>
+                  <li>On the marketing site only, and only after you consent to analytics cookies, we also use Microsoft Clarity (Microsoft Corporation) for heatmaps and session recordings that show how visitors use our pages; form inputs are masked. Clarity sets first-party cookies (_clck and _clsk) and does not run in the product app. See the{' '}
+                    <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Microsoft Privacy Statement</a>.</li>
                 </ul>
               </div>
 
@@ -267,7 +269,7 @@ export default function PrivacyPolicy() {
             <p className="text-foreground/80 mb-3">We use cookies and browser storage for:</p>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
               <li><strong className="text-foreground">Essential Cookies:</strong> Authentication session management (httpOnly, secure)</li>
-              <li><strong className="text-foreground">Analytics Cookies:</strong> PostHog sets a first-party analytics cookie scoped to the site you are on, to measure usage and funnels, as described in section 1.3. Our marketing site and product app are separate domains, so this cookie is not shared between them</li>
+              <li><strong className="text-foreground">Analytics Cookies:</strong> PostHog sets a first-party analytics cookie scoped to the site you are on, to measure usage and funnels, as described in section 1.3. Our marketing site and product app are separate domains, so this cookie is not shared between them. On the marketing site, Microsoft Clarity sets its own first-party cookies (_clck and _clsk) once you consent to analytics cookies</li>
               <li><strong className="text-foreground">Local Storage:</strong> Runway calculator state and analytics identifiers (persisted locally for convenience)</li>
             </ul>
             <p className="text-foreground/80 mt-3">
