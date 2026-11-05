@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
             Privacy Policy
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: November 2, 2026
+            Last Updated: November 5, 2026
           </p>
         </header>
 
@@ -175,7 +175,7 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">HubSpot CRM Integration (Optional):</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>If you connect HubSpot, we sync contacts, companies, line items, invoices, and subscriptions from your CRM</li>
+                  <li>If you connect HubSpot, we request read-only access to contacts, companies, line items, invoices, and subscriptions in your CRM. We sync and store invoices and subscriptions only; contacts, companies, and line items are not stored</li>
                   <li>Used to project recurring billing into your runway forecast</li>
                   <li>You can disconnect HubSpot at any time from your account settings</li>
                 </ul>
@@ -378,7 +378,7 @@ export default function PrivacyPolicy() {
 
               <div>
                 <p className="font-semibold text-foreground">HubSpot Inc. (Optional)</p>
-                <p className="text-foreground/80 text-sm">If you connect HubSpot, we sync contacts, companies, invoices, and subscriptions to project recurring billing into your runway forecast.</p>
+                <p className="text-foreground/80 text-sm">If you connect HubSpot, we sync invoices and subscriptions to project recurring billing into your runway forecast. We hold read-only access to contacts, companies, and line items but do not store them.</p>
               </div>
 
               <div>
