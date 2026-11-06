@@ -46,6 +46,7 @@
 
 import type { PostHog } from "posthog-js";
 import { startClarity, stopClarity } from "./clarity";
+import { startTagManager, stopTagManager } from "./gtm";
 
 const POSTHOG_KEY = import.meta.env.VITE_PUBLIC_POSTHOG_KEY as
   | string
@@ -224,8 +225,9 @@ function startRecordingOnFirstInteraction(): void {
 export function grantCapturing(): void {
   optInRequested = true;
   optOutRequested = false;
-  // Clarity follows the same consent decision (clarity.ts).
+  // Clarity and Tag Manager follow the same consent decision.
   startClarity();
+  startTagManager();
   if (ph) {
     ph.opt_in_capturing();
     startRecordingOnFirstInteraction();
@@ -237,6 +239,7 @@ export function denyCapturing(): void {
   optOutRequested = true;
   optInRequested = false;
   stopClarity();
+  stopTagManager();
   // Drop anything buffered before the decision; a declined visitor is not
   // captured retroactively.
   pendingPageview = null;

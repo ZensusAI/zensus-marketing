@@ -168,6 +168,14 @@ const CATEGORIES: Category[] = [
           "Page views, clicks, scrolls, and session replays with form inputs masked; device, browser, and approximate location derived from IP address.",
       },
       {
+        name: "Google (Tag Manager)",
+        country: "United States",
+        purpose:
+          "Loads the marketing and measurement tags we configure for the marketing site, after the visitor consents to analytics cookies. Google Consent Mode keeps advertising storage denied. Tag Manager does not run in the product app.",
+        dataCategories:
+          "Page URL, browser and device details, and IP address, plus whatever each configured tag collects.",
+      },
+      {
         name: "Apollo.io",
         country: "United States",
         purpose:
@@ -239,7 +247,7 @@ const Subprocessors = () => (
           Subprocessors
         </h1>
         <p className="text-sm text-muted-foreground mb-6">
-          Last updated: November 4, 2026
+          Last updated: November 6, 2026
         </p>
         <p className="text-lg text-muted-foreground mb-12">
           Zensus uses trusted third-party services to operate our platform.
