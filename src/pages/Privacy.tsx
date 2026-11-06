@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
             Privacy Policy
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: November 5, 2026
+            Last Updated: November 6, 2026
           </p>
         </header>
 
@@ -238,6 +238,8 @@ export default function PrivacyPolicy() {
                     <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">PostHog's Privacy Policy</a>.</li>
                   <li>On the marketing site only, and only after you consent to analytics cookies, we also use Microsoft Clarity (Microsoft Corporation) for heatmaps and session recordings that show how visitors use our pages; form inputs are masked. Clarity sets first-party cookies (_clck and _clsk) and does not run in the product app. See the{' '}
                     <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Microsoft Privacy Statement</a>.</li>
+                  <li>On the marketing site only, and only after you consent to analytics cookies, we load Google Tag Manager (Google LLC), which runs the measurement and marketing tags we configure. Google Consent Mode is set to deny advertising storage. Tag Manager does not run in the product app. See{' '}
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Google's Privacy Policy</a>.</li>
                 </ul>
               </div>
 

@@ -49,7 +49,7 @@ export default function TermsPage() {
             Terms of Service
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: November 5, 2026
+            Last Updated: November 6, 2026
           </p>
         </header>
 
