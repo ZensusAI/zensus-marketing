@@ -49,7 +49,7 @@ export default function TermsPage() {
             Terms of Service
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: October 19, 2026
+            Last Updated: November 6, 2026
           </p>
         </header>
 
@@ -205,7 +205,7 @@ export default function TermsPage() {
               <li>Your bank login credentials are handled directly by Plaid and are never stored by Zensus</li>
               <li>Transaction data syncs periodically to keep your runway calculations current</li>
               <li>You can disconnect your bank account at any time through your account settings</li>
-              <li>Disconnecting your bank account does not delete historical transaction data already synced</li>
+              <li>Disconnecting your bank account removes the connection and deletes the transaction data synced from it</li>
               <li>Your use of the Plaid integration is also subject to{' '}
                 <a href="https://plaid.com/legal/#end-user-privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Plaid's End User Privacy Policy</a>
               </li>
@@ -214,7 +214,7 @@ export default function TermsPage() {
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">4.5 HubSpot Integration</h3>
             <p className="text-foreground/80 mb-3">If you connect HubSpot to your Zensus account:</p>
             <ul className="list-disc pl-6 space-y-1 text-foreground/80">
-              <li>You authorize us to access and sync contacts, companies, line items, invoices, and subscriptions from your HubSpot account</li>
+              <li>You authorize us to read contacts, companies, line items, invoices, and subscriptions in your HubSpot account; we sync and store invoices and subscriptions only</li>
               <li>We use this data to project recurring billing into your forecast</li>
               <li>You can disconnect HubSpot at any time through your account settings</li>
             </ul>
@@ -398,9 +398,9 @@ export default function TermsPage() {
 
             <h3 className="text-lg font-medium text-foreground mt-6 mb-3">7.4 Data Export</h3>
             <p className="text-foreground/80">
-              Authenticated Zensus users can self-serve a JSON export of the personal data we hold from the product app at{' '}
+              You can export your transactions as a CSV file from the product app at{' '}
               <a href={APP_URL} className="text-primary hover:underline">{APP_HOST}</a>.
-              You may also request an export by email at{' '}
+              To receive a copy of all the personal data we hold, request an export by email at{' '}
               <a href="mailto:support@zensus.app" className="text-primary hover:underline">support@zensus.app</a>;
               we will respond within 30 days.
             </p>

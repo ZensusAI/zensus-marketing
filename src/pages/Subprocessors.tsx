@@ -91,7 +91,7 @@ const CATEGORIES: Category[] = [
         purpose:
           "Read-only sync of CRM data and subscription tracking for accounts-receivable forecasting.",
         dataCategories:
-          "OAuth tokens, contacts, companies, line items, invoices, subscriptions, admin email (only if you connect HubSpot).",
+          "OAuth tokens, invoices, subscriptions, admin email (only if you connect HubSpot). Read access also covers contacts, companies, and line items, which are not stored.",
       },
       {
         name: "Stripe",
