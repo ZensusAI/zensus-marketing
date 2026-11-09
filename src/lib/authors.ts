@@ -29,6 +29,15 @@ export const authors = {
       "https://github.com/ajinsunny",
     ],
   },
+  john: {
+    name: "John George",
+    position: "Co-Founder, Zensus",
+    avatar: "/authors/john.svg",
+    url: "/about",
+    personId: `${SITE_URL}/about#john-george`,
+    jobTitle: "Co-Founder",
+    sameAs: ["https://www.linkedin.com/in/johngeorge28/"],
+  },
   ashwin: {
     name: "Ashwin Menon",
     position: "Software Developer, Zensus",

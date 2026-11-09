@@ -716,6 +716,14 @@ const PayrollCalendar = () => {
                 explains how that one payday decides which year has the extra run.
               </p>
               <p>
+                To turn these pay dates into a full cost forecast, including the January spike in
+                employer taxes, see{" "}
+                <Link to="/blog/payroll-forecasting" className={linkCls}>
+                  payroll forecasting for 2027
+                </Link>
+                .
+              </p>
+              <p>
                 For the weekly discipline of knowing whether payroll clears, see{" "}
                 <Link to="/blog/will-i-make-payroll" className={linkCls}>
                   Will I Make Payroll?

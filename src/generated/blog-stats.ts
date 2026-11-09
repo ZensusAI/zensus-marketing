@@ -2,7 +2,7 @@
 // Regenerate with: node scripts/generate-blog-stats.mjs
 export const blogStats: Record<string, { wordCount: number; images: string[]; thumbnail?: { width: number; height: number } }> = {
   "27-pay-periods-2026-2027": {
-    "wordCount": 2728,
+    "wordCount": 2751,
     "images": [
       "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2026-biweekly-fridays.webp",
       "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2027-biweekly-fridays.webp"
@@ -113,6 +113,17 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
       "height": 893
     }
   },
+  "payroll-forecasting": {
+    "wordCount": 2291,
+    "images": [
+      "https://zensus.finance/blog/payroll-forecasting/payroll-forecasting-2027-hero.webp",
+      "https://zensus.finance/blog/payroll-forecasting/payroll-forecasting-2027-employer-tax-chart.webp"
+    ],
+    "thumbnail": {
+      "width": 1600,
+      "height": 900
+    }
+  },
   "predictive-cash-flow-forecasting": {
     "wordCount": 2663,
     "images": [
@@ -154,7 +165,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-is-cash-flow-forecasting": {
-    "wordCount": 2884,
+    "wordCount": 3142,
     "images": [
       "https://zensus.finance/blog/what-is-cash-flow-forecasting/spreadsheet-vs-automated.webp"
     ],
@@ -164,7 +175,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "which-months-have-3-paychecks-2027": {
-    "wordCount": 2267,
+    "wordCount": 2272,
     "images": [
       "https://zensus.finance/blog/which-months-have-3-paychecks-2027/april-and-october-3-paydays-2027-biweekly-fridays.webp"
     ],
@@ -174,7 +185,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "will-i-make-payroll": {
-    "wordCount": 2056,
+    "wordCount": 2079,
     "images": [
       "https://zensus.finance/blog/will-i-make-payroll/payroll-projection-method.webp"
     ],
