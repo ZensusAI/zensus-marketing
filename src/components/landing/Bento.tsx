@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import billLogo from "@/assets/integrations/bill-logo-full-color.webp";
 import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks-logo-black.png";
 import zensusLogo from "@/assets/zensus-logo-64.webp";
@@ -24,9 +25,16 @@ import { PinnedSection } from "./PinnedSection";
  * Reduced motion or a short viewport: the end state, still (no shimmer, no
  * ticking).
  *
+ * Six sources (Plaid, QuickBooks, BILL, Ramp, HubSpot, Gmail and Google
+ * Drive; the last three added 10 Nov 2026 on top of the handoff's three):
+ * a column of six on desktop, two columns of three on phones.
+ *
  * Logos (handoff 21 brand rules): Plaid's white logo, unaltered, on a forest
- * pill; Intuit's official black QuickBooks file with clear space; HubSpot and
- * "Slack alert" as plain text; no logo on the transaction rows. The shimmer
+ * pill; Intuit's official black QuickBooks file with clear space; BILL's
+ * official full-color logo (see SHOW_BILL_LOGO); HubSpot, Ramp, Gmail and
+ * Google Drive and "Slack alert" as plain text (HubSpot and Slack restrict
+ * their logos; Ramp and Google files are not in yet); no logo on the
+ * transaction rows. The shimmer
  * is the handoff's three strokes, but the glow is a faint wider stroke instead
  * of an SVG blur filter, which repainted on the CPU every frame.
  * The ambient motion (shimmer, hub pulse, ticking readouts) runs for at most
@@ -37,12 +45,22 @@ import { PinnedSection } from "./PinnedSection";
  */
 
 // The sync cadence on each wire matches the app (Plaid and HubSpot webhooks,
-// QuickBooks daily; app code, 4 Nov 2026).
-const SOURCES = [
+// QuickBooks daily; app code, 4 Nov 2026). The newer sources have no label:
+// their cadence is not confirmed.
+const SOURCES: { name: string; sync?: string }[] = [
   { name: "Plaid", sync: "webhook" },
   { name: "QuickBooks", sync: "daily" },
+  { name: "BILL" },
+  { name: "Ramp" },
   { name: "HubSpot", sync: "webhook" },
+  { name: "Gmail & Google Drive" },
 ];
+
+// BILL's brand terms (Third Party Trademark Use Terms, Aug 2023) allow its
+// logo only with prior written permission, which BILL reviews before
+// publication: communications@hq.bill.com. The owner chose to ship it first
+// (10 Nov 2026). Set this false to fall back to the plain name "BILL".
+const SHOW_BILL_LOGO = true;
 
 const ROWS = [
   { raw: "STRIPE TRANSFER ST-8841XQ", clean: "Stripe payout", amt: "+$18,240" },
@@ -74,46 +92,45 @@ const blen = (P: Bez) => {
 };
 const dstr = (P: Bez) => `M${P[0][0]} ${P[0][1]} C ${P[1][0]} ${P[1][1]}, ${P[2][0]} ${P[2][1]}, ${P[3][0]} ${P[3][1]}`;
 
-// Desktop 720x300 and phone 360x440 layouts (below 760px).
+// Desktop 720x360 and phone 360x480 layouts (below 760px). Source boxes are
+// 48 and 52 units tall because BILL's logo must stay at least 60px wide, which
+// makes it about 39px tall.
 const GEO = {
   d: {
     W: 720,
-    H: 300,
-    hub: [376, 140] as Pt,
-    lg: 30,
-    fs: 20,
-    src: [
-      { x: 30, y: 43, w: 120, h: 34 },
-      { x: 30, y: 123, w: 120, h: 34 },
-      { x: 30, y: 203, w: 120, h: 34 },
-    ],
+    H: 360,
+    hub: [376, 180] as Pt,
+    lg: 40,
+    fs: 25,
+    src: [0, 1, 2, 3, 4, 5].map((i) => ({ x: 24, y: 16 + 56 * i, w: 132, h: 48 })),
     outs: [
-      { x: 560, y: 78, w: 130, h: 44 },
-      { x: 560, y: 163, w: 130, h: 34 },
+      { x: 560, y: 117, w: 130, h: 46 },
+      { x: 560, y: 202, w: 130, h: 36 },
     ],
-    card: { x: 246, y: 186, w: 260 },
-    inB: (s: Box): Bez => [[150, s.y + 17], [228, s.y + 17], [228, 140], [306, 140]],
-    outB: (o: Box): Bez => [[446, 140], [503, 140], [503, o.y + o.h / 2], [560, o.y + o.h / 2]],
+    card: { x: 266, y: 232, w: 250 },
+    inB: (s: Box): Bez => [[s.x + s.w, s.y + s.h / 2], [228, s.y + s.h / 2], [228, 180], [306, 180]],
+    outB: (o: Box): Bez => [[446, 180], [503, 180], [503, o.y + o.h / 2], [560, o.y + o.h / 2]],
     labelT: 0.42,
   },
   m: {
     W: 360,
-    H: 440,
-    hub: [180, 150] as Pt,
-    lg: 28,
-    fs: 18,
-    src: [
-      { x: 14, y: 18, w: 96, h: 32 },
-      { x: 128, y: 18, w: 104, h: 32 },
-      { x: 250, y: 18, w: 96, h: 32 },
-    ],
+    H: 480,
+    hub: [180, 228] as Pt,
+    lg: 34,
+    fs: 22,
+    // Two columns of three, funnelling into one trunk down the middle.
+    src: [0, 1, 2, 3, 4, 5].map((i) => ({ x: i < 3 ? 14 : 204, y: 14 + 60 * (i % 3), w: 142, h: 52 })),
     outs: [
-      { x: 22, y: 236, w: 136, h: 42 },
-      { x: 206, y: 240, w: 130, h: 34 },
+      { x: 22, y: 298, w: 136, h: 46 },
+      { x: 206, y: 302, w: 130, h: 38 },
     ],
-    card: { x: 14, y: 302, w: 332 },
-    inB: (s: Box): Bez => [[s.x + s.w / 2, 50], [s.x + s.w / 2, 95], [180, 95], [180, 134]],
-    outB: (o: Box): Bez => [[180, 166], [180, 205], [o.x + o.w / 2, 205], [o.x + o.w / 2, o.y]],
+    card: { x: 14, y: 360, w: 332 },
+    inB: (s: Box): Bez => {
+      const left = s.x < 180;
+      const y = s.y + s.h / 2;
+      return [[left ? s.x + s.w : s.x, y], [180, y], [180, 190], [180, 212]];
+    },
+    outB: (o: Box): Bez => [[180, 244], [180, 272], [o.x + o.w / 2, 272], [o.x + o.w / 2, o.y]],
     labelT: 0,
   },
 };
@@ -185,8 +202,8 @@ const Bento = () => {
   const pc = (x: number, y: number) => [(x / W) * 100, (y / H) * 100];
   const box = (r: Box) => ({ left: `${(r.x / W) * 100}%`, top: `${(r.y / H) * 100}%`, width: `${(r.w / W) * 100}%`, height: `${(r.h / H) * 100}%` });
 
-  const kc = [0, 1, 2].map((i) => ease((P - 0.02 - i * 0.04) / 0.07));
-  const kb = [0, 1, 2].map((i) => ease((P - 0.08 - i * 0.03) / 0.12));
+  const kc = SOURCES.map((_, i) => ease((P - 0.02 - i * 0.022) / 0.06));
+  const kb = SOURCES.map((_, i) => ease((P - 0.07 - i * 0.016) / 0.1));
   const ko = ease((P - 0.52) / 0.1);
   const kO = [0, 1].map((i) => ease((P - 0.5 - i * 0.06) / 0.08));
   const kZ = ease((P - 0.6) / 0.06);
@@ -218,7 +235,7 @@ const Bento = () => {
       });
     };
     ins.forEach((B, i) => {
-      const sp = i === 1 ? 3000 : 1900;
+      const sp = SOURCES[i].sync === "daily" ? 3000 : 1900;
       add(B, sp, i * 0.31, kFlow);
       add(B, sp, i * 0.31 + 0.5, kFlow);
     });
@@ -231,10 +248,12 @@ const Bento = () => {
 
   const labels = narrow
     ? []
-    : ins.map((B, i) => {
+    : ins.flatMap((B, i) => {
+        const sync = SOURCES[i].sync;
+        if (!sync) return [];
         const [x, y] = bez(B, G.labelT);
-        const [lx, ly] = pc(x, y - 13);
-        return { t: SOURCES[i].sync, x: lx, y: ly };
+        const [lx, ly] = pc(x, y + (B[0][1] > G.hub[1] ? 13 : -13));
+        return [{ t: sync, x: lx, y: ly }];
       });
 
   const zOn = kZ > 0.5;
@@ -257,8 +276,9 @@ const Bento = () => {
 
           <div className="flex min-h-0 flex-1 items-center justify-center">
             <p className="sr-only">
-              Plaid bank feeds and HubSpot arrive by webhook and QuickBooks syncs daily. Zensus normalizes the
-              transactions into clean vendor names, keeps your zero-cash date current and sends Slack alerts.
+              Plaid bank feeds and HubSpot arrive by webhook and QuickBooks syncs daily. BILL, Ramp, and Gmail and
+              Google Drive connect as sources too. Zensus normalizes the transactions into clean vendor names, keeps
+              your zero-cash date current and sends Slack alerts.
             </p>
             <div
               ref={diagramRef}
@@ -308,20 +328,33 @@ const Bento = () => {
                       "absolute flex items-center justify-center gap-[5px] whitespace-nowrap rounded-[9px] border bg-card text-[11.5px] text-foreground transition-colors duration-300 min-[760px]:gap-[7px] min-[760px]:text-[13px]",
                       kb[i] > 0.95 ? "border-primary" : "border-border",
                     )}
-                    style={{ ...box(G.src[i]), opacity: 0.25 + 0.75 * kc[i], transform: `scale(${lerp(0.92, 1, kc[i])})` }}
+                    style={{
+                      ...box(G.src[i]),
+                      opacity: 0.25 + 0.75 * kc[i],
+                      // BILL's terms bar animating its logo, so that box fades in without the scale.
+                      transform: s.name === "BILL" && SHOW_BILL_LOGO ? undefined : `scale(${lerp(0.92, 1, kc[i])})`,
+                    }}
                   >
                     {s.name === "Plaid" ? (
-                      <span className="inline-flex h-5 items-center rounded-full bg-forest px-2 min-[760px]:h-6 min-[760px]:px-2.5">
-                        <img src={plaidLogo} alt="" className="block h-[11px] w-auto min-[760px]:h-3.5" />
+                      <span className="inline-flex h-5 items-center rounded-full bg-forest px-2 min-[760px]:h-7 min-[760px]:px-3">
+                        <img src={plaidLogo} alt="" className="block h-[11px] w-auto min-[760px]:h-4" />
                       </span>
                     ) : s.name === "QuickBooks" ? (
-                      <img src={quickbooksLogo} alt="" className="block h-4 w-auto min-[760px]:h-5" />
+                      <img src={quickbooksLogo} alt="" className="block h-4 w-auto min-[760px]:h-6" />
+                    ) : s.name === "BILL" && SHOW_BILL_LOGO ? (
+                      // Unaltered file, never below 60px wide: the mark fills
+                      // about 60% of the file's width, so the file is 100px.
+                      // Its built-in margin is BILL's clear space; no extra
+                      // words or marks go in this box.
+                      <img src={billLogo} alt="" width={100} height={61} className="block h-[61px] w-[100px] max-w-none" />
+                    ) : s.name === "Gmail & Google Drive" ? (
+                      <span className="whitespace-normal text-balance px-2 text-center font-semibold leading-[1.15]">{s.name}</span>
                     ) : (
                       <span className="font-semibold">{s.name}</span>
                     )}
                     <span
                       className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-primary-foreground"
-                      style={{ transform: `scale(${ease((P - 0.14 - i * 0.03) / 0.04)})` }}
+                      style={{ transform: `scale(${ease((P - 0.1 - i * 0.022) / 0.04)})` }}
                     >
                       ✓
                     </span>
