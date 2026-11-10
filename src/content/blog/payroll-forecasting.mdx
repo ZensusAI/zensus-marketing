@@ -1,0 +1,229 @@
+export const meta = {
+  title: 'Payroll Forecasting: How to Forecast Payroll Costs and Cash for 2027',
+  seoTitle: 'Payroll Forecasting: How to Forecast 2027 Payroll | Zensus',
+  description:
+    'How to forecast payroll for 2027: fully loaded cost per employee, employer taxes that spike in January, and the weeks payroll cash leaves your bank.',
+  date: '2026-11-10',
+  dateModified: '2026-11-10',
+  category: 'Guide',
+  readTime: '10 min read',
+  slug: 'payroll-forecasting',
+  author: 'john',
+  topic: 'payroll',
+  tags: ['Payroll', 'Cash Flow', 'Guides'],
+  thumbnail: '/blog/payroll-forecasting/payroll-forecasting-2027-hero.webp',
+  thumbnailAlt:
+    'Employer payroll tax on one paycheck for the same 8-person team in 2027: $3,951 on the first paycheck (Jan 8) vs $1,812 on the last (Dec 24)',
+  ogImage: '/og/blog/payroll-forecasting.png',
+  ogTitle: 'Payroll Forecasting for 2027',
+  ogSubtitle:
+    "Employer payroll taxes are highest on the first paychecks of the year. Here's how to forecast payroll costs and cash for 2027, pay date by pay date.",
+  faqs: [
+    {
+      question: 'How far ahead should I forecast payroll?',
+      answer:
+        'At least 13 weeks on a weekly basis, which is far enough to act on a shortfall. Keep a 12-month view too, so you can see the three-paycheck months, planned hires and the January tax spike before they arrive.',
+    },
+    {
+      question: 'What percentage of payroll is employer tax?',
+      answer:
+        'Federal employer taxes start at 7.65% of wages: 6.2% Social Security and 1.45% Medicare. FUTA and state unemployment add more early in the year. In our example, employer taxes came to 7.79% of wages over the year and 8.70% in the first quarter.',
+    },
+    {
+      question: 'Why are my payroll taxes higher in January?',
+      answer:
+        'Social Security, FUTA and state unemployment wage bases reset every January 1, so you pay all of them in full on the first paychecks of the year. As employees pass each cap during the year, those taxes stop until the next January.',
+    },
+    {
+      question: 'How do I forecast payroll for a new hire mid-year?',
+      answer:
+        "Add them from their first pay date, not from January. Their wage bases start fresh with you, so they'll trigger FUTA and state unemployment on their first paychecks, even late in the year.",
+    },
+    {
+      question: 'Is a payroll forecast the same as a payroll budget?',
+      answer:
+        'No. A budget is an annual total. A forecast places each cost on the date the cash leaves your bank, which is what tells you whether a particular week is tight.',
+    },
+  ],
+};
+
+import { BlogCallout } from '@/components/blog/BlogCallout';
+import { BlogFigure } from '@/components/blog/BlogFigure';
+
+<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">Picture an eight-person team paid every two weeks. On its first paycheck of 2027, the employer taxes come to $3,951. On its last paycheck of the year, same people, same salaries, the bill drops to $1,812.</p>
+
+Nothing changed except the calendar. Payroll taxes have yearly caps that reset every January, so the start of the year costs more than the end. A budget that adds a flat 7.65% on top of wages misses that, and it misses it in the months when cash is often tightest.
+
+We built Zensus after seeing founders get caught by cash timing, not by bad business. Payroll is the clearest example: the biggest bill most small companies have, paid on fixed dates, whether or not customers have paid you. This guide walks you through how to forecast it properly for 2027.
+
+## Quick Answer
+
+Forecast payroll by pay date, not by month or year. For each pay date, add wages, employer taxes, benefits and fees, and track each tax's yearly cap. Social Security, FUTA and state unemployment all reset on January 1, so the first quarter costs more. In our 8-person example, employer taxes run $2,280 above a flat 7.65% budget in Q1 2027.
+
+## What is payroll forecasting?
+
+Payroll forecasting is estimating what your payroll will cost and when that cash will leave your bank, pay date by pay date. A good payroll forecast covers wages, employer taxes, benefits and fees, and places each one on the date it is actually paid.
+
+That is the difference between a payroll forecast and a payroll budget. A budget gives you an annual total. A forecast gives you dates. You can be on budget for the year and still come up short in a single week, and only the forecast shows you which week.
+
+## What goes into a payroll forecast
+
+Gross wages are only the start. Patriot Software estimates that an employee can cost <a href="https://www.patriotsoftware.com/blog/payroll/payroll-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">up to 32% more than their wages</a> once everything is added. Your forecast needs every line, and for each one, when the cash actually goes out.
+
+| Cost line | How it's calculated | When the cash leaves |
+| --- | --- | --- |
+| Gross wages | Salary or hours times rate, per pay period | Each pay date |
+| Employer Social Security | 6.2% of wages, up to the yearly wage base | With your federal tax deposits (monthly or semiweekly) |
+| Employer Medicare | 1.45% of all wages, no cap | With your federal tax deposits |
+| Federal unemployment (FUTA) | 0.6% net on the first $7,000 per employee | Quarterly, once the amount owed is over $500 |
+| State unemployment (SUTA) | Your state rate on your state's wage base | Usually quarterly; check your state |
+| Health and other benefits | Your current premiums, minus employee share | Monthly, on the insurer's invoice date |
+| Retirement match | Your match formula times eligible pay | Each pay date or as your plan sets |
+| Workers' compensation | Rate per $100 of payroll, by job type | On your policy's billing schedule |
+| Payroll software | Base fee plus per-employee fee | Monthly |
+
+The last column is the one most budgets leave out, and it's the one that decides whether a given week is tight.
+
+## The 2027 numbers to plug in
+
+These are the federal figures for 2027. State figures vary, so take those from the rate notice your state sends each winter.
+
+| Tax | Employer rate | 2027 wage base | Most an employer pays per employee |
+| --- | --- | --- | ---: |
+| Social Security | 6.2% | $192,300 (up from $184,500 in 2026) | $11,922.60 |
+| Medicare | 1.45% | No limit | No limit |
+| FUTA | 6.0%, usually 0.6% after the state credit | $7,000 | $42 at 0.6% |
+| SUTA | Set by your state | Set by your state | Varies |
+
+Sources: <a href="https://www.ssa.gov/oact/cola/cbb.html" className="font-medium text-primary underline-offset-4 hover:underline">Social Security Administration</a> and <a href="https://www.journalofaccountancy.com/news/2026/oct/social-security-wage-base-and-cola-announced-for-2027/" className="font-medium text-primary underline-offset-4 hover:underline">Journal of Accountancy</a> for Social Security, <a href="https://www.irs.gov/taxtopics/tc751" className="font-medium text-primary underline-offset-4 hover:underline">IRS Topic 751</a> for Medicare, <a href="https://www.irs.gov/taxtopics/tc759" className="font-medium text-primary underline-offset-4 hover:underline">IRS Topic 759</a> for FUTA.
+
+### Social Security wage base 2027: what it costs employers
+
+The Social Security wage base is the most an employee's pay can be taxed for Social Security in a year. In 2027 it is $192,300. Most coverage of the change is written for workers. For an employer, three things matter:
+
+- **Each employee earning $192,300 or more costs you up to $11,922.60 in Social Security tax this year**, $483.60 more than the 2026 maximum of $11,439.
+- **Once an employee passes $192,300, your 6.2% stops for the rest of the year.** Medicare carries on at 1.45%.
+- **Higher earners hit the cap late in the year**, so your Social Security cost for them drops in the last weeks of December. Someone on $200,000, paid every two weeks, reaches it on their 25th paycheck.
+
+The extra 0.9% Additional Medicare Tax on pay above $200,000 is withheld from the employee only. Employers don't match it, so it doesn't belong in your cost forecast.
+
+## Why payroll costs more in January
+
+Every wage base resets on January 1. On the first paychecks of the year, you pay full Social Security, full FUTA and full state unemployment tax on everyone. Then, one by one, employees hit each cap and those taxes fall away:
+
+- **FUTA and most SUTA bases are small**, so they're used up within the first few paychecks of the year, sooner for higher earners. (A few states, such as Washington, Hawaii and Oregon, have much higher SUTA wage bases, so state tax there continues well past February.)
+- **Social Security runs until an employee reaches $192,300**, which only your highest earners do, near the end of the year.
+- **Medicare never stops.**
+
+So the same team costs more in January than in December, even with no raises and no new hires. Most budgets use a flat 7.65% on top of wages. That rate is too low for the first quarter and too high for the last.
+
+January also brings filing deadlines, some of which move cash:
+
+| Date | What's due | Cash impact |
+| --- | --- | --- |
+| Fri, Jan 15, 2027 | Monthly depositors: federal payroll taxes for December | Payment |
+| Mon, Feb 1, 2027 | Form 941 for Q4 2026; Form 940; W-2s to employees and the SSA; last FUTA deposit for 2026 | Payment for any balance owed |
+
+If your business is in California, your 2026 FUTA rate may be higher than 0.6% because of a federal credit reduction, which would add to the Form 940 balance due Feb 1. The Labor Department confirms the affected states in November.
+
+Jan 31, 2027 falls on a Sunday, which moves those deadlines to Monday, Feb 1 (<a href="https://www.irs.gov/businesses/small-businesses-self-employed/employment-tax-due-dates" className="font-medium text-primary underline-offset-4 hover:underline">IRS employment tax due dates</a>). If you pay semiweekly, your deposits follow your pay dates instead of the 15th.
+
+## Worked example: an 8-person team in 2027
+
+Here's the team from the start of this guide, worked through line by line.
+
+- **Team:** 2 people on $200,000, 3 on $120,000 and 3 on $60,000. Total wages: $940,000 a year.
+- **Pay schedule:** every two weeks, on Fridays, from Jan 8 to Dec 24, 2027. That's 26 paychecks of $36,153.85 in total wages each.
+- **Taxes:** Social Security 6.2% up to $192,300; Medicare 1.45%; FUTA 0.6% on the first $7,000. For state unemployment we use an example rate of 2.7% on the first $9,000. Your state's rate and wage base will differ.
+
+### Employer taxes, paycheck by paycheck
+
+| Pay date | Social Security + Medicare | FUTA + SUTA | Total employer tax |
+| --- | ---: | ---: | ---: |
+| Jan 8 | $2,765.77 | $1,184.77 | **$3,950.54** |
+| Jan 22 | $2,765.77 | $697.15 | $3,462.92 |
+| Feb 5 | $2,765.77 | $228.46 | $2,994.23 |
+| Feb 19 | $2,765.77 | $169.62 | $2,935.38 |
+| Mar 5 to Dec 10 | $2,765.77 | $0.00 | $2,765.77 (Dec 10: $2,764.82) |
+| Dec 24 | $1,811.92 | $0.00 | **$1,811.92** |
+
+<BlogFigure
+  src="/blog/payroll-forecasting/payroll-forecasting-2027-employer-tax-chart.webp"
+  width={1600}
+  height={960}
+  alt="Line chart of employer payroll taxes on each 2027 paycheck: $3,951 on Jan 8, falling to $2,766 by March, then $1,812 on Dec 24, compared with a flat 7.65% budget of $2,766 per paycheck"
+/>
+
+By the end of February, everyone has used up FUTA and the example SUTA base. On Dec 24, the two $200,000 earners have passed the Social Security wage base, so their 6.2% stops.
+
+### By quarter, against a flat 7.65% budget
+
+| Quarter | Paychecks | Actual employer tax | Flat 7.65% budget | Difference |
+| --- | ---: | ---: | ---: | ---: |
+| Q1 | 6 | $18,874.62 | $16,594.62 | **$2,280.00 more** |
+| Q2 | 7 | $19,360.38 | $19,360.38 | None |
+| Q3 | 6 | $16,594.62 | $16,594.62 | None |
+| Q4 | 7 | $18,405.58 | $19,360.38 | $954.80 less |
+| Full year | 26 | $73,235.20 | $71,910.00 | $1,325.20 more |
+
+Three things to take from this:
+
+1. **The first quarter is where the budget breaks.** The flat-rate budget is $2,280 short in Q1, exactly when January deadlines also land.
+2. **The full-year total is close**, so an annual budget looks fine. The problem is timing, not the total.
+3. **January's two paychecks carry $7,413 in employer tax. December's two carry $4,577.** Same team, same pay.
+
+## Forecast by pay date, not by month
+
+If you pay every two weeks, most months have two paydays, but two months each year have three. In the example above, with Fridays from Jan 8, the three-paycheck months are April and October. Each of those months carries an extra $36,154 in wages plus employer tax, in a single month.
+
+Your schedule may differ. Jan 1, 2027 is a Friday, so a biweekly schedule that pays on Jan 1 has 27 scheduled paydays in 2027, unless the Jan 1 run is paid early on Dec 31, 2026. If your salaries are set as an annual figure divided by 26, that 27th payday is a whole extra payroll you need cash for.
+
+- Find your months with three paydays in <a href="/blog/which-months-have-3-paychecks-2027" className="font-medium text-primary underline-offset-4 hover:underline">which months have 3 paychecks in 2027</a>.
+- Check whether you have 27 pay periods in <a href="/blog/27-pay-periods-2026-2027" className="font-medium text-primary underline-offset-4 hover:underline">27 pay periods in 2026 or 2027</a>.
+- See every pay date for your schedule in the free <a href="/tools/payroll-calendar" className="font-medium text-primary underline-offset-4 hover:underline">2027 payroll calendar</a>.
+
+A monthly forecast averages all of this away. A forecast built on pay dates shows the exact week you need the cash.
+
+## How to forecast payroll expenses in 6 steps
+
+You can do this in a spreadsheet in an afternoon.
+
+1. **List everyone on payroll** with their annual pay, pay frequency and state. Add planned hires with their start dates, and planned raises with the date they take effect.
+2. **List your 2027 pay dates.** Use the <a href="/tools/payroll-calendar" className="font-medium text-primary underline-offset-4 hover:underline">payroll calendar</a> and note any month with three paydays, or a 27th payday.
+3. **Work out wages per pay date.** Annual pay divided by the number of pay periods your payroll provider uses.
+4. **Add employer taxes per pay date, tracking each cap.** Keep a running year-to-date total per employee, and stop each tax when that person reaches its wage base. This is the step that catches the January spike.
+5. **Add benefits, retirement match, workers' comp and fees** on the dates they're billed, not spread evenly.
+6. **Update it monthly**, and whenever someone joins, leaves or gets a raise. Test a planned hire against your cash first with the free <a href="/tools/runway-calculator" className="font-medium text-primary underline-offset-4 hover:underline">runway calculator</a>.
+
+## Put payroll into your cash flow forecast
+
+A payroll forecast tells you what's going out. On its own, it can't tell you whether you can pay it. For that, it needs to sit next to what's coming in.
+
+Drop your dated payroll lines into a weekly cash flow forecast, alongside expected customer payments and other bills. The free <a href="/tools/13-week-cash-flow-template" className="font-medium text-primary underline-offset-4 hover:underline">13-week cash flow template</a> is built for this. Then look for the weeks where a payroll lands while a large customer payment is late. Those are the weeks to plan for now, while you still have time to chase an invoice or move a cost.
+
+For more on reading those weeks, see <a href="/blog/will-i-make-payroll" className="font-medium text-primary underline-offset-4 hover:underline">how to know weeks ahead if you'll make payroll</a>, and our guide to <a href="/blog/what-is-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">cash flow forecasting</a>.
+
+## How Zensus helps
+
+Zensus builds your cash flow forecast from your bank (through Plaid), QuickBooks and HubSpot. Your payroll shows up as a recurring outflow on its real pay dates, next to the invoices you're expecting, so you can see each pay week against the cash that will actually be there. Set a cash floor, and Zensus sends a Slack alert if your 30-day projection drops below it.
+
+Zensus Pro is $199 a month with a <a href="/pricing" className="font-medium text-primary underline-offset-4 hover:underline">14-day free trial</a>.
+
+## The Bottom Line
+
+Payroll is a fixed bill on fixed dates. For 2027, plan for higher employer taxes in January and February while the wage bases reset, check for three-paycheck months and a possible 27th payday, and put every pay date into your weekly cash flow forecast. That way you see a tight week before it arrives.
+
+<p><em>This guide is general information, not tax advice. Check your state's unemployment rate and wage base, and your federal deposit schedule, with your payroll provider or accountant.</em></p>
+
+### Sources
+
+- <a href="https://www.ssa.gov/oact/cola/cbb.html" className="font-medium text-primary underline-offset-4 hover:underline">Social Security Administration: Contribution and Benefit Base</a>
+- <a href="https://www.journalofaccountancy.com/news/2026/oct/social-security-wage-base-and-cola-announced-for-2027/" className="font-medium text-primary underline-offset-4 hover:underline">Journal of Accountancy: Social Security wage base and COLA announced for 2027</a>
+- <a href="https://www.irs.gov/taxtopics/tc751" className="font-medium text-primary underline-offset-4 hover:underline">IRS Topic 751: Social Security and Medicare withholding rates</a>
+- <a href="https://www.irs.gov/taxtopics/tc759" className="font-medium text-primary underline-offset-4 hover:underline">IRS Topic 759: Form 940 and FUTA deposits</a>
+- <a href="https://www.irs.gov/businesses/small-businesses-self-employed/employment-tax-due-dates" className="font-medium text-primary underline-offset-4 hover:underline">IRS: Employment tax due dates</a>
+- <a href="https://www.patriotsoftware.com/blog/payroll/payroll-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">Patriot Software: Payroll forecasting</a>
+
+<BlogCallout title="See Every Pay Week Against Your Cash">
+Your payroll shows up as a recurring outflow on its real pay dates, next to the invoices you're expecting, so you can see each pay week against the cash that will actually be there.
+</BlogCallout>

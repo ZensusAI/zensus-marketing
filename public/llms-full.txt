@@ -304,6 +304,21 @@ Which months have three biweekly paydays in 2027, and how to plan the cash. Key 
 - January 1, 2027 is a federal bank holiday. If that payday is paid on December 31, 2026, the three-paycheck months are July and December and 2027 has 26 actual paydays. If it is paid on January 4, 2027, January still has three payments.
 - At $40,000 per biweekly run, a three-paycheck month needs $120,000 against $80,000, a 50% increase in payroll cash that month, not in labor cost.
 
+### Payroll Forecasting: How to Forecast Payroll Costs and Cash for 2027
+https://zensus.finance/blog/payroll-forecasting
+
+How to forecast payroll for 2027 by pay date: fully loaded cost per employee, employer taxes that spike in January, and the weeks payroll cash leaves the bank. Key facts from the guide:
+
+- Forecast payroll by pay date, not by month or year: for each pay date, add wages, employer taxes, benefits and fees, and track each tax's yearly cap.
+- 2027 federal figures: Social Security 6.2% up to a $192,300 wage base (up from $184,500 in 2026), so the most an employer pays per employee is $11,922.60, $483.60 more than the 2026 maximum of $11,439. Medicare 1.45% with no limit. FUTA 6.0%, usually 0.6% after the state credit, on the first $7,000 ($42 per employee).
+- The 0.9% Additional Medicare Tax on pay above $200,000 is withheld from the employee only; employers don't match it.
+- Social Security, FUTA and state unemployment wage bases reset on January 1, so the first paychecks of the year cost the most. A flat 7.65% budget is too low for the first quarter and too high for the last.
+- Worked example: 8 employees, $940,000 in wages, paid every two weeks on Fridays from Jan 8 to Dec 24, 2027 (26 paychecks of $36,153.85), with an example SUTA of 2.7% on the first $9,000. Employer tax is $3,950.54 on Jan 8 and $1,811.92 on Dec 24.
+- In that example, Q1 2027 employer tax is $18,874.62 against a flat 7.65% budget of $16,594.62, $2,280.00 more. The full year is $73,235.20 against $71,910.00 (7.79% of wages, 8.70% in Q1).
+- January 2027 deadlines: Fri, Jan 15 for monthly depositors' December taxes; Mon, Feb 1 (Jan 31 is a Sunday) for Form 941 for Q4 2026, Form 940, W-2s and the last 2026 FUTA deposit.
+- Jan 1, 2027 is a Friday, so a biweekly schedule that pays on Jan 1 has 27 scheduled paydays in 2027, unless the Jan 1 run is paid early on Dec 31, 2026.
+- Zensus shows payroll as a recurring outflow on its real pay dates in a cash flow forecast built from the bank (through Plaid), QuickBooks and HubSpot, and sends a Slack alert if the 30-day projection drops below a cash floor.
+
 ### Cash Flow Forecasting for Agencies
 https://zensus.finance/blog/cash-flow-forecasting-for-agencies
 
