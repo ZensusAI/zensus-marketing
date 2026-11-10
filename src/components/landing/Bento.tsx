@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import billLogo from "@/assets/integrations/bill-logo-full-color.webp";
+import billIcon from "@/assets/integrations/bill-icon.png";
 import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks-logo-black.png";
+import rampIcon from "@/assets/integrations/ramp-icon.png";
 import zensusLogo from "@/assets/zensus-logo-64.webp";
 import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
@@ -30,11 +31,11 @@ import { PinnedSection } from "./PinnedSection";
  * a column of six on desktop, two columns of three on phones.
  *
  * Logos (handoff 21 brand rules): Plaid's white logo, unaltered, on a forest
- * pill; Intuit's official black QuickBooks file with clear space; BILL's
- * official full-color logo (see SHOW_BILL_LOGO); HubSpot, Ramp, Gmail and
- * Google Drive and "Slack alert" as plain text (HubSpot and Slack restrict
- * their logos; Ramp and Google files are not in yet); no logo on the
- * transaction rows. The shimmer
+ * pill; Intuit's official black QuickBooks file with clear space; BILL's and
+ * Ramp's square icons, unaltered and alone in their boxes (see SHOW_BILL_LOGO
+ * and SHOW_RAMP_LOGO); HubSpot, Gmail and Google Drive and "Slack alert" as
+ * plain text (HubSpot and Slack restrict their logos; the Google files are
+ * not in yet); no logo on the transaction rows. The shimmer
  * is the handoff's three strokes, but the glow is a faint wider stroke instead
  * of an SVG blur filter, which repainted on the CPU every frame.
  * The ambient motion (shimmer, hub pulse, ticking readouts) runs for at most
@@ -59,8 +60,15 @@ const SOURCES: { name: string; sync?: string }[] = [
 // BILL's brand terms (Third Party Trademark Use Terms, Aug 2023) allow its
 // logo only with prior written permission, which BILL reviews before
 // publication: communications@hq.bill.com. The owner chose to ship it first
-// (10 Nov 2026). Set this false to fall back to the plain name "BILL".
+// (10 Nov 2026). The icon is the 256px PNG from logo.dev (bill.com), not a
+// file from BILL; replace it with BILL's own icon SVG when BILL sends it. It
+// is shown square and unaltered, alone in its box, and its box does not scale
+// in (BILL bars animating its logo). Set false for the plain name "BILL".
 const SHOW_BILL_LOGO = true;
+// Ramp: no public logo terms found (Developer Terms are accepted in its
+// console; partner messaging guidelines are a PDF in its partner portal). The
+// icon is the 256px PNG from logo.dev (ramp.com). Set false for the name.
+const SHOW_RAMP_LOGO = true;
 
 const ROWS = [
   { raw: "STRIPE TRANSFER ST-8841XQ", clean: "Stripe payout", amt: "+$18,240" },
@@ -92,45 +100,43 @@ const blen = (P: Bez) => {
 };
 const dstr = (P: Bez) => `M${P[0][0]} ${P[0][1]} C ${P[1][0]} ${P[1][1]}, ${P[2][0]} ${P[2][1]}, ${P[3][0]} ${P[3][1]}`;
 
-// Desktop 720x360 and phone 360x480 layouts (below 760px). Source boxes are
-// 48 and 52 units tall because BILL's logo must stay at least 60px wide, which
-// makes it about 39px tall.
+// Desktop 720x336 and phone 360x466 layouts (below 760px).
 const GEO = {
   d: {
     W: 720,
-    H: 360,
-    hub: [376, 180] as Pt,
+    H: 336,
+    hub: [376, 166] as Pt,
     lg: 40,
     fs: 25,
-    src: [0, 1, 2, 3, 4, 5].map((i) => ({ x: 24, y: 16 + 56 * i, w: 132, h: 48 })),
+    src: [0, 1, 2, 3, 4, 5].map((i) => ({ x: 24, y: 14 + 52 * i, w: 132, h: 44 })),
     outs: [
-      { x: 560, y: 117, w: 130, h: 46 },
-      { x: 560, y: 202, w: 130, h: 36 },
+      { x: 560, y: 103, w: 130, h: 46 },
+      { x: 560, y: 188, w: 130, h: 36 },
     ],
-    card: { x: 266, y: 232, w: 250 },
-    inB: (s: Box): Bez => [[s.x + s.w, s.y + s.h / 2], [228, s.y + s.h / 2], [228, 180], [306, 180]],
-    outB: (o: Box): Bez => [[446, 180], [503, 180], [503, o.y + o.h / 2], [560, o.y + o.h / 2]],
+    card: { x: 266, y: 218, w: 250 },
+    inB: (s: Box): Bez => [[s.x + s.w, s.y + s.h / 2], [228, s.y + s.h / 2], [228, 166], [306, 166]],
+    outB: (o: Box): Bez => [[446, 166], [503, 166], [503, o.y + o.h / 2], [560, o.y + o.h / 2]],
     labelT: 0.42,
   },
   m: {
     W: 360,
-    H: 480,
-    hub: [180, 228] as Pt,
+    H: 466,
+    hub: [180, 214] as Pt,
     lg: 34,
     fs: 22,
     // Two columns of three, funnelling into one trunk down the middle.
-    src: [0, 1, 2, 3, 4, 5].map((i) => ({ x: i < 3 ? 14 : 204, y: 14 + 60 * (i % 3), w: 142, h: 52 })),
+    src: [0, 1, 2, 3, 4, 5].map((i) => ({ x: i < 3 ? 14 : 204, y: 14 + 56 * (i % 3), w: 142, h: 44 })),
     outs: [
-      { x: 22, y: 298, w: 136, h: 46 },
-      { x: 206, y: 302, w: 130, h: 38 },
+      { x: 22, y: 284, w: 136, h: 46 },
+      { x: 206, y: 288, w: 130, h: 38 },
     ],
-    card: { x: 14, y: 360, w: 332 },
+    card: { x: 14, y: 346, w: 332 },
     inB: (s: Box): Bez => {
       const left = s.x < 180;
       const y = s.y + s.h / 2;
-      return [[left ? s.x + s.w : s.x, y], [180, y], [180, 190], [180, 212]];
+      return [[left ? s.x + s.w : s.x, y], [180, y], [180, 176], [180, 198]];
     },
-    outB: (o: Box): Bez => [[180, 244], [180, 272], [o.x + o.w / 2, 272], [o.x + o.w / 2, o.y]],
+    outB: (o: Box): Bez => [[180, 230], [180, 258], [o.x + o.w / 2, 258], [o.x + o.w / 2, o.y]],
     labelT: 0,
   },
 };
@@ -342,11 +348,11 @@ const Bento = () => {
                     ) : s.name === "QuickBooks" ? (
                       <img src={quickbooksLogo} alt="" className="block h-4 w-auto min-[760px]:h-6" />
                     ) : s.name === "BILL" && SHOW_BILL_LOGO ? (
-                      // Unaltered file, never below 60px wide: the mark fills
-                      // about 60% of the file's width, so the file is 100px.
-                      // Its built-in margin is BILL's clear space; no extra
-                      // words or marks go in this box.
-                      <img src={billLogo} alt="" width={100} height={61} className="block h-[61px] w-[100px] max-w-none" />
+                      // Square and unaltered, alone in its box: no words or
+                      // marks beside it (BILL's terms).
+                      <img src={billIcon} alt="" width={36} height={36} loading="lazy" decoding="async" className="block h-7 w-7 min-[760px]:h-8 min-[760px]:w-8 min-[1280px]:h-9 min-[1280px]:w-9" />
+                    ) : s.name === "Ramp" && SHOW_RAMP_LOGO ? (
+                      <img src={rampIcon} alt="" width={36} height={36} loading="lazy" decoding="async" className="block h-7 w-7 min-[760px]:h-8 min-[760px]:w-8 min-[1280px]:h-9 min-[1280px]:w-9" />
                     ) : s.name === "Gmail & Google Drive" ? (
                       <span className="whitespace-normal text-balance px-2 text-center font-semibold leading-[1.15]">{s.name}</span>
                     ) : (
