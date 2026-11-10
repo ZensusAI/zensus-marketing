@@ -144,7 +144,8 @@ describe("GET /api/tour-image", () => {
     await imageHandler(get(first.id, TOKEN), r);
     expect(r.statusCode).toBe(200);
     expectPrivateHeaders(r);
-    expect(r.headers["content-type"]).toBe("image/png");
+    const ext = first.image.split(".").pop();
+    expect(r.headers["content-type"]).toBe(ext === "webp" ? "image/webp" : ext === "png" ? "image/png" : "image/jpeg");
     const onDisk = readFileSync(join(TOUR_DIR, first.image));
     expect(Buffer.compare(r.body, onDisk)).toBe(0);
     expect(r.headers["content-length"]).toBe(String(onDisk.length));

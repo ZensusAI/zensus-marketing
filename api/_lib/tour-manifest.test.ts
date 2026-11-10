@@ -18,9 +18,9 @@ describe("private tour manifest", () => {
       "runway-day",
       "thirteen-week",
       "add-hire",
-      "runway-with-hire",
       "ask-zensus",
       "ask-zensus-answer",
+      "runway-with-hire",
     ]);
   });
 
