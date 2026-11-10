@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import billIcon from "@/assets/integrations/bill-icon.png";
+import gmailIcon from "@/assets/integrations/gmail-icon.svg";
+import googleDriveIcon from "@/assets/integrations/google-drive-icon.svg";
 import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks-logo-black.png";
 import rampIcon from "@/assets/integrations/ramp-icon.png";
@@ -33,9 +35,10 @@ import { PinnedSection } from "./PinnedSection";
  * Logos (handoff 21 brand rules): Plaid's white logo, unaltered, on a forest
  * pill; Intuit's official black QuickBooks file with clear space; BILL's and
  * Ramp's square icons, unaltered and alone in their boxes (see SHOW_BILL_LOGO
- * and SHOW_RAMP_LOGO); HubSpot, Gmail and Google Drive and "Slack alert" as
- * plain text (HubSpot and Slack restrict their logos; the Google files are
- * not in yet); no logo on the transaction rows. The shimmer
+ * and SHOW_RAMP_LOGO); Google's own Gmail and Drive product icons, each next
+ * to the product names (Google: no product icon by itself, first mention of
+ * Google Drive with the trademark mark); HubSpot and "Slack alert" as plain
+ * text (both restrict their logos); no logo on the transaction rows. The shimmer
  * is the handoff's three strokes, but the glow is a faint wider stroke instead
  * of an SVG blur filter, which repainted on the CPU every frame.
  * The ambient motion (shimmer, hub pulse, ticking readouts) runs for at most
@@ -354,7 +357,15 @@ const Bento = () => {
                     ) : s.name === "Ramp" && SHOW_RAMP_LOGO ? (
                       <img src={rampIcon} alt="" width={36} height={36} loading="lazy" decoding="async" className="block h-7 w-7 min-[760px]:h-8 min-[760px]:w-8 min-[1280px]:h-9 min-[1280px]:w-9" />
                     ) : s.name === "Gmail & Google Drive" ? (
-                      <span className="whitespace-normal text-balance px-2 text-center font-semibold leading-[1.15]">{s.name}</span>
+                      // Google's own Workspace product icons (SVG from its help
+                      // center), unaltered, with the product names beside them.
+                      <span className="flex flex-col items-center gap-0.5">
+                        <span className="flex items-center gap-1.5">
+                          <img src={gmailIcon} alt="" width={20} height={20} className="block h-4 w-4 min-[760px]:h-5 min-[760px]:w-5" />
+                          <img src={googleDriveIcon} alt="" width={20} height={20} className="block h-4 w-4 min-[760px]:h-5 min-[760px]:w-5" />
+                        </span>
+                        <span className="text-[10px] font-semibold leading-none max-[359px]:text-[9px] min-[760px]:text-[11.5px]">Gmail &amp; Google Drive&trade;</span>
+                      </span>
                     ) : (
                       <span className="font-semibold">{s.name}</span>
                     )}
