@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { PostHogPageview } from "./lib/analytics/PostHogPageview";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import Index from "./pages/Index";
+import { isPrivateRoute } from "./lib/private-routes";
 
 // The homepage ships in the initial bundle (most visitors land there and
 // the prerendered HTML hydrates fastest when React does not need to
@@ -46,22 +47,35 @@ const QuickBooksIntegration = lazy(
 );
 const HubSpotIntegration = lazy(() => import("./pages/integrations/HubSpot"));
 const SlackIntegration = lazy(() => import("./pages/integrations/Slack"));
+// Private: opened only from a signed link, kept off every public surface
+// (src/lib/private-routes.ts). Nothing else on the site links to it.
+const Tour = lazy(() => import("./pages/Tour"));
 
 // Minimal suspense fallback: the prerendered HTML is already visible,
 // so hydration gaps only matter if a visitor navigates client-side to
 // a lazy route. A blank placeholder is fine.
 const RouteFallback = () => <div className="min-h-screen bg-background" />;
 
+// A private page (the signed-link tour) loads no analytics at all, and so
+// asks for no consent; main.tsx skips initAnalytics() for it the same way.
+// Checked once per document load: the tour leaves only by full page loads.
+const tracking = () =>
+  typeof window === "undefined" || !isPrivateRoute(window.location.pathname);
+
 const App = () => (
   <HelmetProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <ConsentBanner />
+      {tracking() && <ConsentBanner />}
       <BrowserRouter>
-        <PostHogPageview />
-        <Analytics />
-        <SpeedInsights />
+        {tracking() && (
+          <>
+            <PostHogPageview />
+            <Analytics />
+            <SpeedInsights />
+          </>
+        )}
         <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -122,6 +136,7 @@ const App = () => (
             />
             <Route path="/llm-info" element={<LlmInfo />} />
             <Route path="/sitemap" element={<Sitemap />} />
+            <Route path="/tour" element={<Tour />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

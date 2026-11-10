@@ -3,15 +3,20 @@ import App from "./App.tsx";
 import "./index.css";
 import { initAnalytics, grantCapturing } from "./lib/analytics/events";
 import { readConsent } from "./lib/consent";
+import { isPrivateRoute } from "./lib/private-routes";
 
-// Initialise PostHog (opted OUT by default, no cookie/capture yet). No-ops if
-// the key is unset or during the prerender crawl, so it is safe unconditionally.
-initAnalytics();
+// A private page (the signed-link tour, src/lib/private-routes.ts) runs no
+// analytics: nothing is initialised, so nothing can record its URL.
+if (!isPrivateRoute(window.location.pathname)) {
+  // Initialise PostHog (opted OUT by default, no cookie/capture yet). No-ops if
+  // the key is unset or during the prerender crawl, so it is safe unconditionally.
+  initAnalytics();
 
-// Returning visitor who already consented: opt in synchronously, before render,
-// so PostHogPageview captures the entry pageview. New/undecided visitors are
-// handled asynchronously by <ConsentBanner /> (geo check + banner or implied
-// consent). A "denied" decision simply stays opted out.
-if (readConsent() === "granted") grantCapturing();
+  // Returning visitor who already consented: opt in synchronously, before render,
+  // so PostHogPageview captures the entry pageview. New/undecided visitors are
+  // handled asynchronously by <ConsentBanner /> (geo check + banner or implied
+  // consent). A "denied" decision simply stays opted out.
+  if (readConsent() === "granted") grantCapturing();
+}
 
 createRoot(document.getElementById("root")!).render(<App />);

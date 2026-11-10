@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "id": "connected-accounts",
+      "image": "01-connected-accounts.png",
+      "width": 1440,
+      "height": 900,
+      "title": "Your accounts, connected",
+      "caption": "Zensus reads your bank, QuickBooks and HubSpot so every forecast starts from real balances.",
+      "hotspot": { "x": 6, "y": 22, "w": 40, "h": 18 }
+    },
+    {
+      "id": "runway",
+      "image": "02-runway.png",
+      "width": 1440,
+      "height": 900,
+      "title": "Runway and your zero-cash date",
+      "caption": "The runway chart projects your cash forward and marks the day it would run out.",
+      "hotspot": { "x": 62, "y": 30, "w": 22, "h": 24 }
+    },
+    {
+      "id": "runway-day",
+      "image": "03-runway-day.png",
+      "width": 1440,
+      "height": 900,
+      "title": "What moves cash on a given day",
+      "caption": "Open any day on the runway to see the payments and receipts behind the number.",
+      "hotspot": { "x": 52, "y": 36, "w": 30, "h": 34 }
+    },
+    {
+      "id": "thirteen-week",
+      "image": "04-thirteen-week.png",
+      "width": 1440,
+      "height": 900,
+      "title": "The 13-week view",
+      "caption": "Thirteen weeks of inflows and outflows, week by week, the way a CFO reads cash.",
+      "hotspot": { "x": 8, "y": 30, "w": 84, "h": 40 }
+    },
+    {
+      "id": "add-hire",
+      "image": "05-add-hire.png",
+      "width": 1440,
+      "height": 900,
+      "title": "Try a hire before you make it",
+      "caption": "Add a hiring scenario with a salary and a start date, without touching your real data.",
+      "hotspot": { "x": 66, "y": 70, "w": 18, "h": 9 }
+    },
+    {
+      "id": "runway-with-hire",
+      "image": "06-runway-with-hire.png",
+      "width": 1440,
+      "height": 900,
+      "title": "The runway with the hire",
+      "caption": "The scenario overlays your runway, so you see how many months the hire costs.",
+      "hotspot": { "x": 58, "y": 28, "w": 28, "h": 28 }
+    },
+    {
+      "id": "ask-zensus",
+      "image": "07-ask-zensus.png",
+      "width": 1440,
+      "height": 900,
+      "title": "Ask Zensus a question",
+      "caption": "Ask about your cash in plain words, the way you would ask your finance lead.",
+      "hotspot": { "x": 24, "y": 78, "w": 52, "h": 10 }
+    },
+    {
+      "id": "ask-zensus-answer",
+      "image": "08-ask-zensus-answer.png",
+      "width": 1440,
+      "height": 900,
+      "title": "An answer from your own numbers",
+      "caption": "Ask Zensus answers from your forecast and shows the figures it used.",
+      "hotspot": { "x": 24, "y": 24, "w": 52, "h": 44 }
+    }
+  ]
+}

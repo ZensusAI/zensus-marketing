@@ -1,6 +1,14 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "functions": {
+    "api/tour-access.ts": {
+      "includeFiles": "api/_tour/**"
+    },
+    "api/tour-image.ts": {
+      "includeFiles": "api/_tour/**"
+    }
+  },
   "redirects": [
     {
       "source": "/features",
@@ -64,6 +72,40 @@
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://assets.apollo.io https://challenges.cloudflare.com https://us-assets.i.posthog.com https://www.clarity.ms https://*.clarity.ms https://c.bing.com https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; connect-src 'self' https://*.apollo.io https://aplo-evnt.com https://challenges.cloudflare.com https://forminit.com https://us.i.posthog.com https://us-assets.i.posthog.com https://*.clarity.ms https://c.bing.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://www.facebook.com https://connect.facebook.net; frame-src 'self' https://challenges.cloudflare.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+        }
+      ]
+    },
+    {
+      "source": "/tour",
+      "headers": [
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/tour/(.*)",
+      "headers": [
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
         }
       ]
     }
