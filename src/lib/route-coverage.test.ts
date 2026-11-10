@@ -20,6 +20,7 @@ import { describe, expect, it } from "vitest";
 
 import { BLOG_TOPICS } from "./blog";
 import { SITE_URL } from "./constants";
+import { isPrivateRoute } from "./private-routes";
 
 const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
 const read = (...parts: string[]) =>
@@ -31,12 +32,17 @@ const read = (...parts: string[]) =>
 // this test should fail loudly and be fixed by regenerating the sitemap.
 const ORIGIN = SITE_URL;
 
-/** Static route paths declared in App.tsx, minus :params and the catch-all. */
+/**
+ * Public static route paths declared in App.tsx, minus :params, the catch-all
+ * and PRIVATE_ROUTES (which private-routes.test.ts checks are absent from every
+ * list this file checks they are present in).
+ */
 function appRoutes(): string[] {
   const source = read("src", "App.tsx");
   return [...source.matchAll(/path="([^"]+)"/g)]
     .map((m) => m[1])
     .filter((p) => p.startsWith("/") && !p.includes(":"))
+    .filter((p) => !isPrivateRoute(p))
     .sort();
 }
 

@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "id": "connected-accounts",
+      "image": "01-connected-accounts.webp",
+      "width": 2880,
+      "height": 1800,
+      "title": "Your accounts, connected",
+      "caption": "Zensus reads your bank, QuickBooks and HubSpot, so every forecast starts from real balances and real customers.",
+      "hotspot": {
+        "x": 67.2,
+        "y": 5.9,
+        "w": 23.3,
+        "h": 26.3
+      }
+    },
+    {
+      "id": "runway",
+      "image": "02-runway.webp",
+      "width": 2880,
+      "height": 1800,
+      "title": "Your runway and zero-cash date",
+      "caption": "The chart projects cash month by month and marks the month it would run out: here, November 2028.",
+      "hotspot": {
+        "x": 57.8,
+        "y": 15.1,
+        "w": 15.4,
+        "h": 5.7
+      }
+    },
+    {
+      "id": "runway-day",
+      "image": "03-runway-day.webp",
+      "width": 2880,
+      "height": 1800,
+      "title": "What moves cash in a month",
+      "caption": "Click any month to see its days and the money in and out behind them, week by week.",
+      "hotspot": {
+        "x": 6.3,
+        "y": 64.3,
+        "w": 91.4,
+        "h": 35.7
+      }
+    },
+    {
+      "id": "thirteen-week",
+      "image": "04-thirteen-week.webp",
+      "width": 2880,
+      "height": 1800,
+      "title": "The next 13 weeks",
+      "caption": "A week-by-week cash ledger for the next quarter, with every expected payment and receipt.",
+      "hotspot": {
+        "x": 6.2,
+        "y": 65.7,
+        "w": 91.5,
+        "h": 34.3
+      }
+    },
+    {
+      "id": "add-hire",
+      "image": "05-add-hire.webp",
+      "width": 2880,
+      "height": 1800,
+      "title": "Ask what-if in plain English",
+      "caption": "Ask Zensus about a plan, such as hiring two engineers, and it runs it against your live forecast.",
+      "hotspot": {
+        "x": 71.9,
+        "y": 64.6,
+        "w": 21.9,
+        "h": 6.1
+      }
+    },
+    {
+      "id": "ask-zensus",
+      "image": "06-ask-zensus.webp",
+      "width": 2880,
+      "height": 1800,
+      "title": "It asks what it needs",
+      "caption": "If something is missing, like the salaries, Zensus asks before it models anything.",
+      "hotspot": {
+        "x": 71.9,
+        "y": 86.9,
+        "w": 21.5,
+        "h": 5.4
+      }
+    },
+    {
+      "id": "ask-zensus-answer",
+      "image": "07-ask-zensus-answer.webp",
+      "width": 2880,
+      "height": 1800,
+      "title": "The answer, in numbers",
+      "caption": "Zensus models the hires and shows what changes: payroll, burn, runway and the new zero-cash date.",
+      "hotspot": {
+        "x": 71,
+        "y": 68.1,
+        "w": 25.8,
+        "h": 15.4
+      }
+    },
+    {
+      "id": "runway-with-hire",
+      "image": "08-runway-with-hire.webp",
+      "width": 2880,
+      "height": 1800,
+      "title": "See the plan on your runway",
+      "caption": "The scenario sits next to your base forecast, so you can see the year of runway the hires would cost.",
+      "hotspot": {
+        "x": 19.9,
+        "y": 9.4,
+        "w": 11.9,
+        "h": 4.2
+      }
+    }
+  ]
+}
