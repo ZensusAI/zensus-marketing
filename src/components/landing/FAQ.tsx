@@ -73,7 +73,7 @@ const faqGroups = [
     items: [
       {
         question: "Is my financial data secure?",
-        answer: "Yes. Integration tokens are encrypted with AES-256-GCM before storage, and all stored data is encrypted at rest on AWS. Your bank and QuickBooks credentials are never stored on our servers; they stay with Plaid and Intuit. Every request is tied to your signed-in user, and your data is filtered by that user.",
+        answer: "Yes. Integration tokens are encrypted with AES-256-GCM before storage, and your database, its backups and our S3 storage are encrypted at rest on AWS. Your bank and QuickBooks credentials are never stored on our servers; they stay with Plaid and Intuit. Every request is tied to your signed-in user, and your data is filtered by that user.",
         links: [{ text: "encrypted with AES-256-GCM", to: "/security" }],
       },
       {

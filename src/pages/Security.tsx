@@ -128,7 +128,7 @@ const Security = () => {
           <div className="relative z-10 flex w-full max-w-[1080px] flex-col items-center gap-10 min-[760px]:gap-14">
             <div className="flex flex-col items-center gap-4">
               <h2 id="security-stored" className={cn(H2_LARGE, "max-w-[900px] text-forest-foreground")}>
-                Your data is encrypted, backed up daily, and stored in the United States.
+                Your database is encrypted, backed up daily, and stored in the United States.
               </h2>
               <p className={cn(SUB, "text-forest-muted-strong")}>Your data never trains an AI model.</p>
             </div>
@@ -240,16 +240,16 @@ const Security = () => {
                 <div className="flex flex-col gap-2.5 border-t border-foreground pt-[18px]">
                   <h3 className="text-[19px] font-semibold tracking-[-0.02em]">Our own access</h3>
                   <p className="text-pretty text-[16px] leading-[1.6]">
-                    Multi-factor authentication is required on every internal system we use.
-                    Production server access is closed by default, and we review who has access every
-                    quarter.
+                    Our access policy requires multi-factor authentication on the internal systems we
+                    use. Production server access is closed by default, and we review who has access
+                    every quarter.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2.5 border-t border-foreground pt-[18px]">
                   <h3 className="text-[19px] font-semibold tracking-[-0.02em]">Two-factor authentication</h3>
                   <p className="text-pretty text-[16px] leading-[1.6]">
-                    Two-factor authentication is required to connect a bank and while one is connected,
-                    and optional otherwise. Use an authenticator app or a passkey. You get 10 single-use
+                    Two-factor authentication is required to connect or reconnect a bank and while one
+                    is connected, and optional otherwise. Use an authenticator app or a passkey. You get 10 single-use
                     recovery codes, and we email you when these settings change.
                   </p>
                 </div>

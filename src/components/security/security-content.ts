@@ -10,7 +10,7 @@ export const LAST_REVIEWED = "11 November 2026";
 
 export const FACTS: { label: string; value: string; note: string }[] = [
   { label: "Token encryption", value: "AES-256-GCM", note: "AES-256-GCM before storage" },
-  { label: "Encryption at rest", value: "On AWS", note: "Your database, its backups and our file storage" },
+  { label: "Encryption at rest", value: "On AWS", note: "Your database, its backups and our S3 storage" },
   { label: "Daily backups", value: "7 days", note: "Kept 7 days, with point-in-time recovery" },
   { label: "US data residency", value: "US only", note: "AWS us-east-1, sign-in identities on us-east-2" },
 ];
@@ -23,7 +23,7 @@ export const STORE_GROUPS: { title: string; summary: string; items: string[] }[]
       "Access tokens for each connected provider, and the Bill.com sync token you create, encrypted with AES-256-GCM.",
       "Transactions and balances. We fetch up to 12 months of history and keep transactions while the connection is active.",
       "Invoices, bills, and subscriptions from QuickBooks and HubSpot, if you connect them.",
-      "Bills, invoices, and payments from Bill.com, if you connect it.",
+      "Bills and invoices from Bill.com, including their payment status, if you connect it.",
     ],
   },
   {
@@ -40,7 +40,7 @@ export const STORE_GROUPS: { title: string; summary: string; items: string[] }[]
     summary: "What runs your forecast and keeps sign-in secure.",
     items: [
       "Derived runway projections and alert state.",
-      "Your email address, plus the IP address and browser for two-factor and other security events, kept for up to a year.",
+      "Your email address, plus the IP address and browser for two-factor security events, kept for up to a year.",
       "Feedback you send us and your profile image.",
       "Two-factor settings. Your authenticator secret is encrypted with AES-256-GCM, and recovery codes are stored as hashes.",
       "If you add a passkey, only its public key and ID. The private key never leaves your device or password manager, and we store no biometric data.",
@@ -56,7 +56,7 @@ export const NEVER_STORES: { item: string; holder: string }[] = [
 export const KEEP_OR_REMOVE = [
   "Disconnecting a bank revokes access and deletes its transactions.",
   "Disconnecting QuickBooks or HubSpot stops syncing and clears the access tokens. The data already synced stays in your account until you ask us to delete it.",
-  "Disconnecting Bill.com deletes its credentials and the bills and invoices it synced. Delete the sync token in BILL too, because BILL offers no way for us to revoke it.",
+  "Disconnecting Bill.com deletes its credentials and the bills and invoices it synced. Disconnecting does not revoke the sync token, so delete it in BILL too.",
   "To delete your account or export your data, contact support.",
 ];
 
@@ -65,24 +65,24 @@ export type ComplianceStatus = "Active" | "Completed" | "Not yet";
 export const COMPLIANCE: { area: string; detail: string; status: ComplianceStatus }[] = [
   {
     area: "Encryption",
-    detail: "AES-256-GCM for tokens, AWS encryption at rest for the database, backups and file storage, TLS in transit",
+    detail: "AES-256-GCM for tokens, AWS encryption at rest for the database, backups and S3 storage, TLS in transit",
     status: "Active",
   },
   { area: "Hosting", detail: "AWS us-east-1, sign-in identities on us-east-2, all in the United States", status: "Active" },
-  { area: "Backups", detail: "Daily, encrypted, 7-day point-in-time recovery", status: "Active" },
+  { area: "Backups", detail: "Daily database backups, encrypted, 7-day point-in-time recovery", status: "Active" },
   { area: "Data isolation", detail: "Per-user, enforced by the application", status: "Active" },
   { area: "AI training", detail: "None on your data", status: "Active" },
-  { area: "HTTP headers", detail: "HSTS on every domain, enforced CSP, X-Frame-Options and frame-ancestors", status: "Active" },
+  { area: "HTTP headers", detail: "HSTS, enforced CSP, X-Frame-Options and frame-ancestors on our website, app and API", status: "Active" },
   {
     area: "Two-factor authentication",
     detail: "Required with a bank connected, with an authenticator app or a passkey",
     status: "Active",
   },
-  { area: "Internal access", detail: "MFA on every internal system, access reviewed every quarter", status: "Active" },
+  { area: "Internal access", detail: "MFA required by written policy, access reviewed every quarter", status: "Active" },
   { area: "Audit logging", detail: "AWS CloudTrail in every region, logs kept one year", status: "Active" },
   {
-    area: "Bank data partner security review",
-    detail: "Plaid data security attestations completed, November 2026",
+    area: "Plaid security attestations",
+    detail: "All completed, 11 November 2026",
     status: "Completed",
   },
   { area: "SOC 2", detail: "Not certified", status: "Not yet" },
@@ -92,7 +92,7 @@ export const FAQS: FaqItem[] = [
   {
     question: "Is my financial data safe with Zensus?",
     answer:
-      "Your database, its backups and our file storage are encrypted at rest on AWS in the United States. Integration tokens are also encrypted with AES-256-GCM, and data moves over TLS. Every request is tied to your signed-in user, and your data is filtered by that user.",
+      "Your database, its backups and our S3 storage are encrypted at rest on AWS in the United States. Integration tokens are also encrypted with AES-256-GCM, and data moves over TLS. Every request is tied to your signed-in user, and your data is filtered by that user.",
   },
   {
     question: "Does Zensus support two-factor authentication?",
@@ -147,7 +147,7 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
     mono: true,
     rows: [
       ["Token encryption", "AES-256-GCM before storage"],
-      ["Encryption at rest", "Database, backups and file storage, on AWS"],
+      ["Encryption at rest", "Database, backups and S3 storage, on AWS"],
       ["Encryption in transit", "TLS, required by the database"],
       ["Connections", "OAuth, Plaid Link, and a Bill.com sync token you create. Providers hold your logins"],
       ["Sign-in", "Google or an emailed link, then your second factor if it is on"],
@@ -156,12 +156,12 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
       ["Recovery codes", "10 single-use codes, stored as hashes"],
       ["Account isolation", "Every request tied to your signed-in user"],
       ["Staff access", "One named admin, second factor and written reason, under an hour, logged"],
-      ["Internal MFA", "Required on every internal system we use"],
+      ["Internal MFA", "Required by our access policy, enforced on Google Workspace, GitHub and Cloudflare"],
       ["Audit logging", "AWS CloudTrail in every region, kept one year"],
       ["No AI training", "Your data never trains a model"],
       ["US data residency", "AWS us-east-1, sign-in identities on us-east-2"],
       ["Daily backups", "Kept 7 days, with point-in-time recovery"],
-      ["Security headers", "HSTS on every domain, enforced CSP, clickjacking protection"],
+      ["Security headers", "HSTS, enforced CSP and clickjacking protection on our website, app and API"],
     ],
   },
   {
@@ -174,8 +174,8 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
         "You authorize access through OAuth or Plaid. For Bill.com, you create a sync token in BILL.",
       ],
       ["2. Scoped tokens", "Each provider holds the credentials. Zensus encrypts every token with AES-256-GCM."],
-      ["3. Zensus reads what it needs", "Enough to project your runway. Zensus never writes back."],
-      ["4. Encrypted at rest on AWS", "Your database, its backups and our file storage, in us-east-1, United States."],
+      ["3. Zensus reads what it needs", "Enough to project your runway. Zensus never writes to your bank, books, CRM or Bill.com."],
+      ["4. Encrypted at rest on AWS", "Your database, its backups and our S3 storage, in us-east-1, United States."],
       [
         "Slack",
         "If you connect Slack, Zensus posts your cash alerts to the channel you choose. Slack is used only for alerts and their buttons.",
@@ -199,11 +199,11 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
       ],
       [
         "Encryption at rest",
-        "Your database, its backups and our file storage are encrypted at rest on AWS. Integration tokens are also encrypted with AES-256-GCM before storage.",
+        "Your database, its backups and our S3 storage are encrypted at rest on AWS. Integration tokens are also encrypted with AES-256-GCM before storage.",
       ],
       [
         "Backups and recovery",
-        "Your data is backed up daily and kept for 7 days, with point-in-time recovery. Backups are encrypted, and the database runs across multiple availability zones in AWS us-east-1.",
+        "Your data is backed up daily and kept for 7 days, with point-in-time recovery. Database backups are encrypted, and the database runs across multiple availability zones in AWS us-east-1.",
       ],
       ["Database access", "The database is not publicly accessible and accepts encrypted connections only."],
       [
@@ -220,11 +220,11 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
       ],
       [
         "Our own access controls",
-        "Multi-factor authentication is required on every internal system we use. It is enforced organization-wide on Google Workspace (staff accounts), GitHub and Cloudflare. Production server access is closed by default and opened only for a single task. We review who has access every quarter under a written access control policy.",
+        "Our access policy requires multi-factor authentication on the internal systems we use, including AWS, Plaid, Stripe, Intuit and HubSpot. It is enforced organization-wide on Google Workspace (staff accounts), GitHub and Cloudflare. Production server access is closed by default and opened only for a single task. We review who has access every quarter under a written access control policy.",
       ],
       [
         "Monitoring",
-        "AWS CloudTrail records account activity in every region, with tamper-evident log files kept for one year. GuardDuty threat detection runs on our production region. IAM Access Analyzer runs in every region and flags anything shared outside our account. Only web ports are open to the internet.",
+        "AWS CloudTrail records account activity in every region, with tamper-evident log files kept for one year. GuardDuty threat detection runs in our production region. IAM Access Analyzer runs in every enabled region and flags anything shared outside our account. Only web ports are open to the internet. Server access is opened for a single IP address only while a task needs it.",
       ],
       [
         "Connections and webhooks",
@@ -232,7 +232,7 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
       ],
       [
         "Application safeguards",
-        "The product uses a strict cross-origin allowlist, an enforced Content Security Policy, global rate limiting, and validation on every API input. Every domain sends HSTS, and X-Frame-Options and a CSP frame-ancestors rule block clickjacking.",
+        "The product uses a strict cross-origin allowlist, an enforced Content Security Policy, global rate limiting, and validation on every API input. Our website, app and API send HSTS, and a CSP frame-ancestors rule and X-Frame-Options block clickjacking.",
       ],
       [
         "Analytics",
@@ -240,7 +240,7 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
       ],
       [
         "Pipeline security",
-        "Every code pull request is scanned for secrets and cannot merge with a finding. We run Semgrep static analysis across the codebase every month. Dependencies are tracked with automated vulnerability alerts and audited twice a month, and dependency changes are checked for known vulnerabilities.",
+        "Every code pull request is scanned for secrets and cannot merge with a finding. We run Semgrep static analysis across the codebase every month. Dependencies are tracked with automated vulnerability alerts, and pull requests that change dependencies are audited for known vulnerabilities.",
       ],
     ],
   },
@@ -248,12 +248,15 @@ export const REVIEWER_GROUPS: ReviewerGroup[] = [
     title: "What changed",
     intro: "Security updates to the product and this page, newest first.",
     rows: [
-      ["November 2026", "Passkeys added as a second factor."],
-      ["November 2026", "Two-factor authentication required for every account with a bank connected."],
-      ["November 2026", "Bill.com added as a read-only connection."],
-      ["November 2026", "Staff access reviewed and multi-factor authentication enforced on every internal system."],
-      ["November 2026", "Account activity logging added across every AWS region."],
-      ["November 2026", "Session replay turned off in the product app in code."],
+      ["11 November 2026", "Two-factor authentication required for every account with a bank connected."],
+      ["11 November 2026", "Plaid security attestations completed."],
+      ["10 November 2026", "Passkeys added as a second factor."],
+      ["10 November 2026", "Bill.com added as a read-only connection."],
+      [
+        "10 November 2026",
+        "Staff access reviewed under a written access control policy, with multi-factor authentication required on internal systems.",
+      ],
+      ["9 November 2026", "Account activity logging added across every AWS region."],
       ["November 2026", "Two-factor authentication added, with an authenticator app and recovery codes."],
       ["November 2026", "Session replay blocked in the product app."],
       ["November 2026", "Every claim on this page rechecked against the product and its production settings."],

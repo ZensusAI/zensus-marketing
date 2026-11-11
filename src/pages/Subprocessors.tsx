@@ -36,7 +36,7 @@ const CATEGORIES: Category[] = [
         purpose:
           "Primary application infrastructure: managed database, object storage, transactional email, log aggregation, and edge hosting for the product app.",
         dataCategories:
-          "All customer data classes, encrypted in transit. The database, its backups and file storage are encrypted at rest.",
+          "All customer data classes, encrypted in transit. The database, its backups and S3 storage are encrypted at rest.",
       },
       {
         name: "Vercel",
@@ -97,9 +97,9 @@ const CATEGORIES: Category[] = [
         name: "BILL (Bill.com)",
         country: "United States",
         purpose:
-          "Read-only sync of accounts payable and receivable data you choose to connect: bills, invoices, and payments.",
+          "Read-only sync of accounts payable and receivable data you choose to connect: bills and invoices, including their payment status.",
         dataCategories:
-          "The sync token you create in BILL (stored encrypted with AES-256-GCM), bills, invoices, and payments (only if you connect Bill.com).",
+          "The sync token you create in BILL (stored encrypted with AES-256-GCM), bills and invoices from Bill.com, including their payment status (only if you connect Bill.com).",
       },
       {
         name: "Stripe",
