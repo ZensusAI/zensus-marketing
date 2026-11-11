@@ -4,7 +4,6 @@ import gmailIcon from "@/assets/integrations/gmail-icon.svg";
 import googleDriveIcon from "@/assets/integrations/google-drive-icon.svg";
 import plaidLogo from "@/assets/integrations/plaid.svg";
 import quickbooksLogo from "@/assets/integrations/quickbooks-logo-black.png";
-import rampIcon from "@/assets/integrations/ramp-icon.png";
 import zensusLogo from "@/assets/zensus-logo-64.webp";
 import { useStaticPins } from "@/hooks/use-prefers-reduced-motion";
 import type { ScrollProgress } from "@/hooks/use-scroll-progress";
@@ -28,15 +27,16 @@ import { PinnedSection } from "./PinnedSection";
  * Reduced motion or a short viewport: the end state, still (no shimmer, no
  * ticking).
  *
- * Six sources (Plaid, QuickBooks, BILL, Ramp, HubSpot, Gmail and Google
- * Drive; the last three added 10 Nov 2026 on top of the handoff's three):
- * a column of six on desktop, two columns of three on phones.
+ * Five sources (Plaid, QuickBooks, BILL, HubSpot, Gmail and Google Drive;
+ * BILL and Gmail and Google Drive added 10 Nov 2026 on top of the handoff's
+ * three; Ramp was added and then taken out on 11 Nov 2026, so there is no
+ * Ramp code left): a column of five on desktop; on phones two rows of two and
+ * a last source centred under them.
  *
  * Logos (handoff 21 brand rules): Plaid's white logo, unaltered, on a forest
- * pill; Intuit's official black QuickBooks file with clear space; BILL's and
- * Ramp's square icons, unaltered and alone in their boxes (see SHOW_BILL_LOGO
- * and SHOW_RAMP_LOGO); Google's own Gmail and Drive product icons, each next
- * to the product names (Google: no product icon by itself, first mention of
+ * pill; Intuit's official black QuickBooks file with clear space; BILL's
+ * square icon, unaltered and alone in its box (see SHOW_BILL_LOGO); Google's
+ * own Gmail and Drive product icons, each next to the product names (Google: no product icon by itself, first mention of
  * Google Drive with the trademark mark); HubSpot and "Slack alert" as plain
  * text (both restrict their logos); no logo on the transaction rows. The shimmer
  * is the handoff's three strokes, but the glow is a faint wider stroke instead
@@ -55,7 +55,6 @@ const SOURCES: { name: string; sync?: string }[] = [
   { name: "Plaid", sync: "webhook" },
   { name: "QuickBooks", sync: "daily" },
   { name: "BILL" },
-  { name: "Ramp" },
   { name: "HubSpot", sync: "webhook" },
   { name: "Gmail & Google Drive" },
 ];
@@ -68,10 +67,6 @@ const SOURCES: { name: string; sync?: string }[] = [
 // is shown square and unaltered, alone in its box, and its box neither scales
 // nor fades in (BILL bars animating its logo). Set false for the plain name.
 const SHOW_BILL_LOGO = true;
-// Ramp: no public logo terms found (Developer Terms are accepted in its
-// console; partner messaging guidelines are a PDF in its partner portal). The
-// icon is the 256px PNG from logo.dev (ramp.com). Set false for the name.
-const SHOW_RAMP_LOGO = true;
 
 const ROWS = [
   { raw: "STRIPE TRANSFER ST-8841XQ", clean: "Stripe payout", amt: "+$18,240" },
@@ -103,22 +98,22 @@ const blen = (P: Bez) => {
 };
 const dstr = (P: Bez) => `M${P[0][0]} ${P[0][1]} C ${P[1][0]} ${P[1][1]}, ${P[2][0]} ${P[2][1]}, ${P[3][0]} ${P[3][1]}`;
 
-// Desktop 720x336 and phone 360x466 layouts (below 760px).
+// Desktop 720x300 and phone 360x466 layouts (below 760px).
 const GEO = {
   d: {
     W: 720,
-    H: 336,
-    hub: [376, 166] as Pt,
+    H: 300,
+    hub: [376, 140] as Pt,
     lg: 40,
     fs: 25,
-    src: [0, 1, 2, 3, 4, 5].map((i) => ({ x: 24, y: 14 + 52 * i, w: 132, h: 44 })),
+    src: [0, 1, 2, 3, 4].map((i) => ({ x: 24, y: 14 + 52 * i, w: 132, h: 44 })),
     outs: [
-      { x: 560, y: 103, w: 130, h: 46 },
-      { x: 560, y: 188, w: 130, h: 36 },
+      { x: 560, y: 77, w: 130, h: 46 },
+      { x: 560, y: 162, w: 130, h: 36 },
     ],
-    card: { x: 266, y: 218, w: 250 },
-    inB: (s: Box): Bez => [[s.x + s.w, s.y + s.h / 2], [228, s.y + s.h / 2], [228, 166], [306, 166]],
-    outB: (o: Box): Bez => [[446, 166], [503, 166], [503, o.y + o.h / 2], [560, o.y + o.h / 2]],
+    card: { x: 266, y: 192, w: 250 },
+    inB: (s: Box): Bez => [[s.x + s.w, s.y + s.h / 2], [228, s.y + s.h / 2], [228, 140], [306, 140]],
+    outB: (o: Box): Bez => [[446, 140], [503, 140], [503, o.y + o.h / 2], [560, o.y + o.h / 2]],
     labelT: 0.42,
   },
   m: {
@@ -127,16 +122,18 @@ const GEO = {
     hub: [180, 214] as Pt,
     lg: 34,
     fs: 22,
-    // Two columns of three, funnelling into one trunk down the middle.
-    src: [0, 1, 2, 3, 4, 5].map((i) => ({ x: i < 3 ? 14 : 204, y: 14 + 56 * (i % 3), w: 142, h: 44 })),
+    // Two rows of two and the last source centred, all funnelling into one
+    // trunk down the middle.
+    src: [0, 1, 2, 3, 4].map((i) => ({ x: i === 4 ? 109 : i % 2 === 0 ? 14 : 204, y: 14 + 56 * Math.floor(i / 2), w: 142, h: 44 })),
     outs: [
       { x: 22, y: 284, w: 136, h: 46 },
       { x: 206, y: 288, w: 130, h: 38 },
     ],
     card: { x: 14, y: 346, w: 332 },
     inB: (s: Box): Bez => {
-      const left = s.x < 180;
       const y = s.y + s.h / 2;
+      if (s.x + s.w / 2 === 180) return [[180, s.y + s.h], [180, s.y + s.h + 8], [180, 190], [180, 198]];
+      const left = s.x < 180;
       return [[left ? s.x + s.w : s.x, y], [180, y], [180, 176], [180, 198]];
     },
     outB: (o: Box): Bez => [[180, 230], [180, 258], [o.x + o.w / 2, 258], [o.x + o.w / 2, o.y]],
@@ -285,8 +282,8 @@ const Bento = () => {
 
           <div className="flex min-h-0 flex-1 items-center justify-center">
             <p className="sr-only">
-              Plaid bank feeds and HubSpot arrive by webhook and QuickBooks syncs daily. BILL, Ramp, and Gmail and
-              Google Drive connect as sources too. Zensus normalizes the transactions into clean vendor names, keeps
+              Plaid bank feeds and HubSpot arrive by webhook and QuickBooks syncs daily. BILL, and Gmail and Google
+              Drive connect as sources too. Zensus normalizes the transactions into clean vendor names, keeps
               your zero-cash date current and sends Slack alerts.
             </p>
             <div
@@ -356,8 +353,6 @@ const Bento = () => {
                       // Square and unaltered, alone in its box: no words or
                       // marks beside it (BILL's terms).
                       <img src={billIcon} alt="" width={36} height={36} loading="lazy" decoding="async" className="block h-7 w-7 min-[760px]:h-8 min-[760px]:w-8 min-[1280px]:h-9 min-[1280px]:w-9" />
-                    ) : s.name === "Ramp" && SHOW_RAMP_LOGO ? (
-                      <img src={rampIcon} alt="" width={36} height={36} loading="lazy" decoding="async" className="block h-7 w-7 min-[760px]:h-8 min-[760px]:w-8 min-[1280px]:h-9 min-[1280px]:w-9" />
                     ) : s.name === "Gmail & Google Drive" ? (
                       // Google's own Workspace product icons (SVG from its help
                       // center), unaltered, with the product names beside them.

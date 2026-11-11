@@ -414,7 +414,7 @@ const Footer = () => {
             4 Nov 2026), sitewide because the footer is. Counsel to confirm
             the wording. */}
         <p className="mt-4 text-pretty text-center text-xs leading-[1.5] text-muted-foreground min-[760px]:text-left">
-          Plaid, QuickBooks, HubSpot, Ramp, Slack and G2 are trademarks of their respective owners. Slack is a
+          Plaid, QuickBooks, HubSpot, Slack and G2 are trademarks of their respective owners. Slack is a
           registered trademark and service mark of Slack Technologies, Inc. Gmail&trade; and Google Drive&trade; are
           trademarks of Google LLC. BILL and the BILL logo are trademarks belonging to BILL Operations, LLC. Use of
           these names does not imply endorsement.
