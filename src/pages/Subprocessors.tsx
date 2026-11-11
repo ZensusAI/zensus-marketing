@@ -36,7 +36,7 @@ const CATEGORIES: Category[] = [
         purpose:
           "Primary application infrastructure: managed database, object storage, transactional email, log aggregation, and edge hosting for the product app.",
         dataCategories:
-          "All customer data classes (encrypted in transit and at rest).",
+          "All customer data classes, encrypted in transit. The database, its backups and file storage are encrypted at rest.",
       },
       {
         name: "Vercel",
@@ -92,6 +92,14 @@ const CATEGORIES: Category[] = [
           "Read-only sync of CRM data and subscription tracking for accounts-receivable forecasting.",
         dataCategories:
           "OAuth tokens, invoices, subscriptions, admin email (only if you connect HubSpot). Read access also covers contacts, companies, and line items, which are not stored.",
+      },
+      {
+        name: "BILL (Bill.com)",
+        country: "United States",
+        purpose:
+          "Read-only sync of accounts payable and receivable data you choose to connect: bills, invoices, and payments.",
+        dataCategories:
+          "The sync token you create in BILL (stored encrypted with AES-256-GCM), bills, invoices, and payments (only if you connect Bill.com).",
       },
       {
         name: "Stripe",
@@ -155,7 +163,7 @@ const CATEGORIES: Category[] = [
         name: "PostHog",
         country: "United States",
         purpose:
-          "Product and marketing-site analytics, plus session replay on the marketing site only. Session replay does not run in the product app.",
+          "Product and marketing-site analytics, plus session replay on the marketing site only. Session replay does not run in the product app, and product analytics stay off until you consent.",
         dataCategories:
           "Page views, product events, and email address. On the marketing site, session replays with form inputs masked.",
       },
@@ -211,9 +219,9 @@ const CATEGORIES: Category[] = [
         name: "Cloudflare (Turnstile)",
         country: "United States",
         purpose:
-          `Invisible bot and abuse protection on the marketing-site support form (${SITE_HOST}/support), so the contact and acknowledgment flow cannot be used to send spam.`,
+          `Invisible bot and abuse protection on the marketing-site support form (${SITE_HOST}/support), so the contact and acknowledgment flow cannot be used to send spam. It also protects email sign-in in the product app with a CAPTCHA.`,
         dataCategories:
-          "Visitor IP, user-agent, and a verification token (transmitted to Cloudflare when the support form is submitted).",
+          "Visitor IP, user-agent, and a verification token (transmitted to Cloudflare when the support form or the email sign-in form is submitted).",
       },
     ],
   },
@@ -247,7 +255,7 @@ const Subprocessors = () => (
           Subprocessors
         </h1>
         <p className="text-sm text-muted-foreground mb-6">
-          Last updated: November 6, 2026
+          Last updated: November 11, 2026
         </p>
         <p className="text-lg text-muted-foreground mb-12">
           Zensus uses trusted third-party services to operate our platform.

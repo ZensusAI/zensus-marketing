@@ -49,11 +49,12 @@ Most businesses make million-dollar decisions (hiring, fundraising timing, contr
 ## Security
 
 - OAuth tokens are encrypted with AES-256-GCM before storage
-- All stored data and backups are encrypted at rest on AWS, in the us-east-1 region
+- The database, its backups and file storage are encrypted at rest on AWS
+- All data is stored in the United States: application data, the database and backups in AWS us-east-1, and sign-in identities with Supabase on AWS us-east-2
 - Bank and QuickBooks credentials stay with Plaid and Intuit and are never stored by Zensus
 - Financial data is never sold or used to train AI models
 - Every request is tied to the signed-in user, and data is filtered by that user
-- Optional two-factor authentication with an authenticator app, with 10 single-use recovery codes
+- Two-factor authentication with an authenticator app or a passkey, with 10 single-use recovery codes. It is required to connect a bank and while a bank is connected, and optional otherwise
 - Zensus is not SOC 2 certified
 
 ## Pricing
@@ -82,7 +83,7 @@ A few minutes. Connect your bank or QuickBooks with one click, and your cash flo
 Anything about your finances: "When will I run out of cash?", "Can I afford to hire two engineers?", "What if we lose our largest annual contract?", "What happens with 5% monthly churn?"
 
 **Is my financial data secure?**
-Yes. OAuth tokens are encrypted with AES-256-GCM before storage, and all stored data is encrypted at rest on AWS. Bank and QuickBooks credentials stay with Plaid and Intuit and are never stored by Zensus.
+Yes. OAuth tokens are encrypted with AES-256-GCM before storage, and the database, its backups and file storage are encrypted at rest on AWS. Bank and QuickBooks credentials stay with Plaid and Intuit and are never stored by Zensus.
 
 **Who can see my data?**
 You do. One named Zensus admin can also open a one-hour support session on an account, which needs a second factor and a written reason, and is logged. Your financial data is never sold or used to train AI models.
