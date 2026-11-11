@@ -65,8 +65,8 @@ const SOURCES: { name: string; sync?: string }[] = [
 // publication: communications@hq.bill.com. The owner chose to ship it first
 // (10 Nov 2026). The icon is the 256px PNG from logo.dev (bill.com), not a
 // file from BILL; replace it with BILL's own icon SVG when BILL sends it. It
-// is shown square and unaltered, alone in its box, and its box does not scale
-// in (BILL bars animating its logo). Set false for the plain name "BILL".
+// is shown square and unaltered, alone in its box, and its box neither scales
+// nor fades in (BILL bars animating its logo). Set false for the plain name.
 const SHOW_BILL_LOGO = true;
 // Ramp: no public logo terms found (Developer Terms are accepted in its
 // console; partner messaging guidelines are a PDF in its partner portal). The
@@ -339,8 +339,10 @@ const Bento = () => {
                     )}
                     style={{
                       ...box(G.src[i]),
-                      opacity: 0.25 + 0.75 * kc[i],
-                      // BILL's terms bar animating its logo, so that box fades in without the scale.
+                      // BILL's terms bar animating its logo, so that box neither
+                      // scales nor fades: it steps from the dim state to full
+                      // opacity once, where the others ease in.
+                      opacity: s.name === "BILL" && SHOW_BILL_LOGO ? (kc[i] > 0.5 ? 1 : 0.25) : 0.25 + 0.75 * kc[i],
                       transform: s.name === "BILL" && SHOW_BILL_LOGO ? undefined : `scale(${lerp(0.92, 1, kc[i])})`,
                     }}
                   >
@@ -364,7 +366,7 @@ const Bento = () => {
                           <img src={gmailIcon} alt="" width={20} height={20} className="block h-4 w-4 min-[760px]:h-5 min-[760px]:w-5" />
                           <img src={googleDriveIcon} alt="" width={20} height={20} className="block h-4 w-4 min-[760px]:h-5 min-[760px]:w-5" />
                         </span>
-                        <span className="text-[10px] font-semibold leading-none max-[359px]:text-[9px] min-[760px]:text-[11.5px]">Gmail &amp; Google Drive&trade;</span>
+                        <span className="text-[10px] font-semibold leading-none max-[359px]:text-[9px] min-[760px]:text-[11px] min-[1024px]:text-[11.5px]">Gmail &amp; Google Drive&trade;</span>
                       </span>
                     ) : (
                       <span className="font-semibold">{s.name}</span>
