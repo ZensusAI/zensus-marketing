@@ -165,7 +165,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-is-cash-flow-forecasting": {
-    "wordCount": 3142,
+    "wordCount": 4001,
     "images": [
       "https://zensus.finance/blog/what-is-cash-flow-forecasting/spreadsheet-vs-automated.webp"
     ],
