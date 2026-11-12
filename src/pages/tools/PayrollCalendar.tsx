@@ -288,6 +288,9 @@ function PayDateTable({ year, forceOpen }: { year: YearSummary; forceOpen: boole
 const PayrollCalendar = () => {
   const [firstPayDate, setFirstPayDate] = useState(defaultFirstPayDate());
   const [frequency, setFrequency] = useState<PayFrequency>("biweekly");
+  // Controlled so the label can open the list: Radix opens it on a press on the
+  // button itself, and a click on the label alone was a dead click in Clarity.
+  const [frequencyOpen, setFrequencyOpen] = useState(false);
   const [amountPerRun, setAmountPerRun] = useState(21000);
   const [lagDays, setLagDays] = useState(0);
   const [adjust, setAdjust] = useState(true);
@@ -422,10 +425,20 @@ const PayrollCalendar = () => {
                 </p>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="frequency">Pay frequency</Label>
+                <Label
+                  htmlFor="frequency"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setFrequencyOpen(true);
+                  }}
+                >
+                  Pay frequency
+                </Label>
                 <Select
                   value={frequency}
                   onValueChange={(value) => setFrequency(value as PayFrequency)}
+                  open={frequencyOpen}
+                  onOpenChange={setFrequencyOpen}
                 >
                   <SelectTrigger id="frequency" aria-label="Pay frequency">
                     <SelectValue />
