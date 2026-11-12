@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
             Privacy Policy
           </h1>
           <p className="text-sm text-muted-foreground">
-            Last Updated: November 6, 2026
+            Last Updated: November 11, 2026
           </p>
         </header>
 
@@ -246,7 +246,7 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground mb-2">Support-form and calculator Bot Protection:</p>
                 <ul className="list-disc pl-6 space-y-1 text-foreground/80 text-sm">
-                  <li>When you submit the contact form on our support page (<a href={`${SITE_URL}/support`} className="text-primary hover:underline">{SITE_HOST}/support</a>) or request a detailed breakdown from our free runway or payroll calculators, we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects these forms from spam and abuse and does not track you across sites. See Cloudflare's{' '}
+                  <li>When you submit the contact form on our support page (<a href={`${SITE_URL}/support`} className="text-primary hover:underline">{SITE_HOST}/support</a>), request a detailed breakdown from our free runway or payroll calculators, or sign in to the product app with an emailed link, we use Cloudflare Turnstile to confirm the submission is not automated. Turnstile runs invisibly and may collect your IP address, user-agent, and a verification token to make that determination. It protects these forms from spam and abuse and does not track you across sites. See Cloudflare's{' '}
                     <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Turnstile Privacy Addendum</a>.</li>
                 </ul>
               </div>
@@ -383,6 +383,11 @@ export default function PrivacyPolicy() {
               <div>
                 <p className="font-semibold text-foreground">HubSpot Inc. (Optional)</p>
                 <p className="text-foreground/80 text-sm">If you connect HubSpot, we sync invoices and subscriptions to project recurring billing into your runway forecast. We hold read-only access to contacts, companies, and line items but do not store them.</p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-foreground">BILL (Bill.com) (Optional)</p>
+                <p className="text-foreground/80 text-sm">If you connect Bill.com, we sync bills and invoices, including their payment status, with read-only access. We store the sync token you create in BILL, encrypted. You can disconnect at any time.</p>
               </div>
 
               <div>

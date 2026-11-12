@@ -114,7 +114,7 @@ const Security = () => {
                 Zensus cannot move your money.
               </h3>
               <p className="max-w-[560px] text-balance text-[17px] leading-[1.5] text-muted-foreground">
-                We read your financial data and never write to your bank, QuickBooks, or HubSpot.
+                We read your financial data and never write to your bank, QuickBooks, HubSpot, or Bill.com.
               </p>
             </div>
           </div>
@@ -128,7 +128,7 @@ const Security = () => {
           <div className="relative z-10 flex w-full max-w-[1080px] flex-col items-center gap-10 min-[760px]:gap-14">
             <div className="flex flex-col items-center gap-4">
               <h2 id="security-stored" className={cn(H2_LARGE, "max-w-[900px] text-forest-foreground")}>
-                Your data is encrypted, backed up daily, and stored in the United States.
+                Your database is encrypted, backed up daily, and stored in the United States.
               </h2>
               <p className={cn(SUB, "text-forest-muted-strong")}>Your data never trains an AI model.</p>
             </div>
@@ -225,8 +225,9 @@ const Security = () => {
                 <div className="flex flex-col gap-2.5 border-t border-foreground pt-[18px]">
                   <h3 className="text-[19px] font-semibold tracking-[-0.02em]">Staff access</h3>
                   <p className="text-pretty text-[16px] leading-[1.6]">
-                    One named Zensus admin can open a one-hour support session on an account. Each
-                    session needs a second factor and a written reason, and is logged.
+                    One named Zensus admin can open your account for support. Each session needs that
+                    admin's second factor and a written reason, ends within an hour, and is logged. The
+                    admin cannot connect a bank to your account.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2.5 border-t border-foreground pt-[18px]">
@@ -237,10 +238,19 @@ const Security = () => {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2.5 border-t border-foreground pt-[18px]">
+                  <h3 className="text-[19px] font-semibold tracking-[-0.02em]">Our own access</h3>
+                  <p className="text-pretty text-[16px] leading-[1.6]">
+                    Our access policy requires multi-factor authentication on the internal systems we
+                    use. Production server access is closed by default, and we review who has access
+                    every quarter.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2.5 border-t border-foreground pt-[18px]">
                   <h3 className="text-[19px] font-semibold tracking-[-0.02em]">Two-factor authentication</h3>
                   <p className="text-pretty text-[16px] leading-[1.6]">
-                    You can turn on two-factor authentication with an authenticator app. You get 10
-                    single-use recovery codes, and we email you when these settings change.
+                    Two-factor authentication is required to connect or reconnect a bank and while one
+                    is connected, and optional otherwise. Use an authenticator app or a passkey. You get 10 single-use
+                    recovery codes, and we email you when these settings change.
                   </p>
                 </div>
               </div>
@@ -258,7 +268,7 @@ const Security = () => {
                           <span
                             className={cn(
                               "h-2 w-2 rounded-full",
-                              row.status === "Active" ? "bg-primary" : "bg-scenario",
+                              row.status === "Not yet" ? "bg-scenario" : "bg-primary",
                             )}
                             aria-hidden="true"
                           />
