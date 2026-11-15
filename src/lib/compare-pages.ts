@@ -546,9 +546,9 @@ export interface AlternativesPageConfig {
 export const FLOAT_ALTERNATIVES: AlternativesPageConfig = {
   slug: "float-alternatives",
   pageTitle: "Float alternatives for cash flow forecasting",
-  metaTitle: "Float Alternatives for Cash Flow Forecasting (2026)",
+  metaTitle: "Best Float Alternatives (2026): 5 Cash Flow Apps Compared",
   metaDescription:
-    "Float alternatives compared from vendor pages: Cash Flow Frog, Pulse, Helm, Futrli, and Zensus on price, free trial, bank feed, and CRM sync.",
+    "Comparing 5 Float alternatives for cash flow forecasting: Pulse, Cash Flow Frog, Futrli, Helm and Zensus, by price, bank feed, CRM sync and free trial.",
   lead:
     "The right Float alternative depends on why you are leaving Float: the price, the missing direct bank feed, revenue that starts in a CRM, or wanting a simpler tool.",
   disclosure:
