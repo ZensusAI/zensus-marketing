@@ -22,6 +22,17 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
       "height": 900
     }
   },
+  "business-cash-reserves": {
+    "wordCount": 1789,
+    "images": [
+      "https://zensus.finance/blog/business-cash-reserves/business-cash-reserves-hero.webp",
+      "https://zensus.finance/blog/business-cash-reserves/business-cash-reserves-floor.webp"
+    ],
+    "thumbnail": {
+      "width": 1600,
+      "height": 900
+    }
+  },
   "can-quickbooks-forecast-cash-flow": {
     "wordCount": 3148,
     "images": [
@@ -44,7 +55,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "cash-flow-early-warning-system": {
-    "wordCount": 3563,
+    "wordCount": 3588,
     "images": [
       "https://zensus.finance/blog/cash-flow-early-warning-system/cash-balance-falling-below-cash-floor-warning.webp"
     ],
@@ -114,7 +125,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "payroll-forecasting": {
-    "wordCount": 2291,
+    "wordCount": 2312,
     "images": [
       "https://zensus.finance/blog/payroll-forecasting/payroll-forecasting-2027-hero.webp",
       "https://zensus.finance/blog/payroll-forecasting/payroll-forecasting-2027-employer-tax-chart.webp"
@@ -195,7 +206,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "zero-cash-date-for-founders": {
-    "wordCount": 2589,
+    "wordCount": 2607,
     "images": [
       "https://zensus.finance/blog/zero-cash-date-for-founders/runway-vs-zero-cash-date.webp"
     ],

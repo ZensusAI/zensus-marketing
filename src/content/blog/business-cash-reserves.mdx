@@ -1,0 +1,195 @@
+export const meta = {
+  title: 'How Much Cash Reserves Should a Business Have? Set a Cash Floor That Fits',
+  seoTitle: 'How Much Cash Reserves Should a Business Have? | Zensus',
+  description:
+    'How much cash reserves should a business have? Compare the common rules, then size yours from your heaviest four weeks of payments, with a worked example.',
+  date: '2026-11-16',
+  dateModified: '2026-11-16',
+  category: 'Guide',
+  readTime: '9 min read',
+  slug: 'business-cash-reserves',
+  author: 'john',
+  topic: 'runway-and-burn',
+  tags: ['Cash Reserves', 'Cash Flow', 'Runway', 'Guides'],
+  thumbnail: '/blog/business-cash-reserves/business-cash-reserves-hero.webp',
+  thumbnailAlt:
+    'Four answers for how much cash the same 8-person team should keep: 27 days of spending about $93k, heaviest four weeks plus a late payment $153k, 10% to 30% of revenue $140k to $420k, 3 to 6 months of expenses $313k to $626k',
+  ogImage: '/og/blog/business-cash-reserves.png',
+  ogTitle: 'How Much Cash Reserves Should a Business Have?',
+  ogSubtitle:
+    'Rules of thumb say three to six months. A better answer starts with the weeks when your biggest bills land.',
+  faqs: [
+    {
+      question: 'How much cash reserves should a small business have?',
+      answer:
+        "The common guideline is three to six months of operating expenses. A more precise minimum is your heaviest four weeks of payments plus your largest customer payment that could arrive late. Hold more if you're seasonal or would need months to raise cash.",
+    },
+    {
+      question: 'Is three months of cash reserves enough?',
+      answer:
+        "For many steady businesses with access to credit, yes. Check it against your heaviest four weeks: if three months of average spending covers those weeks plus a late payment, it's enough. Seasonal and fast-growing businesses often need more.",
+    },
+    {
+      question: 'What percentage of revenue should a business keep in reserve?',
+      answer:
+        "One CPA firm suggests 10% of annual revenue for stable businesses, 20% for moderate growth and 30% for fast-growing or unpredictable ones. Revenue isn't the same as spending, so check the result against your actual payments.",
+    },
+    {
+      question: 'What is a cash reserve?',
+      answer:
+        "For a business, it's money kept available to cover payments when income is late, lower than expected or stops for a while. It's separate from the cash you plan to spend this month.",
+    },
+    {
+      question: 'Where should a business keep its cash reserve?',
+      answer:
+        'In a separate account you can reach within a few days, such as a business savings or money market account. Keep deposit insurance limits in mind: the FDIC insures $250,000 per depositor, per bank, per ownership category.',
+    },
+    {
+      question: 'Should a startup keep a cash reserve?',
+      answer:
+        "A startup that isn't profitable yet is spending its reserve every month, so its reserve is its runway. Track the date cash would run out and start raising money well before it.",
+    },
+  ],
+};
+
+import { BlogCallout } from '@/components/blog/BlogCallout';
+import { BlogFigure } from '@/components/blog/BlogFigure';
+
+<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">Ask how much cash your business should keep and you'll get two stock answers: three to six months of expenses, or 10 to 30% of annual revenue. For the same company, those rules can point to amounts hundreds of thousands of dollars apart.</p>
+
+Neither rule looks at when your money actually leaves. This guide compares the common rules, then shows a method built on your own calendar: the heaviest four weeks of payments you'll face, plus the customer payment most likely to arrive late. It's written for growing businesses with a payroll, roughly 5 to 50 people.
+
+## Quick Answer
+
+Most advice says to keep three to six months of operating expenses in reserve. A more precise floor is the total of your heaviest four weeks of payments, often two payrolls, January taxes and annual bills, plus your largest customer payment that could arrive late. Keep more on top if raising extra cash would take you weeks, or if your revenue is seasonal.
+
+## What is a business cash reserve?
+
+A business cash reserve is money you keep available to cover payments when income is late, lower than expected or stops for a while. It is separate from the cash you plan to spend this month.
+
+The term also names a few unrelated things you may see in search results: savings products some banks and apps call "cash reserve" accounts, and the reserves banks themselves hold, a topic from economics classes. This guide is about the first meaning, the buffer your business keeps for itself.
+
+## The common rules of thumb, compared
+
+Each rule is a reasonable starting point. Each also misses something.
+
+| Rule | Where it comes from | What it gets right | What it misses |
+| --- | --- | --- | --- |
+| 3 to 6 months of operating expenses | Banks and advisers, including <a href="https://smallbusinessresources.wf.com/small-business-cash-reserves-tips/" className="font-medium text-primary underline-offset-4 hover:underline">Wells Fargo</a> and <a href="https://www.score.org/resource/blog-post/how-much-cash-should-a-small-business-keep-reserve" className="font-medium text-primary underline-offset-4 hover:underline">SCORE</a> | Simple, and scales with your costs | Treats every month as equal, when payroll and tax weeks are not |
+| 9 to 12 months of expenses | Wells Fargo's advice for seasonal or downturn-sensitive businesses | Accounts for long quiet periods | Can tie up cash a growing business needs |
+| 10 to 30% of annual revenue | <a href="https://anderscpa.com/learn/blog/business-cash-requirements/" className="font-medium text-primary underline-offset-4 hover:underline">Anders CPA</a>, 10% for stable businesses up to 30% for fast-growing or unpredictable ones | Links the reserve to risk | Revenue isn't spending; two firms with equal revenue can have very different costs |
+| Enough to last until new money arrives | SCORE: about 3 to 5 days for your own funds, two months for a bank loan, 6 to 9 months for angel investment | Ties the reserve to how fast you could raise cash | Doesn't say what your next few weeks will cost |
+
+For context, the typical small business holds far less than any of these. A 2016 <a href="https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/report-cash-flows-balances-and-buffer-days" className="font-medium text-primary underline-offset-4 hover:underline">JPMorgan Chase Institute study</a> of 597,000 small businesses found a median cash buffer of 27 days, meaning half could cover less than a month of payments if their income stopped. A quarter had less than 13 days.
+
+## A better method: start from your heaviest four weeks
+
+Instead of averaging your costs, look at when they land. Most businesses have a few weeks each year where several large bills arrive together. Your reserve has to survive those weeks, even if a customer pays late at the same time.
+
+That gives you two numbers.
+
+**Your cash floor** is the least you should ever hold. Work it out in four steps:
+
+1. **List your payments by date for the next 12 months.** Include payroll on each pay date, employer payroll taxes, rent, benefits, insurance, loan payments, and any annual or quarterly bills.
+2. **Find the four weeks with the most going out.** For many businesses that's January: two payrolls with employer taxes at their highest, plus annual renewals.
+3. **Add your largest customer payment that could arrive late.** Use one regular payment from your biggest customer, or the invoice that's late most often.
+4. **The total is your floor.** Below it, one late payment in your busiest weeks could leave you short.
+
+**Your reserve target** is the floor plus extra time to raise cash. If you could draw on a line of credit within days, the floor may be enough. If new money would take months, from a loan or investors, hold more on top, as SCORE's lead times suggest.
+
+This is the same idea a 13-week cash flow forecast is built on. If you already keep one, steps 1 and 2 are done: read off the four heaviest weeks. If not, the free <a href="/tools/13-week-cash-flow-template" className="font-medium text-primary underline-offset-4 hover:underline">13-week cash flow template</a> gets you there.
+
+## Worked example: an 8-person team in 2027
+
+This is the same team as our <a href="/blog/payroll-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">payroll forecasting guide</a>: 8 employees, $940,000 in annual wages, paid every two weeks from Jan 8, 2027. We've added example running costs and revenue so you can see every rule side by side.
+
+**Example assumptions**
+
+- Revenue: $1.4 million a year
+- Monthly bills: rent $6,000, software $4,000, benefits $5,600, contractors $3,000 (total $18,600)
+- January annual renewals: insurance $9,000 and software $6,000
+- Largest customer: pays $40,000 a month and often pays 30 days late
+- Average monthly spending across the year: about $104,300
+
+**The heaviest four weeks: January 1 to 28, 2027**
+
+| Payment | Amount |
+| --- | ---: |
+| Payroll on Jan 8: wages $36,154 plus employer taxes $3,951 | $40,104 |
+| Payroll on Jan 22: wages $36,154 plus employer taxes $3,463 | $39,617 |
+| Monthly bills | $18,600 |
+| Annual renewals | $15,000 |
+| **Total going out** | **$113,321** |
+| Plus one late payment from the largest customer | $40,000 |
+| **Cash floor** | **$153,321** |
+
+<BlogFigure
+  src="/blog/business-cash-reserves/business-cash-reserves-floor.webp"
+  width={1600}
+  height={774}
+  alt="Cash floor for January 1 to 28, 2027: payroll on Jan 8 $40,104, payroll on Jan 22 $39,617, monthly bills $18,600, annual renewals $15,000 and one late $40,000 customer payment, totalling $153,321"
+/>
+
+January payrolls cost more because payroll tax wage bases reset on January 1; the payroll guide shows the full calculation.
+
+**How the rules compare for this business**
+
+| Rule | Reserve it suggests |
+| --- | ---: |
+| JPMorgan median: 27 days of spending | About $92,600 |
+| Heaviest four weeks plus one late payment | **About $153,300** |
+| 10% to 30% of revenue | $140,000 to $420,000 |
+| 3 to 6 months of expenses | About $312,900 to $625,700 |
+
+For this team, the floor works out to about six weeks of average spending. The typical buffer of 27 days would not survive January if the largest customer paid late. The three-to-six-month rule would be safe but would hold back $160,000 to $470,000 more than the floor, money a growing business could put to work. Whatever extra it holds above the floor should match how long it would take to raise more cash.
+
+## How the right reserve changes by business type
+
+The method stays the same; what changes is which weeks are heaviest and how much extra to hold.
+
+| Business type | What drives the floor | What to adjust |
+| --- | --- | --- |
+| Seasonal business | Payroll and fixed costs during the quiet months | Size the floor for your slowest stretch, not an average month; Wells Fargo suggests up to 9 to 12 months of expenses for highly seasonal firms |
+| SaaS with annual contracts | Months between big renewals, when cash only goes out | Find the longest gap between renewals and cover it; see <a href="/blog/arr-vs-cash-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">ARR vs cash flow</a> |
+| Agency or services firm | Clients paying 30 to 60 days late while payroll runs on time | Add your two latest-paying clients, not one; see <a href="/blog/cash-flow-forecasting-for-agencies" className="font-medium text-primary underline-offset-4 hover:underline">cash flow forecasting for agencies</a> |
+| Startup not yet profitable | Monthly burn, with no profit to refill the reserve | Your reserve is your runway; track your <a href="/blog/zero-cash-date-for-founders" className="font-medium text-primary underline-offset-4 hover:underline">zero cash date</a> and start raising well before it |
+
+## How to build the reserve, and where to keep it
+
+If you're below your floor today, build up to it before anything else that's optional:
+
+- **Set aside a fixed share of each customer payment** into a separate account, so the reserve grows without a decision each time.
+- **Hold back part of strong months** instead of spending them; seasonal businesses especially.
+- **Arrange a line of credit while things are good.** It's easier to get before you need it, and it shortens how long you'd wait for extra cash.
+
+Keep the reserve where you can reach it within a few days: a separate business savings or money market account at your bank, rather than money tied up for months. Two practical points:
+
+- **Keep it separate from your operating account**, so it isn't spent by accident.
+- **Watch deposit insurance limits.** The FDIC insures $250,000 per depositor, per insured bank, for each ownership category. Accounts owned by a corporation or partnership are insured separately from the owners' personal accounts, while a sole proprietor's business account is counted with the owner's personal accounts (<a href="https://www.fdic.gov/resources/deposit-insurance/understanding-deposit-insurance" className="font-medium text-primary underline-offset-4 hover:underline">FDIC</a>). If your reserve grows past that, ask your bank about options to spread it.
+
+This isn't investment advice; for anything beyond a savings account, talk to your accountant or bank.
+
+## Keep watching it: set a cash floor in your forecast
+
+A reserve only helps if you notice before you dip into it. Put your floor into your cash flow forecast as a line, and check each week whether any week ahead falls below it. If one does, you have time to act: chase an invoice, delay a purchase, or draw on credit.
+
+In a spreadsheet, that means updating the forecast every week. Zensus does it automatically: set your cash floor, and it projects your balance from your bank, QuickBooks and HubSpot data and sends a Slack alert if the next 30 days cross the floor. For more on early signals, see our <a href="/blog/cash-flow-early-warning-system" className="font-medium text-primary underline-offset-4 hover:underline">cash flow early warning system</a> guide.
+
+## The Bottom Line
+
+Three to six months of expenses is a safe default, but it's a guess. A better floor is your heaviest four weeks of payments plus your largest payment that could arrive late, with more on top if raising cash would take time. Work it out once from your forecast, write the number down, and watch for any week that falls below it.
+
+<p><em>This guide is general information, not financial or investment advice.</em></p>
+
+### Sources
+
+- <a href="https://smallbusinessresources.wf.com/small-business-cash-reserves-tips/" className="font-medium text-primary underline-offset-4 hover:underline">Wells Fargo: Is your business saving enough?</a>
+- <a href="https://www.score.org/resource/blog-post/how-much-cash-should-a-small-business-keep-reserve" className="font-medium text-primary underline-offset-4 hover:underline">SCORE: How much cash should a small business keep in reserve</a>
+- <a href="https://anderscpa.com/learn/blog/business-cash-requirements/" className="font-medium text-primary underline-offset-4 hover:underline">Anders CPA: How much cash should a business have?</a>
+- <a href="https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/report-cash-flows-balances-and-buffer-days" className="font-medium text-primary underline-offset-4 hover:underline">JPMorgan Chase Institute: Cash flows, balances and buffer days</a>
+- <a href="https://www.fdic.gov/resources/deposit-insurance/understanding-deposit-insurance" className="font-medium text-primary underline-offset-4 hover:underline">FDIC: Understanding deposit insurance</a>
+- <a href="/blog/payroll-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">Zensus: Payroll forecasting for 2027</a>
+
+<BlogCallout title="Set Your Cash Floor in Zensus">
+Zensus projects your balance from your bank, QuickBooks and HubSpot data and sends a Slack alert if the next 30 days cross your floor.
+</BlogCallout>
