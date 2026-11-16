@@ -321,6 +321,20 @@ How to forecast payroll for 2027 by pay date: fully loaded cost per employee, em
 - Jan 1, 2027 is a Friday, so a biweekly schedule that pays on Jan 1 has 27 scheduled paydays in 2027, unless the Jan 1 run is paid early on Dec 31, 2026.
 - Zensus shows payroll as a recurring outflow on its real pay dates in a cash flow forecast built from the bank (through Plaid), QuickBooks and HubSpot, and sends a Slack alert if the 30-day projection drops below a cash floor.
 
+### How Much Cash Reserves Should a Business Have? Set a Cash Floor That Fits
+https://zensus.finance/blog/business-cash-reserves
+
+How much cash reserves a business should have: the common rules compared, and a cash floor sized from the heaviest four weeks of payments, with a worked example. Key facts from the guide:
+
+- A business cash reserve is money kept available to cover payments when income is late, lower than expected or stops for a while. It is separate from the cash planned for this month.
+- Common rules: 3 to 6 months of operating expenses (Wells Fargo, SCORE); 9 to 12 months for seasonal or downturn-sensitive businesses (Wells Fargo); 10% to 30% of annual revenue (Anders CPA: 10% stable, 20% moderate growth, 30% fast-growing or unpredictable); enough to last until new money arrives (SCORE: about 3 to 5 days for your own funds, two months for a bank loan, 6 to 9 months for angel investment).
+- A 2016 JPMorgan Chase Institute study of 597,000 small businesses found a median cash buffer of 27 days; a quarter had less than 13 days.
+- Cash floor method: list payments by date for the next 12 months, find the four weeks with the most going out (often January: two payrolls with employer taxes at their highest, plus annual renewals), and add the largest customer payment that could arrive late. The reserve target is the floor plus extra for the time it would take to raise more cash.
+- Worked example: the 8-person, $940,000-payroll team from the payroll forecasting guide, with $1.4 million revenue and about $104,300 average monthly spending. January 1 to 28, 2027: payrolls of $40,104 (Jan 8) and $39,617 (Jan 22), $18,600 monthly bills and $15,000 annual renewals, $113,321 in total, plus one late $40,000 customer payment gives a cash floor of $153,321.
+- For that team: 27 days of spending is about $92,600; the floor is about $153,300 (about six weeks of average spending); 10% to 30% of revenue is $140,000 to $420,000; 3 to 6 months of expenses is about $312,900 to $625,700, which holds $160,000 to $470,000 more than the floor.
+- Keep the reserve in a separate account reachable within a few days. The FDIC insures $250,000 per depositor, per insured bank, for each ownership category; corporation and partnership accounts are insured separately from the owners' personal accounts, while a sole proprietor's business account is counted with the owner's personal accounts.
+- Zensus lets you set a cash floor, projects the balance from bank, QuickBooks and HubSpot data, and sends a Slack alert if the next 30 days cross the floor.
+
 ### Cash Flow Forecasting for Agencies
 https://zensus.finance/blog/cash-flow-forecasting-for-agencies
 

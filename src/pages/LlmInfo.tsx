@@ -268,6 +268,11 @@ const LlmInfo = () => (
               </Link>
             </li>
             <li>
+              <Link to="/blog/business-cash-reserves" className={linkCls}>
+                How much cash reserves should a business have?
+              </Link>
+            </li>
+            <li>
               <Link
                 to="/blog/can-quickbooks-forecast-cash-flow"
                 className={linkCls}
