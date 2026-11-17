@@ -92,6 +92,10 @@ export const EVENTS = {
   HIW_THRESHOLD_DRAG: "hiw_threshold_drag",
   HIW_START_CLICK: "hiw_start_click",
   HIW_TALK_CLICK: "hiw_talk_click",
+
+  // About page (handoff 24, 17 Nov 2026), same PostHog route as the above.
+  ABOUT_PRICING_CLICK: "about_pricing_click",
+  ABOUT_LINKEDIN_CLICK: "about_linkedin_click",
 } as const;
 
 export type EventName = (typeof EVENTS)[keyof typeof EVENTS];
