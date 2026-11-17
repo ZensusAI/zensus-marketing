@@ -36,16 +36,17 @@ import {
 import { ToolEmailCapture } from "@/components/tools/ToolEmailCapture";
 
 const PAGE_URL = `${SITE_URL}/tools/payroll-calendar`;
-// The title names both years on purpose. Before #127 it read "(and 2026)" and the
-// page held position 7 to 9 for about 230 impressions a day; the day #127 dropped
-// 2026 from the title, those impressions fell by 95% (Search Console, 2026-10-19).
-// Titles are capped at 60 characters with " | Zensus" appended. "Template" was
-// added in October 2026 for "payroll calendar template" searches, where the
-// result above this page was a 2024 template; the slash keeps both years
-// inside the cap.
-const PAGE_TITLE = "2027/2026 Payroll Calendar Template and Pay Periods";
+// Until November 2026 the title named both years on purpose. Before #127 it
+// read "(and 2026)" and the page held position 7 to 9 for about 230 impressions
+// a day; the day #127 dropped 2026 from the title, those impressions fell by 95% (Search Console, 2026-10-19).
+// "Template" was added in October 2026 for "payroll calendar template" searches,
+// where the result above this page was a 2024 template. In November 2026 the
+// title was changed to lead with "2027 Biweekly" and dropped 2026; it renders
+// without a " | Zensus" suffix (like the Float alternatives page) so it fits the
+// 60-character cap.
+const PAGE_TITLE = "2027 Biweekly Payroll Calendar: Free Template + Pay Dates";
 const PAGE_DESCRIPTION =
-  "Free 2027 and 2026 payroll calendar template: every biweekly, weekly, semimonthly and monthly pay date, moved off bank holidays. Excel, CSV and ICS.";
+  "Free 2027 payroll calendar: every biweekly, weekly, semimonthly and monthly pay date, moved off bank holidays. Download as Excel, CSV or a calendar file.";
 
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
@@ -349,7 +350,7 @@ const PayrollCalendar = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{PAGE_TITLE} | Zensus</title>
+        <title>{PAGE_TITLE}</title>
         <meta name="description" content={PAGE_DESCRIPTION} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={PAGE_URL} />
