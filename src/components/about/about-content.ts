@@ -56,11 +56,11 @@ export const FOUNDER_STORY = {
   role: "Founder",
   photo: "/team/ajin-sunny.webp",
   paragraph:
-    "He grew up in Kerala, India. He is a first-generation immigrant who spent more than 12 years studying and working in the United States on his own. There was no one to show him where his money was going or how long it would last. Every month was a careful guess, made alone.",
+    "He grew up in India. He is a first-generation immigrant who spent more than 12 years studying and working in the United States on his own. There was no one to show him where his money was going or how long it would last. Every month was a careful guess, made alone.",
 } as const;
 
 export const FOUNDER_PATH = [
-  { title: "Kerala, India", detail: "Where he grew up." },
+  { title: "India", detail: "Where he grew up." },
   { title: "University of Kentucky", detail: "Bachelor's and master's degrees." },
   { title: "12+ years in the United States", detail: "Studying and working on his own, with every month a careful guess." },
   { title: "Capital Factory, Austin", detail: "Where Zensus began." },
