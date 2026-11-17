@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { useScrollFrame } from "@/hooks/use-scroll-frame";
 import { clamp01 } from "@/lib/motion";
@@ -74,6 +74,22 @@ export function ParallaxSection({
       copy.style.opacity = (clamp01((p - 0.18) / 0.2) * clamp01((0.92 - p) / 0.17)).toFixed(3);
     }
   }, !reduced);
+
+  // If reduced motion is switched on while the page is open, the scroll hook
+  // stops, but the last inline transforms and opacity would stay (a statement
+  // scrolled past at opacity 0 would never come back). Clear them so the
+  // static, full-strength state shows.
+  useEffect(() => {
+    if (!reduced) return;
+    layerRefs.current.forEach((el) => {
+      if (el) el.style.transform = "";
+    });
+    const copy = copyRef.current;
+    if (copy) {
+      copy.style.transform = "";
+      copy.style.opacity = "";
+    }
+  }, [reduced]);
 
   return (
     <section ref={secRef} aria-labelledby={labelledBy} className={cn("relative min-h-[100svh] overflow-hidden", className)}>

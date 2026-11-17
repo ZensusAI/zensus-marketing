@@ -138,12 +138,14 @@ const About = () => (
     <main>
       {/* 1. Hero: the page's only H1, one sentence per line, the last word of
           each in deep green. "can" and the green word never split. The spaces
-          after the first two lines keep the accessible text readable. */}
+          after the first two lines keep the accessible text readable. The
+          navbar is fixed and takes no space, so the top padding is its 65px
+          plus the handoff's own 56px (phones) or 104px (desktop). */}
       <section
         aria-labelledby="about-heading"
         className={cn(
           SIDE,
-          "flex flex-col bg-[radial-gradient(ellipse_90%_60%_at_50%_40%,rgba(34,197,115,.09),rgba(34,197,115,0)_70%)] pb-10 pt-14 min-[820px]:min-h-[calc(100svh-72px)] min-[820px]:items-center min-[820px]:justify-center min-[820px]:bg-[radial-gradient(ellipse_60%_70%_at_50%_45%,rgba(34,197,115,.09),rgba(34,197,115,0)_70%)] min-[820px]:pb-[104px] min-[820px]:pt-24 min-[820px]:text-center",
+          "flex flex-col bg-[radial-gradient(ellipse_90%_60%_at_50%_40%,rgba(34,197,115,.09),rgba(34,197,115,0)_70%)] pb-10 pt-[120px] min-[820px]:min-h-[100svh] min-[820px]:items-center min-[820px]:justify-center min-[820px]:bg-[radial-gradient(ellipse_60%_70%_at_50%_45%,rgba(34,197,115,.09),rgba(34,197,115,0)_70%)] min-[820px]:pb-[104px] min-[820px]:pt-[168px] min-[820px]:text-center",
         )}
       >
         <p className={LABEL}>{HERO.label}</p>
