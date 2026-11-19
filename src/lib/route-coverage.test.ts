@@ -123,12 +123,15 @@ describe("route coverage", () => {
     expect(ogCardSlugs()).toEqual(app.map(routeToCardSlug).sort());
   });
 
-  // The /sitemap page lists static routes by hand (posts come from the blog
-  // loader), so a new route would otherwise be missing from it unnoticed.
-  it("links every static route from the /sitemap page", () => {
+  // The /sitemap page lists every URL in sitemap.xml on its own
+  // (src/pages/Sitemap.test.tsx), but a static route's name and one-liner
+  // come from STATIC_PAGES. Without an entry it still appears, under "Other
+  // pages" with a name made from its path, so require the copy here.
+  it("gives every static route a name on the /sitemap page", () => {
     const source = read("src", "pages", "Sitemap.tsx");
-    const linked = new Set([...source.matchAll(/href: "([^"]+)"/g)].map((m) => m[1]));
-    const missing = app.filter((p) => p !== "/sitemap" && !linked.has(p));
-    expect(missing).toEqual([]);
+    const block = source.match(/const STATIC_PAGES[^=]*= \{([\s\S]*?)\n\};/);
+    if (!block) throw new Error("STATIC_PAGES not found in Sitemap.tsx");
+    const named = new Set([...block[1].matchAll(/^\s*"(\/[^"]*)":\s*\{/gm)].map((m) => m[1]));
+    expect(app.filter((p) => !named.has(p))).toEqual([]);
   });
 });
