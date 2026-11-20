@@ -187,7 +187,13 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
   },
   "what-is-overhead": {
     "wordCount": 3479,
-    "images": []
+    "images": [
+      "https://zensus.finance/blog/what-is-overhead/what-is-overhead-hero.webp"
+    ],
+    "thumbnail": {
+      "width": 1600,
+      "height": 900
+    }
   },
   "which-months-have-3-paychecks-2027": {
     "wordCount": 2272,
