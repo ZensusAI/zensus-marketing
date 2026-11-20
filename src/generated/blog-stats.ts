@@ -2,7 +2,7 @@
 // Regenerate with: node scripts/generate-blog-stats.mjs
 export const blogStats: Record<string, { wordCount: number; images: string[]; thumbnail?: { width: number; height: number } }> = {
   "27-pay-periods-2026-2027": {
-    "wordCount": 2751,
+    "wordCount": 2787,
     "images": [
       "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2026-biweekly-fridays.webp",
       "https://zensus.finance/blog/27-pay-periods-2026-2027/27-pay-dates-in-2027-biweekly-fridays.webp"
@@ -23,7 +23,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "business-cash-reserves": {
-    "wordCount": 1789,
+    "wordCount": 1802,
     "images": [
       "https://zensus.finance/blog/business-cash-reserves/business-cash-reserves-hero.webp",
       "https://zensus.finance/blog/business-cash-reserves/business-cash-reserves-floor.webp"
@@ -65,7 +65,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "cash-flow-forecasting-for-agencies": {
-    "wordCount": 1992,
+    "wordCount": 2014,
     "images": [
       "https://zensus.finance/blog/cash-flow-forecasting-for-agencies/agency-five-week-cash-vs-floor.webp"
     ],
@@ -146,7 +146,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "runway-vs-burn-rate-for-founders": {
-    "wordCount": 3452,
+    "wordCount": 3465,
     "images": [
       "https://zensus.finance/blog/runway-vs-burn-rate-for-founders/cash-reserve-burn-runway.webp"
     ],
@@ -183,6 +183,16 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     "thumbnail": {
       "width": 640,
       "height": 755
+    }
+  },
+  "what-is-overhead": {
+    "wordCount": 3551,
+    "images": [
+      "https://zensus.finance/blog/what-is-overhead/what-is-overhead-hero.webp"
+    ],
+    "thumbnail": {
+      "width": 1600,
+      "height": 900
     }
   },
   "which-months-have-3-paychecks-2027": {
