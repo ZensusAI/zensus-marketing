@@ -1,80 +1,85 @@
 export const meta = {
-  title: 'Forecasting AI Compute Costs: A Founder Guide for 2026',
-  seoTitle: 'Forecasting AI Compute Costs (2026) | Zensus',
+  title: "AI Inference Costs in 2027: A Founder's Guide to Forecasting Them",
+  seoTitle: 'AI Inference Costs in 2027: How Startups Forecast Them',
   description:
-    'How to model AI inference and agent costs as a line item in your cash flow forecast: the inference cost paradox, margins, and scenario planning.',
+    'How to price, forecast and budget AI inference and agent costs as a line item in your cash flow forecast, with current model prices and worked examples.',
+  metaDescription:
+    'What AI inference costs are, how to calculate them with current Claude and OpenAI prices, and how to forecast the bill into your cash flow and runway.',
   date: '2026-06-09',
-  dateModified: '2026-10-29',
+  dateModified: '2026-11-20',
   category: 'Guide',
   readTime: '20 min read',
   slug: 'forecasting-ai-compute-costs-for-founders',
   thumbnail:
-    '/blog/forecasting-ai-compute-costs-for-founders/cheaper-per-request-bigger-bill.webp',
+    '/blog/forecasting-ai-compute-costs-for-founders/ai-inference-costs-hero.webp',
   thumbnailAlt:
-    'Bar charts from a hypothetical AI startup: average cost per request falls 33% from $0.009 to $0.006 while the monthly inference bill rises 233% from $90 to $300 as requests grow from 10,000 to 50,000',
+    'Cost per 1,000 requests of 4,000 input and 1,000 output tokens at November 2026 list prices: Claude Haiku 5.5 $0.90, Claude Sonnet 5.5 or GPT-6.2 Sol $18, Claude Opus 5.5 $36, Claude Fable 5.2 or GPT-6.2 Astra $72, GPT-6 Astra $90',
   author: 'ashwin',
+  updatedBy: 'john',
   topic: 'runway-and-burn',
   tags: ['AI Agents', 'Cash Flow', 'Guides'],
   ogImage:
     '/og/blog/forecasting-ai-compute-costs-for-founders.png',
-  ogTitle: 'Forecasting AI Compute Costs',
+  ogTitle: 'AI Inference Costs in 2027',
   ogSubtitle:
-    'AI compute is a new line item in the cash flow forecast. Here is how founders are modeling it in 2026.',
+    'How to price, forecast and budget AI inference and agent costs, with current model prices.',
+  breadcrumbTitle: 'AI Inference Costs',
   faqs: [
     {
-      question: 'How do I forecast AI compute costs?',
+      question: "What are AI inference costs?",
       answer:
-        'Estimate how many times each AI workload will execute, calculate the weighted cost of its model and supporting operations, and multiply by projected usage. Add infrastructure and tool charges, then forecast actual vendor payment dates separately.',
+        "The cost of running an AI model each time it answers a request. With managed APIs they're billed per token, with output tokens usually costing several times more than input tokens. With self-hosted models they're the cost of the GPUs serving the requests.",
     },
     {
-      question: 'How much does one AI API request cost?',
+      question: "How are AI inference costs calculated?",
       answer:
-        'The cost depends on the provider, model, input and output tokens, caching, processing tier, and tools. For example, 4,000 input tokens at $1 per million and 1,000 output tokens at $5 per million produce a hypothetical model charge of $0.009 per request.',
+        "Multiply input tokens by the input rate and output tokens by the output rate, divide by one million when prices are quoted per million tokens, and add cached tokens, tools and other separately billed charges. Multiply the result by how often the request runs.",
     },
     {
-      question: 'How much does AI cost for 1,000 users?',
+      question: "How much does one AI API request cost?",
       answer:
-        'There is no fixed cost per 1,000 users. If 1,000 active users each make 50 requests per month at $0.009 per request, the monthly model charge is $450. More complex workflows, additional calls, and infrastructure increase that amount.',
+        "At November 2026 list prices, a request with 4,000 input and 1,000 output tokens costs about $0.0009 on Claude Haiku 5.5, $0.018 on Claude Sonnet 5.5 or GPT-6.2 Sol, and up to $0.09 on GPT-6 Astra. Batch processing halves those figures on both providers.",
     },
     {
-      question: 'How do I calculate the cost per 1,000 LLM requests?',
+      question: "Can AI inference costs be reduced?",
       answer:
-        'Multiply the average modeled cost per request by 1,000. If the weighted cost is $0.009 per request, 1,000 requests cost $9 in model charges before ancillary expenses.',
+        "Yes. The biggest levers are sending simple tasks to cheaper models, caching repeated context, batching work that doesn't need an instant answer, and capping agent retries and loops. Measure quality as you go, so savings don't cost you customers.",
     },
     {
-      question: 'Are AI agents more expensive than ordinary chat requests?',
+      question: "How do I forecast AI costs as usage scales?",
       answer:
-        'They can be. Agents may execute several model calls, use additional tools, and retry failed steps. Measure the full cost of completed tasks rather than assuming one user interaction equals one model request.',
+        "Forecast by feature: active users, times tasks per user, times model calls per task, times cost per call. Build base, upside and downside cases, and add dated price changes and the date your credits run out.",
     },
     {
-      question: 'Is self-hosting an LLM cheaper than using an API?',
+      question: "Are AI agents more expensive than ordinary chat requests?",
       answer:
-        'Not necessarily. The answer depends on GPU utilization, throughput, latency, uptime, infrastructure costs, engineering overhead, and model quality. Compare equivalent workloads and reliability requirements.',
+        "Usually. An agent can make several model calls, use tools and retry steps to finish one task. Track cost per successful task, including failed attempts and the most expensive outliers, not just the cost of one call.",
     },
     {
-      question: 'What is a good AI inference-to-revenue ratio?',
+      question: "Is self-hosting an LLM cheaper than using an API?",
       answer:
-        "There is no universal industry threshold. Establish a target using your product's pricing, gross margin, customer usage, and operating objectives. Track how the ratio changes as the business scales.",
+        "Only if you keep the GPUs busy. A self-hosted GPU costs the same whether it's busy or idle, so the cost per request depends on utilisation. Compare total costs at equal quality, speed and reliability, not the hourly GPU price against the cheapest token price.",
     },
     {
-      question: 'Should AI inference costs be included in cost of goods sold?',
+      question: "Should AI inference costs be included in cost of goods sold?",
       answer:
-        "AI inference used to deliver your product often belongs among direct costs of service. The appropriate treatment depends on the company's accounting policies and the purpose of the expense. Apply a consistent classification and consult your accounting adviser where necessary.",
+        "For most AI products, yes: inference used to deliver the product to customers is a direct cost and usually belongs in cost of goods sold, which lowers gross margin. Check the treatment with your accountant and apply it consistently.",
     },
     {
-      question: 'How do AI compute costs affect startup runway?',
+      question: "How do AI compute costs affect startup runway?",
       answer:
-        'Compute costs affect runway through the cash payments required to operate your product. Forecast vendor payments alongside customer collections, payroll, and other expenses. Recalculate your expected cash balance and zero-cash date under different usage scenarios.',
+        "They reduce runway when they're paid, not when they're used, and they can grow faster than revenue. Put each vendor payment on its expected date in a weekly cash forecast, and watch for credits running out.",
     },
     {
-      question: 'Can cloud forecasting tools predict future AI bills?',
+      question: "When do AI bills hit your bank account?",
       answer:
-        'Cloud cost forecasting tools can estimate costs based on supported historical billing and usage data. They may not capture future product launches, changes in agent depth, external model APIs, or customer behavior without additional modeling.',
+        "It depends on the provider and plan. Some invoice after the month with payment terms, some charge a card as usage builds, and some draw down prepaid credits. Your cash forecast should follow your actual billing terms, not the month you used the service.",
     },
   ],
 };
 
 import { BlogCallout } from '@/components/blog/BlogCallout';
+import { BlogFigure } from '@/components/blog/BlogFigure';
 import { BlogTable } from '@/components/blog/BlogTable';
 
 <p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">So here's the thing that got me thinking a lot as a founder: AI compute costs can quietly become one of the largest variable expenses in an AI startup.</p>
@@ -85,7 +90,19 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>To forecast AI compute costs, you need to estimate how frequently each AI workload runs, calculate its cost using the relevant model and infrastructure prices, then project those costs across expected customer usage. Finally, you need to map vendor billing and payment dates into your cash flow forecast.</p>
 
-<p>This guide walks through the formulas, examples, scenarios, and financial decisions founders need to make in 2026.</p>
+<p>This guide walks through the formulas, current model prices, examples, scenarios, and financial decisions founders need to make heading into 2027.</p>
+
+## Quick Answer
+
+AI inference costs are what you pay each time an AI model processes a request: usually a price per million input tokens plus a higher price per million output tokens. To forecast them, multiply how often each feature runs by its cost per run, project that across expected usage, then put each vendor payment on the date it actually leaves your bank. Prices per token have generally fallen, but bills often grow anyway, because usage grows faster.
+
+## What Are AI Inference Costs?
+
+Inference is the work an AI model does when it answers a request, as opposed to training, which is the work of building the model in the first place. Most startups building on AI APIs never pay for training. They pay for inference, every time a customer uses an AI feature.
+
+With a managed API such as Anthropic's Claude or OpenAI's GPT models, inference is billed by the token, a small chunk of text. You pay one rate for the tokens you send (input) and a higher rate for the tokens the model writes back (output). If you host a model yourself, inference cost is instead the GPU time needed to serve those requests.
+
+Either way, inference is a variable cost: it rises with every customer and every feature that uses AI. That is what makes it worth forecasting separately from your other software bills.
 
 ## What Counts as AI Compute Cost?
 
@@ -116,7 +133,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>The first rule of AI cost forecasting is to model the architecture you actually operate, not a generic industry average.</p>
 
-## AI Compute Cost Forecast Formula
+## How Are AI Inference Costs Calculated?
 
 <p>The foundation of an accurate forecast is workload volume multiplied by the cost of executing each workload.</p>
 
@@ -130,13 +147,19 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>For example, OpenAI and Anthropic document different prices for different token categories and model configurations:</p>
 
-<ul>
-  <li><a href="https://developers.openai.com/api/docs/pricing" className="font-medium text-primary underline-offset-4 hover:underline">OpenAI API pricing</a></li>
-  <li><a href="https://platform.claude.com/docs/en/about-claude/pricing" className="font-medium text-primary underline-offset-4 hover:underline">Anthropic Claude pricing</a></li>
-  <li><a href="https://cloud.google.com/model-garden/pricing" className="font-medium text-primary underline-offset-4 hover:underline">Google Cloud generative AI pricing</a></li>
-</ul>
+**Current list prices (checked November 20, 2026)**
 
-<p><strong>Pricing-reference check: October 29, 2026.</strong> Current account-specific rates, model versions, service tiers, and regional charges should always be verified before budgeting.</p>
+| Model | Input, per million tokens | Output, per million tokens | Cached input, per million tokens |
+| --- | ---: | ---: | ---: |
+| Claude Haiku 5.5 (prompts up to 100,000 tokens) | $0.10 | $0.50 | $0.01 |
+| Claude Sonnet 5.5 | $2 | $10 | $0.10 |
+| Claude Opus 5.5 | $4 | $20 | $0.20 |
+| Claude Fable 5.2 | $8 | $40 | $0.20 |
+| GPT-6.2 Sol | $2 | $10 | $0.10 |
+| GPT-6.2 Astra | $8 | $40 | $0.40 |
+| GPT-6 Astra | $10 | $50 | $1.00 |
+
+Standard API rates in US dollars. Sources: [Anthropic Claude pricing](https://platform.claude.com/docs/en/about-claude/pricing) and [OpenAI API pricing](https://developers.openai.com/api/docs/pricing). Both providers charge half price for batch processing. Writing to Anthropic's cache costs 1.25 times the input rate for 5-minute caching and 2 times for 1-hour caching. Regional or US-only processing adds about 10% on both providers, and your account's rates and model versions may differ, so check before budgeting.
 
 <p>There are a few important distinctions you need to know:</p>
 
@@ -215,6 +238,20 @@ import { BlogTable } from '@/components/blog/BlogTable';
 <p>Real production traffic rarely behaves that way. Some customers send longer prompts, request more detailed answers, or trigger additional processing.</p>
 
 <p>That is why founders need to forecast costs at the workload and customer level.</p>
+
+### What the same request costs on real models
+
+The example above uses made-up rates to keep the maths simple. Here is the same request, 4,000 input tokens and 1,000 output tokens, at the list prices above:
+
+| Model | Cost per request | Cost per 1,000 requests | With batch processing |
+| --- | ---: | ---: | ---: |
+| Claude Haiku 5.5 | $0.0009 | $0.90 | $0.45 |
+| Claude Sonnet 5.5 or GPT-6.2 Sol | $0.018 | $18 | $9 |
+| Claude Opus 5.5 | $0.036 | $36 | $18 |
+| Claude Fable 5.2 or GPT-6.2 Astra | $0.072 | $72 | $36 |
+| GPT-6 Astra | $0.09 | $90 | $45 |
+
+The most expensive option costs 100 times the cheapest for the same request. Which model each feature uses is often the biggest single decision in your AI budget, which is why the cost-reduction section below starts with model routing.
 
 ## How to Forecast Monthly AI Costs from Users and Features
 
@@ -553,6 +590,13 @@ import { BlogTable } from '@/components/blog/BlogTable';
   numeric={[1, 2]}
 />
 
+<BlogFigure
+  src="/blog/forecasting-ai-compute-costs-for-founders/cheaper-per-request-bigger-bill.webp"
+  width={1600}
+  height={900}
+  alt="Bar charts from a hypothetical AI startup: average cost per request falls 33% from $0.009 to $0.006 while the monthly inference bill rises 233% from $90 to $300 as requests grow from 10,000 to 50,000"
+/>
+
 <p>Your unit cost improved, but your total spending increased by 233.3%.</p>
 
 <p>This is not necessarily a problem.</p>
@@ -562,6 +606,18 @@ import { BlogTable } from '@/components/blog/BlogTable';
 <p>The risk occurs when users consume more compute without generating proportionate revenue.</p>
 
 <p>That is why your financial model should forecast request volumes, token intensity, customer growth, and prices separately.</p>
+
+## Price Changes You Can See Coming
+
+Most founders assume AI prices only fall. Some changes go the other way, and many are announced in advance. Put them in your forecast on the date they start, the same way you would a rent increase.
+
+Three examples from current price lists:
+
+- **Faster tiers can get more expensive.** OpenAI's Ultrafast tier for GPT-6.2 Astra and GPT-6.2 Sol is priced at 3 times the standard rate through February 28, 2027, then 6 times from March 1, 2027. A feature built on that tier doubles in cost overnight unless you move it.
+- **Long prompts can cross a price threshold.** Claude Haiku 5.5 charges $0.10 per million input tokens for prompts up to 100,000 tokens, but $0.50 for longer prompts. A request with a 120,000-token prompt and 1,000 output tokens costs about $0.063, five times what it would at the lower rate. If your customers' documents keep getting bigger, your cost per request can jump, not creep.
+- **Discount programmes end.** OpenAI's Flex tier, a half-price option, is being wound down, and OpenAI says it won't be added to new models. A forecast that assumes the discount continues will be too low once you upgrade models.
+
+The practical habit: when you check provider pricing each quarter, look for dated changes, not just today's rates, and add them to your forecast with their start dates.
 
 ## Base, Upside, and Downside AI Compute Scenarios
 
@@ -613,6 +669,8 @@ import { BlogTable } from '@/components/blog/BlogTable';
 </ul>
 
 <p>The purpose of scenario planning is not to predict one exact bill. It is to identify which operating decisions would materially change your costs.</p>
+
+Treat the forecast as a range, not a single number. In the example above, the downside bill is three times the base. When you check whether you can afford a feature, test the downside against your cash, not the base. If the downside would push your balance below your [cash floor](/blog/business-cash-reserves), decide now what you would cut or change if usage heads that way.
 
 ## How to Put AI Compute Bills Into a 13-Week Cash Flow Forecast
 
@@ -689,6 +747,24 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>If credits are consumed at the forecast rate, your future cash payments could rise sharply once the balance is exhausted.</p>
 
+**Example: when credits run out.** Suppose you have $10,000 of credits, usage of $4,000 in December, growing 15% a month, and a provider that invoices after each month with payment around the 8th.
+
+| Usage month | Usage | Paid by credits | Paid in cash | Credits left | When the cash leaves |
+| --- | ---: | ---: | ---: | ---: | --- |
+| December | $4,000 | $4,000 | $0 | $6,000 | – |
+| January | $4,600 | $4,600 | $0 | $1,400 | – |
+| February | $5,290 | $1,400 | $3,890 | $0 | March 8 |
+| March | $6,084 | $0 | $6,084 | $0 | April 8 |
+
+<BlogFigure
+  src="/blog/forecasting-ai-compute-costs-for-founders/ai-inference-costs-credits.webp"
+  width={1600}
+  height={906}
+  alt="AI credits example: usage of $4,000, $4,600, $5,290 and $6,084 from December to March costs no cash until $10,000 of credits run out, then $3,890 is paid in March and $6,084 in April"
+/>
+
+For three months the AI bill costs no cash at all. Then it goes from zero to about $6,000 a month within two payments. A monthly budget that averages your AI spend would miss that cliff. A weekly forecast shows exactly which week it lands. This is a hypothetical example; providers handle credits and billing differently, so check your own terms.
+
 <p>Do not record credit usage as customer revenue or subtract a cash payment that has already been covered by credits.</p>
 
 ### Connect AI spending to the zero-cash date
@@ -753,7 +829,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>For a general cash planning starting point, the <a href="/tools/13-week-cash-flow-template" className="font-medium text-primary underline-offset-4 hover:underline">Zensus 13-week cash flow template</a> can help organize the resulting vendor payments. It is not a dedicated AI token-cost calculator.</p>
 
-## How to Reduce AI Costs Without Sacrificing Product Quality
+## How to Reduce AI Inference Costs Without Sacrificing Quality
 
 <p>The best optimization is not necessarily choosing the cheapest model.</p>
 
@@ -767,6 +843,8 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>Measure the resulting changes in cost, quality, and latency.</p>
 
+At current list prices, Claude Haiku 5.5 costs one-twentieth of Claude Sonnet 5.5 per token for prompts under 100,000 tokens, so moving simple tasks to it can cut their cost by about 95%.
+
 ### Use prompt caching where appropriate
 
 <p>Repeated context can be expensive.</p>
@@ -776,6 +854,8 @@ import { BlogTable } from '@/components/blog/BlogTable';
 <p>But savings depend on cache eligibility, cache-write costs, hit rates, and provider rules.</p>
 
 <p>Calculate the actual difference rather than assuming a fixed percentage reduction.</p>
+
+For scale: Claude Sonnet 5.5 charges $2 per million input tokens but $0.10 for cached reads, 95% less, while writing to the cache costs more than a normal input token.
 
 ### Reduce unnecessary agent loops
 
@@ -791,7 +871,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>Offline reporting, document processing, or background analysis may qualify for lower-cost processing modes.</p>
 
-<p>For example, OpenAI documents a 50% Batch API discount for supported workloads. Eligibility, processing time, and applicable rates must be checked against current documentation.</p>
+<p>For example, both OpenAI and Anthropic document a 50% batch discount for supported workloads. Eligibility, processing time, and applicable rates must be checked against current documentation.</p>
 
 <p>See the <a href="https://developers.openai.com/api/docs/guides/batch" className="font-medium text-primary underline-offset-4 hover:underline">OpenAI Batch API guide</a>.</p>
 
@@ -831,11 +911,15 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p><strong>How much runway does that spending leave your business?</strong></p>
 
-<p><a href="/" className="font-medium text-primary underline-offset-4 hover:underline">Explore Zensus</a> and <a href="/tools/runway-calculator" className="font-medium text-primary underline-offset-4 hover:underline">calculate your runway</a>.</p>
+<p><a href="/" className="font-medium text-primary underline-offset-4 hover:underline">Start a free 14-day trial of Zensus</a> to see what your AI spending does to your runway, or use the free <a href="/tools/runway-calculator" className="font-medium text-primary underline-offset-4 hover:underline">runway calculator</a> first.</p>
+
+## The Bottom Line
+
+AI inference costs are a variable cost that grows with every customer, and on current price lists the same request can cost anywhere from under a tenth of a cent to nine cents depending on the model. Forecast them by feature: how often each runs, what each run costs, and how that grows. Then put the payments on the dates they leave your bank, including when credits run out and when announced price changes start. A per-token price that keeps falling can still sit inside a bill that keeps rising.
 
 <p><em>Editorial note: All worked dollar examples in this guide are hypothetical unless linked to a provider's documentation. AI pricing changes frequently. Verify current model prices, billing terms, and account-specific commitments before making financial decisions.</em></p>
 
-<p><em>Technical and financial references: <a href="https://developers.openai.com/api/docs/pricing" className="font-medium text-primary underline-offset-4 hover:underline">OpenAI API pricing</a>, <a href="https://platform.claude.com/docs/en/about-claude/pricing" className="font-medium text-primary underline-offset-4 hover:underline">Anthropic Claude pricing</a>, <a href="https://cloud.google.com/model-garden/pricing" className="font-medium text-primary underline-offset-4 hover:underline">Google Cloud generative AI pricing</a>, <a href="https://aws.amazon.com/ec2/pricing/on-demand/" className="font-medium text-primary underline-offset-4 hover:underline">AWS EC2 pricing</a>, <a href="https://www.finops.org/wg/finops-for-ai-overview/" className="font-medium text-primary underline-offset-4 hover:underline">FinOps Foundation's FinOps for AI guidance</a>, and <a href="https://langfuse.com/resources/engineering/llm-cost-management" className="font-medium text-primary underline-offset-4 hover:underline">Langfuse's LLM cost-management documentation</a>. Pricing references checked October 29, 2026.</em></p>
+<p><em>Technical and financial references: <a href="https://developers.openai.com/api/docs/pricing" className="font-medium text-primary underline-offset-4 hover:underline">OpenAI API pricing</a>, <a href="https://platform.claude.com/docs/en/about-claude/pricing" className="font-medium text-primary underline-offset-4 hover:underline">Anthropic Claude pricing</a>, <a href="https://cloud.google.com/model-garden/pricing" className="font-medium text-primary underline-offset-4 hover:underline">Google Cloud generative AI pricing</a>, <a href="https://aws.amazon.com/ec2/pricing/on-demand/" className="font-medium text-primary underline-offset-4 hover:underline">AWS EC2 pricing</a>, <a href="https://www.finops.org/wg/finops-for-ai-overview/" className="font-medium text-primary underline-offset-4 hover:underline">FinOps Foundation's FinOps for AI guidance</a>, and <a href="https://langfuse.com/resources/engineering/llm-cost-management" className="font-medium text-primary underline-offset-4 hover:underline">Langfuse's LLM cost-management documentation</a>. Pricing references checked November 20, 2026.</em></p>
 
 <BlogCallout title="Test the AI Bill Against Your Runway">
 Zensus builds your cash forecast from your bank, QuickBooks, and HubSpot invoices and subscriptions. Add a new monthly cost, like an AI feature's infrastructure bill, as a scenario and see it against your baseline, with monthly, weekly, daily, and 13-week views and a Slack alert when the 30-day projection drops below your floor. [Talk to us](https://calendly.com/hello-zensus/introcall) or explore [pricing](/pricing).

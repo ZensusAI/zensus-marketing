@@ -10,7 +10,11 @@ export interface BlogPostMeta {
   title: string;
   /** Document title for SERPs when meta.title is long; defaults to title + brand. */
   seoTitle?: string;
+  /** Text under the title on the post page, and the card blurb. */
   description: string;
+  /** Search-result description when it should differ from `description`;
+   *  defaults to `description`. */
+  metaDescription?: string;
   date: string;
   dateModified?: string;
   category: string;
@@ -20,6 +24,9 @@ export interface BlogPostMeta {
   ogImage: string;
   /** Shorter headline for OG/Twitter cards when the page title is long. */
   ogTitle?: string;
+  /** Short name for the post's breadcrumb step when it should differ from
+   *  ogTitle; defaults to ogTitle, then title. */
+  breadcrumbTitle?: string;
   ogSubtitle?: string;
   /** Optional FAQ block for FAQPage JSON-LD (targets People Also Ask). */
   faqs?: BlogFaqItem[];
@@ -37,6 +44,9 @@ export interface BlogPostMeta {
   thumbnailAlt?: string;
   /** Author key into the authors map; defaults to the site's default author. */
   author?: string;
+  /** Author key of a second person who refreshed the post. The page shows
+   *  "Updated by <name>, <month year of dateModified>" under the byline. */
+  updatedBy?: string;
 }
 
 /*
@@ -188,9 +198,10 @@ export function topicBreadcrumbs(topic: BlogTopic): Crumb[] {
  * visible trail and the markup cannot drift apart. Every step is a canonical,
  * prerendered page; Google asks for "a typical user path to a page", and
  * readers reach a post through its topic. The post is named by its short
- * ogTitle, the form a search result's breadcrumb line can show.
+ * breadcrumbTitle (or ogTitle), the form a search result's breadcrumb line
+ * can show.
  */
-export function postBreadcrumbs(meta: Pick<BlogPostMeta, "slug" | "title" | "ogTitle" | "topic">): Crumb[] {
+export function postBreadcrumbs(meta: Pick<BlogPostMeta, "slug" | "title" | "ogTitle" | "breadcrumbTitle" | "topic">): Crumb[] {
   const topic = getTopic(meta.topic);
-  return [...(topic ? topicBreadcrumbs(topic) : BLOG_TRAIL), { name: meta.ogTitle ?? meta.title, url: postUrl(meta.slug) }];
+  return [...(topic ? topicBreadcrumbs(topic) : BLOG_TRAIL), { name: meta.breadcrumbTitle ?? meta.ogTitle ?? meta.title, url: postUrl(meta.slug) }];
 }

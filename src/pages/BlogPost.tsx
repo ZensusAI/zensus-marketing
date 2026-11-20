@@ -12,7 +12,7 @@ import { FOCUS_RING, HIGH_PRIORITY, SQUIRCLE } from "@/components/blog/PostCard"
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { formatPostDate, getPostBySlug, getTopic, postBreadcrumbs, postUrl, topicPath } from "@/lib/blog";
-import { getAuthor, type Author } from "@/lib/authors";
+import { authors, getAuthor, type Author } from "@/lib/authors";
 import { blogStats } from "@/generated/blog-stats";
 import { cn } from "@/lib/utils";
 import {
@@ -100,6 +100,15 @@ const BlogPost = () => {
   const pageUrl = postUrl(meta.slug);
   const published = meta.dateModified ?? meta.date;
   const author = getAuthor(meta.author);
+  // A second person who refreshed the post. The byline supports one author,
+  // so they get an "Updated by" line under it instead. Unknown keys render
+  // nothing rather than falling back to the default author.
+  const updater: Author | null =
+    meta.updatedBy && meta.updatedBy in authors ? getAuthor(meta.updatedBy) : null;
+  const updatedMonth = meta.dateModified
+    ? formatPostDate(meta.dateModified).replace(/ \d+,/, "")
+    : null;
+  const metaDescription = meta.metaDescription ?? meta.description;
   const topic = getTopic(meta.topic);
   const cover = blogStats[meta.slug]?.thumbnail;
 
@@ -114,7 +123,7 @@ const BlogPost = () => {
 
   const blogPostingLd = blogPostingSchema({
     headline: meta.title,
-    description: meta.description,
+    description: metaDescription,
     datePublished: meta.date,
     dateModified: published,
     url: pageUrl,
@@ -132,7 +141,7 @@ const BlogPost = () => {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>{documentTitle}</title>
-        <meta name="description" content={meta.description} />
+        <meta name="description" content={metaDescription} />
         <meta
           name="robots"
           content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
@@ -144,7 +153,7 @@ const BlogPost = () => {
         <meta property="og:title" content={meta.ogTitle ?? meta.title} />
         <meta
           property="og:description"
-          content={meta.ogSubtitle ?? meta.description}
+          content={meta.ogSubtitle ?? metaDescription}
         />
         <meta property="og:image" content={ogImageUrl} />
         <meta property="og:image:width" content="1200" />
@@ -157,7 +166,7 @@ const BlogPost = () => {
         <meta name="twitter:title" content={meta.ogTitle ?? meta.title} />
         <meta
           name="twitter:description"
-          content={meta.ogSubtitle ?? meta.description}
+          content={meta.ogSubtitle ?? metaDescription}
         />
         <meta name="twitter:image" content={ogImageUrl} />
         <link rel="canonical" href={pageUrl} />
@@ -234,6 +243,18 @@ const BlogPost = () => {
                 </div>
                 <CopyLink url={pageUrl} />
               </div>
+              {updater && updatedMonth ? (
+                <p className="text-[13.5px] text-muted-foreground">
+                  Updated by{" "}
+                  <AuthorLink
+                    author={updater}
+                    className={cn("rounded-sm font-medium text-foreground transition-colors hover:text-sage-dark", FOCUS_RING)}
+                  >
+                    {updater.name}
+                  </AuthorLink>
+                  , {updatedMonth}
+                </p>
+              ) : null}
             </div>
           </header>
 
