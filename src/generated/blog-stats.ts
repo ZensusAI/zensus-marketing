@@ -186,7 +186,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-is-overhead": {
-    "wordCount": 3479,
+    "wordCount": 3551,
     "images": [
       "https://zensus.finance/blog/what-is-overhead/what-is-overhead-hero.webp"
     ],
