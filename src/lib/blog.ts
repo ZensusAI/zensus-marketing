@@ -24,6 +24,9 @@ export interface BlogPostMeta {
   ogImage: string;
   /** Shorter headline for OG/Twitter cards when the page title is long. */
   ogTitle?: string;
+  /** Short name for the post's breadcrumb step when it should differ from
+   *  ogTitle; defaults to ogTitle, then title. */
+  breadcrumbTitle?: string;
   ogSubtitle?: string;
   /** Optional FAQ block for FAQPage JSON-LD (targets People Also Ask). */
   faqs?: BlogFaqItem[];
@@ -195,9 +198,10 @@ export function topicBreadcrumbs(topic: BlogTopic): Crumb[] {
  * visible trail and the markup cannot drift apart. Every step is a canonical,
  * prerendered page; Google asks for "a typical user path to a page", and
  * readers reach a post through its topic. The post is named by its short
- * ogTitle, the form a search result's breadcrumb line can show.
+ * breadcrumbTitle (or ogTitle), the form a search result's breadcrumb line
+ * can show.
  */
-export function postBreadcrumbs(meta: Pick<BlogPostMeta, "slug" | "title" | "ogTitle" | "topic">): Crumb[] {
+export function postBreadcrumbs(meta: Pick<BlogPostMeta, "slug" | "title" | "ogTitle" | "breadcrumbTitle" | "topic">): Crumb[] {
   const topic = getTopic(meta.topic);
-  return [...(topic ? topicBreadcrumbs(topic) : BLOG_TRAIL), { name: meta.ogTitle ?? meta.title, url: postUrl(meta.slug) }];
+  return [...(topic ? topicBreadcrumbs(topic) : BLOG_TRAIL), { name: meta.breadcrumbTitle ?? meta.ogTitle ?? meta.title, url: postUrl(meta.slug) }];
 }

@@ -19,6 +19,7 @@ interface BlogPostMeta {
   ogImage: string;
   ogTitle?: string;
   ogSubtitle?: string;
+  breadcrumbTitle?: string;
   updatedBy?: string;
   faqs?: BlogFaqItem[];
 }
