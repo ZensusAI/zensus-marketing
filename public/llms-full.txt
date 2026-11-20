@@ -243,6 +243,20 @@ What the cash conversion cycle (CCC) is, how to calculate it, how to improve it,
 - A one-column Excel calculator: =AVERAGE(B3:B4)/B10*B2 for DIO, =AVERAGE(B5:B6)/B9*B2 for DSO, =AVERAGE(B7:B8)/B10*B2 for DPO, and =B12+B13-B14 for CCC.
 - For dated cash planning, pair CCC with a 13-week cash flow forecast. Zensus builds one from bank (Plaid), QuickBooks and HubSpot data, with monthly, weekly, daily and 13-week views and Slack alerts.
 
+### What Is Overhead? Costs, Examples, Formulas & Cash Flow Impact
+https://zensus.finance/blog/what-is-overhead
+
+What overhead costs are, how to calculate the overhead ratio and an overhead allocation rate, and how the timing of overhead payments affects cash flow. Key facts from the guide:
+
+- Overhead costs are the indirect expenses a business incurs to support its operations, such as office rent, insurance, administrative salaries and accounting software. They can't be traced directly to a particular product or service.
+- Direct versus indirect describes cost attribution; fixed versus variable describes cost behavior. Overhead can be fixed, variable or semi-variable (mixed).
+- Total overhead is the sum of indirect costs for a period. Worked example: a consulting agency with $13,450 of monthly overhead and $80,000 of revenue has an overhead ratio of 16.81% (overhead ÷ revenue × 100).
+- Overhead allocation rate = overhead to allocate ÷ allocation-base units. $12,000 of budgeted overhead over 600 direct labor hours is $20 per hour, so a 40-hour project carries $800 of overhead.
+- There is no universal healthy overhead percentage; it depends on industry, business model, growth stage and cost classification.
+- Administrative overhead is commonly an operating expense; manufacturing overhead may be allocated to inventory and recognized in COGS when goods are sold.
+- Overhead affects profit when it is expensed and cash when it is paid. In a 13-week example, delaying one $18,000 customer payment by four weeks leaves total collections ($90,000) and ending cash ($30,250) unchanged but lowers the lowest weekly balance from $30,250 to $14,250, in Week 5.
+- Zensus builds a forward cash forecast from connected bank, QuickBooks and HubSpot data, with scenario planning, so a business can see when overhead payments will reduce its cash balance.
+
 ### Can QuickBooks Forecast Cash Flow?
 https://zensus.finance/blog/can-quickbooks-forecast-cash-flow
 
