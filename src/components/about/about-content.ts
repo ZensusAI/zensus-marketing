@@ -27,7 +27,7 @@ export const HERO = {
 
 export const MISSION = {
   label: "Our mission",
-  statement: "Give every business foresight it can prove.",
+  statement: "Give every business foresight it can trust.",
   // Add ", every forecast checked against what actually happened." only once
   // forecast-vs-actual scoring ships in the product.
   line: "Every number traced to its source.",
@@ -35,7 +35,7 @@ export const MISSION = {
 
 export const VISION = {
   label: "Our vision",
-  statement: "A world where no cash decision is a guess.",
+  statement: "A world where every cash decision rests on evidence.",
   line: "The judgment large companies pay analysts for, standard for everyone.",
 } as const;
 
