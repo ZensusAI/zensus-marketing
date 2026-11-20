@@ -9,6 +9,7 @@ interface BlogPostMeta {
   title: string;
   seoTitle?: string;
   description: string;
+  metaDescription?: string;
   date: string;
   dateModified?: string;
   category: string;
@@ -18,6 +19,7 @@ interface BlogPostMeta {
   ogImage: string;
   ogTitle?: string;
   ogSubtitle?: string;
+  updatedBy?: string;
   faqs?: BlogFaqItem[];
 }
 

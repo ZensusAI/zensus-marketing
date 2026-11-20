@@ -10,7 +10,11 @@ export interface BlogPostMeta {
   title: string;
   /** Document title for SERPs when meta.title is long; defaults to title + brand. */
   seoTitle?: string;
+  /** Text under the title on the post page, and the card blurb. */
   description: string;
+  /** Search-result description when it should differ from `description`;
+   *  defaults to `description`. */
+  metaDescription?: string;
   date: string;
   dateModified?: string;
   category: string;
@@ -37,6 +41,9 @@ export interface BlogPostMeta {
   thumbnailAlt?: string;
   /** Author key into the authors map; defaults to the site's default author. */
   author?: string;
+  /** Author key of a second person who refreshed the post. The page shows
+   *  "Updated by <name>, <month year of dateModified>" under the byline. */
+  updatedBy?: string;
 }
 
 /*
