@@ -38,7 +38,7 @@ describe("About page copy (handoff 24)", () => {
   });
 
   it("keeps each person's anchor id, which blog bylines and schema.org link to", () => {
-    expect(TEAM.map((m) => m.id)).toEqual(["ajin-sunny", "john-george", "elsa-iris-reyes", "joe-anglim"]);
+    expect(TEAM.map((m) => m.id)).toEqual(["ajin-sunny", "john-george", "joe-anglim"]);
     for (const m of TEAM) {
       expect(m.photo).toMatch(/^\/team\/.+\.webp$/);
       expect(m.linkedin).toMatch(/^https:\/\/www\.linkedin\.com\/in\//);

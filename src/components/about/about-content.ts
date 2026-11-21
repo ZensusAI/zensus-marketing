@@ -129,7 +129,6 @@ export const TEAM_HEADING = "Our team";
 export const TEAM = [
   { id: "ajin-sunny", name: "Ajin Sunny", title: "Founder", photo: "/team/ajin-sunny.webp", linkedin: "https://www.linkedin.com/in/ajinsunny/" },
   { id: "john-george", name: "John George", title: "Co-Founder", photo: "/team/john-george.webp", linkedin: "https://www.linkedin.com/in/johngeorge28/" },
-  { id: "elsa-iris-reyes", name: "Elsa Iris Reyes", title: "Board Advisor", photo: "/team/elsa-iris-reyes.webp", linkedin: "https://www.linkedin.com/in/elsairisreyes/" },
   { id: "joe-anglim", name: "Joe Anglim", title: "Strategic Advisor", photo: "/team/joe-anglim.webp", linkedin: "https://www.linkedin.com/in/joe-anglim/" },
 ] as const;
 
