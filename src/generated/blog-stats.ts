@@ -127,7 +127,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "payroll-forecasting": {
-    "wordCount": 2312,
+    "wordCount": 2338,
     "images": [
       "https://zensus.finance/blog/payroll-forecasting/payroll-forecasting-2027-hero.webp",
       "https://zensus.finance/blog/payroll-forecasting/payroll-forecasting-2027-employer-tax-chart.webp"
@@ -138,7 +138,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "payroll-tax-deadlines-2027": {
-    "wordCount": 2097,
+    "wordCount": 2156,
     "images": [
       "https://zensus.finance/blog/payroll-tax-deadlines-2027/payroll-tax-deadlines-2027-hero.webp",
       "https://zensus.finance/blog/payroll-tax-deadlines-2027/payroll-tax-deadlines-2027-cash.webp"

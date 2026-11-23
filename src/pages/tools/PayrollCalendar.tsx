@@ -736,6 +736,11 @@ const PayrollCalendar = () => {
                   payroll forecasting for 2027
                 </Link>
                 .
+                {" "}For the date each payroll's taxes are due to the IRS, see the{" "}
+                <Link to="/blog/payroll-tax-deadlines-2027" className={linkCls}>
+                  2027 payroll tax calendar
+                </Link>
+                .
               </p>
               <p>
                 For the weekly discipline of knowing whether payroll clears, see{" "}
