@@ -85,9 +85,11 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "forecasting-ai-compute-costs-for-founders": {
-    "wordCount": 3850,
+    "wordCount": 5042,
     "images": [
-      "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/cheaper-per-request-bigger-bill.webp"
+      "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/ai-inference-costs-hero.webp",
+      "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/cheaper-per-request-bigger-bill.webp",
+      "https://zensus.finance/blog/forecasting-ai-compute-costs-for-founders/ai-inference-costs-credits.webp"
     ],
     "thumbnail": {
       "width": 1600,
@@ -129,6 +131,17 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     "images": [
       "https://zensus.finance/blog/payroll-forecasting/payroll-forecasting-2027-hero.webp",
       "https://zensus.finance/blog/payroll-forecasting/payroll-forecasting-2027-employer-tax-chart.webp"
+    ],
+    "thumbnail": {
+      "width": 1600,
+      "height": 900
+    }
+  },
+  "payroll-tax-deadlines-2027": {
+    "wordCount": 2097,
+    "images": [
+      "https://zensus.finance/blog/payroll-tax-deadlines-2027/payroll-tax-deadlines-2027-hero.webp",
+      "https://zensus.finance/blog/payroll-tax-deadlines-2027/payroll-tax-deadlines-2027-cash.webp"
     ],
     "thumbnail": {
       "width": 1600,
