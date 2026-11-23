@@ -335,6 +335,21 @@ How to forecast payroll for 2027 by pay date: fully loaded cost per employee, em
 - Jan 1, 2027 is a Friday, so a biweekly schedule that pays on Jan 1 has 27 scheduled paydays in 2027, unless the Jan 1 run is paid early on Dec 31, 2026.
 - Zensus shows payroll as a recurring outflow on its real pay dates in a cash flow forecast built from the bank (through Plaid), QuickBooks and HubSpot, and sends a Slack alert if the 30-day projection drops below a cash floor.
 
+### When Are Payroll Taxes Due? The 2027 Payroll Tax Calendar
+https://zensus.finance/blog/payroll-tax-deadlines-2027
+
+Every federal payroll tax deposit and filing date for 2027, which deposit schedule applies, and when each payment actually leaves the bank. Key facts from the guide:
+
+- Payroll taxes are deposited monthly, by the 15th of the next month, or semiweekly, a few days after each payday. The IRS sets the schedule from a lookback period: for 2027, July 1, 2025 through June 30, 2026. $50,000 or less is monthly; more than $50,000 is semiweekly.
+- Semiweekly: paydays Wednesday to Friday are deposited by the following Wednesday; paydays Saturday to Tuesday by the following Friday. A Friday, Jan 8, 2027 payroll is due by Wednesday, Jan 13.
+- New businesses are monthly depositors in their first calendar year. $100,000 or more accumulated on any day must be deposited by the next business day. Under $2,500 for the current or previous quarter can be paid with the return.
+- 2027 monthly deposit dates: Jan 15, Feb 16, Mar 15, Apr 15, May 17, Jun 15, Jul 15, Aug 16, Sep 15, Oct 15, Nov 15 and Dec 15; December 2027 taxes are due Tuesday, Jan 18, 2028.
+- Form 941 is due Mon, Feb 1, 2027 (Q4 2026), Fri, Apr 30, Mon, Aug 2 and Mon, Nov 1, 2027, or by Feb 10, May 10, Aug 10 and Nov 10 if every deposit was on time. Q4 2027 is due Jan 31, 2028.
+- Form 940 for 2026 and W-2s are due Mon, Feb 1, 2027. FUTA is deposited only once it is over $500, by the last day of the month after the quarter.
+- Failure-to-deposit penalty: 2% for 1 to 5 days late, 5% for 6 to 15 days, 10% after that, 15% if unpaid more than 10 days after the first IRS notice. Responsible people can be personally liable for 100% of withheld tax that isn't paid over.
+- Worked example (8 people, $940,000 a year, paid every other Friday): the Jan 8, 2027 payroll costs $40,104.39 and leaves the bank as $27,965.00 net pay on Jan 8, a $10,954.62 federal deposit on Jan 13, $976.15 of state unemployment in late April and $208.62 of FUTA on Jan 31, 2028.
+- Zensus shows payroll and its tax payments on the dates they leave the bank, in a cash flow forecast built from the bank (through Plaid), QuickBooks and HubSpot.
+
 ### How Much Cash Reserves Should a Business Have? Set a Cash Floor That Fits
 https://zensus.finance/blog/business-cash-reserves
 
