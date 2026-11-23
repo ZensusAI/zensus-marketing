@@ -399,7 +399,7 @@ const About = () => (
       <section aria-labelledby="team-heading">
         <div className={cn(FRAME, SIDE, "py-12 min-[820px]:py-[104px] min-[1100px]:pb-[120px]")}>
           <h2 id="team-heading" className={H2}>{TEAM_HEADING}</h2>
-          <ul className="mt-6 grid list-none grid-cols-2 gap-x-3.5 gap-y-6 p-0 min-[820px]:mt-12 min-[820px]:max-w-[774px] min-[820px]:grid-cols-3 min-[820px]:gap-6">
+          <ul className="mt-6 grid list-none grid-cols-2 gap-x-3.5 gap-y-6 p-0 min-[820px]:mt-12 min-[820px]:grid-cols-3 min-[820px]:gap-6">
             {TEAM.map((m) => (
               <li key={m.id} id={m.id} className="flex scroll-mt-24 flex-col">
                 <Squircle radius={R_PHOTO} ring={RING} className="block aspect-square w-full overflow-hidden bg-[#F1E6CB]">
