@@ -204,6 +204,7 @@ const BlogPost = () => {
                     <img
                       src={author.avatar}
                       alt=""
+                      aria-hidden
                       width={42}
                       height={42}
                       className="h-[42px] w-[42px] rounded-full border border-border object-cover"

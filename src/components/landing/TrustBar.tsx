@@ -44,7 +44,7 @@ export const TrustBar = () => (
         rel="noopener noreferrer"
         className={`${cell} ${focusRing} order-1 border-b border-border min-[760px]:border-b-0 min-[760px]:border-r`}
       >
-        <img src={g2Logo} alt="" width={44} height={44} className="h-11 w-11 shrink-0" />
+        <img src={g2Logo} alt="G2" width={44} height={44} className="h-11 w-11 shrink-0" />
         <span className="flex min-w-0 flex-col gap-1">
           <span className={title}>5/5 on G2</span>
           <span className={`${subline} underline underline-offset-2`}>
@@ -61,10 +61,10 @@ export const TrustBar = () => (
             aria-label="Plaid integration"
             className={`inline-flex h-8 shrink-0 items-center rounded-full bg-forest px-3.5 ${logoFocus}`}
           >
-            <img src={plaidLogo} alt="" width={53} height={20} className="block h-5 w-auto" />
+            <img src={plaidLogo} alt="Plaid" width={53} height={20} className="block h-5 w-auto" />
           </Link>
           <Link to="/integrations/quickbooks" aria-label="Intuit QuickBooks integration" className={`mx-1.5 shrink-0 ${logoFocus}`}>
-            <img src={quickbooksLogo} alt="" width={102} height={26} className="block h-[26px] w-auto" />
+            <img src={quickbooksLogo} alt="Intuit QuickBooks" width={102} height={26} className="block h-[26px] w-auto" />
           </Link>
           <Link to="/integrations/hubspot" aria-label="HubSpot integration" className={`${wordmark} ${logoFocus}`}>
             HubSpot

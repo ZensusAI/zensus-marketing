@@ -231,7 +231,7 @@ function AskAiCard() {
                   on && "-translate-y-0.5 shadow-[0_0_0_2px_hsl(var(--sage-light)),0_6px_14px_rgba(0,0,0,.4)] motion-reduce:translate-y-0",
                 )}
               >
-                <img src={ai.logo} alt="" width={20} height={20} loading="lazy" decoding="async" className="h-5 w-5 object-contain min-[760px]:h-[17px] min-[760px]:w-[17px] min-[1280px]:h-5 min-[1280px]:w-5" />
+                <img src={ai.logo} alt={`${ai.name} logo`} width={20} height={20} loading="lazy" decoding="async" className="h-5 w-5 object-contain min-[760px]:h-[17px] min-[760px]:w-[17px] min-[1280px]:h-5 min-[1280px]:w-5" />
               </a>
             </li>
           );
@@ -284,7 +284,7 @@ const Footer = () => {
             {/* Brand sign-off: same lockup drawing as the navbar and OG cards
                 (32px tile, 22px name, -0.02em tracking, 9px gap). */}
             <Link to="/" aria-label="Zensus home" className={cn("inline-flex w-fit items-center gap-[9px]", focusRing)}>
-              <img src={zensusLogo} alt="" width={32} height={32} className="h-8 w-8 rounded-lg" />
+              <img src={zensusLogo} alt="" aria-hidden width={32} height={32} className="h-8 w-8 rounded-lg" />
               <span className="text-[22px] font-semibold tracking-[-0.02em] text-foreground">Zensus</span>
             </Link>
             <p className="mt-[22px] max-w-[640px] text-balance text-[26px] font-semibold leading-[1.15] tracking-[-0.025em] text-foreground min-[760px]:text-[34px]">
