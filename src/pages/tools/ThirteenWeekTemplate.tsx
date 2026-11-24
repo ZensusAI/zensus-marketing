@@ -110,6 +110,26 @@ const usd = new Intl.NumberFormat("en-US", {
 
 const weekOf = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
 
+/**
+ * True while scripts/prerender.mjs captures the page. The saved HTML is what
+ * crawlers and first paint see until the bundle loads, so it must not carry
+ * the build day's dates: it shows "Next Monday" and week offsets instead, and
+ * the browser fills in the real dates when the app renders.
+ */
+function isPrerender(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    (window as unknown as { __PRERENDER__?: boolean }).__PRERENDER__ === true
+  );
+}
+
+/** "Next Monday", "+1 week", "+2 weeks" for the saved copy; week number is 1-based. */
+function relativeWeekLabel(week: number): string {
+  if (week <= 1) return "Next Monday";
+  const n = week - 1;
+  return `+${n} ${n === 1 ? "week" : "weeks"}`;
+}
+
 function downloadText(filename: string, mime: string, text: string) {
   const blob = new Blob([text], { type: mime });
   const url = URL.createObjectURL(blob);
@@ -156,6 +176,7 @@ function NumberField({
 
 const ThirteenWeekTemplate = () => {
   const today = useMemo(() => new Date(), []);
+  const prerendering = useMemo(isPrerender, []);
   const [startDateIso, setStartDateIso] = useState(() => toLocalIsoDate(nextMonday(today)));
   const [openingBalance, setOpeningBalance] = useState(120000);
   const [cashFloor, setCashFloor] = useState(60000);
@@ -321,12 +342,16 @@ const ThirteenWeekTemplate = () => {
               />
               <div className="space-y-1.5">
                 <Label htmlFor="start-date">Week 1 starts</Label>
-                <Input
-                  id="start-date"
-                  type="date"
-                  value={startDateIso}
-                  onChange={(event) => setStartDateIso(event.target.value)}
-                />
+                {prerendering ? (
+                  <Input id="start-date" type="text" readOnly value="Next Monday" />
+                ) : (
+                  <Input
+                    id="start-date"
+                    type="date"
+                    value={startDateIso}
+                    onChange={(event) => setStartDateIso(event.target.value)}
+                  />
+                )}
                 <p className="text-xs text-muted-foreground">
                   Mondays keep the weeks aligned with payroll and bank statements.
                 </p>
@@ -483,7 +508,8 @@ const ThirteenWeekTemplate = () => {
               </p>
               <p className="text-2xl font-bold tracking-tight">{usd.format(result.lowestBalance)}</p>
               <p className="text-sm text-muted-foreground">
-                Week {result.lowestWeek}, {weekOf.format(lowestRow.weekStart)}
+                Week {result.lowestWeek}
+                {prerendering ? null : `, ${weekOf.format(lowestRow.weekStart)}`}
               </p>
             </div>
             <div
@@ -499,7 +525,9 @@ const ThirteenWeekTemplate = () => {
               </p>
               <p className="text-sm text-muted-foreground">
                 {floorRow
-                  ? `${weekOf.format(floorRow.weekStart)}, closes at ${usd.format(floorRow.closing)}`
+                  ? prerendering
+                    ? `Closes at ${usd.format(floorRow.closing)}`
+                    : `${weekOf.format(floorRow.weekStart)}, closes at ${usd.format(floorRow.closing)}`
                   : `Every week closes above ${usd.format(cashFloor)}`}
               </p>
             </div>
@@ -537,7 +565,9 @@ const ThirteenWeekTemplate = () => {
                     }`}
                   >
                     <td className="px-4 py-2">{row.week}</td>
-                    <td className="px-4 py-2 whitespace-nowrap">{weekOf.format(row.weekStart)}</td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                      {prerendering ? relativeWeekLabel(row.week) : weekOf.format(row.weekStart)}
+                    </td>
                     <td className="px-4 py-2 text-right">{usd.format(row.totalIn)}</td>
                     <td className="px-4 py-2 text-right">
                       {usd.format(row.totalOut)}

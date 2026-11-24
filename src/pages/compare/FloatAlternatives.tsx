@@ -208,9 +208,12 @@ const FloatAlternatives = () => (
                 <h3 id={`tool-${entry.id}`} className="text-xl font-semibold tracking-tight">
                   {entry.name}
                   {entry.isZensus ? (
-                    <span className="ml-2 text-sm font-normal text-muted-foreground">
-                      (our product)
-                    </span>
+                    <>
+                      {" "}
+                      <span className="ml-1 text-sm font-normal text-muted-foreground">
+                        (our product)
+                      </span>
+                    </>
                   ) : null}
                 </h3>
                 <p className="mt-2 text-sm font-medium text-foreground">

@@ -281,7 +281,7 @@ const Blog = () => {
         <title>Zensus Blog · Cash Flow Guides for Businesses</title>
         <meta
           name="description"
-          content="Case studies and practical guides on cash flow forecasting and financial decision-making for businesses of any size."
+          content="Practical guides and worked examples on cash flow forecasting and financial decision-making for businesses of any size."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${SITE_URL}/blog`} />
@@ -289,7 +289,7 @@ const Blog = () => {
         <meta property="og:title" content="Zensus Blog · Cash Flow Guides for Businesses" />
         <meta
           property="og:description"
-          content="Case studies and practical guides on cash flow forecasting for businesses of any size."
+          content="Practical guides and worked examples on cash flow forecasting for businesses of any size."
         />
         <meta property="og:image" content={`${SITE_URL}/og/blog.png`} />
         <meta property="og:image:width" content="1200" />
@@ -299,7 +299,7 @@ const Blog = () => {
         <meta name="twitter:title" content="Zensus Blog · Cash Flow Guides for Businesses" />
         <meta
           name="twitter:description"
-          content="Case studies and practical guides on cash flow forecasting for businesses of any size."
+          content="Practical guides and worked examples on cash flow forecasting for businesses of any size."
         />
         <meta name="twitter:image" content={`${SITE_URL}/og/blog.png`} />
         <link rel="canonical" href={`${SITE_URL}/blog`} />
