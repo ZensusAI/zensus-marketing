@@ -35,7 +35,12 @@ const Row = ({ title, count, open, onToggle, children }: RowProps) => {
           <span>{title}</span>
           <span className="flex shrink-0 items-center gap-3">
             {count === undefined ? null : (
-              <span className="font-mono text-[12.5px] font-normal text-muted-foreground">{count}</span>
+              <span className="font-mono text-[12.5px] font-normal text-muted-foreground">
+                {/* Without these the heading's text reads "Controls at a glance12". */}
+                <span className="sr-only"> (</span>
+                {count}
+                <span className="sr-only"> items)</span>
+              </span>
             )}
             <Plus
               className={cn(
