@@ -39,7 +39,7 @@ export function BlogBanners() {
         >
           <picture aria-hidden className="pointer-events-none absolute inset-0">
             <source media={`(min-width: ${HERO_MESH.switchPx}px)`} srcSet={HERO_MESH.wide} />
-            <img src={HERO_MESH.narrow} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover opacity-[.22] invert" />
+            <img src={HERO_MESH.narrow} alt="" aria-hidden loading="lazy" decoding="async" className="h-full w-full object-cover opacity-[.22] invert" />
           </picture>
           <div className="relative flex flex-col gap-2">
             <h2 className="text-[22px] font-semibold tracking-[-0.02em]">Free 13-week cash flow template</h2>
@@ -77,7 +77,7 @@ export function BlogBanners() {
                     FOCUS_RING,
                   )}
                 >
-                  <img src={ai.logo} alt="" width={15} height={15} className="h-[15px] w-[15px] object-contain" />
+                  <img src={ai.logo} alt="" aria-hidden width={15} height={15} className="h-[15px] w-[15px] object-contain" />
                   <span>{ai.name}</span>
                 </a>
               </li>

@@ -309,7 +309,7 @@ function ProductPanel({ onNavigate }: { onNavigate: () => void }) {
                 loading="lazy"
                 decoding="async"
                 src={row.img}
-                alt={i === active ? row.alt : ""}
+                alt={row.alt}
                 aria-hidden={i !== active}
                 width={NAV_ART_WIDTH}
                 height={NAV_ART_HEIGHT}
@@ -536,7 +536,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               aria-label={`${g.name} integration`}
               className={cn("flex h-11 flex-1 items-center justify-center rounded-xl border border-border bg-background", focusRing)}
             >
-              <img src={g.logo} alt="" height={20} className={cn("h-5 w-auto", g.className)} />
+              <img src={g.logo} alt={g.name} height={20} className={cn("h-5 w-auto", g.className)} />
             </Link>
           ))}
         </div>
@@ -689,7 +689,7 @@ const Navbar = () => {
     >
       <div className="mx-auto grid h-16 max-w-[1280px] grid-cols-[1fr_auto] items-center pl-5 pr-3 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
         <Link to="/" aria-label="Zensus home" className={cn("flex items-center gap-[9px] justify-self-start rounded", focusRing)}>
-          <img src={zensusLogo} alt="" width={32} height={32} className="h-8 w-8 rounded-lg" />
+          <img src={zensusLogo} alt="" aria-hidden width={32} height={32} className="h-8 w-8 rounded-lg" />
           <span className="text-[22px] font-semibold tracking-[-0.02em] text-foreground">Zensus</span>
         </Link>
 

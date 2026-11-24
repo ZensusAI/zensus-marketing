@@ -73,6 +73,7 @@ export function SignupModal({ children }: SignupModalProps) {
               <img
                 src="/hero-aurora-1920.jpg"
                 alt=""
+                aria-hidden
                 className="h-full w-full object-cover [filter:brightness(0.7)_contrast(1.05)_saturate(1.1)]"
                 loading="lazy"
               />

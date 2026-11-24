@@ -345,21 +345,21 @@ const Bento = () => {
                   >
                     {s.name === "Plaid" ? (
                       <span className="inline-flex h-5 items-center rounded-full bg-forest px-2 min-[760px]:h-7 min-[760px]:px-3">
-                        <img src={plaidLogo} alt="" className="block h-[11px] w-auto min-[760px]:h-4" />
+                        <img src={plaidLogo} alt="Plaid" className="block h-[11px] w-auto min-[760px]:h-4" />
                       </span>
                     ) : s.name === "QuickBooks" ? (
-                      <img src={quickbooksLogo} alt="" className="block h-4 w-auto min-[760px]:h-6" />
+                      <img src={quickbooksLogo} alt="Intuit QuickBooks" className="block h-4 w-auto min-[760px]:h-6" />
                     ) : s.name === "BILL" && SHOW_BILL_LOGO ? (
                       // Square and unaltered, alone in its box: no words or
                       // marks beside it (BILL's terms).
-                      <img src={billIcon} alt="" width={36} height={36} loading="lazy" decoding="async" className="block h-7 w-7 min-[760px]:h-8 min-[760px]:w-8 min-[1280px]:h-9 min-[1280px]:w-9" />
+                      <img src={billIcon} alt="BILL" width={36} height={36} loading="lazy" decoding="async" className="block h-7 w-7 min-[760px]:h-8 min-[760px]:w-8 min-[1280px]:h-9 min-[1280px]:w-9" />
                     ) : s.name === "Gmail & Google Drive" ? (
                       // Google's own Workspace product icons (SVG from its help
                       // center), unaltered, with the product names beside them.
                       <span className="flex flex-col items-center gap-0.5">
                         <span className="flex items-center gap-1.5">
-                          <img src={gmailIcon} alt="" width={20} height={20} className="block h-4 w-4 min-[760px]:h-5 min-[760px]:w-5" />
-                          <img src={googleDriveIcon} alt="" width={20} height={20} className="block h-4 w-4 min-[760px]:h-5 min-[760px]:w-5" />
+                          <img src={gmailIcon} alt="Gmail" width={20} height={20} className="block h-4 w-4 min-[760px]:h-5 min-[760px]:w-5" />
+                          <img src={googleDriveIcon} alt="Google Drive" width={20} height={20} className="block h-4 w-4 min-[760px]:h-5 min-[760px]:w-5" />
                         </span>
                         <span className="text-[10px] font-semibold leading-none max-[359px]:text-[9px] min-[760px]:text-[11px] min-[1024px]:text-[11.5px]">Gmail &amp; Google Drive&trade;</span>
                       </span>
@@ -401,6 +401,7 @@ const Bento = () => {
                   <img
                     src={zensusLogo}
                     alt=""
+                    aria-hidden
                     className="rounded-[7px]"
                     style={{ width: G.lg, height: G.lg, boxShadow: `0 0 0 ${ring.toFixed(1)}px rgba(34,197,115,.14)` }}
                   />

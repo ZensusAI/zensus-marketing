@@ -336,7 +336,7 @@ function ProductChart({ beat, p, step }: { beat: Beat; p: number; step: number }
         className="absolute inset-x-2.5 top-12 flex gap-2.5 rounded-xl bg-card px-3.5 py-3 shadow-[0_18px_40px_-18px_rgba(0,0,0,.6)] min-[1024px]:left-[84px] min-[1024px]:right-auto min-[1024px]:top-[72px] min-[1024px]:w-[266px]"
         style={{ opacity: v.alert ? 1 : 0, transform: v.alert ? "none" : "translateY(-10px)", transition: `opacity .5s, transform .5s ${ease}` }}
       >
-        <img src={zensusLogo} alt="" width={30} height={30} className="h-7 w-7 shrink-0 rounded-md min-[1024px]:h-[30px] min-[1024px]:w-[30px]" />
+        <img src={zensusLogo} alt="" aria-hidden width={30} height={30} className="h-7 w-7 shrink-0 rounded-md min-[1024px]:h-[30px] min-[1024px]:w-[30px]" />
         <span className="flex flex-col gap-[3px] text-[12.5px] leading-[1.4] text-foreground">
           <span>
             <b className="font-semibold">Zensus</b> <span className="text-muted-foreground">in #finance · Slack</span>
