@@ -1,21 +1,25 @@
 export const meta = {
-  title: 'Can QuickBooks Forecast Cash Flow? Features, Limitations, and Alternatives',
-  seoTitle: 'Can QuickBooks Forecast Cash Flow? (2026 Guide) | Zensus',
+  title: 'QuickBooks Cash Flow Forecast: How to Use the Cash Flow Planner, and Its Limits',
+  seoTitle: 'QuickBooks Cash Flow Forecast and Planner: How to Use It',
   description:
-    'Yes, QuickBooks Online can forecast cash flow. What its 13-week forecast and Cash Flow Planner do, how to set one up, its limits, and when to add a tool.',
+    'How to use the QuickBooks cash flow forecast and Cash Flow Planner: where to find them, a step-by-step setup, QuickBooks AI forecasts, and their limits.',
   date: '2026-06-23',
-  dateModified: '2026-10-27',
+  dateModified: '2026-11-26',
   category: 'Guide',
   readTime: '16 min read',
   slug: 'can-quickbooks-forecast-cash-flow',
   author: 'ashwin',
-  thumbnail: '/blog/can-quickbooks-forecast-cash-flow/short-term-planning-to-strategic-forecasting.webp',
+  thumbnail: '/blog/can-quickbooks-forecast-cash-flow/quickbooks-cash-flow-forecast-hero.webp',
+  thumbnailAlt:
+    'The same month with a customer paying on time or two weeks late: weekly ending cash of $55,000, $85,000, $85,000, $85,000 when paid on time, and $55,000, $25,000, $25,000, $85,000 when paid late, against a $40,000 cash threshold',
+  updatedBy: 'john',
   topic: 'tools-and-integrations',
   tags: ['Cash Flow', 'QuickBooks', 'Guides'],
   ogImage: '/og/blog/can-quickbooks-forecast-cash-flow.png',
-  ogTitle: 'Can QuickBooks Forecast Cash Flow?',
+  ogTitle: 'QuickBooks Cash Flow Forecast',
   ogSubtitle:
-    'What QuickBooks can forecast, how to build a forecast in it, its limits, and when another tool makes sense.',
+    'How to use the Cash Flow Planner and 13-week forecast, QuickBooks AI forecasts, and their limits.',
+  breadcrumbTitle: 'QuickBooks Cash Flow Forecast',
   faqs: [
     {
       question: 'Does QuickBooks Online have built-in cash flow forecasting?',
@@ -62,15 +66,30 @@ export const meta = {
       answer:
         'Not in current versions. Intuit says the Cash Flow Projector was discontinued in QuickBooks Desktop 2022; earlier releases opened it from Company, then Planning & Budgeting, and it projected about six weeks ahead. The Desktop Cash Flow Hub reports past cash from reconciled transactions, and the Cash Flow Planner is a QuickBooks Online feature.',
     },
+    {
+      question: 'How do I use the Cash Flow Planner in QuickBooks Online?',
+      answer:
+        "Go to Reports, then Financial planning, then Cash flow (or Cash flow planner). Check the accounts it includes, set a cash threshold, review open invoices and bills, and add projections for anything not yet in your books. Changes in the planner don't affect your accounting.",
+    },
+    {
+      question: 'How do I create a forecast in QuickBooks?',
+      answer:
+        'For short-term cash, use the 13-week cash flow forecast on the Cash flow page and add projections for expected income and expenses. For a 12-month forecast with scenarios, US QuickBooks Online subscriptions can use Intuit Intelligence.',
+    },
+    {
+      question: 'Can I create a rolling cash forecast in QuickBooks?',
+      answer:
+        'The 13-week forecast rolls forward as time passes and new invoices and bills are recorded, but the assumptions you add stay as you set them. Review and update projections weekly so the forecast stays current.',
+    },
   ],
 };
 
 import { BlogCallout } from '@/components/blog/BlogCallout';
 import { BlogTable } from '@/components/blog/BlogTable';
 
-## The Short Answer: Yes, QuickBooks Can Forecast Cash Flow
+## Quick Answer
 
-<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">Yes, QuickBooks Online can forecast cash flow. It includes a <a href="/blog/what-is-a-13-week-cash-flow-forecast" className="font-medium text-primary underline-offset-4 hover:underline">13-week cash flow forecast</a>, tools for expected incoming and outgoing payments, AI-assisted predictions, manual projections, and ways to monitor future cash balances.</p>
+<p id="blog-article-lead" className="text-lg leading-relaxed text-muted-foreground">Yes. QuickBooks Online has a built-in cash flow forecast: a 13-week forecast and the Cash Flow Planner, found under Reports, then Financial planning. It projects money in and out from your open invoices, bills, bank history and any projections you add, without changing your books. For a 12-month view, Intuit Intelligence, QuickBooks' AI, can forecast cash flow and run what-if scenarios.</p>
 
 <p><strong>But here's the real question you need to ask:</strong> Does QuickBooks give you enough to actually <em>trust</em> the forecast when making decisions?</p>
 
@@ -173,7 +192,7 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p className="text-sm text-muted-foreground">Source: <a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/budget-and-planning/monitor-cash-balance-customize-cash-flow-chart/L46e4318k_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">Intuit, Cash flow chart and runway</a></p>
 
-### 4. Intuit Intelligence and Broader Financial Scenarios
+### 4. QuickBooks AI: Intuit Intelligence Forecasts and Scenarios
 
 <p>QuickBooks' forecasting capabilities extend beyond its operational cash flow page.</p>
 
@@ -188,6 +207,22 @@ import { BlogTable } from '@/components/blog/BlogTable';
 <p>These broader forecasts are distinct from the 13-week cash flow grid. For finance teams, the distinction is between projecting overall financial performance and managing the <em>timing</em> of actual cash receipts and payments.</p>
 
 <p className="text-sm text-muted-foreground">Source: <a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/tasks/forecast-financial-performance-intuit-intelligence/L7o5sk5t2_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">Intuit, Forecast with Intuit Intelligence</a></p>
+
+## Where is the Cash Flow Planner in QuickBooks Online?
+
+<p>In QuickBooks Online, go to <strong>Reports</strong>, then <strong>Financial planning</strong>. Depending on your version, the page is called <strong>Cash flow</strong> or <strong>Cash flow planner</strong>. Intuit's help pages use both names, and the Cash Flow Planner name is still the one most people search for.</p>
+
+<p className="mb-2 font-medium text-foreground">Three things that catch people out:</p>
+
+<ul>
+  <li><strong>It isn't available everywhere.</strong> Intuit says the cash flow planner isn't available in QuickBooks Online Accountant, or in any version with Multicurrency turned on.</li>
+  <li><strong>Overdue invoices and bills are left out by default.</strong> QuickBooks treats them as incomplete. To include one, update it with a new expected date from the top of the planner list.</li>
+  <li><strong>Nothing you change in the planner touches your books.</strong> Changing an expected date or adding a projection doesn't change the original invoice, bill or chart of accounts.</li>
+</ul>
+
+<p>If you use QuickBooks Desktop, the older equivalent is the Cash Flow Projector.</p>
+
+<p className="text-sm text-muted-foreground">Source: <a href="https://quickbooks.intuit.com/learn-support/en-us/help-article/budget-forecast-reports/use-cash-flow-planner-quickbooks-online/L2l59mIqe_US_en_US" className="font-medium text-primary underline-offset-4 hover:underline">Intuit, Use the cash flow planner in QuickBooks Online and Intuit Enterprise Suite</a></p>
 
 ## How to Forecast Cash Flow in QuickBooks Online (Step by Step)
 
@@ -494,6 +529,10 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>Teams with these requirements should test their actual operating process before concluding that an additional application is necessary.</p>
 
+### 6. Some Setups Can't Use the Planner at All
+
+<p>Intuit's help pages say the cash flow planner isn't available in QuickBooks Online Accountant, or in any version with Multicurrency turned on. If you invoice in more than one currency, check this first.</p>
+
 ## When Is QuickBooks Enough, and When Do You Need Another Tool?
 
 <p>For many small businesses, QuickBooks' native forecasting tools may be sufficient.</p>
@@ -522,6 +561,8 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 <p>Their workflows vary, with different emphases on short-term cash visibility, financial statement forecasting, scenario planning, and multi-entity reporting.</p>
 
+<p>For a side-by-side look at the main options and their prices, see our guide to <a href="/compare/float-alternatives" className="font-medium text-primary underline-offset-4 hover:underline">Float alternatives</a>.</p>
+
 <p><strong>A dedicated solution may be useful when the work extends beyond generating a forecast into maintaining and acting on it.</strong></p>
 
 <p className="mb-2 font-medium text-foreground">For example, a finance operator might need to determine:</p>
@@ -536,13 +577,11 @@ import { BlogTable } from '@/components/blog/BlogTable';
 
 ### How Zensus Approaches Cash Flow Planning
 
-<p>At Zensus, our focus is helping business owners and finance operators move from historical financial records toward forward-looking cash flow decisions.</p>
+<p>Zensus is built for the moment the QuickBooks forecast stops being enough: when you need to see cash week by week across your bank, QuickBooks and your sales pipeline, not just your books.</p>
 
-<p>Our cash flow forecasting workflow is designed around using financial data, examining projected cash balances, and exploring what-if questions.</p>
+<p>It reads QuickBooks Online, adds your bank through Plaid and your HubSpot invoices and subscriptions, and shows your projected cash week by week. You can test a scenario, such as a late customer payment or a new hire, against your baseline, and set a cash floor. If the next 30 days are projected to drop below it, Zensus sends a Slack alert.</p>
 
-<p>QuickBooks provides an accounting foundation. Forward-looking planning builds on that foundation by helping teams consider what could happen next.</p>
-
-<p><strong>The objective isn't to replace sound accounting. It's to help finance teams turn financial information into decisions they can evaluate before cash moves.</strong></p>
+<p>Zensus doesn't replace QuickBooks. Your books stay in QuickBooks. Zensus Pro is $199 a month after a 14-day free trial. See <a href="/quickbooks-cash-flow-forecasting" className="font-medium text-primary underline-offset-4 hover:underline">QuickBooks Online cash flow forecasting with Zensus</a>.</p>
 
 ## QuickBooks Cash Flow Forecast Review Checklist
 
