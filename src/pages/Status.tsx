@@ -18,6 +18,9 @@ export const TRY_AGAIN_URL = `${RETRY_APP_ORIGIN}/?from=status`;
 interface StateCopy {
   heading: string;
   label: string;
+  // When set, replaces the configured message. Used where a hand-written
+  // message could wrongly hint that something went wrong.
+  fixedMessage?: string;
   icon: LucideIcon;
   // Tailwind classes for the icon badge. Kept calm: amber for trouble,
   // never an alarming red.
@@ -46,6 +49,7 @@ const COPY: Record<StatusState, StateCopy> = {
   operational: {
     heading: "Everything is running normally",
     label: "All systems operational",
+    fixedMessage: "All Zensus services are running normally.",
     icon: CheckCircle2,
     tone: "bg-emerald-100 text-emerald-900",
   },
@@ -80,7 +84,7 @@ export function StatusView({ status }: { status: SiteStatus }) {
         </h1>
         <div role="status" className="mt-4 space-y-2">
           <p className="text-sm font-medium text-foreground">{copy.label}</p>
-          <p className="text-lg leading-relaxed text-muted-foreground">{status.message}</p>
+          <p className="text-lg leading-relaxed text-muted-foreground">{copy.fixedMessage ?? status.message}</p>
         </div>
         <p className="mt-6 text-sm text-muted-foreground">
           Last updated: <time dateTime={status.updatedAt}>{formatUpdatedAt(status.updatedAt)}</time>

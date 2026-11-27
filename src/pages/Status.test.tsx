@@ -27,7 +27,12 @@ describe("/status page", () => {
       const html = render(state);
       expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
       expect(html).toContain(HEADINGS[state]);
-      expect(html).toContain(`msg-${state}`);
+      if (state === "operational") {
+        expect(html).not.toContain(`msg-${state}`);
+        expect(html).toContain("All Zensus services are running normally.");
+      } else {
+        expect(html).toContain(`msg-${state}`);
+      }
       expect(html).toMatch(/<[^>]*role="status"/);
       expect(html).toContain("Last updated:");
       expect(html).toContain('dateTime="2026-11-27T15:30:00Z"');

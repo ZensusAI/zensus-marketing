@@ -6,6 +6,8 @@
 //   state      'outage' | 'degraded' | 'maintenance' | 'operational'
 //   message    One or two plain sentences shown under the heading. Do not
 //              name a cause or promise a time unless you are certain.
+//              Ignored when state is 'operational': the page then shows a
+//              fixed neutral line instead.
 //   updatedAt  ISO 8601 timestamp of when you last changed this, in UTC.
 
 export type StatusState = "outage" | "degraded" | "maintenance" | "operational";
