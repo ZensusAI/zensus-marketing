@@ -5,6 +5,7 @@ import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { SUPPORT_EMAIL } from "@/lib/constants";
 import { STATUS, type SiteStatus, type StatusState } from "@/config/status";
+import { useStatusHealth } from "@/hooks/use-status-health";
 
 // The app reads `from=status` to delay its health check by 60 seconds, so a
 // visitor who clicks through is not bounced straight back here.
@@ -65,7 +66,14 @@ function formatUpdatedAt(iso: string): string {
   })} UTC`;
 }
 
-export function StatusView({ status }: { status: SiteStatus }) {
+export function StatusView({
+  status,
+  checkedAt = null,
+}: {
+  status: SiteStatus;
+  /** Set once a live health check has proven the service is up. */
+  checkedAt?: Date | null;
+}) {
   const copy = COPY[status.state];
   const Icon = copy.icon;
   const isUp = status.state === "operational";
@@ -87,7 +95,16 @@ export function StatusView({ status }: { status: SiteStatus }) {
           <p className="text-lg leading-relaxed text-muted-foreground">{copy.fixedMessage ?? status.message}</p>
         </div>
         <p className="mt-6 text-sm text-muted-foreground">
-          Last updated: <time dateTime={status.updatedAt}>{formatUpdatedAt(status.updatedAt)}</time>
+          {checkedAt ? (
+            <>
+              Checked <time dateTime={checkedAt.toISOString()}>just now</time>
+            </>
+          ) : (
+            <>
+              Last updated:{" "}
+              <time dateTime={status.updatedAt}>{formatUpdatedAt(status.updatedAt)}</time>
+            </>
+          )}
         </p>
         <Button asChild size="lg" className="mt-8">
           <a href={TRY_AGAIN_URL}>{isUp ? "Open Zensus" : "Try again"}</a>
@@ -107,16 +124,21 @@ export function StatusView({ status }: { status: SiteStatus }) {
   );
 }
 
-const Status = () => (
-  <>
-    <Helmet>
-      <title>Zensus Status</title>
-      <meta name="robots" content="noindex" />
-    </Helmet>
-    <Navbar />
-    <StatusView status={STATUS} />
-    <Footer />
-  </>
-);
+const Status = () => {
+  const live = useStatusHealth(STATUS);
+  // The health check can only move the page up to "operational", on proof.
+  const status: SiteStatus = live.upgraded ? { ...STATUS, state: "operational" } : STATUS;
+  return (
+    <>
+      <Helmet>
+        <title>Zensus Status</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
+      <Navbar />
+      <StatusView status={status} checkedAt={live.upgraded ? live.checkedAt : null} />
+      <Footer />
+    </>
+  );
+};
 
 export default Status;
