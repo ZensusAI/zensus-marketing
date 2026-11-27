@@ -71,8 +71,8 @@ export function StatusView({ status }: { status: SiteStatus }) {
   const isUp = status.state === "operational";
 
   return (
-    <main className="min-h-screen bg-background">
-      <div className="mx-auto flex max-w-xl flex-col items-center px-6 pb-24 pt-32 text-center">
+    <main className="bg-background">
+      <div className="mx-auto flex max-w-xl flex-col items-center px-6 pb-24 pt-28 sm:min-h-[65vh] sm:pt-32 text-center">
         <span
           className={`mb-6 flex h-14 w-14 items-center justify-center rounded-full ${copy.tone}`}
           aria-hidden="true"

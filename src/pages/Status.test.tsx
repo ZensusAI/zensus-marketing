@@ -1,8 +1,9 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { HelmetProvider } from "react-helmet-async";
+import { HelmetProvider, type HelmetServerState } from "react-helmet-async";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
-import { StatusView, TRY_AGAIN_URL } from "./Status";
+import Status, { StatusView, TRY_AGAIN_URL } from "./Status";
 import { STATUS, type StatusState } from "@/config/status";
 import { SUPPORT_EMAIL } from "@/lib/constants";
 
@@ -60,5 +61,21 @@ describe("/status page", () => {
       .map((f) => readFileSync(new URL(f, import.meta.url), "utf-8"))
       .join("\n");
     expect(src).not.toMatch(/\bfetch\s*\(|XMLHttpRequest|axios|supabase|useQuery|api\.zensus/);
+  });
+
+  it("emits a robots noindex tag and is not linked from the /sitemap page", () => {
+    const context: { helmet?: HelmetServerState } = {};
+    renderToStaticMarkup(
+      <HelmetProvider context={context}>
+        <MemoryRouter>
+          <Status />
+        </MemoryRouter>
+      </HelmetProvider>,
+    );
+    const robots = context.helmet?.meta.toString() ?? "";
+    expect(robots).toContain('name="robots"');
+    expect(robots).toContain('content="noindex"');
+    const sitemapPage = readFileSync(new URL("./Sitemap.tsx", import.meta.url), "utf-8");
+    expect(sitemapPage).not.toContain('"/status"');
   });
 });
