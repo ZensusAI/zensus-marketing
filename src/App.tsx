@@ -40,6 +40,7 @@ const QuickBooksForecasting = lazy(
 );
 const LlmInfo = lazy(() => import("./pages/LlmInfo"));
 const Sitemap = lazy(() => import("./pages/Sitemap"));
+const Status = lazy(() => import("./pages/Status"));
 const PlaidIntegration = lazy(() => import("./pages/integrations/Plaid"));
 const QuickBooksIntegration = lazy(
   () => import("./pages/integrations/QuickBooks"),
@@ -122,6 +123,8 @@ const App = () => (
             />
             <Route path="/llm-info" element={<LlmInfo />} />
             <Route path="/sitemap" element={<Sitemap />} />
+            {/* Outage page the product app redirects to. noindex, not in the sitemap. */}
+            <Route path="/status" element={<Status />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
