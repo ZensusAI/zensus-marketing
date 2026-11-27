@@ -21,11 +21,13 @@ import {
 const linkCls = "font-medium text-primary underline-offset-4 hover:underline";
 
 const PAGE_URL = `${SITE_URL}/tools/runway-calculator`;
-// Leads with "zero cash date", the search this page already appears for
-// (around position 17), and keeps "startup runway calculator".
-const PAGE_TITLE = "Zero Cash Date and Startup Runway Calculator";
+// In November 2026 the title changed to lead with "Cash Runway Calculator" and
+// keep "zero cash date". It renders without a " | Zensus" suffix (like the
+// payroll calendar page) so it fits the 60-character cap. The description names
+// the three inputs the calculator asks for: cash, monthly revenue and expenses.
+const PAGE_TITLE = "Cash Runway Calculator: Find Your Zero Cash Date (Free)";
 const PAGE_DESCRIPTION =
-  "Free startup runway calculator: enter cash, revenue, and expenses to get your zero-cash date, then model what a new hire or an annual contract does to it.";
+  "Free cash runway calculator: enter your cash balance, monthly revenue and expenses to see your months of runway and the date your cash would run out.";
 
 const breadcrumbs = breadcrumbSchema([
   HOME_CRUMB,
@@ -183,7 +185,7 @@ const RunwayCalculator = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>{PAGE_TITLE} | Zensus</title>
+        <title>{PAGE_TITLE}</title>
         <meta name="description" content={PAGE_DESCRIPTION} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={PAGE_URL} />
