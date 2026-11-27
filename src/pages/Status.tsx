@@ -3,12 +3,17 @@ import { AlertTriangle, CheckCircle2, Wrench, type LucideIcon } from "lucide-rea
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
-import { APP_URL, SUPPORT_EMAIL } from "@/lib/constants";
+import { SUPPORT_EMAIL } from "@/lib/constants";
 import { STATUS, type SiteStatus, type StatusState } from "@/config/status";
 
 // The app reads `from=status` to delay its health check by 60 seconds, so a
 // visitor who clicks through is not bounced straight back here.
-export const TRY_AGAIN_URL = `${APP_URL}/?from=status`;
+//
+// The product app now lives on app.zensus.finance. The site-wide APP_URL
+// constant still says app.zensus.app (whose root forwards to this site), so
+// this page names the new origin itself until APP_URL is migrated.
+const RETRY_APP_ORIGIN = "https://app.zensus.finance";
+export const TRY_AGAIN_URL = `${RETRY_APP_ORIGIN}/?from=status`;
 
 interface StateCopy {
   heading: string;

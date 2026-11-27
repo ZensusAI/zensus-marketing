@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { StatusView, TRY_AGAIN_URL } from "./Status";
 import { STATUS, type StatusState } from "@/config/status";
-import { APP_URL, SUPPORT_EMAIL } from "@/lib/constants";
+import { SUPPORT_EMAIL } from "@/lib/constants";
 
 const UPDATED = "2026-11-27T15:30:00Z";
 const render = (state: StatusState) =>
@@ -39,7 +39,7 @@ describe("/status page", () => {
   }
 
   it("points Try again at the app with from=status", () => {
-    expect(TRY_AGAIN_URL).toBe(`${APP_URL}/?from=status`);
+    expect(TRY_AGAIN_URL).toBe("https://app.zensus.finance/?from=status");
     expect(render("outage")).toContain(">Try again<");
   });
 
