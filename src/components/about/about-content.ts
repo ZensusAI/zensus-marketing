@@ -27,7 +27,7 @@ export const HERO = {
 
 export const MISSION = {
   label: "Our mission",
-  statement: "Give every business foresight it can trust.",
+  statement: "Give business owners foresight they can trust.",
   // Add ", every forecast checked against what actually happened." only once
   // forecast-vs-actual scoring ships in the product.
   line: "Every number traced to its source.",
