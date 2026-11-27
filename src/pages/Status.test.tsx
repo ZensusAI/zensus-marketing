@@ -56,7 +56,7 @@ describe("/status page", () => {
     expect(Number.isNaN(Date.parse(STATUS.updatedAt))).toBe(false);
   });
 
-  it("shows 'Checked just now' instead of 'Last updated' once health is proven", () => {
+  it("shows the real check time instead of 'Last updated' once health is proven", () => {
     const html = renderToStaticMarkup(
       <HelmetProvider>
         <StatusView
@@ -65,8 +65,10 @@ describe("/status page", () => {
         />
       </HelmetProvider>,
     );
-    expect(html).toContain("Checked");
-    expect(html).toContain("just now");
+    expect(html).toContain("Last checked:");
+    expect(html).toContain("4:00 PM UTC");
+    expect(html).toContain('dateTime="2026-11-27T16:00:00.000Z"');
+    expect(html).not.toContain("just now");
     expect(html).not.toContain("Last updated:");
     expect(html).toContain(`href="${TRY_AGAIN_URL}"`);
   });

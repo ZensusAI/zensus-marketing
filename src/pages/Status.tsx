@@ -66,6 +66,12 @@ function formatUpdatedAt(iso: string): string {
   })} UTC`;
 }
 
+// A fixed time, not "just now": the text would otherwise stay the same however
+// long the tab is left open, while the check time moves on.
+function formatCheckedAt(d: Date): string {
+  return `${d.toLocaleTimeString("en-US", { timeStyle: "short", timeZone: "UTC" })} UTC`;
+}
+
 export function StatusView({
   status,
   checkedAt = null,
@@ -97,7 +103,8 @@ export function StatusView({
         <p className="mt-6 text-sm text-muted-foreground">
           {checkedAt ? (
             <>
-              Checked <time dateTime={checkedAt.toISOString()}>just now</time>
+              Last checked:{" "}
+              <time dateTime={checkedAt.toISOString()}>{formatCheckedAt(checkedAt)}</time>
             </>
           ) : (
             <>
