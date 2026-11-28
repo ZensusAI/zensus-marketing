@@ -11,7 +11,10 @@ import { SQUIRCLE } from "./PostCard";
  * so the prerendered HTML shows the same numbers the article quotes.
  */
 
-const FRAME = cn("not-prose my-9 rounded-[24px] border border-border bg-card p-5 min-[760px]:p-7", SQUIRCLE);
+// A function, not a constant: SQUIRCLE comes from PostCard, which loads the
+// blog post list, which loads this file. Reading it at module load would hit
+// that import cycle before PostCard has initialised (a blank page in dev).
+const frame = () => cn("not-prose my-9 rounded-[24px] border border-border bg-card p-5 min-[760px]:p-7", SQUIRCLE);
 const EYEBROW = "font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-primary";
 const usd = (n: number) => (n < 0 ? "−" : "") + "$" + Math.abs(Math.round(n)).toLocaleString("en-US");
 const fixed2 = (n: number | null) => (n === null ? "n/a" : n.toFixed(2));
@@ -81,7 +84,7 @@ export function WorkingCapitalCalculator() {
   const h = workingCapitalHealth(b);
 
   return (
-    <section aria-label="Net working capital calculator" className={FRAME}>
+    <section aria-label="Net working capital calculator" className={frame()}>
       <p className={EYEBROW}>Net working capital calculator</p>
       <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
         Enter amounts from your balance sheet. It opens on the marketing agency example above.
@@ -165,7 +168,7 @@ export function WorkingCapitalScenarioPlanner() {
   const max = Math.max(1, ...rows.map(([, v]) => v));
 
   return (
-    <section aria-label="Working capital scenario planner" className={FRAME}>
+    <section aria-label="Working capital scenario planner" className={frame()}>
       <p className={EYEBROW}>Working capital scenario planner</p>
       <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
         It opens on the example above. Change the inputs to estimate your own one-time cash release.
