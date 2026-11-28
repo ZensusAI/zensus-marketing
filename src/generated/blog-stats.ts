@@ -13,7 +13,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "arr-vs-cash-for-founders": {
-    "wordCount": 3010,
+    "wordCount": 3028,
     "images": [
       "https://zensus.finance/blog/arr-vs-cash-for-founders/annual-vs-monthly-cash-timing.webp"
     ],
@@ -34,17 +34,17 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "can-quickbooks-forecast-cash-flow": {
-    "wordCount": 3148,
+    "wordCount": 3442,
     "images": [
-      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/short-term-planning-to-strategic-forecasting.webp"
+      "https://zensus.finance/blog/can-quickbooks-forecast-cash-flow/quickbooks-cash-flow-forecast-hero.webp"
     ],
     "thumbnail": {
-      "width": 1024,
-      "height": 576
+      "width": 1600,
+      "height": 900
     }
   },
   "cash-conversion-cycle": {
-    "wordCount": 2491,
+    "wordCount": 2511,
     "images": [
       "https://zensus.finance/blog/cash-conversion-cycle/how-cash-conversion-cycle-works.webp",
       "https://zensus.finance/blog/cash-conversion-cycle/dio-dso-dpo-where-cash-gets-stuck.webp"
@@ -65,7 +65,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "cash-flow-forecasting-for-agencies": {
-    "wordCount": 2014,
+    "wordCount": 2024,
     "images": [
       "https://zensus.finance/blog/cash-flow-forecasting-for-agencies/agency-five-week-cash-vs-floor.webp"
     ],
@@ -117,13 +117,26 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "mcp-vs-cli-for-finance-teams": {
-    "wordCount": 2268,
+    "wordCount": 2272,
     "images": [
       "https://zensus.finance/blog/mcp-vs-cli-for-finance-teams/agent-reaching-into-finance-stack.webp"
     ],
     "thumbnail": {
       "width": 1600,
       "height": 893
+    }
+  },
+  "net-working-capital": {
+    "wordCount": 3870,
+    "images": [
+      "https://zensus.finance/blog/net-working-capital/net-working-capital-hero.webp",
+      "https://zensus.finance/blog/net-working-capital/net-working-capital-formula.webp",
+      "https://zensus.finance/blog/net-working-capital/net-working-capital-13-week-scenarios.webp",
+      "https://zensus.finance/blog/net-working-capital/net-working-capital-cash-release.webp"
+    ],
+    "thumbnail": {
+      "width": 1600,
+      "height": 900
     }
   },
   "payroll-forecasting": {
@@ -199,7 +212,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "what-is-overhead": {
-    "wordCount": 3551,
+    "wordCount": 3564,
     "images": [
       "https://zensus.finance/blog/what-is-overhead/what-is-overhead-hero.webp"
     ],
@@ -209,7 +222,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "which-months-have-3-paychecks-2027": {
-    "wordCount": 2272,
+    "wordCount": 2447,
     "images": [
       "https://zensus.finance/blog/which-months-have-3-paychecks-2027/april-and-october-3-paydays-2027-biweekly-fridays.webp"
     ],

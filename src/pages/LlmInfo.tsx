@@ -253,6 +253,11 @@ const LlmInfo = () => (
               </Link>
             </li>
             <li>
+              <Link to="/blog/net-working-capital" className={linkCls}>
+                Net working capital
+              </Link>
+            </li>
+            <li>
               <Link to="/blog/cash-flow-forecasting-for-agencies" className={linkCls}>
                 Cash flow forecasting for agencies
               </Link>
