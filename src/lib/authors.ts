@@ -19,7 +19,7 @@ export const authors = {
   ajin: {
     name: "Ajin Sunny",
     position: "Founder & CEO, Zensus",
-    avatar: "/authors/ajin.svg",
+    avatar: "/authors/ajin.webp",
     bio: "Ajin writes about cash flow forecasting, financial planning, and how AI changes the way businesses run finance.",
     url: "/about",
     personId: `${SITE_URL}/about#ajin-sunny`,
@@ -32,7 +32,7 @@ export const authors = {
   john: {
     name: "John George",
     position: "Co-Founder, Zensus",
-    avatar: "/authors/john.svg",
+    avatar: "/authors/john.webp",
     url: "/about",
     personId: `${SITE_URL}/about#john-george`,
     jobTitle: "Co-Founder",
