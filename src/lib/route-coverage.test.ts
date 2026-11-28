@@ -31,6 +31,13 @@ const read = (...parts: string[]) =>
 // this test should fail loudly and be fixed by regenerating the sitemap.
 const ORIGIN = SITE_URL;
 
+/**
+ * Routes that are served and prerendered but deliberately kept out of search
+ * and navigation: no sitemap entry, no social card, no /sitemap page link.
+ * /status is the outage page the product app redirects to; it is noindex.
+ */
+const NOINDEX_ROUTES = ["/status"];
+
 /** Static route paths declared in App.tsx, minus :params and the catch-all. */
 function appRoutes(): string[] {
   const source = read("src", "App.tsx");
@@ -79,7 +86,8 @@ function routeToCardSlug(route: string): string {
 }
 
 describe("route coverage", () => {
-  const app = appRoutes();
+  const allApp = appRoutes();
+  const app = allApp.filter((p) => !NOINDEX_ROUTES.includes(p));
   const staticSitemap = sitemapPaths().filter((p) => !p.startsWith("/blog/"));
   const topicPaths = BLOG_TOPICS.map((t) => `/blog/topic/${t.id}`).sort();
 
@@ -90,7 +98,7 @@ describe("route coverage", () => {
   });
 
   it("prerenders every static route in App.tsx", () => {
-    expect(prerenderRoutes()).toEqual(app);
+    expect(prerenderRoutes()).toEqual(allApp);
   });
 
   it("lists every static route in the sitemap", () => {
@@ -133,5 +141,13 @@ describe("route coverage", () => {
     if (!block) throw new Error("STATIC_PAGES not found in Sitemap.tsx");
     const named = new Set([...block[1].matchAll(/^\s*"(\/[^"]*)":\s*\{/gm)].map((m) => m[1]));
     expect(app.filter((p) => !named.has(p))).toEqual([]);
+  });
+
+  it("keeps noindex routes out of the sitemap and social cards, but serves them", () => {
+    for (const route of NOINDEX_ROUTES) {
+      expect(allApp).toContain(route);
+      expect(sitemapPaths()).not.toContain(route);
+      expect(ogCardSlugs()).not.toContain(routeToCardSlug(route));
+    }
   });
 });
