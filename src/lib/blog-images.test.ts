@@ -31,11 +31,18 @@ interface Figure {
 
 function figures(): Figure[] {
   return posts.flatMap(({ file, source }) =>
-    [...source.matchAll(/<BlogFigure([\s\S]*?)\/>/g)].map((m) => ({
-      file,
-      src: m[1].match(/src="([^"]+)"/)?.[1] ?? "",
-      hasSize: /width=\{\d+\}/.test(m[1]) && /height=\{\d+\}/.test(m[1]),
-    })),
+    [...source.matchAll(/<BlogFigure([\s\S]*?)\/>/g)].flatMap((m) => {
+      const figure = {
+        file,
+        src: m[1].match(/\bsrc="([^"]+)"/)?.[1] ?? "",
+        hasSize: /\bwidth=\{\d+\}/.test(m[1]) && /\bheight=\{\d+\}/.test(m[1]),
+      };
+      // An optional phone version is held to the same rules: WebP, sized, on disk.
+      const mobile = m[1].match(/\bmobileSrc="([^"]+)"/)?.[1];
+      return mobile
+        ? [figure, { file, src: mobile, hasSize: /\bmobileWidth=\{\d+\}/.test(m[1]) && /\bmobileHeight=\{\d+\}/.test(m[1]) }]
+        : [figure];
+    }),
   );
 }
 
@@ -53,7 +60,8 @@ describe("blog images", () => {
     // none, as many text-and-table rewrites do), and posts carry a thumbnail.
     const tags = posts.reduce((n, { source }) => n + (source.match(/<BlogFigure\b/g) ?? []).length, 0);
     expect(tags).toBeGreaterThan(0);
-    expect(figures().length).toBe(tags);
+    const mobiles = posts.reduce((n, { source }) => n + (source.match(/\bmobileSrc="/g) ?? []).length, 0);
+    expect(figures().length).toBe(tags + mobiles);
     expect(thumbnails().length).toBeGreaterThan(10);
   });
 

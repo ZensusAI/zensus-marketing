@@ -382,6 +382,9 @@
   .blog-article-body .blog-callout p {
     margin: 0;
   }
+  .blog-article-body .blog-callout p + p {
+    margin-top: 0.6em;
+  }
   @media (min-width: 760px) {
     .blog-article-body #blog-article-lead {
       font-size: 24px;

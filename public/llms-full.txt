@@ -251,7 +251,7 @@ How to calculate net working capital (NWC), what positive and negative working c
 - Net working capital = current assets − current liabilities, from the balance sheet. Current assets are expected to be converted to cash, sold or consumed within one year or the operating cycle, whichever is longer.
 - Worked example: a marketing agency with $85,000 of current assets ($20,000 cash, $60,000 receivables, $5,000 prepaid) and $40,000 of current liabilities has $45,000 of NWC, a current ratio of 2.13, a quick ratio of 2.00 and a cash ratio of 0.50.
 - Operating NWC excludes cash, non-operating investments and interest-bearing debt; the agency's operating NWC is $30,000. An increase in operating NWC absorbs cash, so a growing company with $25,000 of profit and a $30,000 NWC increase has −$5,000 of operating cash flow.
-- Negative NWC is not always bad: a SaaS company with $80,000 cash and $100,000 of deferred revenue can have −$25,000 NWC and still hold cash.
+- Negative NWC is not always bad: a SaaS company with $90,000 of current assets ($80,000 cash) and $115,000 of current liabilities ($100,000 of it deferred revenue) has −$25,000 NWC and still holds cash.
 - Timing: if the agency's $30,000 customer payment arrives two weeks late, weekly cash falls to −$15,000 in Week 3, even though total receipts ($40,000), payments ($45,000) and ending cash ($15,000) are unchanged.
 - Cash release from a shorter cash conversion cycle, for $1.2M of credit sales and $480K of COGS: collecting 10 days faster releases $32,877, 5 fewer inventory days $6,575, 5 more supplier days $6,575, a $46,027 one-time release, not profit.
 - There is no universal right amount of NWC; a current ratio of 1.5 to 2.0 is only a reference point. Review NWC monthly and projected cash weekly.

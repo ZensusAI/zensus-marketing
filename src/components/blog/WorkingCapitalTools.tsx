@@ -95,7 +95,7 @@ export function WorkingCapitalCalculator() {
           <legend className="mb-1 text-[15px] font-semibold text-foreground">Current assets</legend>
           <MoneyField label="Cash and cash equivalents" value={b.cash} onChange={set("cash")} />
           <MoneyField label="Marketable securities" value={b.marketableSecurities} onChange={set("marketableSecurities")} />
-          <MoneyField label="Accounts receivable" value={b.receivables} onChange={set("receivables")} />
+          <MoneyField label="Accounts receivable" value={b.receivables} onChange={set("receivables")} hint="Net of any allowance for doubtful accounts." />
           <MoneyField label="Inventory" value={b.inventory} onChange={set("inventory")} />
           <MoneyField label="Prepaid expenses" value={b.prepaid} onChange={set("prepaid")} />
           <MoneyField label="Other current assets" value={b.otherCurrentAssets} onChange={set("otherCurrentAssets")} />
@@ -118,7 +118,7 @@ export function WorkingCapitalCalculator() {
         />
         <Stat label="Current ratio" value={fixed2(h.currentRatio)} note="Current assets ÷ current liabilities" />
         <Stat label="Quick ratio" value={fixed2(h.quickRatio)} note="Cash, securities and receivables ÷ current liabilities" />
-        <Stat label="Cash ratio" value={fixed2(h.cashRatio)} note="Cash and cash equivalents ÷ current liabilities" />
+        <Stat label="Cash ratio" value={fixed2(h.cashRatio)} note="Cash and cash equivalents ÷ current liabilities (simplified: excludes securities)" />
       </div>
       <p className="mt-5 text-[13px] leading-relaxed text-muted-foreground">
         These are point-in-time measures. They do not show when receivables will turn into cash or when liabilities fall due.
@@ -176,9 +176,9 @@ export function WorkingCapitalScenarioPlanner() {
 
       <div className="mt-5 grid gap-3 min-[760px]:grid-cols-2">
         <MoneyField label="Annual credit sales" value={i.annualCreditSales} onChange={set("annualCreditSales")} />
-        <MoneyField label="Annual cost of goods sold" value={i.annualCogs} onChange={set("annualCogs")} hint="Used as a proxy for purchases." />
+        <MoneyField label="Annual cost of goods sold" value={i.annualCogs} onChange={set("annualCogs")} hint="Drives inventory days, and stands in for purchases on supplier days." />
         <DaysField label="Days faster to collect" value={i.collectDaysFaster} onChange={set("collectDaysFaster")} />
-        <DaysField label="Days less inventory held" value={i.inventoryDaysFewer} onChange={set("inventoryDaysFewer")} />
+        <DaysField label="Fewer days of inventory held" value={i.inventoryDaysFewer} onChange={set("inventoryDaysFewer")} />
         <DaysField label="Days longer supplier terms" value={i.supplierDaysLonger} onChange={set("supplierDaysLonger")} />
       </div>
 
