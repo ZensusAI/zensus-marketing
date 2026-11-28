@@ -127,7 +127,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "net-working-capital": {
-    "wordCount": 3875,
+    "wordCount": 3878,
     "images": [
       "https://zensus.finance/blog/net-working-capital/net-working-capital-hero.webp",
       "https://zensus.finance/blog/net-working-capital/net-working-capital-formula.webp",
