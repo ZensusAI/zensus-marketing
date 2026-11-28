@@ -54,7 +54,7 @@ export const FOUNDER_STORY = {
   heading: "Ajin knew that feeling from the inside.",
   name: "Ajin Sunny",
   role: "Founder",
-  photo: "/team/ajin-sunny.webp",
+  photo: "/team/ajin-sunny-2026.webp",
   paragraph:
     "He grew up in India. He is a first-generation immigrant who spent more than 12 years studying and working in the United States on his own. There was no one to show him where his money was going or how long it would last. Every month was a careful guess, made alone.",
 } as const;
@@ -127,7 +127,7 @@ export const TEAM_HEADING = "Our team";
  * emitted by About.tsx. `photo` is a 512px square WebP under public/team/.
  */
 export const TEAM = [
-  { id: "ajin-sunny", name: "Ajin Sunny", title: "Founder", photo: "/team/ajin-sunny.webp", linkedin: "https://www.linkedin.com/in/ajinsunny/" },
+  { id: "ajin-sunny", name: "Ajin Sunny", title: "Founder", photo: "/team/ajin-sunny-2026.webp", linkedin: "https://www.linkedin.com/in/ajinsunny/" },
   { id: "john-george", name: "John George", title: "Co-Founder", photo: "/team/john-george.webp", linkedin: "https://www.linkedin.com/in/johngeorge28/" },
   { id: "joe-anglim", name: "Joe Anglim", title: "Strategic Advisor", photo: "/team/joe-anglim.webp", linkedin: "https://www.linkedin.com/in/joe-anglim/" },
 ] as const;
