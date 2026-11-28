@@ -56,6 +56,7 @@ Businesses of any size with variable revenue, complex hiring plans, annual contr
 - [ARR vs Cash Flow](https://zensus.finance/blog/arr-vs-cash-for-founders)
 - [Cash Conversion Cycle](https://zensus.finance/blog/cash-conversion-cycle)
 - [What Is Overhead?](https://zensus.finance/blog/what-is-overhead)
+- [Net Working Capital](https://zensus.finance/blog/net-working-capital)
 - [Can QuickBooks Forecast Cash Flow?](https://zensus.finance/blog/can-quickbooks-forecast-cash-flow)
 - [Zero Cash Date for Founders](https://zensus.finance/blog/zero-cash-date-for-founders)
 - [Why Your HubSpot Revenue Numbers Don't Tell the Whole Cash Story](https://zensus.finance/blog/hubspot-pipeline-to-cash-forecast)
