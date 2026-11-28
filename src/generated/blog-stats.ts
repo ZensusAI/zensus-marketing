@@ -65,7 +65,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "cash-flow-forecasting-for-agencies": {
-    "wordCount": 2024,
+    "wordCount": 2027,
     "images": [
       "https://zensus.finance/blog/cash-flow-forecasting-for-agencies/agency-five-week-cash-vs-floor.webp"
     ],
@@ -127,7 +127,7 @@ export const blogStats: Record<string, { wordCount: number; images: string[]; th
     }
   },
   "net-working-capital": {
-    "wordCount": 3870,
+    "wordCount": 3875,
     "images": [
       "https://zensus.finance/blog/net-working-capital/net-working-capital-hero.webp",
       "https://zensus.finance/blog/net-working-capital/net-working-capital-formula.webp",
